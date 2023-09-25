@@ -15,6 +15,24 @@ class LoginInitialEvent extends LoginEvent {
   List<Object?> get props => [];
 }
 
+///Event that is dispatched when the user calls the https://prudmatvisionaries.com/gateway/UserService/login API.
+class CreateLoginEvent extends LoginEvent {
+  CreateLoginEvent({
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+  });
+
+  Function? onCreateLoginEventSuccess;
+
+  Function? onCreateLoginEventError;
+
+  @override
+  List<Object?> get props => [
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+      ];
+}
+
 ///Event for changing password visibility
 class ChangePasswordVisibilityEvent extends LoginEvent {
   ChangePasswordVisibilityEvent({required this.value});

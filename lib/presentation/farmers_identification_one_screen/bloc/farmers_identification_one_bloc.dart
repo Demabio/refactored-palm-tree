@@ -1,0 +1,5 @@
+import 'package:equatable/equatable.dart';import 'package:flutter/material.dart';import '/core/app_export.dart';import 'package:kiamis_app/presentation/farmers_identification_one_screen/models/farmers_identification_one_model.dart';part 'farmers_identification_one_event.dart';part 'farmers_identification_one_state.dart';/// A bloc that manages the state of a FarmersIdentificationOne according to the event that is dispatched to it.
+class FarmersIdentificationOneBloc extends Bloc<FarmersIdentificationOneEvent, FarmersIdentificationOneState> {FarmersIdentificationOneBloc(FarmersIdentificationOneState initialState) : super(initialState) { on<FarmersIdentificationOneInitialEvent>(_onInitialize); }
+
+_onInitialize(FarmersIdentificationOneInitialEvent event, Emitter<FarmersIdentificationOneState> emit, ) async  { emit(state.copyWith(nameController: TextEditingController(), areaNumberController: TextEditingController(), shoppingCenterController: TextEditingController(), nameController1: TextEditingController())); } 
+ }

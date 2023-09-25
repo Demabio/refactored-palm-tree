@@ -17,6 +17,10 @@ dependencies:
   pin_code_fields: ^7.3.0
   sms_autofill: ^2.0.0
   flutter_svg_provider: ^1.0.3
+  carousel_slider: ^4.0.0
+  smooth_page_indicator: ^1.0.0+2
+  grouped_list: ^5.1.2
+  dio: ^5.0.3
 dev_dependencies: 
   flutter_test: 
     sdk: flutter
@@ -41,4 +45,30 @@ flutter:
         - asset: assets/fonts/InterBold.ttf
           weight: 700
         - asset: assets/fonts/InterRegular.ttf
+          weight: 400
+        - asset: assets/fonts/InterSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/InterMedium.ttf
+          weight: 500
+    - family: Lato
+      fonts: 
+        - asset: assets/fonts/LatoRegular.ttf
+          weight: 400
+        - asset: assets/fonts/LatoBold.ttf
+          weight: 700
+    - family: Playfair Display
+      fonts: 
+        - asset: assets/fonts/PlayfairDisplayBold.ttf
+          weight: 700
+        - asset: assets/fonts/PlayfairDisplayMedium.ttf
+          weight: 500
+        - asset: assets/fonts/PlayfairDisplayRegular.ttf
+          weight: 400
+    - family: Montserrat
+      fonts: 
+        - asset: assets/fonts/MontserratSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/MontserratMedium.ttf
+          weight: 500
+        - asset: assets/fonts/MontserratRegular.ttf
           weight: 400

@@ -91,7 +91,7 @@ class CustomTextFormField extends StatelessWidget {
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
-          style: textStyle ?? theme.textTheme.titleMedium,
+          style: textStyle ?? CustomTextStyles.bodySmallLatoGray90001,
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,
@@ -102,14 +102,14 @@ class CustomTextFormField extends StatelessWidget {
       );
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
-        hintStyle: hintStyle ?? theme.textTheme.titleMedium,
+        hintStyle: hintStyle ?? CustomTextStyles.titleMediumBluegray40003,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
         contentPadding: contentPadding ?? EdgeInsets.all(13.h),
-        fillColor: fillColor ?? theme.colorScheme.errorContainer,
+        fillColor: fillColor ?? appTheme.blueGray50,
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(
@@ -140,11 +140,22 @@ class CustomTextFormField extends StatelessWidget {
 
 /// Extension on [CustomTextFormField] to facilitate inclusion of all types of border style etc
 extension TextFormFieldStyleHelper on CustomTextFormField {
-  static OutlineInputBorder get outlinePrimaryTL10 => OutlineInputBorder(
+  static OutlineInputBorder get outlinePrimaryTL101 => OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.h),
         borderSide: BorderSide(
           color: theme.colorScheme.primary,
           width: 1,
         ),
+      );
+  static OutlineInputBorder get fillGray => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.h),
+        borderSide: BorderSide.none,
+      );
+  static OutlineInputBorder get fillWhiteA => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6.h),
+        borderSide: BorderSide.none,
+      );
+  static OutlineInputBorder get fillWhiteA1 => OutlineInputBorder(
+        borderSide: BorderSide.none,
       );
 }
