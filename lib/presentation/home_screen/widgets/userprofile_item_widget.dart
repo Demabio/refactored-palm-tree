@@ -30,6 +30,7 @@ class UserprofileItemWidget extends StatelessWidget {
             height: 45.adaptSize,
             width: 45.adaptSize,
             padding: EdgeInsets.all(12.h),
+            decoration: IconButtonStyleHelper.fillPrimaryContainer,
             child: CustomImageView(
               svgPath: ImageConstant.imgSave,
             ),
@@ -51,7 +52,7 @@ class UserprofileItemWidget extends StatelessWidget {
                 Text(
                   userprofileItemModelObj.balanceAmount!,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleMediumPrimary,
+                  style: CustomTextStyles.titleMediumBold,
                 ),
               ],
             ),

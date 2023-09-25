@@ -91,7 +91,7 @@ class CustomCheckboxButton extends StatelessWidget {
   Widget get textWidget => Text(
         text ?? "",
         textAlign: textAlignment ?? TextAlign.center,
-        style: textStyle ?? CustomTextStyles.titleMediumPrimary_1,
+        style: textStyle ?? theme.textTheme.titleMedium,
       );
   Widget get checkboxWidget => SizedBox(
         height: iconSize,

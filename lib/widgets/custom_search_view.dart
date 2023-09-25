@@ -85,7 +85,7 @@ class CustomSearchView extends StatelessWidget {
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
-          style: textStyle ?? theme.textTheme.bodyMedium,
+          style: textStyle ?? CustomTextStyles.bodyMediumPoppinsBluegray40003,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,
           decoration: decoration,
@@ -94,7 +94,7 @@ class CustomSearchView extends StatelessWidget {
       );
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
-        hintStyle: hintStyle ?? theme.textTheme.bodyMedium,
+        hintStyle: hintStyle ?? CustomTextStyles.bodyMediumPoppinsGray500,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix ??
@@ -122,18 +122,35 @@ class CustomSearchView extends StatelessWidget {
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
-              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(13.h),
+              borderSide: BorderSide(
+                color: appTheme.gray200,
+                width: 1,
+              ),
             ),
         enabledBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
-              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(13.h),
+              borderSide: BorderSide(
+                color: appTheme.gray200,
+                width: 1,
+              ),
             ),
         focusedBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
-              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(13.h),
+              borderSide: BorderSide(
+                color: appTheme.gray200,
+                width: 1,
+              ),
             ),
+      );
+}
+
+/// Extension on [CustomSearchView] to facilitate inclusion of all types of border style etc
+extension SearchViewStyleHelper on CustomSearchView {
+  static OutlineInputBorder get fillPrimaryContainerTL20 => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20.h),
+        borderSide: BorderSide.none,
       );
 }

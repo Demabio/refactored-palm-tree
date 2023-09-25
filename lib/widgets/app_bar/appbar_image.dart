@@ -32,8 +32,8 @@ class AppbarImage extends StatelessWidget {
         child: CustomImageView(
           svgPath: svgPath,
           imagePath: imagePath,
-          height: 24.adaptSize,
-          width: 24.adaptSize,
+          height: 44.adaptSize,
+          width: 44.adaptSize,
           fit: BoxFit.contain,
         ),
       ),
