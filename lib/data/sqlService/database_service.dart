@@ -15,7 +15,7 @@ class DatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = 'login.db';
+    const name = 'localdevice.db';
     final path = await getDatabasesPath();
     return join(path, name);
   }
