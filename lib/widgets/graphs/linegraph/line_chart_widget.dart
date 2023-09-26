@@ -29,7 +29,7 @@ class LineChartWidget extends StatelessWidget {
             drawHorizontalLine: false,
             getDrawingVerticalLine: (value) {
               return FlLine(
-                color: const Color(0xff37434d),
+                color: Color.fromARGB(255, 203, 208, 212),
                 strokeWidth: 1,
               );
             },

@@ -20,6 +20,9 @@ class LoginScreen extends StatelessWidget {
         child: LoginScreen());
   }
 
+  FocusNode _firstTextFieldFocus = FocusNode();
+  FocusNode _secondTextFieldFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -62,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                               selector: (state) => state.userNameController,
                               builder: (context, userNameController) {
                                 return CustomTextFormField(
+                                    focusNode: _firstTextFieldFocus,
                                     controller: userNameController,
                                     margin: EdgeInsets.only(
                                         left: 3.h, top: 26.v, right: 2.h),
@@ -81,6 +85,7 @@ class LoginScreen extends StatelessWidget {
                               builder: (context, state) {
                             return CustomTextFormField(
                                 controller: state.passwordController,
+                                focusNode: _secondTextFieldFocus,
                                 margin: EdgeInsets.only(
                                     left: 3.h, top: 16.v, right: 2.h),
                                 hintText: "lbl_password".tr,
@@ -188,7 +193,7 @@ class LoginScreen extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              title: const Text('Invalid Credentials'),
+              title: const Text('Failed Login'),
               content: const Text('Invalid Credentials'),
               actions: [
                 TextButton(

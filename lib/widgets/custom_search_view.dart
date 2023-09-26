@@ -24,6 +24,7 @@ class CustomSearchView extends StatelessWidget {
     this.fillColor,
     this.filled = true,
     this.validator,
+    this.enabled = false,
   }) : super(
           key: key,
         );
@@ -66,6 +67,8 @@ class CustomSearchView extends StatelessWidget {
 
   final bool? filled;
 
+  final bool? enabled;
+
   final FormFieldValidator<String>? validator;
 
   @override
@@ -90,6 +93,7 @@ class CustomSearchView extends StatelessWidget {
           maxLines: maxLines ?? 1,
           decoration: decoration,
           validator: validator,
+          enabled: enabled,
         ),
       );
   InputDecoration get decoration => InputDecoration(
