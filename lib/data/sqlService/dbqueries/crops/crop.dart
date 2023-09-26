@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../../models/dbModels/crop.dart';
-import '../database_service.dart';
+import '../../../models/dbModels/crops/crop.dart';
+import '../../database_service.dart';
 
 class CropDB {
   final tableName = 'tblfrcrop';
