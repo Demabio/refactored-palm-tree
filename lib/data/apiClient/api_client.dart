@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
@@ -37,6 +39,36 @@ class ApiClient {
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     }
     return false;
+  }
+
+  Future<Response> setupServicePost({
+    Map<String, String> headers = const {},
+    String requestData = "",
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/gateway/Setupservice/graphql',
+        data: jsonEncode(<String, String>{'query': requestData}),
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null
+            ? PostLoginUserServicePostResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
   }
 
   /// Performs API call for https://prudmatvisionaries.com/gateway/UserService/login

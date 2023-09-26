@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:kiamis_app/data/models/dbModels/crops/crop.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
 
 import '../apiClient/api_client.dart';
@@ -14,6 +16,16 @@ class Repository {
     Map requestData = const {},
   }) async {
     return await _apiClient.loginUserServicePost(
+      headers: headers,
+      requestData: requestData,
+    );
+  }
+
+  Future<Response> setupServicePost({
+    Map<String, String> headers = const {},
+    String requestData = "",
+  }) async {
+    return await _apiClient.setupServicePost(
       headers: headers,
       requestData: requestData,
     );

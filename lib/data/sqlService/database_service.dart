@@ -1,3 +1,5 @@
+import 'package:kiamis_app/core/app_export.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -17,6 +19,7 @@ class DatabaseService {
   Future<String> get fullPath async {
     const name = 'localdevice.db';
     final path = await getDatabasesPath();
+    PrefUtils().setDBPath(path);
     return join(path, name);
   }
 
@@ -27,6 +30,8 @@ class DatabaseService {
     return database;
   }
 
-  Future<void> create(Database database, int version) async =>
-      await LoginDB().createTable(database);
+  Future<void> create(Database database, int version) async {
+    //await LoginDB().createTable(database);
+    await CropDB().createTable(database);
+  }
 }

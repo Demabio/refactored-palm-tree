@@ -3,9 +3,9 @@ class Crop {
   final int cropCategoryId;
   final String crop;
   final String cropCode;
-  final String commonCrop;
+  final bool commonCrop;
   final DateTime dateCreated;
-  final String createdBy;
+  final int createdBy;
 
   Crop({
     required this.cropId,
@@ -22,8 +22,53 @@ class Crop {
         cropCategoryId: map['crop_cat_id']?.toInt() ?? 0,
         crop: map['crop'] ?? '',
         cropCode: map['crop_code'] ?? '',
-        commonCrop: map['common_crop'] ?? '',
+        commonCrop: (map['common_crop'] ?? 0) == 1,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by'] ?? '',
+        createdBy: map['created_by'] ?? 0,
       );
+
+  factory Crop.fromJson(Map<String, dynamic> json) {
+    final data = json['data']['getCropByID'][0]; // Extract the relevant data
+    return Crop(
+      cropId: data['cropId'] ?? 0,
+      cropCategoryId: data['cropCatId'] ?? 0,
+      crop: data['crop'] ?? '',
+      cropCode: data['cropCode'] ?? '',
+      commonCrop: data['commonCrop'] ?? '',
+      dateCreated: DateTime.parse(data['dateCreated'] ?? ''),
+      createdBy: data['createdBy'] ?? 0,
+    );
+  }
+  static List<Crop> fromJsonList(Map<String, dynamic> json) {
+    final cropList = json['data']['getallCropsDapper'] as List<dynamic>;
+
+    return cropList
+        .map((cropData) => Crop(
+              cropId: cropData['cropId'] ?? 0,
+              cropCategoryId: cropData['cropCatId'] ?? 0,
+              crop: cropData['crop'] ?? '',
+              cropCode: cropData['cropCode'] ?? '',
+              commonCrop: cropData['commonCrop'] ?? '',
+              dateCreated: DateTime.parse(cropData['dateCreated'] ?? ''),
+              createdBy: cropData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = {
+      'cropId': cropId,
+      'cropCategoryId': cropCategoryId,
+      'crop': crop,
+      'cropCode': cropCode,
+      'commonCrop': commonCrop,
+      'dateCreated': dateCreated.toIso8601String(),
+      'createdBy': createdBy,
+    };
+    return {
+      'data': {
+        'getallCropsDapper': [data]
+      }
+    };
+  }
 }

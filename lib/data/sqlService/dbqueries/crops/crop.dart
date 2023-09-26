@@ -12,10 +12,10 @@ class CropDB {
         "crop_id" INTEGER NOT NULL,
         "crop_cat_id" INTEGER NOT NULL,
         "crop" VARCHAR(255) NOT NULL,
-        "crop_code" VARCHAR(255) NOT NULL,
+        "crop_code" VARCHAR(25),
         "common_crop" BOOLEAN,
         "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "created_by" INT,
         PRIMARY KEY("crop_id")
       );
     """);
@@ -40,6 +40,31 @@ class CropDB {
       DateTime.now().toLocal().toIso8601String(), // Use current datetime
       createdBy,
     ]);
+  }
+
+  Future<int> insertCrops(List<Crop> crops) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var crop in crops) {
+        batch.rawInsert('''
+      INSERT INTO $tableName (crop_cat_id, crop, crop_code, common_crop, date_created, created_by) 
+      VALUES (?, ?, ?, ?, ?, ?)
+    ''', [
+          crop.cropCategoryId,
+          crop.crop,
+          crop.cropCode,
+          crop.commonCrop ? 1 : 0,
+          crop.dateCreated.toLocal().toIso8601String(),
+          crop.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
   }
 
   Future<List<Crop>> fetchAll() async {
