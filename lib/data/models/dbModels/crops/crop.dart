@@ -1,5 +1,4 @@
 class Crop {
-  final int id;
   final int cropId;
   final int cropCategoryId;
   final String crop;
@@ -9,7 +8,6 @@ class Crop {
   final String createdBy;
 
   Crop({
-    required this.id,
     required this.cropId,
     required this.cropCategoryId,
     required this.crop,
@@ -20,7 +18,6 @@ class Crop {
   });
 
   factory Crop.fromSqfliteDatabase(Map<String, dynamic> map) => Crop(
-        id: map['id']?.toInt() ?? 0,
         cropId: map['crop_id']?.toInt() ?? 0,
         cropCategoryId: map['crop_cat_id']?.toInt() ?? 0,
         crop: map['crop'] ?? '',
