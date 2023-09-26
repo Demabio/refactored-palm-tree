@@ -12,4 +12,13 @@ class IncomeSource {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory IncomeSource.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      IncomeSource(
+        incomeSourceId: map['income_source_id']?.toInt() ?? 0,
+        incomeSource: map['income_source'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

@@ -6,4 +6,11 @@ class FishProductionUnitOfMeasure {
     required this.unitOfMeasureId,
     required this.unitOfMeasure,
   });
+
+  factory FishProductionUnitOfMeasure.fromSqfliteDatabase(
+          Map<String, dynamic> map) =>
+      FishProductionUnitOfMeasure(
+        unitOfMeasureId: map['unit_of_measure_id']?.toInt() ?? 0,
+        unitOfMeasure: map['unit_of_measure'] ?? '',
+      );
 }

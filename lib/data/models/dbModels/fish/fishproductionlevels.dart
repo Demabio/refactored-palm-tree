@@ -12,4 +12,13 @@ class FishProductionLevel {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory FishProductionLevel.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      FishProductionLevel(
+        productionLevelId: map['production_level_id']?.toInt() ?? 0,
+        productionLevel: map['production_level'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

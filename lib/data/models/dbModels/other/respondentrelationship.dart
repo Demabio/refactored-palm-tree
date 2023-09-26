@@ -12,4 +12,14 @@ class RespondentRelationship {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory RespondentRelationship.fromSqfliteDatabase(
+          Map<String, dynamic> map) =>
+      RespondentRelationship(
+        respondendRlshpId: map['respondend_rlshp_id']?.toInt() ?? 0,
+        rlshpToFarmer: map['rlshp_to_farmer'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

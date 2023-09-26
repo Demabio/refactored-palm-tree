@@ -12,4 +12,14 @@ class LivestockFarmingSystem {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory LivestockFarmingSystem.fromSqfliteDatabase(
+          Map<String, dynamic> map) =>
+      LivestockFarmingSystem(
+        livestockFarmsystemId: map['livestock_farmsystem_id']?.toInt() ?? 0,
+        livestockFarmsystem: map['livestock_farmsystem'] ?? '',
+        livestockFarmsystemCode: map['livestock_farmsystem_code'] ?? '',
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

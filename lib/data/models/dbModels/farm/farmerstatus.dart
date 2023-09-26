@@ -12,4 +12,13 @@ class FarmerStatus {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory FarmerStatus.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      FarmerStatus(
+        farmerStatusId: map['farmer_status_id']?.toInt() ?? 0,
+        farmerStatus: map['farmer_status'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

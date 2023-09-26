@@ -12,4 +12,13 @@ class MaritalStatus {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory MaritalStatus.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      MaritalStatus(
+        maritalStatusId: map['marital_status_id']?.toInt() ?? 0,
+        maritalStatus: map['marital_status'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

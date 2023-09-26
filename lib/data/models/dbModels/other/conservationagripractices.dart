@@ -10,4 +10,12 @@ class AgriPractice {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory AgriPractice.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      AgriPractice(
+        agriPracticeId: map['agri_practice_id']?.toInt() ?? 0,
+        agriPractice: map['agri_practice'] ?? '',
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

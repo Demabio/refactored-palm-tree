@@ -14,4 +14,14 @@ class FishCategory {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory FishCategory.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      FishCategory(
+        fishCategoryId: map['fish_category_id']?.toInt() ?? 0,
+        fishCategory: map['fish_category'] ?? '',
+        fishCategoryCode: map['fish_category_code'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

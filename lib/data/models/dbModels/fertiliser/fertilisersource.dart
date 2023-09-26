@@ -12,4 +12,13 @@ class FertilizerSource {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory FertilizerSource.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      FertilizerSource(
+        fertSourceId: map['fert_source_id']?.toInt() ?? 0,
+        source: map['source'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

@@ -16,4 +16,14 @@ class FarmAsset {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory FarmAsset.fromSqfliteDatabase(Map<String, dynamic> map) => FarmAsset(
+        farmAssetId: map['farm_asset_id']?.toInt() ?? 0,
+        assetTypeId: map['asset_type_id']?.toInt() ?? 0,
+        asset: map['asset'] ?? '',
+        assetCode: map['asset_code'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

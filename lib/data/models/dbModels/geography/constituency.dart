@@ -16,4 +16,15 @@ class Constituency {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory Constituency.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      Constituency(
+        constituencyId: map['constituency_id']?.toInt() ?? 0,
+        countyId: map['county_id']?.toInt() ?? 0,
+        constCode: map['const_code'] ?? '',
+        constituency: map['constituency'],
+        area: map['area']?.toDouble(),
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

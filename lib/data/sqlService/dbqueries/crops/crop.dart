@@ -9,7 +9,6 @@ class CropDB {
   Future<void> createTable(Database database) async {
     await database.execute("""
       CREATE TABLE IF NOT EXISTS $tableName (
-        "id" INTEGER NOT NULL,
         "crop_id" INTEGER NOT NULL,
         "crop_cat_id" INTEGER NOT NULL,
         "crop" VARCHAR(255),
@@ -17,7 +16,7 @@ class CropDB {
         "common_crop" VARCHAR(255),
         "date_created" VARCHAR(255),
         "created_by" VARCHAR(255),
-        PRIMARY KEY("id" AUTOINCREMENT)
+        PRIMARY KEY("crop_id" AUTOINCREMENT)
       );
     """);
   }

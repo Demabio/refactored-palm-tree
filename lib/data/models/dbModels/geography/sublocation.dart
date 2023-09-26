@@ -20,4 +20,19 @@ class Sublocation {
     this.dateEdited,
     this.editedBy,
   });
+
+  factory Sublocation.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      Sublocation(
+        sublocationId: map['sublocation_id']?.toInt() ?? 0,
+        locationId: map['location_id']?.toInt() ?? 0,
+        sublocationCode: map['sublocation_code'] ?? '',
+        sublocation: map['sublocation'] ?? '',
+        area: map['area']?.toDouble(),
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+        dateEdited: map['date_edited'] != null
+            ? DateTime.parse(map['date_edited'] ?? '')
+            : null,
+        editedBy: map['edited_by']?.toInt(),
+      );
 }

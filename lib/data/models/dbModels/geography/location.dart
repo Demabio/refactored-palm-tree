@@ -22,4 +22,19 @@ class Location {
     this.dateEdited,
     this.editedBy,
   });
+
+  factory Location.fromSqfliteDatabase(Map<String, dynamic> map) => Location(
+        locationId: map['location_id']?.toInt() ?? 0,
+        subcountyId: map['subcounty_id']?.toInt() ?? 0,
+        divisionId: map['division_id']?.toInt() ?? 0,
+        locationCode: map['location_code'] ?? '',
+        location: map['location'] ?? '',
+        area: map['area']?.toDouble(),
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+        dateEdited: map['date_edited'] != null
+            ? DateTime.parse(map['date_edited'] ?? '')
+            : null,
+        editedBy: map['edited_by']?.toInt(),
+      );
 }

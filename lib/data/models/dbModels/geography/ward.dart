@@ -18,4 +18,15 @@ class Ward {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory Ward.fromSqfliteDatabase(Map<String, dynamic> map) => Ward(
+        wardId: map['ward_id']?.toInt() ?? 0,
+        subcountyId: map['subcounty_id']?.toInt() ?? 0,
+        constituencyId: map['constituency_id']?.toInt(),
+        wardCode: map['ward_code'] ?? '',
+        ward: map['ward'] ?? '',
+        area: map['area']?.toDouble(),
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }

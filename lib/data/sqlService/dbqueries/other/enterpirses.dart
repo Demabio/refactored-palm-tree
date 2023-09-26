@@ -1,0 +1,38 @@
+import 'package:sqflite/sqflite.dart';
+
+import '../../../models/dbModels/other/enterpirses.dart';
+import '../../database_service.dart';
+
+class EnterprisesDB {
+  final tableName = 'tblfrenterprises';
+
+  Future<void> createTable(Database database) async {
+    await database.execute("""
+      CREATE TABLE IF NOT EXISTS $tableName (
+        "enterprise_id" INTEGER NOT NULL,
+        "enterprise_desc" VARCHAR(255) NOT NULL,
+        "date_created" DATETIME NOT NULL,
+        "created_by" VARCHAR(255) NOT NULL,
+        PRIMARY KEY("enterprise_id")
+      );
+    """);
+  }
+
+  Future<List<Enterprise>> fetchAll() async {
+    final database = await DatabaseService().database;
+    final enterprises = await database.rawQuery(''' 
+      SELECT * FROM $tableName 
+    ''');
+
+    return enterprises.map((e) => Enterprise.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<Enterprise> fetchByEnterpriseId(int enterpriseId) async {
+    final database = await DatabaseService().database;
+    final enterprise = await database.rawQuery('''
+      SELECT * FROM $tableName WHERE enterprise_id = ?
+    ''', [enterpriseId]);
+
+    return Enterprise.fromSqfliteDatabase(enterprise.first);
+  }
+}

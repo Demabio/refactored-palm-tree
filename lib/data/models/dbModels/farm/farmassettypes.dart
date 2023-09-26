@@ -10,4 +10,12 @@ class FarmAssetType {
     required this.assetName,
     this.description,
   });
+
+  factory FarmAssetType.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      FarmAssetType(
+        assetTypeId: map['asset_type_id']?.toInt() ?? 0,
+        asssetTypeCode: map['assset_type_code'] ?? '',
+        assetName: map['asset_name'] ?? '',
+        description: map['description'],
+      );
 }

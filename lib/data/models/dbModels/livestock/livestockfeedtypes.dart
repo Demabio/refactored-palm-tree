@@ -10,4 +10,12 @@ class LivestockFeedType {
     required this.dateCreated,
     this.createdBy,
   });
+
+  factory LivestockFeedType.fromSqfliteDatabase(Map<String, dynamic> map) =>
+      LivestockFeedType(
+        feedTypeId: map['feed_type_id']?.toInt() ?? 0,
+        feedType: map['feed_type'] ?? '',
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by']?.toInt(),
+      );
 }
