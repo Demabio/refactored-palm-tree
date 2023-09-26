@@ -38,6 +38,31 @@ class RespondentRelationshipDB {
     ]);
   }
 
+  Future<int> insertRespondentRelationships(
+      List<RespondentRelationship> respondentRelationships) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var relationship in respondentRelationships) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (respondend_rlshp_id, rlshp_to_farmer, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          relationship.respondendRlshpId,
+          relationship.rlshpToFarmer,
+          relationship.description,
+          relationship.dateCreated.toLocal().toIso8601String(),
+          relationship.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<RespondentRelationship>> fetchAll() async {
     final database = await DatabaseService().database;
     final relationships = await database.rawQuery(''' 

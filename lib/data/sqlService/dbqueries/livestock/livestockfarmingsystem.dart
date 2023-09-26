@@ -38,6 +38,31 @@ class LivestockFarmingSystemDB {
     ]);
   }
 
+  Future<int> insertLivestockFarmSystems(
+      List<LivestockFarmingSystem> livestockFarmSystems) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var system in livestockFarmSystems) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (livestock_farmsystem_id, livestock_farmsystem, livestock_farmsystem_code, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          system.livestockFarmsystemId,
+          system.livestockFarmsystem,
+          system.livestockFarmsystemCode,
+          system.dateCreated.toLocal().toIso8601String(),
+          system.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<LivestockFarmingSystem>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmingSystems = await database.rawQuery(''' 

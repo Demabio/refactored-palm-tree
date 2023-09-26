@@ -38,6 +38,30 @@ class FarmerTypeDB {
     ]);
   }
 
+  Future<int> insertFarmerTypes(List<FarmerType> farmerTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in farmerTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (farmer_type_id, farmer_type, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          type.farmerTypeId,
+          type.farmerType,
+          type.description,
+          type.dateCreated.toLocal().toIso8601String(),
+          type.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerType>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmerTypes = await database.rawQuery(''' 

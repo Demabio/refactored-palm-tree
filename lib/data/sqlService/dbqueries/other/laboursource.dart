@@ -38,6 +38,30 @@ class LabourSourceDB {
     ]);
   }
 
+  Future<int> insertLabourSources(List<LabourSource> labourSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in labourSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (labour_source_id, labour_source, desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.labourSourceId,
+          source.labourSource,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<LabourSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final labourSources = await database.rawQuery(''' 

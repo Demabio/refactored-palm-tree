@@ -2,7 +2,7 @@ class CropPlantingMotive {
   final int cropMotiveId;
   final String cropMotive;
   final DateTime dateCreated;
-  final String createdBy;
+  final int createdBy;
 
   CropPlantingMotive({
     required this.cropMotiveId,
@@ -16,6 +16,6 @@ class CropPlantingMotive {
         cropMotiveId: map['crop_motive_id']?.toInt() ?? 0,
         cropMotive: map['crop_motive'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by'] ?? '',
+        createdBy: map['created_by'] ?? 0,
       );
 }

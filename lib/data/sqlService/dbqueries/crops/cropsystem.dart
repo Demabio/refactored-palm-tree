@@ -33,6 +33,28 @@ class CropSystemDB {
     ]);
   }
 
+  Future<int> insertCroppingSystems(List<CropSystem> croppingSystems) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var system in croppingSystems) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (crop_system_id, cropping_system, description) 
+        VALUES (?, ?, ?)
+      ''', [
+          system.cropSystemId,
+          system.croppingSystem,
+          system.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<CropSystem>> fetchAll() async {
     final database = await DatabaseService().database;
     final systems = await database.rawQuery(''' 

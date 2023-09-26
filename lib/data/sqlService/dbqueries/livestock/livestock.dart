@@ -45,6 +45,32 @@ class LivestockDB {
     ]);
   }
 
+  Future<int> insertLivestocks(List<Livestock> livestocks) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var livestock in livestocks) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (livestock_id, livestock, livestock_sub_cat_id, livestock_code, common_livestock, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      ''', [
+          livestock.livestockId,
+          livestock.livestock,
+          livestock.livestockSubCatId,
+          livestock.livestockCode,
+          livestock.commonLivestock ? 1 : 0,
+          livestock.dateCreated.toLocal().toIso8601String(),
+          livestock.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<Livestock>> fetchAll() async {
     final database = await DatabaseService().database;
     final livestock = await database.rawQuery(''' 

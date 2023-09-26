@@ -38,6 +38,31 @@ class LivelihoodSourceDB {
     ]);
   }
 
+  Future<int> insertLivelihoodSources(
+      List<LivelihoodSource> livelihoodSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in livelihoodSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (livelihood_source_id, livelihood_source, desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.livelihoodSourceId,
+          source.livelihoodSource,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<LivelihoodSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final livelihoodSources = await database.rawQuery(''' 

@@ -38,6 +38,31 @@ class FishProductionLevelDB {
     ]);
   }
 
+  Future<int> insertProductionLevels(
+      List<FishProductionLevel> productionLevels) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var level in productionLevels) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (production_level_id, production_level, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          level.productionLevelId,
+          level.productionLevel,
+          level.description,
+          level.dateCreated.toLocal().toIso8601String(),
+          level.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FishProductionLevel>> fetchAll() async {
     final database = await DatabaseService().database;
     final productionLevels = await database.rawQuery(''' 

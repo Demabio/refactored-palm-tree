@@ -27,18 +27,41 @@ class CropWaterSourceDB {
     return sources.map((e) => CropWaterSource.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<int> insertWaterSources(List<CropWaterSource> waterSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in waterSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (water_source_id, water_source, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          source.waterSourceId,
+          source.waterSource,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> create({
     required int id,
-    required String areaUnit,
+    required String waterSource,
     required String createdBy,
   }) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName (area_unit_id, area_unit, date_created, created_by) 
+      INSERT INTO $tableName (water_source_id, water_source, date_created, created_by) 
       VALUES (?, ?, ?, ?)
     ''', [
       id,
-      areaUnit,
+      waterSource,
       DateTime.now().toLocal().toIso8601String(),
       createdBy,
     ]);

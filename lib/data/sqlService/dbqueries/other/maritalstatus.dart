@@ -38,6 +38,30 @@ class MaritalStatusDB {
     ]);
   }
 
+  Future<int> insertMaritalStatuses(List<MaritalStatus> maritalStatuses) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var status in maritalStatuses) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (marital_status_id, marital_status, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          status.maritalStatusId,
+          status.maritalStatus,
+          status.description,
+          status.dateCreated.toLocal().toIso8601String(),
+          status.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<MaritalStatus>> fetchAll() async {
     final database = await DatabaseService().database;
     final maritalStatuses = await database.rawQuery(''' 

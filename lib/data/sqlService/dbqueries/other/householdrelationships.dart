@@ -38,6 +38,31 @@ class HouseholdRelationshipsDB {
     ]);
   }
 
+  Future<int> insertHouseholdRelationships(
+      List<HouseholdRelationship> householdRelationships) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var relationship in householdRelationships) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (hh_rlshp_id, rlshp_to_head, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          relationship.hhRlshpId,
+          relationship.rlshpToHead,
+          relationship.description,
+          relationship.dateCreated.toLocal().toIso8601String(),
+          relationship.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<HouseholdRelationship>> fetchAll() async {
     final database = await DatabaseService().database;
     final relationships = await database.rawQuery(''' 

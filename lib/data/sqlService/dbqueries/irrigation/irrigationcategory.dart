@@ -35,6 +35,30 @@ class IrrigationCategoryDB {
     ]);
   }
 
+  Future<int> insertIrrigationCategories(
+      List<IrrigationCategory> irrigationCategories) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var category in irrigationCategories) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (irrigation_category_id, irrigation_category, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          category.irrigationCategoryId,
+          category.irrigationCategory,
+          category.dateCreated.toLocal().toIso8601String(),
+          category.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<IrrigationCategory>> fetchAll() async {
     final database = await DatabaseService().database;
     final irrigationCategories = await database.rawQuery(''' 

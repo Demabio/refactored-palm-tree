@@ -25,14 +25,38 @@ class IrrigationTypeDB {
   }) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName (irrigation_type_id, irrigation_type, date_created, created_by) 
-      VALUES (?, ?, ?, ?)
-    ''', [
+        INSERT INTO $tableName (irrigation_type_id, irrigation_type, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
       id,
       irrigationType,
       DateTime.now().toLocal().toIso8601String(),
       createdBy,
     ]);
+  }
+
+  Future<int> insertIrrigationTypes(
+      List<IrrigationType> irrigationTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in irrigationTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (irrigation_type_id, irrigation_type, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          type.irrigationTypeId,
+          type.irrigationType,
+          type.dateCreated.toLocal().toIso8601String(),
+          type.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
   }
 
   Future<List<IrrigationType>> fetchAll() async {

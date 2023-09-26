@@ -10,8 +10,8 @@ class CropAreaUnitDB {
     await database.execute("""
       CREATE TABLE IF NOT EXISTS $tableName (
         "area_unit_id" INTEGER NOT NULL,
-        "area_unit" VARCHAR(255) NOT NULL,
-        "date_created" DATETIME NOT NULL,
+        "area_unit" VARCHAR(255) ,
+        "date_created" DATETIME,
         "created_by" INTEGER,
         PRIMARY KEY("area_unit_id")
       );
@@ -29,16 +29,16 @@ class CropAreaUnitDB {
 
   Future<int> create({
     required int id,
-    required String waterSource,
+    required String areaUnit,
     required String createdBy,
   }) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName (water_source_id, water_source, date_created, created_by) 
+      INSERT INTO $tableName (area_unit_id, area_unit, date_created, created_by) 
       VALUES (?, ?, ?, ?)
     ''', [
       id,
-      waterSource,
+      areaUnit,
       DateTime.now().toLocal().toIso8601String(),
       createdBy,
     ]);

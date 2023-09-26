@@ -38,6 +38,30 @@ class CropCategoriesDB {
     ]);
   }
 
+  Future<int> insertCropCategories(List<CropCategory> cropCategories) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var category in cropCategories) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (crop_cat_id, crop_category, crop_category_code, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          category.cropCategoryId,
+          category.cropCategory,
+          category.cropCategoryCode,
+          category.dateCreated.toLocal().toIso8601String(),
+          category.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<CropCategory>> fetchAll() async {
     final database = await DatabaseService().database;
     final categories = await database.rawQuery(''' 

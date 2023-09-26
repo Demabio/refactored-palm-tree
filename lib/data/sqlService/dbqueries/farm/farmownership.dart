@@ -46,6 +46,29 @@ class FarmerFarmOwnershipDB {
     ]);
   }
 
+  Future<int> insertOwnerships(List<FarmerFarmOwnership> ownerships) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var ownership in ownerships) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (ownership_id, ownership_desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          ownership.ownershipId,
+          ownership.ownershipDesc,
+          ownership.dateCreated.toLocal().toIso8601String(),
+          ownership.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<FarmerFarmOwnership> fetchByOwnershipId(int ownershipId) async {
     final database = await DatabaseService().database;
     final ownership = await database.rawQuery('''

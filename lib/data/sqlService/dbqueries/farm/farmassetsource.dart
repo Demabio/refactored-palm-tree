@@ -12,8 +12,6 @@ class FarmAssetSourceDB {
         "asset_source_id" INTEGER NOT NULL,
         "asset_source" VARCHAR(255) NOT NULL,
         "description" TEXT,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
         PRIMARY KEY("asset_source_id")
       );
     """);
@@ -27,8 +25,8 @@ class FarmAssetSourceDB {
   }) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName (asset_source_id, asset_source, description, date_created, created_by) 
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO $tableName (asset_source_id, asset_source, description) 
+      VALUES (?, ?, ?)
     ''', [
       id,
       assetSource,
@@ -36,6 +34,28 @@ class FarmAssetSourceDB {
       DateTime.now().toLocal().toIso8601String(),
       createdBy,
     ]);
+  }
+
+  Future<int> insertAssetSources(List<FarmAssetSource> assetSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in assetSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (asset_source_id, asset_source, description) 
+        VALUES (?, ?, ?)
+      ''', [
+          source.assetSourceId,
+          source.assetSource,
+          source.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
   }
 
   Future<List<FarmAssetSource>> fetchAll() async {

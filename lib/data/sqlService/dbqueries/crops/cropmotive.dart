@@ -35,6 +35,29 @@ class CropPlantingMotiveDB {
     ]);
   }
 
+  Future<int> insertCropMotives(List<CropPlantingMotive> cropMotives) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var motive in cropMotives) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (crop_motive_id, crop_motive, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          motive.cropMotiveId,
+          motive.cropMotive,
+          motive.dateCreated.toLocal().toIso8601String(),
+          motive.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<CropPlantingMotive>> fetchAll() async {
     final database = await DatabaseService().database;
     final motives = await database.rawQuery(''' 

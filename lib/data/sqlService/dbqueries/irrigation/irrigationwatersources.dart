@@ -35,6 +35,30 @@ class IrrigationWaterSourceDB {
     ]);
   }
 
+  Future<int> insertIrrigationWaterSources(
+      List<IrrigationWaterSource> irrigationWaterSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in irrigationWaterSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (irrigation_water_source_id, irrigation_water_source, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          source.irrigationWaterSourceId,
+          source.irrigationWaterSource,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<IrrigationWaterSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 

@@ -37,6 +37,30 @@ class FertiliserTypeDB {
     ]);
   }
 
+  Future<int> insertFertilizerTypes(
+      List<FertilizerType> fertilizerTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in fertilizerTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (fertiliser_type_id, fertiliser_category_id, fertiliser_type, description) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          type.fertiliserTypeId,
+          type.fertiliserCategoryId,
+          type.fertiliserType,
+          type.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FertilizerType>> fetchAll() async {
     final database = await DatabaseService().database;
     final types = await database.rawQuery(''' 

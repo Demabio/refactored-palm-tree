@@ -33,6 +33,28 @@ class FarmPowerSourceDB {
     ]);
   }
 
+  Future<int> insertPowerSources(List<FarmPowerSource> powerSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in powerSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (power_source_id, power_source, description) 
+        VALUES (?, ?, ?)
+      ''', [
+          source.powerSourceId,
+          source.powerSource,
+          source.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmPowerSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final powerSources = await database.rawQuery(''' 

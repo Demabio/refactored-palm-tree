@@ -3,7 +3,7 @@ class Livestock {
   final String livestock;
   final int livestockSubCatId;
   final String livestockCode;
-  final String commonLivestock;
+  final bool commonLivestock;
   final DateTime dateCreated;
   final int? createdBy;
 

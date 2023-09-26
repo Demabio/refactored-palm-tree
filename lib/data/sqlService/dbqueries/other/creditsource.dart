@@ -38,6 +38,30 @@ class CreditSourceDB {
     ]);
   }
 
+  Future<int> insertCreditSources(List<CreditSource> creditSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in creditSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (credit_source_id, credit_source, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.creditSourceId,
+          source.creditSource,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<CreditSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 

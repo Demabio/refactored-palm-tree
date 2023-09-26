@@ -35,6 +35,29 @@ class AgriPracticeDB {
     ]);
   }
 
+  Future<int> insertAgriPractices(List<AgriPractice> agriPractices) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var practice in agriPractices) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (agri_practice_id, agri_practice, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          practice.agriPracticeId,
+          practice.agriPractice,
+          practice.dateCreated.toLocal().toIso8601String(),
+          practice.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<AgriPractice>> fetchAll() async {
     final database = await DatabaseService().database;
     final agriPractices = await database.rawQuery(''' 

@@ -42,6 +42,32 @@ class LivestockSubcategoryDB {
     ]);
   }
 
+  Future<int> insertLivestockSubcategories(
+      List<LivestockSubcategory> livestockSubcategories) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var subcategory in livestockSubcategories) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (livestock_sub_cat_id, livestock_cat_id, livestock_subcategory, livestock_subcategory_code, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?, ?)
+      ''', [
+          subcategory.livestockSubCatId,
+          subcategory.livestockCatId,
+          subcategory.livestockSubcategory,
+          subcategory.livestockSubcategoryCode,
+          subcategory.dateCreated.toLocal().toIso8601String(),
+          subcategory.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<LivestockSubcategory>> fetchAll() async {
     final database = await DatabaseService().database;
     final subcategories = await database.rawQuery(''' 

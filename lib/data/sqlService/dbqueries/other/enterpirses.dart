@@ -44,6 +44,29 @@ class EnterprisesDB {
     ]);
   }
 
+  Future<int> insertEnterprises(List<Enterprise> enterprises) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var enterprise in enterprises) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (enterprise_id, enterprise_desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          enterprise.enterpriseId,
+          enterprise.enterpriseDesc,
+          enterprise.dateCreated.toLocal().toIso8601String(),
+          enterprise.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<Enterprise> fetchByEnterpriseId(int enterpriseId) async {
     final database = await DatabaseService().database;
     final enterprise = await database.rawQuery('''

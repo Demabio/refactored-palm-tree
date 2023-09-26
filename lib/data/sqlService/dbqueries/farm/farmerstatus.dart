@@ -38,6 +38,30 @@ class FarmerStatusDB {
     ]);
   }
 
+  Future<int> insertFarmerStatuses(List<FarmerStatus> farmerStatuses) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var status in farmerStatuses) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (farmer_status_id, farmer_status, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          status.farmerStatusId,
+          status.farmerStatus,
+          status.description,
+          status.dateCreated.toLocal().toIso8601String(),
+          status.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerStatus>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmerStatuses = await database.rawQuery(''' 

@@ -38,6 +38,31 @@ class EducationLevelDB {
     ]);
   }
 
+  Future<int> insertEducationLevels(
+      List<EducationLevel> educationLevels) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var level in educationLevels) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (education_level_id, education_level, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          level.educationLevelId,
+          level.educationLevel,
+          level.description,
+          level.dateCreated.toLocal().toIso8601String(),
+          level.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<EducationLevel>> fetchAll() async {
     final database = await DatabaseService().database;
     final levels = await database.rawQuery(''' 

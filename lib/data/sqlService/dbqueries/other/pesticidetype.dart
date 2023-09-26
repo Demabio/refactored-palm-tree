@@ -33,6 +33,28 @@ class PesticideTypeDB {
     ]);
   }
 
+  Future<int> insertPesticideTypes(List<PesticideType> pesticideTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in pesticideTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (pesticide_type_id, pesticide_type, description) 
+        VALUES (?, ?, ?)
+      ''', [
+          type.pesticideTypeId,
+          type.pesticideType,
+          type.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<PesticideType>> fetchAll() async {
     final database = await DatabaseService().database;
     final types = await database.rawQuery(''' 

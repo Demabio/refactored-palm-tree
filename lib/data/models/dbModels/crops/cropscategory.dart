@@ -3,7 +3,7 @@ class CropCategory {
   final String cropCategory;
   final String cropCategoryCode;
   final DateTime dateCreated;
-  final String createdBy;
+  final int createdBy;
 
   CropCategory({
     required this.cropCategoryId,
@@ -19,6 +19,6 @@ class CropCategory {
         cropCategory: map['crop_category'] ?? '',
         cropCategoryCode: map['crop_category_code'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by'] ?? '',
+        createdBy: map['created_by'] ?? 0,
       );
 }

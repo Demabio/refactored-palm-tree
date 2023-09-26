@@ -41,6 +41,32 @@ class FishProductionTypeDB {
     ]);
   }
 
+  Future<int> insertFishProductionTypes(
+      List<FishProductionType> fishProductionTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in fishProductionTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (production_type_id, fish_production_type, unit_of_measure_id, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?, ?)
+      ''', [
+          type.productionTypeId,
+          type.fishProductionType,
+          type.unitOfMeasureId,
+          type.description,
+          type.dateCreated.toLocal().toIso8601String(),
+          type.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FishProductionType>> fetchAll() async {
     final database = await DatabaseService().database;
     final productionTypes = await database.rawQuery(''' 

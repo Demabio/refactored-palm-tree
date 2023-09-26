@@ -38,6 +38,31 @@ class FertiliserSourceDB {
     ]);
   }
 
+  Future<int> insertFertilizerSources(
+      List<FertilizerSource> fertilizerSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in fertilizerSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (fert_source_id, source, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.fertSourceId,
+          source.source,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FertilizerSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 

@@ -38,6 +38,30 @@ class FarmStructureDB {
     ]);
   }
 
+  Future<int> insertFarmStructures(List<FarmStructure> farmStructures) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var structure in farmStructures) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (farm_structure_id, structure_name, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          structure.farmStructureId,
+          structure.structureName,
+          structure.description,
+          structure.dateCreated.toLocal().toIso8601String(),
+          structure.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmStructure>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmStructures = await database.rawQuery(''' 

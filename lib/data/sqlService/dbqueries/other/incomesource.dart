@@ -38,6 +38,30 @@ class IncomeSourceDB {
     ]);
   }
 
+  Future<int> insertIncomeSources(List<IncomeSource> incomeSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in incomeSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (income_source_id, income_source, description, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.incomeSourceId,
+          source.incomeSource,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<IncomeSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final incomeSources = await database.rawQuery(''' 

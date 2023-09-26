@@ -38,6 +38,30 @@ class AgriManagementSkillsDB {
     ]);
   }
 
+  Future<int> insertAgriSkills(List<AgriManagementSkill> agriSkillsList) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var skills in agriSkillsList) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (agri_skills_id, agri_skills, desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          skills.agriSkillsId,
+          skills.agriSkills,
+          skills.description,
+          skills.dateCreated.toLocal().toIso8601String(),
+          skills.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<AgriManagementSkill>> fetchAll() async {
     final database = await DatabaseService().database;
     final agriSkills = await database.rawQuery(''' 

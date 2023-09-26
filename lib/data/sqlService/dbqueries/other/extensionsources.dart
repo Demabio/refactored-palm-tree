@@ -33,6 +33,29 @@ class ExtensionSourceDB {
     ]);
   }
 
+  Future<int> insertExtensionSources(
+      List<ExtensionSource> extensionSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in extensionSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (extension_source_id, source_type, description) 
+        VALUES (?, ?, ?)
+      ''', [
+          source.extensionSourceId,
+          source.sourceType,
+          source.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<ExtensionSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 

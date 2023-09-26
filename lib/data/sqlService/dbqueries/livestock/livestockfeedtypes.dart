@@ -35,6 +35,29 @@ class LivestockFeedTypeDB {
     ]);
   }
 
+  Future<int> insertFeedTypes(List<LivestockFeedType> feedTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var type in feedTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (feed_type_id, feed_type, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          type.feedTypeId,
+          type.feedType,
+          type.dateCreated.toLocal().toIso8601String(),
+          type.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<LivestockFeedType>> fetchAll() async {
     final database = await DatabaseService().database;
     final feedTypes = await database.rawQuery(''' 

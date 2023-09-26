@@ -36,6 +36,29 @@ class FarmAssetTypeDB {
     ]);
   }
 
+  Future<int> insertAssetTypes(List<FarmAssetType> assetTypes) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var assetType in assetTypes) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (asset_type_id, asset_type_code, asset_name, description) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          assetType.assetTypeId,
+          assetType.asssetTypeCode,
+          assetType.assetName,
+          assetType.description,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmAssetType>> fetchAll() async {
     final database = await DatabaseService().database;
     final assetTypes = await database.rawQuery(''' 

@@ -38,6 +38,31 @@ class AgriInfoSourceDB {
     ]);
   }
 
+  Future<int> insertAgriInfoSources(
+      List<AgriInfoSource> agriInfoSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var source in agriInfoSources) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (agri_info_source_id, agri_info_source, desc, date_created, created_by) 
+        VALUES (?, ?, ?, ?, ?)
+      ''', [
+          source.agriInfoSourceId,
+          source.agriInfoSource,
+          source.description,
+          source.dateCreated.toLocal().toIso8601String(),
+          source.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<AgriInfoSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final agriInfoSources = await database.rawQuery(''' 

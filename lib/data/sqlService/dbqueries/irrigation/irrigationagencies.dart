@@ -35,6 +35,30 @@ class IrrigationAgencyDB {
     ]);
   }
 
+  Future<int> insertIrrigationAgencies(
+      List<IrrigationAgency> irrigationAgencies) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var agency in irrigationAgencies) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (irrigation_agency_id, agency_name, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          agency.irrigationAgencyId,
+          agency.agencyName,
+          agency.dateCreated.toLocal().toIso8601String(),
+          agency.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<IrrigationAgency>> fetchAll() async {
     final database = await DatabaseService().database;
     final irrigationAgencies = await database.rawQuery(''' 
