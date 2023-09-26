@@ -29,6 +29,23 @@ class FarmerFarmOwnershipDB {
         .toList();
   }
 
+  Future<int> create({
+    required int id,
+    required String ownershipDesc,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (ownership_id, ownership_desc, date_created, created_by) 
+      VALUES (?, ?, ?, ?)
+    ''', [
+      id,
+      ownershipDesc,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<FarmerFarmOwnership> fetchByOwnershipId(int ownershipId) async {
     final database = await DatabaseService().database;
     final ownership = await database.rawQuery('''

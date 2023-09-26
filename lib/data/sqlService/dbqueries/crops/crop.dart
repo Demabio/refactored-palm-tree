@@ -11,14 +11,35 @@ class CropDB {
       CREATE TABLE IF NOT EXISTS $tableName (
         "crop_id" INTEGER NOT NULL,
         "crop_cat_id" INTEGER NOT NULL,
-        "crop" VARCHAR(255),
-        "crop_code" VARCHAR(255),
-        "common_crop" VARCHAR(255),
-        "date_created" VARCHAR(255),
-        "created_by" VARCHAR(255),
-        PRIMARY KEY("crop_id" AUTOINCREMENT)
+        "crop" VARCHAR(255) NOT NULL,
+        "crop_code" VARCHAR(255) NOT NULL,
+        "common_crop" BOOLEAN,
+        "date_created" DATETIME NOT NULL,
+        "created_by" VARCHAR(255) NOT NULL,
+        PRIMARY KEY("crop_id")
       );
     """);
+  }
+
+  Future<int> create({
+    required int cropCatId,
+    required String crop,
+    required String cropCode,
+    required bool commonCrop,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (crop_cat_id, crop, crop_code, common_crop, date_created, created_by) 
+      VALUES (?, ?, ?, ?, ?, ?)
+    ''', [
+      cropCatId,
+      crop,
+      cropCode,
+      commonCrop ? 1 : 0,
+      DateTime.now().toLocal().toIso8601String(), // Use current datetime
+      createdBy,
+    ]);
   }
 
   Future<List<Crop>> fetchAll() async {
@@ -30,12 +51,14 @@ class CropDB {
     return crops.map((e) => Crop.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<Crop> fetchById(int id) async {
+  Future<Crop> fetchByCropId(int cropId) async {
     final database = await DatabaseService().database;
     final crop = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE id = ?
-    ''', [id]);
+      SELECT * FROM $tableName WHERE crop_id = ?
+    ''', [cropId]);
 
     return Crop.fromSqfliteDatabase(crop.first);
   }
+
+  // Add more database methods as needed
 }

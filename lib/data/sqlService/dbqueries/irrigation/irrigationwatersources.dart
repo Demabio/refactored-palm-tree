@@ -18,6 +18,23 @@ class IrrigationWaterSourceDB {
     """);
   }
 
+  Future<int> create({
+    required int id,
+    required String irrigationWaterSource,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (irrigation_water_source_id, irrigation_water_source, date_created, created_by) 
+      VALUES (?, ?, ?, ?)
+    ''', [
+      id,
+      irrigationWaterSource,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<List<IrrigationWaterSource>> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 

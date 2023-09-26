@@ -18,6 +18,23 @@ class CropPlantingMotiveDB {
     """);
   }
 
+  Future<int> create({
+    required int id,
+    required String cropMotive,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (crop_motive_id, crop_motive, date_created, created_by) 
+      VALUES (?, ?, ?, ?)
+    ''', [
+      id,
+      cropMotive,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<List<CropPlantingMotive>> fetchAll() async {
     final database = await DatabaseService().database;
     final motives = await database.rawQuery(''' 
@@ -37,4 +54,6 @@ class CropPlantingMotiveDB {
 
     return CropPlantingMotive.fromSqfliteDatabase(motive.first);
   }
+
+  // Add more database methods as needed
 }

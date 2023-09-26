@@ -27,6 +27,23 @@ class CropWaterSourceDB {
     return sources.map((e) => CropWaterSource.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<int> create({
+    required int id,
+    required String areaUnit,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (area_unit_id, area_unit, date_created, created_by) 
+      VALUES (?, ?, ?, ?)
+    ''', [
+      id,
+      areaUnit,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<CropWaterSource> fetchByWaterSourceId(int waterSourceId) async {
     final database = await DatabaseService().database;
     final source = await database.rawQuery('''

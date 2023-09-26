@@ -19,6 +19,25 @@ class EducationLevelDB {
     """);
   }
 
+  Future<int> create({
+    required int id,
+    required String educationLevel,
+    String? description,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (education_level_id, education_level, description, date_created, created_by) 
+      VALUES (?, ?, ?, ?, ?)
+    ''', [
+      id,
+      educationLevel,
+      description,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<List<EducationLevel>> fetchAll() async {
     final database = await DatabaseService().database;
     final levels = await database.rawQuery(''' 

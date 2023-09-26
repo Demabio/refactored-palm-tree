@@ -17,6 +17,22 @@ class CropSystemDB {
     """);
   }
 
+  Future<int> create({
+    required int id,
+    required String croppingSystem,
+    String? description,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (crop_system_id, cropping_system, description) 
+      VALUES (?, ?, ?)
+    ''', [
+      id,
+      croppingSystem,
+      description,
+    ]);
+  }
+
   Future<List<CropSystem>> fetchAll() async {
     final database = await DatabaseService().database;
     final systems = await database.rawQuery(''' 
@@ -34,4 +50,6 @@ class CropSystemDB {
 
     return CropSystem.fromSqfliteDatabase(system.first);
   }
+
+  // Add more database methods as needed
 }

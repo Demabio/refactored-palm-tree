@@ -27,6 +27,23 @@ class EnterprisesDB {
     return enterprises.map((e) => Enterprise.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<int> create({
+    required int id,
+    required String enterpriseDesc,
+    required String createdBy,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (enterprise_id, enterprise_desc, date_created, created_by) 
+      VALUES (?, ?, ?, ?)
+    ''', [
+      id,
+      enterpriseDesc,
+      DateTime.now().toLocal().toIso8601String(),
+      createdBy,
+    ]);
+  }
+
   Future<Enterprise> fetchByEnterpriseId(int enterpriseId) async {
     final database = await DatabaseService().database;
     final enterprise = await database.rawQuery('''

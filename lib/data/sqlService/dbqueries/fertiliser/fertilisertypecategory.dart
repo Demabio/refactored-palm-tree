@@ -17,6 +17,22 @@ class FertiliserTypeCategoriesDB {
     """);
   }
 
+  Future<int> create({
+    required int id,
+    required String fertiliserCategory,
+    String? description,
+  }) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (fertiliser_category_id, fertiliser_category, description) 
+      VALUES (?, ?, ?)
+    ''', [
+      id,
+      fertiliserCategory,
+      description,
+    ]);
+  }
+
   Future<List<FertilizerTypeCategory>> fetchAll() async {
     final database = await DatabaseService().database;
     final categories = await database.rawQuery(''' 
