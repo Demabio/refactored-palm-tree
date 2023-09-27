@@ -45,7 +45,6 @@ class ApiClient {
     Map<String, String> headers = const {},
     String requestData = "",
   }) async {
-    ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
       var response = await _dio.post(
@@ -53,7 +52,6 @@ class ApiClient {
         data: jsonEncode(<String, String>{'query': requestData}),
         options: Options(headers: headers),
       );
-      ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
         return response;
       } else {
@@ -62,7 +60,6 @@ class ApiClient {
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {
-      ProgressDialogUtils.hideProgressDialog();
       Logger.log(
         error,
         stackTrace: stackTrace,

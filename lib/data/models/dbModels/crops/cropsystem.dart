@@ -15,4 +15,15 @@ class CropSystem {
         croppingSystem: map['cropping_system'] ?? '',
         description: map['description'] ?? '',
       );
+  static List<CropSystem> parseCropSystems(Map<String, dynamic> json) {
+    final cropSystemsList = json['data']['getallCropSystems'] as List<dynamic>;
+
+    return cropSystemsList
+        .map((cropSystemData) => CropSystem(
+              cropSystemId: cropSystemData['cropSystemId'] ?? 0,
+              croppingSystem: cropSystemData['croppingSystem'] ?? '',
+              description: cropSystemData['description'] ?? '',
+            ))
+        .toList();
+  }
 }

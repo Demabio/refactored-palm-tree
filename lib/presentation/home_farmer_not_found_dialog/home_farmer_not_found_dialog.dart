@@ -22,6 +22,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
     );
   }
 
+//theme.colorScheme.primary
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -40,58 +41,123 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
           children: [
             SizedBox(height: 20.v),
             Text(
-              "msg_farmer_id_xxxxxxxx".tr,
+              "No Local Database found",
               style: CustomTextStyles.bodyLargePrimary_2,
             ),
             SizedBox(height: 9.v),
-            SizedBox(
-              width: 161.h,
-              child: Text(
-                "msg_farmer_does_not".tr,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
-                  height: 1.57,
+            Visibility(
+              visible: !state.visibility,
+              child: SizedBox(
+                width: 161.h,
+                child: Text(
+                  "Download Data?",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+                    height: 1.57,
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              width: 161.h,
-              child: Text(
-                "Count ${state.count}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
-                  height: 1.57,
+            SizedBox(height: 9.v),
+            Visibility(
+              visible: state.visibility,
+              child: SizedBox(
+                width: 250.h,
+                height: 30.v,
+                child: LinearProgressIndicator(
+                  borderRadius: BorderRadius.circular(10),
+
+                  semanticsLabel: "Progress",
+                  semanticsValue: state.percentagedone.toString(),
+                  value: state
+                      .linebarvalue, // The value should be between 0.0 and 1.0, where 0.0 is 0% and 1.0 is 100%.
+                  backgroundColor:
+                      Colors.grey, // Background color of the progress bar.
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      theme.colorScheme.primary), // Color of the progress bar.
+                ),
+              ),
+            ),
+            SizedBox(height: 9.v),
+            Visibility(
+              visible: state.visibility,
+              child: SizedBox(
+                width: 30.v,
+                height: 30.v,
+                child: CircularProgressIndicator.adaptive(
+                  strokeWidth: 4,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    theme.colorScheme.primary,
+                  ),
+                ),
+              ),
+            ),
+            Visibility(visible: state.visibility, child: SizedBox(height: 9.v)),
+            Visibility(
+              visible: state.visibility,
+              child: SizedBox(
+                width: 161.h,
+                child: Text(
+                  "${state.percentagedone}%",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyles.bodyLargePrimary_2,
+                ),
+              ),
+            ),
+            Visibility(
+              visible: state.visibility,
+              child: SizedBox(
+                width: 161.h,
+                child: Text(
+                  "Count ${state.count}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+                    height: 1.57,
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 21.v),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: CustomOutlinedButton(
-                    text: "lbl_no".tr,
-                    margin: EdgeInsets.only(right: 4.h),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: CustomElevatedButton(
-                    text: "lbl_yes".tr,
-                    margin: EdgeInsets.only(left: 4.h),
-                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                    buttonTextStyle: CustomTextStyles.bodyLarge16,
-                    onTap: () => onTapadd(context, state),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 50.v,
+              child: CustomElevatedButton(
+                text: "Download",
+                margin: EdgeInsets.only(left: 4.h),
+                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                buttonTextStyle: CustomTextStyles.bodyLarge16,
+                onTap: () => onTapDonwload(context, state),
+                isDisabled: state.visibility,
+              ),
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Expanded(
+            //       child: CustomOutlinedButton(
+            //         text: "lbl_no".tr,
+            //         margin: EdgeInsets.only(right: 4.h),
+            //         onTap: () {
+            //           Navigator.pop(context);
+            //         },
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: CustomElevatedButton(
+            //         text: "lbl_yes".tr,
+            //         margin: EdgeInsets.only(left: 4.h),
+            //         buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+            //         buttonTextStyle: CustomTextStyles.bodyLarge16,
+            //         onTap: () => onTapadd(context, state),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       );
@@ -101,5 +167,9 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   onTapadd(BuildContext context, HomeFarmerNotFoundState state) {
     context.read<HomeFarmerNotFoundBloc>().add(FetchGetOrdersEvent());
     print(state.count);
+  }
+
+  onTapDonwload(BuildContext context, HomeFarmerNotFoundState state) {
+    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataEvent());
   }
 }

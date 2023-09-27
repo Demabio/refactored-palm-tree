@@ -21,3 +21,10 @@ class FetchGetOrdersEvent extends HomeFarmerNotFoundEvent {
   @override
   List<Object?> get props => [];
 }
+
+class InnitDBwithDataEvent extends HomeFarmerNotFoundEvent {
+  InnitDBwithDataEvent();
+
+  @override
+  List<Object?> get props => [];
+}

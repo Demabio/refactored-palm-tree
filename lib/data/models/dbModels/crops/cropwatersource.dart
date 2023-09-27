@@ -18,4 +18,18 @@ class CropWaterSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<CropWaterSource> parseCropWaterSources(
+      Map<String, dynamic> json) {
+    final waterSourcesList =
+        json['data']['getallCropWaterSources'] as List<dynamic>;
+
+    return waterSourcesList
+        .map((waterSourceData) => CropWaterSource(
+              waterSourceId: waterSourceData['waterSourceId'] ?? 0,
+              waterSource: waterSourceData['waterSource'] ?? '',
+              createdBy: waterSourceData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(waterSourceData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

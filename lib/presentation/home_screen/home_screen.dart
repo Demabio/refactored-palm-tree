@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
-          onTapSearchfarmer(context);
+          dbNotFound(context);
         }, onSuccess: () {
           dbNotFound(context);
         }));

@@ -18,4 +18,16 @@ class CropAreaUnit {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<CropAreaUnit> parseCropAreaUnits(Map<String, dynamic> json) {
+    final areaUnitsList = json['data']['getallCropAreaUnits'] as List<dynamic>;
+
+    return areaUnitsList
+        .map((areaUnitData) => CropAreaUnit(
+              areaUnitId: areaUnitData['areaUnitId'] ?? 0,
+              areaUnit: areaUnitData['areaUnit'] ?? '',
+              createdBy: areaUnitData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(areaUnitData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

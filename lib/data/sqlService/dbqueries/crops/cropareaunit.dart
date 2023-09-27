@@ -44,6 +44,29 @@ class CropAreaUnitDB {
     ]);
   }
 
+  Future<int> insertAreaUnits(List<CropAreaUnit> areaUnits) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var unit in areaUnits) {
+        batch.rawInsert('''
+        INSERT INTO $tableName (area_unit_id, area_unit, date_created, created_by) 
+        VALUES (?, ?, ?, ?)
+      ''', [
+          unit.areaUnitId,
+          unit.areaUnit,
+          unit.dateCreated.toLocal().toIso8601String(),
+          unit.createdBy,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<CropAreaUnit> fetchByAreaUnitId(int areaUnitId) async {
     final database = await DatabaseService().database;
     final unit = await database.rawQuery('''

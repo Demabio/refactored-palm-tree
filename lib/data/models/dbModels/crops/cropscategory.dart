@@ -21,4 +21,20 @@ class CropCategory {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by'] ?? 0,
       );
+
+  static List<CropCategory> parseCropCategories(Map<String, dynamic> json) {
+    final cropCategoriesList =
+        json['data']['getallCropCategories'] as List<dynamic>;
+
+    return cropCategoriesList
+        .map((categoryData) => CropCategory(
+              cropCategoryId: categoryData['cropCatId'] ?? 0,
+              cropCategory: categoryData['cropCategory'] ?? '',
+              cropCategoryCode:
+                  categoryData['cropCategoryCode']?.toString() ?? '',
+              dateCreated: DateTime.parse(categoryData['dateCreated'] ?? ''),
+              createdBy: categoryData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

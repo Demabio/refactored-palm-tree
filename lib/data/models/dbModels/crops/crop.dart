@@ -40,7 +40,7 @@ class Crop {
     );
   }
   static List<Crop> fromJsonList(Map<String, dynamic> json) {
-    final cropList = json['data']['getallCropsDapper'] as List<dynamic>;
+    final cropList = json['data']['getallCrops'] as List<dynamic>;
 
     return cropList
         .map((cropData) => Crop(
