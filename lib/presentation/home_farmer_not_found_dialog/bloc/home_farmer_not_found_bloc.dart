@@ -11,10 +11,17 @@ class HomeFarmerNotFoundBloc
   HomeFarmerNotFoundBloc(HomeFarmerNotFoundState initialState)
       : super(initialState) {
     on<HomeFarmerNotFoundInitialEvent>(_onInitialize);
+    on<FetchGetOrdersEvent>(_addCount);
   }
 
   _onInitialize(
     HomeFarmerNotFoundInitialEvent event,
     Emitter<HomeFarmerNotFoundState> emit,
   ) async {}
+
+  Future<void> _addCount(
+      FetchGetOrdersEvent event, Emitter<HomeFarmerNotFoundState> emit) async {
+    final updatedState = state.copyWith(count: state.count + 1);
+    emit(updatedState);
+  }
 }

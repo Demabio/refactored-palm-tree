@@ -14,3 +14,10 @@ class HomeFarmerNotFoundInitialEvent extends HomeFarmerNotFoundEvent {
   @override
   List<Object?> get props => [];
 }
+
+class FetchGetOrdersEvent extends HomeFarmerNotFoundEvent {
+  FetchGetOrdersEvent();
+
+  @override
+  List<Object?> get props => [];
+}

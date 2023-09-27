@@ -26,59 +26,80 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return Container(
-      width: 330.h,
-      padding: EdgeInsets.all(16.h),
-      decoration: AppDecoration.fillWhiteA.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(height: 20.v),
-          Text(
-            "msg_farmer_id_xxxxxxxx".tr,
-            style: CustomTextStyles.bodyLargePrimary_2,
-          ),
-          SizedBox(height: 9.v),
-          SizedBox(
-            width: 161.h,
-            child: Text(
-              "msg_farmer_does_not".tr,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
-                height: 1.57,
+    return BlocBuilder<HomeFarmerNotFoundBloc, HomeFarmerNotFoundState>(
+        builder: (context, state) {
+      return Container(
+        width: 330.h,
+        padding: EdgeInsets.all(16.h),
+        decoration: AppDecoration.fillWhiteA.copyWith(
+          borderRadius: BorderRadiusStyle.roundedBorder10,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(height: 20.v),
+            Text(
+              "msg_farmer_id_xxxxxxxx".tr,
+              style: CustomTextStyles.bodyLargePrimary_2,
+            ),
+            SizedBox(height: 9.v),
+            SizedBox(
+              width: 161.h,
+              child: Text(
+                "msg_farmer_does_not".tr,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+                  height: 1.57,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 21.v),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomOutlinedButton(
-                  text: "lbl_no".tr,
-                  margin: EdgeInsets.only(right: 4.h),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+            SizedBox(
+              width: 161.h,
+              child: Text(
+                "Count ${state.count}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+                  height: 1.57,
                 ),
               ),
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "lbl_yes".tr,
-                  margin: EdgeInsets.only(left: 4.h),
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
+            ),
+            SizedBox(height: 21.v),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: CustomOutlinedButton(
+                    text: "lbl_no".tr,
+                    margin: EdgeInsets.only(right: 4.h),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: "lbl_yes".tr,
+                    margin: EdgeInsets.only(left: 4.h),
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () => onTapadd(context, state),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  onTapadd(BuildContext context, HomeFarmerNotFoundState state) {
+    context.read<HomeFarmerNotFoundBloc>().add(FetchGetOrdersEvent());
+    print(state.count);
   }
 }
