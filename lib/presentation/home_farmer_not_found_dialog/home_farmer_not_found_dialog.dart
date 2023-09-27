@@ -62,6 +62,9 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 child: CustomOutlinedButton(
                   text: "lbl_no".tr,
                   margin: EdgeInsets.only(right: 4.h),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               Expanded(

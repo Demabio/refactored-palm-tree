@@ -65,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                               selector: (state) => state.userNameController,
                               builder: (context, userNameController) {
                                 return CustomTextFormField(
+                                    autofocus: false,
                                     focusNode: _firstTextFieldFocus,
                                     controller: userNameController,
                                     margin: EdgeInsets.only(
@@ -84,6 +85,7 @@ class LoginScreen extends StatelessWidget {
                           BlocBuilder<LoginBloc, LoginState>(
                               builder: (context, state) {
                             return CustomTextFormField(
+                                autofocus: false,
                                 controller: state.passwordController,
                                 focusNode: _secondTextFieldFocus,
                                 margin: EdgeInsets.only(

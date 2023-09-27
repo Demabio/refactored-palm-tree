@@ -14,3 +14,13 @@ class HomeInitialEvent extends HomeEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DBCheckEvent extends HomeEvent {
+  DBCheckEvent({this.onError, this.onSuccess});
+  Function? onSuccess;
+
+  Function? onError;
+
+  @override
+  List<Object?> get props => [onSuccess, onError];
+}

@@ -12,6 +12,7 @@ class DBUtils {
   DBUtils._internal();
 
   static final DBUtils _dbutils = DBUtils._internal();
+
   bool doesFileExist(String filePath) {
     File file = File(filePath);
     return file.existsSync();
