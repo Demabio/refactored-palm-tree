@@ -21,4 +21,18 @@ class MaritalStatus {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<MaritalStatus> parseMaritalStatus(Map<String, dynamic> json) {
+    final maritalStatusList =
+        json['data']['getallMaritalStatus'] as List<dynamic>;
+
+    return maritalStatusList
+        .map((statusData) => MaritalStatus(
+              maritalStatusId: statusData['maritalStatusId'] ?? 0,
+              maritalStatus: statusData['maritalStatus'] ?? '',
+              description: statusData['description'] ?? '',
+              dateCreated: DateTime.parse(statusData['dateCreated'] ?? ''),
+              createdBy: statusData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

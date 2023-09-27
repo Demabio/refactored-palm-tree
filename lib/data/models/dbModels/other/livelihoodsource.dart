@@ -21,4 +21,19 @@ class LivelihoodSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<LivelihoodSource> parseLivelihoodSources(
+      Map<String, dynamic> json) {
+    final livelihoodSourcesList =
+        json['data']['getallLivelihoodSource'] as List<dynamic>;
+
+    return livelihoodSourcesList
+        .map((sourceData) => LivelihoodSource(
+              livelihoodSourceId: sourceData['livelihoodSourceId'] ?? 0,
+              livelihoodSource: sourceData['livelihoodSource'] ?? '',
+              description: sourceData['desc'] ?? '',
+              dateCreated: DateTime.parse(sourceData['dateCreated'] ?? ''),
+              createdBy: sourceData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

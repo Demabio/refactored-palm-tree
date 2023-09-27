@@ -18,4 +18,16 @@ class Enterprise {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<Enterprise> parseEnterprises(Map<String, dynamic> json) {
+    final enterprisesList = json['data']['getallEnterprises'] as List<dynamic>;
+
+    return enterprisesList
+        .map((enterpriseData) => Enterprise(
+              enterpriseId: enterpriseData['enterpriseId'] ?? 0,
+              enterpriseDesc: enterpriseData['enterpriseDesc'] ?? '',
+              createdBy: enterpriseData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(enterpriseData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

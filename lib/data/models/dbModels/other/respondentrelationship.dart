@@ -22,4 +22,20 @@ class RespondentRelationship {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<RespondentRelationship> parseRespondentRelationships(
+      Map<String, dynamic> json) {
+    final respondentRelationshipsList =
+        json['data']['getallRespondentRelationships'] as List<dynamic>;
+
+    return respondentRelationshipsList
+        .map((relationshipData) => RespondentRelationship(
+              respondendRlshpId: relationshipData['respondendRlshpId'] ?? 0,
+              rlshpToFarmer: relationshipData['rlshpToFarmer'] ?? '',
+              description: relationshipData['description'] ?? '',
+              dateCreated:
+                  DateTime.parse(relationshipData['dateCreated'] ?? ''),
+              createdBy: relationshipData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

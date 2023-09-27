@@ -28,6 +28,7 @@ class HomeFarmerNotFoundBloc
     on<HomeFarmerNotFoundInitialEvent>(_onInitialize);
     on<FetchGetOrdersEvent>(_addCount);
     on<InnitDBwithDataEvent>(_downloadData);
+    on<InnitDBwithDataFailedEvent>(_dbDownloadFailed);
   }
   DBUtils _dbUtils = DBUtils();
   final _repository = Repository();
@@ -47,6 +48,12 @@ class HomeFarmerNotFoundBloc
     emit(updatedState);
   }
 
+  Future<void> _dbDownloadFailed(InnitDBwithDataFailedEvent event,
+      Emitter<HomeFarmerNotFoundState> emit) async {
+    final updatedState = state.copyWith(failed: false);
+    emit(updatedState);
+  }
+
   Future<void> _downloadData(
     InnitDBwithDataEvent event,
     Emitter<HomeFarmerNotFoundState> emit,
@@ -55,7 +62,10 @@ class HomeFarmerNotFoundBloc
     int appraiser = 0;
     double currentval = 0;
     double currentpercentage = 0;
-    final updatedState = state.copyWith(visibility: true);
+    final updatedState = state.copyWith(
+      visibility: true,
+      failed: false,
+    );
     emit(updatedState);
     _dbUtils.deleteDatabaseIfExists(
         join(PrefUtils().getDBPath(), 'localdevice.db'));

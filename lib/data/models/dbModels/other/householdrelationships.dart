@@ -21,4 +21,20 @@ class HouseholdRelationship {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<HouseholdRelationship> parseHouseholdRelationships(
+      Map<String, dynamic> json) {
+    final householdRelationshipsList =
+        json['data']['getallHouseholdRelationship'] as List<dynamic>;
+
+    return householdRelationshipsList
+        .map((relationshipData) => HouseholdRelationship(
+              hhRlshpId: relationshipData['hhRlshpId'] ?? 0,
+              rlshpToHead: relationshipData['rlshpToHead'] ?? '',
+              description: relationshipData['description'] ?? '',
+              dateCreated:
+                  DateTime.parse(relationshipData['dateCreated'] ?? ''),
+              createdBy: relationshipData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

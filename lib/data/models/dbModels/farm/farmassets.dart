@@ -26,4 +26,19 @@ class FarmAsset {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FarmAsset> parseFarmAssets(Map<String, dynamic> json) {
+    final farmAssetsList = json['data']['getallFarmAssets'] as List<dynamic>;
+
+    return farmAssetsList
+        .map((assetData) => FarmAsset(
+              farmAssetId: assetData['farmAssetId'] ?? 0,
+              assetTypeId: assetData['assetTypeId'] ?? 0,
+              asset: assetData['asset'] ?? '',
+              assetCode: assetData['assetCode'] ?? '',
+              description: assetData['description'] ?? '',
+              createdBy: assetData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(assetData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

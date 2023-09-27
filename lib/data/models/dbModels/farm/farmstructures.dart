@@ -21,4 +21,18 @@ class FarmStructure {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FarmStructure> parseFarmStructures(Map<String, dynamic> json) {
+    final farmStructuresList =
+        json['data']['getallFarmStructures'] as List<dynamic>;
+
+    return farmStructuresList
+        .map((structureData) => FarmStructure(
+              farmStructureId: structureData['farmStructureId'] ?? 0,
+              structureName: structureData['structureName'] ?? '',
+              description: structureData['description'] ?? '',
+              createdBy: structureData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(structureData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

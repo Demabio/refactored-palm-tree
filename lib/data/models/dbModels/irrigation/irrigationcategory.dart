@@ -18,4 +18,18 @@ class IrrigationCategory {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<IrrigationCategory> parseIrrigationCategories(
+      Map<String, dynamic> json) {
+    final irrigationCategoriesList =
+        json['data']['getallIrrigationCategories'] as List<dynamic>;
+
+    return irrigationCategoriesList
+        .map((categoryData) => IrrigationCategory(
+              irrigationCategoryId: categoryData['irrigationCategoryId'] ?? 0,
+              irrigationCategory: categoryData['irrigationCategory'] ?? '',
+              createdBy: categoryData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(categoryData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

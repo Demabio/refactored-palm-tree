@@ -18,4 +18,17 @@ class FertilizerType {
         fertiliserType: map['fertiliser_type'] ?? '',
         description: map['description'],
       );
+  static List<FertilizerType> parseFertiliserTypes(Map<String, dynamic> json) {
+    final fertiliserTypesList =
+        json['data']['getallFertiliserTypes'] as List<dynamic>;
+
+    return fertiliserTypesList
+        .map((typeData) => FertilizerType(
+              fertiliserTypeId: typeData['fertiliserTypeId'] ?? 0,
+              fertiliserCategoryId: typeData['fertiliserCategoryId'] ?? 0,
+              fertiliserType: typeData['fertiliserType'] ?? '',
+              description: typeData['description'] ?? '',
+            ))
+        .toList();
+  }
 }

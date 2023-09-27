@@ -21,4 +21,18 @@ class FarmerStatus {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FarmerStatus> parseFarmerStatus(Map<String, dynamic> json) {
+    final farmerStatusList =
+        json['data']['getallFarmerStatus'] as List<dynamic>;
+
+    return farmerStatusList
+        .map((statusData) => FarmerStatus(
+              farmerStatusId: statusData['farmerStatusId'] ?? 0,
+              farmerStatus: statusData['farmerStatus'] ?? '',
+              description: statusData['description'] ?? '',
+              createdBy: statusData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(statusData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

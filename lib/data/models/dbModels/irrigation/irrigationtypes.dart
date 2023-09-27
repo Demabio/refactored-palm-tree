@@ -18,4 +18,18 @@ class IrrigationType {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+
+  static List<IrrigationType> parseIrrigationTypes(Map<String, dynamic> json) {
+    final irrigationTypesList =
+        json['data']['getallIrrigationTypes'] as List<dynamic>;
+
+    return irrigationTypesList
+        .map((typeData) => IrrigationType(
+              irrigationTypeId: typeData['irrigationTypeId'] ?? 0,
+              irrigationType: typeData['irrigationType'] ?? '',
+              createdBy: typeData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(typeData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

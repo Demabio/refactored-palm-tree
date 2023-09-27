@@ -24,4 +24,20 @@ class FishCategory {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+
+  static List<FishCategory> parseFishCategories(Map<String, dynamic> json) {
+    final fishCategoriesList =
+        json['data']['getallFishCategories'] as List<dynamic>;
+
+    return fishCategoriesList
+        .map((categoryData) => FishCategory(
+              fishCategoryId: categoryData['fishCategoryId'] ?? 0,
+              fishCategory: categoryData['fishCategory'] ?? '',
+              fishCategoryCode: categoryData['fishCategoryCode'] ?? '',
+              description: categoryData['description'] ?? '',
+              createdBy: categoryData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(categoryData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

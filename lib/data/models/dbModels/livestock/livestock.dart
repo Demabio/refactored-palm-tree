@@ -26,4 +26,18 @@ class Livestock {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<Livestock> parseLivestocks(Map<String, dynamic> json) {
+    final livestockList = json['data']['getAllLivestocks'] as List<dynamic>;
+
+    return livestockList
+        .map((livestockData) => Livestock(
+              livestockId: livestockData['livestockId'] ?? 0,
+              livestock: livestockData['livestock'] ?? '',
+              livestockCode: livestockData['livestockCode'] ?? '',
+              livestockSubCatId: livestockData['livestockSubCatId'] ?? 0,
+              commonLivestock: livestockData['commonLivestock'] ?? false,
+              dateCreated: DateTime.parse(livestockData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

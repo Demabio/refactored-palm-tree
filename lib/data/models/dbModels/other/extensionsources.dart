@@ -15,4 +15,18 @@ class ExtensionSource {
         sourceType: map['source_type'] ?? '',
         description: map['description'],
       );
+
+  static List<ExtensionSource> parseExtensionSources(
+      Map<String, dynamic> json) {
+    final extensionSourcesList =
+        json['data']['getallExtensionSources'] as List<dynamic>;
+
+    return extensionSourcesList
+        .map((sourceData) => ExtensionSource(
+              extensionSourceId: sourceData['extensionSourceId'] ?? 0,
+              sourceType: sourceData['sourceType'] ?? '',
+              description: sourceData['description'] ?? '',
+            ))
+        .toList();
+  }
 }

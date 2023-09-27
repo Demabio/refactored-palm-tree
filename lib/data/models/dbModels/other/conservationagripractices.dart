@@ -18,4 +18,17 @@ class AgriPractice {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<AgriPractice> parseAgriPractices(Map<String, dynamic> json) {
+    final agriPracticesList =
+        json['data']['getallAgriPractice'] as List<dynamic>;
+
+    return agriPracticesList
+        .map((practiceData) => AgriPractice(
+              agriPracticeId: practiceData['agriPracticeId'] ?? 0,
+              agriPractice: practiceData['agriPractice'] ?? '',
+              dateCreated: DateTime.parse(practiceData['dateCreated'] ?? ''),
+              createdBy: practiceData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

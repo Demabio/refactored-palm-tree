@@ -18,4 +18,18 @@ class IrrigationAgency {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<IrrigationAgency> parseIrrigationAgencies(
+      Map<String, dynamic> json) {
+    final irrigationAgenciesList =
+        json['data']['getallIrrigationAgencies'] as List<dynamic>;
+
+    return irrigationAgenciesList
+        .map((agencyData) => IrrigationAgency(
+              irrigationAgencyId: agencyData['irrigationAgencyId'] ?? 0,
+              agencyName: agencyData['agencyName'] ?? '',
+              createdBy: agencyData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(agencyData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

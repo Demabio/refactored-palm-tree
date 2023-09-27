@@ -21,4 +21,18 @@ class IncomeSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<IncomeSource> parseIncomeSources(Map<String, dynamic> json) {
+    final incomeSourcesList =
+        json['data']['getallIncomeSource'] as List<dynamic>;
+
+    return incomeSourcesList
+        .map((sourceData) => IncomeSource(
+              incomeSourceId: sourceData['incomeSourceId'] ?? 0,
+              incomeSource: sourceData['incomeSource'] ?? '',
+              description: sourceData['description'] ?? '',
+              dateCreated: DateTime.parse(sourceData['dateCreated'] ?? ''),
+              createdBy: sourceData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

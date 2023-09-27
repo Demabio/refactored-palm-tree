@@ -15,4 +15,16 @@ class PesticideType {
         pesticideType: map['pesticide_type'] ?? '',
         description: map['description'],
       );
+  static List<PesticideType> parsePesticideTypes(Map<String, dynamic> json) {
+    final pesticideTypesList =
+        json['data']['getallPesticideTypes'] as List<dynamic>;
+
+    return pesticideTypesList
+        .map((typeData) => PesticideType(
+              pesticideTypeId: typeData['pesticideTypeId'] ?? 0,
+              pesticideType: typeData['pesticideType'] ?? '',
+              description: typeData['description'] ?? '',
+            ))
+        .toList();
+  }
 }

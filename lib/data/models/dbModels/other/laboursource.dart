@@ -21,4 +21,18 @@ class LabourSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<LabourSource> parseLabourSources(Map<String, dynamic> json) {
+    final labourSourcesList =
+        json['data']['getallLabourSource'] as List<dynamic>;
+
+    return labourSourcesList
+        .map((sourceData) => LabourSource(
+              labourSourceId: sourceData['labourSourceId'] ?? 0,
+              labourSource: sourceData['labourSource'] ?? '',
+              description: sourceData['desc'] ?? '',
+              dateCreated: DateTime.parse(sourceData['dateCreated'] ?? ''),
+              createdBy: sourceData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

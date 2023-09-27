@@ -21,4 +21,20 @@ class FishProductionLevel {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FishProductionLevel> parseFishProductionLevels(
+      Map<String, dynamic> json) {
+    final fishProductionLevelsList =
+        json['data']['getallFishProductionLevels'] as List<dynamic>;
+
+    return fishProductionLevelsList
+        .map((productionLevelData) => FishProductionLevel(
+              productionLevelId: productionLevelData['productionLevelId'] ?? 0,
+              productionLevel: productionLevelData['productionLevel'] ?? '',
+              description: productionLevelData['description'] ?? '',
+              createdBy: productionLevelData['createdBy'] ?? 0,
+              dateCreated:
+                  DateTime.parse(productionLevelData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

@@ -21,4 +21,17 @@ class FarmerType {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FarmerType> parseFarmerTypes(Map<String, dynamic> json) {
+    final farmerTypesList = json['data']['getallFarmerType'] as List<dynamic>;
+
+    return farmerTypesList
+        .map((typeData) => FarmerType(
+              farmerTypeId: typeData['farmerTypeId'] ?? 0,
+              farmerType: typeData['farmerType'] ?? '',
+              description: typeData['description'] ?? '',
+              createdBy: typeData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(typeData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

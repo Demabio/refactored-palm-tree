@@ -18,4 +18,18 @@ class LivestockFeedType {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<LivestockFeedType> parseLivestockFeedTypes(
+      Map<String, dynamic> json) {
+    final livestockFeedTypesList =
+        json['data']['getAllLivestockFeedTypes'] as List<dynamic>;
+
+    return livestockFeedTypesList
+        .map((feedTypeData) => LivestockFeedType(
+              feedTypeId: feedTypeData['feedTypeId'] ?? 0,
+              feedType: feedTypeData['feedType'] ?? '',
+              createdBy: feedTypeData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(feedTypeData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

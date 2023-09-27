@@ -21,4 +21,18 @@ class AgriInfoSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<AgriInfoSource> parseAgriInfoSources(Map<String, dynamic> json) {
+    final agriInfoSourcesList =
+        json['data']['getallAgriInfoSource'] as List<dynamic>;
+
+    return agriInfoSourcesList
+        .map((sourceData) => AgriInfoSource(
+              agriInfoSourceId: sourceData['agriInfoSourceId'] ?? 0,
+              agriInfoSource: sourceData['agriInfoSource'] ?? '',
+              description: sourceData['desc'] ?? '',
+              dateCreated: DateTime.parse(sourceData['dateCreated'] ?? ''),
+              createdBy: sourceData['createdBy'] ?? 0,
+            ))
+        .toList();
+  }
 }

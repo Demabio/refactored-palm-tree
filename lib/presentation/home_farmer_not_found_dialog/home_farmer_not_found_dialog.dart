@@ -60,6 +60,21 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 ),
               ),
             ),
+            Visibility(
+              visible: state.failed,
+              child: SizedBox(
+                width: 161.h,
+                child: Text(
+                  "Download Failed, Retry?",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+                    height: 1.57,
+                  ),
+                ),
+              ),
+            ),
             SizedBox(height: 9.v),
             Visibility(
               visible: state.visibility,
@@ -132,7 +147,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                 buttonTextStyle: CustomTextStyles.bodyLarge16,
                 onTap: () => onTapDonwload(context, state),
-                isDisabled: state.visibility,
+                isDisabled: state.visibility || state.failed,
               ),
             ),
             // Row(
@@ -170,6 +185,17 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   }
 
   onTapDonwload(BuildContext context, HomeFarmerNotFoundState state) {
-    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataEvent());
+    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataEvent(
+          onSuccess: downloadComplete(context),
+          onFailed: downloadFailed(context),
+        ));
+  }
+
+  downloadComplete(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  downloadFailed(BuildContext context) {
+    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
   }
 }

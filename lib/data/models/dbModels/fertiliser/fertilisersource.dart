@@ -21,4 +21,20 @@ class FertilizerSource {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+
+  static List<FertilizerSource> parseFertiliserSources(
+      Map<String, dynamic> json) {
+    final fertiliserSourcesList =
+        json['data']['getallFertiliserSources'] as List<dynamic>;
+
+    return fertiliserSourcesList
+        .map((sourceData) => FertilizerSource(
+              fertSourceId: sourceData['fertSourceId'] ?? 0,
+              source: sourceData['source'] ?? '',
+              description: sourceData['description'] ?? '',
+              createdBy: sourceData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(sourceData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

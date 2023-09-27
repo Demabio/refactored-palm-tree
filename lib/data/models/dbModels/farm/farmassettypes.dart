@@ -18,4 +18,18 @@ class FarmAssetType {
         assetName: map['asset_name'] ?? '',
         description: map['description'],
       );
+
+  static List<FarmAssetType> parseFarmAssetTypes(Map<String, dynamic> json) {
+    final farmAssetTypesList =
+        json['data']['getallFarmAssetTypes'] as List<dynamic>;
+
+    return farmAssetTypesList
+        .map((assetTypeData) => FarmAssetType(
+              assetTypeId: assetTypeData['assetTypeId'] ?? 0,
+              asssetTypeCode: assetTypeData['asssetTypeCode'] ?? '',
+              assetName: assetTypeData['assetName'] ?? '',
+              description: assetTypeData['description'] ?? '',
+            ))
+        .toList();
+  }
 }

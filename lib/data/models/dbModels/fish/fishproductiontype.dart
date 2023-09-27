@@ -24,4 +24,23 @@ class FishProductionType {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+
+  static List<FishProductionType> parseFishProductionTypes(
+      Map<String, dynamic> json) {
+    final fishProductionTypesList =
+        json['data']['getallFishProductionTypes'] as List<dynamic>;
+
+    return fishProductionTypesList
+        .map((productionTypeData) => FishProductionType(
+              productionTypeId: productionTypeData['productionTypeId'] ?? 0,
+              fishProductionType:
+                  productionTypeData['fishProductionType'] ?? '',
+              unitOfMeasureId: productionTypeData['unitOfMeasureId'] ?? 0,
+              description: productionTypeData['description'] ?? '',
+              createdBy: productionTypeData['createdBy'] ?? 0,
+              dateCreated:
+                  DateTime.parse(productionTypeData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

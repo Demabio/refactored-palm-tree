@@ -23,7 +23,21 @@ class FetchGetOrdersEvent extends HomeFarmerNotFoundEvent {
 }
 
 class InnitDBwithDataEvent extends HomeFarmerNotFoundEvent {
-  InnitDBwithDataEvent();
+  InnitDBwithDataEvent({
+    this.onSuccess,
+    this.onFailed,
+  });
+  Function? onSuccess;
+  Function? onFailed;
+  @override
+  List<Object?> get props => [
+        onSuccess,
+        onFailed,
+      ];
+}
+
+class InnitDBwithDataFailedEvent extends HomeFarmerNotFoundEvent {
+  InnitDBwithDataFailedEvent();
 
   @override
   List<Object?> get props => [];

@@ -13,4 +13,16 @@ class FishProductionUnitOfMeasure {
         unitOfMeasureId: map['unit_of_measure_id']?.toInt() ?? 0,
         unitOfMeasure: map['unit_of_measure'] ?? '',
       );
+  static List<FishProductionUnitOfMeasure> parseFishProductionUOM(
+      Map<String, dynamic> json) {
+    final fishProductionUOMList =
+        json['data']['getallFishProductionUOM'] as List<dynamic>;
+
+    return fishProductionUOMList
+        .map((productionUOMData) => FishProductionUnitOfMeasure(
+              unitOfMeasureId: productionUOMData['unitOfMeasureId'] ?? 0,
+              unitOfMeasure: productionUOMData['unitOfMeasure'] ?? '',
+            ))
+        .toList();
+  }
 }

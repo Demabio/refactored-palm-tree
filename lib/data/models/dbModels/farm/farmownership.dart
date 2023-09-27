@@ -18,4 +18,18 @@ class FarmerFarmOwnership {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<FarmerFarmOwnership> parseFarmerFarmOwnerships(
+      Map<String, dynamic> json) {
+    final farmerFarmOwnershipsList =
+        json['data']['getallFarmerFarmOwnerships'] as List<dynamic>;
+
+    return farmerFarmOwnershipsList
+        .map((ownershipData) => FarmerFarmOwnership(
+              ownershipId: ownershipData['ownershipId'] ?? 0,
+              ownershipDesc: ownershipData['ownershipDesc'] ?? '',
+              createdBy: ownershipData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(ownershipData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

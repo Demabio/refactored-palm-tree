@@ -22,4 +22,20 @@ class LivestockFarmingSystem {
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by']?.toInt(),
       );
+  static List<LivestockFarmingSystem> parseLivestockFarmingSystems(
+      Map<String, dynamic> json) {
+    final livestockFarmingSystemsList =
+        json['data']['getAllLivestockFarmingSystems'] as List<dynamic>;
+
+    return livestockFarmingSystemsList
+        .map((systemData) => LivestockFarmingSystem(
+              livestockFarmsystemId: systemData['livestockFarmsystemId'] ?? 0,
+              livestockFarmsystem: systemData['livestockFarmsystem'] ?? '',
+              livestockFarmsystemCode:
+                  systemData['livestockFarmsystemCode'] ?? '',
+              createdBy: systemData['createdBy'] ?? 0,
+              dateCreated: DateTime.parse(systemData['dateCreated'] ?? ''),
+            ))
+        .toList();
+  }
 }

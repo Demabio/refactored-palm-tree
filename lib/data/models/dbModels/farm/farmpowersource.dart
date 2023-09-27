@@ -15,4 +15,18 @@ class FarmPowerSource {
         powerSource: map['power_source'] ?? '',
         description: map['description'],
       );
+
+  static List<FarmPowerSource> parseFarmPowerSources(
+      Map<String, dynamic> json) {
+    final farmPowerSourcesList =
+        json['data']['getallFarmPowerSources'] as List<dynamic>;
+
+    return farmPowerSourcesList
+        .map((powerSourceData) => FarmPowerSource(
+              powerSourceId: powerSourceData['powerSourceId'] ?? 0,
+              powerSource: powerSourceData['powerSource'] ?? '',
+              description: powerSourceData['description'] ?? '',
+            ))
+        .toList();
+  }
 }
