@@ -11,8 +11,8 @@ class IrrigationTypeDB {
       CREATE TABLE IF NOT EXISTS $tableName (
         "irrigation_type_id" INTEGER NOT NULL,
         "irrigation_type" VARCHAR(255) NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "date_created" DATETIME ,
+        "created_by" VARCHAR(255) ,
         PRIMARY KEY("irrigation_type_id")
       );
     """);

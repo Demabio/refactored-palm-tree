@@ -186,13 +186,17 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
 
   onTapDonwload(BuildContext context, HomeFarmerNotFoundState state) {
     context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataEvent(
-          onSuccess: downloadComplete(context),
-          onFailed: downloadFailed(context),
+          onSuccess: () {
+            downloadComplete(context);
+          },
+          onFailed: () {
+            downloadFailed(context);
+          },
         ));
   }
 
   downloadComplete(BuildContext context) {
-    Navigator.pop(context);
+    //   Navigator.pop(context);
   }
 
   downloadFailed(BuildContext context) {

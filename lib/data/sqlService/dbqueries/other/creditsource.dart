@@ -12,8 +12,8 @@ class CreditSourceDB {
         "credit_source_id" INTEGER NOT NULL,
         "credit_source" VARCHAR(255) NOT NULL,
         "description" TEXT,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "date_created" DATETIME,
+        "created_by" VARCHAR(255) ,
         PRIMARY KEY("credit_source_id")
       );
     """);

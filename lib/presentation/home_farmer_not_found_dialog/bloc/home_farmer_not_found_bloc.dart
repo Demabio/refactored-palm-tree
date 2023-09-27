@@ -4,6 +4,16 @@ import 'package:kiamis_app/data/models/dbModels/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropscategory.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropwatersource.dart';
+import 'package:kiamis_app/data/models/dbModels/fertiliser/fertilisertype.dart';
+import 'package:kiamis_app/data/models/dbModels/fertiliser/fertilisertypecategory.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishproductionlevels.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishproductionuom.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationtypes.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationwatersources.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockfarmingsystem.dart';
@@ -27,6 +37,17 @@ import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropscategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropwatersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertypecategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
@@ -58,6 +79,7 @@ import '../../../data/models/dbModels/farm/farmlandpractices.dart';
 import '../../../data/models/dbModels/farm/farmownership.dart';
 import '../../../data/models/dbModels/farm/farmpowersource.dart';
 import '../../../data/models/dbModels/farm/farmstructures.dart';
+import '../../../data/models/dbModels/fertiliser/fertilisersource.dart';
 import '../../../data/repository/repository.dart';
 import '../../../data/sqlService/dbqueries/crops/crop.dart';
 import '../../../data/sqlService/dbqueries/farm/farmassets.dart';
@@ -114,7 +136,7 @@ class HomeFarmerNotFoundBloc
     InnitDBwithDataEvent event,
     Emitter<HomeFarmerNotFoundState> emit,
   ) async {
-    int full = 4400;
+    int full = 8800;
     int appraiser = 0;
     double currentval = 0;
     double currentpercentage = 0;
@@ -134,13 +156,23 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCrops,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<Crop> crops = Crop.fromJsonList(value.data);
       Future<int> cropsuccess = CropDB().insertCrops(crops);
+      //List<Crop> crops1 = CropDB().fetchAll();
 
       cropsuccess.then((_) {
         if (_ == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -148,7 +180,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -160,6 +194,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCropSystems,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<CropSystem> cropsystem = CropSystem.parseCropSystems(value.data);
       Future<int> cropsuccess =
           CropSystemDB().insertCroppingSystems(cropsystem);
@@ -167,7 +210,7 @@ class HomeFarmerNotFoundBloc
       cropsuccess.then((_) {
         if (_ == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -175,7 +218,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -187,6 +232,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCropCategories,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<CropCategory> cropcategory =
           CropCategory.parseCropCategories(value.data);
       Future<int> cropsuccess =
@@ -195,7 +249,7 @@ class HomeFarmerNotFoundBloc
       cropsuccess.then((_) {
         if (_ == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -203,7 +257,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -215,6 +271,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCropAreaUnits,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<CropAreaUnit> cropareaunit =
           CropAreaUnit.parseCropAreaUnits(value.data);
       Future<int> cropsuccess = CropAreaUnitDB().insertAreaUnits(cropareaunit);
@@ -222,7 +287,7 @@ class HomeFarmerNotFoundBloc
       cropsuccess.then((_) {
         if (_ == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -230,7 +295,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -242,12 +309,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCropWaterSources,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<CropWaterSource> cropswater =
           CropWaterSource.parseCropWaterSources(value.data);
       await CropWaterSourceDB().insertWaterSources(cropswater).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -255,7 +331,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -270,11 +348,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getAllLivestocks,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<Livestock> data = Livestock.parseLivestocks(value.data);
       await LivestockDB().insertLivestocks(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -282,7 +369,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -295,12 +384,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getAllLivestockCategories,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LivestockCategory> data =
           LivestockCategory.parseLivestockCategories(value.data);
       await LivestockCategoryDB().insertLivestockCategories(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -308,7 +406,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -321,6 +421,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getAllLivestockSubcategories,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LivestockSubcategory> data =
           LivestockSubcategory.parseLivestockSubcategories(value.data);
       await LivestockSubcategoryDB()
@@ -328,7 +437,7 @@ class HomeFarmerNotFoundBloc
           .then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -336,7 +445,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -349,6 +460,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getAllLivestockFarmingSystems,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LivestockFarmingSystem> data =
           LivestockFarmingSystem.parseLivestockFarmingSystems(value.data);
       await LivestockFarmingSystemDB()
@@ -356,7 +476,7 @@ class HomeFarmerNotFoundBloc
           .then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -364,7 +484,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -377,12 +499,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getAllLivestockFeedTypes,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LivestockFeedType> data =
           LivestockFeedType.parseLivestockFeedTypes(value.data);
       await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -390,164 +521,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    //Farm
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
-      });
-    }).onError((error, stackTrace) {
-      print(error.toString());
-    });
-
-    await _repository.setupServicePost(
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      },
-      requestData: Graphql.getAllLivestockFeedTypes,
-    ).then((value) async {
-      List<LivestockFeedType> data =
-          LivestockFeedType.parseLivestockFeedTypes(value.data);
-      await LivestockFeedTypeDB().insertFeedTypes(data).then((value) {
-        if (value == 200) {
-          appraiser += 100;
-          currentval = appraiser / 4400;
-          currentpercentage = currentval * 100;
-          final updatedState = state.copyWith(
-            count: state.count + 1,
-            linebarvalue: currentval,
-            percentagedone: currentpercentage.toInt(),
-          );
-          emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -561,12 +537,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmAssetSources,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmAssetSource> data =
           FarmAssetSource.parseFarmAssetSources(value.data);
       await FarmAssetSourceDB().insertAssetSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -587,11 +572,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmAssetTypes,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmAssetType> data = FarmAssetType.parseFarmAssetTypes(value.data);
       await FarmAssetTypeDB().insertAssetTypes(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -599,7 +593,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -612,11 +608,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmAssets,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmAsset> data = FarmAsset.parseFarmAssets(value.data);
       await FarmAssetDB().insertFarmAssets(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -624,7 +629,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -637,12 +644,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmPowerSources,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmPowerSource> data =
           FarmPowerSource.parseFarmPowerSources(value.data);
       await FarmPowerSourceDB().insertPowerSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -650,7 +666,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -664,11 +682,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmStructures,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmStructure> data = FarmStructure.parseFarmStructures(value.data);
       await FarmStructureDB().insertFarmStructures(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -676,7 +703,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -689,12 +718,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmerFarmOwnerships,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmerFarmOwnership> data =
           FarmerFarmOwnership.parseFarmerFarmOwnerships(value.data);
       await FarmerFarmOwnershipDB().insertOwnerships(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -702,7 +740,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -715,11 +755,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmerStatus,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmerStatus> data = FarmerStatus.parseFarmerStatus(value.data);
       await FarmerStatusDB().insertFarmerStatuses(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -727,7 +776,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -740,11 +791,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmerType,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmerType> data = FarmerType.parseFarmerTypes(value.data);
       await FarmerTypeDB().insertFarmerTypes(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -752,7 +812,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -765,12 +827,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallFarmlandPractices,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<FarmlandPractice> data =
           FarmlandPractice.parseFarmlandPractices(value.data);
       await FarmlandPracticeDB().insertLandPractices(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -778,7 +849,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -792,12 +865,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallAgriInfoSource,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<AgriInfoSource> data =
           AgriInfoSource.parseAgriInfoSources(value.data);
       await AgriInfoSourceDB().insertAgriInfoSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -805,7 +887,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -818,12 +902,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallAgriManagementSkills,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<AgriManagementSkill> data =
           AgriManagementSkill.parseAgriManagementSkills(value.data);
       await AgriManagementSkillsDB().insertAgriSkills(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -831,7 +924,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -844,11 +939,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallAgriPractice,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<AgriPractice> data = AgriPractice.parseAgriPractices(value.data);
       await AgriPracticeDB().insertAgriPractices(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -856,7 +960,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -869,11 +975,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallCreditSources,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<CreditSource> data = CreditSource.parseCreditSources(value.data);
       await CreditSourceDB().insertCreditSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -881,7 +996,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -894,12 +1011,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallEducationLevels,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<EducationLevel> data =
           EducationLevel.parseEducationLevels(value.data);
       await EducationLevelDB().insertEducationLevels(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -907,7 +1033,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -920,11 +1048,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallEnterprises,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<Enterprise> data = Enterprise.parseEnterprises(value.data);
       await EnterprisesDB().insertEnterprises(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -932,7 +1069,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -945,12 +1084,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallExtensionSources,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<ExtensionSource> data =
           ExtensionSource.parseExtensionSources(value.data);
       await ExtensionSourceDB().insertExtensionSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -958,7 +1106,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -971,6 +1121,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallHouseholdRelationship,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<HouseholdRelationship> data =
           HouseholdRelationship.parseHouseholdRelationships(value.data);
       await HouseholdRelationshipsDB()
@@ -978,7 +1137,7 @@ class HomeFarmerNotFoundBloc
           .then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -986,7 +1145,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -999,11 +1160,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallIncomeSource,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<IncomeSource> data = IncomeSource.parseIncomeSources(value.data);
       await IncomeSourceDB().insertIncomeSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1011,7 +1181,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1024,11 +1196,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallLabourSource,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LabourSource> data = LabourSource.parseLabourSources(value.data);
       await LabourSourceDB().insertLabourSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1036,7 +1217,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1049,12 +1232,21 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallLivelihoodSource,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<LivelihoodSource> data =
           LivelihoodSource.parseLivelihoodSources(value.data);
       await LivelihoodSourceDB().insertLivelihoodSources(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1062,7 +1254,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1075,11 +1269,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallMaritalStatus,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<MaritalStatus> data = MaritalStatus.parseMaritalStatus(value.data);
       await MaritalStatusDB().insertMaritalStatuses(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1087,7 +1290,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1100,11 +1305,20 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallPesticideTypes,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<PesticideType> data = PesticideType.parsePesticideTypes(value.data);
       await PesticideTypeDB().insertPesticideTypes(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1112,7 +1326,9 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1125,6 +1341,15 @@ class HomeFarmerNotFoundBloc
       },
       requestData: Graphql.getallRespondentRelationships,
     ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
       List<RespondentRelationship> data =
           RespondentRelationship.parseRespondentRelationships(value.data);
       await RespondentRelationshipDB()
@@ -1132,7 +1357,7 @@ class HomeFarmerNotFoundBloc
           .then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1140,7 +1365,48 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    //fertilizer
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFertiliserSources,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FertilizerSource> data =
+          FertilizerSource.parseFertiliserSources(value.data);
+      await FertiliserSourceDB().insertFertilizerSources(data).then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -1151,16 +1417,23 @@ class HomeFarmerNotFoundBloc
         'Content-type': 'application/json',
         'Authorization': 'Bearer ${PrefUtils().getToken()}'
       },
-      requestData: Graphql.getallRespondentRelationships,
+      requestData: Graphql.getallFertiliserTypes,
     ).then((value) async {
-      List<RespondentRelationship> data =
-          RespondentRelationship.parseRespondentRelationships(value.data);
-      await RespondentRelationshipDB()
-          .insertRespondentRelationships(data)
-          .then((value) {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FertilizerType> data =
+          FertilizerType.parseFertiliserTypes(value.data);
+      await FertiliserTypeDB().insertFertilizerTypes(data).then((value) {
         if (value == 200) {
           appraiser += 100;
-          currentval = appraiser / 4400;
+          currentval = appraiser / full;
           currentpercentage = currentval * 100;
           final updatedState = state.copyWith(
             count: state.count + 1,
@@ -1168,7 +1441,353 @@ class HomeFarmerNotFoundBloc
             percentagedone: currentpercentage.toInt(),
           );
           emit(updatedState);
-        } else {}
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFertiliserTypeCategories,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FertilizerTypeCategory> data =
+          FertilizerTypeCategory.parseFertiliserCategories(value.data);
+      await FertiliserTypeCategoriesDB()
+          .insertFertilizerCategories(data)
+          .then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    //fish
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFishCategories,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FishCategory> data = FishCategory.parseFishCategories(value.data);
+      await FishCategoryDB().insertFishCategories(data).then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFishProductionLevels,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FishProductionLevel> data =
+          FishProductionLevel.parseFishProductionLevels(value.data);
+      await FishProductionLevelDB().insertProductionLevels(data).then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFishProductionTypes,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FishProductionType> data =
+          FishProductionType.parseFishProductionTypes(value.data);
+      await FishProductionTypeDB()
+          .insertFishProductionTypes(data)
+          .then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallFishProductionUOM,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<FishProductionUnitOfMeasure> data =
+          FishProductionUnitOfMeasure.parseFishProductionUOM(value.data);
+      await FishProductionUnitOfMeasureDB()
+          .insertUnitOfMeasures(data)
+          .then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    // Irrigation
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallIrrigationAgencies,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<IrrigationAgency> data =
+          IrrigationAgency.parseIrrigationAgencies(value.data);
+      await IrrigationAgencyDB().insertIrrigationAgencies(data).then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallIrrigationCategories,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<IrrigationCategory> data =
+          IrrigationCategory.parseIrrigationCategories(value.data);
+      await IrrigationCategoryDB()
+          .insertIrrigationCategories(data)
+          .then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallIrrigationTypes,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<IrrigationType> data =
+          IrrigationType.parseIrrigationTypes(value.data);
+      await IrrigationTypeDB().insertIrrigationTypes(data).then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
+      });
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+
+    await _repository.setupServicePost(
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ${PrefUtils().getToken()}'
+      },
+      requestData: Graphql.getallIrrigationWaterSources,
+    ).then((value) async {
+      appraiser += 100;
+      currentval = appraiser / full;
+      currentpercentage = currentval * 100;
+      final updatedState = state.copyWith(
+        count: state.count + 1,
+        linebarvalue: currentval,
+        percentagedone: currentpercentage.toInt(),
+      );
+      emit(updatedState);
+      List<IrrigationWaterSource> data =
+          IrrigationWaterSource.parseIrrigationWaterSources(value.data);
+      await IrrigationWaterSourceDB()
+          .insertIrrigationWaterSources(data)
+          .then((value) {
+        if (value == 200) {
+          appraiser += 100;
+          currentval = appraiser / full;
+          currentpercentage = currentval * 100;
+          final updatedState = state.copyWith(
+            count: state.count + 1,
+            linebarvalue: currentval,
+            percentagedone: currentpercentage.toInt(),
+          );
+          emit(updatedState);
+        } else {
+          print("failed");
+        }
       });
     }).onError((error, stackTrace) {
       print(error.toString());

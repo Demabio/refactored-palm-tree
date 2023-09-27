@@ -42,7 +42,7 @@ class FarmAssetTypeDB {
     try {
       for (var assetType in assetTypes) {
         batch.rawInsert('''
-        INSERT INTO $tableName (asset_type_id, asset_type_code, asset_name, description) 
+        INSERT INTO $tableName (asset_type_id, assset_type_code, asset_name, description) 
         VALUES (?, ?, ?, ?)
       ''', [
           assetType.assetTypeId,
