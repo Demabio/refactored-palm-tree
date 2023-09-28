@@ -15,6 +15,12 @@ class OtpOneInitialEvent extends OtpOneEvent {
   List<Object?> get props => [];
 }
 
+class OtpDeconstruction extends OtpOneEvent {
+  OtpDeconstruction();
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for OTP auto fill
 class ChangeOTPEvent extends OtpOneEvent {
   ChangeOTPEvent({required this.code});

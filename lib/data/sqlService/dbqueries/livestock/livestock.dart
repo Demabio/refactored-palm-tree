@@ -14,8 +14,8 @@ class LivestockDB {
         "livestock_sub_cat_id" INTEGER NOT NULL,
         "livestock_code" VARCHAR(255) NOT NULL,
         "common_livestock" BOOLEAN NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "date_created" DATETIME ,
+        "created_by" VARCHAR(255) ,
         PRIMARY KEY("livestock_id"),
         FOREIGN KEY("livestock_sub_cat_id") REFERENCES "tblfrlivestocksubcategories"("livestock_sub_cat_id")
       );

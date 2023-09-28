@@ -1792,5 +1792,7 @@ class HomeFarmerNotFoundBloc
     }).onError((error, stackTrace) {
       print(error.toString());
     });
+
+    event.onSuccess?.call();
   }
 }

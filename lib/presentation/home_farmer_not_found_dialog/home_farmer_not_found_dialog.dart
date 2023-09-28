@@ -196,7 +196,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   }
 
   downloadComplete(BuildContext context) {
-    //   Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   downloadFailed(BuildContext context) {

@@ -27,6 +27,7 @@ dependencies:
   sqflite: ^2.3.0
   fl_chart: ^0.63.0
   file_picker: ^4.0.0
+  dart_jsonwebtoken: ^2.11.0
 dev_dependencies: 
   flutter_test: 
     sdk: flutter
