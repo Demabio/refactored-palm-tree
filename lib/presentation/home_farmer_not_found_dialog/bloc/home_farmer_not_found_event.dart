@@ -42,3 +42,10 @@ class InnitDBwithDataFailedEvent extends HomeFarmerNotFoundEvent {
   @override
   List<Object?> get props => [];
 }
+
+class InnitDBwithDataSuccessEvent extends HomeFarmerNotFoundEvent {
+  InnitDBwithDataSuccessEvent();
+
+  @override
+  List<Object?> get props => [];
+}

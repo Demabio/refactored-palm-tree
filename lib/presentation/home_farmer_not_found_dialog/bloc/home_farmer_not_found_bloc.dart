@@ -107,6 +107,7 @@ class HomeFarmerNotFoundBloc
     on<FetchGetOrdersEvent>(_addCount);
     on<InnitDBwithDataEvent>(_downloadData);
     on<InnitDBwithDataFailedEvent>(_dbDownloadFailed);
+    on<InnitDBwithDataSuccessEvent>(_dbDownloadSuccess);
   }
   DBUtils _dbUtils = DBUtils();
   final _repository = Repository();
@@ -128,8 +129,18 @@ class HomeFarmerNotFoundBloc
 
   Future<void> _dbDownloadFailed(InnitDBwithDataFailedEvent event,
       Emitter<HomeFarmerNotFoundState> emit) async {
-    final updatedState = state.copyWith(failed: false);
+    final updatedState = state.copyWith(failed: true, success: false);
     emit(updatedState);
+  }
+
+  Future<void> _dbDownloadSuccess(InnitDBwithDataSuccessEvent event,
+      Emitter<HomeFarmerNotFoundState> emit) async {
+    try {
+      final updatedState = state.copyWith(failed: false, success: true);
+      emit(updatedState);
+    } catch (e) {
+      throw (e);
+    }
   }
 
   Future<void> _downloadData(

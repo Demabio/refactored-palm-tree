@@ -11,6 +11,7 @@ class HomeFarmerNotFoundState extends Equatable {
     this.linebarvalue = 0,
     this.percentagedone = 0,
     this.failed = false,
+    this.success = false,
   });
 
   HomeFarmerNotFoundModel? homeFarmerNotFoundModelObj;
@@ -25,15 +26,19 @@ class HomeFarmerNotFoundState extends Equatable {
 
   bool failed;
 
+  bool success;
+
   @override
   List<Object?> get props => [homeFarmerNotFoundModelObj, count];
-  HomeFarmerNotFoundState copyWith(
-      {HomeFarmerNotFoundModel? homeFarmerNotFoundModelObj,
-      int? count,
-      bool? visibility,
-      double? linebarvalue,
-      int? percentagedone,
-      bool? failed}) {
+  HomeFarmerNotFoundState copyWith({
+    HomeFarmerNotFoundModel? homeFarmerNotFoundModelObj,
+    int? count,
+    bool? visibility,
+    double? linebarvalue,
+    int? percentagedone,
+    bool? failed,
+    bool? success,
+  }) {
     return HomeFarmerNotFoundState(
       homeFarmerNotFoundModelObj:
           homeFarmerNotFoundModelObj ?? this.homeFarmerNotFoundModelObj,
@@ -42,6 +47,7 @@ class HomeFarmerNotFoundState extends Equatable {
       linebarvalue: linebarvalue ?? this.linebarvalue,
       percentagedone: percentagedone ?? this.percentagedone,
       failed: failed ?? this.failed,
+      success: success ?? this.success,
     );
   }
 }

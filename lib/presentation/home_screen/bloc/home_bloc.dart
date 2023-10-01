@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
 import '/core/app_export.dart';
@@ -44,11 +45,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     DBCheckEvent event,
     Emitter<HomeState> emit,
   ) async {
+    ////ProgressDialogUtils.showProgressDialog();
     await getDatabasesPath().then((value) async {
       exists = _dbutils.doesFileExist(join(value, 'localdevice.db'));
       if (exists) {
+        // ProgressDialogUtils.hideProgressDialog();
+
         event.onSuccess?.call();
       } else {
+        // ProgressDialogUtils.hideProgressDialog();
+
         event.onError?.call();
       }
     }).onError((error, stackTrace) {

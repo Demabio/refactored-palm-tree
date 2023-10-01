@@ -40,9 +40,21 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(height: 20.v),
-            Text(
-              "No Local Database found",
-              style: CustomTextStyles.bodyLargePrimary_2,
+            Visibility(
+              visible: !state.failed && !state.success,
+              child: Text(
+                !state.visibility
+                    ? "No Local Database found"
+                    : "Downloading...",
+                style: CustomTextStyles.bodyLargePrimary_2,
+              ),
+            ),
+            Visibility(
+              visible: !state.failed && state.success,
+              child: Text(
+                "Downloaded",
+                style: CustomTextStyles.bodyLargePrimary_2,
+              ),
             ),
             SizedBox(height: 9.v),
             Visibility(
@@ -97,7 +109,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
             ),
             SizedBox(height: 9.v),
             Visibility(
-              visible: state.visibility,
+              visible: state.visibility && !state.failed && !state.success,
               child: SizedBox(
                 width: 30.v,
                 height: 30.v,
@@ -123,21 +135,21 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 ),
               ),
             ),
-            Visibility(
-              visible: state.visibility,
-              child: SizedBox(
-                width: 161.h,
-                child: Text(
-                  "Count ${state.count}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
-                    height: 1.57,
-                  ),
-                ),
-              ),
-            ),
+            // Visibility(
+            //   visible: state.visibility,
+            //   child: SizedBox(
+            //     width: 161.h,
+            //     child: Text(
+            //       "Count ${state.count}",
+            //       maxLines: 1,
+            //       overflow: TextOverflow.ellipsis,
+            //       textAlign: TextAlign.center,
+            //       style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
+            //         height: 1.57,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 21.v),
             SizedBox(
               height: 50.v,
@@ -173,6 +185,22 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
             //     ),
             //   ],
             // ),
+            SizedBox(height: 21.v),
+
+            Visibility(
+              visible: !state.failed && state.success,
+              child: SizedBox(
+                height: 50.v,
+                child: CustomElevatedButton(
+                  text: "Close",
+                  margin: EdgeInsets.only(left: 4.h),
+                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                  buttonTextStyle: CustomTextStyles.bodyLarge16,
+                  onTap: () => closeDialog(context),
+                  isDisabled: state.visibility || state.failed,
+                ),
+              ),
+            ),
           ],
         ),
       );
@@ -196,10 +224,14 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   }
 
   downloadComplete(BuildContext context) {
-    Navigator.pop(context);
+    // context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataSuccessEvent());
   }
 
   downloadFailed(BuildContext context) {
-    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
+    //  context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
+  }
+
+  closeDialog(BuildContext context) {
+    Navigator.pop(context);
   }
 }
