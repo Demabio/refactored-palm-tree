@@ -506,4 +506,28 @@ class Graphql {
     }
   }
 ''';
+  static const String getallFish = r'''
+  query {
+    getallFish {
+      fishTypeId
+      fishCategoryId
+      fishType
+      fishCode
+      commonFish
+      description
+      dateCreated
+      createdBy
+    }
+  }
+''';
+
+  static const String getallFarmerRegistrationStatuses = r'''
+  query {
+    getallFarmerRegistrationStatuses {
+      registrationStatusId
+      registrationStatus
+      description
+    }
+  }
+''';
 }

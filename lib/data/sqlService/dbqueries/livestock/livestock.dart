@@ -74,10 +74,28 @@ class LivestockDB {
   Future<List<Livestock>> fetchAll() async {
     final database = await DatabaseService().database;
     final livestock = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT tblfrlivestock.*,tblfrlivestocksubcategories.livestock_cat_id,tblfrlivestocksubcategories.livestock_subcategory,tblfrlivestockcategories.livestock_category FROM $tableName 
+      LEFT JOIN tblfrlivestocksubcategories ON tblfrlivestock.livestock_sub_cat_id = tblfrlivestocksubcategories.livestock_sub_cat_id
+      LEFT JOIN tblfrlivestockcategories ON tblfrlivestocksubcategories.livestock_cat_id = tblfrlivestockcategories.livestock_cat_id    
+      ''');
+
+    return livestock
+        .map((e) => Livestock.fromSqfliteDatabaseJoined(e))
+        .toList();
+  }
+
+  Future<List<Livestock>> fetchAllCommon() async {
+    final database = await DatabaseService().database;
+    final livestock = await database.rawQuery(''' 
+      SELECT tblfrlivestock.*,tblfrlivestocksubcategories.livestock_cat_id,tblfrlivestocksubcategories.livestock_subcategory,tblfrlivestockcategories.livestock_category FROM $tableName 
+      LEFT JOIN tblfrlivestocksubcategories ON tblfrlivestock.livestock_sub_cat_id = tblfrlivestocksubcategories.livestock_sub_cat_id
+      LEFT JOIN tblfrlivestockcategories ON tblfrlivestocksubcategories.livestock_cat_id = tblfrlivestockcategories.livestock_cat_id
+      WHERE tblfrlivestock.common_livestock = 1
     ''');
 
-    return livestock.map((e) => Livestock.fromSqfliteDatabase(e)).toList();
+    return livestock
+        .map((e) => Livestock.fromSqfliteDatabaseJoined(e))
+        .toList();
   }
 
   Future<Livestock> fetchByLivestockId(int livestockId) async {

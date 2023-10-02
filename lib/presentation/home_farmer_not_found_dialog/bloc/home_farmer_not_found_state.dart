@@ -29,7 +29,15 @@ class HomeFarmerNotFoundState extends Equatable {
   bool success;
 
   @override
-  List<Object?> get props => [homeFarmerNotFoundModelObj, count];
+  List<Object?> get props => [
+        homeFarmerNotFoundModelObj,
+        count,
+        failed,
+        percentagedone,
+        linebarvalue,
+        success,
+        visibility,
+      ];
   HomeFarmerNotFoundState copyWith({
     HomeFarmerNotFoundModel? homeFarmerNotFoundModelObj,
     int? count,

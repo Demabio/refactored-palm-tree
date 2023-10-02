@@ -197,7 +197,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                   buttonTextStyle: CustomTextStyles.bodyLarge16,
                   onTap: () => closeDialog(context),
-                  isDisabled: state.visibility || state.failed,
+                  isDisabled: !state.success,
                 ),
               ),
             ),
@@ -224,11 +224,11 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   }
 
   downloadComplete(BuildContext context) {
-    // context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataSuccessEvent());
+    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataSuccessEvent());
   }
 
   downloadFailed(BuildContext context) {
-    //  context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
+    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
   }
 
   closeDialog(BuildContext context) {

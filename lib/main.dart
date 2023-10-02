@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sizer/sizer.dart';
 import 'core/app_export.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -27,26 +28,28 @@ class MyApp extends StatelessWidget {
       ),
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
-            theme: theme,
-            title: 'kiamis_app',
-            navigatorKey: NavigatorService.navigatorKey,
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: [
-              AppLocalizationDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: [
-              Locale(
-                'en',
-                '',
-              ),
-            ],
-            initialRoute: AppRoutes.initialRoute,
-            routes: AppRoutes.routes,
-          );
+          return Sizer(builder: (context, orientation, deviceType) {
+            return MaterialApp(
+              theme: theme,
+              title: 'kiamis_app',
+              navigatorKey: NavigatorService.navigatorKey,
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: [
+                AppLocalizationDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: [
+                Locale(
+                  'en',
+                  '',
+                ),
+              ],
+              initialRoute: AppRoutes.initialRoute,
+              routes: AppRoutes.routes,
+            );
+          });
         },
       ),
     );

@@ -24,6 +24,7 @@ class CustomDropDown extends StatelessWidget {
     this.filled = true,
     this.validator,
     this.onChanged,
+    this.val,
   }) : super(
           key: key,
         );
@@ -68,6 +69,8 @@ class CustomDropDown extends StatelessWidget {
 
   final Function(SelectionPopupModel)? onChanged;
 
+  final SelectionPopupModel? val;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -84,6 +87,7 @@ class CustomDropDown extends StatelessWidget {
         child: DropdownButtonFormField<SelectionPopupModel>(
           focusNode: focusNode ?? FocusNode(),
           icon: icon,
+          //  value: val,
           autofocus: autofocus!,
           style: textStyle ?? CustomTextStyles.bodyMediumGray60002,
           items: items?.map((SelectionPopupModel item) {

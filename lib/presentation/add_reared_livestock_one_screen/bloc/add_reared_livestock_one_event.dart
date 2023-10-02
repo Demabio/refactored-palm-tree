@@ -20,16 +20,18 @@ class UpdateChipViewEvent extends AddRearedLivestockOneEvent {
   UpdateChipViewEvent({
     required this.index,
     this.isSelected,
+    this.model,
   });
 
   int index;
-
+  ChipviewayrshiItemModel? model;
   bool? isSelected;
 
   @override
   List<Object?> get props => [
         index,
         isSelected,
+        model,
       ];
 }
 
@@ -48,6 +50,39 @@ class ChangeDropDownEvent extends AddRearedLivestockOneEvent {
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddRearedLivestockOneEvent {
   ChangeDropDown1Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ChangeDropDownEventLivestock extends AddRearedLivestockOneEvent {
+  ChangeDropDownEventLivestock({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ChangeDropDownEventCategory extends AddRearedLivestockOneEvent {
+  ChangeDropDownEventCategory({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ChangeDropDownEventSubCategory extends AddRearedLivestockOneEvent {
+  ChangeDropDownEventSubCategory({required this.value});
 
   SelectionPopupModel value;
 

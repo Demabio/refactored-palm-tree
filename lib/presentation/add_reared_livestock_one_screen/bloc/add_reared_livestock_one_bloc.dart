@@ -1,5 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
+import 'package:kiamis_app/data/models/dbModels/livestock/livestockcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/livestock/livestocksubcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcategory.dart';
 import '/core/app_export.dart';
 import '../models/chipviewayrshi_item_model.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_one_screen/models/add_reared_livestock_one_model.dart';
@@ -13,39 +19,70 @@ class AddRearedLivestockOneBloc
       : super(initialState) {
     on<AddRearedLivestockOneInitialEvent>(_onInitialize);
     on<UpdateChipViewEvent>(_updateChipView);
-    on<ChangeDropDownEvent>(_changeDropDown);
-    on<ChangeDropDown1Event>(_changeDropDown1);
+    on<ChangeDropDownEventLivestock>(_changeDropDownLiveStock);
+    on<ChangeDropDownEventSubCategory>(_changeDropDownSubCategory);
+    on<ChangeDropDownEventCategory>(_changeDropDownCategory);
   }
 
   _updateChipView(
     UpdateChipViewEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) {
-    List<ChipviewayrshiItemModel> newList = List<ChipviewayrshiItemModel>.from(
-        state.addRearedLivestockOneModelObj!.chipviewayrshiItemList);
-    newList[event.index] = newList[event.index].copyWith(
-      isSelected: event.isSelected,
+    // List<ChipviewayrshiItemModel> newList = List<ChipviewayrshiItemModel>.from(
+    //     state.addRearedLivestockOneModelObj!.chipviewayrshiItemList);
+    // newList[event.index] = newList[event.index].copyWith(
+    //   isSelected: event.isSelected,
+    // );
+
+    add(ChangeDropDownEventCategory(
+        value: SelectionPopupModel(
+      title: event.model?.livestockCat ?? "",
+      id: event.model?.categoryid,
+    )));
+
+    final updatedState = state.copyWith(
+      selectedCategory: SelectionPopupModel(
+        title: event.model?.livestockCat ?? "",
+        id: event.model?.categoryid,
+      ),
+      selectedSubCategory: SelectionPopupModel(
+        title: event.model?.livestockSubCat ?? "",
+        id: event.model?.subcategoryid,
+      ),
+      selectedLivestock: SelectionPopupModel(
+        title: event.model?.ayrshi ?? "",
+        id: event.model?.livestockid,
+      ),
+      // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
+      //     ?.copyWith(chipviewayrshiItemList: newList),
     );
-    emit(state.copyWith(
-        addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
-            ?.copyWith(chipviewayrshiItemList: newList)));
+    emit(updatedState);
   }
 
-  _changeDropDown(
-    ChangeDropDownEvent event,
+  _changeDropDownLiveStock(
+    ChangeDropDownEventLivestock event,
     Emitter<AddRearedLivestockOneState> emit,
   ) {
     emit(state.copyWith(
-      selectedDropDownValue: event.value,
+      selectedLivestock: event.value,
     ));
   }
 
-  _changeDropDown1(
-    ChangeDropDown1Event event,
+  _changeDropDownCategory(
+    ChangeDropDownEventCategory event,
     Emitter<AddRearedLivestockOneState> emit,
   ) {
     emit(state.copyWith(
-      selectedDropDownValue1: event.value,
+      selectedCategory: event.value,
+    ));
+  }
+
+  _changeDropDownSubCategory(
+    ChangeDropDownEventSubCategory event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) {
+    emit(state.copyWith(
+      selectedSubCategory: event.value,
     ));
   }
 
@@ -53,40 +90,64 @@ class AddRearedLivestockOneBloc
     return List.generate(4, (index) => ChipviewayrshiItemModel());
   }
 
-  List<SelectionPopupModel> fillDropdownItemList() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
+  Future<List<ChipviewayrshiItemModel>> fillCommonLivestock() async {
+    List<ChipviewayrshiItemModel> list = [];
+    state.livestockDB = LivestockDB();
+    await state.livestockDB?.fetchAllCommon().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewayrshiItemModel(
+          livestockid: value[i].livestockId,
+          subcategoryid: value[i].livestockSubCatId,
+          categoryid: value[i].livestockCatId,
+          ayrshi: value[i].livestock,
+          livestockCat: value[i].livestockCat,
+          livestockSubCat: value[i].livestockSubCat,
+        ));
+      }
+    });
+    return list;
   }
 
-  List<SelectionPopupModel> fillDropdownItemList1() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
+  Future<List<SelectionPopupModel>> fillCategories() async {
+    List<SelectionPopupModel> list = [];
+    state.categoryDB = LivestockCategoryDB();
+    await state.categoryDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestockCategory,
+          id: value[i].livestockCatId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fillLivestock() async {
+    List<SelectionPopupModel> list = [];
+    state.livestockDB = LivestockDB();
+    await state.livestockDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestock,
+          id: value[i].livestockId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fillSubCategory() async {
+    List<SelectionPopupModel> list = [];
+    state.subcategoryDB = LivestockSubcategoryDB();
+    await state.subcategoryDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestockSubcategory,
+          id: value[i].livestockSubCatId,
+        ));
+      }
+    });
+    return list;
   }
 
   _onInitialize(
@@ -101,9 +162,11 @@ class AddRearedLivestockOneBloc
     emit(state.copyWith(
         addRearedLivestockOneModelObj:
             state.addRearedLivestockOneModelObj?.copyWith(
-      chipviewayrshiItemList: fillChipviewayrshiItemList(),
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
+      chipviewayrshiItemList:
+          await fillCommonLivestock(), //fillChipviewayrshiItemList(),
+      categories: await fillCategories(),
+      subcategories: await fillSubCategory(),
+      livestock: await fillLivestock(),
     )));
   }
 }

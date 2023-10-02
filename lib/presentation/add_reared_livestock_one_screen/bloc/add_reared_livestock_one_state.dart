@@ -11,6 +11,15 @@ class AddRearedLivestockOneState extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.addRearedLivestockOneModelObj,
+    this.selectedCategory,
+    this.selectedLivestock,
+    this.selectedSubCategory,
+    this.categories,
+    this.livestock,
+    this.subcategories,
+    this.categoryDB,
+    this.livestockDB,
+    this.subcategoryDB,
   });
 
   TextEditingController? searchController;
@@ -23,6 +32,24 @@ class AddRearedLivestockOneState extends Equatable {
 
   SelectionPopupModel? selectedDropDownValue1;
 
+  SelectionPopupModel? selectedLivestock;
+
+  SelectionPopupModel? selectedCategory;
+
+  SelectionPopupModel? selectedSubCategory;
+
+  List<Livestock>? livestock;
+
+  List<LivestockCategory>? categories;
+
+  List<LivestockSubcategory>? subcategories;
+
+  LivestockDB? livestockDB;
+
+  LivestockCategoryDB? categoryDB;
+
+  LivestockSubcategoryDB? subcategoryDB;
+
   AddRearedLivestockOneModel? addRearedLivestockOneModelObj;
 
   @override
@@ -33,6 +60,15 @@ class AddRearedLivestockOneState extends Equatable {
         selectedDropDownValue,
         selectedDropDownValue1,
         addRearedLivestockOneModelObj,
+        selectedLivestock,
+        selectedCategory,
+        selectedSubCategory,
+        livestock,
+        categories,
+        subcategories,
+        categoryDB,
+        livestockDB,
+        subcategoryDB,
       ];
   AddRearedLivestockOneState copyWith({
     TextEditingController? searchController,
@@ -41,6 +77,15 @@ class AddRearedLivestockOneState extends Equatable {
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     AddRearedLivestockOneModel? addRearedLivestockOneModelObj,
+    SelectionPopupModel? selectedLivestock,
+    SelectionPopupModel? selectedCategory,
+    SelectionPopupModel? selectedSubCategory,
+    List<Livestock>? livestock,
+    List<LivestockCategory>? categories,
+    List<LivestockSubcategory>? subcategories,
+    LivestockDB? livestockDB,
+    LivestockCategoryDB? categoryDB,
+    LivestockSubcategoryDB? subcategoryDB,
   }) {
     return AddRearedLivestockOneState(
       searchController: searchController ?? this.searchController,
@@ -54,6 +99,15 @@ class AddRearedLivestockOneState extends Equatable {
           selectedDropDownValue1 ?? this.selectedDropDownValue1,
       addRearedLivestockOneModelObj:
           addRearedLivestockOneModelObj ?? this.addRearedLivestockOneModelObj,
+      selectedLivestock: selectedLivestock ?? this.selectedLivestock,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedSubCategory: selectedSubCategory ?? this.selectedSubCategory,
+      livestock: livestock ?? this.livestock,
+      categories: categories ?? this.categories,
+      subcategories: subcategories ?? this.subcategories,
+      livestockDB: livestockDB ?? this.livestockDB,
+      categoryDB: categoryDB ?? this.categoryDB,
+      subcategoryDB: subcategoryDB ?? this.subcategoryDB,
     );
   }
 }

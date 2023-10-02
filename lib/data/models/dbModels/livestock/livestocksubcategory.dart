@@ -22,7 +22,7 @@ class LivestockSubcategory {
         livestockSubcategory: map['livestock_subcategory'] ?? '',
         livestockSubcategoryCode: map['livestock_subcategory_code'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by']),
       );
   static List<LivestockSubcategory> parseLivestockSubcategories(
       Map<String, dynamic> json) {
