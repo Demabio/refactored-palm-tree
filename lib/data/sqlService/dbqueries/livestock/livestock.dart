@@ -111,6 +111,19 @@ class LivestockDB {
         .toList();
   }
 
+  Future<List<Livestock>> searchLivestock(String livestockSTR) async {
+    final database = await DatabaseService().database;
+    final livestock = await database.rawQuery(''' 
+      SELECT tblfrlivestock.*,tblfrlivestocksubcategories.livestock_cat_id,tblfrlivestocksubcategories.livestock_subcategory,tblfrlivestockcategories.livestock_category FROM $tableName 
+      LEFT JOIN tblfrlivestocksubcategories ON tblfrlivestock.livestock_sub_cat_id = tblfrlivestocksubcategories.livestock_sub_cat_id
+      LEFT JOIN tblfrlivestockcategories ON tblfrlivestocksubcategories.livestock_cat_id = tblfrlivestockcategories.livestock_cat_id WHERE tblfrlivestock.livestock LIKE '%' || ? || '%' LIMIT 5
+      ''', [livestockSTR]);
+
+    return livestock
+        .map((e) => Livestock.fromSqfliteDatabaseJoined(e))
+        .toList();
+  }
+
   Future<Livestock> fetchByLivestockId(int livestockId) async {
     final database = await DatabaseService().database;
     final livestockItem = await database.rawQuery('''

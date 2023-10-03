@@ -22,6 +22,8 @@ class AddRearedLivestockOneBloc
     on<ChangeDropDownEventLivestock>(_changeDropDownLiveStock);
     on<ChangeDropDownEventSubCategory>(_changeDropDownSubCategory);
     on<ChangeDropDownEventCategory>(_changeDropDownCategory);
+    on<SearchEventLivestock>(_searchLivestock);
+    on<ReturnCommonEventLivestock>(_restoreCommonLivestock);
   }
 
   _updateChipView(
@@ -58,11 +60,16 @@ class AddRearedLivestockOneBloc
           selectedSubCategory: null,
           subcategories: subcategories,
           livestock: livestock,
+          search: false,
         )
         // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
         //     ?.copyWith(chipviewayrshiItemList: newList),
         );
     emit(updatedState);
+
+    if (state.searchController?.value != null) {
+      emit(state.copyWith(searchController: TextEditingController()));
+    }
     SelectionPopupModel? categorymodel =
         state.addRearedLivestockOneModelObj?.categories.firstWhere(
       (model) => model.id == event.model!.categoryid,
@@ -139,6 +146,37 @@ class AddRearedLivestockOneBloc
     ));
   }
 
+  _searchLivestock(
+    SearchEventLivestock event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    emit(state.copyWith(
+        addRearedLivestockOneModelObj:
+            state.addRearedLivestockOneModelObj?.copyWith(
+      selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+      selectedSubCategory:
+          state.addRearedLivestockOneModelObj?.selectedSubCategory,
+      selectedLivestock: state.addRearedLivestockOneModelObj?.selectedLivestock,
+      search: true,
+      searchResults: await searchLivestock(event.value),
+    )));
+  }
+
+  _restoreCommonLivestock(
+    ReturnCommonEventLivestock event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    emit(state.copyWith(
+        addRearedLivestockOneModelObj:
+            state.addRearedLivestockOneModelObj?.copyWith(
+      selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+      selectedSubCategory:
+          state.addRearedLivestockOneModelObj?.selectedSubCategory,
+      selectedLivestock: state.addRearedLivestockOneModelObj?.selectedLivestock,
+      search: false,
+    )));
+  }
+
   List<ChipviewayrshiItemModel> fillChipviewayrshiItemList() {
     return List.generate(4, (index) => ChipviewayrshiItemModel());
   }
@@ -147,6 +185,24 @@ class AddRearedLivestockOneBloc
     List<ChipviewayrshiItemModel> list = [];
     state.livestockDB = LivestockDB();
     await state.livestockDB?.fetchAllCommon().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewayrshiItemModel(
+          livestockid: value[i].livestockId,
+          subcategoryid: value[i].livestockSubCatId,
+          categoryid: value[i].livestockCatId,
+          ayrshi: value[i].livestock,
+          livestockCat: value[i].livestockCat,
+          livestockSubCat: value[i].livestockSubCat,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<ChipviewayrshiItemModel>> searchLivestock(String value) async {
+    List<ChipviewayrshiItemModel> list = [];
+    state.livestockDB = LivestockDB();
+    await state.livestockDB?.searchLivestock(value).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(ChipviewayrshiItemModel(
           livestockid: value[i].livestockId,

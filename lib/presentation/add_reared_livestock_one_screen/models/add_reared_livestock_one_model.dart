@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'chipviewayrshi_item_model.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
@@ -17,7 +18,12 @@ class AddRearedLivestockOneModel extends Equatable {
     this.selectedCategory,
     this.selectedLivestock,
     this.selectedSubCategory,
+    this.search = false,
+    this.searchResults,
+    this.searchController,
   }) {}
+
+  TextEditingController? searchController;
 
   List<ChipviewayrshiItemModel> chipviewayrshiItemList;
 
@@ -37,6 +43,10 @@ class AddRearedLivestockOneModel extends Equatable {
 
   SelectionPopupModel? selectedSubCategory;
 
+  List<ChipviewayrshiItemModel>? searchResults;
+
+  bool search;
+
   AddRearedLivestockOneModel copyWith({
     List<ChipviewayrshiItemModel>? chipviewayrshiItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -47,19 +57,24 @@ class AddRearedLivestockOneModel extends Equatable {
     SelectionPopupModel? selectedLivestock,
     SelectionPopupModel? selectedCategory,
     SelectionPopupModel? selectedSubCategory,
+    List<ChipviewayrshiItemModel>? searchResults,
+    bool? search,
+    TextEditingController? searchController,
   }) {
     return AddRearedLivestockOneModel(
-      chipviewayrshiItemList:
-          chipviewayrshiItemList ?? this.chipviewayrshiItemList,
-      dropdownItemList: dropdownItemList ?? this.dropdownItemList,
-      dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
-      livestock: livestock ?? this.livestock,
-      categories: categories ?? this.categories,
-      subcategories: subcategories ?? this.subcategories,
-      selectedLivestock: selectedLivestock,
-      selectedCategory: selectedCategory,
-      selectedSubCategory: selectedSubCategory,
-    );
+        chipviewayrshiItemList:
+            chipviewayrshiItemList ?? this.chipviewayrshiItemList,
+        dropdownItemList: dropdownItemList ?? this.dropdownItemList,
+        dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
+        livestock: livestock ?? this.livestock,
+        categories: categories ?? this.categories,
+        subcategories: subcategories ?? this.subcategories,
+        selectedLivestock: selectedLivestock,
+        selectedCategory: selectedCategory,
+        selectedSubCategory: selectedSubCategory,
+        search: search ?? this.search,
+        searchResults: searchResults ?? this.searchResults,
+        searchController: searchController ?? this.searchController);
   }
 
   @override
@@ -73,5 +88,8 @@ class AddRearedLivestockOneModel extends Equatable {
         selectedCategory,
         selectedLivestock,
         selectedSubCategory,
+        search,
+        searchResults,
+        searchController,
       ];
 }

@@ -91,3 +91,25 @@ class ChangeDropDownEventSubCategory extends AddRearedLivestockOneEvent {
         value,
       ];
 }
+
+class SearchEventLivestock extends AddRearedLivestockOneEvent {
+  SearchEventLivestock({required this.value});
+
+  String value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ReturnCommonEventLivestock extends AddRearedLivestockOneEvent {
+  ReturnCommonEventLivestock({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

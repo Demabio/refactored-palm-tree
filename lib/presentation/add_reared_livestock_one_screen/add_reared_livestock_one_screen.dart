@@ -82,6 +82,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                             selector: (state) => state.searchController,
                             builder: (context, searchController) {
                               return CustomSearchView(
+                                onChanged: (value) {
+                                  context
+                                      .read<AddRearedLivestockOneBloc>()
+                                      .add(SearchEventLivestock(value: value));
+                                },
                                 enabled: true,
                                 margin: EdgeInsets.only(
                                   left: 15.h,
@@ -109,6 +114,9 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   child: IconButton(
                                     onPressed: () {
                                       searchController!.clear();
+                                      context
+                                          .read<AddRearedLivestockOneBloc>()
+                                          .add(ReturnCommonEventLivestock());
                                     },
                                     icon: Icon(
                                       Icons.clear,
@@ -140,34 +148,66 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                             selector: (state) =>
                                 state.addRearedLivestockOneModelObj,
                             builder: (context, addRearedLivestockOneModelObj) {
-                              return Wrap(
-                                runSpacing: 10.v,
-                                spacing: 10.h,
-                                children: List<Widget>.generate(
-                                  addRearedLivestockOneModelObj
-                                          ?.chipviewayrshiItemList.length ??
-                                      0,
-                                  (index) {
-                                    ChipviewayrshiItemModel model =
+                              return !addRearedLivestockOneModelObj!.search
+                                  ? Wrap(
+                                      runSpacing: 10.v,
+                                      spacing: 10.h,
+                                      children: List<Widget>.generate(
                                         addRearedLivestockOneModelObj
-                                                    ?.chipviewayrshiItemList[
-                                                index] ??
-                                            ChipviewayrshiItemModel();
+                                                ?.chipviewayrshiItemList
+                                                .length ??
+                                            0,
+                                        (index) {
+                                          ChipviewayrshiItemModel model =
+                                              addRearedLivestockOneModelObj
+                                                          ?.chipviewayrshiItemList[
+                                                      index] ??
+                                                  ChipviewayrshiItemModel();
 
-                                    return ChipviewayrshiItemWidget(
-                                      model,
-                                      onSelectedChipView: (value) {
-                                        context
-                                            .read<AddRearedLivestockOneBloc>()
-                                            .add(UpdateChipViewEvent(
-                                                index: index,
-                                                isSelected: value,
-                                                model: model));
-                                      },
+                                          return ChipviewayrshiItemWidget(
+                                            model,
+                                            onSelectedChipView: (value) {
+                                              context
+                                                  .read<
+                                                      AddRearedLivestockOneBloc>()
+                                                  .add(UpdateChipViewEvent(
+                                                      index: index,
+                                                      isSelected: value,
+                                                      model: model));
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : Wrap(
+                                      runSpacing: 10.v,
+                                      spacing: 10.h,
+                                      children: List<Widget>.generate(
+                                        addRearedLivestockOneModelObj
+                                                .searchResults?.length ??
+                                            0,
+                                        (index) {
+                                          ChipviewayrshiItemModel model =
+                                              addRearedLivestockOneModelObj
+                                                      .searchResults?[index] ??
+                                                  ChipviewayrshiItemModel();
+
+                                          return ChipviewayrshiItemWidget(
+                                            model,
+                                            onSelectedChipView: (value) {
+                                              _firstTextFieldFocus.unfocus();
+                                              context
+                                                  .read<
+                                                      AddRearedLivestockOneBloc>()
+                                                  .add(UpdateChipViewEvent(
+                                                      index: index,
+                                                      isSelected: value,
+                                                      model: model));
+                                            },
+                                          );
+                                        },
+                                      ),
                                     );
-                                  },
-                                ),
-                              );
                             },
                           ),
                         ),
