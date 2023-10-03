@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/add_reared_livestock_dialog_two_model.dart';
 part 'add_reared_livestock_dialog_two_event.dart';
@@ -13,12 +14,6 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     on<AddRearedLivestockDialogTwoInitialEvent>(_onInitialize);
     on<ChangeCheckBoxEvent>(_changeCheckBox);
     on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
-    on<ChangeCheckBox3Event>(_changeCheckBox3);
-    on<ChangeCheckBox4Event>(_changeCheckBox4);
-    on<ChangeCheckBox5Event>(_changeCheckBox5);
-    on<ChangeCheckBox6Event>(_changeCheckBox6);
-    on<ChangeCheckBox7Event>(_changeCheckBox7);
   }
 
   _changeCheckBox(
@@ -39,59 +34,23 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     ));
   }
 
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      lessThanTwoMont: event.value,
-    ));
-  }
-
-  _changeCheckBox3(
-    ChangeCheckBox3Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      twoToSixMonths: event.value,
-    ));
-  }
-
-  _changeCheckBox4(
-    ChangeCheckBox4Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      sixToTwelveMont: event.value,
-    ));
-  }
-
-  _changeCheckBox5(
-    ChangeCheckBox5Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      oneToTwoYears: event.value,
-    ));
-  }
-
-  _changeCheckBox6(
-    ChangeCheckBox6Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      twoToFourYears: event.value,
-    ));
-  }
-
-  _changeCheckBox7(
-    ChangeCheckBox7Event event,
-    Emitter<AddRearedLivestockDialogTwoState> emit,
-  ) {
-    emit(state.copyWith(
-      fourYearsOrOlde: event.value,
-    ));
-  }
+  // Future<List<AgeGroupmModel>> fillCommonLivestock() async {
+  //   List<AgeGroupmModel> list = [];
+  //   state.livestockDB = LivestockDB();
+  //   await state.livestockDB?.fetchAllCommon().then((value) {
+  //     for (int i = 0; i < value.length; i++) {
+  //       list.add(ChipviewayrshiItemModel(
+  //         livestockid: value[i].livestockId,
+  //         subcategoryid: value[i].livestockSubCatId,
+  //         categoryid: value[i].livestockCatId,
+  //         ayrshi: value[i].livestock,
+  //         livestockCat: value[i].livestockCat,
+  //         livestockSubCat: value[i].livestockSubCat,
+  //       ));
+  //     }
+  //   });
+  //   return list;
+  // }
 
   _onInitialize(
     AddRearedLivestockDialogTwoInitialEvent event,

@@ -1,3 +1,6 @@
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_three_dialog/add_reared_livestock_dialog_three_dialog.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/add_reared_livestock_dialog_two_dialog.dart';
+
 import '../add_reared_livestock_one_screen/widgets/chipviewayrshi_item_widget.dart';
 import 'bloc/add_reared_livestock_one_bloc.dart';
 import 'models/add_reared_livestock_one_model.dart';
@@ -335,6 +338,9 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                             right: 15.h,
                           ),
                           alignment: Alignment.center,
+                          onTap: () {
+                            addAgeGroup(context);
+                          },
                         ),
                         SizedBox(height: 35.v),
                         Text(
@@ -412,5 +418,18 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  addAgeGroup(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddRearedLivestockDialogTwoDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 }
