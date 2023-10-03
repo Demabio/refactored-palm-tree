@@ -14,6 +14,9 @@ class AddRearedLivestockOneModel extends Equatable {
     this.livestock = const [],
     this.categories = const [],
     this.subcategories = const [],
+    this.selectedCategory,
+    this.selectedLivestock,
+    this.selectedSubCategory,
   }) {}
 
   List<ChipviewayrshiItemModel> chipviewayrshiItemList;
@@ -28,6 +31,12 @@ class AddRearedLivestockOneModel extends Equatable {
 
   List<SelectionPopupModel> subcategories;
 
+  SelectionPopupModel? selectedLivestock;
+
+  SelectionPopupModel? selectedCategory;
+
+  SelectionPopupModel? selectedSubCategory;
+
   AddRearedLivestockOneModel copyWith({
     List<ChipviewayrshiItemModel>? chipviewayrshiItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -35,6 +44,9 @@ class AddRearedLivestockOneModel extends Equatable {
     List<SelectionPopupModel>? livestock,
     List<SelectionPopupModel>? categories,
     List<SelectionPopupModel>? subcategories,
+    SelectionPopupModel? selectedLivestock,
+    SelectionPopupModel? selectedCategory,
+    SelectionPopupModel? selectedSubCategory,
   }) {
     return AddRearedLivestockOneModel(
       chipviewayrshiItemList:
@@ -44,6 +56,9 @@ class AddRearedLivestockOneModel extends Equatable {
       livestock: livestock ?? this.livestock,
       categories: categories ?? this.categories,
       subcategories: subcategories ?? this.subcategories,
+      selectedLivestock: selectedLivestock,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedSubCategory: selectedSubCategory,
     );
   }
 
@@ -55,5 +70,8 @@ class AddRearedLivestockOneModel extends Equatable {
         livestock,
         categories,
         subcategories,
+        selectedCategory,
+        selectedLivestock,
+        selectedSubCategory,
       ];
 }

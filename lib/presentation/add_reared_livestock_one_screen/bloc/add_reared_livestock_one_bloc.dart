@@ -77,6 +77,8 @@ class AddRearedLivestockOneBloc
         selectedCategory: event.value,
         addRearedLivestockOneModelObj:
             state.addRearedLivestockOneModelObj?.copyWith(
+          selectedCategory: event.value,
+          selectedSubCategory: null,
           subcategories: await fillSubCategory(
             event.value.id!,
           ),
@@ -93,6 +95,7 @@ class AddRearedLivestockOneBloc
       selectedSubCategory: event.value,
       addRearedLivestockOneModelObj:
           state.addRearedLivestockOneModelObj?.copyWith(
+        selectedSubCategory: event.value,
         livestock: await fillLivestock(
           event.value.id!,
         ),
