@@ -79,6 +79,17 @@ class LivestockSubcategoryDB {
         .toList();
   }
 
+  Future<List<LivestockSubcategory>> fetchAllWhereCatID(
+      int livestockCatId) async {
+    final database = await DatabaseService().database;
+    final subcategories = await database.rawQuery(''' 
+   SELECT * FROM $tableName WHERE livestock_cat_id = ?
+    ''', [livestockCatId]);
+    return subcategories
+        .map((e) => LivestockSubcategory.fromSqfliteDatabase(e))
+        .toList();
+  }
+
   Future<LivestockSubcategory> fetchByLivestockSubcategoryId(
       int livestockSubcategoryId) async {
     final database = await DatabaseService().database;

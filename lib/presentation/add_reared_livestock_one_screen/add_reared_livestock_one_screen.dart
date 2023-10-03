@@ -1,3 +1,7 @@
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcategory.dart';
+
 import '../add_reared_livestock_one_screen/widgets/chipviewayrshi_item_widget.dart';
 import 'bloc/add_reared_livestock_one_bloc.dart';
 import 'models/add_reared_livestock_one_model.dart';
@@ -12,7 +16,7 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
-class AddRearedLivestockOneScreen extends StatelessWidget {
+class AddRearedLivestockOneScreen extends StatefulWidget {
   AddRearedLivestockOneScreen({Key? key})
       : super(
           key: key,
@@ -28,12 +32,108 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
     );
   }
 
+  @override
+  State<AddRearedLivestockOneScreen> createState() =>
+      _AddRearedLivestockOneScreenState();
+}
+
+class _AddRearedLivestockOneScreenState
+    extends State<AddRearedLivestockOneScreen> {
   FocusNode _firstTextFieldFocus = FocusNode();
+
   FocusNode _secondTextFieldFocus = FocusNode();
+
   FocusNode _thirdTextFieldFocus = FocusNode();
+
   FocusNode fouthTextFieldFocus = FocusNode();
+
   FocusNode fifthTextFieldFocus = FocusNode();
+
   FocusNode sixthTextFieldFocus = FocusNode();
+
+  SelectionPopupModel? selectedLivestock;
+
+  SelectionPopupModel? selectedCategories;
+
+  SelectionPopupModel? selectedSubCategories =
+      null; //SelectionPopupModel(title: "Select", id: 0);
+
+  void clearSelectionLivestock(AddRearedLivestockOneState state) {
+    setState(() {
+      selectedLivestock = null;
+      state.addRearedLivestockOneModelObj?.livestock = [];
+    });
+  }
+
+  void clearSelectionCategories(AddRearedLivestockOneState state) {
+    setState(() {
+      selectedCategories = null;
+      state.addRearedLivestockOneModelObj?.categories = [];
+    });
+  }
+
+  void clearSelectionSubCategories(AddRearedLivestockOneState state) {
+    setState(() {
+      selectedSubCategories = SelectionPopupModel(title: "Selected", id: 0);
+      //state.addRearedLivestockOneModelObj?.subcategories = [];
+    });
+  }
+
+  Future<void> fillCategories(AddRearedLivestockOneState state) async {
+    List<SelectionPopupModel> list = [];
+    state.categoryDB = LivestockCategoryDB();
+    await state.categoryDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestockCategory,
+          id: value[i].livestockCatId,
+        ));
+      }
+    });
+    setState(() {
+      state.addRearedLivestockOneModelObj?.categories = list;
+      selectedSubCategories = SelectionPopupModel(title: "Selected", id: 0);
+    });
+  }
+
+  Future<void> fillLivestock(
+      int subCatId, AddRearedLivestockOneState state) async {
+    List<SelectionPopupModel> list = [];
+    state.livestockDB = LivestockDB();
+    await state.livestockDB?.fetchAllWhereSubCatId(subCatId).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestock,
+          id: value[i].livestockId,
+        ));
+      }
+    });
+    setState(() {
+      state.addRearedLivestockOneModelObj?.livestock = list;
+    });
+  }
+
+  Future<void> fillSubCategory(
+      int catId, AddRearedLivestockOneState state) async {
+    List<SelectionPopupModel> list = [];
+    list.add(SelectionPopupModel(title: "Selected", id: 0));
+
+    state.subcategoryDB = LivestockSubcategoryDB();
+    await state.subcategoryDB?.fetchAllWhereCatID(catId).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestockSubcategory,
+          id: value[i].livestockSubCatId,
+        ));
+      }
+    });
+    setState(() {
+      state.addRearedLivestockOneModelObj?.subcategories = list;
+      selectedSubCategories =
+          null; //SelectionPopupModel(title: "Selected", id: 0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -160,12 +260,12 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                       return ChipviewayrshiItemWidget(
                                         model,
                                         onSelectedChipView: (value) {
-                                          context
-                                              .read<AddRearedLivestockOneBloc>()
-                                              .add(UpdateChipViewEvent(
-                                                  index: index,
-                                                  isSelected: value,
-                                                  model: model));
+                                          // context
+                                          //     .read<AddRearedLivestockOneBloc>()
+                                          //     .add(UpdateChipViewEvent(
+                                          //         index: index,
+                                          //         isSelected: value,
+                                          //         model: model));
                                         },
                                       );
                                     },
@@ -199,17 +299,25 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   ),
                                 ),
                                 hintText: "lbl_select".tr,
-                                // val: state.selectedCategory == null
-                                //     ? null // Handle the case when 'categories' is empty
-                                //     : addRearedLivestockOneModelObj?.categories[
-                                //         state.selectedCategory!.id! - 1],
-                                items:
-                                    addRearedLivestockOneModelObj?.categories ??
+                                enabled:
+                                    addRearedLivestockOneModelObj?.categories !=
+                                            null ||
+                                        addRearedLivestockOneModelObj!
+                                            .categories.isNotEmpty,
+                                items: addRearedLivestockOneModelObj
+                                            ?.categories?.isEmpty ??
+                                        true
+                                    ? []
+                                    : addRearedLivestockOneModelObj
+                                            ?.categories ??
                                         [],
                                 onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventCategory(
-                                          value: value));
+                                  // clearSelectionLivestock(state);
+                                  //clearSelectionSubCategories(state);
+                                  // context.read<AddRearedLivestockOneBloc>().add(
+                                  //     ChangeDropDownEventCategory(
+                                  //         value: value));
+                                  fillSubCategory(value.id!, state);
                                 },
                               );
                             },
@@ -239,18 +347,28 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   ),
                                 ),
                                 hintText: "lbl_select".tr,
-                                // val: state.selectedSubCategory == null
-                                //     ? null // Handle the case when 'categories' is empty
-                                //     : addRearedLivestockOneModelObj
-                                //             ?.subcategories[
-                                //         state.selectedSubCategory!.id! - 1],
+                                enabled: addRearedLivestockOneModelObj
+                                            ?.subcategories !=
+                                        null ||
+                                    addRearedLivestockOneModelObj!
+                                        .subcategories.isNotEmpty,
+                                val: selectedSubCategories,
                                 items: addRearedLivestockOneModelObj
-                                        ?.subcategories ??
-                                    [],
+                                            ?.subcategories?.isEmpty ??
+                                        true
+                                    ? []
+                                    : addRearedLivestockOneModelObj
+                                            ?.subcategories ??
+                                        [],
                                 onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventSubCategory(
-                                          value: value));
+                                  setState(() {
+                                    selectedSubCategories = value;
+                                  });
+                                  clearSelectionLivestock(state);
+                                  // context.read<AddRearedLivestockOneBloc>().add(
+                                  //     ChangeDropDownEventSubCategory(
+                                  //         value: value));
+                                  fillLivestock(value.id!, state);
                                 },
                               );
                             },
@@ -280,17 +398,26 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   ),
                                 ),
                                 hintText: "lbl_select".tr,
-                                // val: state.selectedLivestock == null
-                                //     ? null // Handle the case when 'categories' is empty
-                                //     : addRearedLivestockOneModelObj?.livestock[
-                                //         state.selectedLivestock!.id! - 1],
-                                items:
-                                    addRearedLivestockOneModelObj?.livestock ??
+                                enabled:
+                                    addRearedLivestockOneModelObj?.livestock !=
+                                            null ||
+                                        addRearedLivestockOneModelObj!
+                                            .livestock.isNotEmpty,
+                                val: selectedLivestock,
+                                items: addRearedLivestockOneModelObj
+                                            ?.livestock.isEmpty ??
+                                        true
+                                    ? []
+                                    : addRearedLivestockOneModelObj
+                                            ?.livestock ??
                                         [],
                                 onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventLivestock(
-                                          value: value));
+                                  setState(() {
+                                    selectedLivestock = value;
+                                  });
+                                  // context.read<AddRearedLivestockOneBloc>().add(
+                                  //     ChangeDropDownEventLivestock(
+                                  //         value: value));
                                 },
                               );
                             },

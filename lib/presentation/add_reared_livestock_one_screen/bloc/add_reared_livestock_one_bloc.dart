@@ -71,18 +71,32 @@ class AddRearedLivestockOneBloc
   _changeDropDownCategory(
     ChangeDropDownEventCategory event,
     Emitter<AddRearedLivestockOneState> emit,
-  ) {
-    emit(state.copyWith(
-      selectedCategory: event.value,
-    ));
+  ) async {
+    emit(
+      state.copyWith(
+        selectedCategory: event.value,
+        addRearedLivestockOneModelObj:
+            state.addRearedLivestockOneModelObj?.copyWith(
+          subcategories: await fillSubCategory(
+            event.value.id!,
+          ),
+        ),
+      ),
+    );
   }
 
   _changeDropDownSubCategory(
     ChangeDropDownEventSubCategory event,
     Emitter<AddRearedLivestockOneState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(
       selectedSubCategory: event.value,
+      addRearedLivestockOneModelObj:
+          state.addRearedLivestockOneModelObj?.copyWith(
+        livestock: await fillLivestock(
+          event.value.id!,
+        ),
+      ),
     ));
   }
 
@@ -122,10 +136,10 @@ class AddRearedLivestockOneBloc
     return list;
   }
 
-  Future<List<SelectionPopupModel>> fillLivestock() async {
+  Future<List<SelectionPopupModel>> fillLivestock(int subCatId) async {
     List<SelectionPopupModel> list = [];
     state.livestockDB = LivestockDB();
-    await state.livestockDB?.fetchAll().then((value) {
+    await state.livestockDB?.fetchAllWhereSubCatId(subCatId).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].livestock,
@@ -136,10 +150,10 @@ class AddRearedLivestockOneBloc
     return list;
   }
 
-  Future<List<SelectionPopupModel>> fillSubCategory() async {
+  Future<List<SelectionPopupModel>> fillSubCategory(int catId) async {
     List<SelectionPopupModel> list = [];
     state.subcategoryDB = LivestockSubcategoryDB();
-    await state.subcategoryDB?.fetchAll().then((value) {
+    await state.subcategoryDB?.fetchAllWhereCatID(catId).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].livestockSubcategory,
@@ -159,14 +173,15 @@ class AddRearedLivestockOneBloc
       categoryvalueController: TextEditingController(),
       subcategoryvaluController: TextEditingController(),
     ));
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         addRearedLivestockOneModelObj:
             state.addRearedLivestockOneModelObj?.copyWith(
-      chipviewayrshiItemList:
-          await fillCommonLivestock(), //fillChipviewayrshiItemList(),
-      categories: await fillCategories(),
-      subcategories: await fillSubCategory(),
-      livestock: await fillLivestock(),
-    )));
+          chipviewayrshiItemList:
+              await fillCommonLivestock(), //fillChipviewayrshiItemList(),
+          categories: await fillCategories(),
+        ),
+      ),
+    );
   }
 }
