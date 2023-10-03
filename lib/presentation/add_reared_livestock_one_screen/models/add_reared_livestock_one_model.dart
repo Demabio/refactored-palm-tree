@@ -57,7 +57,7 @@ class AddRearedLivestockOneModel extends Equatable {
       categories: categories ?? this.categories,
       subcategories: subcategories ?? this.subcategories,
       selectedLivestock: selectedLivestock,
-      selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedCategory: selectedCategory,
       selectedSubCategory: selectedSubCategory,
     );
   }

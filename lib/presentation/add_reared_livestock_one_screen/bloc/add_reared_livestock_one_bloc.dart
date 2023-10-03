@@ -27,36 +27,62 @@ class AddRearedLivestockOneBloc
   _updateChipView(
     UpdateChipViewEvent event,
     Emitter<AddRearedLivestockOneState> emit,
-  ) {
+  ) async {
     // List<ChipviewayrshiItemModel> newList = List<ChipviewayrshiItemModel>.from(
     //     state.addRearedLivestockOneModelObj!.chipviewayrshiItemList);
     // newList[event.index] = newList[event.index].copyWith(
     //   isSelected: event.isSelected,
     // );
-
-    add(ChangeDropDownEventCategory(
-        value: SelectionPopupModel(
-      title: event.model?.livestockCat ?? "",
-      id: event.model?.categoryid,
-    )));
+    List<SelectionPopupModel> subcategories =
+        await fillSubCategory(event.model!.categoryid!);
+    List<SelectionPopupModel> livestock =
+        await fillLivestock(event.model!.subcategoryid!);
 
     final updatedState = state.copyWith(
-      selectedCategory: SelectionPopupModel(
-        title: event.model?.livestockCat ?? "",
-        id: event.model?.categoryid,
-      ),
-      selectedSubCategory: SelectionPopupModel(
-        title: event.model?.livestockSubCat ?? "",
-        id: event.model?.subcategoryid,
-      ),
-      selectedLivestock: SelectionPopupModel(
-        title: event.model?.ayrshi ?? "",
-        id: event.model?.livestockid,
-      ),
-      // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
-      //     ?.copyWith(chipviewayrshiItemList: newList),
-    );
+        selectedCategory: SelectionPopupModel(
+          title: event.model?.livestockCat ?? "",
+          id: event.model?.categoryid,
+        ),
+        selectedSubCategory: SelectionPopupModel(
+          title: event.model?.livestockSubCat ?? "",
+          id: event.model?.subcategoryid,
+        ),
+        selectedLivestock: SelectionPopupModel(
+          title: event.model?.ayrshi ?? "",
+          id: event.model?.livestockid,
+        ),
+        addRearedLivestockOneModelObj:
+            state.addRearedLivestockOneModelObj?.copyWith(
+          selectedLivestock: null,
+          selectedCategory: null,
+          selectedSubCategory: null,
+          subcategories: subcategories,
+          livestock: livestock,
+        )
+        // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
+        //     ?.copyWith(chipviewayrshiItemList: newList),
+        );
     emit(updatedState);
+    SelectionPopupModel? categorymodel =
+        state.addRearedLivestockOneModelObj?.categories.firstWhere(
+      (model) => model.id == event.model!.categoryid,
+    );
+    SelectionPopupModel? subcategorymodel =
+        state.addRearedLivestockOneModelObj?.subcategories.firstWhere(
+      (model) => model.id == event.model!.subcategoryid,
+    );
+
+    SelectionPopupModel? livestockmodel =
+        state.addRearedLivestockOneModelObj?.livestock.firstWhere(
+      (model) => model.id == event.model!.livestockid,
+    );
+    emit(state.copyWith(
+        addRearedLivestockOneModelObj:
+            state.addRearedLivestockOneModelObj?.copyWith(
+      selectedCategory: categorymodel,
+      selectedSubCategory: subcategorymodel,
+      selectedLivestock: livestockmodel,
+    )));
   }
 
   _changeDropDownLiveStock(
@@ -65,6 +91,13 @@ class AddRearedLivestockOneBloc
   ) {
     emit(state.copyWith(
       selectedLivestock: event.value,
+      addRearedLivestockOneModelObj:
+          state.addRearedLivestockOneModelObj?.copyWith(
+        selectedLivestock: event.value,
+        selectedSubCategory:
+            state.addRearedLivestockOneModelObj?.selectedSubCategory,
+        selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+      ),
     ));
   }
 
@@ -79,6 +112,7 @@ class AddRearedLivestockOneBloc
             state.addRearedLivestockOneModelObj?.copyWith(
           selectedCategory: event.value,
           selectedSubCategory: null,
+          selectedLivestock: null,
           subcategories: await fillSubCategory(
             event.value.id!,
           ),
@@ -96,6 +130,8 @@ class AddRearedLivestockOneBloc
       addRearedLivestockOneModelObj:
           state.addRearedLivestockOneModelObj?.copyWith(
         selectedSubCategory: event.value,
+        selectedLivestock: null,
+        selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
         livestock: await fillLivestock(
           event.value.id!,
         ),

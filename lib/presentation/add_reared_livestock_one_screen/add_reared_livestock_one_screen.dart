@@ -1,7 +1,3 @@
-import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcategory.dart';
-
 import '../add_reared_livestock_one_screen/widgets/chipviewayrshi_item_widget.dart';
 import 'bloc/add_reared_livestock_one_bloc.dart';
 import 'models/add_reared_livestock_one_model.dart';
@@ -16,7 +12,7 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
-class AddRearedLivestockOneScreen extends StatefulWidget {
+class AddRearedLivestockOneScreen extends StatelessWidget {
   AddRearedLivestockOneScreen({Key? key})
       : super(
           key: key,
@@ -32,108 +28,12 @@ class AddRearedLivestockOneScreen extends StatefulWidget {
     );
   }
 
-  @override
-  State<AddRearedLivestockOneScreen> createState() =>
-      _AddRearedLivestockOneScreenState();
-}
-
-class _AddRearedLivestockOneScreenState
-    extends State<AddRearedLivestockOneScreen> {
   FocusNode _firstTextFieldFocus = FocusNode();
-
   FocusNode _secondTextFieldFocus = FocusNode();
-
   FocusNode _thirdTextFieldFocus = FocusNode();
-
   FocusNode fouthTextFieldFocus = FocusNode();
-
   FocusNode fifthTextFieldFocus = FocusNode();
-
   FocusNode sixthTextFieldFocus = FocusNode();
-
-  SelectionPopupModel? selectedLivestock;
-
-  SelectionPopupModel? selectedCategories;
-
-  SelectionPopupModel? selectedSubCategories =
-      null; //SelectionPopupModel(title: "Select", id: 0);
-
-  void clearSelectionLivestock(AddRearedLivestockOneState state) {
-    setState(() {
-      selectedLivestock = null;
-      state.addRearedLivestockOneModelObj?.livestock = [];
-    });
-  }
-
-  void clearSelectionCategories(AddRearedLivestockOneState state) {
-    setState(() {
-      selectedCategories = null;
-      state.addRearedLivestockOneModelObj?.categories = [];
-    });
-  }
-
-  void clearSelectionSubCategories(AddRearedLivestockOneState state) {
-    setState(() {
-      selectedSubCategories = SelectionPopupModel(title: "Selected", id: 0);
-      //state.addRearedLivestockOneModelObj?.subcategories = [];
-    });
-  }
-
-  Future<void> fillCategories(AddRearedLivestockOneState state) async {
-    List<SelectionPopupModel> list = [];
-    state.categoryDB = LivestockCategoryDB();
-    await state.categoryDB?.fetchAll().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        list.add(SelectionPopupModel(
-          title: value[i].livestockCategory,
-          id: value[i].livestockCatId,
-        ));
-      }
-    });
-    setState(() {
-      state.addRearedLivestockOneModelObj?.categories = list;
-      selectedSubCategories = SelectionPopupModel(title: "Selected", id: 0);
-    });
-  }
-
-  Future<void> fillLivestock(
-      int subCatId, AddRearedLivestockOneState state) async {
-    List<SelectionPopupModel> list = [];
-    state.livestockDB = LivestockDB();
-    await state.livestockDB?.fetchAllWhereSubCatId(subCatId).then((value) {
-      for (int i = 0; i < value.length; i++) {
-        list.add(SelectionPopupModel(
-          title: value[i].livestock,
-          id: value[i].livestockId,
-        ));
-      }
-    });
-    setState(() {
-      state.addRearedLivestockOneModelObj?.livestock = list;
-    });
-  }
-
-  Future<void> fillSubCategory(
-      int catId, AddRearedLivestockOneState state) async {
-    List<SelectionPopupModel> list = [];
-    list.add(SelectionPopupModel(title: "Selected", id: 0));
-
-    state.subcategoryDB = LivestockSubcategoryDB();
-    await state.subcategoryDB?.fetchAllWhereCatID(catId).then((value) {
-      for (int i = 0; i < value.length; i++) {
-        list.add(SelectionPopupModel(
-          title: value[i].livestockSubcategory,
-          id: value[i].livestockSubCatId,
-        ));
-      }
-    });
-    setState(() {
-      state.addRearedLivestockOneModelObj?.subcategories = list;
-      selectedSubCategories =
-          null; //SelectionPopupModel(title: "Selected", id: 0);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -257,12 +157,12 @@ class _AddRearedLivestockOneScreenState
                                     return ChipviewayrshiItemWidget(
                                       model,
                                       onSelectedChipView: (value) {
-                                        // context
-                                        //     .read<AddRearedLivestockOneBloc>()
-                                        //     .add(UpdateChipViewEvent(
-                                        //         index: index,
-                                        //         isSelected: value,
-                                        //         model: model));
+                                        context
+                                            .read<AddRearedLivestockOneBloc>()
+                                            .add(UpdateChipViewEvent(
+                                                index: index,
+                                                isSelected: value,
+                                                model: model));
                                       },
                                     );
                                   },
@@ -296,17 +196,12 @@ class _AddRearedLivestockOneScreenState
                                 ),
                               ),
                               hintText: "lbl_select".tr,
-                              enabled:
-                                  addRearedLivestockOneModelObj?.categories !=
-                                          null ||
-                                      addRearedLivestockOneModelObj!
-                                          .categories.isNotEmpty,
-                              items: addRearedLivestockOneModelObj
-                                          ?.categories?.isEmpty ??
-                                      true
+                              val: addRearedLivestockOneModelObj
+                                  ?.selectedCategory,
+                              items: addRearedLivestockOneModelObj!
+                                      .categories.isEmpty
                                   ? []
-                                  : addRearedLivestockOneModelObj?.categories ??
-                                      [],
+                                  : addRearedLivestockOneModelObj.categories,
                               onChanged: (value) {
                                 context.read<AddRearedLivestockOneBloc>().add(
                                     ChangeDropDownEventCategory(value: value));
@@ -339,20 +234,12 @@ class _AddRearedLivestockOneScreenState
                                 ),
                               ),
                               hintText: "lbl_select".tr,
-                              enabled: addRearedLivestockOneModelObj
-                                          ?.subcategories !=
-                                      null ||
-                                  addRearedLivestockOneModelObj!
-                                      .subcategories.isNotEmpty,
                               val: addRearedLivestockOneModelObj
                                   ?.selectedSubCategory,
-                              items: addRearedLivestockOneModelObj
-                                          ?.subcategories?.isEmpty ??
-                                      true
+                              items: addRearedLivestockOneModelObj!
+                                      .subcategories.isEmpty
                                   ? []
-                                  : addRearedLivestockOneModelObj
-                                          ?.subcategories ??
-                                      [],
+                                  : addRearedLivestockOneModelObj.subcategories,
                               onChanged: (value) {
                                 context.read<AddRearedLivestockOneBloc>().add(
                                     ChangeDropDownEventSubCategory(
@@ -386,25 +273,15 @@ class _AddRearedLivestockOneScreenState
                                 ),
                               ),
                               hintText: "lbl_select".tr,
-                              enabled:
-                                  addRearedLivestockOneModelObj?.livestock !=
-                                          null ||
-                                      addRearedLivestockOneModelObj!
-                                          .livestock.isNotEmpty,
-                              val: selectedLivestock,
-                              items: addRearedLivestockOneModelObj
-                                          ?.livestock.isEmpty ??
-                                      true
+                              val: addRearedLivestockOneModelObj
+                                  ?.selectedLivestock,
+                              items: addRearedLivestockOneModelObj!
+                                      .livestock.isEmpty
                                   ? []
-                                  : addRearedLivestockOneModelObj?.livestock ??
-                                      [],
+                                  : addRearedLivestockOneModelObj.livestock,
                               onChanged: (value) {
-                                setState(() {
-                                  selectedLivestock = value;
-                                });
-                                // context.read<AddRearedLivestockOneBloc>().add(
-                                //     ChangeDropDownEventLivestock(
-                                //         value: value));
+                                context.read<AddRearedLivestockOneBloc>().add(
+                                    ChangeDropDownEventLivestock(value: value));
                               },
                             );
                           },
