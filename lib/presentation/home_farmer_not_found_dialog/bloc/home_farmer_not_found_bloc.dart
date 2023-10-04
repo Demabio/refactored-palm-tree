@@ -15,6 +15,8 @@ import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.da
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/models/dbModels/livestock/agegroup.dart';
+import 'package:kiamis_app/data/models/dbModels/livestock/beehivetypes.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockfarmingsystem.dart';
@@ -23,9 +25,11 @@ import 'package:kiamis_app/data/models/dbModels/livestock/livestocksubcategory.d
 import 'package:kiamis_app/data/models/dbModels/other/agriculturalinfosource.dart';
 import 'package:kiamis_app/data/models/dbModels/other/agriskills.dart';
 import 'package:kiamis_app/data/models/dbModels/other/conservationagripractices.dart';
+import 'package:kiamis_app/data/models/dbModels/other/cooperativegroups.dart';
 import 'package:kiamis_app/data/models/dbModels/other/creditsource.dart';
 import 'package:kiamis_app/data/models/dbModels/other/educationlevel.dart';
 import 'package:kiamis_app/data/models/dbModels/other/enterpirses.dart';
+import 'package:kiamis_app/data/models/dbModels/other/extensionmodes.dart';
 import 'package:kiamis_app/data/models/dbModels/other/extensionsources.dart';
 import 'package:kiamis_app/data/models/dbModels/other/householdrelationships.dart';
 import 'package:kiamis_app/data/models/dbModels/other/incomesource.dart';
@@ -51,6 +55,8 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagenci
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
@@ -59,9 +65,11 @@ import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcateg
 import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/agriskills.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/conservationagripractices.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/cooperativegroups.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/creditsource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/educationlevel.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/enterpirses.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionmodes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/householdrelationships.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/incomesource.dart';
@@ -151,7 +159,7 @@ class HomeFarmerNotFoundBloc
     InnitDBwithDataEvent event,
     Emitter<HomeFarmerNotFoundState> emit,
   ) async {
-    int full = 8800;
+    int full = 10000;
     int appraiser = 0;
     double currentval = 0;
     double currentpercentage = 0;
@@ -1816,80 +1824,229 @@ class HomeFarmerNotFoundBloc
         print(error.toString());
       });
 
-      // await _repository.setupServicePost(
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //     'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      //   },
-      //   requestData: Graphql.getallFish,
-      // ).then((value) async {
-      //   appraiser += 100;
-      //   currentval = appraiser / full;
-      //   currentpercentage = currentval * 100;
-      //   final updatedState = state.copyWith(
-      //     count: state.count + 1,
-      //     linebarvalue: currentval,
-      //     percentagedone: currentpercentage.toInt(),
-      //   );
-      //   emit(updatedState);
-      //   List<FishType> data = FishType.parseFishList(value.data);
-      //   await FishTypeDB().insertFishTypes(data).then((value) {
-      //     if (value == 200) {
-      //       appraiser += 100;
-      //       currentval = appraiser / full;
-      //       currentpercentage = currentval * 100;
-      //       final updatedState = state.copyWith(
-      //         count: state.count + 1,
-      //         linebarvalue: currentval,
-      //         percentagedone: currentpercentage.toInt(),
-      //       );
-      //       emit(updatedState);
-      //     } else {
-      //       print("failed");
-      //     }
-      //   });
-      // }).onError((error, stackTrace) {
-      //   print(error.toString());
-      // });
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallFish,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<FishType> data = FishType.parseFishList(value.data);
+        await FishTypeDB().insertFishTypes(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
 
-      // await _repository.setupServicePost(
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //     'Authorization': 'Bearer ${PrefUtils().getToken()}'
-      //   },
-      //   requestData: Graphql.getallFarmerRegistrationStatuses,
-      // ).then((value) async {
-      //   appraiser += 100;
-      //   currentval = appraiser / full;
-      //   currentpercentage = currentval * 100;
-      //   final updatedState = state.copyWith(
-      //     count: state.count + 1,
-      //     linebarvalue: currentval,
-      //     percentagedone: currentpercentage.toInt(),
-      //   );
-      //   emit(updatedState);
-      //   List<FarmersRegistrationStatus> data =
-      //       FarmersRegistrationStatus.parseFarmerRegistrationStatuses(value.data);
-      //   await FarmersRegistrationStatusDB()
-      //       .insertRegistrationStatuses(data)
-      //       .then((value) {
-      //     if (value == 200) {
-      //       appraiser += 100;
-      //       currentval = appraiser / full;
-      //       currentpercentage = currentval * 100;
-      //       final updatedState = state.copyWith(
-      //         count: state.count + 1,
-      //         linebarvalue: currentval,
-      //         percentagedone: currentpercentage.toInt(),
-      //       );
-      //       emit(updatedState);
-      //     } else {
-      //       print("failed");
-      //     }
-      //   });
-      // }).onError((error, stackTrace) {
-      //   print(error.toString());
-      // });
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallFarmerRegistrationStatuses,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<FarmersRegistrationStatus> data =
+            FarmersRegistrationStatus.parseFarmerRegistrationStatuses(
+                value.data);
+        await FarmersRegistrationStatusDB()
+            .insertRegistrationStatuses(data)
+            .then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
+
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallAgeGroups,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<LivestockAgeGroup> data =
+            LivestockAgeGroup.parseAgeGroups(value.data);
+        await LivestockAgeGroupDB().insertAgeGroups(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
+
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallBeeHiveTypes,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<LivestockBeehiveType> data =
+            LivestockBeehiveType.parseBeeHiveTypes(value.data);
+        await LivestockBeehiveTypeDB().insertBeehiveTypes(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
+
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallCooperativeGroups,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<CooperativeGroup> data =
+            CooperativeGroup.parseCooperativeGroups(value.data);
+        await CooperativeGroupDB().insertCooperativeGroups(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
+
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallExtensionModes,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<ExtensionMode> data =
+            ExtensionMode.parseExtensionModes(value.data);
+        await ExtensionModeDB().insertExtensionModes(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
     } catch (e) {
       event.onFailed?.call();
     } finally {
@@ -1899,6 +2056,7 @@ class HomeFarmerNotFoundBloc
         event.onFailed?.call();
       }
     }
+
 // Crops
 
     //event.onSuccess?.call();

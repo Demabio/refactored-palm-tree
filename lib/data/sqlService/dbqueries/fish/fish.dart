@@ -50,9 +50,10 @@ class FishTypeDB {
     try {
       for (var fishType in fishTypes) {
         batch.rawInsert('''
-      INSERT INTO $tableName (fish_category_id, fish_type, fish_code, common_fish, description, date_created, created_by) 
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO $tableName (fish_type_id,fish_category_id, fish_type, fish_code, common_fish, description, date_created, created_by) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
+          fishType.fishTypeId,
           fishType.fishCategoryId,
           fishType.fishType,
           fishType.fishCode,

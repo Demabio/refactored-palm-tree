@@ -530,4 +530,43 @@ class Graphql {
     }
   }
 ''';
+  static const String getallAgeGroups = r'''
+  query {
+    getallAgeGroups {
+      ageGroup
+      ageGroupId
+      createdBy
+      dateCreated
+    }
+  }
+''';
+
+  static const String getallCooperativeGroups = r'''
+  query {
+    getallCooperativeGroups {
+      cooperateiveGroupId
+      group
+      description
+    }
+  }
+''';
+
+  static const String getallBeeHiveTypes = r'''
+  query {
+    getallBeeHiveTypes {
+      beehivesTypeId
+      beeHiveType
+    }
+  }
+''';
+
+  static const String getallExtensionModes = r'''
+  query {
+    getallExtensionModes {
+      extensionModeId
+      sourceMode
+      description
+    }
+  }
+''';
 }

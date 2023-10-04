@@ -159,7 +159,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                 buttonTextStyle: CustomTextStyles.bodyLarge16,
                 onTap: () => onTapDonwload(context, state),
-                isDisabled: state.visibility || state.failed,
+                isDisabled: state.visibility && !state.failed,
               ),
             ),
             // Row(

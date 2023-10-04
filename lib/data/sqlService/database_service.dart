@@ -17,6 +17,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmstructures.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertypecategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
@@ -25,6 +26,8 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagenci
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
@@ -33,9 +36,11 @@ import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcateg
 import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/agriskills.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/conservationagripractices.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/cooperativegroups.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/creditsource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/educationlevel.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/enterpirses.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionmodes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/householdrelationships.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/incomesource.dart';
@@ -43,6 +48,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/laboursource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/livelihoodsource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/maritalstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/registrationstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/respondentrelationship.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -127,5 +133,13 @@ class DatabaseService {
     await MaritalStatusDB().createTable(database);
     await PesticideTypeDB().createTable(database);
     await RespondentRelationshipDB().createTable(database);
+
+    //
+    await FishTypeDB().createTable(database);
+    await FarmersRegistrationStatusDB().createTable(database);
+    await LivestockAgeGroupDB().createTable(database);
+    await LivestockBeehiveTypeDB().createTable(database);
+    await ExtensionModeDB().createTable(database);
+    await CooperativeGroupDB().createTable(database);
   }
 }
