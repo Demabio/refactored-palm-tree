@@ -33,71 +33,80 @@ class AgeGroupItemWidget extends StatelessWidget {
       child: Column(
         children: [
           CustomCheckboxButton(
-            text: "msg_less_than_3_weeks".tr,
+            text: ageGroupmModel.title,
             value: ageGroupmModel.isSelected,
             margin: EdgeInsets.only(
               left: 5.h,
-              top: 46.v,
+              top: 20.v,
             ),
-            onChange: (value) {},
+            onChange: (value) {
+              onSelect?.call(value);
+            },
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 14.v,
-              right: 5.h,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 10.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "lbl_males".tr,
-                          style: CustomTextStyles.labelMediumPrimary_1,
-                        ),
-                        CustomTextFormField(
-                          width: 150.h,
-                          controller: ageGroupmModel.male,
-                          hintText: "lbl_males".tr,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 7.h,
-                            vertical: 13.v,
+          if (ageGroupmModel.isSelected)
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5.v,
+                right: 5.h,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "lbl_males".tr,
+                            style: CustomTextStyles.labelMediumPrimary_1,
                           ),
-                        ),
-                      ],
+                          CustomTextFormField(
+                            width: 150.h,
+                            focusNode: ageGroupmModel.focusNode,
+                            autofocus: false,
+                            controller: ageGroupmModel.male,
+                            hintText: "lbl_males".tr,
+                            textInputType: TextInputType.number,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 7.h,
+                              vertical: 13.v,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "lbl_females".tr,
-                          style: CustomTextStyles.labelMediumPrimary_1,
-                        ),
-                        CustomTextFormField(
-                          width: 150.h,
-                          controller: ageGroupmModel.female,
-                          hintText: "lbl_females".tr,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 8.h,
-                            vertical: 13.v,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "lbl_females".tr,
+                            style: CustomTextStyles.labelMediumPrimary_1,
                           ),
-                        ),
-                      ],
+                          CustomTextFormField(
+                            width: 150.h,
+                            focusNode: ageGroupmModel.femalefocusNode,
+                            autofocus: false,
+                            controller: ageGroupmModel.female,
+                            hintText: "lbl_females".tr,
+                            textInputType: TextInputType.number,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 8.h,
+                              vertical: 13.v,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

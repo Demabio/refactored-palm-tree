@@ -7,21 +7,24 @@ import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/m
 /// and is typically used to hold data that is passed between different parts of the application.
 class AddRearedLivestockDialogTwoModel extends Equatable {
   AddRearedLivestockDialogTwoModel({
-    this.ageGroupmModel,
+    this.ageGroupmModels = const [],
+    this.count = 0,
   }) {}
 
-  List<AgeGroupmModel>? ageGroupmModel;
+  List<AgeGroupmModel> ageGroupmModels;
 
-  AddRearedLivestockDialogTwoModel copyWith(
-    List<AgeGroupmModel>? ageGroupmModel,
-  ) {
+  int count;
+
+  AddRearedLivestockDialogTwoModel copyWith({
+    List<AgeGroupmModel>? ageGroupmModels,
+    int? count,
+  }) {
     return AddRearedLivestockDialogTwoModel(
-      ageGroupmModel: ageGroupmModel ?? this.ageGroupmModel,
+      ageGroupmModels: ageGroupmModels ?? this.ageGroupmModels,
+      count: count ?? this.count,
     );
   }
 
   @override
-  List<Object?> get props => [
-        ageGroupmModel,
-      ];
+  List<Object?> get props => [ageGroupmModels, count];
 }

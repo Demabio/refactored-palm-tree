@@ -16,7 +16,7 @@ class LivestockAgeGroup {
         ageGroupId: map['age_group_id']?.toInt() ?? 0,
         ageGroup: map['age_group'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by']),
+        createdBy: map['created_by'] ?? 0,
       );
   static List<LivestockAgeGroup> parseAgeGroups(Map<String, dynamic> json) {
     final ageGroupsList = json['data']['getallAgeGroups'] as List<dynamic>;

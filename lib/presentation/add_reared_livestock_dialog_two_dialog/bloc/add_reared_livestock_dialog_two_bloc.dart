@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/add_reared_livestock_dialog_two_model.dart';
@@ -14,6 +15,7 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     on<AddRearedLivestockDialogTwoInitialEvent>(_onInitialize);
     on<ChangeCheckBoxEvent>(_changeCheckBox);
     on<ChangeCheckBox1Event>(_changeCheckBox1);
+    on<ChangeAgeGroupCheckbox>(_changeAgeGroupCB);
   }
 
   _changeCheckBox(
@@ -34,37 +36,56 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     ));
   }
 
-  // Future<List<AgeGroupmModel>> fillCommonLivestock() async {
-  //   List<AgeGroupmModel> list = [];
-  //   state.livestockDB = LivestockDB();
-  //   await state.livestockDB?.fetchAllCommon().then((value) {
-  //     for (int i = 0; i < value.length; i++) {
-  //       list.add(ChipviewayrshiItemModel(
-  //         livestockid: value[i].livestockId,
-  //         subcategoryid: value[i].livestockSubCatId,
-  //         categoryid: value[i].livestockCatId,
-  //         ayrshi: value[i].livestock,
-  //         livestockCat: value[i].livestockCat,
-  //         livestockSubCat: value[i].livestockSubCat,
-  //       ));
-  //     }
-  //   });
-  //   return list;
-  // }
+  Future<List<AgeGroupmModel>> fetchAgeGroups() async {
+    List<AgeGroupmModel> list = [];
+    LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
+    TextEditingController stored = TextEditingController();
+    stored.value = TextEditingValue(text: "999");
+    await livestockAgeGroupDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(AgeGroupmModel(
+          title: value[i].ageGroup,
+          ageGroupId: value[i].ageGroupId,
+          female: TextEditingController(),
+          male: TextEditingController(),
+          focusNode: FocusNode(),
+          femalefocusNode: FocusNode(),
+        ));
+      }
+    });
+    return list;
+  }
+
+  _changeAgeGroupCB(
+    ChangeAgeGroupCheckbox event,
+    Emitter<AddRearedLivestockDialogTwoState> emit,
+  ) {
+    List<AgeGroupmModel> newModels =
+        state.addRearedLivestockDialogTwoModelObj!.ageGroupmModels;
+
+    newModels[event.value].isSelected = true;
+
+    emit(state.copyWith(
+        addRearedLivestockDialogTwoModelObj:
+            state.addRearedLivestockDialogTwoModelObj?.copyWith(
+      ageGroupmModels: newModels,
+      count: state.addRearedLivestockDialogTwoModelObj!.count + 1,
+    )));
+  }
 
   _onInitialize(
     AddRearedLivestockDialogTwoInitialEvent event,
     Emitter<AddRearedLivestockDialogTwoState> emit,
   ) async {
-    emit(state.copyWith(
-      lessThanThreeWe: false,
-      threeToEightWee: false,
-      lessThanTwoMont: false,
-      twoToSixMonths: false,
-      sixToTwelveMont: false,
-      oneToTwoYears: false,
-      twoToFourYears: false,
-      fourYearsOrOlde: false,
-    ));
+    emit(
+      state.copyWith(
+        lessThanThreeWe: false,
+        threeToEightWee: false,
+        addRearedLivestockDialogTwoModelObj:
+            state.addRearedLivestockDialogTwoModelObj?.copyWith(
+          ageGroupmModels: await fetchAgeGroups(),
+        ),
+      ),
+    );
   }
 }

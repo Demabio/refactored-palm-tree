@@ -25,12 +25,6 @@ class AddRearedLivestockDialogTwoState extends Equatable {
   AddRearedLivestockDialogTwoState copyWith({
     bool? lessThanThreeWe,
     bool? threeToEightWee,
-    bool? lessThanTwoMont,
-    bool? twoToSixMonths,
-    bool? sixToTwelveMont,
-    bool? oneToTwoYears,
-    bool? twoToFourYears,
-    bool? fourYearsOrOlde,
     AddRearedLivestockDialogTwoModel? addRearedLivestockDialogTwoModelObj,
   }) {
     return AddRearedLivestockDialogTwoState(

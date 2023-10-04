@@ -8,13 +8,15 @@ class AgeGroupmModel extends Equatable {
   AgeGroupmModel({
     this.title = "Ayrshi",
     this.isSelected = false,
-    this.livestockid,
+    this.ageGroupId,
     this.categoryid,
     this.subcategoryid,
     this.livestockCat,
     this.livestockSubCat,
     this.female,
     this.male,
+    this.focusNode,
+    this.femalefocusNode,
   }) {}
 
   String title;
@@ -25,7 +27,7 @@ class AgeGroupmModel extends Equatable {
 
   TextEditingController? female;
 
-  int? livestockid;
+  int? ageGroupId;
 
   int? categoryid;
 
@@ -35,27 +37,35 @@ class AgeGroupmModel extends Equatable {
 
   String? livestockSubCat;
 
+  FocusNode? focusNode;
+
+  FocusNode? femalefocusNode;
+
   AgeGroupmModel copyWith({
     String? ayrshi,
     bool? isSelected,
-    int? livestockid,
+    int? ageGroupId,
     int? categoryid,
     int? subcategoryid,
     String? livestockCat,
     String? livestockSubCat,
     TextEditingController? male,
     TextEditingController? female,
+    FocusNode? focusNode,
+    FocusNode? femalefocusNode,
   }) {
     return AgeGroupmModel(
       title: ayrshi ?? this.title,
       isSelected: isSelected ?? this.isSelected,
-      livestockid: livestockid ?? this.livestockid,
+      ageGroupId: ageGroupId ?? this.ageGroupId,
       categoryid: categoryid ?? this.categoryid,
       subcategoryid: subcategoryid ?? this.subcategoryid,
       livestockCat: livestockCat ?? this.livestockCat,
       livestockSubCat: livestockSubCat ?? this.livestockSubCat,
       male: male ?? this.male,
       female: female ?? this.female,
+      focusNode: focusNode ?? this.focusNode,
+      femalefocusNode: femalefocusNode ?? this.femalefocusNode,
     );
   }
 
@@ -65,10 +75,12 @@ class AgeGroupmModel extends Equatable {
         isSelected,
         subcategoryid,
         categoryid,
-        livestockid,
+        ageGroupId,
         livestockSubCat,
         livestockCat,
         female,
         male,
+        focusNode,
+        femalefocusNode,
       ];
 }

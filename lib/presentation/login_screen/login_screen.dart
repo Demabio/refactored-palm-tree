@@ -155,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                               text: "lbl_log_in".tr,
                               margin: EdgeInsets.fromLTRB(3.h, 25.v, 2.h, 5.v),
                               onTap: () {
-                                loginAPI(context);
+                                _onLoginUserServicePostEventSuccess(context);
                               })
                         ])))));
   }
@@ -185,7 +185,7 @@ class LoginScreen extends StatelessWidget {
   /// to push the named route for the otpOneScreen.
   void _onLoginUserServicePostEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.otpOneScreen,
+      AppRoutes.addRearedLivestockOneScreen,
     );
   }
 
