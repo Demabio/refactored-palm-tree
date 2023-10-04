@@ -15,3 +15,36 @@ class FarmersIdentificationOneInitialEvent
   @override
   List<Object?> get props => [];
 }
+
+class StepUpEvent extends FarmersIdentificationOneEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends FarmersIdentificationOneEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends FarmersIdentificationOneEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

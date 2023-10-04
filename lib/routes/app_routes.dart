@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/presentation/farmers_identification_screen_base/farmers_identification_base_screen.dart';
 import 'package:kiamis_app/presentation/splash_screen/splash_screen.dart';
 import 'package:kiamis_app/presentation/login_screen/login_screen.dart';
 import 'package:kiamis_app/presentation/forgot_password_screen/forgot_password_screen.dart';
@@ -87,6 +88,9 @@ class AppRoutes {
   static const String searchFarmerFoundScreen = '/search_farmer_found_screen';
 
   static const String farmerRegistrationScreen = '/farmer_registration_screen';
+
+  static const String farmerRegistrationbaseScreen =
+      '/farmer_registration_base_screen';
 
   static const String draftEntriesScreen = '/draft_entries_screen';
 
@@ -319,6 +323,7 @@ class AppRoutes {
         expenseTrackingTabContainerScreen:
             ExpenseTrackingTabContainerScreen.builder,
         appNavigationScreen: AppNavigationScreen.builder,
-        initialRoute: SplashScreen.builder
+        initialRoute: SplashScreen.builder,
+        farmerRegistrationbaseScreen: FarmersIdentificationScreenBase.builder,
       };
 }
