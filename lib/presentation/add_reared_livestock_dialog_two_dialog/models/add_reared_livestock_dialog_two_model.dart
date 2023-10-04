@@ -11,12 +11,12 @@ class AddRearedLivestockDialogTwoModel extends Equatable {
     this.count = 0,
   }) {}
 
-  List<AgeGroupmModel> ageGroupmModels;
+  List<AgeGroupModel> ageGroupmModels;
 
   int count;
 
   AddRearedLivestockDialogTwoModel copyWith({
-    List<AgeGroupmModel>? ageGroupmModels,
+    List<AgeGroupModel>? ageGroupmModels,
     int? count,
   }) {
     return AddRearedLivestockDialogTwoModel(

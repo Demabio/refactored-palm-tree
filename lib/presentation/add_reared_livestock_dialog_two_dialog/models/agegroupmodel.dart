@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 /// This class is used in the [chipviewayrshi_item_widget] screen.
-class AgeGroupmModel extends Equatable {
-  AgeGroupmModel({
+class AgeGroupModel extends Equatable {
+  AgeGroupModel({
     this.title = "Ayrshi",
     this.isSelected = false,
     this.ageGroupId,
@@ -41,7 +41,7 @@ class AgeGroupmModel extends Equatable {
 
   FocusNode? femalefocusNode;
 
-  AgeGroupmModel copyWith({
+  AgeGroupModel copyWith({
     String? ayrshi,
     bool? isSelected,
     int? ageGroupId,
@@ -54,7 +54,7 @@ class AgeGroupmModel extends Equatable {
     FocusNode? focusNode,
     FocusNode? femalefocusNode,
   }) {
-    return AgeGroupmModel(
+    return AgeGroupModel(
       title: ayrshi ?? this.title,
       isSelected: isSelected ?? this.isSelected,
       ageGroupId: ageGroupId ?? this.ageGroupId,
@@ -83,4 +83,34 @@ class AgeGroupmModel extends Equatable {
         focusNode,
         femalefocusNode,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'isSelected': isSelected,
+      'male': male?.text,
+      'female': female?.text,
+      'ageGroupId': ageGroupId,
+      // Add other properties as needed...
+    };
+  }
+
+  factory AgeGroupModel.fromJson(Map<String, dynamic> json) {
+    return AgeGroupModel(
+      title: json['title'],
+      isSelected: json['isSelected'],
+      male: json['male'] != null
+          ? TextEditingController(text: json['male'])
+          : null,
+      female: json['female'] != null
+          ? TextEditingController(text: json['female'])
+          : null,
+      ageGroupId: json['ageGroupId'],
+      categoryid: json['categoryid'],
+      subcategoryid: json['subcategoryid'],
+      livestockCat: json['livestockCat'],
+      livestockSubCat: json['livestockSubCat'],
+      // Add other properties as needed...
+    );
+  }
 }

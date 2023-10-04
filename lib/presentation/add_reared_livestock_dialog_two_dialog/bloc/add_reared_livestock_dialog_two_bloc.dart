@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
@@ -16,6 +18,9 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     on<ChangeCheckBoxEvent>(_changeCheckBox);
     on<ChangeCheckBox1Event>(_changeCheckBox1);
     on<ChangeAgeGroupCheckbox>(_changeAgeGroupCB);
+    on<ResetCBs>(_resetCBs);
+
+    on<AddAGs>(_addAgeGroups);
   }
 
   _changeCheckBox(
@@ -36,14 +41,14 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     ));
   }
 
-  Future<List<AgeGroupmModel>> fetchAgeGroups() async {
-    List<AgeGroupmModel> list = [];
+  Future<List<AgeGroupModel>> fetchAgeGroups() async {
+    List<AgeGroupModel> list = [];
     LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
     await livestockAgeGroupDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
-        list.add(AgeGroupmModel(
+        list.add(AgeGroupModel(
           title: value[i].ageGroup,
           ageGroupId: value[i].ageGroupId,
           female: TextEditingController(),
@@ -60,10 +65,10 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     ChangeAgeGroupCheckbox event,
     Emitter<AddRearedLivestockDialogTwoState> emit,
   ) {
-    List<AgeGroupmModel> newModels =
+    List<AgeGroupModel> newModels =
         state.addRearedLivestockDialogTwoModelObj!.ageGroupmModels;
 
-    newModels[event.value].isSelected = true;
+    newModels[event.value].isSelected = event.selected!;
 
     emit(state.copyWith(
         addRearedLivestockDialogTwoModelObj:
@@ -71,6 +76,40 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
       ageGroupmModels: newModels,
       count: state.addRearedLivestockDialogTwoModelObj!.count + 1,
     )));
+  }
+
+  _resetCBs(
+    ResetCBs event,
+    Emitter<AddRearedLivestockDialogTwoState> emit,
+  ) async {
+    emit(state.copyWith(
+        addRearedLivestockDialogTwoModelObj:
+            state.addRearedLivestockDialogTwoModelObj?.copyWith(
+      ageGroupmModels: await fetchAgeGroups(),
+      count: 0,
+    )));
+  }
+
+  _addAgeGroups(
+    AddAGs event,
+    Emitter<AddRearedLivestockDialogTwoState> emit,
+  ) {
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
+
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<AgeGroupModel> ageGroupList =
+        decageGroupMapList.map((json) => AgeGroupModel.fromJson(json)).toList();
+
+    emit(state.copyWith(
+        addRearedLivestockDialogTwoModelObj:
+            state.addRearedLivestockDialogTwoModelObj));
   }
 
   _onInitialize(

@@ -58,4 +58,16 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setAgeGroups(String value) {
+    return _sharedPreferences!.setString('agegroups', value);
+  }
+
+  String getAgeGroups() {
+    try {
+      return _sharedPreferences!.getString('agegroups') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

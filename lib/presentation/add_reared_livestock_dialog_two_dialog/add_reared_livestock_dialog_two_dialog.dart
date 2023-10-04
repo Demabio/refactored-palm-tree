@@ -1,5 +1,7 @@
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/widgets/age_group_widget.dart';
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:sizer/sizer.dart';
 
 import 'bloc/add_reared_livestock_dialog_two_bloc.dart';
@@ -56,19 +58,17 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
                               ?.ageGroupmModels.length ??
                           0,
                       (index) {
-                        AgeGroupmModel model =
+                        AgeGroupModel model =
                             addRearedLivestockDialogTwoModelObj
                                     ?.ageGroupmModels[index] ??
-                                AgeGroupmModel();
+                                AgeGroupModel();
 
                         return AgeGroupItemWidget(
                           model,
                           onSelect: (value) {
-                            context
-                                .read<AddRearedLivestockDialogTwoBloc>()
-                                .add(ChangeAgeGroupCheckbox(
-                                  value: index,
-                                ));
+                            context.read<AddRearedLivestockDialogTwoBloc>().add(
+                                ChangeAgeGroupCheckbox(
+                                    value: index, selected: value));
                           },
                         );
                       },
@@ -78,7 +78,55 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
+        BlocSelector<
+            AddRearedLivestockDialogTwoBloc,
+            AddRearedLivestockDialogTwoState,
+            AddRearedLivestockDialogTwoModel?>(
+          selector: (state) => state.addRearedLivestockDialogTwoModelObj,
+          builder: (context, addRearedLivestockDialogTwoModelObj) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
+                  ResponsiveExtension(4).h, 16.v),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_reset".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context
+                          .read<AddRearedLivestockDialogTwoBloc>()
+                          .add(ResetCBs());
+                    },
+                  ),
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_add".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context.read<AddRearedLivestockDialogTwoBloc>().add(
+                          AddAGs(
+                              models: addRearedLivestockDialogTwoModelObj!
+                                  .ageGroupmModels));
+                      Navigator.pop(context);
+                    },
+                  ),
+                  CustomOutlinedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_close".tr,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ]),
     );
   }

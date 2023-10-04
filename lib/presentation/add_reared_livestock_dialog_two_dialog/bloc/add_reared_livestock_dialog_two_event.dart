@@ -41,12 +41,34 @@ class ChangeCheckBox1Event extends AddRearedLivestockDialogTwoEvent {
 }
 
 class ChangeAgeGroupCheckbox extends AddRearedLivestockDialogTwoEvent {
-  ChangeAgeGroupCheckbox({required this.value});
+  ChangeAgeGroupCheckbox({required this.value, this.selected});
 
   int value;
+
+  bool? selected;
 
   @override
   List<Object?> get props => [
         value,
+        selected,
+      ];
+}
+
+class ResetCBs extends AddRearedLivestockDialogTwoEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddAGs extends AddRearedLivestockDialogTwoEvent {
+  AddAGs({
+    required this.models,
+  });
+
+  List<AgeGroupModel> models;
+  @override
+  List<Object?> get props => [
+        models,
       ];
 }

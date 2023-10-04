@@ -17,7 +17,7 @@ class AgeGroupItemWidget extends StatelessWidget {
           key: key,
         );
 
-  AgeGroupmModel ageGroupmModel;
+  AgeGroupModel ageGroupmModel;
 
   Function(bool)? onSelect;
 
