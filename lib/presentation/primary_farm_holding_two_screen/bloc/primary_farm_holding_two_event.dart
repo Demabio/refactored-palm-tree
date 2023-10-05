@@ -122,3 +122,36 @@ class ChangeCheckBox6Event extends PrimaryFarmHoldingTwoEvent {
         value,
       ];
 }
+
+class StepUpEvent extends PrimaryFarmHoldingTwoEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends PrimaryFarmHoldingTwoEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends PrimaryFarmHoldingTwoEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

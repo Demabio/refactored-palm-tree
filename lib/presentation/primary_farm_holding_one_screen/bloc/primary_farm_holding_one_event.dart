@@ -26,3 +26,36 @@ class ChangeDropDownEvent extends PrimaryFarmHoldingOneEvent {
         value,
       ];
 }
+
+class StepUpEvent extends PrimaryFarmHoldingOneEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends PrimaryFarmHoldingOneEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends PrimaryFarmHoldingOneEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
