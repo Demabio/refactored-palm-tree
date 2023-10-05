@@ -13,11 +13,12 @@ class FarmersIdentificationFourModel extends Equatable {
     this.dropdownItemList2 = const [],
     this.dropdownItemList3 = const [],
     this.dropdownItemList4 = const [],
-    this.stepped = 0,
-    this.page1 = StepState.indexed,
-    this.page2 = StepState.indexed,
-    this.page3 = StepState.indexed,
+    this.stepped = 3,
+    this.page1 = StepState.complete,
+    this.page2 = StepState.complete,
+    this.page3 = StepState.complete,
     this.page4 = StepState.indexed,
+    this.isFarmer = false,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -40,6 +41,8 @@ class FarmersIdentificationFourModel extends Equatable {
 
   StepState? page4;
 
+  bool isFarmer;
+
   FarmersIdentificationFourModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -51,6 +54,7 @@ class FarmersIdentificationFourModel extends Equatable {
     StepState? page2,
     StepState? page3,
     StepState? page4,
+    bool? isFarmer,
   }) {
     return FarmersIdentificationFourModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -63,6 +67,7 @@ class FarmersIdentificationFourModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
+      isFarmer: isFarmer ?? this.isFarmer,
     );
   }
 
@@ -78,5 +83,6 @@ class FarmersIdentificationFourModel extends Equatable {
         page2,
         page3,
         page4,
+        isFarmer,
       ];
 }

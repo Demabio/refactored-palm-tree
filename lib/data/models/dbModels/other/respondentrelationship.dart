@@ -20,7 +20,7 @@ class RespondentRelationship {
         rlshpToFarmer: map['rlshp_to_farmer'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<RespondentRelationship> parseRespondentRelationships(
       Map<String, dynamic> json) {

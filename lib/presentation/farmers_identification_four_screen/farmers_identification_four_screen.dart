@@ -1,3 +1,5 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+
 import 'bloc/farmers_identification_four_bloc.dart';
 import 'models/farmers_identification_four_model.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +11,9 @@ import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
+// ignore: must_be_immutable
 class FarmersIdentificationFourScreen extends StatelessWidget {
-  const FarmersIdentificationFourScreen({Key? key}) : super(key: key);
+  FarmersIdentificationFourScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<FarmersIdentificationFourBloc>(
@@ -22,6 +25,11 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
         child: FarmersIdentificationFourScreen());
   }
 
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -48,6 +56,24 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              BlocSelector<
+                                      FarmersIdentificationFourBloc,
+                                      FarmersIdentificationFourState,
+                                      FarmersIdentificationFourModel?>(
+                                  selector: (state) =>
+                                      state.farmersIdentificationFourModelObj,
+                                  builder: ((context,
+                                      farmersIdentificationOneModelObj) {
+                                    return SizedBox(
+                                      height: 150.v,
+                                      width: double.infinity,
+                                      child: _buildStepper(
+                                          StepperType.horizontal,
+                                          context,
+                                          farmersIdentificationOneModelObj),
+                                    );
+                                  })),
+                              SizedBox(height: 11.v),
                               Text("msg_respondent_details".tr,
                                   style: CustomTextStyles.titleMediumSemiBold),
                               SizedBox(height: 18.v),
@@ -86,8 +112,23 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                         });
                                   }),
                               SizedBox(height: 19.v),
-                              Text("msg_relationship_to".tr,
-                                  style: CustomTextStyles.labelMediumPrimary_1),
+                              BlocSelector<
+                                  FarmersIdentificationFourBloc,
+                                  FarmersIdentificationFourState,
+                                  FarmersIdentificationFourModel?>(
+                                selector: (state) =>
+                                    state.farmersIdentificationFourModelObj,
+                                builder: (context,
+                                    farmersIdentificationFourModelObj) {
+                                  return Visibility(
+                                    visible: !farmersIdentificationFourModelObj!
+                                        .isFarmer,
+                                    child: Text("msg_relationship_to".tr,
+                                        style: CustomTextStyles
+                                            .labelMediumPrimary_1),
+                                  );
+                                },
+                              ),
                               BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -96,29 +137,35 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                       state.farmersIdentificationFourModelObj,
                                   builder: (context,
                                       farmersIdentificationFourModelObj) {
-                                    return CustomDropDown(
-                                        autofocus: false,
-                                        icon: Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                30.h, 10.v, 9.h, 15.v),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.h)),
-                                            child: CustomImageView(
-                                                svgPath: ImageConstant
-                                                    .imgArrowdownPrimary)),
-                                        hintText: "lbl_select".tr,
-                                        items: farmersIdentificationFourModelObj
-                                                ?.dropdownItemList1 ??
-                                            [],
-                                        onChanged: (value) {
-                                          context
-                                              .read<
-                                                  FarmersIdentificationFourBloc>()
-                                              .add(ChangeDropDown1Event(
-                                                  value: value));
-                                        });
+                                    return Visibility(
+                                      visible:
+                                          !farmersIdentificationFourModelObj!
+                                              .isFarmer,
+                                      child: CustomDropDown(
+                                          autofocus: false,
+                                          icon: Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  30.h, 10.v, 9.h, 15.v),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.h)),
+                                              child: CustomImageView(
+                                                  svgPath: ImageConstant
+                                                      .imgArrowdownPrimary)),
+                                          hintText: "lbl_select".tr,
+                                          items:
+                                              farmersIdentificationFourModelObj
+                                                      ?.dropdownItemList1 ??
+                                                  [],
+                                          onChanged: (value) {
+                                            context
+                                                .read<
+                                                    FarmersIdentificationFourBloc>()
+                                                .add(ChangeDropDown1Event(
+                                                    value: value));
+                                          }),
+                                    );
                                   }),
                               SizedBox(height: 21.v),
                               Text("lbl_production_type".tr,
@@ -267,6 +314,77 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                     onTapSave(context);
                                   })
                             ]))))));
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      FarmersIdentificationFourModel? farmersIdentificationFourModel) {
+    final canCancel = farmersIdentificationFourModel!.stepped > 0;
+    final canContinue = farmersIdentificationFourModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: farmersIdentificationFourModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        //Validation checks
+
+        context
+            .read<FarmersIdentificationFourBloc>()
+            .add(OnSteppedEvent(value: step));
+      },
+      onStepCancel: canCancel
+          ? () {
+              context
+                  .read<FarmersIdentificationFourBloc>()
+                  .add(StepDownEvent());
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: farmersIdentificationFourModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: farmersIdentificationFourModel.page2!,
+        ),
+        _buildStep(
+          title: Text('3'),
+          state: farmersIdentificationFourModel.page3!,
+        ),
+        _buildStep(
+          title: Text('4'),
+          state: farmersIdentificationFourModel.page4!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
   }
 
   /// Navigates to the farmersIdentificationThreeScreen when the action is triggered.

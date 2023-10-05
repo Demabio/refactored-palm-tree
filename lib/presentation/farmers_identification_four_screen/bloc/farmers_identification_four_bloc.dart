@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/respondentrelationship.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/farmers_identification_four_screen/models/farmers_identification_four_model.dart';
 part 'farmers_identification_four_event.dart';
@@ -25,21 +26,30 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     FarmersIdentificationFourInitialEvent event,
     Emitter<FarmersIdentificationFourState> emit,
   ) async {
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         farmersIdentificationFourModelObj:
             state.farmersIdentificationFourModelObj?.copyWith(
-                dropdownItemList: fillDropdownItemList(),
-                dropdownItemList1: fillDropdownItemList1(),
-                dropdownItemList2: fillDropdownItemList2(),
-                dropdownItemList3: fillDropdownItemList3(),
-                dropdownItemList4: fillDropdownItemList4())));
+          dropdownItemList: fillDropdownItemList(),
+          dropdownItemList1: await fetchRespondentRelationships(),
+          dropdownItemList2: fillDropdownItemList2(),
+          dropdownItemList3: fillDropdownItemList3(),
+          dropdownItemList4: fillDropdownItemList4(),
+        ),
+      ),
+    );
   }
 
   _changeDropDown(
     ChangeDropDownEvent event,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(state.copyWith(
+        selectedDropDownValue: event.value,
+        farmersIdentificationFourModelObj:
+            state.farmersIdentificationFourModelObj?.copyWith(
+          isFarmer: event.value.id == 1,
+        )));
   }
 
   _changeDropDown1(
@@ -140,11 +150,25 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     );
   }
 
+  Future<List<SelectionPopupModel>> fetchRespondentRelationships() async {
+    List<SelectionPopupModel> list = [];
+    RespondentRelationshipDB relationshipDB = RespondentRelationshipDB();
+
+    await relationshipDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].rlshpToFarmer,
+          id: value[i].respondendRlshpId,
+        ));
+      }
+    });
+    return list;
+  }
+
   List<SelectionPopupModel> fillDropdownItemList() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No"),
     ];
   }
 
@@ -158,25 +182,22 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
 
   List<SelectionPopupModel> fillDropdownItemList2() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No"),
     ];
   }
 
   List<SelectionPopupModel> fillDropdownItemList3() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No"),
     ];
   }
 
   List<SelectionPopupModel> fillDropdownItemList4() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No"),
     ];
   }
 }
