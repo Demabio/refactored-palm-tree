@@ -11,9 +11,9 @@ class FarmersIdentificationThreeModel extends Equatable {
     this.dropdownItemList = const [],
     this.dropdownItemList1 = const [],
     this.dropdownItemList2 = const [],
-    this.stepped = 0,
-    this.page1 = StepState.indexed,
-    this.page2 = StepState.indexed,
+    this.stepped = 2,
+    this.page1 = StepState.complete,
+    this.page2 = StepState.complete,
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
   }) {}

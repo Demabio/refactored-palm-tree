@@ -19,7 +19,7 @@ class EducationLevel {
         educationLevel: map['education_level'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<EducationLevel> parseEducationLevels(Map<String, dynamic> json) {
     final educationLevelsList =

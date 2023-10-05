@@ -1,3 +1,5 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+
 import 'bloc/farmers_identification_three_bloc.dart';
 import 'models/farmers_identification_three_model.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +12,9 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
+// ignore: must_be_immutable
 class FarmersIdentificationThreeScreen extends StatelessWidget {
-  const FarmersIdentificationThreeScreen({Key? key}) : super(key: key);
+  FarmersIdentificationThreeScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<FarmersIdentificationThreeBloc>(
@@ -23,6 +26,11 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
         child: FarmersIdentificationThreeScreen());
   }
 
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -50,6 +58,23 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              BlocSelector<
+                                      FarmersIdentificationThreeBloc,
+                                      FarmersIdentificationThreeState,
+                                      FarmersIdentificationThreeModel?>(
+                                  selector: (state) =>
+                                      state.farmersIdentificationThreeModelObj,
+                                  builder: ((context,
+                                      farmersIdentificationOneModelObj) {
+                                    return SizedBox(
+                                      height: 150.v,
+                                      width: double.infinity,
+                                      child: _buildStepper(
+                                          StepperType.horizontal,
+                                          context,
+                                          farmersIdentificationOneModelObj),
+                                    );
+                                  })),
                               SizedBox(height: 11.v),
                               Text("msg_individual_farmer2".tr,
                                   style: CustomTextStyles.titleMediumSemiBold),
@@ -64,6 +89,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                       state.codevalueoneController,
                                   builder: (context, codevalueoneController) {
                                     return CustomTextFormField(
+                                        autofocus: false,
+                                        focusNode: node2,
                                         controller: codevalueoneController,
                                         hintText: "lbl_code".tr);
                                   }),
@@ -79,6 +106,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                   builder: (context,
                                       farmersIdentificationThreeModelObj) {
                                     return CustomDropDown(
+                                        focusNode: node3,
                                         autofocus: false,
                                         icon: Container(
                                             margin: EdgeInsets.fromLTRB(
@@ -151,6 +179,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                   builder: (context,
                                       farmersIdentificationThreeModelObj) {
                                     return CustomDropDown(
+                                        width: double.infinity,
                                         autofocus: false,
                                         icon: Container(
                                             margin: EdgeInsets.fromLTRB(
@@ -186,9 +215,11 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                       state.hhsizevalueoneController,
                                   builder: (context, hhsizevalueoneController) {
                                     return CustomTextFormField(
+                                        focusNode: node1,
                                         autofocus: false,
                                         controller: hhsizevalueoneController,
                                         hintText: "lbl_hh_size3".tr,
+                                        textInputType: TextInputType.number,
                                         textInputAction: TextInputAction.done);
                                   }),
                               SizedBox(height: 21.v),
@@ -226,6 +257,77 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                     onTapSave(context);
                                   })
                             ]))))));
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      FarmersIdentificationThreeModel? farmersIdentificationThreeModel) {
+    final canCancel = farmersIdentificationThreeModel!.stepped > 0;
+    final canContinue = farmersIdentificationThreeModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: farmersIdentificationThreeModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        //Validation checks
+
+        context
+            .read<FarmersIdentificationThreeBloc>()
+            .add(OnSteppedEvent(value: step));
+      },
+      onStepCancel: canCancel
+          ? () {
+              context
+                  .read<FarmersIdentificationThreeBloc>()
+                  .add(StepDownEvent());
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              context.read<FarmersIdentificationThreeBloc>().add(StepUpEvent());
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: farmersIdentificationThreeModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: farmersIdentificationThreeModel.page2!,
+        ),
+        _buildStep(
+          title: Text('3'),
+          state: farmersIdentificationThreeModel.page3!,
+        ),
+        _buildStep(
+          title: Text('4'),
+          state: farmersIdentificationThreeModel.page4!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
   }
 
   /// Navigates to the farmersIdentificationTwoScreen when the action is triggered.

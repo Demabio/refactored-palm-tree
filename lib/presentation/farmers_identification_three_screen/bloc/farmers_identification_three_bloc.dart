@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/educationlevel.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/maritalstatus.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/farmers_identification_three_screen/models/farmers_identification_three_model.dart';
 part 'farmers_identification_three_event.dart';
@@ -50,9 +52,8 @@ class FarmersIdentificationThreeBloc extends Bloc<
 
   List<SelectionPopupModel> fillDropdownItemList1() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No"),
     ];
   }
 
@@ -62,6 +63,36 @@ class FarmersIdentificationThreeBloc extends Bloc<
       SelectionPopupModel(id: 2, title: "Item Two"),
       SelectionPopupModel(id: 3, title: "Item Three")
     ];
+  }
+
+  Future<List<SelectionPopupModel>> fetchEducationLevels() async {
+    List<SelectionPopupModel> list = [];
+    EducationLevelDB educationLevelDB = EducationLevelDB();
+
+    await educationLevelDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].educationLevel,
+          id: value[i].educationLevelId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fetchMaritalStatus() async {
+    List<SelectionPopupModel> list = [];
+    MaritalStatusDB maritalStatusDB = MaritalStatusDB();
+
+    await maritalStatusDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].maritalStatus,
+          id: value[i].maritalStatusId,
+        ));
+      }
+    });
+    return list;
   }
 
   _onSteppedDown(
@@ -142,10 +173,12 @@ class FarmersIdentificationThreeBloc extends Bloc<
         codevalueoneController: TextEditingController(),
         hhsizevalueoneController: TextEditingController()));
     emit(state.copyWith(
-        farmersIdentificationThreeModelObj:
-            state.farmersIdentificationThreeModelObj?.copyWith(
-                dropdownItemList: fillDropdownItemList(),
-                dropdownItemList1: fillDropdownItemList1(),
-                dropdownItemList2: fillDropdownItemList2())));
+      farmersIdentificationThreeModelObj:
+          state.farmersIdentificationThreeModelObj?.copyWith(
+        dropdownItemList: await fetchMaritalStatus(),
+        dropdownItemList1: fillDropdownItemList1(),
+        dropdownItemList2: await fetchEducationLevels(),
+      ),
+    ));
   }
 }
