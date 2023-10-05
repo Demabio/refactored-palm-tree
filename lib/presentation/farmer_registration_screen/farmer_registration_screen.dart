@@ -77,56 +77,92 @@ class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
           title: Text('Farmers Identification'),
           state: StepState.indexed,
           addcallback: () {
-            onTapAdddetails(context);
+            farmersIdentification(context);
           },
         ),
         _buildStep(
           title: Text('Primary Farm Holding'),
           state: StepState.indexed,
+          addcallback: () {
+            primaryFarmHolding(context);
+          },
         ),
         _buildStep(
           title: Text('Add Other Farm Holdings'),
           state: StepState.indexed,
+          addcallback: () {
+            addFarmHolding(context);
+          },
         ),
         _buildStep(
           title: Text('Crop Agriculture'),
           state: StepState.indexed,
+          addcallback: () {
+            cropAgriculture(context);
+          },
         ),
         _buildStep(
           title: Text('Livestock'),
           state: StepState.indexed,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Aquaculture'),
           state: StepState.indexed,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
           state: StepState.indexed,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Land and Water Management'),
           state: StepState.indexed,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Financial and Services'),
           state: StepState.indexed,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Error'),
           state: StepState.error,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Disabled'),
           state: StepState.disabled,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Editing'),
           state: StepState.editing,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         ),
         _buildStep(
           title: Text('Completed'),
           state: StepState.complete,
+          addcallback: () {
+            onTapAdddetails(context);
+          },
         )
       ],
     );

@@ -39,6 +39,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                   title: AppbarSubtitle1(text: "msg_farmers_identification".tr),
                   actions: [
                     AppbarImage1(
+                        onTap: () {
+                          NavigatorService.pushNamed(
+                              AppRoutes.farmersIdentificationOneScreen);
+                        },
                         svgPath: ImageConstant.imgFrame33,
                         margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v))
                   ],

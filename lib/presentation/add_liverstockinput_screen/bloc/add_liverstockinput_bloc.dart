@@ -114,17 +114,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -132,17 +128,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -150,17 +142,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -168,17 +156,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -204,17 +188,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -222,17 +202,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -240,17 +216,13 @@ class AddLiverstockinputBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 }
