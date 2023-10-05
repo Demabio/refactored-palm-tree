@@ -16,7 +16,7 @@ class CropPlantingMotive {
         cropMotiveId: map['crop_motive_id']?.toInt() ?? 0,
         cropMotive: map['crop_motive'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by'] ?? 0,
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<CropPlantingMotive> parseCropPlantingMotive(
       Map<String, dynamic> json) {

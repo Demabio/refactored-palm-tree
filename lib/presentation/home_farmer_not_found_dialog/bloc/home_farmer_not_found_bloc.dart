@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropareaunit.dart';
+import 'package:kiamis_app/data/models/dbModels/crops/cropmotive.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropscategory.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropwatersource.dart';
@@ -40,6 +41,7 @@ import 'package:kiamis_app/data/models/dbModels/other/pesticidetype.dart';
 import 'package:kiamis_app/data/models/dbModels/other/registrationstatus.dart';
 import 'package:kiamis_app/data/models/dbModels/other/respondentrelationship.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropmotive.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropscategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropwatersource.dart';
@@ -210,6 +212,7 @@ class HomeFarmerNotFoundBloc
       }).onError((error, stackTrace) {
         print(error.toString());
       });
+
       await _repository.setupServicePost(
         headers: {
           'Content-type': 'application/json',
@@ -248,6 +251,47 @@ class HomeFarmerNotFoundBloc
       }).onError((error, stackTrace) {
         print(error.toString());
       });
+
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallCropPlantingMotive,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<CropPlantingMotive> cropsystem =
+            CropPlantingMotive.parseCropPlantingMotive(value.data);
+        Future<int> cropsuccess =
+            CropPlantingMotiveDB().insertCropMotives(cropsystem);
+
+        cropsuccess.then((_) {
+          if (_ == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
+
       await _repository.setupServicePost(
         headers: {
           'Content-type': 'application/json',
