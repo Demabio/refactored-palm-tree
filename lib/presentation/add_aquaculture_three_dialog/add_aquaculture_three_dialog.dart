@@ -1,3 +1,6 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/widgets/custom_column_checkboxes.dart';
+
 import 'bloc/add_aquaculture_three_bloc.dart';
 import 'models/add_aquaculture_three_model.dart';
 import 'package:flutter/material.dart';
@@ -26,121 +29,86 @@ class AddAquacultureThreeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return Container(
       width: 344.h,
-      padding: EdgeInsets.symmetric(
-        horizontal: 11.h,
-        vertical: 26.v,
-      ),
-      decoration: AppDecoration.fillWhiteA.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder6,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 3.h),
-            child: Text(
-              "msg_add_aquaculture".tr,
-              style: CustomTextStyles.titleMediumSemiBold,
+      padding: EdgeInsets.symmetric(horizontal: 13.h, vertical: 15.v),
+      decoration: AppDecoration.fillWhiteA
+          .copyWith(borderRadius: BorderRadiusStyle.roundedBorder6),
+      child: Column(children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.center,
+              child: BlocSelector<AddAquacultureThreeBloc,
+                  AddAquacultureThreeState, AddAquacultureThreeModel?>(
+                selector: (state) => state.addAquacultureThreeModelObj,
+                builder: (context, addRearedLivestockDialogTwoModelObj) {
+                  return Column(
+                    children: List<Widget>.generate(
+                      addRearedLivestockDialogTwoModelObj?.models.length ?? 0,
+                      (index) {
+                        CheckBoxList model = addRearedLivestockDialogTwoModelObj
+                                ?.models[index] ??
+                            CheckBoxList();
+
+                        return CBListWidget(
+                          model,
+                          onSelect: (value) {
+                            context.read<AddAquacultureThreeBloc>().add(
+                                ChangeCheckbox(value: index, selected: value));
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-          BlocSelector<AddAquacultureThreeBloc, AddAquacultureThreeState,
-              bool?>(
-            selector: (state) => state.brackishvalue,
-            builder: (context, brackishvalue) {
-              return CustomCheckboxButton(
-                text: "lbl_brackish".tr,
-                value: brackishvalue,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 35.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddAquacultureThreeBloc>()
-                      .add(ChangeCheckBoxEvent(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddAquacultureThreeBloc, AddAquacultureThreeState,
-              bool?>(
-            selector: (state) => state.chickMarsh,
-            builder: (context, chickMarsh) {
-              return CustomCheckboxButton(
-                text: "lbl_chick_marsh".tr,
-                value: chickMarsh,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddAquacultureThreeBloc>()
-                      .add(ChangeCheckBox1Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddAquacultureThreeBloc, AddAquacultureThreeState,
-              bool?>(
-            selector: (state) => state.homeMadeFeedMix,
-            builder: (context, homeMadeFeedMix) {
-              return CustomCheckboxButton(
-                text: "msg_home_made_feed_mix".tr,
-                value: homeMadeFeedMix,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddAquacultureThreeBloc>()
-                      .add(ChangeCheckBox2Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 36.v,
-              bottom: 8.v,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 25.h,
-                    vertical: 12.v,
+        ),
+        BlocSelector<AddAquacultureThreeBloc, AddAquacultureThreeState,
+            AddAquacultureThreeModel?>(
+          selector: (state) => state.addAquacultureThreeModelObj,
+          builder: (context, addRearedLivestockDialogOneModelObj) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
+                  ResponsiveExtension(4).h, 16.v),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_reset".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context.read<AddAquacultureThreeBloc>().add(ResetCBs());
+                    },
                   ),
-                  decoration: AppDecoration.fillPrimary.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder6,
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_add".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context.read<AddAquacultureThreeBloc>().add(AddCBs(
+                          models: addRearedLivestockDialogOneModelObj!.models));
+                      Navigator.pop(context);
+                    },
                   ),
-                  child: Text(
-                    "lbl_reset".tr,
-                    style: CustomTextStyles.bodyLarge16,
+                  CustomOutlinedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_close".tr,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-                CustomElevatedButton(
-                  width: 95.h,
-                  text: "lbl_add".tr,
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
-                ),
-                CustomOutlinedButton(
-                  width: 95.h,
-                  text: "lbl_close".tr,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                ],
+              ),
+            );
+          },
+        ),
+      ]),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 
 // ignore: must_be_immutable
@@ -15,7 +15,7 @@ class CBListWidget extends StatelessWidget {
           key: key,
         );
 
-  EnterpriseModel enterpriseModel;
+  CheckBoxList enterpriseModel;
 
   Function(bool)? onSelect;
 

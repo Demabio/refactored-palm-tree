@@ -50,3 +50,36 @@ class ChangeCheckBox2Event extends AddAquacultureSixEvent {
         value,
       ];
 }
+
+class ResetCBs extends AddAquacultureSixEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddCBs extends AddAquacultureSixEvent {
+  AddCBs({
+    required this.models,
+  });
+
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
+
+class ChangeCheckbox extends AddAquacultureSixEvent {
+  ChangeCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}

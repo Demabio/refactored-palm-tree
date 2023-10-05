@@ -22,7 +22,7 @@ class FishProductionType {
         unitOfMeasureId: map['unit_of_measure_id']?.toInt() ?? 0,
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 
   static List<FishProductionType> parseFishProductionTypes(
