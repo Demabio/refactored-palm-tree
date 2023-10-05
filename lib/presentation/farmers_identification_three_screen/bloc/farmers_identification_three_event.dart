@@ -51,3 +51,36 @@ class ChangeDropDown2Event extends FarmersIdentificationThreeEvent {
         value,
       ];
 }
+
+class StepUpEvent extends FarmersIdentificationThreeEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends FarmersIdentificationThreeEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends FarmersIdentificationThreeEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

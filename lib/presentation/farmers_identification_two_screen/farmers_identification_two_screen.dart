@@ -1,3 +1,5 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+
 import 'bloc/farmers_identification_two_bloc.dart';
 import 'models/farmers_identification_two_model.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +29,17 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
         child: FarmersIdentificationTwoScreen());
   }
 
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(
                 leadingWidth: 60.h,
                 leading: AppbarImage(
@@ -54,6 +61,23 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              BlocSelector<
+                                      FarmersIdentificationTwoBloc,
+                                      FarmersIdentificationTwoState,
+                                      FarmersIdentificationTwoModel?>(
+                                  selector: (state) =>
+                                      state.farmersIdentificationTwoModelObj,
+                                  builder: ((context,
+                                      farmersIdentificationOneModelObj) {
+                                    return SizedBox(
+                                      height: 150.v,
+                                      width: double.infinity,
+                                      child: _buildStepper(
+                                          StepperType.horizontal,
+                                          context,
+                                          farmersIdentificationOneModelObj),
+                                    );
+                                  })),
                               SizedBox(height: 11.v),
                               Text("msg_individual_farmer".tr,
                                   style: CustomTextStyles.titleMediumSemiBold),
@@ -80,7 +104,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                   builder: (context,
                                                       farmersIdentificationTwoModelObj) {
                                                     return CustomDropDown(
-                                                        width: 146.h,
+                                                        width: 160.h,
                                                         autofocus: false,
                                                         icon: Container(
                                                             margin: EdgeInsets
@@ -132,7 +156,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                   builder: (context,
                                                       farmersIdentificationTwoModelObj) {
                                                     return CustomDropDown(
-                                                        width: 147.h,
+                                                        width: 160.h,
                                                         autofocus: false,
                                                         icon: Container(
                                                             margin: EdgeInsets
@@ -180,6 +204,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                       state.idnumberoneController,
                                   builder: (context, idnumberoneController) {
                                     return CustomTextFormField(
+                                        focusNode: node1,
                                         controller: idnumberoneController,
                                         autofocus: false,
                                         hintText: "lbl_id_number".tr,
@@ -202,6 +227,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                       state.mobileNumberController,
                                   builder: (context, mobileNumberController) {
                                     return CustomTextFormField(
+                                        focusNode: node2,
                                         autofocus: false,
                                         controller: mobileNumberController,
                                         hintText: "lbl_mobile_number2".tr,
@@ -223,6 +249,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                   selector: (state) => state.emailController,
                                   builder: (context, emailController) {
                                     return CustomTextFormField(
+                                        focusNode: node3,
+                                        autofocus: false,
                                         controller: emailController,
                                         hintText: "lbl_email2".tr,
                                         textInputType:
@@ -246,6 +274,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                   selector: (state) => state.addressController,
                                   builder: (context, addressController) {
                                     return CustomTextFormField(
+                                        focusNode: node4,
                                         autofocus: false,
                                         controller: addressController,
                                         hintText: "lbl_address".tr,
@@ -286,6 +315,73 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                     onTapSave(context);
                                   })
                             ]))))));
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      FarmersIdentificationTwoModel? farmersIdentificationTwoModel) {
+    final canCancel = farmersIdentificationTwoModel!.stepped > 0;
+    final canContinue = farmersIdentificationTwoModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: farmersIdentificationTwoModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        context
+            .read<FarmersIdentificationTwoBloc>()
+            .add(OnSteppedEvent(value: step));
+      },
+      onStepCancel: canCancel
+          ? () {
+              context.read<FarmersIdentificationTwoBloc>().add(StepDownEvent());
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              context.read<FarmersIdentificationTwoBloc>().add(StepUpEvent());
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: farmersIdentificationTwoModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: farmersIdentificationTwoModel.page2!,
+        ),
+        _buildStep(
+          title: Text('3'),
+          state: farmersIdentificationTwoModel.page3!,
+        ),
+        _buildStep(
+          title: Text('4'),
+          state: farmersIdentificationTwoModel.page4!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
   }
 
   /// Navigates to the farmersIdentificationOneScreen when the action is triggered.
