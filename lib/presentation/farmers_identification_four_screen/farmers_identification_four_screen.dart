@@ -327,20 +327,27 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
         //Best place to save and get scope identity and store in pref
         //Validation checks
 
-        context
-            .read<FarmersIdentificationFourBloc>()
-            .add(OnSteppedEvent(value: step));
+        // context
+        //     .read<FarmersIdentificationFourBloc>()
+        //     .add(OnSteppedEvent(value: step));
+
+        //chosen
+        onTapNextC(context, step);
       },
       onStepCancel: canCancel
           ? () {
-              context
-                  .read<FarmersIdentificationFourBloc>()
-                  .add(StepDownEvent());
+              // context
+              //     .read<FarmersIdentificationFourBloc>()
+              //     .add(StepDownEvent());
+              //Chosen
+              onTapNextC(context, farmersIdentificationFourModel.stepped - 1);
             }
           : null,
       onStepContinue: canContinue
           ? () {
-              context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+              //   context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+              //Chosen
+              onTapNextC(context, farmersIdentificationFourModel.stepped + 1);
             }
           : null,
       steps: [
@@ -385,6 +392,26 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
             width: 1,
           )),
     );
+  }
+
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationOneScreen,
+      );
+    } else if (step == 1) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationTwoScreen,
+      );
+    } else if (step == 2) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationThreeScreen,
+      );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationFourScreen,
+      );
+    }
   }
 
   /// Navigates to the farmersIdentificationThreeScreen when the action is triggered.

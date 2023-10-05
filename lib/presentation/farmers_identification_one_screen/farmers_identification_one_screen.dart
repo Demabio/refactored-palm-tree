@@ -195,7 +195,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                               text: "lbl_next".tr,
                               margin: EdgeInsets.only(left: 1.h),
                               onTap: () {
-                                onTapNext(context);
+                                //  onTapNext(context);
                               }))
                     ]),
                     SizedBox(height: 12.v),
@@ -228,18 +228,22 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
       currentStep: currentStep,
       onStepTapped: (step) {
         //Best place to save and get scope identity and store in pref
-        context
-            .read<FarmersIdentificationOneBloc>()
-            .add(OnSteppedEvent(value: step));
+        // context
+        //     .read<FarmersIdentificationOneBloc>()
+        //     .add(OnSteppedEvent(value: step));
+
+        onTapNextC(context, step);
       },
       onStepCancel: canCancel
           ? () {
-              context.read<FarmersIdentificationOneBloc>().add(StepDownEvent());
+              //  context.read<FarmersIdentificationOneBloc>().add(StepDownEvent());
+              onTapNextC(context, farmersIdentificationOneModel.stepped - 1);
             }
           : null,
       onStepContinue: canContinue
           ? () {
-              context.read<FarmersIdentificationOneBloc>().add(StepUpEvent());
+              // context.read<FarmersIdentificationOneBloc>().add(StepUpEvent());
+              onTapNextC(context, farmersIdentificationOneModel.stepped + 1);
             }
           : null,
       steps: [
@@ -286,6 +290,26 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
     );
   }
 
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationOneScreen,
+      );
+    } else if (step == 1) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationTwoScreen,
+      );
+    } else if (step == 2) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationThreeScreen,
+      );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationFourScreen,
+      );
+    }
+  }
+
   /// Navigates to the farmersIdentificationScreen when the action is triggered.
   ///
   /// The [BuildContext] parameter is used to build the navigation stack.
@@ -322,11 +346,11 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// The [BuildContext] parameter is used to build the navigation stack.
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationTwoScreen.
-  onTapNext(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.farmersIdentificationTwoScreen,
-    );
-  }
+  // onTapNext(BuildContext context) {
+  //   NavigatorService.pushNamed(
+  //     AppRoutes.farmersIdentificationTwoScreen,
+  //   );
+  // }
 
   /// Navigates to the farmersIdentificationScreen when the action is triggered.
   ///

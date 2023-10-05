@@ -326,18 +326,21 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
       currentStep: farmersIdentificationTwoModel.stepped,
       onStepTapped: (step) {
         //Best place to save and get scope identity and store in pref
-        context
-            .read<FarmersIdentificationTwoBloc>()
-            .add(OnSteppedEvent(value: step));
+        // context
+        //     .read<FarmersIdentificationTwoBloc>()
+        //     .add(OnSteppedEvent(value: step));
+        onTapNextC(context, step);
       },
       onStepCancel: canCancel
           ? () {
-              context.read<FarmersIdentificationTwoBloc>().add(StepDownEvent());
+              //       context.read<FarmersIdentificationTwoBloc>().add(StepDownEvent());
+              onTapNextC(context, farmersIdentificationTwoModel.stepped - 1);
             }
           : null,
       onStepContinue: canContinue
           ? () {
-              context.read<FarmersIdentificationTwoBloc>().add(StepUpEvent());
+              //  context.read<FarmersIdentificationTwoBloc>().add(StepUpEvent());
+              onTapNextC(context, farmersIdentificationTwoModel.stepped + 1);
             }
           : null,
       steps: [
@@ -382,6 +385,26 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
             width: 1,
           )),
     );
+  }
+
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationOneScreen,
+      );
+    } else if (step == 1) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationTwoScreen,
+      );
+    } else if (step == 2) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationThreeScreen,
+      );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.farmersIdentificationFourScreen,
+      );
+    }
   }
 
   /// Navigates to the farmersIdentificationOneScreen when the action is triggered.
