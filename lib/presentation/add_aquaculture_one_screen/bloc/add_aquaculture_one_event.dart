@@ -14,3 +14,36 @@ class AddAquacultureOneInitialEvent extends AddAquacultureOneEvent {
   @override
   List<Object?> get props => [];
 }
+
+class StepUpEvent extends AddAquacultureOneEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends AddAquacultureOneEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends AddAquacultureOneEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

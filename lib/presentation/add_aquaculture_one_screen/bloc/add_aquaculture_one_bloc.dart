@@ -13,6 +13,73 @@ class AddAquacultureOneBloc
     on<AddAquacultureOneInitialEvent>(_onInitialize);
   }
 
+  _onSteppedDown(
+    StepDownEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
+          stepped: --state.addAquacultureOneModelObj?.stepped,
+          page1: state.addAquacultureOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addAquacultureOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addAquacultureOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addAquacultureOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onSteppedUp(
+    StepUpEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
+          stepped: ++state.addAquacultureOneModelObj?.stepped,
+          page1: state.addAquacultureOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addAquacultureOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addAquacultureOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addAquacultureOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onStepped(
+    OnSteppedEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
+          stepped: event.value,
+          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
+          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
+          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
+          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
   _onInitialize(
     AddAquacultureOneInitialEvent event,
     Emitter<AddAquacultureOneState> emit,

@@ -1,10 +1,50 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:equatable/equatable.dart';/// This class defines the variables used in the [add_aquaculture_one_screen],
-/// and is typically used to hold data that is passed between different parts of the application.
-class AddAquacultureOneModel extends Equatable {AddAquacultureOneModel() {  }
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
-AddAquacultureOneModel copyWith() { return AddAquacultureOneModel(
-); } 
-@override List<Object?> get props => [];
- }
+/// This class defines the variables used in the [add_aquaculture_one_screen],
+/// and is typically used to hold data that is passed between different parts of the application.
+class AddAquacultureOneModel extends Equatable {
+  AddAquacultureOneModel({
+    this.stepped = 0,
+    this.page1 = StepState.indexed,
+    this.page2 = StepState.indexed,
+    this.page3 = StepState.indexed,
+    this.page4 = StepState.indexed,
+  }) {}
+
+  int stepped;
+
+  StepState? page1;
+
+  StepState? page2;
+
+  StepState? page3;
+
+  StepState? page4;
+  AddAquacultureOneModel copyWith({
+    int? stepped,
+    StepState? page1,
+    StepState? page2,
+    StepState? page3,
+    StepState? page4,
+  }) {
+    return AddAquacultureOneModel(
+      stepped: stepped ?? this.stepped,
+      page1: page1 ?? this.page1,
+      page2: page2 ?? this.page2,
+      page3: page3 ?? this.page3,
+      page4: page4 ?? this.page4,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        stepped,
+        page1,
+        page2,
+        page3,
+        page4,
+      ];
+}

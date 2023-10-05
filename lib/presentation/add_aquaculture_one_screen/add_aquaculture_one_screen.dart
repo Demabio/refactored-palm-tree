@@ -1,3 +1,8 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/add_aquaculture_five_dialog.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/add_aquaculture_four_dialog.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/add_aquaculture_three_dialog.dart';
+
 import 'bloc/add_aquaculture_one_bloc.dart';
 import 'models/add_aquaculture_one_model.dart';
 import 'package:flutter/material.dart';
@@ -62,87 +67,18 @@ class AddAquacultureOneScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 69.h),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      CustomIconButton(
-                                        height: 31.v,
-                                        width: 32.h,
-                                        padding: EdgeInsets.all(8.h),
-                                        child: CustomImageView(
-                                          svgPath: ImageConstant.imgCheckmark,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 16.v,
-                                          bottom: 13.v,
-                                        ),
-                                        child: SizedBox(
-                                          width: 54.h,
-                                          child: Divider(),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 6.v),
-                                Text(
-                                  "lbl_step_1".tr,
-                                  style:
-                                      CustomTextStyles.bodyLargeBluegray40003,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: 16.v,
-                                        bottom: 13.v,
-                                      ),
-                                      child: SizedBox(
-                                        width: 54.h,
-                                        child: Divider(),
-                                      ),
-                                    ),
-                                    CustomIconButton(
-                                      height: 31.v,
-                                      width: 32.h,
-                                      padding: EdgeInsets.all(8.h),
-                                      child: CustomImageView(
-                                        svgPath: ImageConstant.imgCheckmark,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 6.v),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    "lbl_step_2".tr,
-                                    style:
-                                        CustomTextStyles.bodyLargeBluegray40003,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 22.v),
+                      BlocSelector<AddAquacultureOneBloc,
+                              AddAquacultureOneState, AddAquacultureOneModel?>(
+                          selector: (state) => state.addAquacultureOneModelObj,
+                          builder:
+                              ((context, farmersIdentificationOneModelObj) {
+                            return SizedBox(
+                              height: 150.v,
+                              width: double.infinity,
+                              child: _buildStepper(StepperType.horizontal,
+                                  context, farmersIdentificationOneModelObj),
+                            );
+                          })),
                       Text(
                         "msg_aquaculture_type2".tr,
                         style: theme.textTheme.titleSmall,
@@ -154,6 +90,9 @@ class AddAquacultureOneScreen extends StatelessWidget {
                       ),
                       CustomElevatedButton(
                         text: "msg_add_aquaculture".tr,
+                        onTap: () {
+                          addAquaculturetype(context);
+                        },
                         margin: EdgeInsets.only(
                           left: 82.h,
                           top: 65.v,
@@ -167,6 +106,9 @@ class AddAquacultureOneScreen extends StatelessWidget {
                       ),
                       CustomElevatedButton(
                         text: "msg_add_production_system".tr,
+                        onTap: () {
+                          addProductionType(context);
+                        },
                         margin: EdgeInsets.only(
                           left: 82.h,
                           top: 106.v,
@@ -235,5 +177,134 @@ class AddAquacultureOneScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      AddAquacultureOneModel? primaryFarmHoldingOneModel) {
+    final canCancel = primaryFarmHoldingOneModel!.stepped > 0;
+    final canContinue = primaryFarmHoldingOneModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: primaryFarmHoldingOneModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        //Validation checks
+
+        // context
+        //     .read<FarmersIdentificationFourBloc>()
+        //     .add(OnSteppedEvent(value: step));
+
+        //chosen
+        onTapNextC(context, step);
+      },
+      onStepCancel: canCancel
+          ? () {
+              // context
+              //     .read<FarmersIdentificationFourBloc>()
+              //     .add(StepDownEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingOneModel.stepped - 1);
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              //   context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingOneModel.stepped + 1);
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: primaryFarmHoldingOneModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: primaryFarmHoldingOneModel.page2!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
+  }
+
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addAquacultureOneScreen,
+      );
+      // } else if (step == 1) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.primaryFarmHoldingTwoScreen,
+      //   );
+      // } else if (step == 2) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.farmersIdentificationThreeScreen,
+      //   );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addAquacultureTwoScreen,
+      );
+    }
+  }
+
+  addAquaculturespecies(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddAquacultureFiveDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addAquaculturetype(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddAquacultureThreeDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addProductionType(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddAquacultureFourDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 }

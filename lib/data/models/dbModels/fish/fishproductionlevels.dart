@@ -19,7 +19,7 @@ class FishProductionLevel {
         productionLevel: map['production_level'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<FishProductionLevel> parseFishProductionLevels(
       Map<String, dynamic> json) {
