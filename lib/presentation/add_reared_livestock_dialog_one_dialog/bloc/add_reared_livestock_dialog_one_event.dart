@@ -16,122 +16,35 @@ class AddRearedLivestockDialogOneInitialEvent
   List<Object?> get props => [];
 }
 
-///Event for changing checkbox
-class ChangeCheckBoxEvent extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBoxEvent({required this.value});
+class ChangeCheckbox extends AddRearedLivestockDialogOneEvent {
+  ChangeCheckbox({required this.value, this.selected});
 
-  bool value;
+  int value;
+
+  bool? selected;
 
   @override
   List<Object?> get props => [
         value,
+        selected,
       ];
 }
 
-///Event for changing checkbox
-class ChangeCheckBox1Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox1Event({required this.value});
-
-  bool value;
+class ResetCBs extends AddRearedLivestockDialogOneEvent {
+  ResetCBs();
 
   @override
-  List<Object?> get props => [
-        value,
-      ];
+  List<Object?> get props => [];
 }
 
-///Event for changing checkbox
-class ChangeCheckBox2Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox2Event({required this.value});
+class AddCBs extends AddRearedLivestockDialogOneEvent {
+  AddCBs({
+    required this.models,
+  });
 
-  bool value;
-
+  List<FeedsModel> models;
   @override
   List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox3Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox3Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox4Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox4Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox5Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox5Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox6Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox6Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox7Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox7Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox8Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox8Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-///Event for changing checkbox
-class ChangeCheckBox9Event extends AddRearedLivestockDialogOneEvent {
-  ChangeCheckBox9Event({required this.value});
-
-  bool value;
-
-  @override
-  List<Object?> get props => [
-        value,
+        models,
       ];
 }

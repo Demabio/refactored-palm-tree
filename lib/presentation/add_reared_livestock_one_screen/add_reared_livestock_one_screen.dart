@@ -1,3 +1,4 @@
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/add_reared_livestock_dialog_one_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_three_dialog/add_reared_livestock_dialog_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/add_reared_livestock_dialog_two_dialog.dart';
 
@@ -426,7 +427,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         barrierDismissible: false,
         //barrierColor: const Color.fromARGB(255, 50, 50, 50),
         builder: (_) => AlertDialog(
-              content: AddRearedLivestockDialogTwoDialog.builder(context),
+              content: AddRearedLivestockDialogOneDialog.builder(context),
               backgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),

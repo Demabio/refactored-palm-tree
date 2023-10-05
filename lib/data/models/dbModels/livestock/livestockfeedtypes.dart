@@ -16,7 +16,7 @@ class LivestockFeedType {
         feedTypeId: map['feed_type_id']?.toInt() ?? 0,
         feedType: map['feed_type'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<LivestockFeedType> parseLivestockFeedTypes(
       Map<String, dynamic> json) {
