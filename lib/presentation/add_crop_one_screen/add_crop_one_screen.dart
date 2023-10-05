@@ -39,7 +39,7 @@ class AddCropOneScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(
                 leadingWidth: 60.h,
                 leading: AppbarImage(
@@ -90,7 +90,14 @@ class AddCropOneScreen extends StatelessWidget {
                                                 top: 7.v,
                                                 right: 18.h),
                                             controller: searchController,
+                                            enabled: true,
                                             autofocus: false,
+                                            onChanged: (value) {
+                                              context
+                                                  .read<AddCropOneBloc>()
+                                                  .add(SearchEventCrop(
+                                                      value: value));
+                                            },
                                             focusNode: node1,
                                             hintText: "lbl_search_crop".tr,
                                             alignment: Alignment.center,
@@ -108,6 +115,11 @@ class AddCropOneScreen extends StatelessWidget {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       searchController!.clear();
+                                                      context
+                                                          .read<
+                                                              AddCropOneBloc>()
+                                                          .add(
+                                                              ReturnCommonEventCrop());
                                                     },
                                                     icon: Icon(Icons.clear,
                                                         color: Colors
@@ -127,29 +139,71 @@ class AddCropOneScreen extends StatelessWidget {
                                       selector: (state) =>
                                           state.addCropOneModelObj,
                                       builder: (context, addCropOneModelObj) {
-                                        return Wrap(
-                                            runSpacing: 14.v,
-                                            spacing: 14.h,
-                                            children: List<Widget>.generate(
-                                                addCropOneModelObj
-                                                        ?.chipviewalbertItemList
-                                                        .length ??
-                                                    0, (index) {
-                                              ChipviewalbertItemModel model =
+                                        return !addCropOneModelObj!.search
+                                            ? Wrap(
+                                                runSpacing: 10.v,
+                                                spacing: 10.h,
+                                                children: List<Widget>.generate(
                                                   addCropOneModelObj
-                                                              ?.chipviewalbertItemList[
-                                                          index] ??
-                                                      ChipviewalbertItemModel();
-                                              return ChipviewalbertItemWidget(
-                                                  model,
-                                                  onSelectedChipView: (value) {
-                                                context
-                                                    .read<AddCropOneBloc>()
-                                                    .add(UpdateChipViewEvent(
-                                                        index: index,
-                                                        isSelected: value));
-                                              });
-                                            }));
+                                                          ?.chipviewalbertItemList
+                                                          .length ??
+                                                      0,
+                                                  (index) {
+                                                    ChipviewalbertItemModel
+                                                        model =
+                                                        addCropOneModelObj
+                                                                    ?.chipviewalbertItemList[
+                                                                index] ??
+                                                            ChipviewalbertItemModel();
+                                                    return ChipviewalbertItemWidget(
+                                                        model,
+                                                        onSelectedChipView:
+                                                            (value) {
+                                                      context
+                                                          .read<
+                                                              AddCropOneBloc>()
+                                                          .add(
+                                                              UpdateChipViewEvent(
+                                                            index: index,
+                                                            isSelected: value,
+                                                            model: model,
+                                                          ));
+                                                    });
+                                                  },
+                                                ),
+                                              )
+                                            : Wrap(
+                                                runSpacing: 10.v,
+                                                spacing: 10.h,
+                                                children: List<Widget>.generate(
+                                                  addCropOneModelObj
+                                                          .searchValues
+                                                          ?.length ??
+                                                      0,
+                                                  (index) {
+                                                    ChipviewalbertItemModel
+                                                        model =
+                                                        addCropOneModelObj!
+                                                                    .searchValues?[
+                                                                index] ??
+                                                            ChipviewalbertItemModel();
+                                                    return ChipviewalbertItemWidget(
+                                                        model,
+                                                        onSelectedChipView:
+                                                            (value) {
+                                                      context
+                                                          .read<
+                                                              AddCropOneBloc>()
+                                                          .add(
+                                                              UpdateChipViewEvent(
+                                                            index: index,
+                                                            isSelected: value,
+                                                            model: model,
+                                                          ));
+                                                    });
+                                                  },
+                                                ),
+                                              );
                                       })),
                               SizedBox(height: 24.v),
                               Text("lbl_crop2".tr,
@@ -169,6 +223,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                 svgPath: ImageConstant
                                                     .imgArrowdownPrimary)),
                                         hintText: "lbl_select".tr,
+                                        val: addCropOneModelObj?.selectedCrop,
                                         items: addCropOneModelObj
                                                 ?.dropdownItemList ??
                                             [],
@@ -354,7 +409,7 @@ class AddCropOneScreen extends StatelessWidget {
   onTapNextC(BuildContext context, int step) {
     if (step == 0) {
       NavigatorService.popAndPushNamed(
-        AppRoutes.primaryFarmHoldingOneScreen,
+        AppRoutes.addCropOneScreen,
       );
       // } else if (step == 1) {
       //   NavigatorService.popAndPushNamed(
@@ -366,7 +421,7 @@ class AddCropOneScreen extends StatelessWidget {
       //   );
     } else {
       NavigatorService.popAndPushNamed(
-        AppRoutes.primaryFarmHoldingTwoScreen,
+        AppRoutes.addCropTwoScreen,
       );
     }
   }

@@ -315,7 +315,7 @@ class AddCropTwoScreen extends StatelessWidget {
   onTapNextC(BuildContext context, int step) {
     if (step == 0) {
       NavigatorService.popAndPushNamed(
-        AppRoutes.primaryFarmHoldingOneScreen,
+        AppRoutes.addCropOneScreen,
       );
       // } else if (step == 1) {
       //   NavigatorService.popAndPushNamed(
@@ -327,7 +327,7 @@ class AddCropTwoScreen extends StatelessWidget {
       //   );
     } else {
       NavigatorService.popAndPushNamed(
-        AppRoutes.primaryFarmHoldingTwoScreen,
+        AppRoutes.addCropTwoScreen,
       );
     }
   }

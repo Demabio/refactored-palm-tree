@@ -8,6 +8,7 @@ class ChipviewalbertItemModel extends Equatable {
     this.albertcrop = "Albert crop",
     this.isSelected = false,
     this.cropId,
+    this.search = false,
   }) {}
 
   String albertcrop;
@@ -16,14 +17,20 @@ class ChipviewalbertItemModel extends Equatable {
 
   int? cropId;
 
+  bool search;
+
   ChipviewalbertItemModel copyWith({
     String? albertcrop,
     bool? isSelected,
+    int? cropId,
+    bool? search,
   }) {
     return ChipviewalbertItemModel(
-        albertcrop: albertcrop ?? this.albertcrop,
-        isSelected: isSelected ?? this.isSelected,
-        cropId: cropId ?? this.cropId);
+      albertcrop: albertcrop ?? this.albertcrop,
+      isSelected: isSelected ?? this.isSelected,
+      cropId: cropId ?? this.cropId,
+      search: search ?? this.search,
+    );
   }
 
   @override
@@ -31,5 +38,6 @@ class ChipviewalbertItemModel extends Equatable {
         albertcrop,
         isSelected,
         cropId,
+        search,
       ];
 }

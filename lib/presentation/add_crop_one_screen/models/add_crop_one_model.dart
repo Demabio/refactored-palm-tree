@@ -18,6 +18,9 @@ class AddCropOneModel extends Equatable {
     this.page2 = StepState.indexed,
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
+    this.selectedCrop,
+    this.search = false,
+    this.searchValues,
   }) {}
 
   List<ChipviewalbertItemModel> chipviewalbertItemList;
@@ -38,6 +41,12 @@ class AddCropOneModel extends Equatable {
 
   StepState? page4;
 
+  SelectionPopupModel? selectedCrop;
+
+  bool search;
+
+  List<ChipviewalbertItemModel>? searchValues;
+
   AddCropOneModel copyWith({
     List<ChipviewalbertItemModel>? chipviewalbertItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -48,6 +57,9 @@ class AddCropOneModel extends Equatable {
     StepState? page2,
     StepState? page3,
     StepState? page4,
+    SelectionPopupModel? selectedCrop,
+    bool? search,
+    List<ChipviewalbertItemModel>? searchValues,
   }) {
     return AddCropOneModel(
       chipviewalbertItemList:
@@ -60,6 +72,9 @@ class AddCropOneModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
+      selectedCrop: selectedCrop,
+      search: search ?? this.search,
+      searchValues: searchValues ?? this.searchValues,
     );
   }
 
@@ -74,5 +89,8 @@ class AddCropOneModel extends Equatable {
         page2,
         page3,
         page4,
+        selectedCrop,
+        search,
+        searchValues
       ];
 }

@@ -20,16 +20,20 @@ class UpdateChipViewEvent extends AddCropOneEvent {
   UpdateChipViewEvent({
     required this.index,
     this.isSelected,
+    this.model,
   });
 
   int index;
 
   bool? isSelected;
 
+  ChipviewalbertItemModel? model;
+
   @override
   List<Object?> get props => [
         index,
         isSelected,
+        model,
       ];
 }
 
@@ -95,6 +99,28 @@ class OnSteppedEvent extends AddCropOneEvent {
   OnSteppedEvent({this.value});
 
   int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class SearchEventCrop extends AddCropOneEvent {
+  SearchEventCrop({required this.value});
+
+  String value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ReturnCommonEventCrop extends AddCropOneEvent {
+  ReturnCommonEventCrop({this.value});
+
+  String? value;
 
   @override
   List<Object?> get props => [

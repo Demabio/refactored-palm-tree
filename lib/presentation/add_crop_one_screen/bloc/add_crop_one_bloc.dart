@@ -19,19 +19,33 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     on<StepDownEvent>(_onSteppedDown);
     on<OnSteppedEvent>(_onStepped);
     on<StepUpEvent>(_onSteppedUp);
+    on<SearchEventCrop>(_searchCrops);
+    on<ReturnCommonEventCrop>(_restoreCommon);
   }
 
   _updateChipView(
     UpdateChipViewEvent event,
     Emitter<AddCropOneState> emit,
   ) {
-    List<ChipviewalbertItemModel> newList = List<ChipviewalbertItemModel>.from(
-        state.addCropOneModelObj!.chipviewalbertItemList);
-    newList[event.index] =
-        newList[event.index].copyWith(isSelected: event.isSelected);
+    // List<ChipviewalbertItemModel> newList = List<ChipviewalbertItemModel>.from(
+    //     state.addCropOneModelObj!.chipviewalbertItemList);
+    // newList[event.index] =
+    //     newList[event.index].copyWith(isSelected: event.isSelected);
     emit(state.copyWith(
-        addCropOneModelObj: state.addCropOneModelObj
-            ?.copyWith(chipviewalbertItemList: newList)));
+        addCropOneModelObj: state.addCropOneModelObj?.copyWith(
+      selectedCrop: null,
+      search: false,
+    )));
+
+    SelectionPopupModel? categorymodel =
+        state.addCropOneModelObj?.dropdownItemList.firstWhere(
+      (model) => model.id == event.model!.cropId,
+    );
+
+    emit(state.copyWith(
+        addCropOneModelObj: state.addCropOneModelObj?.copyWith(
+      selectedCrop: categorymodel,
+    )));
   }
 
   _changeDropDown(
@@ -149,6 +163,29 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     );
   }
 
+  _searchCrops(
+    SearchEventCrop event,
+    Emitter<AddCropOneState> emit,
+  ) async {
+    emit(state.copyWith(
+        addCropOneModelObj: state.addCropOneModelObj?.copyWith(
+      selectedCrop: state.addCropOneModelObj?.selectedCrop,
+      search: true,
+      searchValues: await searchCrop(event.value),
+    )));
+  }
+
+  _restoreCommon(
+    ReturnCommonEventCrop event,
+    Emitter<AddCropOneState> emit,
+  ) async {
+    emit(state.copyWith(
+        addCropOneModelObj: state.addCropOneModelObj?.copyWith(
+      selectedCrop: state.addCropOneModelObj?.selectedCrop,
+      search: false,
+    )));
+  }
+
   Future<List<SelectionPopupModel>> fetchAreaUnits() async {
     List<SelectionPopupModel> list = [];
     CropAreaUnitDB areaUnitDB = CropAreaUnitDB();
@@ -179,6 +216,36 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     return list;
   }
 
+  Future<List<ChipviewalbertItemModel>> fetchCommonCrops() async {
+    List<ChipviewalbertItemModel> list = [];
+    CropDB cropDB = CropDB();
+
+    await cropDB.fetchCommonCrops().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewalbertItemModel(
+          albertcrop: value[i].crop,
+          cropId: value[i].cropId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<ChipviewalbertItemModel>> searchCrop(String crop) async {
+    List<ChipviewalbertItemModel> list = [];
+    CropDB cropDB = CropDB();
+
+    await cropDB.searchCrops(crop).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewalbertItemModel(
+          albertcrop: value[i].crop,
+          cropId: value[i].cropId,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     AddCropOneInitialEvent event,
     Emitter<AddCropOneState> emit,
@@ -188,9 +255,9 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
         areavalueoneController: TextEditingController()));
     emit(state.copyWith(
         addCropOneModelObj: state.addCropOneModelObj?.copyWith(
-            chipviewalbertItemList: fillChipviewalbertItemList(),
-            dropdownItemList: fillDropdownItemList(),
-            dropdownItemList1: fillDropdownItemList1(),
+            chipviewalbertItemList: await fetchCommonCrops(),
+            dropdownItemList: await fetchCrops(),
+            dropdownItemList1: await fetchAreaUnits(),
             dropdownItemList2: fillDropdownItemList2())));
   }
 }

@@ -76,6 +76,24 @@ class CropDB {
     return crops.map((e) => Crop.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<List<Crop>> fetchCommonCrops() async {
+    final database = await DatabaseService().database;
+    final crops = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE common_crop = 1
+    ''');
+
+    return crops.map((e) => Crop.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<Crop>> searchCrops(String crop) async {
+    final database = await DatabaseService().database;
+    final crops = await database.rawQuery('''
+      SELECT * FROM $tableName WHERE crop LIKE '%' ||  ? || '%' LIMIT 5
+    ''', [crop]);
+
+    return crops.map((e) => Crop.fromSqfliteDatabase(e)).toList();
+  }
+
   Future<Crop> fetchByCropId(int cropId) async {
     final database = await DatabaseService().database;
     final crop = await database.rawQuery('''
