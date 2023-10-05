@@ -16,7 +16,7 @@ class Enterprise {
         enterpriseId: map['enterprise_id']?.toInt() ?? 0,
         enterpriseDesc: map['enterprise_desc'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<Enterprise> parseEnterprises(Map<String, dynamic> json) {
     final enterprisesList = json['data']['getallEnterprises'] as List<dynamic>;

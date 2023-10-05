@@ -155,3 +155,17 @@ class OnSteppedEvent extends PrimaryFarmHoldingTwoEvent {
         value,
       ];
 }
+
+class ChangeEnterprisesCheckbox extends PrimaryFarmHoldingTwoEvent {
+  ChangeEnterprisesCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}

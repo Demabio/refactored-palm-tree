@@ -1,3 +1,7 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
+import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/widgets/enterprises_widget.dart';
+
 import 'bloc/primary_farm_holding_two_bloc.dart';
 import 'models/primary_farm_holding_two_model.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +16,9 @@ import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
+// ignore: must_be_immutable
 class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
-  const PrimaryFarmHoldingTwoScreen({Key? key}) : super(key: key);
+  PrimaryFarmHoldingTwoScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<PrimaryFarmHoldingTwoBloc>(
@@ -24,12 +29,18 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
         child: PrimaryFarmHoldingTwoScreen());
   }
 
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
+  FocusNode node6 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             appBar: CustomAppBar(
                 leadingWidth: 60.h,
                 leading: AppbarImage(
@@ -51,6 +62,24 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              BlocSelector<
+                                      PrimaryFarmHoldingTwoBloc,
+                                      PrimaryFarmHoldingTwoState,
+                                      PrimaryFarmHoldingTwoModel?>(
+                                  selector: (state) =>
+                                      state.primaryFarmHoldingTwoModelObj,
+                                  builder: ((context,
+                                      farmersIdentificationOneModelObj) {
+                                    return SizedBox(
+                                      height: 150.v,
+                                      width: double.infinity,
+                                      child: _buildStepper(
+                                          StepperType.horizontal,
+                                          context,
+                                          farmersIdentificationOneModelObj),
+                                    );
+                                  })),
+                              SizedBox(height: 11.v),
                               Padding(
                                   padding:
                                       EdgeInsets.only(left: 14.h, top: 15.v),
@@ -91,6 +120,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               (context, titleoneController) {
                                             return CustomTextFormField(
                                                 width: 95.h,
+                                                autofocus: false,
+                                                focusNode: node1,
                                                 controller: titleoneController,
                                                 hintText: "lbl_longitude3".tr,
                                                 contentPadding:
@@ -118,6 +149,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                   titlethreeController) {
                                                 return CustomTextFormField(
                                                     width: 95.h,
+                                                    autofocus: false,
+                                                    focusNode: node2,
                                                     controller:
                                                         titlethreeController,
                                                     hintText:
@@ -182,6 +215,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       state.titlesevenController,
                                   builder: (context, titlesevenController) {
                                     return CustomTextFormField(
+                                        focusNode: node3,
+                                        autofocus: false,
                                         controller: titlesevenController,
                                         hintText: "lbl_info".tr,
                                         textInputAction: TextInputAction.done);
@@ -228,114 +263,41 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1)),
                               SizedBox(height: 12.v),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.aquacultureForS,
-                                  builder: (context, aquacultureForS) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_aquaculture_for".tr,
-                                        value: aquacultureForS,
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBoxEvent(
-                                                  value: value));
-                                        });
-                                  }),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.trash,
-                                  builder: (context, trash) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_aquaculture_for2".tr,
-                                        value: trash,
-                                        margin: EdgeInsets.only(
-                                            top: 16.v, right: 80.h),
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox1Event(
-                                                  value: value));
-                                        });
-                                  }),
-                              SizedBox(height: 16.v),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.growingCropsFor,
-                                  builder: (context, growingCropsFor) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_growing_crops_for3".tr,
-                                        value: growingCropsFor,
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox2Event(
-                                                  value: value));
-                                        });
-                                  }),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.trashone,
-                                  builder: (context, trashone) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_growing_crops_for4".tr,
-                                        value: trashone,
-                                        margin: EdgeInsets.only(
-                                            top: 16.v, right: 63.h),
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox3Event(
-                                                  value: value));
-                                        });
-                                  }),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.trashtwo,
-                                  builder: (context, trashtwo) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_rearing_livestock".tr,
-                                        value: trashtwo,
-                                        margin: EdgeInsets.only(
-                                            top: 16.v, right: 97.h),
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox4Event(
-                                                  value: value));
-                                        });
-                                  }),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.trashthree,
-                                  builder: (context, trashthree) {
-                                    return CustomCheckboxButton(
-                                        text: "msg_rearing_livestock2".tr,
-                                        value: trashthree,
-                                        margin: EdgeInsets.only(
-                                            top: 16.v, right: 42.h),
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox5Event(
-                                                  value: value));
-                                        });
-                                  }),
-                              SizedBox(height: 16.v),
-                              BlocSelector<PrimaryFarmHoldingTwoBloc,
-                                      PrimaryFarmHoldingTwoState, bool?>(
-                                  selector: (state) => state.treeFarming,
-                                  builder: (context, treeFarming) {
-                                    return CustomCheckboxButton(
-                                        text: "lbl_tree_farming".tr,
-                                        value: treeFarming,
-                                        onChange: (value) {
-                                          context
-                                              .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(ChangeCheckBox6Event(
-                                                  value: value));
-                                        });
-                                  }),
+                              BlocSelector<
+                                  PrimaryFarmHoldingTwoBloc,
+                                  PrimaryFarmHoldingTwoState,
+                                  PrimaryFarmHoldingTwoModel?>(
+                                selector: (state) =>
+                                    state.primaryFarmHoldingTwoModelObj,
+                                builder:
+                                    (context, primaryFarmHoldingTwoModelObj) {
+                                  return Column(
+                                    children: List<Widget>.generate(
+                                      primaryFarmHoldingTwoModelObj
+                                              ?.enterprises.length ??
+                                          0,
+                                      (index) {
+                                        EnterpriseModel model =
+                                            primaryFarmHoldingTwoModelObj
+                                                    ?.enterprises[index] ??
+                                                EnterpriseModel();
+
+                                        return EnterprisesItemWidget(
+                                          model,
+                                          onSelect: (value) {
+                                            context
+                                                .read<
+                                                    PrimaryFarmHoldingTwoBloc>()
+                                                .add(ChangeEnterprisesCheckbox(
+                                                    value: index,
+                                                    selected: value));
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
                               SizedBox(height: 12.v),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -370,6 +332,96 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                     onTapSave(context);
                                   })
                             ]))))));
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      PrimaryFarmHoldingTwoModel? primaryFarmHoldingTwoModel) {
+    final canCancel = primaryFarmHoldingTwoModel!.stepped > 0;
+    final canContinue = primaryFarmHoldingTwoModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: primaryFarmHoldingTwoModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        //Validation checks
+
+        // context
+        //     .read<FarmersIdentificationFourBloc>()
+        //     .add(OnSteppedEvent(value: step));
+
+        //chosen
+        onTapNextC(context, step);
+      },
+      onStepCancel: canCancel
+          ? () {
+              // context
+              //     .read<FarmersIdentificationFourBloc>()
+              //     .add(StepDownEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingTwoModel.stepped - 1);
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              //   context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingTwoModel.stepped + 1);
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: primaryFarmHoldingTwoModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: primaryFarmHoldingTwoModel.page2!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
+  }
+
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.primaryFarmHoldingOneScreen,
+      );
+      // } else if (step == 1) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.primaryFarmHoldingTwoScreen,
+      //   );
+      // } else if (step == 2) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.farmersIdentificationThreeScreen,
+      //   );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.primaryFarmHoldingTwoScreen,
+      );
+    }
   }
 
   /// Navigates to the primaryFarmHoldingOneScreen when the action is triggered.

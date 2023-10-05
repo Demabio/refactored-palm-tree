@@ -195,6 +195,8 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                             .titleMediumBluegray40003);
                                   }),
                               SizedBox(height: 33.v),
+                              Text("msg_size_of_land_leased2".tr,
+                                  style: CustomTextStyles.labelMediumPrimary_1),
                               BlocSelector<
                                       PrimaryFarmHoldingOneBloc,
                                       PrimaryFarmHoldingOneState,
@@ -211,6 +213,8 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                             .titleMediumBluegray40003);
                                   }),
                               SizedBox(height: 33.v),
+                              Text("msg_size_of_land_lying2".tr,
+                                  style: CustomTextStyles.labelMediumPrimary_1),
                               BlocSelector<
                                       PrimaryFarmHoldingOneBloc,
                                       PrimaryFarmHoldingOneState,
@@ -334,19 +338,19 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
   onTapNextC(BuildContext context, int step) {
     if (step == 0) {
       NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationOneScreen,
+        AppRoutes.primaryFarmHoldingOneScreen,
       );
-    } else if (step == 1) {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationTwoScreen,
-      );
-    } else if (step == 2) {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationThreeScreen,
-      );
+      // } else if (step == 1) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.primaryFarmHoldingTwoScreen,
+      //   );
+      // } else if (step == 2) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.farmersIdentificationThreeScreen,
+      //   );
     } else {
       NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationFourScreen,
+        AppRoutes.primaryFarmHoldingTwoScreen,
       );
     }
   }

@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmownership.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/enterpirses.dart';
+import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/primary_farm_holding_two_model.dart';
 part 'primary_farm_holding_two_event.dart';
@@ -23,6 +26,7 @@ class PrimaryFarmHoldingTwoBloc
     on<StepDownEvent>(_onSteppedDown);
     on<OnSteppedEvent>(_onStepped);
     on<StepUpEvent>(_onSteppedUp);
+    on<ChangeEnterprisesCheckbox>(_changeEnterpriseCB);
   }
 
   _changeDropDown(
@@ -98,9 +102,8 @@ class PrimaryFarmHoldingTwoBloc
 
   List<SelectionPopupModel> fillDropdownItemList1() {
     return [
-      SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
-      SelectionPopupModel(id: 2, title: "Item Two"),
-      SelectionPopupModel(id: 3, title: "Item Three")
+      SelectionPopupModel(id: 1, title: "Yes"),
+      SelectionPopupModel(id: 0, title: "No")
     ];
   }
 
@@ -174,6 +177,53 @@ class PrimaryFarmHoldingTwoBloc
     );
   }
 
+  _changeEnterpriseCB(
+    ChangeEnterprisesCheckbox event,
+    Emitter<PrimaryFarmHoldingTwoState> emit,
+  ) {
+    List<EnterpriseModel> newModels =
+        state.primaryFarmHoldingTwoModelObj!.enterprises;
+
+    newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        primaryFarmHoldingTwoModelObj:
+            state.primaryFarmHoldingTwoModelObj?.copyWith(
+      enterprises: newModels,
+      count: state.primaryFarmHoldingTwoModelObj!.count + 1,
+    )));
+  }
+
+  Future<List<SelectionPopupModel>> fetchOwnerships() async {
+    List<SelectionPopupModel> list = [];
+    FarmerFarmOwnershipDB farmOwnershipDB = FarmerFarmOwnershipDB();
+
+    await farmOwnershipDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].ownershipDesc,
+          id: value[i].ownershipId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<EnterpriseModel>> fetchEnterprises() async {
+    List<EnterpriseModel> list = [];
+    EnterprisesDB enterprisesDB = EnterprisesDB();
+
+    await enterprisesDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(EnterpriseModel(
+          title: value[i].enterpriseDesc,
+          enterpriseId: value[i].enterpriseId,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     PrimaryFarmHoldingTwoInitialEvent event,
     Emitter<PrimaryFarmHoldingTwoState> emit,
@@ -192,7 +242,8 @@ class PrimaryFarmHoldingTwoBloc
     emit(state.copyWith(
         primaryFarmHoldingTwoModelObj: state.primaryFarmHoldingTwoModelObj
             ?.copyWith(
-                dropdownItemList: fillDropdownItemList(),
+                enterprises: await fetchEnterprises(),
+                dropdownItemList: await fetchOwnerships(),
                 dropdownItemList1: fillDropdownItemList1())));
   }
 }
