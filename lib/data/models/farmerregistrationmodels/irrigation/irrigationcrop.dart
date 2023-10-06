@@ -28,6 +28,6 @@ class FarmerIrrigationCrop {
         areaUnitId: map['area_unit_id']?.toInt() ?? 0,
         noOfCropPerYear: map['no_of_crop_per_year']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

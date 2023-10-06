@@ -19,7 +19,7 @@ class IncomeSource {
         incomeSource: map['income_source'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<IncomeSource> parseIncomeSources(Map<String, dynamic> json) {
     final incomeSourcesList =

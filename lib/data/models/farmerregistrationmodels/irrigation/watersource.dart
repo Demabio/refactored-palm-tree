@@ -24,6 +24,6 @@ class FarmerIrrigationWaterSource {
             map['irrigation_water_source_id']?.toInt() ?? 0,
         sourceName: map['source_name'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

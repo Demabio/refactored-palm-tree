@@ -19,7 +19,7 @@ class HouseholdRelationship {
         rlshpToHead: map['rlshp_to_head'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<HouseholdRelationship> parseHouseholdRelationships(
       Map<String, dynamic> json) {

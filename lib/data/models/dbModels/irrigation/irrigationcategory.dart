@@ -16,7 +16,7 @@ class IrrigationCategory {
         irrigationCategoryId: map['irrigation_category_id']?.toInt() ?? 0,
         irrigationCategory: map['irrigation_category'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<IrrigationCategory> parseIrrigationCategories(
       Map<String, dynamic> json) {

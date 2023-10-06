@@ -20,7 +20,7 @@ class LivestockFarmingSystem {
         livestockFarmsystem: map['livestock_farmsystem'] ?? '',
         livestockFarmsystemCode: map['livestock_farmsystem_code'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<LivestockFarmingSystem> parseLivestockFarmingSystems(
       Map<String, dynamic> json) {

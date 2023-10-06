@@ -21,6 +21,6 @@ class County {
         county: map['county'] ?? '',
         area: map['area']?.toDouble(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -25,6 +25,6 @@ class FarmerSoilTest {
         soilTest: map['soiltest']?.toInt(),
         soilTestYear: map['soil_test_year'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

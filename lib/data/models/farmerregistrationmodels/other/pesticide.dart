@@ -28,6 +28,6 @@ class FarmerPesticide {
         pesticideTypeId: map['pesticide_type_id']?.toInt() ?? 0,
         others: map['others'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_five_dialog/models/add_landandwatermgmt_five_model.dart';
 part 'add_landandwatermgmt_five_event.dart';
@@ -11,86 +15,77 @@ class AddLandandwatermgmtFiveBloc
   AddLandandwatermgmtFiveBloc(AddLandandwatermgmtFiveState initialState)
       : super(initialState) {
     on<AddLandandwatermgmtFiveInitialEvent>(_onInitialize);
-    on<ChangeCheckBoxEvent>(_changeCheckBox);
-    on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
-    on<ChangeCheckBox3Event>(_changeCheckBox3);
-    on<ChangeCheckBox4Event>(_changeCheckBox4);
-    on<ChangeCheckBox5Event>(_changeCheckBox5);
-    on<ChangeCheckBox6Event>(_changeCheckBox6);
-    on<ChangeCheckBox7Event>(_changeCheckBox7);
+    on<ChangeCheckbox>(_changeAgeGroupCB);
+
+    on<ResetCBs>(_resetCBs);
+    on<AddCBs>(_addAgeGroups);
   }
 
-  _changeCheckBox(
-    ChangeCheckBoxEvent event,
+  _changeAgeGroupCB(
+    ChangeCheckbox event,
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) {
+    List<CheckBoxList> newModels =
+        state.addLandandwatermgmtFiveModelObj!.models;
+
+    newModels[event.value].isSelected = event.selected!;
+
     emit(state.copyWith(
-      furrowvalue: event.value,
-    ));
+        addLandandwatermgmtFiveModelObj:
+            state.addLandandwatermgmtFiveModelObj?.copyWith(
+      models: newModels,
+      count: state.addLandandwatermgmtFiveModelObj!.count + 1,
+    )));
   }
 
-  _changeCheckBox1(
-    ChangeCheckBox1Event event,
-    Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
-    emit(state.copyWith(
-      dripvalue: event.value,
-    ));
+  Future<List<CheckBoxList>> fetchFarmStructure() async {
+    List<CheckBoxList> list = [];
+    IrrigationTypeDB farmStructureDB = IrrigationTypeDB();
+//        createdBy: int.parse(map['created_by'] ?? "0"),
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].irrigationType,
+          id: value[i].irrigationTypeId,
+        ));
+      }
+    });
+    return list;
   }
 
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
+  _resetCBs(
+    ResetCBs event,
     Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(
-      sprinklervalue: event.value,
-    ));
+        addLandandwatermgmtFiveModelObj:
+            state.addLandandwatermgmtFiveModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+      count: 0,
+    )));
   }
 
-  _changeCheckBox3(
-    ChangeCheckBox3Event event,
+  _addAgeGroups(
+    AddCBs event,
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) {
-    emit(state.copyWith(
-      centrePivot: event.value,
-    ));
-  }
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
 
-  _changeCheckBox4(
-    ChangeCheckBox4Event event,
-    Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
-    emit(state.copyWith(
-      bucketIrrigatio: event.value,
-    ));
-  }
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
 
-  _changeCheckBox5(
-    ChangeCheckBox5Event event,
-    Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
-    emit(state.copyWith(
-      basinIrrigation: event.value,
-    ));
-  }
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
 
-  _changeCheckBox6(
-    ChangeCheckBox6Event event,
-    Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
-    emit(state.copyWith(
-      floodingvalue: event.value,
-    ));
-  }
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<CheckBoxList> ageGroupList =
+        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
 
-  _changeCheckBox7(
-    ChangeCheckBox7Event event,
-    Emitter<AddLandandwatermgmtFiveState> emit,
-  ) {
     emit(state.copyWith(
-      furrowCanal: event.value,
-    ));
+        addLandandwatermgmtFiveModelObj:
+            state.addLandandwatermgmtFiveModelObj));
   }
 
   _onInitialize(

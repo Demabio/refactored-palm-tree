@@ -19,7 +19,7 @@ class CreditSource {
         creditSource: map['credit_source'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<CreditSource> parseCreditSources(Map<String, dynamic> json) {
     final creditSourcesList =

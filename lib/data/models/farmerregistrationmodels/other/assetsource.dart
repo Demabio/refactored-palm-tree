@@ -22,6 +22,6 @@ class FarmerAssetSource {
         farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         assetSourceId: map['asset_source_id']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

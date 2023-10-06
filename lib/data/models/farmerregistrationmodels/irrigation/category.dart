@@ -17,7 +17,8 @@ class FarmerIrrigationCategory {
     this.createdBy,
   });
 
-  factory FarmerIrrigationCategory.fromSqfliteDatabase(Map<String, dynamic> map) =>
+  factory FarmerIrrigationCategory.fromSqfliteDatabase(
+          Map<String, dynamic> map) =>
       FarmerIrrigationCategory(
         irrigationCropId: map['irrigation_crop_id']?.toInt() ?? 0,
         farmerId: map['farmer_id']?.toInt() ?? 0,
@@ -25,6 +26,6 @@ class FarmerIrrigationCategory {
         irrigationProjectName: map['irrigation_project_name'] ?? '',
         membershipTypeId: map['membership_type_id']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

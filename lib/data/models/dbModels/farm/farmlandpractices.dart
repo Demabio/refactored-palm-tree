@@ -19,7 +19,7 @@ class FarmlandPractice {
         landPracticeName: map['land_practice_name'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 
   static List<FarmlandPractice> parseFarmlandPractices(

@@ -51,6 +51,6 @@ class FarmerLivestockService {
         routineVaccination: (map['routine_vaccination'] ?? 0) == 1,
         curativeMeasures: (map['curative_measures'] ?? 0) == 1,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -16,7 +16,7 @@ class AgriPractice {
         agriPracticeId: map['agri_practice_id']?.toInt() ?? 0,
         agriPractice: map['agri_practice'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<AgriPractice> parseAgriPractices(Map<String, dynamic> json) {
     final agriPracticesList =

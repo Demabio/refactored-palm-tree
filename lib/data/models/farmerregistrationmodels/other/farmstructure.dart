@@ -22,6 +22,6 @@ class FarmerStructure {
         farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         farmStructureId: map['farm_structure_id']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -28,7 +28,7 @@ class Division {
         division: map['division'] ?? '',
         area: map['area']?.toDouble(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
         dateEdited: map['date_edited'] != null
             ? DateTime.parse(map['date_edited'] ?? '')
             : null,

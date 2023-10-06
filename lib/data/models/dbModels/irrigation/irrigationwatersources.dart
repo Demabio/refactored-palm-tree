@@ -17,7 +17,7 @@ class IrrigationWaterSource {
             map['irrigation_water_source_id']?.toInt() ?? 0,
         irrigationWaterSource: map['irrigation_water_source'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<IrrigationWaterSource> parseIrrigationWaterSources(
       Map<String, dynamic> json) {

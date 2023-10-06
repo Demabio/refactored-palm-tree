@@ -19,7 +19,7 @@ class AgriManagementSkill {
         agriSkills: map['agri_skills'] ?? '',
         description: map['desc'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<AgriManagementSkill> parseAgriManagementSkills(
       Map<String, dynamic> json) {

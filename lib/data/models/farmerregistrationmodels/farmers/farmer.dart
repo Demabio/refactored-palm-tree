@@ -225,7 +225,7 @@ class Farmer {
         enumeratorId: map['enumerator_id'],
         enumeratorMobile: map['enumerator_mobile'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
         dateCaptured: DateTime.parse(map['date_captured'] ?? ''),
         approvedBy: map['approved_by']?.toInt(),
         dateApproved: DateTime.parse(map['date_approved'] ?? ''),

@@ -19,7 +19,7 @@ class AgriInfoSource {
         agriInfoSource: map['agri_info_source'] ?? '',
         description: map['desc'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<AgriInfoSource> parseAgriInfoSources(Map<String, dynamic> json) {
     final agriInfoSourcesList =

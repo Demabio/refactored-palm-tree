@@ -16,6 +16,39 @@ class AddLandandwatermgmtSevenInitialEvent
   List<Object?> get props => [];
 }
 
+class ResetCBs extends AddLandandwatermgmtSevenEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddCBs extends AddLandandwatermgmtSevenEvent {
+  AddCBs({
+    required this.models,
+  });
+
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
+
+class ChangeCheckbox extends AddLandandwatermgmtSevenEvent {
+  ChangeCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
 ///Event for changing checkbox
 class ChangeCheckBoxEvent extends AddLandandwatermgmtSevenEvent {
   ChangeCheckBoxEvent({required this.value});

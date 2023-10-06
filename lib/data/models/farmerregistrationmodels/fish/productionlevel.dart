@@ -30,6 +30,6 @@ class FarmerFishProductionLevel {
         fertilizerInPonds: map['fertilizer_in_ponds'] == 1,
         espBenefit: map['esp_benefit']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

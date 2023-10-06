@@ -22,6 +22,6 @@ class FarmerLivestockFeed {
         feedTypeId: map['feed_type_id']?.toInt() ?? 0,
         feedQuantity: map['feed_quantity']?.toDouble() ?? 0.0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -25,6 +25,6 @@ class FarmerEnterprise {
         insured: map['insured']?.toInt(),
         insuranceName: map['insurance_name'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

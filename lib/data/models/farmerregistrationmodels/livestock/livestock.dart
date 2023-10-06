@@ -28,6 +28,6 @@ class FarmerLivestock {
         livestockId: map['livestock_id']?.toInt() ?? 0,
         noOfBeehives: map['no_of_beehives']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

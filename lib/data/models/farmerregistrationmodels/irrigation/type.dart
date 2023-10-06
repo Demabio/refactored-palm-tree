@@ -22,6 +22,6 @@ class FarmerIrrigationType {
         irrigationTypeId: map['irrigation_type_id']?.toInt() ?? 0,
         othersName: map['others_name'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

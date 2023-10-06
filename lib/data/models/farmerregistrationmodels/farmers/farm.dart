@@ -55,6 +55,6 @@ class FarmerFarm {
         accuracyLevel: map['accuracy_level']?.toDouble(),
         otherFarmElsewhere: map['other_farm_elsewhere'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

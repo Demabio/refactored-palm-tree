@@ -49,6 +49,6 @@ class FarmerCrop {
         fertilizerUse: map['fertilizer_use']?.toInt() ?? 0,
         pesticideUse: map['pesticide_use']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }

@@ -25,6 +25,6 @@ class FarmerIrrigation {
         totalAreaIrrigation: map['total_area_irrigation']?.toInt(),
         areaUnitId: map['area_unit_id']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
 }
