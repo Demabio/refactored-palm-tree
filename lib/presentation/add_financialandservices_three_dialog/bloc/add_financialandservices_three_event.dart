@@ -16,6 +16,39 @@ class AddFinancialandservicesThreeInitialEvent
   List<Object?> get props => [];
 }
 
+class ResetCBs extends AddFinancialandservicesThreeEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddCBs extends AddFinancialandservicesThreeEvent {
+  AddCBs({
+    required this.models,
+  });
+
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
+
+class ChangeCheckbox extends AddFinancialandservicesThreeEvent {
+  ChangeCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
 ///Event for changing checkbox
 class ChangeCheckBoxEvent extends AddFinancialandservicesThreeEvent {
   ChangeCheckBoxEvent({required this.value});

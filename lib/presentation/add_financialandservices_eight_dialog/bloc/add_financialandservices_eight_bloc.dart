@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_eight_dialog/models/add_financialandservices_eight_model.dart';
 part 'add_financialandservices_eight_event.dart';
@@ -18,6 +22,72 @@ class AddFinancialandservicesEightBloc extends Bloc<
     on<ChangeCheckBox3Event>(_changeCheckBox3);
     on<ChangeCheckBox4Event>(_changeCheckBox4);
     on<ChangeCheckBox5Event>(_changeCheckBox5);
+  }
+
+  _changeAgeGroupCB(
+    ChangeCheckbox event,
+    Emitter<AddFinancialandservicesEightState> emit,
+  ) {
+    List<CheckBoxList> newModels =
+        state.addFinancialandservicesEightModelObj!.models;
+
+    newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        addFinancialandservicesEightModelObj:
+            state.addFinancialandservicesEightModelObj?.copyWith(
+      models: newModels,
+      count: state.addFinancialandservicesEightModelObj!.count + 1,
+    )));
+  }
+
+  Future<List<CheckBoxList>> fetchFarmStructure() async {
+    List<CheckBoxList> list = [];
+    ExtensionSourceDB farmStructureDB = ExtensionSourceDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].sourceType,
+          id: value[i].extensionSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  _resetCBs(
+    ResetCBs event,
+    Emitter<AddFinancialandservicesEightState> emit,
+  ) async {
+    emit(state.copyWith(
+        addFinancialandservicesEightModelObj:
+            state.addFinancialandservicesEightModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+      count: 0,
+    )));
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddFinancialandservicesEightState> emit,
+  ) {
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
+
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<CheckBoxList> ageGroupList =
+        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+
+    emit(state.copyWith(
+        addFinancialandservicesEightModelObj:
+            state.addFinancialandservicesEightModelObj));
   }
 
   _changeCheckBox(
@@ -79,12 +149,9 @@ class AddFinancialandservicesEightBloc extends Bloc<
     Emitter<AddFinancialandservicesEightState> emit,
   ) async {
     emit(state.copyWith(
-      eExtension: false,
-      faceToFace: false,
-      farmerFieldScho: false,
-      trash: false,
-      peerToPeer: false,
-      othervalue: false,
-    ));
+        addFinancialandservicesEightModelObj:
+            state.addFinancialandservicesEightModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }

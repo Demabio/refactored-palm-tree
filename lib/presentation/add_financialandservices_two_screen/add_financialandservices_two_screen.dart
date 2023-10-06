@@ -282,6 +282,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "Add Source".tr,
+                    onTap: () => addSource(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 9.v,
@@ -336,6 +337,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "msg_add_extension_access".tr,
+                    onTap: () => addAccess(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 30.v,
@@ -357,6 +359,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "lbl_add_mode".tr,
+                    onTap: () => addMode(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 8.v,

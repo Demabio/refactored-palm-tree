@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/models/add_financialandservices_six_model.dart';
 part 'add_financialandservices_six_event.dart';
@@ -16,6 +20,72 @@ class AddFinancialandservicesSixBloc extends Bloc<
     on<ChangeCheckBox2Event>(_changeCheckBox2);
     on<ChangeCheckBox3Event>(_changeCheckBox3);
     on<ChangeCheckBox4Event>(_changeCheckBox4);
+  }
+
+  _changeAgeGroupCB(
+    ChangeCheckbox event,
+    Emitter<AddFinancialandservicesSixState> emit,
+  ) {
+    List<CheckBoxList> newModels =
+        state.addFinancialandservicesSixModelObj!.models;
+
+    newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        addFinancialandservicesSixModelObj:
+            state.addFinancialandservicesSixModelObj?.copyWith(
+      models: newModels,
+      count: state.addFinancialandservicesSixModelObj!.count + 1,
+    )));
+  }
+
+  Future<List<CheckBoxList>> fetchFarmStructure() async {
+    List<CheckBoxList> list = [];
+    AgriInfoSourceDB farmStructureDB = AgriInfoSourceDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].agriInfoSource,
+          id: value[i].agriInfoSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  _resetCBs(
+    ResetCBs event,
+    Emitter<AddFinancialandservicesSixState> emit,
+  ) async {
+    emit(state.copyWith(
+        addFinancialandservicesSixModelObj:
+            state.addFinancialandservicesSixModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+      count: 0,
+    )));
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddFinancialandservicesSixState> emit,
+  ) {
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
+
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<CheckBoxList> ageGroupList =
+        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+
+    emit(state.copyWith(
+        addFinancialandservicesSixModelObj:
+            state.addFinancialandservicesSixModelObj));
   }
 
   _changeCheckBox(
@@ -68,11 +138,9 @@ class AddFinancialandservicesSixBloc extends Bloc<
     Emitter<AddFinancialandservicesSixState> emit,
   ) async {
     emit(state.copyWith(
-      publicGathering: false,
-      radiovalue: false,
-      trash: false,
-      internetvalue: false,
-      extensionMeetin: false,
-    ));
+        addFinancialandservicesSixModelObj:
+            state.addFinancialandservicesSixModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }

@@ -41,6 +41,13 @@ class AddFinancialandservicesFourScreen extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder6,
       ),
       child: Column(children: [
+        Padding(
+          padding: EdgeInsets.only(left: ResponsiveExtension(3).h),
+          child: Text(
+            "Add Cooperative Group".tr,
+            style: CustomTextStyles.titleMediumSemiBold,
+          ),
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Align(

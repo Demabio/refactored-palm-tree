@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/creditsource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_five_screen/models/add_financialandservices_five_model.dart';
 part 'add_financialandservices_five_event.dart';
@@ -23,6 +27,72 @@ class AddFinancialandservicesFiveBloc extends Bloc<
     on<ChangeCheckBox8Event>(_changeCheckBox8);
     on<ChangeCheckBox9Event>(_changeCheckBox9);
     on<ChangeCheckBox10Event>(_changeCheckBox10);
+  }
+
+  _changeAgeGroupCB(
+    ChangeCheckbox event,
+    Emitter<AddFinancialandservicesFiveState> emit,
+  ) {
+    List<CheckBoxList> newModels =
+        state.addFinancialandservicesFiveModelObj!.models;
+
+    newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        addFinancialandservicesFiveModelObj:
+            state.addFinancialandservicesFiveModelObj?.copyWith(
+      models: newModels,
+      count: state.addFinancialandservicesFiveModelObj!.count + 1,
+    )));
+  }
+
+  Future<List<CheckBoxList>> fetchFarmStructure() async {
+    List<CheckBoxList> list = [];
+    CreditSourceDB farmStructureDB = CreditSourceDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].creditSource,
+          id: value[i].creditSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  _resetCBs(
+    ResetCBs event,
+    Emitter<AddFinancialandservicesFiveState> emit,
+  ) async {
+    emit(state.copyWith(
+        addFinancialandservicesFiveModelObj:
+            state.addFinancialandservicesFiveModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+      count: 0,
+    )));
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddFinancialandservicesFiveState> emit,
+  ) {
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
+
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<CheckBoxList> ageGroupList =
+        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+
+    emit(state.copyWith(
+        addFinancialandservicesFiveModelObj:
+            state.addFinancialandservicesFiveModelObj));
   }
 
   _changeDropDown(
@@ -175,6 +245,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
         addFinancialandservicesFiveModelObj:
             state.addFinancialandservicesFiveModelObj?.copyWith(
       dropdownItemList: fillDropdownItemList(),
+      models: await fetchFarmStructure(),
     )));
   }
 }

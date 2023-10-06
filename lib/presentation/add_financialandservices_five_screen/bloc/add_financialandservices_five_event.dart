@@ -16,6 +16,39 @@ class AddFinancialandservicesFiveInitialEvent
   List<Object?> get props => [];
 }
 
+class ResetCBs extends AddFinancialandservicesFiveEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddCBs extends AddFinancialandservicesFiveEvent {
+  AddCBs({
+    required this.models,
+  });
+
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
+
+class ChangeCheckbox extends AddFinancialandservicesFiveEvent {
+  ChangeCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddFinancialandservicesFiveEvent {
   ChangeDropDownEvent({required this.value});

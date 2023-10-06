@@ -16,6 +16,39 @@ class AddFinancialandservicesEightInitialEvent
   List<Object?> get props => [];
 }
 
+class ResetCBs extends AddFinancialandservicesEightEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddCBs extends AddFinancialandservicesEightEvent {
+  AddCBs({
+    required this.models,
+  });
+
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
+
+class ChangeCheckbox extends AddFinancialandservicesEightEvent {
+  ChangeCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
 ///Event for changing checkbox
 class ChangeCheckBoxEvent extends AddFinancialandservicesEightEvent {
   ChangeCheckBoxEvent({required this.value});

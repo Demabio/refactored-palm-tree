@@ -1,3 +1,6 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/widgets/custom_column_checkboxes.dart';
+
 import 'bloc/add_financialandservices_eight_bloc.dart';
 import 'models/add_financialandservices_eight_model.dart';
 import 'package:flutter/material.dart';
@@ -28,181 +31,103 @@ class AddFinancialandservicesEightDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return Container(
       width: 344.h,
-      padding: EdgeInsets.symmetric(
-        horizontal: 11.h,
-        vertical: 13.v,
-      ),
-      decoration: AppDecoration.fillWhiteA.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder6,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: 3.h,
-              top: 10.v,
+      padding: EdgeInsets.symmetric(horizontal: 13.h, vertical: 15.v),
+      decoration: AppDecoration.fillWhiteA
+          .copyWith(borderRadius: BorderRadiusStyle.roundedBorder6),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.only(left: 3.h),
+          child: Text(
+            "Add Extension Mode".tr,
+            style: CustomTextStyles.titleMediumSemiBold,
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.center,
+              child: BlocSelector<
+                  AddFinancialandservicesEightBloc,
+                  AddFinancialandservicesEightState,
+                  AddFinancialandservicesEightModel?>(
+                selector: (state) => state.addFinancialandservicesEightModelObj,
+                builder: (context, addRearedLivestockDialogTwoModelObj) {
+                  return Column(
+                    children: List<Widget>.generate(
+                      addRearedLivestockDialogTwoModelObj?.models.length ?? 0,
+                      (index) {
+                        CheckBoxList model = addRearedLivestockDialogTwoModelObj
+                                ?.models[index] ??
+                            CheckBoxList();
+
+                        return CBListWidget(
+                          model,
+                          onSelect: (value) {
+                            context
+                                .read<AddFinancialandservicesEightBloc>()
+                                .add(ChangeCheckbox(
+                                    value: index, selected: value));
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-            child: Text(
-              "msg_add_mode_of_extension".tr,
-              style: CustomTextStyles.titleMediumSemiBold,
-            ),
           ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.eExtension,
-            builder: (context, eExtension) {
-              return CustomCheckboxButton(
-                text: "lbl_e_extension".tr,
-                value: eExtension,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 12.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBoxEvent(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.faceToFace,
-            builder: (context, faceToFace) {
-              return CustomCheckboxButton(
-                text: "lbl_face_to_face".tr,
-                value: faceToFace,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBox1Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.farmerFieldScho,
-            builder: (context, farmerFieldScho) {
-              return CustomCheckboxButton(
-                text: "msg_farmer_field_schools".tr,
-                value: farmerFieldScho,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBox2Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.trash,
-            builder: (context, trash) {
-              return CustomCheckboxButton(
-                text: "msg_group_demonstrations".tr,
-                value: trash,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 17.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBox3Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.peerToPeer,
-            builder: (context, peerToPeer) {
-              return CustomCheckboxButton(
-                text: "lbl_peer_to_peer".tr,
-                value: peerToPeer,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBox4Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddFinancialandservicesEightBloc,
-              AddFinancialandservicesEightState, bool?>(
-            selector: (state) => state.othervalue,
-            builder: (context, othervalue) {
-              return CustomCheckboxButton(
-                text: "lbl_other".tr,
-                value: othervalue,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 14.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddFinancialandservicesEightBloc>()
-                      .add(ChangeCheckBox5Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 45.v,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 25.h,
-                    vertical: 12.v,
+        ),
+        BlocSelector<
+            AddFinancialandservicesEightBloc,
+            AddFinancialandservicesEightState,
+            AddFinancialandservicesEightModel?>(
+          selector: (state) => state.addFinancialandservicesEightModelObj,
+          builder: (context, addRearedLivestockDialogOneModelObj) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
+                  ResponsiveExtension(4).h, 16.v),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_reset".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context
+                          .read<AddFinancialandservicesEightBloc>()
+                          .add(ResetCBs());
+                    },
                   ),
-                  decoration: AppDecoration.fillPrimary.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder6,
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_add".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context.read<AddFinancialandservicesEightBloc>().add(
+                          AddCBs(
+                              models:
+                                  addRearedLivestockDialogOneModelObj!.models));
+                      Navigator.pop(context);
+                    },
                   ),
-                  child: Text(
-                    "lbl_reset".tr,
-                    style: CustomTextStyles.bodyLarge16,
+                  CustomOutlinedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_close".tr,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-                CustomElevatedButton(
-                  width: 95.h,
-                  text: "lbl_add".tr,
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
-                ),
-                CustomOutlinedButton(
-                  width: 95.h,
-                  text: "lbl_close".tr,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                ],
+              ),
+            );
+          },
+        ),
+      ]),
     );
   }
 }
