@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/models/add_aquaculture_three_model.dart';
@@ -53,14 +54,14 @@ class AddAquacultureThreeBloc
 
   Future<List<CheckBoxList>> fetchFeeds() async {
     List<CheckBoxList> list = [];
-    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    FishCategoryDB fishCategoryDB = FishCategoryDB();
     TextEditingController stored = TextEditingController();
-    stored.value = TextEditingValue(text: "999");
-    await fishProductionTypeDB?.fetchAll().then((value) {
+
+    await fishCategoryDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
-          title: value[i].fishProductionType,
-          id: value[i].productionTypeId,
+          title: value[i].fishCategory,
+          id: value[i].fishCategoryId,
         ));
       }
     });

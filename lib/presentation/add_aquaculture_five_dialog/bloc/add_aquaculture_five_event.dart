@@ -50,3 +50,25 @@ class ChangeDropDown2Event extends AddAquacultureFiveEvent {
         value,
       ];
 }
+
+class SearchEventFish extends AddAquacultureFiveEvent {
+  SearchEventFish({required this.value});
+
+  String value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ReturnCommonEvent extends AddAquacultureFiveEvent {
+  ReturnCommonEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

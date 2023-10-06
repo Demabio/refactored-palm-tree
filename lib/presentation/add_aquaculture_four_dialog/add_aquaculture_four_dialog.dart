@@ -1,3 +1,6 @@
+import 'package:kiamis_app/core/utils/validation_functions.dart';
+import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+
 import 'bloc/add_aquaculture_four_bloc.dart';
 import 'models/add_aquaculture_four_model.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,7 @@ import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 // ignore_for_file: must_be_immutable
 class AddAquacultureFourDialog extends StatelessWidget {
-  const AddAquacultureFourDialog({Key? key})
+  AddAquacultureFourDialog({Key? key})
       : super(
           key: key,
         );
@@ -23,6 +26,12 @@ class AddAquacultureFourDialog extends StatelessWidget {
     );
   }
 
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
+  FocusNode node6 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -36,262 +45,240 @@ class AddAquacultureFourDialog extends StatelessWidget {
       decoration: AppDecoration.fillWhiteA.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder6,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 3.h),
-            child: Text(
-              "msg_add_production_system".tr,
-              style: CustomTextStyles.titleMediumSemiBold,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 3.h),
+              child: Text(
+                "msg_add_production_system".tr,
+                style: CustomTextStyles.titleMediumSemiBold,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 36.v,
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 36.v,
+              ),
+              child: Text(
+                "msg_production_system4".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
             ),
-            child: Text(
-              "msg_production_system4".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                AddAquacultureFourModel?>(
+              selector: (state) => state.addAquacultureFourModelObj,
+              builder: (context, addAquacultureFourModelObj) {
+                return CustomDropDown(
+                  icon: Container(
+                    margin: EdgeInsets.only(left: 30.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        10.h,
+                      ),
+                    ),
+                    child: CustomImageView(
+                      svgPath: ImageConstant.imgArrowdownPrimary,
                     ),
                   ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
-                  ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDownEvent(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 7.v,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_select".tr,
+                  items: addAquacultureFourModelObj?.dropdownItemList ?? [],
+                  onChanged: (value) {
+                    context
+                        .read<AddAquacultureFourBloc>()
+                        .add(ChangeDropDownEvent(value: value));
+                  },
+                );
+              },
             ),
-            child: Text(
-              "msg_unit_of_measure".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 7.v,
+              ),
+              child: Text(
+                "msg_unit_of_measure".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
             ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                AddAquacultureFourModel?>(
+              selector: (state) => state.addAquacultureFourModelObj,
+              builder: (context, addAquacultureFourModelObj) {
+                return CustomDropDown(
+                  icon: Container(
+                    margin: EdgeInsets.only(left: 30.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        10.h,
+                      ),
+                    ),
+                    child: CustomImageView(
+                      svgPath: ImageConstant.imgArrowdownPrimary,
                     ),
                   ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_select".tr,
+                  items: addAquacultureFourModelObj?.dropdownItemList1 ?? [],
+                  onChanged: (value) {
+                    context
+                        .read<AddAquacultureFourBloc>()
+                        .add(ChangeDropDown1Event(value: value));
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 7.v,
+              ),
+              child: Text(
+                "msg_number_of_active".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
+            ),
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                TextEditingController?>(
+              selector: (state) => state.inp1,
+              builder: (context, numbervalueoneController) {
+                return CustomTextFormField(
+                  autofocus: false,
+                  focusNode: node1,
+                  controller: numbervalueoneController,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_number".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (!isNumeric(value)) {
+                      return "Please enter valid number";
+                    }
+                    return null;
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 7.v,
+              ),
+              child: Text(
+                "msg_active_volume_m32".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
+            ),
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                TextEditingController?>(
+              selector: (state) => state.inp2,
+              builder: (context, numbervalueoneController) {
+                return CustomTextFormField(
+                  focusNode: node2,
+                  autofocus: false,
+                  controller: numbervalueoneController,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_number".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (!isNumeric(value)) {
+                      return "Please enter valid number";
+                    }
+                    return null;
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 7.v,
+              ),
+              child: Text(
+                "msg_number_of_inactive".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
+            ),
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                TextEditingController?>(
+              selector: (state) => state.inp3,
+              builder: (context, numbervalueoneController) {
+                return CustomTextFormField(
+                  focusNode: node3,
+                  autofocus: false,
+                  controller: numbervalueoneController,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_number".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (!isNumeric(value)) {
+                      return "Please enter valid number";
+                    }
+                    return null;
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 7.v,
+              ),
+              child: Text(
+                "msg_inactive_volume".tr,
+                style: CustomTextStyles.labelMediumPrimary_1,
+              ),
+            ),
+            BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                TextEditingController?>(
+              selector: (state) => state.inp4,
+              builder: (context, numbervalueoneController) {
+                return CustomTextFormField(
+                  autofocus: false,
+                  focusNode: node4,
+                  controller: numbervalueoneController,
+                  margin: EdgeInsets.symmetric(horizontal: 5.h),
+                  hintText: "lbl_number".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (!isNumeric(value)) {
+                      return "Please enter valid number";
+                    }
+                    return null;
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 5.h,
+                top: 8.v,
+                bottom: 29.v,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomElevatedButton(
+                    width: 95.h,
+                    text: "lbl_add".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
                   ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList1 ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDown1Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 7.v,
-            ),
-            child: Text(
-              "msg_number_of_active".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
-                    ),
+                  CustomOutlinedButton(
+                    width: 95.h,
+                    text: "lbl_close".tr,
                   ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
-                  ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList2 ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDown2Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 7.v,
+                ],
+              ),
             ),
-            child: Text(
-              "msg_active_volume_m32".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
-                    ),
-                  ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
-                  ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList3 ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDown3Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 7.v,
-            ),
-            child: Text(
-              "msg_number_of_inactive".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
-                    ),
-                  ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
-                  ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList4 ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDown4Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 7.v,
-            ),
-            child: Text(
-              "msg_inactive_volume".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
-              AddAquacultureFourModel?>(
-            selector: (state) => state.addAquacultureFourModelObj,
-            builder: (context, addAquacultureFourModelObj) {
-              return CustomDropDown(
-                icon: Container(
-                  margin: EdgeInsets.only(left: 30.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10.h,
-                    ),
-                  ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgArrowdownPrimary,
-                  ),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 5.h),
-                hintText: "lbl_select".tr,
-                items: addAquacultureFourModelObj?.dropdownItemList5 ?? [],
-                onChanged: (value) {
-                  context
-                      .read<AddAquacultureFourBloc>()
-                      .add(ChangeDropDown5Event(value: value));
-                },
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 8.v,
-              bottom: 29.v,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomElevatedButton(
-                  width: 95.h,
-                  text: "lbl_add".tr,
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
-                ),
-                CustomOutlinedButton(
-                  width: 95.h,
-                  text: "lbl_close".tr,
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

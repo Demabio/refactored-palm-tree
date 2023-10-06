@@ -80,6 +80,49 @@ class FishTypeDB {
     return fishTypes.map((e) => FishType.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<List<FishType>> fetchAllJoined() async {
+    final database = await DatabaseService().database;
+    final fishTypes = await database.rawQuery(''' 
+      SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
+      LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id
+    ''');
+
+    return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
+  }
+
+  Future<List<FishType>> fetchCommonFish() async {
+    final database = await DatabaseService().database;
+    final fishTypes = await database.rawQuery(''' 
+      SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
+      LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id 
+      WHERE $tableName.common_fish = 1
+    ''');
+
+    return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
+  }
+
+  Future<List<FishType>> fetchByCategoryId(int id) async {
+    final database = await DatabaseService().database;
+    final fishTypes = await database.rawQuery(''' 
+      SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
+      LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id 
+      WHERE $tableName.fish_category = ?
+    ''', [id]);
+
+    return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
+  }
+
+  Future<List<FishType>> searchFish(String fish) async {
+    final database = await DatabaseService().database;
+    final fishTypes = await database.rawQuery(''' 
+      SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
+      LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id 
+      WHERE $tableName.fish_type LIKE '%' || ? || '%" LIMIT 5
+    ''', [fish]);
+
+    return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
+  }
+
   Future<FishType> fetchByFishTypeId(int fishTypeId) async {
     final database = await DatabaseService().database;
     final fishType = await database.rawQuery('''

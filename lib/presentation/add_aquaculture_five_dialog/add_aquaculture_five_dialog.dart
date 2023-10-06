@@ -1,3 +1,6 @@
+import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/chipvieway_item_model.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/widgets/chipvieway_item_widget.dart';
+
 import 'bloc/add_aquaculture_five_bloc.dart';
 import 'models/add_aquaculture_five_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,7 @@ import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
 class AddAquacultureFiveDialog extends StatelessWidget {
-  const AddAquacultureFiveDialog({Key? key})
+  AddAquacultureFiveDialog({Key? key})
       : super(
           key: key,
         );
@@ -25,6 +28,14 @@ class AddAquacultureFiveDialog extends StatelessWidget {
       child: AddAquacultureFiveDialog(),
     );
   }
+
+  FocusNode node1 = FocusNode();
+  FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
+  FocusNode node4 = FocusNode();
+  FocusNode node5 = FocusNode();
+  FocusNode node6 = FocusNode();
+  FocusNode _firstTextFieldFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +69,19 @@ class AddAquacultureFiveDialog extends StatelessWidget {
             selector: (state) => state.searchController,
             builder: (context, searchController) {
               return CustomSearchView(
+                onChanged: (value) {
+                  context
+                      .read<AddAquacultureFiveBloc>()
+                      .add(SearchEventFish(value: value));
+                },
                 margin: EdgeInsets.only(
                   left: 5.h,
                   top: 9.v,
                   right: 5.h,
                 ),
                 controller: searchController,
+                focusNode: _firstTextFieldFocus,
+                autofocus: false,
                 hintText: "lbl_search_fish".tr,
                 prefix: Container(
                   margin: EdgeInsets.fromLTRB(15.h, 12.v, 9.h, 12.v),
@@ -81,6 +99,9 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                   child: IconButton(
                     onPressed: () {
                       searchController!.clear();
+                      context
+                          .read<AddAquacultureFiveBloc>()
+                          .add(ReturnCommonEvent());
                     },
                     icon: Icon(
                       Icons.clear,
@@ -91,37 +112,64 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               );
             },
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 5.v,
-            ),
-            child: Text(
-              "lbl_common_fish".tr,
-              style: CustomTextStyles.labelMediumPrimary_1,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              top: 12.v,
-            ),
-            child: Row(
-              children: [
-                CustomElevatedButton(
-                  height: 43.v,
-                  width: 95.h,
-                  text: "lbl_catfish".tr,
-                  buttonTextStyle: CustomTextStyles.bodyMediumPoppinsWhiteA700,
-                ),
-                CustomElevatedButton(
-                  height: 43.v,
-                  width: 95.h,
-                  text: "lbl_tilapia".tr,
-                  margin: EdgeInsets.only(left: 14.h),
-                  buttonTextStyle: CustomTextStyles.bodyMediumPoppinsWhiteA700,
-                ),
-              ],
+          SizedBox(height: 20.v),
+          Align(
+            alignment: Alignment.center,
+            child: BlocSelector<AddAquacultureFiveBloc, AddAquacultureFiveState,
+                AddAquacultureFiveModel?>(
+              selector: (state) => state.addAquacultureFiveModelObj,
+              builder: (context, addRearedLivestockOneModelObj) {
+                return !addRearedLivestockOneModelObj!.search
+                    ? Wrap(
+                        runSpacing: 10.v,
+                        spacing: 10.h,
+                        children: List<Widget>.generate(
+                          addRearedLivestockOneModelObj?.commons.length ?? 0,
+                          (index) {
+                            ChipviewayItemModel model =
+                                addRearedLivestockOneModelObj?.commons[index] ??
+                                    ChipviewayItemModel();
+
+                            return ChipviewayItemWidget(
+                              model,
+                              onSelectedChipView: (value) {
+                                // context.read<AddAquacultureFiveBloc>().add(
+                                //     UpdateChipViewEvent(
+                                //         index: index,
+                                //         isSelected: value,
+                                //         model: model));
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    : Wrap(
+                        runSpacing: 10.v,
+                        spacing: 10.h,
+                        children: List<Widget>.generate(
+                          addRearedLivestockOneModelObj.searchResults?.length ??
+                              0,
+                          (index) {
+                            ChipviewayItemModel model =
+                                addRearedLivestockOneModelObj
+                                        .searchResults?[index] ??
+                                    ChipviewayItemModel();
+
+                            return ChipviewayItemWidget(
+                              model,
+                              onSelectedChipView: (value) {
+                                _firstTextFieldFocus.unfocus();
+                                // context.read<AddAquacultureFiveBloc>().add(
+                                //     UpdateChipViewEvent(
+                                //         index: index,
+                                //         isSelected: value,
+                                //         model: model));
+                              },
+                            );
+                          },
+                        ),
+                      );
+              },
             ),
           ),
           Padding(
@@ -253,6 +301,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                 controller: numbervalueoneController,
                 margin: EdgeInsets.symmetric(horizontal: 5.h),
                 hintText: "lbl_number".tr,
+                autofocus: false,
+                focusNode: node1,
                 textInputAction: TextInputAction.done,
                 textInputType: TextInputType.number,
                 validator: (value) {

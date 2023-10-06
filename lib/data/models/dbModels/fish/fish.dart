@@ -9,6 +9,7 @@ class FishType {
   final String? description;
   final DateTime dateCreated;
   final int? createdBy;
+  String? fishCategory;
 
   FishType({
     required this.fishTypeId,
@@ -19,6 +20,7 @@ class FishType {
     this.description,
     required this.dateCreated,
     this.createdBy,
+    this.fishCategory,
   });
 
   factory FishType.fromSqfliteDatabase(Map<String, dynamic> map) => FishType(
@@ -26,10 +28,23 @@ class FishType {
         fishCategoryId: map['fish_category_id']?.toInt() ?? 0,
         fishType: map['fish_type'] ?? '',
         fishCode: map['fish_code'] ?? '',
-        commonFish: map['common_fish'] ?? false,
+        commonFish: map['common_fish'] == 1,
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by']),
+        createdBy: map['created_by'] ?? 0,
+      );
+
+  factory FishType.fromSqfliteDatabaseJoined(Map<String, dynamic> map) =>
+      FishType(
+        fishTypeId: map['fish_type_id']?.toInt() ?? 0,
+        fishCategoryId: map['fish_category_id']?.toInt() ?? 0,
+        fishType: map['fish_type'] ?? '',
+        fishCode: map['fish_code'] ?? '',
+        commonFish: map['common_fish'] == 1,
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: map['created_by'] ?? 0,
+        fishCategory: map['fish_category'] ?? '',
       );
 
   static List<FishType> parseFishList(Map<String, dynamic> json) {

@@ -130,6 +130,9 @@ class AddAquacultureOneScreen extends StatelessWidget {
                       ),
                       CustomElevatedButton(
                         text: "msg_add_aquatic_species".tr,
+                        onTap: () {
+                          addAquaculturespecies(context);
+                        },
                         margin: EdgeInsets.only(
                           left: 82.h,
                           top: 41.v,

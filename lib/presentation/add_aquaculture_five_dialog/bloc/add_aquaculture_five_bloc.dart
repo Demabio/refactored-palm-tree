@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/chipvieway_item_model.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/add_aquaculture_five_model.dart';
 part 'add_aquaculture_five_event.dart';
@@ -97,6 +101,82 @@ class AddAquacultureFiveBloc
     ];
   }
 
+  Future<List<ChipviewayItemModel>> searchFish(String value) async {
+    List<ChipviewayItemModel> list = [];
+    FishTypeDB fishTypeDB = FishTypeDB();
+    await fishTypeDB?.searchFish(value).then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewayItemModel(
+          fishid: value[i].fishTypeId,
+          categoryid: value[i].fishCategoryId,
+          fish: value[i].fishType,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<ChipviewayItemModel>> commonFish() async {
+    List<ChipviewayItemModel> list = [];
+    FishTypeDB fishTypeDB = FishTypeDB();
+    await fishTypeDB?.fetchCommonFish().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(ChipviewayItemModel(
+          fishid: value[i].fishTypeId,
+          categoryid: value[i].fishCategoryId,
+          fish: value[i].fishType,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fetchFishCategories() async {
+    List<SelectionPopupModel> list = [];
+    FishCategoryDB fishCategoryDB = FishCategoryDB();
+    TextEditingController stored = TextEditingController();
+
+    await fishCategoryDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].fishCategory,
+          id: value[i].fishCategoryId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fetchFish() async {
+    List<SelectionPopupModel> list = [];
+    FishTypeDB fishCategoryDB = FishTypeDB();
+    TextEditingController stored = TextEditingController();
+
+    await fishCategoryDB?.fetchAllJoined().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].fishType,
+          id: value[i].fishTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fillProdsystems() async {
+    List<SelectionPopupModel> list = [];
+    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    await fishProductionTypeDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].fishProductionType,
+          id: value[i].productionTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     AddAquacultureFiveInitialEvent event,
     Emitter<AddAquacultureFiveState> emit,
@@ -107,9 +187,10 @@ class AddAquacultureFiveBloc
     ));
     emit(state.copyWith(
         addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
-      dropdownItemList2: fillDropdownItemList2(),
+      dropdownItemList: await fetchFishCategories(),
+      dropdownItemList1: await fetchFish(),
+      dropdownItemList2: await fillProdsystems(),
+      commons: await commonFish(),
     )));
   }
 }

@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/productionsystem.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/models/add_aquaculture_four_model.dart';
 part 'add_aquaculture_four_event.dart';
@@ -24,14 +27,14 @@ class AddAquacultureFourBloc
     Emitter<AddAquacultureFourState> emit,
   ) async {
     emit(state.copyWith(
+        inp1: TextEditingController(),
+        inp2: TextEditingController(),
+        inp3: TextEditingController(),
+        inp4: TextEditingController(),
         addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
-      dropdownItemList2: fillDropdownItemList2(),
-      dropdownItemList3: fillDropdownItemList3(),
-      dropdownItemList4: fillDropdownItemList4(),
-      dropdownItemList5: fillDropdownItemList5(),
-    )));
+          dropdownItemList: await fillProdsystems(),
+          dropdownItemList1: await fillUOMs(),
+        )));
   }
 
   _changeDropDown(
@@ -194,5 +197,34 @@ class AddAquacultureFourBloc
         title: "Item Three",
       )
     ];
+  }
+
+  Future<List<SelectionPopupModel>> fillUOMs() async {
+    List<SelectionPopupModel> list = [];
+    FishProductionUnitOfMeasureDB fishProductionUnitOfMeasureDB =
+        FishProductionUnitOfMeasureDB();
+    await fishProductionUnitOfMeasureDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].unitOfMeasure,
+          id: value[i].unitOfMeasureId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fillProdsystems() async {
+    List<SelectionPopupModel> list = [];
+    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    await fishProductionTypeDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].fishProductionType,
+          id: value[i].productionTypeId,
+        ));
+      }
+    });
+    return list;
   }
 }
