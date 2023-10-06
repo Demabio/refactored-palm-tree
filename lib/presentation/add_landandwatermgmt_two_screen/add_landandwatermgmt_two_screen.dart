@@ -18,8 +18,9 @@ import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
+// ignore: must_be_immutable
 class AddLandandwatermgmtTwoScreen extends StatelessWidget {
-  const AddLandandwatermgmtTwoScreen({Key? key})
+  AddLandandwatermgmtTwoScreen({Key? key})
       : super(
           key: key,
         );
@@ -35,6 +36,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
     );
   }
 
+  FocusNode node = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -187,6 +189,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                     selector: (state) => state.areavalueoneController,
                     builder: (context, areavalueoneController) {
                       return CustomTextFormField(
+                        focusNode: node,
+                        autofocus: false,
                         controller: areavalueoneController,
                         hintText: "lbl_area".tr,
                         textInputAction: TextInputAction.done,

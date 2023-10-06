@@ -112,21 +112,21 @@ class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
           title: Text('Aquaculture'),
           state: StepState.indexed,
           addcallback: () {
-            onTapAdddetails(context);
+            onTapAqua(context);
           },
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
           state: StepState.indexed,
           addcallback: () {
-            onTapAdddetails(context);
+            onFarmasset(context);
           },
         ),
         _buildStep(
           title: Text('Land and Water Management'),
           state: StepState.indexed,
           addcallback: () {
-            onTapAdddetails(context);
+            onLandWater(context);
           },
         ),
         _buildStep(
@@ -264,6 +264,30 @@ class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
       AppRoutes.livestockOneTabContainerScreen,
     );
   }
+
+  onTapAqua(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.aquacultureScreen,
+    );
+  }
+
+  onFarmasset(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.farmtechandassetsScreen,
+    );
+  }
+
+  onLandWater(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.landandwatermgmtScreen,
+    );
+  }
+
+  // onTapAdddetails(BuildContext context) {
+  //   NavigatorService.pushNamed(
+  //     AppRoutes.livestockOneTabContainerScreen,
+  //   );
+  // }
 
   /// Navigates to the homeScreen when the action is triggered.
   ///
