@@ -106,7 +106,7 @@ class FishTypeDB {
     final fishTypes = await database.rawQuery(''' 
       SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
       LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id 
-      WHERE $tableName.fish_category = ?
+      WHERE $tableName.fish_category_id = ?
     ''', [id]);
 
     return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
@@ -117,7 +117,7 @@ class FishTypeDB {
     final fishTypes = await database.rawQuery(''' 
       SELECT tblfrfishtype.*,tblfrfishcategories.fish_category FROM $tableName 
       LEFT JOIN tblfrfishcategories ON tblfrfishtype.fish_category_id = tblfrfishcategories.fish_category_id 
-      WHERE $tableName.fish_type LIKE '%' || ? || '%" LIMIT 5
+      WHERE $tableName.fish_type LIKE '%' || ? || '%' LIMIT 5
     ''', [fish]);
 
     return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();

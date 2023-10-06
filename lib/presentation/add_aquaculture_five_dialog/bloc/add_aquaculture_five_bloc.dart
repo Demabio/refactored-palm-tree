@@ -18,15 +18,73 @@ class AddAquacultureFiveBloc
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
     on<ChangeDropDown2Event>(_changeDropDown2);
+    on<UpdateChipViewEvent>(_updateChipView);
+    on<SearchEventFish>(_searchFish);
+    on<ReturnCommonEvent>(_restoreCommon);
+  }
+
+  _updateChipView(
+    UpdateChipViewEvent event,
+    Emitter<AddAquacultureFiveState> emit,
+  ) async {
+    // List<ChipviewayrshiItemModel> newList = List<ChipviewayrshiItemModel>.from(
+    //     state.addRearedLivestockOneModelObj!.chipviewayrshiItemList);
+    // newList[event.index] = newList[event.index].copyWith(
+    //   isSelected: event.isSelected,
+    // );
+
+    List<SelectionPopupModel> fish = await fetchFish(event.model!.categoryid!);
+
+    final updatedState = state.copyWith(
+        selectedDropDownValue: SelectionPopupModel(
+          title: event.model?.fishCat ?? "",
+          id: event.model?.categoryid,
+        ),
+        selectedDropDownValue1: SelectionPopupModel(
+          title: event.model?.fish ?? "",
+          id: event.model?.fishid,
+        ),
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+          selectedFish: null,
+          selectedCategory: null,
+          dropdownItemList1: fish,
+          search: false,
+        )
+        // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
+        //     ?.copyWith(chipviewayrshiItemList: newList),
+        );
+    emit(updatedState);
+
+    if (state.searchController?.value != null) {
+      emit(state.copyWith(searchController: TextEditingController()));
+    }
+    SelectionPopupModel? categorymodel =
+        state.addAquacultureFiveModelObj?.dropdownItemList.firstWhere(
+      (model) => model.id == event.model!.categoryid,
+    );
+
+    SelectionPopupModel? fishmodel =
+        state.addAquacultureFiveModelObj?.dropdownItemList1.firstWhere(
+      (model) => model.id == event.model!.fishid,
+    );
+    emit(state.copyWith(
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+      selectedCategory: categorymodel,
+      selectedFish: fishmodel,
+    )));
   }
 
   _changeDropDown(
     ChangeDropDownEvent event,
     Emitter<AddAquacultureFiveState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(
-      selectedDropDownValue: event.value,
-    ));
+        selectedDropDownValue: event.value,
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+          selectedCategory: event.value,
+          selectedFish: null,
+          dropdownItemList1: await fetchFish(event.value.id!),
+        )));
   }
 
   _changeDropDown1(
@@ -47,58 +105,29 @@ class AddAquacultureFiveBloc
     ));
   }
 
-  List<SelectionPopupModel> fillDropdownItemList() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
+  _searchFish(
+    SearchEventFish event,
+    Emitter<AddAquacultureFiveState> emit,
+  ) async {
+    emit(state.copyWith(
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+      selectedCategory: state.addAquacultureFiveModelObj?.selectedCategory,
+      selectedFish: state.addAquacultureFiveModelObj?.selectedFish,
+      search: true,
+      searchResults: await searchFish(event.value),
+    )));
   }
 
-  List<SelectionPopupModel> fillDropdownItemList1() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
-  }
-
-  List<SelectionPopupModel> fillDropdownItemList2() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
+  _restoreCommon(
+    ReturnCommonEvent event,
+    Emitter<AddAquacultureFiveState> emit,
+  ) async {
+    emit(state.copyWith(
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+      selectedCategory: state.addAquacultureFiveModelObj?.selectedCategory,
+      selectedFish: state.addAquacultureFiveModelObj?.selectedFish,
+      search: false,
+    )));
   }
 
   Future<List<ChipviewayItemModel>> searchFish(String value) async {
@@ -110,6 +139,7 @@ class AddAquacultureFiveBloc
           fishid: value[i].fishTypeId,
           categoryid: value[i].fishCategoryId,
           fish: value[i].fishType,
+          fishCat: value[i].fishCategory,
         ));
       }
     });
@@ -125,6 +155,7 @@ class AddAquacultureFiveBloc
           fishid: value[i].fishTypeId,
           categoryid: value[i].fishCategoryId,
           fish: value[i].fishType,
+          fishCat: value[i].fishCategory,
         ));
       }
     });
@@ -147,12 +178,12 @@ class AddAquacultureFiveBloc
     return list;
   }
 
-  Future<List<SelectionPopupModel>> fetchFish() async {
+  Future<List<SelectionPopupModel>> fetchFish(int id) async {
     List<SelectionPopupModel> list = [];
     FishTypeDB fishCategoryDB = FishTypeDB();
     TextEditingController stored = TextEditingController();
 
-    await fishCategoryDB?.fetchAllJoined().then((value) {
+    await fishCategoryDB?.fetchByCategoryId(id).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].fishType,
@@ -166,7 +197,7 @@ class AddAquacultureFiveBloc
   Future<List<SelectionPopupModel>> fillProdsystems() async {
     List<SelectionPopupModel> list = [];
     FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
-    await fishProductionTypeDB?.fetchAll().then((value) {
+    await fishProductionTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].fishProductionType,
@@ -188,7 +219,6 @@ class AddAquacultureFiveBloc
     emit(state.copyWith(
         addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
       dropdownItemList: await fetchFishCategories(),
-      dropdownItemList1: await fetchFish(),
       dropdownItemList2: await fillProdsystems(),
       commons: await commonFish(),
     )));

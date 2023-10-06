@@ -39,6 +39,26 @@ class ChangeDropDown1Event extends AddAquacultureFiveEvent {
       ];
 }
 
+///Event for changing ChipView selection
+class UpdateChipViewEvent extends AddAquacultureFiveEvent {
+  UpdateChipViewEvent({
+    required this.index,
+    this.isSelected,
+    this.model,
+  });
+
+  int index;
+  ChipviewayItemModel? model;
+  bool? isSelected;
+
+  @override
+  List<Object?> get props => [
+        index,
+        isSelected,
+        model,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDown2Event extends AddAquacultureFiveEvent {
   ChangeDropDown2Event({required this.value});

@@ -10,7 +10,7 @@ class ChipviewayItemModel extends Equatable {
     this.fishid,
     this.categoryid,
     this.subcategoryid,
-    this.livestockCat,
+    this.fishCat,
     this.livestockSubCat,
   }) {}
 
@@ -24,7 +24,7 @@ class ChipviewayItemModel extends Equatable {
 
   int? subcategoryid;
 
-  String? livestockCat;
+  String? fishCat;
 
   String? livestockSubCat;
 
@@ -34,7 +34,7 @@ class ChipviewayItemModel extends Equatable {
     int? fishid,
     int? categoryid,
     int? subcategoryid,
-    String? livestockCat,
+    String? fishCat,
     String? livestockSubCat,
   }) {
     return ChipviewayItemModel(
@@ -43,7 +43,7 @@ class ChipviewayItemModel extends Equatable {
       fishid: fishid ?? this.fishid,
       categoryid: categoryid ?? this.categoryid,
       subcategoryid: subcategoryid ?? this.subcategoryid,
-      livestockCat: livestockCat ?? this.livestockCat,
+      fishCat: fishCat ?? this.fishCat,
       livestockSubCat: livestockSubCat ?? this.livestockSubCat,
     );
   }
@@ -56,6 +56,6 @@ class ChipviewayItemModel extends Equatable {
         categoryid,
         fishid,
         livestockSubCat,
-        livestockCat,
+        fishCat,
       ];
 }
