@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmpowersource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_two_dialog/models/add_farmtechandassets_two_model.dart';
 part 'add_farmtechandassets_two_event.dart';
@@ -18,6 +22,10 @@ class AddFarmtechandassetsTwoBloc
     on<ChangeCheckBox4Event>(_changeCheckBox4);
     on<ChangeCheckBox5Event>(_changeCheckBox5);
     on<ChangeCheckBox6Event>(_changeCheckBox6);
+    on<ChangeCheckbox>(_changeAgeGroupCB);
+
+    on<ResetCBs>(_resetCBs);
+    on<AddCBs>(_addAgeGroups);
   }
 
   _changeCheckBox(
@@ -83,18 +91,80 @@ class AddFarmtechandassetsTwoBloc
     ));
   }
 
+  _changeAgeGroupCB(
+    ChangeCheckbox event,
+    Emitter<AddFarmtechandassetsTwoState> emit,
+  ) {
+    List<CheckBoxList> newModels =
+        state.addFarmtechandassetsTwoModelObj!.models;
+
+    newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        addFarmtechandassetsTwoModelObj:
+            state.addFarmtechandassetsTwoModelObj?.copyWith(
+      models: newModels,
+      count: state.addFarmtechandassetsTwoModelObj!.count + 1,
+    )));
+  }
+
+  _resetCBs(
+    ResetCBs event,
+    Emitter<AddFarmtechandassetsTwoState> emit,
+  ) async {
+    emit(state.copyWith(
+        addFarmtechandassetsTwoModelObj:
+            state.addFarmtechandassetsTwoModelObj?.copyWith(
+      models: await fetchPowerSources(),
+      count: 0,
+    )));
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddFarmtechandassetsTwoState> emit,
+  ) {
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
+
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<CheckBoxList> ageGroupList =
+        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+
+    emit(state.copyWith(
+        addFarmtechandassetsTwoModelObj:
+            state.addFarmtechandassetsTwoModelObj));
+  }
+
+  Future<List<CheckBoxList>> fetchPowerSources() async {
+    List<CheckBoxList> list = [];
+    FarmPowerSourceDB powerSourceDB = FarmPowerSourceDB();
+
+    await powerSourceDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].powerSource,
+          id: value[i].powerSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     AddFarmtechandassetsTwoInitialEvent event,
     Emitter<AddFarmtechandassetsTwoState> emit,
   ) async {
     emit(state.copyWith(
-      animalDraft: false,
-      gridElectricity: false,
-      manualvalue: false,
-      trash: false,
-      othervalue: false,
-      solarvalue: false,
-      windvalue: false,
-    ));
+        addFarmtechandassetsTwoModelObj:
+            state.addFarmtechandassetsTwoModelObj?.copyWith(
+      models: await fetchPowerSources(),
+    )));
   }
 }

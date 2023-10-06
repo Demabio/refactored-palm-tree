@@ -35,6 +35,13 @@ class AddAquacultureThreeDialog extends StatelessWidget {
       decoration: AppDecoration.fillWhiteA
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder6),
       child: Column(children: [
+        Padding(
+          padding: EdgeInsets.only(left: 3.h),
+          child: Text(
+            "msg_add_farm_structure".tr,
+            style: CustomTextStyles.titleMediumSemiBold,
+          ),
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Align(
