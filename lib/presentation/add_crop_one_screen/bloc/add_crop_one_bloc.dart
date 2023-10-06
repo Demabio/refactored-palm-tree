@@ -52,7 +52,11 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     ChangeDropDownEvent event,
     Emitter<AddCropOneState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(state.copyWith(
+        selectedDropDownValue: event.value,
+        addCropOneModelObj: state.addCropOneModelObj?.copyWith(
+          selectedCrop: event.value,
+        )));
   }
 
   _changeDropDown1(

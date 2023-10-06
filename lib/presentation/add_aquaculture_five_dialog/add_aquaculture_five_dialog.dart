@@ -205,7 +205,9 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 5.h),
                   val: addAquacultureFiveModelObj?.selectedCategory,
                   hintText: "lbl_select".tr,
-                  items: addAquacultureFiveModelObj?.dropdownItemList ?? [],
+                  items: addAquacultureFiveModelObj!.dropdownItemList.isEmpty
+                      ? []
+                      : addAquacultureFiveModelObj.dropdownItemList,
                   onChanged: (value) {
                     context
                         .read<AddAquacultureFiveBloc>()
@@ -243,7 +245,9 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 5.h),
                   val: addAquacultureFiveModelObj?.selectedFish,
                   hintText: "lbl_select".tr,
-                  items: addAquacultureFiveModelObj?.dropdownItemList1 ?? [],
+                  items: addAquacultureFiveModelObj!.dropdownItemList1.isEmpty
+                      ? []
+                      : addAquacultureFiveModelObj.dropdownItemList1,
                   onChanged: (value) {
                     context
                         .read<AddAquacultureFiveBloc>()

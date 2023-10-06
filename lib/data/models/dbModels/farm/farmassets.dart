@@ -6,6 +6,7 @@ class FarmAsset {
   final String? description;
   final DateTime dateCreated;
   final int? createdBy;
+  String? assetType;
 
   FarmAsset({
     required this.farmAssetId,
@@ -15,6 +16,7 @@ class FarmAsset {
     this.description,
     required this.dateCreated,
     this.createdBy,
+    this.assetType,
   });
 
   factory FarmAsset.fromSqfliteDatabase(Map<String, dynamic> map) => FarmAsset(
@@ -24,7 +26,19 @@ class FarmAsset {
         assetCode: map['asset_code'] ?? '',
         description: map['description'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
+      );
+
+  factory FarmAsset.fromSqfliteDatabaseJoined(Map<String, dynamic> map) =>
+      FarmAsset(
+        farmAssetId: map['farm_asset_id']?.toInt() ?? 0,
+        assetTypeId: map['asset_type_id']?.toInt() ?? 0,
+        asset: map['asset'] ?? '',
+        assetCode: map['asset_code'] ?? '',
+        description: map['description'],
+        dateCreated: DateTime.parse(map['date_created'] ?? ''),
+        createdBy: int.parse(map['created_by'] ?? "0"),
+        assetType: map['asset_type'] ?? '',
       );
   static List<FarmAsset> parseFarmAssets(Map<String, dynamic> json) {
     final farmAssetsList = json['data']['getallFarmAssets'] as List<dynamic>;

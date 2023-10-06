@@ -71,10 +71,6 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                     style: theme.textTheme.titleSmall,
                   ),
                   SizedBox(height: 20.v),
-                  Text(
-                    "msg_what_types_of_aquaculture2".tr,
-                    style: theme.textTheme.titleSmall,
-                  ),
                   CustomElevatedButton(
                     text: "msg_add_powersource".tr,
                     onTap: () => addPowerSource(context),

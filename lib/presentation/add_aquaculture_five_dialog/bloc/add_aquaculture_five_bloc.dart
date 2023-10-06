@@ -92,8 +92,11 @@ class AddAquacultureFiveBloc
     Emitter<AddAquacultureFiveState> emit,
   ) {
     emit(state.copyWith(
-      selectedDropDownValue1: event.value,
-    ));
+        selectedDropDownValue1: event.value,
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+            selectedCategory:
+                state.addAquacultureFiveModelObj?.selectedCategory,
+            selectedFish: event.value)));
   }
 
   _changeDropDown2(

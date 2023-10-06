@@ -80,6 +80,38 @@ class FarmAssetDB {
     return farmAssets.map((e) => FarmAsset.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<List<FarmAsset>> fetchAllJoined() async {
+    final database = await DatabaseService().database;
+    final farmAssets = await database.rawQuery(''' 
+      SELECT $tableName.* FROM $tableName 
+      LEFT JOIN tblfrfarmassettype ON $tableName.asset_type_id=tblfrfarmassettype.asset_type_id
+    ''');
+
+    return farmAssets.map((e) => FarmAsset.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<FarmAsset>> fetchAllByTypeId(int id) async {
+    final database = await DatabaseService().database;
+    final farmAssets = await database.rawQuery(''' 
+      SELECT $tableName.* FROM $tableName 
+      LEFT JOIN tblfrfarmassettype ON $tableName.asset_type_id=tblfrfarmassettype.asset_type_id
+      WHERE $tableName.asset_type_id = ?
+    ''', [id]);
+
+    return farmAssets.map((e) => FarmAsset.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<FarmAsset>> searchAsset(String id) async {
+    final database = await DatabaseService().database;
+    final farmAssets = await database.rawQuery(''' 
+      SELECT $tableName.* FROM $tableName 
+      LEFT JOIN tblfrfarmassettype ON $tableName.asset_type_id=tblfrfarmassettype.asset_type_id
+      WHERE $tableName.asset LIKE '%' || ? || '%' LIMIT 5
+    ''', [id]);
+
+    return farmAssets.map((e) => FarmAsset.fromSqfliteDatabase(e)).toList();
+  }
+
   Future<FarmAsset> fetchByFarmAssetId(int farmAssetId) async {
     final database = await DatabaseService().database;
     final farmAsset = await database.rawQuery('''

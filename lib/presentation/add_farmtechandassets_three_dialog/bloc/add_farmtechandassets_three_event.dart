@@ -51,3 +51,45 @@ class ChangeDropDown2Event extends AddFarmtechandassetsThreeEvent {
         value,
       ];
 }
+
+class SearchEventFish extends AddFarmtechandassetsThreeEvent {
+  SearchEventFish({required this.value});
+
+  String value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ReturnCommonEvent extends AddFarmtechandassetsThreeEvent {
+  ReturnCommonEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+///Event for changing ChipView selection
+class UpdateChipViewEvent extends AddFarmtechandassetsThreeEvent {
+  UpdateChipViewEvent({
+    required this.index,
+    this.isSelected,
+    this.model,
+  });
+
+  int index;
+  ChipviewayItemModel? model;
+  bool? isSelected;
+
+  @override
+  List<Object?> get props => [
+        index,
+        isSelected,
+        model,
+      ];
+}
