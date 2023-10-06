@@ -89,21 +89,86 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     ));
   }
 
+  _onSteppedDown(
+    StepDownEvent event,
+    Emitter<AddFinancialandservicesTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesTwoModelObj:
+            state.addFinancialandservicesTwoModelObj?.copyWith(
+          stepped: --state.addFinancialandservicesTwoModelObj?.stepped,
+          page1: state.addFinancialandservicesTwoModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addFinancialandservicesTwoModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addFinancialandservicesTwoModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addFinancialandservicesTwoModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onSteppedUp(
+    StepUpEvent event,
+    Emitter<AddFinancialandservicesTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesTwoModelObj:
+            state.addFinancialandservicesTwoModelObj?.copyWith(
+          stepped: ++state.addFinancialandservicesTwoModelObj?.stepped,
+          page1: state.addFinancialandservicesTwoModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addFinancialandservicesTwoModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addFinancialandservicesTwoModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addFinancialandservicesTwoModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onStepped(
+    OnSteppedEvent event,
+    Emitter<AddFinancialandservicesTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesTwoModelObj:
+            state.addFinancialandservicesTwoModelObj?.copyWith(
+          stepped: event.value,
+          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
+          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
+          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
+          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
   List<SelectionPopupModel> fillDropdownItemList() {
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -111,17 +176,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -129,17 +189,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -147,17 +202,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -165,17 +215,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -183,17 +228,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 }

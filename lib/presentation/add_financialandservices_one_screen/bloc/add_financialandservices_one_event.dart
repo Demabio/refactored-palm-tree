@@ -27,3 +27,36 @@ class ChangeDropDownEvent extends AddFinancialandservicesOneEvent {
         value,
       ];
 }
+
+class StepUpEvent extends AddFinancialandservicesOneEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends AddFinancialandservicesOneEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends AddFinancialandservicesOneEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

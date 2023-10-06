@@ -87,3 +87,36 @@ class ChangeDropDown5Event extends AddFinancialandservicesTwoEvent {
         value,
       ];
 }
+
+class StepUpEvent extends AddFinancialandservicesTwoEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends AddFinancialandservicesTwoEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends AddFinancialandservicesTwoEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

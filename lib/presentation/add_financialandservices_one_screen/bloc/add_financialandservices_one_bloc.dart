@@ -27,18 +27,83 @@ class AddFinancialandservicesOneBloc extends Bloc<
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
+  }
+
+  _onSteppedDown(
+    StepDownEvent event,
+    Emitter<AddFinancialandservicesOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesOneModelObj:
+            state.addFinancialandservicesOneModelObj?.copyWith(
+          stepped: --state.addFinancialandservicesOneModelObj?.stepped,
+          page1: state.addFinancialandservicesOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addFinancialandservicesOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addFinancialandservicesOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addFinancialandservicesOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onSteppedUp(
+    StepUpEvent event,
+    Emitter<AddFinancialandservicesOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesOneModelObj:
+            state.addFinancialandservicesOneModelObj?.copyWith(
+          stepped: ++state.addFinancialandservicesOneModelObj?.stepped,
+          page1: state.addFinancialandservicesOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addFinancialandservicesOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addFinancialandservicesOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addFinancialandservicesOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onStepped(
+    OnSteppedEvent event,
+    Emitter<AddFinancialandservicesOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addFinancialandservicesOneModelObj:
+            state.addFinancialandservicesOneModelObj?.copyWith(
+          stepped: event.value,
+          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
+          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
+          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
+          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
+        ),
+      ),
+    );
   }
 
   _onInitialize(

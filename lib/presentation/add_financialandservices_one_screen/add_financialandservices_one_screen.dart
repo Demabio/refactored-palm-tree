@@ -1,3 +1,11 @@
+import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_eight_dialog/add_financialandservices_eight_dialog.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_five_screen/add_financialandservices_five_screen.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_four_screen/add_financialandservices_four_screen.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_seven_dialog/add_financialandservices_seven_dialog.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/add_financialandservices_six_dialog.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_three_dialog/add_financialandservices_three_dialog.dart';
+
 import 'bloc/add_financialandservices_one_bloc.dart';
 import 'models/add_financialandservices_one_model.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +42,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           leadingWidth: 60.h,
           leading: AppbarImage(
@@ -64,84 +72,20 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 69.h),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CustomIconButton(
-                                    height: 31.v,
-                                    width: 32.h,
-                                    padding: EdgeInsets.all(8.h),
-                                    child: CustomImageView(
-                                      svgPath: ImageConstant.imgCheckmark,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 16.v,
-                                      bottom: 13.v,
-                                    ),
-                                    child: SizedBox(
-                                      width: 54.h,
-                                      child: Divider(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 6.v),
-                            Text(
-                              "lbl_step_1".tr,
-                              style: CustomTextStyles.bodyLargeBluegray40003,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 16.v,
-                                    bottom: 13.v,
-                                  ),
-                                  child: SizedBox(
-                                    width: 54.h,
-                                    child: Divider(),
-                                  ),
-                                ),
-                                CustomIconButton(
-                                  height: 31.v,
-                                  width: 32.h,
-                                  padding: EdgeInsets.all(8.h),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgCheckmark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 6.v),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "lbl_step_2".tr,
-                                style: CustomTextStyles.bodyLargeBluegray40003,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  BlocSelector<
+                          AddFinancialandservicesOneBloc,
+                          AddFinancialandservicesOneState,
+                          AddFinancialandservicesOneModel?>(
+                      selector: (state) =>
+                          state.addFinancialandservicesOneModelObj,
+                      builder: ((context, farmersIdentificationOneModelObj) {
+                        return SizedBox(
+                          height: 150.v,
+                          width: double.infinity,
+                          child: _buildStepper(StepperType.horizontal, context,
+                              farmersIdentificationOneModelObj),
+                        );
+                      })),
                   SizedBox(height: 20.v),
                   Text(
                     "msg_financial_livelihood".tr,
@@ -167,6 +111,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       top: 42.v,
                     ),
                     alignment: Alignment.centerRight,
+                    onTap: () => addSource(context),
                   ),
                   Container(
                     width: 306.h,
@@ -188,8 +133,11 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                     builder: (context, selectvalueoneController) {
                       return CustomTextFormField(
                         controller: selectvalueoneController,
-                        hintText: "lbl_select".tr,
+                        autofocus: false,
+                        focusNode: FocusNode(),
+                        hintText: "Percent".tr,
                         textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.number,
                       );
                     },
                   ),
@@ -258,6 +206,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "msg_add_cooperative".tr,
+                    onTap: () => addCoopGroup(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 34.v,
@@ -284,6 +233,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "msg_add_financial_services".tr,
+                    onTap: () => addFinancial(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 37.v,
@@ -327,5 +277,134 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
+      AddFinancialandservicesOneModel? primaryFarmHoldingOneModel) {
+    final canCancel = primaryFarmHoldingOneModel!.stepped > 0;
+    final canContinue = primaryFarmHoldingOneModel.stepped < 3;
+    return CupertinoStepper(
+      type: type,
+      currentStep: primaryFarmHoldingOneModel.stepped,
+      onStepTapped: (step) {
+        //Best place to save and get scope identity and store in pref
+        //Validation checks
+
+        // context
+        //     .read<FarmersIdentificationFourBloc>()
+        //     .add(OnSteppedEvent(value: step));
+
+        //chosen
+        onTapNextC(context, step);
+      },
+      onStepCancel: canCancel
+          ? () {
+              // context
+              //     .read<FarmersIdentificationFourBloc>()
+              //     .add(StepDownEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingOneModel.stepped - 1);
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              //   context.read<FarmersIdentificationFourBloc>().add(StepUpEvent());
+              //Chosen
+              onTapNextC(context, primaryFarmHoldingOneModel.stepped + 1);
+            }
+          : null,
+      steps: [
+        _buildStep(
+          title: Text('1'),
+          state: primaryFarmHoldingOneModel.page1!,
+          addcallback: () {},
+        ),
+        _buildStep(
+          title: Text('2'),
+          state: primaryFarmHoldingOneModel.page2!,
+        ),
+      ],
+    );
+  }
+
+  Step _buildStep({
+    required Widget title,
+    StepState state = StepState.indexed,
+    bool isActive = false,
+    VoidCallback? addcallback,
+    VoidCallback? editcallback,
+  }) {
+    return Step(
+      title: title,
+      // subtitle: Text('Subtitle'),
+      state: state,
+      isActive: isActive,
+      content: LimitedBox(
+          maxWidth: double.infinity,
+          maxHeight: 1,
+          child: SizedBox(
+            height: 1,
+            width: 1,
+          )),
+    );
+  }
+
+  onTapNextC(BuildContext context, int step) {
+    if (step == 0) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addFinancialandservicesOneScreen,
+      );
+      // } else if (step == 1) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.primaryFarmHoldingTwoScreen,
+      //   );
+      // } else if (step == 2) {
+      //   NavigatorService.popAndPushNamed(
+      //     AppRoutes.farmersIdentificationThreeScreen,
+      //   );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addFinancialandservicesTwoScreen,
+      );
+    }
+  }
+
+  addSource(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFinancialandservicesThreeDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addCoopGroup(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFinancialandservicesFourScreen.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addFinancial(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFinancialandservicesFiveScreen.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 }

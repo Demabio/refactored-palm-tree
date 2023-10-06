@@ -99,3 +99,36 @@ class ChangeCheckBox5Event extends AddFinancialandservicesFourEvent {
         value,
       ];
 }
+
+class ChangeAgeGroupCheckbox extends AddFinancialandservicesFourEvent {
+  ChangeAgeGroupCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
+class ResetCBs extends AddFinancialandservicesFourEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddAGs extends AddFinancialandservicesFourEvent {
+  AddAGs({
+    required this.models,
+  });
+
+  List<IrrigationProjectModel> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}
