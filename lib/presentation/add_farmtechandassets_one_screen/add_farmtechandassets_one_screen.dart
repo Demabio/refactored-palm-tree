@@ -1,3 +1,7 @@
+import 'package:kiamis_app/presentation/add_farmtechandassets_four_dialog/add_farmtechandassets_four_dialog.dart';
+import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/add_farmtechandassets_three_dialog.dart';
+import 'package:kiamis_app/presentation/add_farmtechandassets_two_dialog/add_farmtechandassets_two_dialog.dart';
+
 import 'bloc/add_farmtechandassets_one_bloc.dart';
 import 'models/add_farmtechandassets_one_model.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +34,9 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
 
     return SafeArea(
+      maintainBottomViewPadding: true,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           leadingWidth: 60.h,
           leading: AppbarImage(
@@ -71,6 +77,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "msg_add_powersource".tr,
+                    onTap: () => addPowerSource(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 65.v,
@@ -119,6 +126,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     text: "msg_add_farmer_marchinery".tr,
+                    onTap: () => addFarmMachinery(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 106.v,
@@ -166,7 +174,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                     style: theme.textTheme.titleSmall,
                   ),
                   CustomElevatedButton(
-                    text: "msg_add_aquatic_species".tr,
+                    text: "Add Farm Structure".tr,
+                    onTap: () => addFarmStructure(context),
                     margin: EdgeInsets.only(
                       left: 82.h,
                       top: 106.v,
@@ -190,5 +199,44 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  addPowerSource(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFarmtechandassetsTwoDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addFarmMachinery(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFarmtechandassetsThreeDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addFarmStructure(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFarmtechandassetsFourDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 }

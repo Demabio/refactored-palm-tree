@@ -19,7 +19,7 @@ class LabourSource {
         labourSource: map['labour_source'] ?? '',
         description: map['desc'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: map['created_by']?.toInt(),
+        createdBy: int.parse(map['created_by'] ?? "0"),
       );
   static List<LabourSource> parseLabourSources(Map<String, dynamic> json) {
     final labourSourcesList =

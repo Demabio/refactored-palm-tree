@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassetsource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/laboursource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_one_screen/models/add_farmtechandassets_one_model.dart';
 part 'add_farmtechandassets_one_event.dart';
@@ -22,8 +24,8 @@ class AddFarmtechandassetsOneBloc
     emit(state.copyWith(
         addFarmtechandassetsOneModelObj:
             state.addFarmtechandassetsOneModelObj?.copyWith(
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
+      dropdownItemList: await fetchLabourSources(),
+      dropdownItemList1: await fetchOwnerships(),
     )));
   }
 
@@ -79,5 +81,35 @@ class AddFarmtechandassetsOneBloc
         title: "Item Three",
       )
     ];
+  }
+
+  Future<List<SelectionPopupModel>> fetchOwnerships() async {
+    List<SelectionPopupModel> list = [];
+    FarmAssetSourceDB farmOwnershipDB = FarmAssetSourceDB();
+
+    await farmOwnershipDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].assetSource,
+          id: value[i].assetSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<SelectionPopupModel>> fetchLabourSources() async {
+    List<SelectionPopupModel> list = [];
+    LabourSourceDB labourSourceDB = LabourSourceDB();
+
+    await labourSourceDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].labourSource,
+          id: value[i].labourSourceId,
+        ));
+      }
+    });
+    return list;
   }
 }
