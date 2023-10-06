@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_two_screen/models/add_landandwatermgmt_two_model.dart';
 part 'add_landandwatermgmt_two_event.dart';
@@ -40,17 +41,13 @@ class AddLandandwatermgmtTwoBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "Yes",
         isSelected: true,
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -70,6 +67,20 @@ class AddLandandwatermgmtTwoBloc
         title: "Item Three",
       )
     ];
+  }
+
+  Future<List<SelectionPopupModel>> fillCategories() async {
+    List<SelectionPopupModel> list = [];
+    CropAreaUnitDB areaUnitDB = CropAreaUnitDB();
+    await areaUnitDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].areaUnit,
+          id: value[i].areaUnitId,
+        ));
+      }
+    });
+    return list;
   }
 
   _onSteppedDown(
@@ -153,7 +164,7 @@ class AddLandandwatermgmtTwoBloc
         addLandandwatermgmtTwoModelObj:
             state.addLandandwatermgmtTwoModelObj?.copyWith(
       dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
+      dropdownItemList1: await fillCategories(),
     )));
   }
 }

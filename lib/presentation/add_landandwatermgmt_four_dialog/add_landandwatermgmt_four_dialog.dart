@@ -1,3 +1,6 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/widgets/custom_column_checkboxes.dart';
+
 import 'bloc/add_landandwatermgmt_four_bloc.dart';
 import 'models/add_landandwatermgmt_four_model.dart';
 import 'package:flutter/material.dart';
@@ -27,296 +30,95 @@ class AddLandandwatermgmtFourDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return Container(
       width: 344.h,
-      padding: EdgeInsets.symmetric(
-        horizontal: 11.h,
-        vertical: 14.v,
-      ),
-      decoration: AppDecoration.fillWhiteA.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder6,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 3.h),
-            child: Text(
-              "msg_add_water_source".tr,
-              style: CustomTextStyles.titleMediumSemiBold,
+      padding: EdgeInsets.symmetric(horizontal: 13.h, vertical: 15.v),
+      decoration: AppDecoration.fillWhiteA
+          .copyWith(borderRadius: BorderRadiusStyle.roundedBorder6),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.only(left: 3.h),
+          child: Text(
+            "msg_add_water_source".tr,
+            style: CustomTextStyles.titleMediumSemiBold,
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.center,
+              child: BlocSelector<AddLandandwatermgmtFourBloc,
+                  AddLandandwatermgmtFourState, AddLandandwatermgmtFourModel?>(
+                selector: (state) => state.addLandandwatermgmtFourModelObj,
+                builder: (context, addRearedLivestockDialogTwoModelObj) {
+                  return Column(
+                    children: List<Widget>.generate(
+                      addRearedLivestockDialogTwoModelObj?.models.length ?? 0,
+                      (index) {
+                        CheckBoxList model = addRearedLivestockDialogTwoModelObj
+                                ?.models[index] ??
+                            CheckBoxList();
+
+                        return CBListWidget(
+                          model,
+                          onSelect: (value) {
+                            context.read<AddLandandwatermgmtFourBloc>().add(
+                                ChangeCheckbox(value: index, selected: value));
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.trash,
-            builder: (context, trash) {
-              return CustomCheckboxButton(
-                text: "msg_natural_rivers_and".tr,
-                value: trash,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 37.v,
-                  right: 74.h,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBoxEvent(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.adjacentWaterBo,
-            builder: (context, adjacentWaterBo) {
-              return CustomCheckboxButton(
-                text: "msg_adjacent_water_body".tr,
-                value: adjacentWaterBo,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 17.v,
-                  right: 29.h,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox1Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.localityWaterSu,
-            builder: (context, localityWaterSu) {
-              return CustomCheckboxButton(
-                text: "msg_locality_water_supply".tr,
-                value: localityWaterSu,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox2Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.manMadeDam,
-            builder: (context, manMadeDam) {
-              return CustomCheckboxButton(
-                text: "lbl_man_made_dam".tr,
-                value: manMadeDam,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox3Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.waterPan,
-            builder: (context, waterPan) {
-              return CustomCheckboxButton(
-                text: "lbl_water_pan2".tr,
-                value: waterPan,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox4Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.trashone,
-            builder: (context, trashone) {
-              return CustomCheckboxButton(
-                text: "msg_shallow_well_or".tr,
-                value: trashone,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                  right: 86.h,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox5Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.roadRunoff,
-            builder: (context, roadRunoff) {
-              return CustomCheckboxButton(
-                text: "lbl_road_runoff".tr,
-                value: roadRunoff,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox6Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.othervalue,
-            builder: (context, othervalue) {
-              return CustomCheckboxButton(
-                text: "lbl_other".tr,
-                value: othervalue,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 17.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox7Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.rainvalue,
-            builder: (context, rainvalue) {
-              return CustomCheckboxButton(
-                text: "lbl_rain".tr,
-                value: rainvalue,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox8Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.harvestedWater,
-            builder: (context, harvestedWater) {
-              return CustomCheckboxButton(
-                text: "lbl_harvested_water".tr,
-                value: harvestedWater,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 17.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox9Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.trashtwo,
-            builder: (context, trashtwo) {
-              return CustomCheckboxButton(
-                text: "msg_independent_water".tr,
-                value: trashtwo,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 16.v,
-                  right: 46.h,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox10Event(value: value));
-                },
-              );
-            },
-          ),
-          BlocSelector<AddLandandwatermgmtFourBloc,
-              AddLandandwatermgmtFourState, bool?>(
-            selector: (state) => state.waterTrucking,
-            builder: (context, waterTrucking) {
-              return CustomCheckboxButton(
-                text: "lbl_water_trucking2".tr,
-                value: waterTrucking,
-                margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
-                ),
-                onChange: (value) {
-                  context
-                      .read<AddLandandwatermgmtFourBloc>()
-                      .add(ChangeCheckBox11Event(value: value));
-                },
-              );
-            },
-          ),
-          Spacer(),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 5.h,
-              bottom: 6.v,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 25.h,
-                    vertical: 12.v,
+        ),
+        BlocSelector<AddLandandwatermgmtFourBloc, AddLandandwatermgmtFourState,
+            AddLandandwatermgmtFourModel?>(
+          selector: (state) => state.addLandandwatermgmtFourModelObj,
+          builder: (context, addRearedLivestockDialogOneModelObj) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
+                  ResponsiveExtension(4).h, 16.v),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_reset".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context
+                          .read<AddLandandwatermgmtFourBloc>()
+                          .add(ResetCBs());
+                    },
                   ),
-                  decoration: AppDecoration.fillPrimary.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder6,
+                  CustomElevatedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_add".tr,
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                    onTap: () {
+                      context.read<AddLandandwatermgmtFourBloc>().add(AddCBs(
+                          models: addRearedLivestockDialogOneModelObj!.models));
+                      Navigator.pop(context);
+                    },
                   ),
-                  child: Text(
-                    "lbl_reset".tr,
-                    style: CustomTextStyles.bodyLarge16,
+                  CustomOutlinedButton(
+                    width: ResponsiveExtension(95).h,
+                    text: "lbl_close".tr,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-                CustomElevatedButton(
-                  width: 95.h,
-                  text: "lbl_add".tr,
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
-                ),
-                CustomOutlinedButton(
-                  width: 95.h,
-                  text: "lbl_close".tr,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                ],
+              ),
+            );
+          },
+        ),
+      ]),
     );
   }
 }

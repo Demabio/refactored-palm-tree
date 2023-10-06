@@ -43,7 +43,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           leadingWidth: 60.h,
           leading: AppbarImage(
@@ -191,6 +191,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                       return CustomTextFormField(
                         focusNode: node,
                         autofocus: false,
+                        textInputType: TextInputType.number,
                         controller: areavalueoneController,
                         hintText: "lbl_area".tr,
                         textInputAction: TextInputAction.done,

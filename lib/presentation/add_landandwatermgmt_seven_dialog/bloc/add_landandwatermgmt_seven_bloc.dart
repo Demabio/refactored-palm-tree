@@ -93,12 +93,9 @@ class AddLandandwatermgmtSevenBloc
     Emitter<AddLandandwatermgmtSevenState> emit,
   ) async {
     emit(state.copyWith(
-      countyGovernmen: false,
-      trash: false,
-      implementingAge: false,
-      othervalue: false,
-      selfPrivate: false,
-      trashone: false,
-    ));
+        addLandandwatermgmtSevenModelObj:
+            state.addLandandwatermgmtSevenModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }

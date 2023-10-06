@@ -93,14 +93,9 @@ class AddLandandwatermgmtFiveBloc
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) async {
     emit(state.copyWith(
-      furrowvalue: false,
-      dripvalue: false,
-      sprinklervalue: false,
-      centrePivot: false,
-      bucketIrrigatio: false,
-      basinIrrigation: false,
-      floodingvalue: false,
-      furrowCanal: false,
-    ));
+        addLandandwatermgmtFiveModelObj:
+            state.addLandandwatermgmtFiveModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }

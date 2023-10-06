@@ -93,20 +93,9 @@ class AddLandandwatermgmtThreeBloc
     Emitter<AddLandandwatermgmtThreeState> emit,
   ) async {
     emit(state.copyWith(
-      biogasProductio: false,
-      mulchingvalue: false,
-      trash: false,
-      terracingvalue: false,
-      waterHarvesting: false,
-      fymCompostManur: false,
-      zaiPits: false,
-      cutOffDrains: false,
-      trashone: false,
-      trashtwo: false,
-      minimumTillage: false,
-      deepRipping: false,
-      manuringCompost: false,
-      grassStrips: false,
-    ));
+        addLandandwatermgmtThreeModelObj:
+            state.addLandandwatermgmtThreeModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }

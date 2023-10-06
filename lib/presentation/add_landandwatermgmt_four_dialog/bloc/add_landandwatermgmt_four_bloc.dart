@@ -92,18 +92,9 @@ class AddLandandwatermgmtFourBloc
     Emitter<AddLandandwatermgmtFourState> emit,
   ) async {
     emit(state.copyWith(
-      trash: false,
-      adjacentWaterBo: false,
-      localityWaterSu: false,
-      manMadeDam: false,
-      waterPan: false,
-      trashone: false,
-      roadRunoff: false,
-      othervalue: false,
-      rainvalue: false,
-      harvestedWater: false,
-      trashtwo: false,
-      waterTrucking: false,
-    ));
+        addLandandwatermgmtFourModelObj:
+            state.addLandandwatermgmtFourModelObj?.copyWith(
+      models: await fetchFarmStructure(),
+    )));
   }
 }
