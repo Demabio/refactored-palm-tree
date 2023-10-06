@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
+import '../models/irrigationprojetmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/add_landandwatermgmt_six_model.dart';
 part 'add_landandwatermgmt_six_event.dart';
@@ -11,56 +16,61 @@ class AddLandandwatermgmtSixBloc
   AddLandandwatermgmtSixBloc(AddLandandwatermgmtSixState initialState)
       : super(initialState) {
     on<AddLandandwatermgmtSixInitialEvent>(_onInitialize);
-    on<ChangeDropDownEvent>(_changeDropDown);
-    on<ChangeDropDown1Event>(_changeDropDown1);
-    on<ChangeCheckBoxEvent>(_changeCheckBox);
-    on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
+    on<ChangeAgeGroupCheckbox>(_changeAgeGroupCB);
+    on<ResetCBs>(_resetCBs);
+
+    on<AddAGs>(_addAgeGroups);
   }
 
-  _changeDropDown(
-    ChangeDropDownEvent event,
+  _changeAgeGroupCB(
+    ChangeAgeGroupCheckbox event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) {
+    List<IrrigationProjectModel> newModels =
+        state.addLandandwatermgmtSixModelObj!.ageGroupmModels;
+
+    newModels[event.value].isSelected = event.selected!;
+
     emit(state.copyWith(
-      selectedDropDownValue: event.value,
-    ));
+        addLandandwatermgmtSixModelObj:
+            state.addLandandwatermgmtSixModelObj?.copyWith(
+      ageGroupmModels: newModels,
+      count: state.addLandandwatermgmtSixModelObj!.count + 1,
+    )));
   }
 
-  _changeDropDown1(
-    ChangeDropDown1Event event,
+  _resetCBs(
+    ResetCBs event,
     Emitter<AddLandandwatermgmtSixState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(
-      selectedDropDownValue1: event.value,
-    ));
+        addLandandwatermgmtSixModelObj:
+            state.addLandandwatermgmtSixModelObj?.copyWith(
+      ageGroupmModels: await fetchSchemes(),
+      count: 0,
+    )));
   }
 
-  _changeCheckBox(
-    ChangeCheckBoxEvent event,
+  _addAgeGroups(
+    AddAGs event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) {
-    emit(state.copyWith(
-      trash: event.value,
-    ));
-  }
+    List<Map<String, dynamic>> ageGroupMapList =
+        event.models.map((ageGroup) => ageGroup.toJson()).toList();
 
-  _changeCheckBox1(
-    ChangeCheckBox1Event event,
-    Emitter<AddLandandwatermgmtSixState> emit,
-  ) {
-    emit(state.copyWith(
-      communityScheme: event.value,
-    ));
-  }
+    // Convert the list of maps to a JSON string
+    String jsonString = jsonEncode(ageGroupMapList);
+    PrefUtils().setAgeGroups(jsonString);
 
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
-    Emitter<AddLandandwatermgmtSixState> emit,
-  ) {
+    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+
+    // Create a list of AgeGroupModel objects from the list of dynamic objects
+    List<IrrigationProjectModel> ageGroupList = decageGroupMapList
+        .map((json) => IrrigationProjectModel.fromJson(json))
+        .toList();
+
     emit(state.copyWith(
-      trashone: event.value,
-    ));
+        addLandandwatermgmtSixModelObj: state.addLandandwatermgmtSixModelObj));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -99,6 +109,33 @@ class AddLandandwatermgmtSixBloc
     ];
   }
 
+  Future<List<IrrigationProjectModel>> fetchSchemes() async {
+    List<IrrigationProjectModel> list = [];
+
+    List<SelectionPopupModel> dpds = [
+      SelectionPopupModel(title: "Full Member", id: 1),
+      SelectionPopupModel(title: "Out Grower Member", id: 0),
+    ];
+
+    IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
+    TextEditingController stored = TextEditingController();
+    stored.value = TextEditingValue(text: "999");
+    await livestockAgeGroupDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(IrrigationProjectModel(
+          title: value[i].agencyName,
+          ageGroupId: value[i].irrigationAgencyId,
+          female: TextEditingController(),
+          male: TextEditingController(),
+          focusNode: FocusNode(),
+          femalefocusNode: FocusNode(),
+          model: dpds,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     AddLandandwatermgmtSixInitialEvent event,
     Emitter<AddLandandwatermgmtSixState> emit,
@@ -120,6 +157,7 @@ class AddLandandwatermgmtSixBloc
             state.addLandandwatermgmtSixModelObj?.copyWith(
       dropdownItemList: fillDropdownItemList(),
       dropdownItemList1: fillDropdownItemList1(),
+      ageGroupmModels: await fetchSchemes(),
     )));
   }
 }

@@ -74,3 +74,36 @@ class ChangeCheckBox2Event extends AddLandandwatermgmtSixEvent {
         value,
       ];
 }
+
+class ChangeAgeGroupCheckbox extends AddLandandwatermgmtSixEvent {
+  ChangeAgeGroupCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
+      ];
+}
+
+class ResetCBs extends AddLandandwatermgmtSixEvent {
+  ResetCBs();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddAGs extends AddLandandwatermgmtSixEvent {
+  AddAGs({
+    required this.models,
+  });
+
+  List<IrrigationProjectModel> models;
+  @override
+  List<Object?> get props => [
+        models,
+      ];
+}

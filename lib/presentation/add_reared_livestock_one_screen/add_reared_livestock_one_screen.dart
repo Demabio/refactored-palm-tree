@@ -356,6 +356,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                         SizedBox(height: 65.v),
                         CustomElevatedButton(
                           width: 152.h,
+                          onTap: () => addFeed(context),
                           text: "lbl_add_feed".tr,
                           alignment: Alignment.centerRight,
                         ),
@@ -422,6 +423,19 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
   }
 
   addAgeGroup(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddRearedLivestockDialogTwoDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  addFeed(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,

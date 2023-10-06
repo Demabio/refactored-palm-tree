@@ -14,6 +14,9 @@ class AddLandandwatermgmtOneBloc
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
     on<ChangeDropDown2Event>(_changeDropDown2);
+    on<StepDownEvent>(_onSteppedDown);
+    on<OnSteppedEvent>(_onStepped);
+    on<StepUpEvent>(_onSteppedUp);
   }
 
   _onInitialize(
@@ -56,21 +59,86 @@ class AddLandandwatermgmtOneBloc
     ));
   }
 
+  _onSteppedDown(
+    StepDownEvent event,
+    Emitter<AddLandandwatermgmtOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtOneModelObj:
+            state.addLandandwatermgmtOneModelObj?.copyWith(
+          stepped: --state.addLandandwatermgmtOneModelObj?.stepped,
+          page1: state.addLandandwatermgmtOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addLandandwatermgmtOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addLandandwatermgmtOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addLandandwatermgmtOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onSteppedUp(
+    StepUpEvent event,
+    Emitter<AddLandandwatermgmtOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtOneModelObj:
+            state.addLandandwatermgmtOneModelObj?.copyWith(
+          stepped: ++state.addLandandwatermgmtOneModelObj?.stepped,
+          page1: state.addLandandwatermgmtOneModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addLandandwatermgmtOneModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addLandandwatermgmtOneModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addLandandwatermgmtOneModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onStepped(
+    OnSteppedEvent event,
+    Emitter<AddLandandwatermgmtOneState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtOneModelObj:
+            state.addLandandwatermgmtOneModelObj?.copyWith(
+          stepped: event.value,
+          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
+          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
+          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
+          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
   List<SelectionPopupModel> fillDropdownItemList() {
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -78,17 +146,12 @@ class AddLandandwatermgmtOneBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 
@@ -96,17 +159,12 @@ class AddLandandwatermgmtOneBloc
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
-        isSelected: true,
+        title: "Yes",
       ),
       SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
+        id: 0,
+        title: "No",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
 }

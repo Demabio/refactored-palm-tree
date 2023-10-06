@@ -1,16 +1,46 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:equatable/equatable.dart';import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';/// This class defines the variables used in the [add_landandwatermgmt_six_screen],
+import 'package:equatable/equatable.dart';
+import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
+import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/irrigationprojetmodel.dart';
+
+/// This class defines the variables used in the [add_landandwatermgmt_six_screen],
 /// and is typically used to hold data that is passed between different parts of the application.
-class AddLandandwatermgmtSixModel extends Equatable {AddLandandwatermgmtSixModel({this.dropdownItemList = const [], this.dropdownItemList1 = const [], }) {  }
+class AddLandandwatermgmtSixModel extends Equatable {
+  AddLandandwatermgmtSixModel({
+    this.dropdownItemList = const [],
+    this.dropdownItemList1 = const [],
+    this.ageGroupmModels = const [],
+    this.count = 0,
+  }) {}
 
-List<SelectionPopupModel> dropdownItemList;
+  List<SelectionPopupModel> dropdownItemList;
 
-List<SelectionPopupModel> dropdownItemList1;
+  List<SelectionPopupModel> dropdownItemList1;
 
-AddLandandwatermgmtSixModel copyWith({List<SelectionPopupModel>? dropdownItemList, List<SelectionPopupModel>? dropdownItemList1, }) { return AddLandandwatermgmtSixModel(
-dropdownItemList : dropdownItemList ?? this.dropdownItemList,
-dropdownItemList1 : dropdownItemList1 ?? this.dropdownItemList1,
-); } 
-@override List<Object?> get props => [dropdownItemList,dropdownItemList1];
- }
+  List<IrrigationProjectModel> ageGroupmModels;
+
+  int count;
+
+  AddLandandwatermgmtSixModel copyWith({
+    List<SelectionPopupModel>? dropdownItemList,
+    List<SelectionPopupModel>? dropdownItemList1,
+    List<IrrigationProjectModel>? ageGroupmModels,
+    int? count,
+  }) {
+    return AddLandandwatermgmtSixModel(
+      dropdownItemList: dropdownItemList ?? this.dropdownItemList,
+      dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
+      ageGroupmModels: ageGroupmModels ?? this.ageGroupmModels,
+      count: count ?? this.count,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        dropdownItemList,
+        dropdownItemList1,
+        ageGroupmModels,
+        count,
+      ];
+}

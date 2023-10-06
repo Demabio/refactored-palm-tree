@@ -50,3 +50,36 @@ class ChangeDropDown2Event extends AddLandandwatermgmtOneEvent {
         value,
       ];
 }
+
+class StepUpEvent extends AddLandandwatermgmtOneEvent {
+  StepUpEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class StepDownEvent extends AddLandandwatermgmtOneEvent {
+  StepDownEvent({this.value});
+
+  String? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class OnSteppedEvent extends AddLandandwatermgmtOneEvent {
+  OnSteppedEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

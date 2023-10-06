@@ -62,6 +62,23 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              BlocSelector<
+                                      AddFarmHoldingOneBloc,
+                                      AddFarmHoldingOneState,
+                                      AddFarmHoldingOneModel?>(
+                                  selector: (state) =>
+                                      state.addFarmHoldingOneModelObj,
+                                  builder: ((context,
+                                      farmersIdentificationOneModelObj) {
+                                    return SizedBox(
+                                      height: 150.v,
+                                      width: double.infinity,
+                                      child: _buildStepper(
+                                          StepperType.horizontal,
+                                          context,
+                                          farmersIdentificationOneModelObj),
+                                    );
+                                  })),
                               Padding(
                                   padding:
                                       EdgeInsets.only(left: 13.h, top: 13.v),

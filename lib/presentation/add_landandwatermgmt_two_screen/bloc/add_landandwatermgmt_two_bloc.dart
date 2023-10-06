@@ -13,6 +13,9 @@ class AddLandandwatermgmtTwoBloc
     on<AddLandandwatermgmtTwoInitialEvent>(_onInitialize);
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
+    on<StepDownEvent>(_onSteppedDown);
+    on<OnSteppedEvent>(_onStepped);
+    on<StepUpEvent>(_onSteppedUp);
   }
 
   _changeDropDown(
@@ -67,6 +70,76 @@ class AddLandandwatermgmtTwoBloc
         title: "Item Three",
       )
     ];
+  }
+
+  _onSteppedDown(
+    StepDownEvent event,
+    Emitter<AddLandandwatermgmtTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtTwoModelObj:
+            state.addLandandwatermgmtTwoModelObj?.copyWith(
+          stepped: --state.addLandandwatermgmtTwoModelObj?.stepped,
+          page1: state.addLandandwatermgmtTwoModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addLandandwatermgmtTwoModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addLandandwatermgmtTwoModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addLandandwatermgmtTwoModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onSteppedUp(
+    StepUpEvent event,
+    Emitter<AddLandandwatermgmtTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtTwoModelObj:
+            state.addLandandwatermgmtTwoModelObj?.copyWith(
+          stepped: ++state.addLandandwatermgmtTwoModelObj?.stepped,
+          page1: state.addLandandwatermgmtTwoModelObj!.stepped > 0
+              ? StepState.complete
+              : StepState.indexed,
+          page2: state.addLandandwatermgmtTwoModelObj!.stepped > 1
+              ? StepState.complete
+              : StepState.indexed,
+          page3: state.addLandandwatermgmtTwoModelObj!.stepped > 2
+              ? StepState.complete
+              : StepState.indexed,
+          page4: state.addLandandwatermgmtTwoModelObj!.stepped > 3
+              ? StepState.complete
+              : StepState.indexed,
+        ),
+      ),
+    );
+  }
+
+  _onStepped(
+    OnSteppedEvent event,
+    Emitter<AddLandandwatermgmtTwoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        addLandandwatermgmtTwoModelObj:
+            state.addLandandwatermgmtTwoModelObj?.copyWith(
+          stepped: event.value,
+          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
+          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
+          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
+          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
+        ),
+      ),
+    );
   }
 
   _onInitialize(
