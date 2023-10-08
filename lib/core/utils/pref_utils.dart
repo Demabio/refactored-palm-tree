@@ -70,4 +70,28 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setFarmerId(int value) {
+    return _sharedPreferences!.setInt('farmerid', value);
+  }
+
+  int getFarmerId() {
+    try {
+      return _sharedPreferences!.getInt('farmerid') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<void> setAddorEdit(bool value) {
+    return _sharedPreferences!.setBool('addoredit', value);
+  }
+
+  bool getAddorEdit() {
+    try {
+      return _sharedPreferences!.getBool('addoredit') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

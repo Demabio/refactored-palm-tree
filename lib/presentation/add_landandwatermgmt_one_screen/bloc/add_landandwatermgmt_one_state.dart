@@ -9,6 +9,7 @@ class AddLandandwatermgmtOneState extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.addLandandwatermgmtOneModelObj,
+    this.isPageone = false,
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -19,18 +20,22 @@ class AddLandandwatermgmtOneState extends Equatable {
 
   AddLandandwatermgmtOneModel? addLandandwatermgmtOneModelObj;
 
+  bool isPageone;
+
   @override
   List<Object?> get props => [
         selectedDropDownValue,
         selectedDropDownValue1,
         selectedDropDownValue2,
         addLandandwatermgmtOneModelObj,
+        isPageone,
       ];
   AddLandandwatermgmtOneState copyWith({
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     AddLandandwatermgmtOneModel? addLandandwatermgmtOneModelObj,
+    bool? isPageone,
   }) {
     return AddLandandwatermgmtOneState(
       selectedDropDownValue:
@@ -41,6 +46,7 @@ class AddLandandwatermgmtOneState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       addLandandwatermgmtOneModelObj:
           addLandandwatermgmtOneModelObj ?? this.addLandandwatermgmtOneModelObj,
+      isPageone: isPageone ?? this.isPageone,
     );
   }
 }

@@ -50,6 +50,44 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/maritalstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/registrationstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/respondentrelationship.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser_source.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionlevel.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionsystem.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/agency.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/irrigation.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/irrigationcrop.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/type.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/watersource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/beehivetype.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmcategory.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmsystem.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfeed.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assetsource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/campchange.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/cooperativegroups.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/creditservice.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/enterprise.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionaccess.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionmode.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/incomesource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/pesticide.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/powersource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/premium.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/program.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/soiltest.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/structure.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -141,5 +179,59 @@ class DatabaseService {
     await LivestockBeehiveTypeDB().createTable(database);
     await ExtensionModeDB().createTable(database);
     await CooperativeGroupDB().createTable(database);
+
+    //Farmer Registration
+
+    //
+    await FarmerCropsDB().createTable(database);
+
+    //
+    await FarmerDB().createTable(database);
+    await FarmerFarmDB().createTable(database);
+
+    //
+    await FarmerFertiliserSourcesDB().createTable(database);
+    await FarmerFertiliserDB().createTable(database);
+
+    //
+    await FarmerFishDB().createTable(database);
+    await FarmerFishProductionLevelsDB().createTable(database);
+    await FarmerFishProductionSystemDB().createTable(database);
+
+    //
+    await FarmerIrrigationAgencyDB().createTable(database);
+    await FarmerIrrigationCategoryDB().createTable(database);
+    await FarmerIrrigationDB().createTable(database);
+    await FarmerIrrigationCropDB().createTable(database);
+    await FarmerIrrigationTypeDB().createTable(database);
+    await FarmerIrrigationWaterSourceDB().createTable(database);
+
+    //
+    await FarmerLivestockAgeGroupsDB().createTable(database);
+    await FarmerLivestockBeehiveTypeDB().createTable(database);
+    await FarmerLivestockDB().createTable(database);
+    await LivestockFarmSystemCategoryDB().createTable(database);
+    await FarmerLivestockFarmSystemDB().createTable(database);
+    await FarmerLivestockFeedsDB().createTable(database);
+    await FarmerLivestockServicesDB().createTable(database);
+
+    //
+    await FarmerAgriInfoSourceDB().createTable(database);
+    await FarmerAssetsDB().createTable(database);
+    await FarmerAssetSourceDB().createTable(database);
+    await FarmerCampChangeDB().createTable(database);
+    await FarmerCooperativeGroupDB().createTable(database);
+    await FarmerCreditServiceDB().createTable(database);
+    await FarmerEnterprisesDB().createTable(database);
+    await FarmerExtensionModeDB().createTable(database);
+    await FarmerExtensionAccessDB().createTable(database);
+    await FarmerIncomeSourceDB().createTable(database);
+    await FarmerLandPracticesDB().createTable(database);
+    await FarmerPesticidesDB().createTable(database);
+    await FarmerPowerSourceDB().createTable(database);
+    await FarmerProgramDB().createTable(database);
+    await FarmerPremiumDB().createTable(database);
+    await FarmerSoilTestDB().createTable(database);
+    await FarmerStructureDB().createTable(database);
   }
 }
