@@ -13,128 +13,183 @@ import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/presentation/save_draft_modal_dialog/save_draft_modal_dialog.dart';
 import 'package:sizer/sizer.dart';
 
-class FarmerRegistrationScreen extends StatefulWidget {
+class FarmerRegistrationScreen extends StatelessWidget {
   const FarmerRegistrationScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<FarmerRegistrationBloc>(
-        create: (context) => FarmerRegistrationBloc(FarmerRegistrationState(
-            farmerRegistrationModelObj: FarmerRegistrationModel()))
-          ..add(FarmerRegistrationInitialEvent()),
-        child: FarmerRegistrationScreen());
+      create: (context) => FarmerRegistrationBloc(
+        FarmerRegistrationState(
+          farmerRegistrationModelObj: FarmerRegistrationModel(),
+        ),
+      )..add(FarmerRegistrationInitialEvent()),
+      child: const FarmerRegistrationScreen(),
+    );
   }
-
-  @override
-  State<FarmerRegistrationScreen> createState() =>
-      _FarmerRegistrationScreenState();
-}
-
-class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
-  int currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
-    mediaQueryData = MediaQuery.of(context);
-    return BlocBuilder<FarmerRegistrationBloc, FarmerRegistrationState>(
-        builder: (context, state) {
-      return SafeArea(
-        child: Scaffold(
-          appBar: CustomAppBar(
-              height: 47.v,
-              leadingWidth: ResponsiveExtension(48).h,
-              leading: AppbarImage(
-                  svgPath: ImageConstant.imgMenu,
-                  margin: EdgeInsets.only(
-                      left: ResponsiveExtension(24).h, top: 8.v, bottom: 15.v)),
-              centerTitle: true,
-              title: AppbarSubtitle1(text: "msg_farmer_registration".tr)),
-          body: SizedBox(
-            width: mediaQueryData.size.width,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: ResponsiveExtension(22).h,
-                  right: ResponsiveExtension(10).h,
-                  bottom: 5.v),
-              child: _buildStepper(StepperType.vertical, context),
+    final mediaQueryData = MediaQuery.of(context);
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          height: 47.v,
+          leadingWidth: ResponsiveExtension(48).h,
+          leading: AppbarImage(
+            svgPath: ImageConstant.imgMenu,
+            margin: EdgeInsets.only(
+              left: ResponsiveExtension(24).h,
+              top: 8.v,
+              bottom: 15.v,
+            ),
+          ),
+          centerTitle: true,
+          title: AppbarSubtitle1(text: "msg_farmer_registration".tr),
+        ),
+        body: SizedBox(
+          width: mediaQueryData.size.width,
+          height: mediaQueryData.size.height,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: ResponsiveExtension(22).h,
+              right: ResponsiveExtension(10).h,
+              bottom: 5.v,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  BlocSelector<FarmerRegistrationBloc, FarmerRegistrationState,
+                      FarmerRegistrationModel?>(
+                    selector: (state) => state.farmerRegistrationModelObj,
+                    builder: (context, farmerRegistrationModelObj) {
+                      return _buildStepper(
+                        StepperType.vertical,
+                        context,
+                        farmerRegistrationModelObj!,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
-  CupertinoStepper _buildStepper(StepperType type, BuildContext context) {
-    final canCancel = currentStep > 0;
-    final canContinue = currentStep < 12;
+  CupertinoStepper _buildStepper(
+      StepperType type, BuildContext context, FarmerRegistrationModel model) {
+    final canCancel = model.currentStep > 0;
+    final canContinue = model.currentStep < 12;
     return CupertinoStepper(
       type: type,
-      currentStep: currentStep,
-      onStepTapped: (step) => setState(() => currentStep = step),
-      onStepCancel: canCancel ? () => setState(() => --currentStep) : null,
-      onStepContinue: canContinue ? () => setState(() => ++currentStep) : null,
+      physics: ClampingScrollPhysics(),
+      currentStep: model.currentStep,
+      onStepTapped: (step) {
+        context.read<FarmerRegistrationBloc>().add(OnSteppedEvent(value: step));
+      },
+      onStepCancel: canCancel
+          ? () {
+              context.read<FarmerRegistrationBloc>().add(StepDownEvent());
+            }
+          : null,
+      onStepContinue: canContinue
+          ? () {
+              context.read<FarmerRegistrationBloc>().add(StepUpEvent());
+            }
+          : null,
       steps: [
         _buildStep(
           title: Text('Farmers Identification'),
-          state: StepState.indexed,
+          state: model.processStatus?.farmeridentification == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             farmersIdentification(context);
           },
+          addoredit: model.processStatus?.farmeridentification == 1,
         ),
         _buildStep(
           title: Text('Primary Farm Holding'),
-          state: StepState.indexed,
+          state: model.processStatus?.primaryfarmholding == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             primaryFarmHolding(context);
           },
+          addoredit: model.processStatus?.primaryfarmholding == 1,
         ),
         _buildStep(
           title: Text('Add Other Farm Holdings'),
-          state: StepState.indexed,
+          state: model.processStatus?.primaryfarmholding == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             addFarmHolding(context);
           },
+          addoredit: model.processStatus?.primaryfarmholding == 1,
         ),
         _buildStep(
           title: Text('Crop Agriculture'),
-          state: StepState.indexed,
+          state: model.processStatus?.cropAgriculture == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             cropAgriculture(context);
           },
+          addoredit: model.processStatus?.cropAgriculture == 1,
         ),
         _buildStep(
           title: Text('Livestock'),
-          state: StepState.indexed,
+          state: model.processStatus?.livestock == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             onTapAdddetails(context);
           },
+          addoredit: model.processStatus?.livestock == 1,
         ),
         _buildStep(
           title: Text('Aquaculture'),
-          state: StepState.indexed,
+          state: model.processStatus?.aquaculture == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             onTapAqua(context);
           },
+          addoredit: model.processStatus?.aquaculture == 1,
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
-          state: StepState.indexed,
+          state: model.processStatus?.farmAssets == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             onFarmasset(context);
           },
+          addoredit: model.processStatus?.farmAssets == 1,
         ),
         _buildStep(
           title: Text('Land and Water Management'),
-          state: StepState.indexed,
+          state: model.processStatus?.landWater == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             onLandWater(context);
           },
+          addoredit: model.processStatus?.landWater == 1,
         ),
         _buildStep(
           title: Text('Financial and Services'),
-          state: StepState.indexed,
+          state: model.processStatus?.financialServices == 1
+              ? StepState.complete
+              : StepState.indexed,
           addcallback: () {
             onTapAdddetails(context);
           },
+          addoredit: model.processStatus?.financialServices == 1,
         ),
         _buildStep(
           title: Text('Error'),
@@ -174,6 +229,7 @@ class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
     bool isActive = false,
     VoidCallback? addcallback,
     VoidCallback? editcallback,
+    bool addoredit = false,
   }) {
     return Step(
       title: title,
@@ -185,25 +241,27 @@ class _FarmerRegistrationScreenState extends State<FarmerRegistrationScreen> {
         maxHeight: SizerExt(15).h,
         child: Column(
           children: [
-            CustomElevatedButton(
-              text: "Add Details",
-              margin: EdgeInsets.only(left: SizerExt(10).h),
-              buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-              buttonTextStyle: CustomTextStyles.bodyLarge16,
-              onTap: () {
-                addcallback?.call();
-              },
-            ),
-            Spacer(),
-            CustomElevatedButton(
-              text: "Edit Details",
-              margin: EdgeInsets.only(left: SizerExt(10).h),
-              buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-              buttonTextStyle: CustomTextStyles.bodyLarge16,
-              onTap: () {
-                editcallback?.call();
-              },
-            ),
+            if (!addoredit)
+              CustomElevatedButton(
+                text: "Add Details",
+                margin: EdgeInsets.only(left: SizerExt(10).h),
+                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                buttonTextStyle: CustomTextStyles.bodyLarge16,
+                onTap: () {
+                  addcallback?.call();
+                },
+              ),
+            if (addoredit) Spacer(),
+            if (addoredit)
+              CustomElevatedButton(
+                text: "Edit Details",
+                margin: EdgeInsets.only(left: SizerExt(10).h),
+                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                buttonTextStyle: CustomTextStyles.bodyLarge16,
+                onTap: () {
+                  editcallback?.call();
+                },
+              ),
           ],
         ),
       ),

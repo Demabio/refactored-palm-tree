@@ -208,13 +208,13 @@ class FarmerDB {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   ''', [
       farmer.idNo,
-      farmer.nrcChanged ? 1 : 0,
+      farmer.nrcChanged! ? 1 : 0,
       farmer.registrationStatusId,
       farmer.farmerName,
       farmer.nfrFarmerStatusId,
       farmer.farmerTypeId,
       farmer.gender,
-      farmer.dateCreated.toLocal().toIso8601String(),
+      farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
     ]);
   }

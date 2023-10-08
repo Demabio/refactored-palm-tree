@@ -1,20 +1,20 @@
 class Farmer {
   final int farmerId;
-  final String idNo;
+  final String? idNo;
   final String? oldNrc;
-  final bool nrcChanged;
+  final bool? nrcChanged;
   final String? farmerNo;
   final int? nfrRegistrationStatusId;
-  final int registrationStatusId;
+  final int? registrationStatusId;
   final String farmerName;
   final bool? farmerTheRespodent;
   final String? respondentName;
   final int? respondentRlshpId;
   final String? respondentMobile;
   final String? respNationalId;
-  final int nfrFarmerStatusId;
+  final int? nfrFarmerStatusId;
   final int? farmerStatusId;
-  final int farmerTypeId;
+  final int? farmerTypeId;
   final DateTime? dateOfRegistration;
   final String? villageName;
   final int? constituencyId;
@@ -23,7 +23,7 @@ class Farmer {
   final int? wardId;
   final String? enumerationAreaNumber;
   final String? shoppingCenter;
-  final int gender;
+  final int? gender;
   final String? email;
   final String? mobile;
   final int? dob;
@@ -55,7 +55,7 @@ class Farmer {
   final String? enumeratorName;
   final String? enumeratorId;
   final String? enumeratorMobile;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
   final DateTime? dateCaptured;
   final int? approvedBy;
@@ -72,7 +72,7 @@ class Farmer {
   final int? hhSize;
   final bool? formalAgriTraining;
   final String? accountNo;
-  final int approvedList;
+  final int? approvedList;
   final DateTime? dateApprovedList;
   final DateTime? dateOfConflict;
   final DateTime? dateRequestedForDelete;
@@ -84,21 +84,21 @@ class Farmer {
 
   Farmer({
     required this.farmerId,
-    required this.idNo,
+    this.idNo,
     this.oldNrc,
-    required this.nrcChanged,
+    this.nrcChanged,
     this.farmerNo,
     this.nfrRegistrationStatusId,
-    required this.registrationStatusId,
+    this.registrationStatusId,
     required this.farmerName,
     this.farmerTheRespodent,
     this.respondentName,
     this.respondentRlshpId,
     this.respondentMobile,
     this.respNationalId,
-    required this.nfrFarmerStatusId,
+    this.nfrFarmerStatusId,
     this.farmerStatusId,
-    required this.farmerTypeId,
+    this.farmerTypeId,
     this.dateOfRegistration,
     this.villageName,
     this.constituencyId,
@@ -107,7 +107,7 @@ class Farmer {
     this.wardId,
     this.enumerationAreaNumber,
     this.shoppingCenter,
-    required this.gender,
+    this.gender,
     this.email,
     this.mobile,
     this.dob,
@@ -139,7 +139,7 @@ class Farmer {
     this.enumeratorName,
     this.enumeratorId,
     this.enumeratorMobile,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
     this.dateCaptured,
     this.approvedBy,
@@ -156,7 +156,7 @@ class Farmer {
     this.hhSize,
     this.formalAgriTraining,
     this.accountNo,
-    required this.approvedList,
+    this.approvedList,
     this.dateApprovedList,
     this.dateOfConflict,
     this.dateRequestedForDelete,

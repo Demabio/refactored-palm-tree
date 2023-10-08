@@ -94,4 +94,16 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setAddFarm(bool value) {
+    return _sharedPreferences!.setBool('addfarm', value);
+  }
+
+  bool getAddFarm() {
+    try {
+      return _sharedPreferences!.getBool('addfarm') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }
