@@ -23,6 +23,11 @@ class FarmersIdentificationFourModel extends Equatable {
     this.isFarmer = false,
     this.fiProgress,
     this.farmer,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -49,6 +54,15 @@ class FarmersIdentificationFourModel extends Equatable {
   FIProgress? fiProgress;
 
   Farmer? farmer;
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+
+  SelectionPopupModel? selectedDropDownValue2;
+
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
   FarmersIdentificationFourModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -63,6 +77,11 @@ class FarmersIdentificationFourModel extends Equatable {
     bool? isFarmer,
     FIProgress? fiProgress,
     Farmer? farmer,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
   }) {
     return FarmersIdentificationFourModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -78,6 +97,11 @@ class FarmersIdentificationFourModel extends Equatable {
       isFarmer: isFarmer ?? this.isFarmer,
       farmer: farmer ?? this.farmer,
       fiProgress: fiProgress ?? this.fiProgress,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
     );
   }
 
@@ -96,5 +120,10 @@ class FarmersIdentificationFourModel extends Equatable {
         isFarmer,
         fiProgress,
         farmer,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
       ];
 }

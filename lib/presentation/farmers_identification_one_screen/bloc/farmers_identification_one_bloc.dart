@@ -23,13 +23,6 @@ class FarmersIdentificationOneBloc
     on<SaveTapEvent>(_saveTap);
     on<LoadFarmerDataEvent>(_loadData);
   }
-  Future<FIProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FIProgressDB fiProgressDB = FIProgressDB();
-      return await fiProgressDB.fetchByFarmerId(farmerid);
-    }
-  }
 
   _onSteppedDown(
     StepDownEvent event,
@@ -233,6 +226,12 @@ class FarmersIdentificationOneBloc
     return await farmerDB.fetchByFarmerId(farmerid);
   }
 
+  Future<FIProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FIProgressDB fiProgressDB = FIProgressDB();
+    return await fiProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _loadData(
     LoadFarmerDataEvent event,
     Emitter<FarmersIdentificationOneState> emit,
@@ -274,7 +273,7 @@ class FarmersIdentificationOneBloc
           pageThree: 0,
           pageFour: 0,
         );
-    ;
+
     print(farmer);
     TextEditingController villagename = TextEditingController();
     TextEditingController center = TextEditingController();

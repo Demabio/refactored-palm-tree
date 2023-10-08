@@ -75,7 +75,7 @@ class FarmersIdentificationTwoBloc
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          //PrefUtils().setFarmerId(value);
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -106,7 +106,7 @@ class FarmersIdentificationTwoBloc
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          //PrefUtils().setFarmerId(value);
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -117,54 +117,35 @@ class FarmersIdentificationTwoBloc
     }
   }
 
-  Farmer getFarmer() {
+  Future<Farmer?> getFarmer() async {
     int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FarmerDB farmerDB = FarmerDB();
-      farmerDB.fetchByFarmerId(farmerid).then((value) {
-        return Farmer(
-          farmerId: value!.farmerId,
-          farmerName: value.farmerName,
-          villageName: value.villageName,
-          shoppingCenter: value.shoppingCenter,
-        );
-      });
-    }
-
-    return Farmer(
-      farmerId: 0,
-      farmerName: "NA",
-    );
+    FarmerDB farmerDB = FarmerDB();
+    return await farmerDB.fetchByFarmerId(farmerid);
   }
 
-  FIProgress getProgress() {
+  Future<FIProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FIProgressDB fiProgressDB = FIProgressDB();
-      fiProgressDB.fetchByFarmerId(farmerid).then((value) {
-        return FIProgress(
-          farmerId: value!.farmerId,
-          pageOne: value.pageOne,
-          pageTwo: value.pageTwo,
-          pageThree: value.pageThree,
-          pageFour: value.pageFour,
-        );
-      });
-    }
-
-    return FIProgress(
-      farmerId: 0,
-      pageOne: 0,
-      pageTwo: 0,
-      pageThree: 0,
-      pageFour: 0,
-    );
+    FIProgressDB fiProgressDB = FIProgressDB();
+    return await fiProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     FarmersIdentificationTwoInitialEvent event,
     Emitter<FarmersIdentificationTwoState> emit,
   ) async {
+    Farmer farmer = await getFarmer() ??
+        Farmer(
+          farmerId: 0,
+          farmerName: "NA",
+        );
+    FIProgress fiProgress = await getProgress() ??
+        FIProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+          pageThree: 0,
+          pageFour: 0,
+        );
     emit(state.copyWith(
         idnumberoneController: TextEditingController(),
         mobileNumberController: TextEditingController(),
@@ -176,8 +157,8 @@ class FarmersIdentificationTwoBloc
             state.farmersIdentificationTwoModelObj?.copyWith(
           dropdownItemList: fillDropdownItemList(),
           dropdownItemList1: fillDropdownItemList1(),
-          farmer: getFarmer(),
-          fiProgress: getProgress(),
+          fiProgress: fiProgress,
+          farmer: farmer,
         ),
       ),
     );

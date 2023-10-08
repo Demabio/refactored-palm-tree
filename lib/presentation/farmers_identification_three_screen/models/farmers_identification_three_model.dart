@@ -20,6 +20,9 @@ class FarmersIdentificationThreeModel extends Equatable {
     this.page4 = StepState.indexed,
     this.fiProgress,
     this.farmer,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -38,12 +41,20 @@ class FarmersIdentificationThreeModel extends Equatable {
 
   StepState? page4;
   FIProgress? fiProgress;
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+
+  SelectionPopupModel? selectedDropDownValue2;
 
   Farmer? farmer;
   FarmersIdentificationThreeModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
     List<SelectionPopupModel>? dropdownItemList2,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
     int? stepped,
     StepState? page1,
     StepState? page2,
@@ -61,6 +72,9 @@ class FarmersIdentificationThreeModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
       farmer: farmer ?? this.farmer,
       fiProgress: fiProgress ?? this.fiProgress,
     );
@@ -78,5 +92,8 @@ class FarmersIdentificationThreeModel extends Equatable {
         page4,
         fiProgress,
         farmer,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        selectedDropDownValue2,
       ];
 }

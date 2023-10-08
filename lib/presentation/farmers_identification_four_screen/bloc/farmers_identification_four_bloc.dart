@@ -24,11 +24,35 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     on<NextTapEvent>(_nextTap);
     on<SaveTapEvent>(_saveTap);
   }
+  Future<Farmer?> getFarmer() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FarmerDB farmerDB = FarmerDB();
+    return await farmerDB.fetchByFarmerId(farmerid);
+  }
+
+  Future<FIProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FIProgressDB fiProgressDB = FIProgressDB();
+    return await fiProgressDB.fetchByFarmerId(farmerid);
+  }
 
   _onInitialize(
     FarmersIdentificationFourInitialEvent event,
     Emitter<FarmersIdentificationFourState> emit,
   ) async {
+    Farmer farmer = await getFarmer() ??
+        Farmer(
+          farmerId: 0,
+          farmerName: "NA",
+        );
+    FIProgress fiProgress = await getProgress() ??
+        FIProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+          pageThree: 0,
+          pageFour: 0,
+        );
     emit(
       state.copyWith(
         farmersIdentificationFourModelObj:
@@ -38,8 +62,8 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           dropdownItemList2: fillDropdownItemList2(),
           dropdownItemList3: fillDropdownItemList3(),
           dropdownItemList4: fillDropdownItemList4(),
-          farmer: getFarmer(),
-          fiProgress: getProgress(),
+          fiProgress: fiProgress,
+          farmer: farmer,
         ),
       ),
     );
@@ -160,50 +184,6 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     } catch (e) {
       event.createFailed!.call();
     }
-  }
-
-  Farmer getFarmer() {
-    int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FarmerDB farmerDB = FarmerDB();
-      farmerDB.fetchByFarmerId(farmerid).then((value) {
-        return Farmer(
-          farmerId: value!.farmerId,
-          farmerName: value.farmerName,
-          villageName: value.villageName,
-          shoppingCenter: value.shoppingCenter,
-        );
-      });
-    }
-
-    return Farmer(
-      farmerId: 0,
-      farmerName: "NA",
-    );
-  }
-
-  FIProgress getProgress() {
-    int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FIProgressDB fiProgressDB = FIProgressDB();
-      fiProgressDB.fetchByFarmerId(farmerid).then((value) {
-        return FIProgress(
-          farmerId: value!.farmerId,
-          pageOne: value.pageOne,
-          pageTwo: value.pageTwo,
-          pageThree: value.pageThree,
-          pageFour: value.pageFour,
-        );
-      });
-    }
-
-    return FIProgress(
-      farmerId: 0,
-      pageOne: 0,
-      pageTwo: 0,
-      pageThree: 0,
-      pageFour: 0,
-    );
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {

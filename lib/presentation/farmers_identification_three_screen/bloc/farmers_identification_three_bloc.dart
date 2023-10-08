@@ -160,54 +160,35 @@ class FarmersIdentificationThreeBloc extends Bloc<
     }
   }
 
-  Farmer getFarmer() {
+  Future<Farmer?> getFarmer() async {
     int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FarmerDB farmerDB = FarmerDB();
-      farmerDB.fetchByFarmerId(farmerid).then((value) {
-        return Farmer(
-          farmerId: value!.farmerId,
-          farmerName: value.farmerName,
-          villageName: value.villageName,
-          shoppingCenter: value.shoppingCenter,
-        );
-      });
-    }
-
-    return Farmer(
-      farmerId: 0,
-      farmerName: "NA",
-    );
+    FarmerDB farmerDB = FarmerDB();
+    return await farmerDB.fetchByFarmerId(farmerid);
   }
 
-  FIProgress getProgress() {
+  Future<FIProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmerId();
-    if (farmerid != 0) {
-      FIProgressDB fiProgressDB = FIProgressDB();
-      fiProgressDB.fetchByFarmerId(farmerid).then((value) {
-        return FIProgress(
-          farmerId: value!.farmerId,
-          pageOne: value.pageOne,
-          pageTwo: value.pageTwo,
-          pageThree: value.pageThree,
-          pageFour: value.pageFour,
-        );
-      });
-    }
-
-    return FIProgress(
-      farmerId: 0,
-      pageOne: 0,
-      pageTwo: 0,
-      pageThree: 0,
-      pageFour: 0,
-    );
+    FIProgressDB fiProgressDB = FIProgressDB();
+    return await fiProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     FarmersIdentificationThreeInitialEvent event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) async {
+    Farmer farmer = await getFarmer() ??
+        Farmer(
+          farmerId: 0,
+          farmerName: "NA",
+        );
+    FIProgress fiProgress = await getProgress() ??
+        FIProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+          pageThree: 0,
+          pageFour: 0,
+        );
     emit(state.copyWith(
         codevalueoneController: TextEditingController(),
         hhsizevalueoneController: TextEditingController()));
@@ -217,8 +198,8 @@ class FarmersIdentificationThreeBloc extends Bloc<
         dropdownItemList: await fetchMaritalStatus(),
         dropdownItemList1: fillDropdownItemList1(),
         dropdownItemList2: await fetchEducationLevels(),
-        farmer: getFarmer(),
-        fiProgress: getProgress(),
+        fiProgress: fiProgress,
+        farmer: farmer,
       ),
     ));
   }
