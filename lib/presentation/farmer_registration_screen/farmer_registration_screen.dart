@@ -1,4 +1,5 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/routes/navigation_args.dart';
 
 import 'bloc/farmer_registration_bloc.dart';
 import 'models/farmer_registration_model.dart';
@@ -109,6 +110,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             farmersIdentification(context);
           },
+          editcallback: () => editfarmersIdentification(context),
           addoredit: model.processStatus?.farmeridentification == 1,
         ),
         _buildStep(
@@ -119,6 +121,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             primaryFarmHolding(context);
           },
+          editcallback: () => editprimaryFarmHolding(context),
           addoredit: model.processStatus?.primaryfarmholding == 1,
         ),
         _buildStep(
@@ -129,6 +132,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             addFarmHolding(context);
           },
+          editcallback: () => editFarmHolding(context),
           addoredit: model.processStatus?.primaryfarmholding == 1,
         ),
         _buildStep(
@@ -139,6 +143,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             cropAgriculture(context);
           },
+          editcallback: () => editcropAgriculture(context),
           addoredit: model.processStatus?.cropAgriculture == 1,
         ),
         _buildStep(
@@ -149,6 +154,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             onTapAdddetails(context);
           },
+          editcallback: () => editTapAdddetails(context),
           addoredit: model.processStatus?.livestock == 1,
         ),
         _buildStep(
@@ -159,6 +165,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             onTapAqua(context);
           },
+          editcallback: () => editTapAqua(context),
           addoredit: model.processStatus?.aquaculture == 1,
         ),
         _buildStep(
@@ -169,6 +176,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             onFarmasset(context);
           },
+          editcallback: () => editFarmasset(context),
           addoredit: model.processStatus?.farmAssets == 1,
         ),
         _buildStep(
@@ -179,6 +187,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             onLandWater(context);
           },
+          editcallback: () => editLandWater(context),
           addoredit: model.processStatus?.landWater == 1,
         ),
         _buildStep(
@@ -189,6 +198,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addcallback: () {
             onTapAdddetails(context);
           },
+          editcallback: () => editFinance(context),
           addoredit: model.processStatus?.financialServices == 1,
         ),
         _buildStep(
@@ -268,79 +278,123 @@ class FarmerRegistrationScreen extends StatelessWidget {
     );
   }
 
-  /// Navigates to the farmersIdentificationScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the farmersIdentificationScreen.
   farmersIdentification(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.farmersIdentificationScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.farmersIdentificationOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
-  /// Navigates to the primaryFarmHoldingScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the primaryFarmHoldingScreen.
   primaryFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.primaryFarmHoldingScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.primaryFarmHoldingOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
-  /// Navigates to the addFarmHoldingScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the addFarmHoldingScreen.
   addFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.addFarmHoldingScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addFarmHoldingOneScreen, arguments: {
+      NavigationArgs.farmerEdit: false,
+    });
   }
 
-  /// Navigates to the cropAgricultureScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the cropAgricultureScreen.
   cropAgriculture(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.cropAgricultureScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addCropOneScreen, arguments: {
+      NavigationArgs.farmerEdit: false,
+    });
   }
 
-  /// Navigates to the livestockOneTabContainerScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the livestockOneTabContainerScreen.
   onTapAdddetails(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.livestockOneTabContainerScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addRearedLivestockOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
   onTapAqua(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.aquacultureScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addAquacultureOneScreen, arguments: {
+      NavigationArgs.farmerEdit: false,
+    });
   }
 
   onFarmasset(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.farmtechandassetsScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addFarmtechandassetsOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
   onLandWater(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.landandwatermgmtScreen,
-    );
+    NavigatorService.pushNamed(AppRoutes.addLandandwatermgmtOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
+  onFinance(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.addFinancialandservicesOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
+  }
+
+//EDIT
+  editfarmersIdentification(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.farmersIdentificationScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
+  }
+
+  editprimaryFarmHolding(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.primaryFarmHoldingScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editFarmHolding(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.addFarmHoldingScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editcropAgriculture(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.cropAgricultureScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editTapAdddetails(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.livestockOneTabContainerScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
+  }
+
+  editTapAqua(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.aquacultureScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editFarmasset(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.farmtechandassetsScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editLandWater(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.landandwatermgmtScreen, arguments: {
+      NavigationArgs.farmerEdit: true,
+    });
+  }
+
+  editFinance(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.financialandservicesScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
+  }
   // onTapAdddetails(BuildContext context) {
   //   NavigatorService.pushNamed(
   //     AppRoutes.livestockOneTabContainerScreen,

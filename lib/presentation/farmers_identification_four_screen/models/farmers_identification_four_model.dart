@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
 /// This class defines the variables used in the [farmers_identification_four_screen],
@@ -19,6 +21,8 @@ class FarmersIdentificationFourModel extends Equatable {
     this.page3 = StepState.complete,
     this.page4 = StepState.indexed,
     this.isFarmer = false,
+    this.fiProgress,
+    this.farmer,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -42,7 +46,9 @@ class FarmersIdentificationFourModel extends Equatable {
   StepState? page4;
 
   bool isFarmer;
+  FIProgress? fiProgress;
 
+  Farmer? farmer;
   FarmersIdentificationFourModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -55,6 +61,8 @@ class FarmersIdentificationFourModel extends Equatable {
     StepState? page3,
     StepState? page4,
     bool? isFarmer,
+    FIProgress? fiProgress,
+    Farmer? farmer,
   }) {
     return FarmersIdentificationFourModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -68,6 +76,8 @@ class FarmersIdentificationFourModel extends Equatable {
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
       isFarmer: isFarmer ?? this.isFarmer,
+      farmer: farmer ?? this.farmer,
+      fiProgress: fiProgress ?? this.fiProgress,
     );
   }
 
@@ -84,5 +94,7 @@ class FarmersIdentificationFourModel extends Equatable {
         page3,
         page4,
         isFarmer,
+        fiProgress,
+        farmer,
       ];
 }

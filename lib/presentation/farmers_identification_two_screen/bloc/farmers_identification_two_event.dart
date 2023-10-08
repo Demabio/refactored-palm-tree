@@ -40,35 +40,40 @@ class ChangeDropDown1Event extends FarmersIdentificationTwoEvent {
       ];
 }
 
-class StepUpEvent extends FarmersIdentificationTwoEvent {
-  StepUpEvent({this.value});
-
-  String? value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-class StepDownEvent extends FarmersIdentificationTwoEvent {
-  StepDownEvent({this.value});
-
-  String? value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
-
-class OnSteppedEvent extends FarmersIdentificationTwoEvent {
-  OnSteppedEvent({this.value});
+class NextTapEvent extends FarmersIdentificationTwoEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
 
   int? value;
+  Function? createSuccessful;
 
+  Function? createFailed;
   @override
   List<Object?> get props => [
         value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends FarmersIdentificationTwoEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
       ];
 }

@@ -11,19 +11,19 @@ class FarmerDB {
         "farmerId" INTEGER NOT NULL,
         "idNo" VARCHAR(255) NOT NULL,
         "oldNrc" VARCHAR(255),
-        "nrcChanged" BOOLEAN NOT NULL,
+        "nrcChanged" BOOLEAN,
         "farmerNo" VARCHAR(255),
         "nfrRegistrationStatusId" INTEGER,
-        "registrationStatusId" INTEGER NOT NULL,
-        "farmerName" VARCHAR(255) NOT NULL,
+        "registrationStatusId" INTEGER,
+        "farmerName" VARCHAR(255),
         "farmerTheRespodent" BOOLEAN,
         "respondentName" VARCHAR(255),
         "respondentRlshpId" INTEGER,
         "respondentMobile" VARCHAR(255),
         "respNationalId" VARCHAR(255),
-        "nfrFarmerStatusId" INTEGER NOT NULL,
+        "nfrFarmerStatusId" INTEGER ,
         "farmerStatusId" INTEGER,
-        "farmerTypeId" INTEGER NOT NULL,
+        "farmerTypeId" INTEGER ,
         "dateOfRegistration" DATETIME,
         "villageName" VARCHAR(255),
         "constituencyId" INTEGER,
@@ -32,7 +32,7 @@ class FarmerDB {
         "wardId" INTEGER,
         "enumerationAreaNumber" VARCHAR(255),
         "shoppingCenter" VARCHAR(255),
-        "gender" INTEGER NOT NULL,
+        "gender" INTEGER ,
         "email" VARCHAR(255),
         "mobile" VARCHAR(255),
         "dob" INTEGER,
@@ -64,7 +64,7 @@ class FarmerDB {
         "enumeratorName" VARCHAR(255),
         "enumeratorId" VARCHAR(255),
         "enumeratorMobile" VARCHAR(255),
-        "dateCreated" DATETIME NOT NULL,
+        "dateCreated" DATETIME ,
         "createdBy" INTEGER,
         "dateCaptured" DATETIME,
         "approvedBy" INTEGER,
@@ -81,7 +81,7 @@ class FarmerDB {
         "hhSize" INTEGER,
         "formalAgriTraining" BOOLEAN,
         "accountNo" VARCHAR(255),
-        "approvedList" INTEGER NOT NULL,
+        "approvedList" INTEGER ,
         "dateApprovedList" DATETIME,
         "dateOfConflict" DATETIME,
         "dateRequestedForDelete" DATETIME,
@@ -203,17 +203,12 @@ class FarmerDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-      "idNo", "nrcChanged", "registrationStatusId", "farmerName", "nfrFarmerStatusId", "farmerTypeId", "gender", "dateCreated", "createdBy"
+      "idNo", "farmerName", "dateCreated", "createdBy"
     ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?)
   ''', [
       farmer.idNo,
-      farmer.nrcChanged! ? 1 : 0,
-      farmer.registrationStatusId,
       farmer.farmerName,
-      farmer.nfrFarmerStatusId,
-      farmer.farmerTypeId,
-      farmer.gender,
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
     ]);

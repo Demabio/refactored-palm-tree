@@ -50,6 +50,8 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/maritalstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/registrationstatus.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/respondentrelationship.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/process_status.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
@@ -233,5 +235,11 @@ class DatabaseService {
     await FarmerPremiumDB().createTable(database);
     await FarmerSoilTestDB().createTable(database);
     await FarmerStructureDB().createTable(database);
+
+    //Progress tracking
+
+    //
+    await FIProgressDB().createTable(database);
+    await ProcessStatusDB().createTable(database);
   }
 }

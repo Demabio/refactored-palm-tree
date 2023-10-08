@@ -105,6 +105,14 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: hintStyle ?? CustomTextStyles.titleMediumBluegray40003,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
+        errorStyle: TextStyle(color: const Color.fromARGB(255, 240, 16, 0)),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.h),
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 255, 17, 0),
+            width: 2,
+          ),
+        ),
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
@@ -116,7 +124,7 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
-                width: 1,
+                width: 2,
               ),
             ),
         enabledBorder: borderDecoration ??
@@ -124,7 +132,7 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
-                width: 1,
+                width: 2,
               ),
             ),
         focusedBorder: borderDecoration ??
@@ -132,7 +140,7 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
-                width: 1,
+                width: 2,
               ),
             ),
       );

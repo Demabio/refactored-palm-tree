@@ -1,4 +1,5 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
 import 'bloc/farmers_identification_one_bloc.dart';
@@ -71,11 +72,117 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                         selector: (state) =>
                             state.farmersIdentificationOneModelObj,
                         builder: ((context, farmersIdentificationOneModelObj) {
-                          return SizedBox(
-                            height: 150.v,
-                            width: double.infinity,
-                            child: _buildStepper(StepperType.horizontal,
-                                context, farmersIdentificationOneModelObj),
+                          return EasyStepper(
+                            activeStep:
+                                farmersIdentificationOneModelObj!.stepped,
+                            direction: Axis.horizontal,
+                            unreachedStepIconColor: theme.colorScheme.primary,
+                            finishedStepIconColor: Colors.orange,
+                            activeStepTextColor: Colors.black87,
+                            finishedStepTextColor: Colors.black87,
+                            internalPadding: 0,
+                            showLoadingAnimation: true,
+                            stepRadius: 20,
+                            disableScroll: true,
+                            showStepBorder: true,
+                            alignment: Alignment.center,
+                            steps: [
+                              EasyStep(
+                                customStep: CircleAvatar(
+                                  radius: 35,
+                                  backgroundColor: theme.colorScheme.primary,
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: theme.colorScheme.primary,
+                                    child: farmersIdentificationOneModelObj
+                                                .stepped <=
+                                            0
+                                        ? Text(
+                                            '1', // You can replace '1' with the desired number
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          )
+                                        : Icon(Icons.check),
+                                  ),
+                                ),
+                                title: 'Step 1',
+                              ),
+                              EasyStep(
+                                customStep: CircleAvatar(
+                                  radius: 35,
+                                  backgroundColor: theme.colorScheme.primary,
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: theme.colorScheme.primary,
+                                    child: farmersIdentificationOneModelObj
+                                                .stepped <=
+                                            1
+                                        ? Text(
+                                            '2', // You can replace '1' with the desired number
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          )
+                                        : Icon(Icons.check),
+                                  ),
+                                ),
+
+                                title: 'Step 2',
+                                //topTitle: true,
+                              ),
+                              EasyStep(
+                                customStep: CircleAvatar(
+                                  radius: 35,
+                                  backgroundColor: theme.colorScheme.primary,
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: theme.colorScheme.primary,
+                                    child: farmersIdentificationOneModelObj
+                                                .stepped <=
+                                            2
+                                        ? Text(
+                                            '3', // You can replace '1' with the desired number
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          )
+                                        : Icon(Icons.check),
+                                  ),
+                                ),
+                                title: 'Step 3',
+                              ),
+                              EasyStep(
+                                customStep: CircleAvatar(
+                                  radius: 35,
+                                  backgroundColor: theme.colorScheme.primary,
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: theme.colorScheme.primary,
+                                    child: farmersIdentificationOneModelObj
+                                                .stepped <=
+                                            3
+                                        ? Text(
+                                            '4', // You can replace '1' with the desired number
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          )
+                                        : Icon(Icons.check),
+                                  ),
+                                ),
+                                title: 'Step 4',
+                                // topTitle: true,
+                              ),
+                            ],
                           );
                         })),
                     SizedBox(height: 13.v),
@@ -106,32 +213,32 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                               contentPadding:
                                   EdgeInsets.fromLTRB(12.h, 16.v, 12.h, 9.v));
                         }),
-                    SizedBox(height: 20.v),
-                    Text("msg_enumerator_area2".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1),
-                    BlocSelector<
-                            FarmersIdentificationOneBloc,
-                            FarmersIdentificationOneState,
-                            TextEditingController?>(
-                        selector: (state) => state.areaNumberController,
-                        builder: (context, areaNumberController) {
-                          return CustomTextFormField(
-                              focusNode: node1,
-                              controller: areaNumberController,
-                              autofocus: false,
-                              hintText: "lbl_area_number".tr,
-                              hintStyle:
-                                  CustomTextStyles.titleMediumBluegray40003,
-                              textInputType: TextInputType.number,
-                              validator: (value) {
-                                if (!isNumeric(value)) {
-                                  return "Please enter valid number";
-                                }
-                                return null;
-                              },
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(16.h, 13.v, 16.h, 12.v));
-                        }),
+                    // SizedBox(height: 20.v),
+                    // Text("msg_enumerator_area2".tr,
+                    //     style: CustomTextStyles.labelMediumPrimary_1),
+                    // BlocSelector<
+                    //         FarmersIdentificationOneBloc,
+                    //         FarmersIdentificationOneState,
+                    //         TextEditingController?>(
+                    //     selector: (state) => state.areaNumberController,
+                    //     builder: (context, areaNumberController) {
+                    //       return CustomTextFormField(
+                    //           focusNode: node1,
+                    //           controller: areaNumberController,
+                    //           autofocus: false,
+                    //           hintText: "lbl_area_number".tr,
+                    //           hintStyle:
+                    //               CustomTextStyles.titleMediumBluegray40003,
+                    //           textInputType: TextInputType.number,
+                    //           validator: (value) {
+                    //             if (!isNumeric(value)) {
+                    //               return "Please enter valid number";
+                    //             }
+                    //             return null;
+                    //           },
+                    //           contentPadding:
+                    //               EdgeInsets.fromLTRB(16.h, 13.v, 16.h, 12.v));
+                    //     }),
                     SizedBox(height: 21.v),
                     Text("Shopping Center".tr,
                         style: CustomTextStyles.labelMediumPrimary_1),
@@ -170,15 +277,42 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                               hintText: "lbl_name".tr,
                               hintStyle:
                                   CustomTextStyles.titleMediumBluegray40003,
-                              textInputAction: TextInputAction.done,
                               validator: (value) {
                                 if (!isText(value)) {
                                   return "Please enter valid text";
+                                } else if (isNotEmpty(value)) {
+                                  return "Field is required.";
                                 }
                                 return null;
                               },
                               contentPadding:
                                   EdgeInsets.fromLTRB(16.h, 13.v, 16.h, 12.v));
+                        }),
+                    SizedBox(height: 21.v),
+
+                    Text("msg_national_id_number2".tr,
+                        style: CustomTextStyles.labelMediumPrimary_1),
+                    BlocSelector<
+                            FarmersIdentificationOneBloc,
+                            FarmersIdentificationOneState,
+                            TextEditingController?>(
+                        selector: (state) => state.areaNumberController,
+                        builder: (context, idnumberoneController) {
+                          return CustomTextFormField(
+                              focusNode: node1,
+                              controller: idnumberoneController,
+                              autofocus: false,
+                              hintText: "lbl_id_number".tr,
+                              textInputType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                              validator: (value) {
+                                if (!isNumeric(value)) {
+                                  return "Please enter valid number";
+                                } else if (isNotEmpty(value)) {
+                                  return "Field is required.";
+                                }
+                                return null;
+                              });
                         }),
                     SizedBox(height: 31.v),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -186,6 +320,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                           child: CustomOutlinedButton(
                               text: "lbl_back".tr,
                               margin: EdgeInsets.only(right: 1.h),
+                              onTap: () => goBack(context),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
                               buttonTextStyle:
@@ -195,7 +330,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                               text: "lbl_next".tr,
                               margin: EdgeInsets.only(left: 1.h),
                               onTap: () {
-                                //  onTapNext(context);
+                                nextPage(context);
                               }))
                     ]),
                     SizedBox(height: 12.v),
@@ -206,7 +341,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                           child: CustomImageView(
                               svgPath: ImageConstant.imgSaveWhiteA700)),
                       onTap: () {
-                        onTapSave(context);
+                        saveDraft(context);
                       },
                     ),
                   ],
@@ -219,95 +354,47 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
     });
   }
 
-  CupertinoStepper _buildStepper(StepperType type, BuildContext context,
-      FarmersIdentificationOneModel? farmersIdentificationOneModel) {
-    final canCancel = farmersIdentificationOneModel!.stepped > 0;
-    final canContinue = farmersIdentificationOneModel.stepped < 3;
-    return CupertinoStepper(
-      type: type,
-      currentStep: currentStep,
-      onStepTapped: (step) {
-        //Best place to save and get scope identity and store in pref
-        // context
-        //     .read<FarmersIdentificationOneBloc>()
-        //     .add(OnSteppedEvent(value: step));
-
-        onTapNextC(context, step);
-      },
-      onStepCancel: canCancel
-          ? () {
-              //  context.read<FarmersIdentificationOneBloc>().add(StepDownEvent());
-              onTapNextC(context, farmersIdentificationOneModel.stepped - 1);
-            }
-          : null,
-      onStepContinue: canContinue
-          ? () {
-              // context.read<FarmersIdentificationOneBloc>().add(StepUpEvent());
-              onTapNextC(context, farmersIdentificationOneModel.stepped + 1);
-            }
-          : null,
-      steps: [
-        _buildStep(
-          title: Text('1'),
-          state: farmersIdentificationOneModel.page1!,
-          addcallback: () {},
-        ),
-        _buildStep(
-          title: Text('2'),
-          state: farmersIdentificationOneModel.page2!,
-        ),
-        _buildStep(
-          title: Text('3'),
-          state: farmersIdentificationOneModel.page3!,
-        ),
-        _buildStep(
-          title: Text('4'),
-          state: farmersIdentificationOneModel.page4!,
-        ),
-      ],
-    );
-  }
-
-  Step _buildStep({
-    required Widget title,
-    StepState state = StepState.indexed,
-    bool isActive = false,
-    VoidCallback? addcallback,
-    VoidCallback? editcallback,
-  }) {
-    return Step(
-      title: title,
-      // subtitle: Text('Subtitle'),
-      state: state,
-      isActive: isActive,
-      content: LimitedBox(
-          maxWidth: double.infinity,
-          maxHeight: 1,
-          child: SizedBox(
-            height: 1,
-            width: 1,
-          )),
-    );
-  }
-
-  onTapNextC(BuildContext context, int step) {
-    if (step == 0) {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationOneScreen,
-      );
-    } else if (step == 1) {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationTwoScreen,
-      );
-    } else if (step == 2) {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationThreeScreen,
-      );
-    } else {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.farmersIdentificationFourScreen,
-      );
+  nextPage(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<FarmersIdentificationOneBloc>().add(
+            NextTapEvent(
+              createSuccessful: () {
+                _success(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
     }
+  }
+
+  _success(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.farmersIdentificationTwoScreen);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong")));
+  }
+
+  saveDraft(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<FarmersIdentificationOneBloc>().add(
+            SaveTapEvent(
+              createSuccessful: () {
+                _successSaved(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
+    }
+  }
+
+  _successSaved(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.farmersIdentificationScreen);
   }
 
   /// Navigates to the farmersIdentificationScreen when the action is triggered.
@@ -327,7 +414,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// used to build the navigation stack. When the action is triggered, this
   /// function uses the [NavigatorService] to navigate to the previous screen
   /// in the navigation stack.
-  onTapImgArrowleftone(BuildContext context) {
+  goBack(BuildContext context) {
     NavigatorService.goBack();
   }
 

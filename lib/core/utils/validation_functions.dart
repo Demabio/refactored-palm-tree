@@ -10,7 +10,7 @@ bool isText(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^[a-zA-Z]+$';
+    const pattern = r'^[a-zA-Z\s]+$';
 
     final regExp = RegExp(pattern);
 
@@ -45,6 +45,19 @@ bool isValidPassword(
     final regExp = RegExp(pattern);
 
     isInputStringValid = regExp.hasMatch(inputString);
+  }
+
+  return isInputStringValid;
+}
+
+bool isNotEmpty(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
   }
 
   return isInputStringValid;

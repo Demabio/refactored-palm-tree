@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
           dbNotFound(context);
         }, onSuccess: () {
-          //dbNotFound(context);
+          dbNotFound(context);
         }));
   }
 

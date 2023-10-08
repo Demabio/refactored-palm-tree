@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/respondentrelationship.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/farmers_identification_four_screen/models/farmers_identification_four_model.dart';
 part 'farmers_identification_four_event.dart';
@@ -17,9 +21,6 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     on<ChangeDropDown2Event>(_changeDropDown2);
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
-    on<StepDownEvent>(_onSteppedDown);
-    on<OnSteppedEvent>(_onStepped);
-    on<StepUpEvent>(_onSteppedUp);
   }
 
   _onInitialize(
@@ -35,6 +36,8 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           dropdownItemList2: fillDropdownItemList2(),
           dropdownItemList3: fillDropdownItemList3(),
           dropdownItemList4: fillDropdownItemList4(),
+          farmer: getFarmer(),
+          fiProgress: getProgress(),
         ),
       ),
     );
@@ -80,76 +83,6 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     emit(state.copyWith(selectedDropDownValue4: event.value));
   }
 
-  _onSteppedDown(
-    StepDownEvent event,
-    Emitter<FarmersIdentificationFourState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationFourModelObj:
-            state.farmersIdentificationFourModelObj?.copyWith(
-          stepped: --state.farmersIdentificationFourModelObj?.stepped,
-          page1: state.farmersIdentificationFourModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.farmersIdentificationFourModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.farmersIdentificationFourModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.farmersIdentificationFourModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onSteppedUp(
-    StepUpEvent event,
-    Emitter<FarmersIdentificationFourState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationFourModelObj:
-            state.farmersIdentificationFourModelObj?.copyWith(
-          stepped: ++state.farmersIdentificationFourModelObj?.stepped,
-          page1: state.farmersIdentificationFourModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.farmersIdentificationFourModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.farmersIdentificationFourModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.farmersIdentificationFourModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onStepped(
-    OnSteppedEvent event,
-    Emitter<FarmersIdentificationFourState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationFourModelObj:
-            state.farmersIdentificationFourModelObj?.copyWith(
-          stepped: event.value,
-          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
-          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
-          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
-          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
   Future<List<SelectionPopupModel>> fetchRespondentRelationships() async {
     List<SelectionPopupModel> list = [];
     RespondentRelationshipDB relationshipDB = RespondentRelationshipDB();
@@ -163,6 +96,116 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       }
     });
     return list;
+  }
+
+  _nextTap(
+    NextTapEvent event,
+    Emitter<FarmersIdentificationFourState> emit,
+  ) {
+    FarmerDB farmerDB = FarmerDB();
+
+    try {
+      farmerDB
+          .updatePageTwo(Farmer(
+        farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
+        farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
+        idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        farmerTheRespodent: state.selectedDropDownValue!.id == 1,
+        respondentRlshpId: state.selectedDropDownValue1?.id ?? 0,
+        cropProd: state.selectedDropDownValue2!.id == 1,
+        livestockProd: state.selectedDropDownValue3!.id == 1,
+        fishFarming: state.selectedDropDownValue4!.id == 1,
+      ))
+          .then((value) {
+        if (value > 0) {
+          PrefUtils().setFarmerId(value);
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
+      });
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
+
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<FarmersIdentificationFourState> emit,
+  ) {
+    FarmerDB farmerDB = FarmerDB();
+
+    try {
+      farmerDB
+          .updatePageTwo(Farmer(
+        farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
+        farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
+        idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        farmerTheRespodent: state.selectedDropDownValue!.id == 1,
+        respondentRlshpId: state.selectedDropDownValue1?.id ?? 0,
+        cropProd: state.selectedDropDownValue2!.id == 1,
+        livestockProd: state.selectedDropDownValue3!.id == 1,
+        fishFarming: state.selectedDropDownValue4!.id == 1,
+      ))
+          .then((value) {
+        if (value > 0) {
+          PrefUtils().setFarmerId(value);
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
+      });
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
+
+  Farmer getFarmer() {
+    if (PrefUtils().getAddorEdit()) {
+      int farmerid = PrefUtils().getFarmerId();
+      if (farmerid != 0) {
+        FarmerDB farmerDB = FarmerDB();
+        farmerDB.fetchByFarmerId(farmerid).then((value) {
+          return Farmer(
+            farmerId: value!.farmerId,
+            farmerName: value.farmerName,
+            villageName: value.villageName,
+            shoppingCenter: value.shoppingCenter,
+          );
+        });
+      }
+    }
+
+    return Farmer(
+      farmerId: 0,
+      farmerName: "NA",
+    );
+  }
+
+  FIProgress getProgress() {
+    if (PrefUtils().getAddorEdit()) {
+      int farmerid = PrefUtils().getFarmerId();
+      if (farmerid != 0) {
+        FIProgressDB fiProgressDB = FIProgressDB();
+        fiProgressDB.fetchByFarmerId(farmerid).then((value) {
+          return FIProgress(
+            farmerId: value!.farmerId,
+            pageOne: value.pageOne,
+            pageTwo: value.pageTwo,
+            pageThree: value.pageThree,
+            pageFour: value.pageFour,
+          );
+        });
+      }
+    }
+
+    return FIProgress(
+      farmerId: 0,
+      pageOne: 0,
+      pageTwo: 0,
+      pageThree: 0,
+      pageFour: 0,
+    );
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {

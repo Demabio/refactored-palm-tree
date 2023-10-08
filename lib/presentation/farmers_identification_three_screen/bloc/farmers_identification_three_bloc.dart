@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/educationlevel.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/maritalstatus.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/farmers_identification_three_screen/models/farmers_identification_three_model.dart';
 part 'farmers_identification_three_event.dart';
@@ -16,9 +20,6 @@ class FarmersIdentificationThreeBloc extends Bloc<
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
     on<ChangeDropDown2Event>(_changeDropDown2);
-    on<StepDownEvent>(_onSteppedDown);
-    on<OnSteppedEvent>(_onStepped);
-    on<StepUpEvent>(_onSteppedUp);
   }
 
   _changeDropDown(
@@ -95,73 +96,113 @@ class FarmersIdentificationThreeBloc extends Bloc<
     return list;
   }
 
-  _onSteppedDown(
-    StepDownEvent event,
+  _nextTap(
+    NextTapEvent event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationThreeModelObj:
-            state.farmersIdentificationThreeModelObj?.copyWith(
-          stepped: --state.farmersIdentificationThreeModelObj?.stepped,
-          page1: state.farmersIdentificationThreeModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.farmersIdentificationThreeModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.farmersIdentificationThreeModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.farmersIdentificationThreeModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
+    FarmerDB farmerDB = FarmerDB();
+
+    try {
+      farmerDB
+          .updatePageTwo(Farmer(
+        farmerId: state.farmersIdentificationThreeModelObj!.farmer!.farmerId,
+        farmerName:
+            state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
+        idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
+        postalCode: state.codevalueoneController?.text ?? "NA",
+        maritalStatusId: state.selectedDropDownValue!.id,
+        agriSkillsId: state.selectedDropDownValue1!.id,
+        hhSize: int.parse(state.hhsizevalueoneController!.text),
+      ))
+          .then((value) {
+        if (value > 0) {
+          PrefUtils().setFarmerId(value);
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
+      });
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
+
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<FarmersIdentificationThreeState> emit,
+  ) {
+    FarmerDB farmerDB = FarmerDB();
+
+    try {
+      farmerDB
+          .updatePageThree(Farmer(
+        farmerId: state.farmersIdentificationThreeModelObj!.farmer!.farmerId,
+        farmerName:
+            state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
+        idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
+        postalCode: state.codevalueoneController?.text ?? "NA",
+        maritalStatusId: state.selectedDropDownValue!.id,
+        agriSkillsId: state.selectedDropDownValue1!.id,
+        hhSize: int.parse(state.hhsizevalueoneController!.text),
+      ))
+          .then((value) {
+        if (value > 0) {
+          PrefUtils().setFarmerId(value);
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
+      });
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
+
+  Farmer getFarmer() {
+    if (PrefUtils().getAddorEdit()) {
+      int farmerid = PrefUtils().getFarmerId();
+      if (farmerid != 0) {
+        FarmerDB farmerDB = FarmerDB();
+        farmerDB.fetchByFarmerId(farmerid).then((value) {
+          return Farmer(
+            farmerId: value!.farmerId,
+            farmerName: value.farmerName,
+            villageName: value.villageName,
+            shoppingCenter: value.shoppingCenter,
+          );
+        });
+      }
+    }
+
+    return Farmer(
+      farmerId: 0,
+      farmerName: "NA",
     );
   }
 
-  _onSteppedUp(
-    StepUpEvent event,
-    Emitter<FarmersIdentificationThreeState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationThreeModelObj:
-            state.farmersIdentificationThreeModelObj?.copyWith(
-          stepped: ++state.farmersIdentificationThreeModelObj?.stepped,
-          page1: state.farmersIdentificationThreeModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.farmersIdentificationThreeModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.farmersIdentificationThreeModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.farmersIdentificationThreeModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
+  FIProgress getProgress() {
+    if (PrefUtils().getAddorEdit()) {
+      int farmerid = PrefUtils().getFarmerId();
+      if (farmerid != 0) {
+        FIProgressDB fiProgressDB = FIProgressDB();
+        fiProgressDB.fetchByFarmerId(farmerid).then((value) {
+          return FIProgress(
+            farmerId: value!.farmerId,
+            pageOne: value.pageOne,
+            pageTwo: value.pageTwo,
+            pageThree: value.pageThree,
+            pageFour: value.pageFour,
+          );
+        });
+      }
+    }
 
-  _onStepped(
-    OnSteppedEvent event,
-    Emitter<FarmersIdentificationThreeState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        farmersIdentificationThreeModelObj:
-            state.farmersIdentificationThreeModelObj?.copyWith(
-          stepped: event.value,
-          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
-          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
-          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
-          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
-        ),
-      ),
+    return FIProgress(
+      farmerId: 0,
+      pageOne: 0,
+      pageTwo: 0,
+      pageThree: 0,
+      pageFour: 0,
     );
   }
 
@@ -178,6 +219,8 @@ class FarmersIdentificationThreeBloc extends Bloc<
         dropdownItemList: await fetchMaritalStatus(),
         dropdownItemList1: fillDropdownItemList1(),
         dropdownItemList2: await fetchEducationLevels(),
+        farmer: getFarmer(),
+        fiProgress: getProgress(),
       ),
     ));
   }

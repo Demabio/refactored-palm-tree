@@ -19,7 +19,7 @@ class ApiClient {
   static final ApiClient _apiClient = ApiClient._internal();
 
   final _dio = Dio(BaseOptions(
-    connectTimeout: const Duration(seconds: 60),
+    connectTimeout: const Duration(seconds: 360),
   ))
     ..interceptors.add(NetworkInterceptor());
 

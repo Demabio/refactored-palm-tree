@@ -108,3 +108,41 @@ class OnSteppedEvent extends FarmersIdentificationFourEvent {
         value,
       ];
 }
+
+class NextTapEvent extends FarmersIdentificationFourEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends FarmersIdentificationFourEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
