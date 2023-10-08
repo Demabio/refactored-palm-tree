@@ -21,31 +21,14 @@ class FarmersIdentificationOneBloc
     on<StepUpEvent>(_onSteppedUp);
     on<NextTapEvent>(_nextTap);
     on<SaveTapEvent>(_saveTap);
+    on<LoadFarmerDataEvent>(_loadData);
   }
-  FIProgress getProgress() {
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        FIProgressDB fiProgressDB = FIProgressDB();
-        fiProgressDB.fetchByFarmerId(farmerid).then((value) {
-          return FIProgress(
-            farmerId: value!.farmerId,
-            pageOne: value.pageOne,
-            pageTwo: value.pageTwo,
-            pageThree: value.pageThree,
-            pageFour: value.pageFour,
-          );
-        });
-      }
+  Future<FIProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    if (farmerid != 0) {
+      FIProgressDB fiProgressDB = FIProgressDB();
+      return await fiProgressDB.fetchByFarmerId(farmerid);
     }
-
-    return FIProgress(
-      farmerId: 0,
-      pageOne: 0,
-      pageTwo: 0,
-      pageThree: 0,
-      pageFour: 0,
-    );
   }
 
   _onSteppedDown(
@@ -125,111 +108,194 @@ class FarmersIdentificationOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     FarmerDB farmerDB = FarmerDB();
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        farmerDB.updatePageOne(state.farmersIdentificationOneModelObj!.farmer!);
-      }
-    }
     try {
-      farmerDB
-          .insertNonNullable(Farmer(
-        farmerId: 0,
-        farmerName: state.nameController1!.text,
-        villageName: state.nameController?.text ?? "NA",
-        shoppingCenter: state.shoppingCenterController?.text ?? "NA",
-        idNo: state.areaNumberController!.text,
-        dateCreated: DateTime.now(),
-        createdBy: userId,
-      ))
-          .then((value) {
-        if (value > 0) {
-          PrefUtils().setFarmerId(value);
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
+      if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 0) {
+        farmerDB
+            .insertNonNullable(Farmer(
+          farmerId: 0,
+          farmerName: state.nameController1!.text,
+          villageName: state.nameController?.text ?? "NA",
+          shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+          idNo: state.areaNumberController!.text,
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ))
+            .then((value) {
+          if (value > 0) {
+            PrefUtils().setFarmerId(value);
+
+            farmerDB.updatePageOne(Farmer(
+              farmerId: value,
+              farmerName: state.nameController1!.text,
+              villageName: state.nameController?.text ?? "NA",
+              shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+              idNo: state.areaNumberController!.text,
+              dateCreated: DateTime.now(),
+              createdBy: userId,
+            ));
+            FIProgressDB fiProgressDB = FIProgressDB();
+            fiProgressDB
+                .insert(FIProgress(
+                  farmerId: value,
+                  pageOne: 1,
+                  pageTwo: 0,
+                  pageThree: 0,
+                  pageFour: 0,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      }
+      if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 1) {
+        int farmerid = PrefUtils().getFarmerId();
+        if (farmerid != 0) {
+          farmerDB.updatePageOne(Farmer(
+            farmerId: PrefUtils().getFarmerId(),
+            farmerName: state.nameController1!.text,
+            villageName: state.nameController?.text ?? "NA",
+            shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+            idNo: state.areaNumberController!.text,
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+          ));
         }
-      });
+      }
     } catch (e) {
       event.createFailed!.call();
     }
+
+    event.createSuccessful!.call();
   }
 
   _saveTap(
     SaveTapEvent event,
     Emitter<FarmersIdentificationOneState> emit,
   ) {
-    FarmerDB farmerDB = FarmerDB();
-
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
-
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        farmerDB.updatePageOne(state.farmersIdentificationOneModelObj!.farmer!);
-      }
-    }
+    FarmerDB farmerDB = FarmerDB();
     try {
-      farmerDB
-          .insertNonNullable(Farmer(
-        farmerId: 0,
-        farmerName: state.nameController1!.text,
-        idNo: state.areaNumberController!.text,
-        villageName: state.nameController?.text ?? "NA",
-        shoppingCenter: state.shoppingCenterController?.text ?? "NA",
-        dateCreated: DateTime.now(),
-        createdBy: userId,
-      ))
-          .then((value) {
-        if (value > 0) {
-          PrefUtils().setFarmerId(value);
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
+      if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 0) {
+        farmerDB
+            .insertNonNullable(Farmer(
+          farmerId: 0,
+          farmerName: state.nameController1!.text,
+          villageName: state.nameController?.text ?? "NA",
+          shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+          idNo: state.areaNumberController!.text,
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ))
+            .then((value) {
+          if (value > 0) {
+            PrefUtils().setFarmerId(value);
+            FIProgressDB fiProgressDB = FIProgressDB();
+            fiProgressDB
+                .insert(FIProgress(
+                  farmerId: value,
+                  pageOne: 1,
+                  pageTwo: 0,
+                  pageThree: 0,
+                  pageFour: 0,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      }
+      if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 1) {
+        int farmerid = PrefUtils().getFarmerId();
+        if (farmerid != 0) {
+          farmerDB.updatePageOne(Farmer(
+            farmerId: PrefUtils().getFarmerId(),
+            farmerName: state.nameController1!.text,
+            villageName: state.nameController?.text ?? "NA",
+            shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+            idNo: state.areaNumberController!.text,
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+          ));
         }
-      });
+      }
     } catch (e) {
       event.createFailed!.call();
     }
+
+    event.createSuccessful!.call();
   }
 
-  Farmer getFarmer() {
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        FarmerDB farmerDB = FarmerDB();
-        farmerDB.fetchByFarmerId(farmerid).then((value) {
-          return Farmer(
-            farmerId: value!.farmerId,
-            farmerName: value.farmerName,
-            villageName: value.villageName,
-            shoppingCenter: value.shoppingCenter,
-          );
-        });
-      }
-    }
+  Future<Farmer?> getFarmer() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FarmerDB farmerDB = FarmerDB();
+    return await farmerDB.fetchByFarmerId(farmerid);
+  }
 
-    return Farmer(
-      farmerId: 0,
-      farmerName: "NA",
-    );
+  _loadData(
+    LoadFarmerDataEvent event,
+    Emitter<FarmersIdentificationOneState> emit,
+  ) {
+    if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 1 &&
+        state.farmersIdentificationOneModelObj!.farmer!.farmerId != 0) {
+      TextEditingController villagename = TextEditingController(
+          text: state.farmersIdentificationOneModelObj!.farmer!.villageName);
+      TextEditingController center = TextEditingController(
+          text: state.farmersIdentificationOneModelObj!.farmer!.shoppingCenter);
+      TextEditingController fname = TextEditingController(
+          text: state.farmersIdentificationOneModelObj!.farmer!.farmerName);
+      TextEditingController idNo = TextEditingController(
+          text: state.farmersIdentificationOneModelObj!.farmer!.idNo);
+
+      emit(state.copyWith(
+        areaNumberController: idNo,
+        nameController1: fname,
+        nameController: villagename,
+        shoppingCenterController: center,
+      ));
+    }
   }
 
   _onInitialize(
     FarmersIdentificationOneInitialEvent event,
     Emitter<FarmersIdentificationOneState> emit,
   ) async {
+    Farmer farmer = await getFarmer() ??
+        Farmer(
+          farmerId: 0,
+          farmerName: "NA",
+        );
+    FIProgress fiProgress = await getProgress() ??
+        FIProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+          pageThree: 0,
+          pageFour: 0,
+        );
+    ;
+    print(farmer);
+    TextEditingController villagename = TextEditingController();
+    TextEditingController center = TextEditingController();
+    TextEditingController fname = TextEditingController();
+    TextEditingController idNo = TextEditingController();
+    if (fiProgress.pageOne == 1 && farmer.farmerId != 0) {
+      villagename = TextEditingController(text: farmer.villageName);
+      center = TextEditingController(text: farmer.shoppingCenter);
+      fname = TextEditingController(text: farmer.farmerName);
+      idNo = TextEditingController(text: farmer.idNo);
+    }
     emit(
       state.copyWith(
-          nameController: TextEditingController(),
-          areaNumberController: TextEditingController(),
-          shoppingCenterController: TextEditingController(),
-          nameController1: TextEditingController(),
+          nameController: villagename,
+          areaNumberController: idNo,
+          shoppingCenterController: center,
+          nameController1: fname,
           farmersIdentificationOneModelObj:
               state.farmersIdentificationOneModelObj?.copyWith(
-            fiProgress: getProgress(),
-            farmer: getFarmer(),
+            fiProgress: fiProgress,
+            farmer: farmer,
           )),
     );
   }

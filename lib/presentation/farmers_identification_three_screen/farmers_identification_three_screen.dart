@@ -36,372 +36,382 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    return SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: CustomAppBar(
-                leadingWidth: 60.h,
-                leading: AppbarImage(
-                    svgPath: ImageConstant.imgSort,
-                    margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
-                    onTap: () {
-                      onTapSortone(context);
-                    }),
-                centerTitle: true,
-                title: AppbarSubtitle1(text: "msg_farmers_identification".tr),
-                styleType: Style.bgFill),
-            body: Form(
-              key: _formKey,
-              child: SizedBox(
-                  width: mediaQueryData.size.width,
-                  child: SingleChildScrollView(
-                      padding: EdgeInsets.only(top: 15.v),
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 16.h, right: 16.h, bottom: 5.v),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        FarmersIdentificationThreeModel?>(
-                                    selector: (state) => state
-                                        .farmersIdentificationThreeModelObj,
-                                    builder: ((context,
-                                        farmersIdentificationOneModelObj) {
-                                      return EasyStepper(
-                                        activeStep:
-                                            farmersIdentificationOneModelObj!
-                                                .stepped,
-                                        direction: Axis.horizontal,
-                                        unreachedStepIconColor:
-                                            theme.colorScheme.primary,
-                                        finishedStepIconColor: Colors.orange,
-                                        activeStepTextColor: Colors.black87,
-                                        finishedStepTextColor: Colors.black87,
-                                        internalPadding: 0,
-                                        showLoadingAnimation: true,
-                                        stepRadius: 20,
-                                        disableScroll: true,
-                                        showStepBorder: true,
-                                        alignment: Alignment.center,
-                                        steps: [
-                                          EasyStep(
-                                            customStep: CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor:
-                                                  theme.colorScheme.primary,
-                                              child: CircleAvatar(
-                                                radius: 25,
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: SafeArea(
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: CustomAppBar(
+                  leadingWidth: 60.h,
+                  leading: AppbarImage(
+                      svgPath: ImageConstant.imgSort,
+                      margin:
+                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      onTap: () {
+                        goToDetails(context);
+                      }),
+                  centerTitle: true,
+                  title: AppbarSubtitle1(text: "msg_farmers_identification".tr),
+                  styleType: Style.bgFill),
+              body: Form(
+                key: _formKey,
+                child: SizedBox(
+                    width: mediaQueryData.size.width,
+                    child: SingleChildScrollView(
+                        padding: EdgeInsets.only(top: 15.v),
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 16.h, right: 16.h, bottom: 5.v),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          FarmersIdentificationThreeModel?>(
+                                      selector: (state) => state
+                                          .farmersIdentificationThreeModelObj,
+                                      builder: ((context,
+                                          farmersIdentificationOneModelObj) {
+                                        return EasyStepper(
+                                          activeStep:
+                                              farmersIdentificationOneModelObj!
+                                                  .stepped,
+                                          direction: Axis.horizontal,
+                                          unreachedStepIconColor:
+                                              theme.colorScheme.primary,
+                                          finishedStepIconColor: Colors.orange,
+                                          activeStepTextColor: Colors.black87,
+                                          finishedStepTextColor: Colors.black87,
+                                          internalPadding: 0,
+                                          showLoadingAnimation: true,
+                                          stepRadius: 20,
+                                          disableScroll: true,
+                                          showStepBorder: true,
+                                          alignment: Alignment.center,
+                                          steps: [
+                                            EasyStep(
+                                              customStep: CircleAvatar(
+                                                radius: 35,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
-                                                child:
-                                                    farmersIdentificationOneModelObj
-                                                                .stepped <=
-                                                            0
-                                                        ? Text(
-                                                            '1', // You can replace '1' with the desired number
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.check),
+                                                child: CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundColor:
+                                                      theme.colorScheme.primary,
+                                                  child:
+                                                      farmersIdentificationOneModelObj
+                                                                  .stepped <=
+                                                              0
+                                                          ? Text(
+                                                              '1', // You can replace '1' with the desired number
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                              ),
+                                                            )
+                                                          : Icon(Icons.check),
+                                                ),
                                               ),
+                                              title: 'Step 1',
                                             ),
-                                            title: 'Step 1',
-                                          ),
-                                          EasyStep(
-                                            customStep: CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor:
-                                                  theme.colorScheme.primary,
-                                              child: CircleAvatar(
-                                                radius: 25,
+                                            EasyStep(
+                                              customStep: CircleAvatar(
+                                                radius: 35,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
-                                                child:
-                                                    farmersIdentificationOneModelObj
-                                                                .stepped <=
-                                                            1
-                                                        ? Text(
-                                                            '2', // You can replace '1' with the desired number
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.check),
+                                                child: CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundColor:
+                                                      theme.colorScheme.primary,
+                                                  child:
+                                                      farmersIdentificationOneModelObj
+                                                                  .stepped <=
+                                                              1
+                                                          ? Text(
+                                                              '2', // You can replace '1' with the desired number
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                              ),
+                                                            )
+                                                          : Icon(Icons.check),
+                                                ),
                                               ),
-                                            ),
 
-                                            title: 'Step 2',
-                                            //topTitle: true,
-                                          ),
-                                          EasyStep(
-                                            customStep: CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor:
-                                                  theme.colorScheme.primary,
-                                              child: CircleAvatar(
-                                                radius: 25,
+                                              title: 'Step 2',
+                                              //topTitle: true,
+                                            ),
+                                            EasyStep(
+                                              customStep: CircleAvatar(
+                                                radius: 35,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
-                                                child:
-                                                    farmersIdentificationOneModelObj
-                                                                .stepped <=
-                                                            2
-                                                        ? Text(
-                                                            '3', // You can replace '1' with the desired number
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.check),
+                                                child: CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundColor:
+                                                      theme.colorScheme.primary,
+                                                  child:
+                                                      farmersIdentificationOneModelObj
+                                                                  .stepped <=
+                                                              2
+                                                          ? Text(
+                                                              '3', // You can replace '1' with the desired number
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                              ),
+                                                            )
+                                                          : Icon(Icons.check),
+                                                ),
                                               ),
+                                              title: 'Step 3',
                                             ),
-                                            title: 'Step 3',
-                                          ),
-                                          EasyStep(
-                                            customStep: CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor:
-                                                  theme.colorScheme.primary,
-                                              child: CircleAvatar(
-                                                radius: 25,
+                                            EasyStep(
+                                              customStep: CircleAvatar(
+                                                radius: 35,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
-                                                child:
-                                                    farmersIdentificationOneModelObj
-                                                                .stepped <=
-                                                            3
-                                                        ? Text(
-                                                            '4', // You can replace '1' with the desired number
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.check),
+                                                child: CircleAvatar(
+                                                  radius: 25,
+                                                  backgroundColor:
+                                                      theme.colorScheme.primary,
+                                                  child:
+                                                      farmersIdentificationOneModelObj
+                                                                  .stepped <=
+                                                              3
+                                                          ? Text(
+                                                              '4', // You can replace '1' with the desired number
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                              ),
+                                                            )
+                                                          : Icon(Icons.check),
+                                                ),
                                               ),
+                                              title: 'Step 4',
+                                              // topTitle: true,
                                             ),
-                                            title: 'Step 4',
-                                            // topTitle: true,
-                                          ),
-                                        ],
-                                      );
-                                    })),
-                                SizedBox(height: 11.v),
-                                Text("msg_individual_farmer2".tr,
-                                    style:
-                                        CustomTextStyles.titleMediumSemiBold),
-                                SizedBox(height: 20.v),
-                                Text("lbl_postal_code2".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        TextEditingController?>(
-                                    selector: (state) =>
-                                        state.codevalueoneController,
-                                    builder: (context, codevalueoneController) {
-                                      return CustomTextFormField(
-                                          autofocus: false,
-                                          focusNode: node2,
-                                          controller: codevalueoneController,
-                                          hintText: "lbl_code".tr);
-                                    }),
-                                SizedBox(height: 20.v),
-                                Text("msg_marital_status".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        FarmersIdentificationThreeModel?>(
-                                    selector: (state) => state
-                                        .farmersIdentificationThreeModelObj,
-                                    builder: (context,
-                                        farmersIdentificationThreeModelObj) {
-                                      return CustomDropDown(
-                                          focusNode: node3,
-                                          autofocus: false,
-                                          icon: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  30.h, 10.v, 9.h, 15.v),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.h)),
-                                              child: CustomImageView(
-                                                  svgPath: ImageConstant
-                                                      .imgArrowdownPrimary)),
-                                          hintText: "lbl_select".tr,
-                                          items:
-                                              farmersIdentificationThreeModelObj
-                                                      ?.dropdownItemList ??
-                                                  [],
-                                          onChanged: (value) {
-                                            context
-                                                .read<
-                                                    FarmersIdentificationThreeBloc>()
-                                                .add(ChangeDropDownEvent(
-                                                    value: value));
-                                          });
-                                    }),
-                                SizedBox(height: 20.v),
-                                Text("msg_formal_training".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        FarmersIdentificationThreeModel?>(
-                                    selector: (state) => state
-                                        .farmersIdentificationThreeModelObj,
-                                    builder: (context,
-                                        farmersIdentificationThreeModelObj) {
-                                      return CustomDropDown(
-                                          autofocus: false,
-                                          icon: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  30.h, 10.v, 9.h, 15.v),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.h)),
-                                              child: CustomImageView(
-                                                  svgPath: ImageConstant
-                                                      .imgArrowdownPrimary)),
-                                          hintText: "lbl_select".tr,
-                                          items:
-                                              farmersIdentificationThreeModelObj
-                                                      ?.dropdownItemList1 ??
-                                                  [],
-                                          onChanged: (value) {
-                                            context
-                                                .read<
-                                                    FarmersIdentificationThreeBloc>()
-                                                .add(ChangeDropDown1Event(
-                                                    value: value));
-                                          });
-                                    }),
-                                SizedBox(height: 20.v),
-                                Text("msg_formal_education2".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        FarmersIdentificationThreeModel?>(
-                                    selector: (state) => state
-                                        .farmersIdentificationThreeModelObj,
-                                    builder: (context,
-                                        farmersIdentificationThreeModelObj) {
-                                      return CustomDropDown(
-                                          width: double.infinity,
-                                          autofocus: false,
-                                          icon: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  30.h, 10.v, 9.h, 15.v),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.h)),
-                                              child: CustomImageView(
-                                                  svgPath: ImageConstant
-                                                      .imgArrowdownPrimary)),
-                                          hintText: "lbl_select".tr,
-                                          items:
-                                              farmersIdentificationThreeModelObj
-                                                      ?.dropdownItemList2 ??
-                                                  [],
-                                          onChanged: (value) {
-                                            context
-                                                .read<
-                                                    FarmersIdentificationThreeBloc>()
-                                                .add(ChangeDropDown2Event(
-                                                    value: value));
-                                          });
-                                    }),
-                                SizedBox(height: 20.v),
-                                Text("lbl_hh_size2".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        FarmersIdentificationThreeBloc,
-                                        FarmersIdentificationThreeState,
-                                        TextEditingController?>(
-                                    selector: (state) =>
-                                        state.hhsizevalueoneController,
-                                    builder:
-                                        (context, hhsizevalueoneController) {
-                                      return CustomTextFormField(
-                                          focusNode: node1,
-                                          autofocus: false,
-                                          controller: hhsizevalueoneController,
-                                          hintText: "lbl_hh_size3".tr,
-                                          textInputType: TextInputType.number,
-                                          textInputAction:
-                                              TextInputAction.done);
-                                    }),
-                                SizedBox(height: 21.v),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                          child: CustomOutlinedButton(
-                                              text: "lbl_back".tr,
-                                              margin:
-                                                  EdgeInsets.only(right: 1.h),
-                                              buttonStyle: CustomButtonStyles
-                                                  .outlinePrimary,
-                                              buttonTextStyle: CustomTextStyles
-                                                  .bodyLargePrimary_2,
-                                              onTap: () {
-                                                onTapBack(context);
-                                              })),
-                                      Expanded(
-                                          child: CustomElevatedButton(
-                                              text: "lbl_next".tr,
-                                              margin:
-                                                  EdgeInsets.only(left: 1.h),
-                                              onTap: () {
-                                                onTapNext(context);
-                                              }))
-                                    ]),
-                                SizedBox(height: 12.v),
-                                CustomElevatedButton(
-                                    text: "lbl_save".tr,
-                                    leftIcon: Container(
-                                        margin: EdgeInsets.only(right: 10.h),
-                                        child: CustomImageView(
-                                            svgPath: ImageConstant
-                                                .imgSaveWhiteA700)),
-                                    onTap: () {
-                                      onTapSave(context);
-                                    })
-                              ])))),
-            )));
+                                          ],
+                                        );
+                                      })),
+                                  SizedBox(height: 11.v),
+                                  Text("msg_individual_farmer2".tr,
+                                      style:
+                                          CustomTextStyles.titleMediumSemiBold),
+                                  SizedBox(height: 20.v),
+                                  Text("lbl_postal_code2".tr,
+                                      style: CustomTextStyles
+                                          .labelMediumPrimary_1),
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          TextEditingController?>(
+                                      selector: (state) =>
+                                          state.codevalueoneController,
+                                      builder:
+                                          (context, codevalueoneController) {
+                                        return CustomTextFormField(
+                                            autofocus: false,
+                                            focusNode: node2,
+                                            controller: codevalueoneController,
+                                            hintText: "lbl_code".tr);
+                                      }),
+                                  SizedBox(height: 20.v),
+                                  Text("msg_marital_status".tr,
+                                      style: CustomTextStyles
+                                          .labelMediumPrimary_1),
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          FarmersIdentificationThreeModel?>(
+                                      selector: (state) => state
+                                          .farmersIdentificationThreeModelObj,
+                                      builder: (context,
+                                          farmersIdentificationThreeModelObj) {
+                                        return CustomDropDown(
+                                            focusNode: node3,
+                                            autofocus: false,
+                                            icon: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    30.h, 10.v, 9.h, 15.v),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.h)),
+                                                child: CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowdownPrimary)),
+                                            hintText: "lbl_select".tr,
+                                            items:
+                                                farmersIdentificationThreeModelObj
+                                                        ?.dropdownItemList ??
+                                                    [],
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      FarmersIdentificationThreeBloc>()
+                                                  .add(ChangeDropDownEvent(
+                                                      value: value));
+                                            });
+                                      }),
+                                  SizedBox(height: 20.v),
+                                  Text("msg_formal_training".tr,
+                                      style: CustomTextStyles
+                                          .labelMediumPrimary_1),
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          FarmersIdentificationThreeModel?>(
+                                      selector: (state) => state
+                                          .farmersIdentificationThreeModelObj,
+                                      builder: (context,
+                                          farmersIdentificationThreeModelObj) {
+                                        return CustomDropDown(
+                                            autofocus: false,
+                                            icon: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    30.h, 10.v, 9.h, 15.v),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.h)),
+                                                child: CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowdownPrimary)),
+                                            hintText: "lbl_select".tr,
+                                            items:
+                                                farmersIdentificationThreeModelObj
+                                                        ?.dropdownItemList1 ??
+                                                    [],
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      FarmersIdentificationThreeBloc>()
+                                                  .add(ChangeDropDown1Event(
+                                                      value: value));
+                                            });
+                                      }),
+                                  SizedBox(height: 20.v),
+                                  Text("msg_formal_education2".tr,
+                                      style: CustomTextStyles
+                                          .labelMediumPrimary_1),
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          FarmersIdentificationThreeModel?>(
+                                      selector: (state) => state
+                                          .farmersIdentificationThreeModelObj,
+                                      builder: (context,
+                                          farmersIdentificationThreeModelObj) {
+                                        return CustomDropDown(
+                                            width: double.infinity,
+                                            autofocus: false,
+                                            icon: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    30.h, 10.v, 9.h, 15.v),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.h)),
+                                                child: CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgArrowdownPrimary)),
+                                            hintText: "lbl_select".tr,
+                                            items:
+                                                farmersIdentificationThreeModelObj
+                                                        ?.dropdownItemList2 ??
+                                                    [],
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      FarmersIdentificationThreeBloc>()
+                                                  .add(ChangeDropDown2Event(
+                                                      value: value));
+                                            });
+                                      }),
+                                  SizedBox(height: 20.v),
+                                  Text("lbl_hh_size2".tr,
+                                      style: CustomTextStyles
+                                          .labelMediumPrimary_1),
+                                  BlocSelector<
+                                          FarmersIdentificationThreeBloc,
+                                          FarmersIdentificationThreeState,
+                                          TextEditingController?>(
+                                      selector: (state) =>
+                                          state.hhsizevalueoneController,
+                                      builder:
+                                          (context, hhsizevalueoneController) {
+                                        return CustomTextFormField(
+                                            focusNode: node1,
+                                            autofocus: false,
+                                            controller:
+                                                hhsizevalueoneController,
+                                            hintText: "lbl_hh_size3".tr,
+                                            textInputType: TextInputType.number,
+                                            textInputAction:
+                                                TextInputAction.done);
+                                      }),
+                                  SizedBox(height: 21.v),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                            child: CustomOutlinedButton(
+                                                text: "lbl_back".tr,
+                                                margin:
+                                                    EdgeInsets.only(right: 1.h),
+                                                buttonStyle: CustomButtonStyles
+                                                    .outlinePrimary,
+                                                buttonTextStyle:
+                                                    CustomTextStyles
+                                                        .bodyLargePrimary_2,
+                                                onTap: () {
+                                                  onTapBack(context);
+                                                })),
+                                        Expanded(
+                                            child: CustomElevatedButton(
+                                                text: "lbl_next".tr,
+                                                margin:
+                                                    EdgeInsets.only(left: 1.h),
+                                                onTap: () {
+                                                  onTapNext(context);
+                                                }))
+                                      ]),
+                                  SizedBox(height: 12.v),
+                                  CustomElevatedButton(
+                                      text: "lbl_save".tr,
+                                      leftIcon: Container(
+                                          margin: EdgeInsets.only(right: 10.h),
+                                          child: CustomImageView(
+                                              svgPath: ImageConstant
+                                                  .imgSaveWhiteA700)),
+                                      onTap: () {
+                                        onTapSave(context);
+                                      })
+                                ])))),
+              ))),
+    );
   }
 
   nextPage(BuildContext context) {
@@ -420,7 +430,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   }
 
   _success(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationFourScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationFourScreen);
   }
 
   void _failed(BuildContext context) {
@@ -444,11 +454,18 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   }
 
   _successSaved(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
   }
 
   goBack(BuildContext context) {
-    NavigatorService.goBack();
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen);
+  }
+
+  goToDetails(BuildContext context) {
+    PrefUtils().setFarmerId(0);
+    NavigatorService.popAndPushNamed(
+      AppRoutes.farmersIdentificationScreen,
+    );
   }
 
   /// Navigates to the farmersIdentificationTwoScreen when the action is triggered.

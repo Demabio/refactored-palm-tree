@@ -21,6 +21,8 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     on<ChangeDropDown2Event>(_changeDropDown2);
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
+    on<NextTapEvent>(_nextTap);
+    on<SaveTapEvent>(_saveTap);
   }
 
   _onInitialize(
@@ -161,19 +163,17 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
   }
 
   Farmer getFarmer() {
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        FarmerDB farmerDB = FarmerDB();
-        farmerDB.fetchByFarmerId(farmerid).then((value) {
-          return Farmer(
-            farmerId: value!.farmerId,
-            farmerName: value.farmerName,
-            villageName: value.villageName,
-            shoppingCenter: value.shoppingCenter,
-          );
-        });
-      }
+    int farmerid = PrefUtils().getFarmerId();
+    if (farmerid != 0) {
+      FarmerDB farmerDB = FarmerDB();
+      farmerDB.fetchByFarmerId(farmerid).then((value) {
+        return Farmer(
+          farmerId: value!.farmerId,
+          farmerName: value.farmerName,
+          villageName: value.villageName,
+          shoppingCenter: value.shoppingCenter,
+        );
+      });
     }
 
     return Farmer(
@@ -183,20 +183,18 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
   }
 
   FIProgress getProgress() {
-    if (PrefUtils().getAddorEdit()) {
-      int farmerid = PrefUtils().getFarmerId();
-      if (farmerid != 0) {
-        FIProgressDB fiProgressDB = FIProgressDB();
-        fiProgressDB.fetchByFarmerId(farmerid).then((value) {
-          return FIProgress(
-            farmerId: value!.farmerId,
-            pageOne: value.pageOne,
-            pageTwo: value.pageTwo,
-            pageThree: value.pageThree,
-            pageFour: value.pageFour,
-          );
-        });
-      }
+    int farmerid = PrefUtils().getFarmerId();
+    if (farmerid != 0) {
+      FIProgressDB fiProgressDB = FIProgressDB();
+      fiProgressDB.fetchByFarmerId(farmerid).then((value) {
+        return FIProgress(
+          farmerId: value!.farmerId,
+          pageOne: value.pageOne,
+          pageTwo: value.pageTwo,
+          pageThree: value.pageThree,
+          pageFour: value.pageFour,
+        );
+      });
     }
 
     return FIProgress(

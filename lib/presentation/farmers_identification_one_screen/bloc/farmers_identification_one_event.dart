@@ -86,3 +86,14 @@ class SaveTapEvent extends FarmersIdentificationOneEvent {
         createSuccessful,
       ];
 }
+
+class LoadFarmerDataEvent extends FarmersIdentificationOneEvent {
+  LoadFarmerDataEvent({this.value});
+
+  int? value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

@@ -282,6 +282,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
     final farmer = await database
         .rawQuery('SELECT * FROM $tableName WHERE farmerId = ?', [farmerId]);
+    print(farmer);
     return farmer.isNotEmpty ? Farmer.fromSqfliteDatabase(farmer.first) : null;
   }
 

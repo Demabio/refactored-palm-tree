@@ -40,9 +40,12 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    return BlocBuilder<FarmersIdentificationOneBloc,
-        FarmersIdentificationOneState>(builder: (context, state) {
-      return SafeArea(
+
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppBar(
@@ -51,7 +54,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                   svgPath: ImageConstant.imgSort,
                   margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
                   onTap: () {
-                    onTapSortone(context);
+                    goToDetails(context);
                   }),
               centerTitle: true,
               title: AppbarSubtitle1(text: "msg_farmers_identification".tr),
@@ -320,7 +323,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                           child: CustomOutlinedButton(
                               text: "lbl_back".tr,
                               margin: EdgeInsets.only(right: 1.h),
-                              onTap: () => goBack(context),
+                              //onTap: () => goBack(context),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
                               buttonTextStyle:
@@ -350,8 +353,8 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
   nextPage(BuildContext context) {
@@ -370,7 +373,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   }
 
   _success(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationTwoScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen);
   }
 
   void _failed(BuildContext context) {
@@ -394,7 +397,11 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   }
 
   _successSaved(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
+  }
+
+  goBack(BuildContext context) {
+    NavigatorService.popAndPushNamed(AppRoutes.farmerRegistrationOneScreen);
   }
 
   /// Navigates to the farmersIdentificationScreen when the action is triggered.
@@ -402,8 +409,9 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// The [BuildContext] parameter is used to build the navigation stack.
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
-  onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+  goToDetails(BuildContext context) {
+    PrefUtils().setFarmerId(0);
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
   }
@@ -414,9 +422,6 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// used to build the navigation stack. When the action is triggered, this
   /// function uses the [NavigatorService] to navigate to the previous screen
   /// in the navigation stack.
-  goBack(BuildContext context) {
-    NavigatorService.goBack();
-  }
 
   /// Navigates to the previous screen.
   ///
@@ -424,9 +429,6 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// used to build the navigation stack. When the action is triggered, this
   /// function uses the [NavigatorService] to navigate to the previous screen
   /// in the navigation stack.
-  onTapImgArrowleftthree(BuildContext context) {
-    NavigatorService.goBack();
-  }
 
   /// Navigates to the farmersIdentificationTwoScreen when the action is triggered.
   ///
@@ -445,6 +447,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
   onTapSave(BuildContext context) {
+    PrefUtils().setFarmerId(0);
     NavigatorService.pushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
