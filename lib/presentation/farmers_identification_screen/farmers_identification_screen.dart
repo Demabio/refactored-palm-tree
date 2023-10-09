@@ -66,7 +66,9 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       Padding(
                                           padding: EdgeInsets.only(left: 21.h),
                                           child: Text(
-                                              "msg_farmer_felix_faro".tr,
+                                              state.farmersIdentificationModelObj
+                                                      ?.farmer?.farmerName ??
+                                                  "NA",
                                               style:
                                                   theme.textTheme.labelMedium))
                                     ])),
@@ -88,77 +90,77 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                     child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 1.v),
-                                                        child: Text(
-                                                            "lbl_division".tr,
-                                                            style: CustomTextStyles
-                                                                .labelMediumPrimary)),
-                                                    Text("lbl_chesegon".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 13.v, right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "lbl_constituency"
-                                                                .tr,
-                                                            style: CustomTextStyles
-                                                                .labelMediumPrimary)),
-                                                    Text("lbl_kacheliba".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 13.v, right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text("lbl_location".tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text("lbl_emboasis".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 14.v, right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text("lbl_sub_location".tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text("lbl_emboasis".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
+                                          // Padding(
+                                          //     padding:
+                                          //         EdgeInsets.only(right: 1.h),
+                                          //     child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment
+                                          //                 .spaceBetween,
+                                          //         children: [
+                                          //           Padding(
+                                          //               padding:
+                                          //                   EdgeInsets.only(
+                                          //                       bottom: 1.v),
+                                          //               child: Text(
+                                          //                   "lbl_division".tr,
+                                          //                   style: CustomTextStyles
+                                          //                       .labelMediumPrimary)),
+                                          //           Text("lbl_chesegon".tr,
+                                          //               style: theme.textTheme
+                                          //                   .labelMedium)
+                                          //         ])),
+                                          // Padding(
+                                          //     padding: EdgeInsets.only(
+                                          //         top: 13.v, right: 1.h),
+                                          //     child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment
+                                          //                 .spaceBetween,
+                                          //         children: [
+                                          //           Padding(
+                                          //               padding:
+                                          //                   EdgeInsets.only(
+                                          //                       top: 1.v),
+                                          //               child: Text(
+                                          //                   "lbl_constituency"
+                                          //                       .tr,
+                                          //                   style: CustomTextStyles
+                                          //                       .labelMediumPrimary)),
+                                          //           Text("lbl_kacheliba".tr,
+                                          //               style: theme.textTheme
+                                          //                   .labelMedium)
+                                          //         ])),
+                                          // Padding(
+                                          //     padding: EdgeInsets.only(
+                                          //         top: 13.v, right: 1.h),
+                                          //     child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment
+                                          //                 .spaceBetween,
+                                          //         children: [
+                                          //           Text("lbl_location".tr,
+                                          //               style: CustomTextStyles
+                                          //                   .labelMediumPrimary),
+                                          //           Text("lbl_emboasis".tr,
+                                          //               style: theme.textTheme
+                                          //                   .labelMedium)
+                                          //         ])),
+                                          // Padding(
+                                          //     padding: EdgeInsets.only(
+                                          //         top: 14.v, right: 1.h),
+                                          //     child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment
+                                          //                 .spaceBetween,
+                                          //         children: [
+                                          //           Text("lbl_sub_location".tr,
+                                          //               style: CustomTextStyles
+                                          //                   .labelMediumPrimary),
+                                          //           Text("lbl_emboasis".tr,
+                                          //               style: theme.textTheme
+                                          //                   .labelMedium)
+                                          //         ])),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   top: 16.v, right: 1.h),
@@ -172,27 +174,32 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_village_unit".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 13.v, right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
                                                     Text(
-                                                        "msg_enumerator_area"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text("lbl_1234567891234".tr,
+                                                        state
+                                                                .farmersIdentificationModelObj
+                                                                ?.farmer
+                                                                ?.villageName ??
+                                                            "N/A",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
+                                          // Padding(
+                                          //     padding: EdgeInsets.only(
+                                          //         top: 13.v, right: 1.h),
+                                          //     child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment
+                                          //                 .spaceBetween,
+                                          //         children: [
+                                          //           Text(
+                                          //               "msg_enumerator_area"
+                                          //                   .tr,
+                                          //               style: CustomTextStyles
+                                          //                   .labelMediumPrimary),
+                                          //           Text("lbl_1234567891234".tr,
+                                          //               style: theme.textTheme
+                                          //                   .labelMedium)
+                                          //         ])),
                                           SizedBox(height: 16.v),
                                           Row(
                                               mainAxisAlignment:
@@ -202,7 +209,12 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("msg_shopping_center".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_shopping_center".tr,
+                                                Text(
+                                                    state
+                                                            .farmersIdentificationModelObj
+                                                            ?.farmer
+                                                            ?.shoppingCenter ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ])
@@ -233,7 +245,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_farmer_name".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("msg_farmer_felix_faro".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.farmerName ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -247,7 +262,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     "msg_national_id_number".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_34598721".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.idNo ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -263,7 +281,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     child: Text("lbl_email".tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary)),
-                                                Text("msg_ffelixf_gmail_com".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.email ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -273,7 +294,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text("lbl_year_of_birth".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.dob
+                                                            .toString() ??
+                                                        "0",
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
                                                 Text("lbl_1990".tr,
@@ -289,7 +314,12 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_postal_address".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_1111".tr,
+                                                Text(
+                                                    state
+                                                            .farmersIdentificationModelObj
+                                                            ?.farmer
+                                                            ?.postalAddress ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -302,7 +332,12 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_postal_code".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_1001".tr,
+                                                Text(
+                                                    state
+                                                            .farmersIdentificationModelObj
+                                                            ?.farmer
+                                                            ?.postalAddress ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -315,7 +350,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_mobile_number".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_0724087222".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.mobile ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -328,7 +366,10 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_marital_status".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_yes".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.marital ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -341,7 +382,12 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_sex".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_male".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                                ?.farmer?.gender ==
+                                                            1
+                                                        ? "Male"
+                                                        : "Female",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -354,7 +400,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                 Text("lbl_hh_size".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_30".tr,
+                                                Text(
+                                                    state.farmersIdentificationModelObj
+                                                            ?.farmer?.hhSize
+                                                            .toString() ??
+                                                        "N/A",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -368,7 +418,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     "msg_agriculture_formal".tr,
                                                     style: CustomTextStyles
                                                         .labelMediumPrimary),
-                                                Text("lbl_yes".tr,
+                                                Text(
+                                                    state
+                                                                .farmersIdentificationModelObj
+                                                                ?.farmer
+                                                                ?.agriSkillsId ==
+                                                            1
+                                                        ? "Yes"
+                                                        : "No",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]),
@@ -392,8 +449,9 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     margin: EdgeInsets.only(
                                                         left: 24.h),
                                                     child: Text(
-                                                        "msg_post_graduate_degree"
-                                                            .tr,
+                                                        state.farmersIdentificationModelObj
+                                                                ?.ed ??
+                                                            "N/A",
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -436,7 +494,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                                 .tr,
                                                             style: CustomTextStyles
                                                                 .labelMediumPrimary)),
-                                                    Text("lbl_no".tr,
+                                                    Text(
+                                                        state
+                                                                    .farmersIdentificationModelObj
+                                                                    ?.farmer
+                                                                    ?.respondentRlshpId ==
+                                                                1
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -457,13 +522,16 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                                 .tr,
                                                             style: CustomTextStyles
                                                                 .labelMediumPrimary)),
-                                                    Text("lbl_n_a".tr,
+                                                    Text(
+                                                        state.farmersIdentificationModelObj
+                                                                ?.rship ??
+                                                            "N/A",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ]))
                                         ])),
                                 SizedBox(height: 11.v),
-                                Text("msg_enumeration_geography".tr,
+                                Text("Production Type".tr,
                                     style:
                                         CustomTextStyles.titleMediumSemiBold),
                                 SizedBox(height: 5.v),
@@ -490,7 +558,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state
+                                                                    .farmersIdentificationModelObj
+                                                                    ?.farmer
+                                                                    ?.cropProd ??
+                                                                false
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -507,7 +582,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state
+                                                                    .farmersIdentificationModelObj
+                                                                    ?.farmer
+                                                                    ?.livestockProd ??
+                                                                false
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -524,7 +606,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_no".tr,
+                                                    Text(
+                                                        state
+                                                                    .farmersIdentificationModelObj
+                                                                    ?.farmer
+                                                                    ?.fishFarming ??
+                                                                false
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ]))

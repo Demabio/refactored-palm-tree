@@ -437,7 +437,8 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
   goToDetails(BuildContext context) {
-    PrefUtils().setFarmerId(0);
+// PrefUtils().setFarmerId(0);
+
     NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
@@ -474,7 +475,8 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
   onTapSave(BuildContext context) {
-    PrefUtils().setFarmerId(0);
+// PrefUtils().setFarmerId(0);
+
     NavigatorService.pushNamed(
       AppRoutes.farmersIdentificationScreen,
     );

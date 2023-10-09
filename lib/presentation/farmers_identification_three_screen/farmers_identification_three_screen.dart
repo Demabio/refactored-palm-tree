@@ -495,7 +495,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   }
 
   goToDetails(BuildContext context) {
-    PrefUtils().setFarmerId(0);
+// PrefUtils().setFarmerId(0);
+
     NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
