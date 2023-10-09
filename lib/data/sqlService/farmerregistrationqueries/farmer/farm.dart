@@ -10,66 +10,71 @@ class FarmerFarmDB {
       CREATE TABLE IF NOT EXISTS $tableName (
         "farmer_farm_id" INTEGER NOT NULL,
         "farmer_id" INTEGER NOT NULL,
-        "ownership_id" INTEGER NOT NULL,
-        "farm_name" VARCHAR(255) NOT NULL,
+        "ownership_id" INTEGER,
+        "farm_name" VARCHAR(255),
         "farm_lr_cert" VARCHAR(255),
         "farm_size" DOUBLE,
         "crop_farm_size" DOUBLE,
+        "livestock_farm_size" DOUBLE,
         "leased_farm_size" DOUBLE,
         "idle_farm_size" DOUBLE,
-        "area_unit_id" INTEGER NOT NULL,
+        "area_unit_id" INTEGER,
         "lease_years" INTEGER,
         "x" DOUBLE,
         "y" DOUBLE,
         "accuracy_level" INTEGER,
-        "other_farm_elsewhere" TEXT,
-        "date_created" DATETIME NOT NULL,
+        "other_farm_elsewhere" INTEGER,
+        "date_created" DATETIME,
         "created_by" INT,
         PRIMARY KEY("farmer_farm_id")
       );
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int ownershipId,
-    required String farmName,
-    String? farmLrCert,
-    double? farmSize,
-    double? cropFarmSize,
-    double? leasedFarmSize,
-    double? idleFarmSize,
-    required int areaUnitId,
-    int? leaseYears,
-    double? x,
-    double? y,
-    int? accuracyLevel,
-    String? otherFarmElsewhere,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerFarm farm) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, ownership_id, farm_name, farm_lr_cert, farm_size, crop_farm_size, leased_farm_size, idle_farm_size,
-        area_unit_id, lease_years, x, y, accuracy_level, other_farm_elsewhere, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        farmer_id,  date_created, created_by
+      ) VALUES (?, ?, ?)
     ''', [
-      farmerId,
-      ownershipId,
-      farmName,
-      farmLrCert,
-      farmSize,
-      cropFarmSize,
-      leasedFarmSize,
-      idleFarmSize,
-      areaUnitId,
-      leaseYears,
-      x,
-      y,
-      accuracyLevel,
-      otherFarmElsewhere,
-      DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farm.farmerId,
+      farm.dateCreated?.toLocal().toIso8601String(),
+      farm.createdBy,
+    ]);
+  }
+
+  Future<int> updatePageTwo(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+      x = ?, y = ?, ownershipId = ?, farmLrCert = ?, otherFarmElsewhere = ?
+      WHERE farmer_farm_id = ?
+    ''', [
+      farm.x,
+      farm.y,
+      farm.ownershipId,
+      farm.farmLrCert,
+      farm.otherFarmElsewhere! ? 1 : 0,
+      farm.farmerFarmId,
+    ]);
+  }
+
+  Future<int> updatePageOne(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+      farm_name = ?, farm_size = ?, area_unit_id = ?, crop_farm_size = ?, livestock_farm_size = ?, leased_farm_size = ?, idle_farm_size = ? 
+      WHERE farmer_farm_id = ?
+    ''', [
+      farm.farmName,
+      farm.farmSize,
+      farm.areaUnitId,
+      farm.cropFarmSize,
+      farm.livestockFarmSize,
+      farm.leasedFarmSize,
+      farm.idleFarmSize,
+      farm.farmerFarmId,
     ]);
   }
 

@@ -1,39 +1,41 @@
 class FarmerFarm {
-  final int farmerFarmId;
-  final int farmerId;
-  final int ownershipId;
-  final String farmName;
-  final String? farmLrCert;
-  final double farmSize;
-  final double? cropFarmSize;
-  final double? leasedFarmSize;
-  final double? idleFarmSize;
-  final int areaUnitId;
-  final int? leaseYears;
-  final double? x;
-  final double? y;
-  final double? accuracyLevel;
-  final bool? otherFarmElsewhere;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerFarmId;
+  int farmerId;
+  int? ownershipId;
+  String? farmName;
+  String? farmLrCert;
+  double? farmSize;
+  double? cropFarmSize;
+  double? livestockFarmSize;
+  double? leasedFarmSize;
+  double? idleFarmSize;
+  int? areaUnitId;
+  int? leaseYears;
+  double? x;
+  double? y;
+  double? accuracyLevel;
+  bool? otherFarmElsewhere;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerFarm({
     required this.farmerFarmId,
     required this.farmerId,
-    required this.ownershipId,
-    required this.farmName,
+    this.ownershipId,
+    this.farmName,
     this.farmLrCert,
-    required this.farmSize,
+    this.farmSize,
     this.cropFarmSize,
+    this.livestockFarmSize,
     this.leasedFarmSize,
     this.idleFarmSize,
-    required this.areaUnitId,
+    this.areaUnitId,
     this.leaseYears,
     this.x,
     this.y,
     this.accuracyLevel,
     this.otherFarmElsewhere,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 
@@ -46,6 +48,7 @@ class FarmerFarm {
         farmLrCert: map['farm_lr_cert'],
         farmSize: map['farm_size']?.toDouble() ?? 0.0,
         cropFarmSize: map['crop_farm_size']?.toDouble(),
+        livestockFarmSize: map['livestock_farm_size']?.toDouble(),
         leasedFarmSize: map['leased_farm_size']?.toDouble(),
         idleFarmSize: map['idle_farm_size']?.toDouble(),
         areaUnitId: map['area_unit_id']?.toInt() ?? 0,
