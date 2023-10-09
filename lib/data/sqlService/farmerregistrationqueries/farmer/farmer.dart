@@ -223,8 +223,8 @@ class FarmerDB {
         farmer.villageName,
         farmer.shoppingCenter,
         farmer.farmerName,
-        farmer.farmerId,
         farmer.idNo,
+        farmer.farmerId,
       ]);
     } catch (e) {
       print(e.toString());
@@ -275,7 +275,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
         farmer.respondentRlshpId,

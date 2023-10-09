@@ -138,14 +138,18 @@ class FarmersIdentificationThreeBloc extends Bloc<
 
     try {
       farmerDB
-          .updatePageTwo(Farmer(
+          .updatePageThree(Farmer(
         farmerId: state.farmersIdentificationThreeModelObj!.farmer!.farmerId,
         farmerName:
             state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
         postalCode: state.codevalueoneController?.text ?? "NA",
-        maritalStatusId: state.selectedDropDownValue!.id,
-        agriSkillsId: state.selectedDropDownValue1!.id,
+        maritalStatusId:
+            state.farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
+        agriSkillsId: state
+            .farmersIdentificationThreeModelObj!.selectedDropDownValue1!.id,
+        educationLevelId: state
+            .farmersIdentificationThreeModelObj!.selectedDropDownValue2!.id,
         hhSize: int.parse(state.hhsizevalueoneController!.text),
       ))
           .then((value) {
@@ -185,13 +189,27 @@ class FarmersIdentificationThreeBloc extends Bloc<
             state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
         postalCode: state.codevalueoneController?.text ?? "NA",
-        maritalStatusId: state.selectedDropDownValue!.id,
-        agriSkillsId: state.selectedDropDownValue1!.id,
+        maritalStatusId:
+            state.farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
+        agriSkillsId: state
+            .farmersIdentificationThreeModelObj!.selectedDropDownValue1!.id,
+        educationLevelId: state
+            .farmersIdentificationThreeModelObj!.selectedDropDownValue2!.id,
         hhSize: int.parse(state.hhsizevalueoneController!.text),
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: 1,
+                pageFour: state
+                    .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -261,7 +279,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
 
     int stepper = 2;
     if (fiProgress.pageFour == 1) {
-      stepper = 3;
+      stepper = 4;
     } else if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {
@@ -270,14 +288,15 @@ class FarmersIdentificationThreeBloc extends Bloc<
       stepper = 1;
     }
     emit(state.copyWith(
-        codevalueoneController: TextEditingController(),
-        hhsizevalueoneController: TextEditingController()));
+      codevalueoneController: postalCode,
+      hhsizevalueoneController: hhSize,
+    ));
     emit(state.copyWith(
       farmersIdentificationThreeModelObj:
           state.farmersIdentificationThreeModelObj?.copyWith(
         dropdownItemList: marital,
-        dropdownItemList1: formaled,
-        dropdownItemList2: agriskill,
+        dropdownItemList1: agriskill,
+        dropdownItemList2: formaled,
         fiProgress: fiProgress,
         farmer: farmer,
         selectedDropDownValue: selectedDropDownValue,

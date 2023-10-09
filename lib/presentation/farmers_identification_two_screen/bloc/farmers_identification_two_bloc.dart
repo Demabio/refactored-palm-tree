@@ -87,8 +87,9 @@ class FarmersIdentificationTwoBloc
         farmerId: state.farmersIdentificationTwoModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationTwoModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationTwoModelObj!.farmer!.idNo,
-        dob: state.selectedDropDownValue?.id,
-        gender: state.selectedDropDownValue1?.id,
+        dob: state.farmersIdentificationTwoModelObj!.selectedDropDownValue?.id,
+        gender:
+            state.farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
         mobile: state.mobileNumberController!.text,
         email: state.emailController?.text ?? "NA",
         postalAddress: state.addressController?.text ?? "NA",
@@ -129,15 +130,27 @@ class FarmersIdentificationTwoBloc
         farmerId: state.farmersIdentificationTwoModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationTwoModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationTwoModelObj!.farmer!.idNo,
-        dob: state.selectedDropDownValue?.id,
-        gender: state.selectedDropDownValue1?.id,
+        dob: state.farmersIdentificationTwoModelObj!.selectedDropDownValue?.id,
+        gender:
+            state.farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
         mobile: state.mobileNumberController!.text,
         email: state.emailController?.text ?? "NA",
         postalAddress: state.addressController?.text ?? "NA",
       ))
           .then((value) {
         if (value > 0) {
-          //PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
+                pageFour: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -202,7 +215,7 @@ class FarmersIdentificationTwoBloc
     }
 
     if (fiProgress.pageFour == 1) {
-      stepper = 3;
+      stepper = 4;
     } else if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {

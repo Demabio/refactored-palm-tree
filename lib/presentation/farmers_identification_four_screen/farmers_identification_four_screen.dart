@@ -1,5 +1,6 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 
 import 'bloc/farmers_identification_four_bloc.dart';
 import 'models/farmers_identification_four_model.dart';
@@ -79,7 +80,11 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               farmersIdentificationOneModelObj!
                                                   .stepped,
                                           onStepReached: (index) {
-                                            _navToStep(index, context);
+                                            _navToStep(
+                                                index,
+                                                context,
+                                                farmersIdentificationOneModelObj
+                                                    .fiProgress!);
                                           },
                                           direction: Axis.horizontal,
                                           unreachedStepIconColor:
@@ -235,6 +240,11 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           farmersIdentificationFourModelObj) {
                                         return CustomDropDown(
                                             autofocus: false,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Field is required";
+                                              }
+                                            },
                                             val:
                                                 farmersIdentificationFourModelObj
                                                     ?.selectedDropDownValue,
@@ -294,6 +304,18 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                   .isFarmer,
                                           child: CustomDropDown(
                                               autofocus: false,
+                                              validator: (value) {
+                                                if (value == null &&
+                                                    farmersIdentificationFourModelObj
+                                                            .selectedDropDownValue!
+                                                            .id ==
+                                                        1) {
+                                                  return "Field is required";
+                                                }
+                                              },
+                                              val:
+                                                  farmersIdentificationFourModelObj
+                                                      .selectedDropDownValue1,
                                               icon: Container(
                                                   margin: EdgeInsets.fromLTRB(
                                                       30.h, 10.v, 9.h, 15.v),
@@ -336,6 +358,14 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           farmersIdentificationFourModelObj) {
                                         return CustomDropDown(
                                             autofocus: false,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Field is required";
+                                              }
+                                            },
+                                            val:
+                                                farmersIdentificationFourModelObj
+                                                    ?.selectedDropDownValue2,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     30.h, 10.v, 9.h, 15.v),
@@ -373,6 +403,14 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           farmersIdentificationFourModelObj) {
                                         return CustomDropDown(
                                             autofocus: false,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Field is required";
+                                              }
+                                            },
+                                            val:
+                                                farmersIdentificationFourModelObj
+                                                    ?.selectedDropDownValue3,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     30.h, 10.v, 9.h, 15.v),
@@ -410,6 +448,14 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           farmersIdentificationFourModelObj) {
                                         return CustomDropDown(
                                             autofocus: false,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Field is required";
+                                              }
+                                            },
+                                            val:
+                                                farmersIdentificationFourModelObj
+                                                    ?.selectedDropDownValue4,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     30.h, 10.v, 9.h, 15.v),
@@ -447,6 +493,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                     text: "lbl_back".tr,
                                                     margin: EdgeInsets.only(
                                                         right: 1.h),
+                                                    onTap: () =>
+                                                        goBack(context),
                                                     buttonStyle:
                                                         CustomButtonStyles
                                                             .outlinePrimary,
@@ -533,7 +581,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
     );
   }
 
-  _navToStep(int val, BuildContext context) {
+  _navToStep(int val, BuildContext context, FIProgress fiProgress) {
     if (val == 0) {
       Navigator.popAndPushNamed(
           context, AppRoutes.farmersIdentificationOneScreen);

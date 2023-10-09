@@ -160,15 +160,19 @@ class FarmersIdentificationOneBloc
       if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 1) {
         int farmerid = PrefUtils().getFarmerId();
         if (farmerid != 0) {
-          farmerDB.updatePageOne(Farmer(
-            farmerId: PrefUtils().getFarmerId(),
-            farmerName: state.nameController1!.text,
-            villageName: state.nameController?.text ?? "NA",
-            shoppingCenter: state.shoppingCenterController?.text ?? "NA",
-            idNo: state.areaNumberController!.text,
-            dateCreated: DateTime.now(),
-            createdBy: userId,
-          ));
+          farmerDB
+              .updatePageOne(Farmer(
+                farmerId: PrefUtils().getFarmerId(),
+                farmerName: state.nameController1!.text,
+                villageName: state.nameController?.text ?? "NA",
+                shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+                idNo: state.areaNumberController!.text,
+                dateCreated: DateTime.now(),
+                createdBy: userId,
+              ))
+              .then((value) => print(
+                    "Updated scop: " + value.toString(),
+                  ));
         }
       }
     } catch (e) {
@@ -200,16 +204,42 @@ class FarmersIdentificationOneBloc
             .then((value) {
           if (value > 0) {
             PrefUtils().setFarmerId(value);
+
+            farmerDB.updatePageOne(Farmer(
+              farmerId: value,
+              farmerName: state.nameController1!.text,
+              villageName: state.nameController?.text ?? "NA",
+              shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+              idNo: state.areaNumberController!.text,
+              dateCreated: DateTime.now(),
+              createdBy: userId,
+            ));
             FIProgressDB fiProgressDB = FIProgressDB();
-            fiProgressDB
-                .insert(FIProgress(
-                  farmerId: value,
-                  pageOne: 1,
-                  pageTwo: 0,
-                  pageThree: 0,
-                  pageFour: 0,
-                ))
-                .then((value) => print("Scope FI" + value.toString()));
+            if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne ==
+                0) {
+              fiProgressDB
+                  .insert(FIProgress(
+                    farmerId: value,
+                    pageOne: 1,
+                    pageTwo: 0,
+                    pageThree: 0,
+                    pageFour: 0,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            } else {
+              fiProgressDB
+                  .update(FIProgress(
+                    farmerId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .farmersIdentificationOneModelObj!.fiProgress!.pageTwo,
+                    pageThree: state.farmersIdentificationOneModelObj!
+                        .fiProgress!.pageThree,
+                    pageFour: state
+                        .farmersIdentificationOneModelObj!.fiProgress!.pageFour,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            }
           } else {
             event.createFailed!.call();
           }
@@ -218,15 +248,19 @@ class FarmersIdentificationOneBloc
       if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne == 1) {
         int farmerid = PrefUtils().getFarmerId();
         if (farmerid != 0) {
-          farmerDB.updatePageOne(Farmer(
-            farmerId: PrefUtils().getFarmerId(),
-            farmerName: state.nameController1!.text,
-            villageName: state.nameController?.text ?? "NA",
-            shoppingCenter: state.shoppingCenterController?.text ?? "NA",
-            idNo: state.areaNumberController!.text,
-            dateCreated: DateTime.now(),
-            createdBy: userId,
-          ));
+          farmerDB
+              .updatePageOne(Farmer(
+                farmerId: PrefUtils().getFarmerId(),
+                farmerName: state.nameController1!.text,
+                villageName: state.nameController?.text ?? "NA",
+                shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+                idNo: state.areaNumberController!.text,
+                dateCreated: DateTime.now(),
+                createdBy: userId,
+              ))
+              .then((value) => print(
+                    "Updated scop: " + value.toString(),
+                  ));
         }
       }
     } catch (e) {
@@ -303,7 +337,7 @@ class FarmersIdentificationOneBloc
     }
     int stepper = 0;
     if (fiProgress.pageFour == 1) {
-      stepper = 3;
+      stepper = 4;
     } else if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {

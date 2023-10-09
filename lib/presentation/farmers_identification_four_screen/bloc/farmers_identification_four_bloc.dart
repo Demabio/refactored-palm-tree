@@ -74,19 +74,19 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       selectedDropDownValue1 = relationshipFarmer.firstWhere(
         (model) => model.id == farmer.respondentRlshpId,
       );
-      selectedDropDownValue2 = relationshipFarmer.firstWhere(
+      selectedDropDownValue2 = crop.firstWhere(
         (model) => model.id == (farmer.cropProd! ? 1 : 0),
       );
-      selectedDropDownValue3 = relationshipFarmer.firstWhere(
+      selectedDropDownValue3 = livestock.firstWhere(
         (model) => model.id == (farmer.livestockProd! ? 1 : 0),
       );
-      selectedDropDownValue4 = relationshipFarmer.firstWhere(
+      selectedDropDownValue4 = fish.firstWhere(
         (model) => model.id == (farmer.fishFarming! ? 1 : 0),
       );
     }
     int stepper = 3;
     if (fiProgress.pageFour == 1) {
-      stepper = 3;
+      stepper = 4;
     } else if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {
@@ -107,6 +107,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           farmer: farmer,
           selectedDropDownValue1: selectedDropDownValue1,
           selectedDropDownValue: selectedDropDownValue,
+          selectedDropDownValue2: selectedDropDownValue2,
           selectedDropDownValue3: selectedDropDownValue3,
           selectedDropDownValue4: selectedDropDownValue4,
           stepped2: stepper,
@@ -145,9 +146,9 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       selectedDropDownValue1: event.value,
       farmersIdentificationFourModelObj:
           state.farmersIdentificationFourModelObj?.copyWith(
-        selectedDropDownValue: event.value,
-        selectedDropDownValue1:
-            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue1: event.value,
+        selectedDropDownValue:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue,
         selectedDropDownValue2:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
         selectedDropDownValue3:
@@ -166,11 +167,11 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       selectedDropDownValue2: event.value,
       farmersIdentificationFourModelObj:
           state.farmersIdentificationFourModelObj?.copyWith(
-        selectedDropDownValue: event.value,
+        selectedDropDownValue2: event.value,
         selectedDropDownValue1:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
-        selectedDropDownValue2:
-            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue,
         selectedDropDownValue3:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
         selectedDropDownValue4:
@@ -187,13 +188,13 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       selectedDropDownValue3: event.value,
       farmersIdentificationFourModelObj:
           state.farmersIdentificationFourModelObj?.copyWith(
-        selectedDropDownValue: event.value,
+        selectedDropDownValue3: event.value,
         selectedDropDownValue1:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
         selectedDropDownValue2:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
-        selectedDropDownValue3:
-            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue,
         selectedDropDownValue4:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
       ),
@@ -208,15 +209,15 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       selectedDropDownValue4: event.value,
       farmersIdentificationFourModelObj:
           state.farmersIdentificationFourModelObj?.copyWith(
-        selectedDropDownValue: event.value,
+        selectedDropDownValue4: event.value,
         selectedDropDownValue1:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
         selectedDropDownValue2:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
         selectedDropDownValue3:
             state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
-        selectedDropDownValue4:
-            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+        selectedDropDownValue:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue,
       ),
     ));
   }
@@ -244,19 +245,38 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
 
     try {
       farmerDB
-          .updatePageTwo(Farmer(
+          .updatePageFour(Farmer(
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
-        farmerTheRespodent: state.selectedDropDownValue!.id == 1,
-        respondentRlshpId: state.selectedDropDownValue1?.id ?? 0,
-        cropProd: state.selectedDropDownValue2!.id == 1,
-        livestockProd: state.selectedDropDownValue3!.id == 1,
-        fishFarming: state.selectedDropDownValue4!.id == 1,
+        farmerTheRespodent: state
+                .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
+            1,
+        respondentRlshpId: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue1?.id ??
+            0,
+        cropProd: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue2!.id ==
+            1,
+        livestockProd: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue3!.id ==
+            1,
+        fishFarming: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue4!.id ==
+            1,
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: 1,
+                pageFour: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -275,15 +295,25 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
 
     try {
       farmerDB
-          .updatePageTwo(Farmer(
+          .updatePageFour(Farmer(
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
-        farmerTheRespodent: state.selectedDropDownValue!.id == 1,
-        respondentRlshpId: state.selectedDropDownValue1?.id ?? 0,
-        cropProd: state.selectedDropDownValue2!.id == 1,
-        livestockProd: state.selectedDropDownValue3!.id == 1,
-        fishFarming: state.selectedDropDownValue4!.id == 1,
+        farmerTheRespodent: state
+                .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
+            1,
+        respondentRlshpId: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue1?.id ??
+            0,
+        cropProd: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue2!.id ==
+            1,
+        livestockProd: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue3!.id ==
+            1,
+        fishFarming: state.farmersIdentificationFourModelObj!
+                .selectedDropDownValue4!.id ==
+            1,
       ))
           .then((value) {
         if (value > 0) {

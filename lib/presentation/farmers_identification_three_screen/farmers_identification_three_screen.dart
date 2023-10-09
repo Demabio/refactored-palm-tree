@@ -43,7 +43,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
       },
       child: SafeArea(
           child: Scaffold(
-              resizeToAvoidBottomInset: false,
+              resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
                   leadingWidth: 60.h,
                   leading: AppbarImage(
@@ -420,7 +420,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                                     CustomTextStyles
                                                         .bodyLargePrimary_2,
                                                 onTap: () {
-                                                  onTapBack(context);
+                                                  goBack(context);
                                                 })),
                                         Expanded(
                                             child: CustomElevatedButton(
@@ -428,7 +428,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                                 margin:
                                                     EdgeInsets.only(left: 1.h),
                                                 onTap: () {
-                                                  onTapNext(context);
+                                                  nextPage(context);
                                                 }))
                                       ]),
                                   SizedBox(height: 12.v),
@@ -440,7 +440,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),
                                       onTap: () {
-                                        onTapSave(context);
+                                        saveDraft(context);
                                       })
                                 ])))),
               ))),
