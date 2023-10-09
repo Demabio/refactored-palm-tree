@@ -6,7 +6,7 @@ class FarmerCooperativeGroup {
   final String? cooperateiveGroupName;
   final String? other;
   final int? createdBy;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
 
   FarmerCooperativeGroup({
     required this.farmerCooperativeGroupId,
@@ -16,7 +16,7 @@ class FarmerCooperativeGroup {
     this.cooperateiveGroupName,
     this.other,
     this.createdBy,
-    required this.dateCreated,
+    this.dateCreated,
   });
 
   factory FarmerCooperativeGroup.fromSqfliteDatabase(

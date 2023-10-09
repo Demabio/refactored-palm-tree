@@ -1,21 +1,21 @@
 class FarmerIrrigationCrop {
   final int irrigationCropId;
   final int farmerId;
-  final int cropId;
-  final int areaOfCrop;
-  final int areaUnitId;
-  final int noOfCropPerYear;
-  final DateTime dateCreated;
+  final int? cropId;
+  final int? areaOfCrop;
+  final int? areaUnitId;
+  final int? noOfCropPerYear;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerIrrigationCrop({
     required this.irrigationCropId,
     required this.farmerId,
     required this.cropId,
-    required this.areaOfCrop,
-    required this.areaUnitId,
-    required this.noOfCropPerYear,
-    required this.dateCreated,
+    this.areaOfCrop,
+    this.areaUnitId,
+    this.noOfCropPerYear,
+    this.dateCreated,
     this.createdBy,
   });
 

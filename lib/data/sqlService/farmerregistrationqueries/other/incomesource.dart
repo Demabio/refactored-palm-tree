@@ -18,22 +18,54 @@ class FarmerIncomeSourceDB {
     """);
   }
 
-  Future<int> create({
-    required int incomeSourceId,
-    int? priorityLevel,
-    int? farmerId,
-    String? other,
-  }) async {
+  Future<int> create(FarmerIncomeSource incomeSource) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (income_source_id, priority_level, farmer_id, other) 
       VALUES (?, ?, ?, ?)
     ''', [
-      incomeSourceId,
-      priorityLevel,
-      farmerId,
-      other,
+      incomeSource.incomeSourceId,
+      incomeSource.priorityLevel,
+      incomeSource.farmerId,
+      incomeSource.other,
     ]);
+  }
+
+  Future<int> update(FarmerIncomeSource incomeSource) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        income_source_id = ?, priority_level = ?, other = ?
+      WHERE farmer_income_id = ?
+    ''', [
+      incomeSource.incomeSourceId,
+      incomeSource.priorityLevel,
+      incomeSource.other,
+      incomeSource.farmerIncomeId,
+    ]);
+  }
+
+  Future<int> insertIncome(List<FarmerIncomeSource> incomeSources) async {
+    final database = await DatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var incomeSource in incomeSources) {
+        batch.rawInsert('''
+            INSERT INTO $tableName (income_source_id, priority_level, farmer_id, other) 
+          VALUES (?, ?, ?, ?)
+        ''', [
+          incomeSource.incomeSourceId,
+          incomeSource.priorityLevel,
+          incomeSource.farmerId,
+          incomeSource.other,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
   }
 
   Future<List<FarmerIncomeSource>> fetchAll() async {

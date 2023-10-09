@@ -21,28 +21,35 @@ class FarmerIrrigationCropDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int cropId,
-    required double areaOfCrop,
-    required int areaUnitId,
-    required int noOfCropPerYear,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerIrrigationCrop irrigationCrop) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, crop_id, area_of_crop, area_unit_id, no_of_crop_per_year, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      cropId,
-      areaOfCrop,
-      areaUnitId,
-      noOfCropPerYear,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      irrigationCrop.farmerId,
+      irrigationCrop.cropId,
+      irrigationCrop.areaOfCrop,
+      irrigationCrop.areaUnitId,
+      irrigationCrop.noOfCropPerYear,
+      DateTime.now().toLocal().toIso8601String(),
+      irrigationCrop.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerIrrigationCrop irrigationCrop) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        crop_id = ?, area_of_crop = ?, area_unit_id = ? , no_of_crop_per_year = ?
+      WHERE irrigation_crop_id = ?
+    ''', [
+      irrigationCrop.cropId,
+      irrigationCrop.areaOfCrop,
+      irrigationCrop.areaUnitId,
+      irrigationCrop.noOfCropPerYear,
+      irrigationCrop.irrigationCropId,
     ]);
   }
 
@@ -62,7 +69,7 @@ class FarmerIrrigationCropDB {
           irrigationCrop.areaOfCrop,
           irrigationCrop.areaUnitId,
           irrigationCrop.noOfCropPerYear,
-          irrigationCrop.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           irrigationCrop.createdBy,
         ]);
       }

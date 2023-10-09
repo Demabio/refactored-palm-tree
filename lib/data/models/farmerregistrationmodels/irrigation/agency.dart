@@ -2,16 +2,16 @@ class FarmerIrrigationAgency {
   final int irrigationCropId;
   final int farmerId;
   final int irrigationAgencyId;
-  final String agencyName;
-  final DateTime dateCreated;
+  final String? agencyName;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerIrrigationAgency({
     required this.irrigationCropId,
     required this.farmerId,
     required this.irrigationAgencyId,
-    required this.agencyName,
-    required this.dateCreated,
+    this.agencyName,
+    this.dateCreated,
     this.createdBy,
   });
 

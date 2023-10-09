@@ -20,14 +20,7 @@ class FarmerSoilTestDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required String soilTest,
-    required int soilTestYear,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerSoilTest soilTest) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
@@ -35,12 +28,25 @@ class FarmerSoilTestDB {
         date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      soilTest,
-      soilTestYear,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      soilTest.farmerId,
+      soilTest.farmerFarmId,
+      soilTest.soilTest,
+      soilTest.soilTestYear,
+      DateTime.now().toLocal().toIso8601String(),
+      soilTest.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerSoilTest soilTest) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        soiltest = ?, soil_test_year = ? 
+      WHERE farmer_soilseed_id = ?
+    ''', [
+      soilTest.soilTest,
+      soilTest.soilTestYear,
+      soilTest.farmerSoilseedId,
     ]);
   }
 
@@ -59,7 +65,7 @@ class FarmerSoilTestDB {
           soilTest.farmerFarmId,
           soilTest.soilTest,
           soilTest.soilTestYear,
-          soilTest.dateCreated.toLocal().toIso8601String(),
+          soilTest.dateCreated?.toLocal().toIso8601String(),
           soilTest.createdBy,
         ]);
       }

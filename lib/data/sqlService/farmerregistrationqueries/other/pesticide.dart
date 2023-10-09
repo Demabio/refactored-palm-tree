@@ -21,27 +21,32 @@ class FarmerPesticidesDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int farmerCropId,
-    required int pesticideTypeId,
-    String? others,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerPesticide pesticide) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, farmer_crop_id, pesticide_type_id, others, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      farmerCropId,
-      pesticideTypeId,
-      others,
+      pesticide.farmerId,
+      pesticide.farmerFarmId,
+      pesticide.farmerCropId,
+      pesticide.pesticideTypeId,
+      pesticide.others,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      pesticide.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerPesticide pesticide) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        pesticide_type_id = ?, others = ? 
+      WHERE farmer_pesticide_id = ?
+    ''', [
+      pesticide.pesticideTypeId,
+      pesticide.others,
     ]);
   }
 
@@ -60,7 +65,7 @@ class FarmerPesticidesDB {
           pesticide.farmerCropId,
           pesticide.pesticideTypeId,
           pesticide.others,
-          pesticide.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           pesticide.createdBy,
         ]);
       }

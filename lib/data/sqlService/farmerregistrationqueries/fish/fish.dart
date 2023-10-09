@@ -40,7 +40,7 @@ class FarmerFishDB {
 
   Future<int> update(FarmerFish farmerFish) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    return await database.rawUpdate('''
       UPDATE  $tableName SET
         fish_type_id = ?, production_type_id = ?, no_of_fingerlings = ?
       WHERE farmer_fish_id = ?

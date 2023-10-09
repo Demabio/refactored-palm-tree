@@ -5,7 +5,7 @@ class FarmerPesticide {
   final int farmerCropId;
   final int pesticideTypeId;
   final String? others;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerPesticide({
@@ -15,7 +15,7 @@ class FarmerPesticide {
     required this.farmerCropId,
     required this.pesticideTypeId,
     this.others,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

@@ -19,23 +19,30 @@ class FarmerExtensionAccessDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int extensionSourceId,
-    String? createdBy,
-  }) async {
+  Future<int> create(FarmerExtensionAccess extensionAccess) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, extension_source_id, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      extensionSourceId,
+      extensionAccess.farmerId,
+      extensionAccess.farmerFarmId,
+      extensionAccess.extensionSourceId,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      extensionAccess.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerExtensionAccess extensionAccess) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        extension_source_id = ? 
+      WHERE farmer_extension_access_id = ?
+    ''', [
+      extensionAccess.extensionSourceId,
+      extensionAccess.farmerExtensionAccessId,
     ]);
   }
 
@@ -53,7 +60,7 @@ class FarmerExtensionAccessDB {
           extensionAccess.farmerId,
           extensionAccess.farmerFarmId,
           extensionAccess.extensionSourceId,
-          extensionAccess.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           extensionAccess.createdBy,
         ]);
       }

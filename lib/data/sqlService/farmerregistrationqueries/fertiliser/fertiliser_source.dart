@@ -22,29 +22,35 @@ class FarmerFertiliserSourcesDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int farmerCropId,
-    required int fertSourceId,
-    String? otherSource,
-    double? distanceSource,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerFertiliserSource fertiliserSource) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, farmer_crop_id, fert_source_id, other_source, distance_source, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      farmerCropId,
-      fertSourceId,
-      otherSource,
-      distanceSource,
+      fertiliserSource.farmerId,
+      fertiliserSource.farmerFarmId,
+      fertiliserSource.farmerCropId,
+      fertiliserSource.fertSourceId,
+      fertiliserSource.otherSource,
+      fertiliserSource.distanceSource,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      fertiliserSource.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerFertiliserSource fertiliserSource) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        fert_source_id = ?, other_source = ?, distance_source = ?
+      WHERE farmer_fert_source_id = ?
+    ''', [
+      fertiliserSource.fertSourceId,
+      fertiliserSource.otherSource,
+      fertiliserSource.distanceSource,
+      fertiliserSource.farmerFertSourceId,
     ]);
   }
 
@@ -66,7 +72,7 @@ class FarmerFertiliserSourcesDB {
           fertiliserSource.fertSourceId,
           fertiliserSource.otherSource,
           fertiliserSource.distanceSource,
-          fertiliserSource.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           fertiliserSource.createdBy,
         ]);
       }

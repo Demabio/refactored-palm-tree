@@ -19,24 +19,31 @@ class FarmerIrrigationAgencyDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int irrigationAgencyId,
-    required String agencyName,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerIrrigationAgency irrigationAgency) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, irrigation_agency_id, agency_name, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      irrigationAgencyId,
-      agencyName,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      irrigationAgency.farmerId,
+      irrigationAgency.irrigationAgencyId,
+      irrigationAgency.agencyName,
+      DateTime.now().toLocal().toIso8601String(),
+      irrigationAgency.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerIrrigationAgency irrigationAgency) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        irrigation_agency_id = ?, agency_name = ? 
+      WHERE irrigation_crop_id = ?
+    ''', [
+      irrigationAgency.irrigationAgencyId,
+      irrigationAgency.agencyName,
+      irrigationAgency.irrigationCropId,
     ]);
   }
 
@@ -54,7 +61,7 @@ class FarmerIrrigationAgencyDB {
           irrigationAgency.farmerId,
           irrigationAgency.irrigationAgencyId,
           irrigationAgency.agencyName,
-          irrigationAgency.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           irrigationAgency.createdBy,
         ]);
       }

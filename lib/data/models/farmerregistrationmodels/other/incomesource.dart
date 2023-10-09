@@ -1,14 +1,14 @@
 class FarmerIncomeSource {
   final int farmerIncomeId;
   final int? incomeSourceId;
-  final int priorityLevel;
+  final int? priorityLevel;
   final int farmerId;
   final String? other;
 
   FarmerIncomeSource({
     required this.farmerIncomeId,
     this.incomeSourceId,
-    required this.priorityLevel,
+    this.priorityLevel,
     required this.farmerId,
     this.other,
   });

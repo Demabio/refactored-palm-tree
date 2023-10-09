@@ -20,25 +20,32 @@ class FarmerLandPracticesDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int landPracticeId,
-    double? quantity,
-    String? createdBy,
-  }) async {
+  Future<int> create(FarmerLandPractice farmerLandPractice) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, land_practice_id, quantity, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      landPracticeId,
-      quantity,
+      farmerLandPractice.farmerId,
+      farmerLandPractice.farmerFarmId,
+      farmerLandPractice.landPracticeId,
+      farmerLandPractice.quantity,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerLandPractice.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerLandPractice farmerLandPractice) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        land_practice_id = ?, quantity = ? 
+      WHERE farmer_practice_id = ?
+    ''', [
+      farmerLandPractice.landPracticeId,
+      farmerLandPractice.quantity,
+      farmerLandPractice.landPracticeId,
     ]);
   }
 
@@ -57,7 +64,7 @@ class FarmerLandPracticesDB {
           landPractice.farmerFarmId,
           landPractice.landPracticeId,
           landPractice.quantity,
-          landPractice.dateCreated.toLocal().toIso8601String(),
+          landPractice.dateCreated?.toLocal().toIso8601String(),
           landPractice.createdBy,
         ]);
       }

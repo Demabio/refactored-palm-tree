@@ -20,26 +20,32 @@ class FarmerIrrigationCategoryDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int irrigationCategoryId,
-    required String irrigationProjectName,
-    required int membershipTypeId,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerIrrigationCategory irrigationCategory) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, irrigation_category_id, irrigation_project_name, membership_type_id, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      irrigationCategoryId,
-      irrigationProjectName,
-      membershipTypeId,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      irrigationCategory.farmerId,
+      irrigationCategory.irrigationCategoryId,
+      irrigationCategory.irrigationProjectName,
+      irrigationCategory.membershipTypeId,
+      DateTime.now().toLocal().toIso8601String(),
+      irrigationCategory.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerIrrigationCategory irrigationCategory) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        irrigation_category_id = ?, irrigation_project_name = ?, membership_type_id = ? 
+      WHERE irrigation_crop_id = ?
+    ''', [
+      irrigationCategory.irrigationCategoryId,
+      irrigationCategory.irrigationProjectName,
+      irrigationCategory.membershipTypeId,
     ]);
   }
 
@@ -58,7 +64,7 @@ class FarmerIrrigationCategoryDB {
           irrigationCategory.irrigationCategoryId,
           irrigationCategory.irrigationProjectName,
           irrigationCategory.membershipTypeId,
-          irrigationCategory.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           irrigationCategory.createdBy,
         ]);
       }

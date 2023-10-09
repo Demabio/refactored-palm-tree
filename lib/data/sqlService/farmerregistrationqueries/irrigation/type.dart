@@ -19,24 +19,31 @@ class FarmerIrrigationTypeDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int irrigationTypeId,
-    String? othersName,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerIrrigationType irrigationType) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, irrigation_type_id, others_name, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      irrigationTypeId,
-      othersName,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      irrigationType.farmerId,
+      irrigationType.irrigationTypeId,
+      irrigationType.othersName,
+      DateTime.now().toLocal().toIso8601String(),
+      irrigationType.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerIrrigationType irrigationType) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        irrigation_type_id = ?, others_name = ? 
+      WHERE irrigation_crop_id = ?
+    ''', [
+      irrigationType.irrigationTypeId,
+      irrigationType.othersName,
+      irrigationType.irrigationCropId,
     ]);
   }
 
@@ -54,7 +61,7 @@ class FarmerIrrigationTypeDB {
           irrigationType.farmerId,
           irrigationType.irrigationTypeId,
           irrigationType.othersName,
-          irrigationType.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           irrigationType.createdBy,
         ]);
       }

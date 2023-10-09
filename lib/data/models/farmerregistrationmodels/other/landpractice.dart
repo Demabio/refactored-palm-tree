@@ -4,7 +4,7 @@ class FarmerLandPractice {
   final int farmerFarmId;
   final int landPracticeId;
   final double? quantity;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerLandPractice({
@@ -13,7 +13,7 @@ class FarmerLandPractice {
     required this.farmerFarmId,
     required this.landPracticeId,
     this.quantity,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

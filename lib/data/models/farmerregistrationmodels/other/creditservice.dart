@@ -2,20 +2,20 @@ class FarmerCreditService {
   final int farmerCreditServiceId;
   final int farmerId;
   final int? creditSourceId;
-  final String saccoName;
+  final String? saccoName;
   final String? mfInstitutionName;
   final String? othersName;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerCreditService({
     required this.farmerCreditServiceId,
     required this.farmerId,
     this.creditSourceId,
-    required this.saccoName,
+    this.saccoName,
     this.mfInstitutionName,
     this.othersName,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

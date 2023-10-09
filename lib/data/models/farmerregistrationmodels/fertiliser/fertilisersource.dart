@@ -6,7 +6,7 @@ class FarmerFertiliserSource {
   final int fertSourceId;
   final String? otherSource;
   final double? distanceSource;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerFertiliserSource({
@@ -17,7 +17,7 @@ class FarmerFertiliserSource {
     required this.fertSourceId,
     this.otherSource,
     this.distanceSource,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

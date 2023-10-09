@@ -4,7 +4,7 @@ class FarmerSoilTest {
   final int farmerFarmId;
   final int? soilTest;
   final String? soilTestYear;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerSoilTest({
@@ -13,7 +13,7 @@ class FarmerSoilTest {
     required this.farmerFarmId,
     this.soilTest,
     this.soilTestYear,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

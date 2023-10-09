@@ -3,7 +3,7 @@ class FarmerExtensionAccess {
   final int farmerId;
   final int farmerFarmId;
   final int extensionSourceId;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerExtensionAccess({
@@ -11,7 +11,7 @@ class FarmerExtensionAccess {
     required this.farmerId,
     required this.farmerFarmId,
     required this.extensionSourceId,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

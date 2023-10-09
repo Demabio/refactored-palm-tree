@@ -3,8 +3,8 @@ class FarmerIrrigation {
   final int farmerId;
   final int? useIrrigation;
   final int? totalAreaIrrigation;
-  final int areaUnitId;
-  final DateTime dateCreated;
+  final int? areaUnitId;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerIrrigation({
@@ -12,8 +12,8 @@ class FarmerIrrigation {
     required this.farmerId,
     this.useIrrigation,
     this.totalAreaIrrigation,
-    required this.areaUnitId,
-    required this.dateCreated,
+    this.areaUnitId,
+    this.dateCreated,
     this.createdBy,
   });
 

@@ -275,7 +275,8 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? WHERE farmerId = ? 
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? 
+    WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
         farmer.respondentRlshpId,
@@ -301,6 +302,48 @@ class FarmerDB {
     WHERE farmerId = ? 
   ''', [
         farmer.labourSourceId,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromLandWater(Farmer farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET gokFertiliser = ?, limeUsage = ?, irrigationUse = ?, farmerId = ?, hhSize = ? 
+    WHERE farmerId = ? 
+  ''', [
+        farmer.gokFertiliser! ? 1 : 0,
+        farmer.limeUsage! ? 1 : 0,
+        farmer.irrigationUse! ? 1 : 0,
+        farmer.irrigationArea,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromFinancial(Farmer farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? 
+    WHERE farmerId = ? 
+  ''', [
+        farmer.livelihoodSourceId,
+        farmer.farmingIncomePercent,
+        farmer.cropsInsurance! ? 1 : 0,
+        farmer.livestockInsurance! ? 1 : 0,
+        farmer.fishInsurance! ? 1 : 0,
+        farmer.assetsInsurance! ? 1 : 0,
+        farmer.farmRecords! ? 1 : 0,
+        farmer.extensionsericeAccess,
         farmer.farmerId,
       ]);
     } catch (e) {

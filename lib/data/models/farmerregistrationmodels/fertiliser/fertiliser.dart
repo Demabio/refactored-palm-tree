@@ -7,7 +7,7 @@ class FarmerFertiliser {
   final String? compoundName;
   final String? basalOthersName;
   final String? others;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerFertiliser({
@@ -19,7 +19,7 @@ class FarmerFertiliser {
     this.compoundName,
     this.basalOthersName,
     this.others,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

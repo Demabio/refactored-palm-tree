@@ -39,6 +39,21 @@ class FarmerFishProductionLevelsDB {
     ]);
   }
 
+  Future<int> update(
+      FarmerFishProductionLevel farmerFishProductionLevel) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        production_level_id = ?, fertilizer_in_ponds = ?, esp_benefit = ?
+      WHERE farmer_productionlevel_id = ?
+    ''', [
+      farmerFishProductionLevel.productionLevelId,
+      farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0,
+      farmerFishProductionLevel.espBenefit,
+      farmerFishProductionLevel.farmerProductionLevelId,
+    ]);
+  }
+
   Future<int> insertProductionLevels(
       List<FarmerFishProductionLevel> productionLevels) async {
     final database = await DatabaseService().database;

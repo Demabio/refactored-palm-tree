@@ -21,27 +21,34 @@ class FarmerCooperativeGroupDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int cooperativeGroupId,
-    String? cooperativeGroupName,
-    String? other,
-    String? createdBy,
-  }) async {
+  Future<int> create(FarmerCooperativeGroup cooperativeGroup) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, cooperative_group_id, cooperative_group_name, other, created_by, date_created
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      cooperativeGroupId,
-      cooperativeGroupName,
-      other,
-      createdBy,
+      cooperativeGroup.farmerId,
+      cooperativeGroup.farmerFarmId,
+      cooperativeGroup.cooperateiveGroupId,
+      cooperativeGroup.cooperateiveGroupName,
+      cooperativeGroup.other,
+      cooperativeGroup.createdBy,
       DateTime.now().toLocal().toIso8601String(),
+    ]);
+  }
+
+  Future<int> update(FarmerCooperativeGroup cooperativeGroup) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        cooperative_group_id = ?, cooperative_group_name = ?, other = ?
+      WHERE farmer_cooperative_group_id = ?
+    ''', [
+      cooperativeGroup.cooperateiveGroupId,
+      cooperativeGroup.cooperateiveGroupName,
+      cooperativeGroup.other,
+      cooperativeGroup.farmerCooperativeGroupId,
     ]);
   }
 
@@ -62,7 +69,7 @@ class FarmerCooperativeGroupDB {
           cooperativeGroup.cooperateiveGroupName,
           cooperativeGroup.other,
           cooperativeGroup.createdBy,
-          cooperativeGroup.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
         ]);
       }
 

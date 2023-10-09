@@ -4,7 +4,7 @@ class FarmerExtensionMode {
   final int farmerFarmId;
   final int extensionModeId;
   final String? other;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerExtensionMode({
@@ -13,7 +13,7 @@ class FarmerExtensionMode {
     required this.farmerFarmId,
     required this.extensionModeId,
     this.other,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

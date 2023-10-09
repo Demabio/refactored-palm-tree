@@ -23,16 +23,7 @@ class FarmerFertiliserDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int farmerCropId,
-    required int fertiliserTypeId,
-    String? compoundName,
-    String? basalOthersName,
-    String? others,
-    required String createdBy,
-  }) async {
+  Future<int> createFarmerFertiliser(FarmerFertiliser fertiliser) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
@@ -40,15 +31,30 @@ class FarmerFertiliserDB {
         date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      farmerCropId,
-      fertiliserTypeId,
-      compoundName,
-      basalOthersName,
-      others,
+      fertiliser.farmerId,
+      fertiliser.farmerFarmId,
+      fertiliser.farmerCropId,
+      fertiliser.fertiliserTypeId,
+      fertiliser.compoundName,
+      fertiliser.basalOthersName,
+      fertiliser.others,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      fertiliser.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerFertiliser fertiliser) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        fertiliser_type_id = ?, compound_name = ?, basal_others_name = ?, others = ?
+      WHERE farmer_fert_id = ?
+    ''', [
+      fertiliser.fertiliserTypeId,
+      fertiliser.compoundName,
+      fertiliser.basalOthersName,
+      fertiliser.others,
+      fertiliser.farmerFertId,
     ]);
   }
 
@@ -70,7 +76,7 @@ class FarmerFertiliserDB {
           fertiliser.compoundName,
           fertiliser.basalOthersName,
           fertiliser.others,
-          fertiliser.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           fertiliser.createdBy,
         ]);
       }

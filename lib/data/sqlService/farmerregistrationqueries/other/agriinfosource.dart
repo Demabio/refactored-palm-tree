@@ -16,18 +16,27 @@ class FarmerAgriInfoSourceDB {
     """);
   }
 
-  Future<int> create({
-    required int agriInfoSourceId,
-    required int farmerId,
-  }) async {
+  Future<int> create(FarmerAgriInfoSource agriInfoSource) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         agri_info_source_id, farmer_id
       ) VALUES (?, ?)
     ''', [
-      agriInfoSourceId,
-      farmerId,
+      agriInfoSource.agriInfoSourceId,
+      agriInfoSource.farmerId,
+    ]);
+  }
+
+  Future<int> update(FarmerAgriInfoSource agriInfoSource) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        agri_info_source_id = ? 
+      WHERE farmer_agri_info_source_id = ?
+    ''', [
+      agriInfoSource.agriInfoSourceId,
+      agriInfoSource.farmerAgriInfoSourceId,
     ]);
   }
 

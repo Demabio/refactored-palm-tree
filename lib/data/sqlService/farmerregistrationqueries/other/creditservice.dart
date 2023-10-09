@@ -21,28 +21,35 @@ class FarmerCreditServiceDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int creditSourceId,
-    String? saccoName,
-    String? mfInstitutionName,
-    String? othersName,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerCreditService creditService) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, credit_source_id, sacco_name, mfintitution_name, others_name, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      creditSourceId,
-      saccoName,
-      mfInstitutionName,
-      othersName,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      creditService.farmerId,
+      creditService.creditSourceId,
+      creditService.saccoName,
+      creditService.mfInstitutionName,
+      creditService.othersName,
+      DateTime.now().toLocal().toIso8601String(),
+      creditService.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerCreditService creditService) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        credit_source_id = ?, sacco_name = ?, mfintitution_name = ?, others_name = ?
+      WHERE farmer_creditservice_id = ?
+    ''', [
+      creditService.creditSourceId,
+      creditService.saccoName,
+      creditService.mfInstitutionName,
+      creditService.othersName,
+      creditService.farmerCreditServiceId,
     ]);
   }
 
@@ -62,7 +69,7 @@ class FarmerCreditServiceDB {
           creditService.saccoName,
           creditService.mfInstitutionName,
           creditService.othersName,
-          creditService.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           creditService.createdBy,
         ]);
       }
