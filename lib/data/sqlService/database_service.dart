@@ -93,8 +93,6 @@ import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/struc
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'logindb.dart';
-
 class DatabaseService {
   Database? _database;
 
