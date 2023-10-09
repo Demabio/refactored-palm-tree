@@ -216,60 +216,81 @@ class FarmerDB {
 
   Future<int> updatePageOne(Farmer farmer) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
-    UPDATE $tableName SET villageName = ?, shoppingCenter = ?, farmerName = ? WHERE farmerId = ? 
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET villageName = ?, shoppingCenter = ?, farmerName = ?, idNo = ? WHERE farmerId = ? 
   ''', [
-      farmer.villageName,
-      farmer.shoppingCenter,
-      farmer.farmerName,
-      farmer.farmerId,
-    ]);
+        farmer.villageName,
+        farmer.shoppingCenter,
+        farmer.farmerName,
+        farmer.farmerId,
+        farmer.idNo,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
   }
 
   Future<int> updatePageTwo(Farmer farmer) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    try {
+      return await database.rawUpdate('''
     UPDATE $tableName SET dob = ?, gender = ?, idNo = ?, mobile = ?, email = ?, postalAddress = ? WHERE farmerId = ? 
   ''', [
-      farmer.dob,
-      farmer.gender,
-      farmer.idNo,
-      farmer.mobile,
-      farmer.email,
-      farmer.postalAddress,
-      farmer.farmerId,
-    ]);
+        farmer.dob,
+        farmer.gender,
+        farmer.idNo,
+        farmer.mobile,
+        farmer.email,
+        farmer.postalAddress,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
   }
 
   Future<int> updatePageThree(Farmer farmer) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    try {
+      return await database.rawUpdate('''
     UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
   ''', [
-      farmer.postalCode,
-      farmer.maritalStatusId,
-      farmer.agriSkillsId,
-      farmer.educationLevelId,
-      farmer.hhSize,
-      farmer.farmerId,
-    ]);
+        farmer.postalCode,
+        farmer.maritalStatusId,
+        farmer.agriSkillsId,
+        farmer.educationLevelId,
+        farmer.hhSize,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
   }
 
   Future<int> updatePageFour(Farmer farmer) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    try {
+      return await database.rawUpdate('''
     UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
   ''', [
-      farmer.farmerTheRespodent! ? 1 : 0,
-      farmer.respondentRlshpId,
-      farmer.respondentName,
-      farmer.respNationalId,
-      farmer.respondentMobile,
-      farmer.cropProd,
-      farmer.livestockProd,
-      farmer.fishFarming,
-      farmer.farmerId,
-    ]);
+        farmer.farmerTheRespodent! ? 1 : 0,
+        farmer.respondentRlshpId,
+        farmer.respondentName,
+        farmer.respNationalId,
+        farmer.respondentMobile,
+        farmer.cropProd,
+        farmer.livestockProd,
+        farmer.fishFarming,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
   }
 
   Future<List<Farmer>> fetchAll() async {

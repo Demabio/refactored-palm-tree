@@ -28,21 +28,53 @@ class FarmersIdentificationThreeBloc extends Bloc<
     ChangeDropDownEvent event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(
+      state.copyWith(
+        selectedDropDownValue: event.value,
+        farmersIdentificationThreeModelObj:
+            state.farmersIdentificationThreeModelObj?.copyWith(
+          selectedDropDownValue1:
+              state.farmersIdentificationThreeModelObj?.selectedDropDownValue1,
+          selectedDropDownValue2:
+              state.farmersIdentificationThreeModelObj?.selectedDropDownValue2,
+          selectedDropDownValue: event.value,
+        ),
+      ),
+    );
   }
 
   _changeDropDown1(
     ChangeDropDown1Event event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue1: event.value,
+      farmersIdentificationThreeModelObj:
+          state.farmersIdentificationThreeModelObj?.copyWith(
+        selectedDropDownValue:
+            state.farmersIdentificationThreeModelObj?.selectedDropDownValue,
+        selectedDropDownValue2:
+            state.farmersIdentificationThreeModelObj?.selectedDropDownValue2,
+        selectedDropDownValue1: event.value,
+      ),
+    ));
   }
 
   _changeDropDown2(
     ChangeDropDown2Event event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue2: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue2: event.value,
+      farmersIdentificationThreeModelObj:
+          state.farmersIdentificationThreeModelObj?.copyWith(
+        selectedDropDownValue1:
+            state.farmersIdentificationThreeModelObj?.selectedDropDownValue1,
+        selectedDropDownValue:
+            state.farmersIdentificationThreeModelObj?.selectedDropDownValue,
+        selectedDropDownValue2: event.value,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -118,7 +150,17 @@ class FarmersIdentificationThreeBloc extends Bloc<
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: 1,
+                pageFour: state
+                    .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -217,6 +259,16 @@ class FarmersIdentificationThreeBloc extends Bloc<
       hhSize = TextEditingController(text: farmer.hhSize.toString());
     }
 
+    int stepper = 2;
+    if (fiProgress.pageFour == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageThree == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (fiProgress.pageOne == 1) {
+      stepper = 1;
+    }
     emit(state.copyWith(
         codevalueoneController: TextEditingController(),
         hhsizevalueoneController: TextEditingController()));
@@ -231,6 +283,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
         selectedDropDownValue: selectedDropDownValue,
         selectedDropDownValue1: selectedDropDownValue1,
         selectedDropDownValue2: selectedDropDownValue2,
+        stepped2: stepper,
       ),
     ));
   }

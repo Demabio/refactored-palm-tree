@@ -127,15 +127,31 @@ class FarmersIdentificationOneBloc
               createdBy: userId,
             ));
             FIProgressDB fiProgressDB = FIProgressDB();
-            fiProgressDB
-                .insert(FIProgress(
-                  farmerId: value,
-                  pageOne: 1,
-                  pageTwo: 0,
-                  pageThree: 0,
-                  pageFour: 0,
-                ))
-                .then((value) => print("Scope FI" + value.toString()));
+            if (state.farmersIdentificationOneModelObj!.fiProgress!.pageOne ==
+                0) {
+              fiProgressDB
+                  .insert(FIProgress(
+                    farmerId: value,
+                    pageOne: 1,
+                    pageTwo: 0,
+                    pageThree: 0,
+                    pageFour: 0,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            } else {
+              fiProgressDB
+                  .update(FIProgress(
+                    farmerId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .farmersIdentificationOneModelObj!.fiProgress!.pageTwo,
+                    pageThree: state.farmersIdentificationOneModelObj!
+                        .fiProgress!.pageThree,
+                    pageFour: state
+                        .farmersIdentificationOneModelObj!.fiProgress!.pageFour,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            }
           } else {
             event.createFailed!.call();
           }
@@ -274,7 +290,7 @@ class FarmersIdentificationOneBloc
           pageFour: 0,
         );
 
-    print(farmer);
+    //print(farmer);
     TextEditingController villagename = TextEditingController();
     TextEditingController center = TextEditingController();
     TextEditingController fname = TextEditingController();
@@ -284,6 +300,16 @@ class FarmersIdentificationOneBloc
       center = TextEditingController(text: farmer.shoppingCenter);
       fname = TextEditingController(text: farmer.farmerName);
       idNo = TextEditingController(text: farmer.idNo);
+    }
+    int stepper = 0;
+    if (fiProgress.pageFour == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageThree == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (fiProgress.pageOne == 1) {
+      stepper = 1;
     }
     emit(
       state.copyWith(
@@ -295,6 +321,7 @@ class FarmersIdentificationOneBloc
               state.farmersIdentificationOneModelObj?.copyWith(
             fiProgress: fiProgress,
             farmer: farmer,
+            stepped2: stepper,
           )),
     );
   }

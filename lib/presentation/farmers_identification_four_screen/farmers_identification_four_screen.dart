@@ -78,6 +78,9 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           activeStep:
                                               farmersIdentificationOneModelObj!
                                                   .stepped,
+                                          onStepReached: (index) {
+                                            _navToStep(index, context);
+                                          },
                                           direction: Axis.horizontal,
                                           unreachedStepIconColor:
                                               theme.colorScheme.primary,
@@ -102,7 +105,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                       theme.colorScheme.primary,
                                                   child:
                                                       farmersIdentificationOneModelObj
-                                                                  .stepped <=
+                                                                  .stepped2 <=
                                                               0
                                                           ? Text(
                                                               '1', // You can replace '1' with the desired number
@@ -131,7 +134,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                       theme.colorScheme.primary,
                                                   child:
                                                       farmersIdentificationOneModelObj
-                                                                  .stepped <=
+                                                                  .stepped2 <=
                                                               1
                                                           ? Text(
                                                               '2', // You can replace '1' with the desired number
@@ -162,7 +165,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                       theme.colorScheme.primary,
                                                   child:
                                                       farmersIdentificationOneModelObj
-                                                                  .stepped <=
+                                                                  .stepped2 <=
                                                               2
                                                           ? Text(
                                                               '3', // You can replace '1' with the desired number
@@ -191,7 +194,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                       theme.colorScheme.primary,
                                                   child:
                                                       farmersIdentificationOneModelObj
-                                                                  .stepped <=
+                                                                  .stepped2 <=
                                                               3
                                                           ? Text(
                                                               '4', // You can replace '1' with the desired number
@@ -208,6 +211,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               title: 'Step 4',
+
                                               // topTitle: true,
                                             ),
                                           ],
@@ -231,6 +235,9 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           farmersIdentificationFourModelObj) {
                                         return CustomDropDown(
                                             autofocus: false,
+                                            val:
+                                                farmersIdentificationFourModelObj
+                                                    ?.selectedDropDownValue,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     30.h, 10.v, 9.h, 15.v),
@@ -524,6 +531,19 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
     NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
+  }
+
+  _navToStep(int val, BuildContext context) {
+    if (val == 0) {
+      Navigator.popAndPushNamed(
+          context, AppRoutes.farmersIdentificationOneScreen);
+    } else if (val == 1) {
+      Navigator.popAndPushNamed(
+          context, AppRoutes.farmersIdentificationTwoScreen);
+    } else if (val == 2) {
+      Navigator.popAndPushNamed(
+          context, AppRoutes.farmersIdentificationThreeScreen);
+    }
   }
 
   /// Navigates to the farmersIdentificationThreeScreen when the action is triggered.

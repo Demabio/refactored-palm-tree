@@ -1,5 +1,6 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
 import 'bloc/farmers_identification_one_bloc.dart';
@@ -78,7 +79,12 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                           return EasyStepper(
                             activeStep:
                                 farmersIdentificationOneModelObj!.stepped,
+                            onStepReached: (index) {
+                              _navToStep(index, context,
+                                  farmersIdentificationOneModelObj.fiProgress!);
+                            },
                             direction: Axis.horizontal,
+                            maxReachedStep: 3,
                             unreachedStepIconColor: theme.colorScheme.primary,
                             finishedStepIconColor: Colors.orange,
                             activeStepTextColor: Colors.black87,
@@ -98,7 +104,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                     radius: 25,
                                     backgroundColor: theme.colorScheme.primary,
                                     child: farmersIdentificationOneModelObj
-                                                .stepped <=
+                                                .stepped2 <=
                                             0
                                         ? Text(
                                             '1', // You can replace '1' with the desired number
@@ -121,7 +127,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                     radius: 25,
                                     backgroundColor: theme.colorScheme.primary,
                                     child: farmersIdentificationOneModelObj
-                                                .stepped <=
+                                                .stepped2 <=
                                             1
                                         ? Text(
                                             '2', // You can replace '1' with the desired number
@@ -146,7 +152,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                     radius: 25,
                                     backgroundColor: theme.colorScheme.primary,
                                     child: farmersIdentificationOneModelObj
-                                                .stepped <=
+                                                .stepped2 <=
                                             2
                                         ? Text(
                                             '3', // You can replace '1' with the desired number
@@ -169,7 +175,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                     radius: 25,
                                     backgroundColor: theme.colorScheme.primary,
                                     child: farmersIdentificationOneModelObj
-                                                .stepped <=
+                                                .stepped2 <=
                                             3
                                         ? Text(
                                             '4', // You can replace '1' with the desired number
@@ -183,6 +189,7 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                   ),
                                 ),
                                 title: 'Step 4',
+
                                 // topTitle: true,
                               ),
                             ],
@@ -393,6 +400,26 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
               },
             ),
           );
+    }
+  }
+
+  _navToStep(int val, BuildContext context, FIProgress fiProgress) {
+    if (_formKey.currentState!.validate()) {
+      if (val == 1 && fiProgress.pageTwo == 1) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationTwoScreen);
+      } else if (val == 2 &&
+          fiProgress.pageOne == 1 &&
+          fiProgress.pageTwo == 1) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationThreeScreen);
+      } else if (val == 3 &&
+          fiProgress.pageThree == 1 &&
+          fiProgress.pageTwo == 1 &&
+          fiProgress.pageThree == 1) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationFourScreen);
+      }
     }
   }
 

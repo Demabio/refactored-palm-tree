@@ -10,6 +10,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.d
 class FarmersIdentificationOneModel extends Equatable {
   FarmersIdentificationOneModel({
     this.stepped = 0,
+    this.stepped2 = 1,
     this.page1 = StepState.indexed,
     this.page2 = StepState.indexed,
     this.page3 = StepState.indexed,
@@ -19,6 +20,7 @@ class FarmersIdentificationOneModel extends Equatable {
   }) {}
 
   int stepped;
+  int stepped2;
 
   StepState? page1;
 
@@ -34,6 +36,7 @@ class FarmersIdentificationOneModel extends Equatable {
 
   FarmersIdentificationOneModel copyWith({
     int? stepped,
+    int? stepped2,
     StepState? page1,
     StepState? page2,
     StepState? page3,
@@ -43,6 +46,7 @@ class FarmersIdentificationOneModel extends Equatable {
   }) {
     return FarmersIdentificationOneModel(
       stepped: stepped ?? this.stepped,
+      stepped2: stepped2 ?? this.stepped2,
       page1: page1 ?? this.page1,
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
@@ -55,6 +59,7 @@ class FarmersIdentificationOneModel extends Equatable {
   @override
   List<Object?> get props => [
         stepped,
+        stepped2,
         page1,
         page2,
         page3,

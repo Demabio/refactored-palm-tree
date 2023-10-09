@@ -28,14 +28,32 @@ class FarmersIdentificationTwoBloc
     ChangeDropDownEvent event,
     Emitter<FarmersIdentificationTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(
+      state.copyWith(
+        selectedDropDownValue: event.value,
+        farmersIdentificationTwoModelObj:
+            state.farmersIdentificationTwoModelObj?.copyWith(
+          selectedDropDownValue: event.value,
+          selectedDropDownValue1:
+              state.farmersIdentificationTwoModelObj?.selectedDropDownValue1,
+        ),
+      ),
+    );
   }
 
   _changeDropDown1(
     ChangeDropDown1Event event,
     Emitter<FarmersIdentificationTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue1: event.value,
+      farmersIdentificationTwoModelObj:
+          state.farmersIdentificationTwoModelObj?.copyWith(
+        selectedDropDownValue1: event.value,
+        selectedDropDownValue:
+            state.farmersIdentificationTwoModelObj?.selectedDropDownValue,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -77,7 +95,18 @@ class FarmersIdentificationTwoBloc
       ))
           .then((value) {
         if (value > 0) {
-          //PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
+                pageFour: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
@@ -199,7 +228,7 @@ class FarmersIdentificationTwoBloc
           farmer: farmer,
           selectedDropDownValue: selectedyear,
           selectedDropDownValue1: genderselected,
-          stepped: stepper,
+          stepped2: stepper,
         ),
       ),
     );

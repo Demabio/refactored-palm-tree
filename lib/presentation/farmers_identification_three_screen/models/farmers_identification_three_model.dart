@@ -14,6 +14,7 @@ class FarmersIdentificationThreeModel extends Equatable {
     this.dropdownItemList1 = const [],
     this.dropdownItemList2 = const [],
     this.stepped = 2,
+    this.stepped2 = 1,
     this.page1 = StepState.complete,
     this.page2 = StepState.complete,
     this.page3 = StepState.indexed,
@@ -32,6 +33,7 @@ class FarmersIdentificationThreeModel extends Equatable {
   List<SelectionPopupModel> dropdownItemList2;
 
   int stepped;
+  int stepped2;
 
   StepState? page1;
 
@@ -56,6 +58,7 @@ class FarmersIdentificationThreeModel extends Equatable {
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     int? stepped,
+    int? stepped2,
     StepState? page1,
     StepState? page2,
     StepState? page3,
@@ -68,6 +71,7 @@ class FarmersIdentificationThreeModel extends Equatable {
       dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
       dropdownItemList2: dropdownItemList2 ?? this.dropdownItemList2,
       stepped: stepped ?? this.stepped,
+      stepped2: stepped2 ?? this.stepped2,
       page1: page1 ?? this.page1,
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
@@ -86,6 +90,7 @@ class FarmersIdentificationThreeModel extends Equatable {
         dropdownItemList1,
         dropdownItemList2,
         stepped,
+        stepped2,
         page1,
         page2,
         page3,

@@ -84,7 +84,16 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         (model) => model.id == (farmer.fishFarming! ? 1 : 0),
       );
     }
-
+    int stepper = 3;
+    if (fiProgress.pageFour == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageThree == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (fiProgress.pageOne == 1) {
+      stepper = 1;
+    }
     emit(
       state.copyWith(
         farmersIdentificationFourModelObj:
@@ -100,6 +109,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           selectedDropDownValue: selectedDropDownValue,
           selectedDropDownValue3: selectedDropDownValue3,
           selectedDropDownValue4: selectedDropDownValue4,
+          stepped2: stepper,
         ),
       ),
     );
@@ -110,39 +120,105 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
     emit(state.copyWith(
+      selectedDropDownValue: event.value,
+      farmersIdentificationFourModelObj:
+          state.farmersIdentificationFourModelObj?.copyWith(
+        isFarmer: event.value.id == 1,
         selectedDropDownValue: event.value,
-        farmersIdentificationFourModelObj:
-            state.farmersIdentificationFourModelObj?.copyWith(
-          isFarmer: event.value.id == 1,
-        )));
+        selectedDropDownValue1:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown1(
     ChangeDropDown1Event event,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue1: event.value,
+      farmersIdentificationFourModelObj:
+          state.farmersIdentificationFourModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown2(
     ChangeDropDown2Event event,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue2: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue2: event.value,
+      farmersIdentificationFourModelObj:
+          state.farmersIdentificationFourModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown3(
     ChangeDropDown3Event event,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue3: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue3: event.value,
+      farmersIdentificationFourModelObj:
+          state.farmersIdentificationFourModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown4(
     ChangeDropDown4Event event,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue4: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue4: event.value,
+      farmersIdentificationFourModelObj:
+          state.farmersIdentificationFourModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.farmersIdentificationFourModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   Future<List<SelectionPopupModel>> fetchRespondentRelationships() async {
@@ -211,7 +287,16 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       ))
           .then((value) {
         if (value > 0) {
-          PrefUtils().setFarmerId(value);
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo: 1,
+                pageThree: 1,
+                pageFour: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();
