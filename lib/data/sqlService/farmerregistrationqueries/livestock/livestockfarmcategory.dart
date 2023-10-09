@@ -11,21 +11,15 @@ class LivestockFarmSystemCategoryDB {
         "livestock_farmsystem_cat_id" INTEGER NOT NULL,
         "livestock_cat_id" INTEGER NOT NULL,
         "livestock_farmsystem_id" INTEGER NOT NULL,
-        "livestock_farmsys_cat_code" VARCHAR(25) NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "livestock_farmsys_cat_code" VARCHAR(25),
+        "date_created" DATETIME ,
+        "created_by" VARCHAR(255),
         PRIMARY KEY("livestock_farmsystem_cat_id")
       );
     """);
   }
 
-  Future<int> create({
-    required int livestockCatId,
-    required int livestockFarmSystemId,
-    required String livestockFarmSystemCatCode,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(LivestockFarmSystemCategory farmSystemCategory) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
@@ -33,11 +27,11 @@ class LivestockFarmSystemCategoryDB {
         date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      livestockCatId,
-      livestockFarmSystemId,
-      livestockFarmSystemCatCode,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      farmSystemCategory.livestockCatId,
+      farmSystemCategory.livestockFarmsystemId,
+      farmSystemCategory.livestockFarmsysCatCode,
+      DateTime.now().toLocal().toIso8601String(),
+      farmSystemCategory.createdBy,
     ]);
   }
 

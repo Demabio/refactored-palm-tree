@@ -1,9 +1,9 @@
 class FarmerLivestockFarmSystem {
-  final int farmerLivestockFarmSystemId;
-  final int farmerId;
-  final int livestockFarmSystemCatId;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerLivestockFarmSystemId;
+  int farmerId;
+  int? livestockFarmSystemCatId;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerLivestockFarmSystem({
     required this.farmerLivestockFarmSystemId,

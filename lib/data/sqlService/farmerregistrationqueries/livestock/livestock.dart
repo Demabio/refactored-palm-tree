@@ -11,11 +11,11 @@ class FarmerLivestockDB {
         "farmer_livestock_id" INTEGER NOT NULL,
         "farmer_id" INTEGER NOT NULL,
         "farmer_farm_id" INTEGER NOT NULL,
-        "livestock_farmsystem_cat_id" INTEGER NOT NULL,
-        "livestock_id" INTEGER NOT NULL,
-        "no_of_beehives" INTEGER NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "livestock_farmsystem_cat_id",
+        "livestock_id" INTEGER,
+        "no_of_beehives" INTEGER ,
+        "date_created" DATETIME ,
+        "created_by" VARCHAR(255) ,
         PRIMARY KEY("farmer_livestock_id")
       );
     """);
@@ -47,6 +47,37 @@ class FarmerLivestockDB {
     ]);
   }
 
+  Future<int> insertNonNulls(FarmerLivestock farmerLivestock) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (
+        farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', [
+      farmerLivestock.farmerId,
+      farmerLivestock.farmerFarmId,
+      farmerLivestock.livestockId,
+      farmerLivestock.livestockFarmsystemCatId,
+      farmerLivestock.noOfBeehives,
+      DateTime.now().toLocal().toIso8601String(),
+      farmerLivestock.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerLivestock farmerLivestock) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+        livestock_id = ?, livestock_farmsystem_cat_id = ?, no_of_beehives = ?
+      WHERE farmer_livestock_id = ?
+    ''', [
+      farmerLivestock.livestockId,
+      farmerLivestock.livestockFarmsystemCatId,
+      farmerLivestock.noOfBeehives,
+      farmerLivestock.farmerLivestockId,
+    ]);
+  }
+
   Future<int> insertLivestock(List<FarmerLivestock> livestockList) async {
     final database = await DatabaseService().database;
     final batch = database.batch();
@@ -63,7 +94,7 @@ class FarmerLivestockDB {
           livestock.livestockFarmsystemCatId,
           livestock.livestockId,
           livestock.noOfBeehives,
-          livestock.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           livestock.createdBy,
         ]);
       }

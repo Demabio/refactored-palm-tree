@@ -11,9 +11,9 @@ class FarmerLivestockFeedsDB {
         "farmer_livestockfeed_id" INTEGER NOT NULL,
         "farmer_livestock_id" INTEGER NOT NULL,
         "feed_type_id" INTEGER NOT NULL,
-        "feed_quantity" REAL NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "feed_quantity" REAL,
+        "date_created" DATETIME,
+        "created_by" VARCHAR(255),
         PRIMARY KEY("farmer_livestockfeed_id")
       );
     """);
@@ -35,7 +35,7 @@ class FarmerLivestockFeedsDB {
       farmerLivestockId,
       feedTypeId,
       feedQuantity,
-      dateCreated.toLocal().toIso8601String(),
+      DateTime.now().toLocal().toIso8601String(),
       createdBy,
     ]);
   }
@@ -53,7 +53,7 @@ class FarmerLivestockFeedsDB {
           feed.farmerLivestockId,
           feed.feedTypeId,
           feed.feedQuantity,
-          feed.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           feed.createdBy,
         ]);
       }
@@ -74,6 +74,13 @@ class FarmerLivestockFeedsDB {
     return feeds
         .map((e) => FarmerLivestockFeed.fromSqfliteDatabase(e))
         .toList();
+  }
+
+  Future<int> delete({required int id}) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
   }
 
   // Add more database methods as needed

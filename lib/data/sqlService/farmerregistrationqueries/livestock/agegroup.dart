@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -13,7 +14,7 @@ class FarmerLivestockAgeGroupsDB {
         "age_group_id" INTEGER NOT NULL,
         "no_of_livestock_male" INTEGER,
         "no_of_livestock_female" INTEGER,
-        "date_created" DATETIME NOT NULL,
+        "date_created" DATETIME,
         "created_by" INT,
         PRIMARY KEY("farmer_livestockagegroup_id")
       );
@@ -56,7 +57,7 @@ class FarmerLivestockAgeGroupsDB {
           ageGroup.ageGroupId,
           ageGroup.noOfLivestockMale,
           ageGroup.noOfLivestockFemale,
-          ageGroup.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           ageGroup.createdBy,
         ]);
       }
@@ -66,6 +67,13 @@ class FarmerLivestockAgeGroupsDB {
     } catch (e) {
       return 500;
     }
+  }
+
+  Future<int> delete({required int id}) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
   }
 
   Future<List<FarmerLivestockAgeGroup>> fetchAll() async {

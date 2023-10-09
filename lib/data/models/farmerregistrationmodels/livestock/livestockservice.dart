@@ -2,34 +2,34 @@ class FarmerLivestockService {
   final int farmerLivestockServicesId;
   final int farmerId;
   final int farmerFarmId;
-  final double livestockArea;
-  final int areaUnitId;
-  final bool fertilizerForFodder;
-  final bool fodderSeeds;
-  final bool fertilizerSeeds;
-  final int aiUse;
-  final int hormoneUse;
-  final bool embryoTransfer;
-  final bool routineVaccination;
-  final bool curativeMeasures;
-  final DateTime dateCreated;
+  final double? livestockArea;
+  final int? areaUnitId;
+  final bool? fertilizerForFodder;
+  final bool? fodderSeeds;
+  final bool? fertilizerSeeds;
+  final int? aiUse;
+  final int? hormoneUse;
+  final bool? embryoTransfer;
+  final bool? routineVaccination;
+  final bool? curativeMeasures;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerLivestockService({
     required this.farmerLivestockServicesId,
     required this.farmerId,
     required this.farmerFarmId,
-    required this.livestockArea,
-    required this.areaUnitId,
-    required this.fertilizerForFodder,
-    required this.fodderSeeds,
-    required this.fertilizerSeeds,
-    required this.aiUse,
-    required this.hormoneUse,
-    required this.embryoTransfer,
-    required this.routineVaccination,
-    required this.curativeMeasures,
-    required this.dateCreated,
+    this.livestockArea,
+    this.areaUnitId,
+    this.fertilizerForFodder,
+    this.fodderSeeds,
+    this.fertilizerSeeds,
+    this.aiUse,
+    this.hormoneUse,
+    this.embryoTransfer,
+    this.routineVaccination,
+    this.curativeMeasures,
+    this.dateCreated,
     this.createdBy,
   });
 

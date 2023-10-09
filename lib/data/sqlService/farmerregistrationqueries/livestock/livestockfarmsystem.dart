@@ -8,11 +8,11 @@ class FarmerLivestockFarmSystemDB {
   Future<void> createTable(Database database) async {
     await database.execute("""
       CREATE TABLE IF NOT EXISTS $tableName (
-        "farmer_livestock_farmsystem_id" INTEGER NOT NULL,
+        "farmer_livestock_farmsystem_id" INTEGER ,
         "farmer_id" INTEGER NOT NULL,
-        "livestock_farmsystem_cat_id" INTEGER NOT NULL,
-        "date_created" DATETIME NOT NULL,
-        "created_by" VARCHAR(255) NOT NULL,
+        "livestock_farmsystem_cat_id" INTEGER ,
+        "date_created" DATETIME,
+        "created_by" VARCHAR(255) ,
         PRIMARY KEY("farmer_livestock_farmsystem_id")
       );
     """);
@@ -50,7 +50,7 @@ class FarmerLivestockFarmSystemDB {
         ''', [
           farmSystem.farmerId,
           farmSystem.livestockFarmSystemCatId,
-          farmSystem.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           farmSystem.createdBy,
         ]);
       }

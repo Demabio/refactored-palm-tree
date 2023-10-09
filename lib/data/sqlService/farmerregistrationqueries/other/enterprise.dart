@@ -55,7 +55,7 @@ class FarmerEnterprisesDB {
           enterprise.farmerFarmId,
           enterprise.enterpriseId,
           enterprise.insured,
-          enterprise.dateCreated.toLocal().toIso8601String(),
+          enterprise.dateCreated?.toLocal().toIso8601String(),
           enterprise.createdBy,
         ]);
       }
@@ -81,6 +81,17 @@ class FarmerEnterprisesDB {
     final enterprises = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
+
+    return enterprises
+        .map((e) => FarmerEnterprise.fromSqfliteDatabase(e))
+        .toList();
+  }
+
+  Future<List<FarmerEnterprise>> fetchAllByFarmId(int id) async {
+    final database = await DatabaseService().database;
+    final enterprises = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+    ''', [id]);
 
     return enterprises
         .map((e) => FarmerEnterprise.fromSqfliteDatabase(e))

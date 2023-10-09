@@ -2,34 +2,34 @@ class FarmerCrop {
   final int farmerCropId;
   final int farmerId;
   final int farmerFarmId;
-  final int cropId;
-  final int cropCode;
+  final int? cropId;
+  final int? cropCode;
   final double? cropArea;
   final int? areaUnitId;
   final int? cropMotiveId;
   final int? waterSourceId;
   final bool? usageOfCertifiedSeeds;
-  final int cropSystemId;
-  final int fertilizerUse;
-  final int pesticideUse;
-  final DateTime dateCreated;
+  final int? cropSystemId;
+  final int? fertilizerUse;
+  final int? pesticideUse;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerCrop({
     required this.farmerCropId,
     required this.farmerId,
     required this.farmerFarmId,
-    required this.cropId,
-    required this.cropCode,
+    this.cropId,
+    this.cropCode,
     this.cropArea,
     this.areaUnitId,
     this.cropMotiveId,
     this.waterSourceId,
     this.usageOfCertifiedSeeds,
-    required this.cropSystemId,
-    required this.fertilizerUse,
-    required this.pesticideUse,
-    required this.dateCreated,
+    this.cropSystemId,
+    this.fertilizerUse,
+    this.pesticideUse,
+    this.dateCreated,
     this.createdBy,
   });
 

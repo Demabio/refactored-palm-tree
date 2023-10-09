@@ -435,8 +435,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
             ));
   }
 
-  addFeed(BuildContext context) {
-    showDialog(
+  addFeed(BuildContext context) async {
+    await showDialog(
         context: context,
         barrierDismissible: false,
         //barrierColor: const Color.fromARGB(255, 50, 50, 50),
@@ -446,5 +446,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),
             ));
+
+    // addAgeGroup(context);
   }
 }

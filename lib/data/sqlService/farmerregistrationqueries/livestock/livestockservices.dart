@@ -70,6 +70,40 @@ class FarmerLivestockServicesDB {
     ]);
   }
 
+  Future<int> insertNonNulls(
+      FarmerLivestockService farmerLivestockService) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (
+        farmer_id, farmer_farm_id, date_created, created_by
+      ) VALUES (?, ?, ?, ?)
+    ''', [
+      farmerLivestockService.farmerId,
+      farmerLivestockService.farmerFarmId,
+      DateTime.now().toLocal().toIso8601String(),
+      farmerLivestockService.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerLivestockService farmerLivestockService) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+        UPDATE  $tableName SET
+        area_unit_id = ?, fodder_seeds = ?, fertilizer_for_fodder = ?,  ai_use = ?, hormone_use = ?, embryo_transfer = ?, routine_vaccination = ?, curative_measures = ? 
+      WHERE farmer_livestock_services_id = ?
+    ''', [
+      farmerLivestockService.areaUnitId,
+      farmerLivestockService.fodderSeeds! ? 1 : 0,
+      farmerLivestockService.fertilizerForFodder! ? 1 : 0,
+      farmerLivestockService.aiUse!,
+      farmerLivestockService.hormoneUse,
+      farmerLivestockService.embryoTransfer,
+      farmerLivestockService.routineVaccination! ? 1 : 0,
+      farmerLivestockService.curativeMeasures! ? 1 : 0,
+      farmerLivestockService.farmerLivestockServicesId,
+    ]);
+  }
+
   Future<int> insertServices(List<FarmerLivestockService> services) async {
     final database = await DatabaseService().database;
     final batch = database.batch();
@@ -87,15 +121,15 @@ class FarmerLivestockServicesDB {
           service.farmerFarmId,
           service.livestockArea,
           service.areaUnitId,
-          service.fertilizerForFodder ? 1 : 0,
-          service.fodderSeeds ? 1 : 0,
-          service.fertilizerSeeds ? 1 : 0,
+          service.fertilizerForFodder! ? 1 : 0,
+          service.fodderSeeds! ? 1 : 0,
+          service.fertilizerSeeds! ? 1 : 0,
           service.aiUse,
           service.hormoneUse,
-          service.embryoTransfer ? 1 : 0,
-          service.routineVaccination ? 1 : 0,
-          service.curativeMeasures ? 1 : 0,
-          service.dateCreated.toLocal().toIso8601String(),
+          service.embryoTransfer! ? 1 : 0,
+          service.routineVaccination! ? 1 : 0,
+          service.curativeMeasures! ? 1 : 0,
+          DateTime.now().toLocal().toIso8601String(),
           service.createdBy,
         ]);
       }

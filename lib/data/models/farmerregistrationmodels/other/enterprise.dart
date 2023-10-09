@@ -1,11 +1,11 @@
 class FarmerEnterprise {
-  final int farmerEnterpriseId;
-  final int farmerFarmId;
-  final int enterpriseId;
-  final int? insured;
-  final String? insuranceName;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerEnterpriseId;
+  int farmerFarmId;
+  int enterpriseId;
+  int? insured;
+  String? insuranceName;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerEnterprise({
     required this.farmerEnterpriseId,
@@ -13,7 +13,7 @@ class FarmerEnterprise {
     required this.enterpriseId,
     this.insured,
     this.insuranceName,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

@@ -1,21 +1,21 @@
 class FarmerLivestock {
-  final int farmerLivestockId;
-  final int farmerId;
-  final int farmerFarmId;
-  final int? livestockFarmsystemCatId;
-  final int livestockId;
-  final int? noOfBeehives;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerLivestockId;
+  int farmerId;
+  int farmerFarmId;
+  int? livestockFarmsystemCatId;
+  int? livestockId;
+  int? noOfBeehives;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerLivestock({
     required this.farmerLivestockId,
     required this.farmerId,
     required this.farmerFarmId,
     this.livestockFarmsystemCatId,
-    required this.livestockId,
+    this.livestockId,
     this.noOfBeehives,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

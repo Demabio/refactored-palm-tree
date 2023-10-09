@@ -12,16 +12,16 @@ class FarmerCropsDB {
         "farmer_id" INTEGER NOT NULL,
         "farmer_farm_id" INTEGER NOT NULL,
         "crop_id" INTEGER NOT NULL,
-        "crop_code" VARCHAR(25) NOT NULL,
-        "crop_area" DOUBLE NOT NULL,
-        "area_unit_id" INTEGER NOT NULL,
-        "crop_motive_id" INTEGER NOT NULL,
-        "water_source_id" INTEGER NOT NULL,
+        "crop_code" VARCHAR(25),
+        "crop_area" DOUBLE,
+        "area_unit_id" INTEGER,
+        "crop_motive_id" INTEGER ,
+        "water_source_id" INTEGER,
         "usage_of_certified_seeds" BOOLEAN,
-        "crop_system_id" INTEGER NOT NULL,
+        "crop_system_id" INTEGER,
         "fertilizer_use" BOOLEAN,
         "pesticide_use" BOOLEAN,
-        "date_created" DATETIME NOT NULL,
+        "date_created" DATETIME,
         "created_by" INT,
         PRIMARY KEY("farmer_crop_id")
       );
@@ -67,6 +67,52 @@ class FarmerCropsDB {
     ]);
   }
 
+  Future<int> insertNonNullables(FarmerCrop farmerCrop) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      INSERT INTO $tableName (
+        farmer_id, farmer_farm_id, crop_id, crop_code, date_created, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    ''', [
+      farmerCrop.farmerId,
+      farmerCrop.farmerFarmId,
+      farmerCrop.cropId,
+      farmerCrop.cropCode,
+      DateTime.now().toLocal().toIso8601String(),
+      farmerCrop.createdBy,
+    ]);
+  }
+
+  Future<int> updatePageOne(FarmerCrop farmerCrop) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+      crop_area = ?, area_unit_id = ?, usage_of_certified_seeds = ?
+      WHERE crop_id = ?
+    ''', [
+      farmerCrop.cropArea,
+      farmerCrop.areaUnitId,
+      farmerCrop.usageOfCertifiedSeeds! ? 1 : 0,
+      farmerCrop.cropId,
+    ]);
+  }
+
+  Future<int> updatePageTwo(FarmerCrop farmerCrop) async {
+    final database = await DatabaseService().database;
+    return await database.rawUpdate('''
+      UPDATE  $tableName SET
+      crop_motive_id = ?, crop_system_id = ?, water_source_id = ?, pesticide_use = ?, fertilizer_use = ?
+      WHERE crop_id = ?
+    ''', [
+      farmerCrop.cropMotiveId,
+      farmerCrop.cropSystemId,
+      farmerCrop.waterSourceId,
+      farmerCrop.pesticideUse,
+      farmerCrop.fertilizerUse,
+      farmerCrop.cropId,
+    ]);
+  }
+
   Future<int> insertFarmerCrops(List<FarmerCrop> farmerCrops) async {
     final database = await DatabaseService().database;
     final batch = database.batch();
@@ -90,7 +136,7 @@ class FarmerCropsDB {
           farmerCrop.cropSystemId,
           farmerCrop.fertilizerUse == true ? 1 : 0,
           farmerCrop.pesticideUse == true ? 1 : 0,
-          farmerCrop.dateCreated.toLocal().toIso8601String(),
+          farmerCrop.dateCreated?.toLocal().toIso8601String(),
           farmerCrop.createdBy,
         ]);
       }
@@ -107,6 +153,15 @@ class FarmerCropsDB {
     final farmerCrops = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
+
+    return farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<FarmerCrop>> fetchAllByFarmer(int id) async {
+    final database = await DatabaseService().database;
+    final farmerCrops = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ?
+    ''', [id]);
 
     return farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList();
   }
