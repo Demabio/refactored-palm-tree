@@ -1,17 +1,17 @@
 class FarmerAssetSource {
-  final int farmerAssetSource;
-  final int farmerId;
-  final int farmerFarmId;
-  final int assetSourceId;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerAssetSource;
+  int farmerId;
+  int farmerFarmId;
+  int assetSourceId;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerAssetSource({
     required this.farmerAssetSource,
     required this.farmerId,
     required this.farmerFarmId,
     required this.assetSourceId,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

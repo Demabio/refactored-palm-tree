@@ -13,35 +13,42 @@ class FarmerAssetsDB {
         "farmer_farm_id" INTEGER NOT NULL,
         "farm_asset_id" INTEGER NOT NULL,
         "qty" INTEGER NOT NULL,
-        "usable_condition" BOOLEAN NOT NULL,
-        "date_created" DATETIME NOT NULL,
+        "usable_condition" BOOLEAN ,
+        "date_created" DATETIME ,
         "created_by" INT,
         PRIMARY KEY("farmer_asset_id")
       );
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int farmAssetId,
-    required int qty,
-    required bool usableCondition,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerAsset farmerAsset) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      farmAssetId,
-      qty,
-      usableCondition ? 1 : 0,
+      farmerAsset.farmerId,
+      farmerAsset.farmerFarmId,
+      farmerAsset.farmAssetId,
+      farmerAsset.qty,
+      farmerAsset.usableCondition,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerAsset.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerAsset farmerAsset) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        farm_asset_id = ?, qty = ?, usable_condition = ?
+      WHERE farmer_asset_id = ?
+    ''', [
+      farmerAsset.farmAssetId,
+      farmerAsset.qty,
+      farmerAsset.usableCondition,
+      farmerAsset.farmerAssetId,
     ]);
   }
 
@@ -60,7 +67,7 @@ class FarmerAssetsDB {
           asset.farmAssetId,
           asset.qty,
           asset.usableCondition,
-          asset.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           asset.createdBy,
         ]);
       }

@@ -21,27 +21,34 @@ class FarmerFishDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int fishTypeId,
-    required int productionTypeId,
-    required int noOfFingerlings,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerFish farmerFish) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      fishTypeId,
-      productionTypeId,
-      noOfFingerlings,
+      farmerFish.farmerId,
+      farmerFish.farmerFarmId,
+      farmerFish.fishTypeId,
+      farmerFish.productionTypeId,
+      farmerFish.noOfFingerlings,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerFish.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerFish farmerFish) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        fish_type_id = ?, production_type_id = ?, no_of_fingerlings = ?
+      WHERE farmer_fish_id = ?
+    ''', [
+      farmerFish.fishTypeId,
+      farmerFish.productionTypeId,
+      farmerFish.noOfFingerlings,
+      farmerFish.farmerFishId,
     ]);
   }
 
@@ -60,7 +67,7 @@ class FarmerFishDB {
           farmerFish.fishTypeId,
           farmerFish.productionTypeId,
           farmerFish.noOfFingerlings,
-          farmerFish.dateCreated.toLocal().toIso8601String(),
+          farmerFish.dateCreated?.toLocal().toIso8601String(),
           farmerFish.createdBy,
         ]);
       }

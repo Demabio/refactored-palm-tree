@@ -21,27 +21,21 @@ class FarmerFishProductionLevelsDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int productionLevelId,
-    bool? fertilizerInPonds,
-    String? espBenefit,
-    String? createdBy,
-  }) async {
+  Future<int> create(
+      FarmerFishProductionLevel farmerFishProductionLevel) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      productionLevelId,
-      fertilizerInPonds! ? 1 : 0,
-      espBenefit,
+      farmerFishProductionLevel.farmerId,
+      farmerFishProductionLevel.farmerFarmId,
+      farmerFishProductionLevel.productionLevelId,
+      farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0,
+      farmerFishProductionLevel.espBenefit,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerFishProductionLevel.createdBy,
     ]);
   }
 
@@ -59,9 +53,9 @@ class FarmerFishProductionLevelsDB {
           productionLevel.farmerId,
           productionLevel.farmerFarmId,
           productionLevel.productionLevelId,
-          productionLevel.fertilizerInPonds ? 1 : 0,
+          productionLevel.fertilizerInPonds! ? 1 : 0,
           productionLevel.espBenefit,
-          productionLevel.dateCreated.toLocal().toIso8601String(),
+          productionLevel.dateCreated?.toLocal().toIso8601String(),
           productionLevel.createdBy,
         ]);
       }

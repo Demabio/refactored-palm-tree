@@ -3,7 +3,7 @@ class FarmerStructure {
   final int farmerId;
   final int farmerFarmId;
   final int farmStructureId;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerStructure({
@@ -11,7 +11,7 @@ class FarmerStructure {
     required this.farmerId,
     required this.farmerFarmId,
     required this.farmStructureId,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

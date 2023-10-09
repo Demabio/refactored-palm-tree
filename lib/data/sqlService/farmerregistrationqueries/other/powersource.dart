@@ -13,32 +13,26 @@ class FarmerPowerSourceDB {
         "farmer_farm_id" INTEGER NOT NULL,
         "power_source_id" INTEGER NOT NULL,
         "others_name" VARCHAR(255),
-        "date_created" DATETIME NOT NULL,
+        "date_created" DATETIME,
         "created_by" INT,
         PRIMARY KEY("farm_power_source_id")
       );
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int powerSourceId,
-    String? othersName,
-    String? createdBy,
-  }) async {
+  Future<int> create(FarmerPowerSource farmerPowerSource) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, power_source_id, others_name, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      powerSourceId,
-      othersName,
+      farmerPowerSource.farmerId,
+      farmerPowerSource.farmerFarmId,
+      farmerPowerSource.powerSourceId,
+      farmerPowerSource.othersName,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerPowerSource.createdBy,
     ]);
   }
 
@@ -56,7 +50,7 @@ class FarmerPowerSourceDB {
           powerSource.farmerFarmId,
           powerSource.powerSourceId,
           powerSource.othersName,
-          powerSource.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           powerSource.createdBy,
         ]);
       }
@@ -66,6 +60,18 @@ class FarmerPowerSourceDB {
     } catch (e) {
       return 500;
     }
+  }
+
+  Future<int> update(FarmerPowerSource farmerPowerSource) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        power_source_id = ?
+      WHERE farm_power_source_id = ?
+    ''', [
+      farmerPowerSource.powerSourceId,
+      farmerPowerSource.farmPowerSourceId,
+    ]);
   }
 
   Future<List<FarmerPowerSource>> fetchAll() async {

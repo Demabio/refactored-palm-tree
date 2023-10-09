@@ -293,6 +293,22 @@ class FarmerDB {
     }
   }
 
+  Future<int> updateFromFarmAsset(Farmer farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET labourSourceId = ?  
+    WHERE farmerId = ? 
+  ''', [
+        farmer.labourSourceId,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
   Future<List<Farmer>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmerList = await database.rawQuery('SELECT * FROM $tableName');

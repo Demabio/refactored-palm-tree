@@ -1,21 +1,21 @@
 class FarmerFish {
-  final int farmerFishId;
-  final int farmerId;
-  final int farmerFarmId;
-  final int fishTypeId;
-  final int productionTypeId;
-  final int noOfFingerlings;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerFishId;
+  int farmerId;
+  int farmerFarmId;
+  int fishTypeId;
+  int? productionTypeId;
+  int? noOfFingerlings;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerFish({
     required this.farmerFishId,
     required this.farmerId,
     required this.farmerFarmId,
     required this.fishTypeId,
-    required this.productionTypeId,
-    required this.noOfFingerlings,
-    required this.dateCreated,
+    this.productionTypeId,
+    this.noOfFingerlings,
+    this.dateCreated,
     this.createdBy,
   });
 

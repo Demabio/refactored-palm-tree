@@ -3,9 +3,9 @@ class FarmerAsset {
   final int farmerId;
   final int farmerFarmId;
   final int farmAssetId;
-  final int qty;
+  final int? qty;
   final int? usableCondition;
-  final DateTime dateCreated;
+  final DateTime? dateCreated;
   final int? createdBy;
 
   FarmerAsset({
@@ -13,9 +13,9 @@ class FarmerAsset {
     required this.farmerId,
     required this.farmerFarmId,
     required this.farmAssetId,
-    required this.qty,
+    this.qty,
     this.usableCondition,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

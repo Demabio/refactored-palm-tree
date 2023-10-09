@@ -24,17 +24,8 @@ class FarmerFishProductionSystemDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int productionTypeId,
-    String? productionStatus,
-    double? activeArea,
-    int? numberOfActiveUnits,
-    double? inactiveArea,
-    int? numberOfInactiveUnits,
-    String? createdBy,
-  }) async {
+  Future<int> create(
+      FarmerFishProductionSystem farmerFishProductionSystem) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
@@ -42,16 +33,34 @@ class FarmerFishProductionSystemDB {
         no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      productionTypeId,
-      productionStatus,
-      activeArea,
-      numberOfActiveUnits,
-      inactiveArea,
-      numberOfInactiveUnits,
+      farmerFishProductionSystem.farmerId,
+      farmerFishProductionSystem.farmerFarmId,
+      farmerFishProductionSystem.productionTypeId,
+      farmerFishProductionSystem.productionStatus,
+      farmerFishProductionSystem.activeArea,
+      farmerFishProductionSystem.noOfActiveUnits,
+      farmerFishProductionSystem.inactiveArea,
+      farmerFishProductionSystem.noOfInactiveUnits,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerFishProductionSystem.createdBy,
+    ]);
+  }
+
+  Future<int> update(
+      FarmerFishProductionSystem farmerFishProductionSystem) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        production_type_id = ?, production_status = ?, active_area = ?, no_of_active_units = ?, inactive_area = ?, no_of_inactive_units = ?
+      WHERE farmer_fish_id = ?
+    ''', [
+      farmerFishProductionSystem.productionTypeId,
+      farmerFishProductionSystem.productionStatus,
+      farmerFishProductionSystem.activeArea,
+      farmerFishProductionSystem.noOfActiveUnits,
+      farmerFishProductionSystem.inactiveArea,
+      farmerFishProductionSystem.noOfInactiveUnits,
+      farmerFishProductionSystem.farmerFishprodId,
     ]);
   }
 

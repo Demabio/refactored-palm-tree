@@ -19,13 +19,7 @@ class FarmerStructureDB {
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int farmStructureId,
-    required DateTime dateCreated,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerStructure farmerStructure) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
@@ -33,11 +27,23 @@ class FarmerStructureDB {
         date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      farmStructureId,
-      dateCreated.toLocal().toIso8601String(),
-      createdBy,
+      farmerStructure.farmerId,
+      farmerStructure.farmerFarmId,
+      farmerStructure.farmStructureId,
+      DateTime.now().toLocal().toIso8601String(),
+      farmerStructure.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerStructure farmerStructure) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        farm_structure_id = ? 
+      WHERE farmer_asset_id = ?
+    ''', [
+      farmerStructure.farmStructureId,
+      farmerStructure.farmerAssetId,
     ]);
   }
 
@@ -55,7 +61,7 @@ class FarmerStructureDB {
           structure.farmerId,
           structure.farmerFarmId,
           structure.farmStructureId,
-          structure.dateCreated.toLocal().toIso8601String(),
+          structure.dateCreated?.toLocal().toIso8601String(),
           structure.createdBy,
         ]);
       }

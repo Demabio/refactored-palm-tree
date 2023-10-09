@@ -1,11 +1,11 @@
 class FarmerPowerSource {
-  final int farmPowerSourceId;
-  final int farmerId;
-  final int farmerFarmId;
-  final int powerSourceId;
-  final String? othersName;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmPowerSourceId;
+  int farmerId;
+  int farmerFarmId;
+  int powerSourceId;
+  String? othersName;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerPowerSource({
     required this.farmPowerSourceId,
@@ -13,7 +13,7 @@ class FarmerPowerSource {
     required this.farmerFarmId,
     required this.powerSourceId,
     this.othersName,
-    required this.dateCreated,
+    this.dateCreated,
     this.createdBy,
   });
 

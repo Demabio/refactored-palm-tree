@@ -12,30 +12,37 @@ class FarmerAssetSourceDB {
         "farmer_id" INTEGER NOT NULL,
         "farmer_farm_id" INTEGER NOT NULL,
         "asset_source_id" INTEGER NOT NULL,
-        "date_created" DATETIME NOT NULL,
+        "date_created" DATETIME ,
         "created_by" INT,
         PRIMARY KEY("farmer_asset_source_id")
       );
     """);
   }
 
-  Future<int> create({
-    required int farmerId,
-    required int farmerFarmId,
-    required int assetSourceId,
-    required String createdBy,
-  }) async {
+  Future<int> create(FarmerAssetSource farmerAssetSource) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, asset_source_id, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerId,
-      farmerFarmId,
-      assetSourceId,
+      farmerAssetSource.farmerId,
+      farmerAssetSource.farmerFarmId,
+      farmerAssetSource.assetSourceId,
       DateTime.now().toLocal().toIso8601String(),
-      createdBy,
+      farmerAssetSource.createdBy,
+    ]);
+  }
+
+  Future<int> update(FarmerAssetSource farmerAssetSource) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+      UPDATE  $tableName SET
+        asset_source_id = ? 
+      WHERE farmer_asset_source_id = ?
+    ''', [
+      farmerAssetSource.assetSourceId,
+      farmerAssetSource.farmerAssetSource,
     ]);
   }
 
@@ -52,7 +59,7 @@ class FarmerAssetSourceDB {
           assetSource.farmerId,
           assetSource.farmerFarmId,
           assetSource.assetSourceId,
-          assetSource.dateCreated.toLocal().toIso8601String(),
+          DateTime.now().toLocal().toIso8601String(),
           assetSource.createdBy,
         ]);
       }

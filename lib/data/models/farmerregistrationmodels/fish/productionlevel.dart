@@ -1,21 +1,21 @@
 class FarmerFishProductionLevel {
-  final int farmerProductionLevelId;
-  final int farmerId;
-  final int farmerFarmId;
-  final int productionLevelId;
-  final bool fertilizerInPonds;
-  final int espBenefit;
-  final DateTime dateCreated;
-  final int? createdBy;
+  int farmerProductionLevelId;
+  int farmerId;
+  int farmerFarmId;
+  int productionLevelId;
+  bool? fertilizerInPonds;
+  int? espBenefit;
+  DateTime? dateCreated;
+  int? createdBy;
 
   FarmerFishProductionLevel({
     required this.farmerProductionLevelId,
     required this.farmerId,
     required this.farmerFarmId,
     required this.productionLevelId,
-    required this.fertilizerInPonds,
-    required this.espBenefit,
-    required this.dateCreated,
+    this.fertilizerInPonds,
+    this.espBenefit,
+    this.dateCreated,
     this.createdBy,
   });
 
