@@ -79,6 +79,9 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                         activeStep:
                                             farmersIdentificationOneModelObj!
                                                 .stepped,
+                                        onStepReached: (index) {
+                                          _navToStep(index, context);
+                                        },
                                         direction: Axis.horizontal,
                                         unreachedStepIconColor:
                                             theme.colorScheme.primary,
@@ -209,6 +212,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                               ),
                                             ),
                                             title: 'Step 4',
+
                                             // topTitle: true,
                                           ),
                                         ],
@@ -243,6 +247,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                       return CustomDropDown(
                                                           width: 160.h,
                                                           autofocus: false,
+                                                          val: farmersIdentificationTwoModelObj
+                                                              ?.selectedDropDownValue,
                                                           icon: Container(
                                                               margin: EdgeInsets
                                                                   .fromLTRB(
@@ -301,6 +307,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                       return CustomDropDown(
                                                           width: 160.h,
                                                           autofocus: false,
+                                                          val: farmersIdentificationTwoModelObj
+                                                              ?.selectedDropDownValue1,
                                                           icon: Container(
                                                               margin: EdgeInsets
                                                                   .fromLTRB(
@@ -517,19 +525,41 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
     }
   }
 
+  _navToStep(int val, BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      if (val == 0) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationOneScreen);
+      } else if (val == 1) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationTwoScreen);
+      } else if (val == 2) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationThreeScreen);
+      } else if (val == 3) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.farmersIdentificationFourScreen);
+      }
+    }
+  }
+
   _successSaved(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
+    Navigator.popAndPushNamed(context, AppRoutes.farmersIdentificationScreen);
   }
 
   goBack(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.farmersIdentificationOneScreen);
   }
 
   goToDetails(BuildContext context) {
     PrefUtils().setFarmerId(0);
-    NavigatorService.popAndPushNamed(
-      AppRoutes.farmersIdentificationScreen,
-    );
+    // NavigatorService.popAndPushNamed(
+    //   AppRoutes.farmersIdentificationScreen,
+    // );
+    Navigator.popAndPushNamed(context, AppRoutes.farmersIdentificationScreen);
   }
 
   /// Navigates to the farmersIdentificationOneScreen when the action is triggered.
@@ -538,9 +568,11 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationOneScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.farmersIdentificationOneScreen,
-    );
+    // NavigatorService.pushNamed(
+    //   AppRoutes.farmersIdentificationOneScreen,
+    // );
+    Navigator.popAndPushNamed(
+        context, AppRoutes.farmersIdentificationOneScreen);
   }
 
   /// Navigates to the previous screen.

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -146,19 +148,58 @@ class FarmersIdentificationTwoBloc
           pageThree: 0,
           pageFour: 0,
         );
-    emit(state.copyWith(
-        idnumberoneController: TextEditingController(),
-        mobileNumberController: TextEditingController(),
-        emailController: TextEditingController(),
-        addressController: TextEditingController()));
+    int stepper = 0;
+
+    List<SelectionPopupModel> years = fillDropdownItemList();
+    List<SelectionPopupModel> gender = fillDropdownItemList1();
+    TextEditingController mobile = TextEditingController();
+    TextEditingController email = TextEditingController();
+    TextEditingController padrress = TextEditingController();
+    SelectionPopupModel? selectedyear;
+    SelectionPopupModel? genderselected;
+
+    if (fiProgress.pageTwo != 0 && farmer.farmerId != 0) {
+      selectedyear = years.firstWhere(
+        (model) => model.id == farmer.dob,
+      );
+
+      genderselected = gender.firstWhere(
+        (model) => model.id == farmer.gender,
+      );
+
+      mobile = TextEditingController(text: farmer.mobile);
+      email = TextEditingController(text: farmer.email);
+      padrress = TextEditingController(text: farmer.postalAddress);
+    }
+
+    if (fiProgress.pageFour == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageThree == 1) {
+      stepper = 3;
+    } else if (fiProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (fiProgress.pageOne == 1) {
+      stepper = 1;
+    }
+
+    emit(
+      state.copyWith(
+        mobileNumberController: mobile,
+        emailController: email,
+        addressController: padrress,
+      ),
+    );
     emit(
       state.copyWith(
         farmersIdentificationTwoModelObj:
             state.farmersIdentificationTwoModelObj?.copyWith(
-          dropdownItemList: fillDropdownItemList(),
-          dropdownItemList1: fillDropdownItemList1(),
+          dropdownItemList: years,
+          dropdownItemList1: gender,
           fiProgress: fiProgress,
           farmer: farmer,
+          selectedDropDownValue: selectedyear,
+          selectedDropDownValue1: genderselected,
+          stepped: stepper,
         ),
       ),
     );

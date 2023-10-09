@@ -53,17 +53,53 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           pageThree: 0,
           pageFour: 0,
         );
+    List<SelectionPopupModel> isFarmer = fillDropdownItemList();
+    List<SelectionPopupModel> relationshipFarmer =
+        await fetchRespondentRelationships();
+    List<SelectionPopupModel> crop = fillDropdownItemList2();
+    List<SelectionPopupModel> livestock = fillDropdownItemList2();
+    List<SelectionPopupModel> fish = fillDropdownItemList2();
+
+    SelectionPopupModel? selectedDropDownValue;
+    SelectionPopupModel? selectedDropDownValue1;
+    SelectionPopupModel? selectedDropDownValue2;
+    SelectionPopupModel? selectedDropDownValue3;
+    SelectionPopupModel? selectedDropDownValue4;
+
+    if (fiProgress.pageFour == 1) {
+      selectedDropDownValue = isFarmer.firstWhere(
+        (model) => model.id == (farmer.farmerTheRespodent! ? 1 : 0),
+      );
+
+      selectedDropDownValue1 = relationshipFarmer.firstWhere(
+        (model) => model.id == farmer.respondentRlshpId,
+      );
+      selectedDropDownValue2 = relationshipFarmer.firstWhere(
+        (model) => model.id == (farmer.cropProd! ? 1 : 0),
+      );
+      selectedDropDownValue3 = relationshipFarmer.firstWhere(
+        (model) => model.id == (farmer.livestockProd! ? 1 : 0),
+      );
+      selectedDropDownValue4 = relationshipFarmer.firstWhere(
+        (model) => model.id == (farmer.fishFarming! ? 1 : 0),
+      );
+    }
+
     emit(
       state.copyWith(
         farmersIdentificationFourModelObj:
             state.farmersIdentificationFourModelObj?.copyWith(
-          dropdownItemList: fillDropdownItemList(),
-          dropdownItemList1: await fetchRespondentRelationships(),
-          dropdownItemList2: fillDropdownItemList2(),
-          dropdownItemList3: fillDropdownItemList3(),
-          dropdownItemList4: fillDropdownItemList4(),
+          dropdownItemList: isFarmer,
+          dropdownItemList1: relationshipFarmer,
+          dropdownItemList2: crop,
+          dropdownItemList3: livestock,
+          dropdownItemList4: fish,
           fiProgress: fiProgress,
           farmer: farmer,
+          selectedDropDownValue1: selectedDropDownValue1,
+          selectedDropDownValue: selectedDropDownValue,
+          selectedDropDownValue3: selectedDropDownValue3,
+          selectedDropDownValue4: selectedDropDownValue4,
         ),
       ),
     );

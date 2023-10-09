@@ -189,17 +189,48 @@ class FarmersIdentificationThreeBloc extends Bloc<
           pageThree: 0,
           pageFour: 0,
         );
+    List<SelectionPopupModel> marital = await fetchMaritalStatus();
+    List<SelectionPopupModel> agriskill = fillDropdownItemList1();
+    List<SelectionPopupModel> formaled = await fetchEducationLevels();
+
+    SelectionPopupModel? selectedDropDownValue;
+    SelectionPopupModel? selectedDropDownValue1;
+    SelectionPopupModel? selectedDropDownValue2;
+
+    TextEditingController postalCode = TextEditingController();
+    TextEditingController hhSize = TextEditingController();
+
+    if (fiProgress.pageThree == 1) {
+      selectedDropDownValue = marital.firstWhere(
+        (model) => model.id == farmer.maritalStatusId,
+      );
+
+      selectedDropDownValue2 = formaled.firstWhere(
+        (model) => model.id == farmer.educationLevelId,
+      );
+
+      selectedDropDownValue1 = agriskill.firstWhere(
+        (model) => model.id == farmer.agriSkillsId,
+      );
+
+      postalCode = TextEditingController(text: farmer.postalCode);
+      hhSize = TextEditingController(text: farmer.hhSize.toString());
+    }
+
     emit(state.copyWith(
         codevalueoneController: TextEditingController(),
         hhsizevalueoneController: TextEditingController()));
     emit(state.copyWith(
       farmersIdentificationThreeModelObj:
           state.farmersIdentificationThreeModelObj?.copyWith(
-        dropdownItemList: await fetchMaritalStatus(),
-        dropdownItemList1: fillDropdownItemList1(),
-        dropdownItemList2: await fetchEducationLevels(),
+        dropdownItemList: marital,
+        dropdownItemList1: formaled,
+        dropdownItemList2: agriskill,
         fiProgress: fiProgress,
         farmer: farmer,
+        selectedDropDownValue: selectedDropDownValue,
+        selectedDropDownValue1: selectedDropDownValue1,
+        selectedDropDownValue2: selectedDropDownValue2,
       ),
     ));
   }
