@@ -1,3 +1,5 @@
+import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
+
 import '../models/cropdetails_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
@@ -6,13 +8,16 @@ import 'package:kiamis_app/core/app_export.dart';
 class CropdetailsItemWidget extends StatelessWidget {
   CropdetailsItemWidget(
     this.cropdetailsItemModelObj, {
+    this.edit,
+    this.delete,
     Key? key,
   }) : super(
           key: key,
         );
 
   CropdetailsItemModel cropdetailsItemModelObj;
-
+  VoidCallback? edit;
+  VoidCallback? delete;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +45,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.totalAcreage!,
+                  cropdetailsItemModelObj.name!,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelMedium,
                 ),
@@ -63,7 +68,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.unitOfArea!,
+                  cropdetailsItemModelObj.totalAcreage!,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelMedium,
                 ),
@@ -83,7 +88,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  "lbl_acre".tr,
+                  cropdetailsItemModelObj.unitOfArea!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -102,7 +107,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  "lbl_no".tr,
+                  cropdetailsItemModelObj.seeds!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -147,7 +152,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "lbl_irrigated".tr,
+                  cropdetailsItemModelObj.water!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -166,7 +171,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  "msg_organic_agriculture".tr,
+                  cropdetailsItemModelObj.system!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -185,7 +190,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  "lbl_no".tr,
+                  cropdetailsItemModelObj.fertiliser!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -204,17 +209,29 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  "lbl_no".tr,
+                  cropdetailsItemModelObj.pesticide!,
                   style: theme.textTheme.labelMedium,
                 ),
               ],
             ),
           ),
           SizedBox(height: 15.v),
-          CustomImageView(
-            svgPath: ImageConstant.imgFrame10164,
-            height: 39.v,
-            width: 324.h,
+          Row(
+            children: [
+              AppbarImage1(
+                  svgPath: ImageConstant.imgFrame33,
+                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  onTap: () {
+                    edit?.call();
+                  }),
+              Spacer(),
+              AppbarImage1(
+                  svgPath: ImageConstant.imgFrame34,
+                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  onTap: () {
+                    delete?.call();
+                  }),
+            ],
           ),
         ],
       ),

@@ -473,7 +473,9 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
       );
     }
     int stepper = 0;
-    if (caProgress.pageOne == 1) {
+    if (caProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (caProgress.pageOne == 1) {
       stepper = 1;
     }
     emit(
@@ -495,7 +497,6 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           selectedDropDownValue2: selecteduse,
           crop: crop,
           caProgressDB: caProgress,
-          stepped: stepper,
         ),
       ),
     );
