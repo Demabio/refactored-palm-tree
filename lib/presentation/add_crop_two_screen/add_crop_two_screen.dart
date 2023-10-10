@@ -430,10 +430,8 @@ class AddCropTwoScreen extends StatelessWidget {
   }
 
   _navToStep(int val, BuildContext context, CAProgress caProgress) {
-    if (_formKey.currentState!.validate()) {
-      if (val == 1 && caProgress.pageOne == 1) {
-        Navigator.popAndPushNamed(context, AppRoutes.addCropTwoScreen);
-      }
+    if (val == 0 && caProgress.pageOne == 1) {
+      Navigator.popAndPushNamed(context, AppRoutes.addCropOneScreen);
     }
   }
 

@@ -69,17 +69,21 @@ class FarmerCropsDB {
 
   Future<int> insertNonNullables(FarmerCrop farmerCrop) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    try {
+      return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, crop_id, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?)
     ''', [
-      farmerCrop.farmerId,
-      farmerCrop.farmerFarmId,
-      farmerCrop.cropId,
-      DateTime.now().toLocal().toIso8601String(),
-      farmerCrop.createdBy,
-    ]);
+        farmerCrop.farmerId,
+        farmerCrop.farmerFarmId,
+        farmerCrop.cropId,
+        DateTime.now().toLocal().toIso8601String(),
+        farmerCrop.createdBy,
+      ]);
+    } catch (e) {
+      throw (e);
+    }
   }
 
   Future<int> updatePageOne(FarmerCrop farmerCrop) async {
@@ -87,14 +91,14 @@ class FarmerCropsDB {
     return await database.rawUpdate('''
       UPDATE  $tableName SET
        crop_id = ?, crop_code = ?, crop_area = ?, area_unit_id = ?, usage_of_certified_seeds = ?
-      WHERE crop_id = ?
+      WHERE farmer_crop_id = ?
     ''', [
       farmerCrop.cropId,
-      farmerCrop.cropCode,
+      farmerCrop.cropCode.toString(),
       farmerCrop.cropArea,
       farmerCrop.areaUnitId,
       farmerCrop.usageOfCertifiedSeeds! ? 1 : 0,
-      farmerCrop.cropId,
+      farmerCrop.farmerCropId,
     ]);
   }
 
@@ -103,14 +107,14 @@ class FarmerCropsDB {
     return await database.rawUpdate('''
       UPDATE  $tableName SET
       crop_motive_id = ?, crop_system_id = ?, water_source_id = ?, pesticide_use = ?, fertilizer_use = ?
-      WHERE crop_id = ?
+      WHERE farmer_crop_id = ?
     ''', [
       farmerCrop.cropMotiveId,
       farmerCrop.cropSystemId,
       farmerCrop.waterSourceId,
       farmerCrop.pesticideUse,
       farmerCrop.fertilizerUse,
-      farmerCrop.cropId,
+      farmerCrop.farmerCropId,
     ]);
   }
 
@@ -167,13 +171,15 @@ class FarmerCropsDB {
     return farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<FarmerCrop> fetchByFarmerCropId(int farmerCropId) async {
+  Future<FarmerCrop?> fetchByFarmerCropId(int farmerCropId) async {
     final database = await DatabaseService().database;
     final farmerCrop = await database.rawQuery('''
       SELECT * FROM $tableName WHERE farmer_crop_id = ?
     ''', [farmerCropId]);
 
-    return FarmerCrop.fromSqfliteDatabase(farmerCrop.first);
+    return farmerCrop.isNotEmpty
+        ? FarmerCrop.fromSqfliteDatabase(farmerCrop.first)
+        : null;
   }
 
   // Add more database methods as needed

@@ -44,8 +44,8 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
     List<SelectionPopupModel> motive = await fetchMotives();
     List<SelectionPopupModel> syst = await fetchProductionSytems();
     List<SelectionPopupModel> water = await fetchWaterSources();
-    List<SelectionPopupModel> fert = await fillDropdownItemList3();
-    List<SelectionPopupModel> pest = fillDropdownItemList2();
+    List<SelectionPopupModel> fert = fillDropdownItemList3();
+    List<SelectionPopupModel> pest = fillDropdownItemList3();
 
     SelectionPopupModel? selectedmotive;
     SelectionPopupModel? selectedsyst;
@@ -75,13 +75,13 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
       );
     }
     int stepper = 0;
-    if (caProgress.pageTwo == 1) {
+    if (caProgress.pageOne == 1) {
       stepper = 1;
     }
     emit(
       state.copyWith(
         addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
-          dropdownItemList: water,
+          dropdownItemList: motive,
           dropdownItemList1: syst,
           dropdownItemList2: water,
           dropdownItemList3: pest,
@@ -135,7 +135,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
           CAProgressDB caProgressDB = CAProgressDB();
 
           caProgressDB
-              .insert(CAProgress(
+              .update(CAProgress(
                 cropId: value,
                 pageOne: state.addCropTwoModelObj!.caProgressDB!.pageOne,
                 pageTwo: 1,
@@ -156,35 +156,96 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
     ChangeDropDownEvent event,
     Emitter<AddCropTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue: event.value,
+      addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.addCropTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.addCropTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.addCropTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.addCropTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown1(
     ChangeDropDown1Event event,
     Emitter<AddCropTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue1: event.value,
+      addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
+        selectedDropDownValue1: event.value,
+        selectedDropDownValue: state.addCropTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue2:
+            state.addCropTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.addCropTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.addCropTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown2(
     ChangeDropDown2Event event,
     Emitter<AddCropTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue2: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue2: event.value,
+      addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
+        selectedDropDownValue2: event.value,
+        selectedDropDownValue1:
+            state.addCropTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue: state.addCropTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue3:
+            state.addCropTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.addCropTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown3(
     ChangeDropDown3Event event,
     Emitter<AddCropTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue3: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue3: event.value,
+      addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
+        selectedDropDownValue3: event.value,
+        selectedDropDownValue1:
+            state.addCropTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.addCropTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue: state.addCropTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue4:
+            state.addCropTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
   }
 
   _changeDropDown4(
     ChangeDropDown4Event event,
     Emitter<AddCropTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue4: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue4: event.value,
+      addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
+        selectedDropDownValue4: event.value,
+        selectedDropDownValue1:
+            state.addCropTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.addCropTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.addCropTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue: state.addCropTwoModelObj?.selectedDropDownValue,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {

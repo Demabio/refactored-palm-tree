@@ -94,17 +94,14 @@ class AddCropTwoModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
-      selectedDropDownValue:
-          selectedDropDownValue ?? this.selectedDropDownValue,
-      selectedDropDownValue1:
-          selectedDropDownValue1 ?? this.selectedDropDownValue1,
-      selectedDropDownValue2:
-          selectedDropDownValue2 ?? this.selectedDropDownValue2,
-      selectedDropDownValue3:
-          selectedDropDownValue3 ?? this.selectedDropDownValue3,
-      selectedDropDownValue4:
-          selectedDropDownValue4 ?? this.selectedDropDownValue4,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
       stepped2: stepped2 ?? this.stepped2,
+      caProgressDB: caProgressDB ?? this.caProgressDB,
+      crop: crop ?? this.crop,
     );
   }
 
@@ -123,5 +120,10 @@ class AddCropTwoModel extends Equatable {
         caProgressDB,
         crop,
         stepped2,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
       ];
 }

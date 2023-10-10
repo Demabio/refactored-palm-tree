@@ -231,7 +231,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           farmerCropId: 0,
           farmerId: farmerid,
           cropCode: 0,
-          cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+          cropId: state.addCropOneModelObj!.selectedCrop?.id,
           farmerFarmId: PrefUtils().getFarmId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
@@ -248,7 +248,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                       state.addCropOneModelObj!.selectedDropDownValue1?.id,
                   usageOfCertifiedSeeds:
                       state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
-                  cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+                  cropId: state.addCropOneModelObj!.selectedCrop?.id,
                   farmerId: farmerid,
                   farmerFarmId: PrefUtils().getFarmId(),
                 ))
@@ -292,7 +292,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                     state.addCropOneModelObj!.selectedDropDownValue1?.id,
                 usageOfCertifiedSeeds:
                     state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
-                cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+                cropId: state.addCropOneModelObj!.selectedCrop?.id,
                 farmerId: farmerid,
                 farmerFarmId: PrefUtils().getFarmId(),
               ))
@@ -331,7 +331,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           farmerCropId: 0,
           farmerId: farmerid,
           cropCode: 0,
-          cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+          cropId: state.addCropOneModelObj!.selectedCrop?.id,
           farmerFarmId: PrefUtils().getFarmId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
@@ -348,7 +348,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                       state.addCropOneModelObj!.selectedDropDownValue1?.id,
                   usageOfCertifiedSeeds:
                       state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
-                  cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+                  cropId: state.addCropOneModelObj!.selectedCrop?.id,
                   farmerId: farmerid,
                   farmerFarmId: PrefUtils().getFarmId(),
                 ))
@@ -392,7 +392,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                     state.addCropOneModelObj!.selectedDropDownValue1?.id,
                 usageOfCertifiedSeeds:
                     state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
-                cropId: state.addCropOneModelObj!.selectedDropDownValue?.id,
+                cropId: state.addCropOneModelObj!.selectedCrop?.id,
                 farmerId: farmerid,
                 farmerFarmId: PrefUtils().getFarmId(),
               ))
@@ -416,7 +416,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     event.createSuccessful!.call();
   }
 
-  Future<FarmerCrop?> getFarm() async {
+  Future<FarmerCrop?> getCrop() async {
     int cropId = PrefUtils().getCropId();
     FarmerCropsDB farmerCropsDB = FarmerCropsDB();
     return await farmerCropsDB.fetchByFarmerCropId(cropId);
@@ -432,7 +432,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     AddCropOneInitialEvent event,
     Emitter<AddCropOneState> emit,
   ) async {
-    FarmerCrop crop = await getFarm() ??
+    FarmerCrop crop = await getCrop() ??
         FarmerCrop(
           farmerId: PrefUtils().getFarmerId(),
           farmerFarmId: PrefUtils().getFarmId(),
@@ -464,16 +464,16 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
         (model) => model.id == crop.areaUnitId,
       );
 
-      selectedarea = crops.firstWhere(
+      selectedcrop = crops.firstWhere(
         (model) => model.id == crop.areaUnitId,
       );
 
-      selectedarea = useof.firstWhere(
+      selecteduse = useof.firstWhere(
         (model) => model.id == (crop.usageOfCertifiedSeeds! ? 1 : 0),
       );
     }
     int stepper = 0;
-    if (caProgress.pageTwo == 1) {
+    if (caProgress.pageOne == 1) {
       stepper = 1;
     }
     emit(
@@ -495,6 +495,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           selectedDropDownValue2: selecteduse,
           crop: crop,
           caProgressDB: caProgress,
+          stepped: stepper,
         ),
       ),
     );

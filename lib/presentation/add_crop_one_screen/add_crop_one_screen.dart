@@ -1,4 +1,5 @@
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
 
 import '../add_crop_one_screen/widgets/chipviewalbert_item_widget.dart';
@@ -352,6 +353,13 @@ class AddCropOneScreen extends StatelessWidget {
                                         return CustomTextFormField(
                                             autofocus: false,
                                             focusNode: node2,
+                                            validator: (value) {
+                                              if (!isNumeric(value,
+                                                  isRequired: true)) {
+                                                return "Invalid Input";
+                                              }
+                                            },
+                                            textInputType: TextInputType.number,
                                             controller: areavalueoneController,
                                             hintText: "lbl_area".tr,
                                             textInputAction:
@@ -388,6 +396,7 @@ class AddCropOneScreen extends StatelessWidget {
                                             items: addCropOneModelObj
                                                     ?.dropdownItemList1 ??
                                                 [],
+                                            focusNode: FocusNode(),
                                             onChanged: (value) {
                                               context
                                                   .read<AddCropOneBloc>()
