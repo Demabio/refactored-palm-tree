@@ -10,8 +10,8 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     this.titlesevenController,
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
-    this.aquacultureForS = false,
-    this.trash = false,
+    this.filled = false,
+    this.checked = false,
     this.growingCropsFor = false,
     this.trashone = false,
     this.trashtwo = false,
@@ -32,9 +32,9 @@ class PrimaryFarmHoldingTwoState extends Equatable {
 
   PrimaryFarmHoldingTwoModel? primaryFarmHoldingTwoModelObj;
 
-  bool aquacultureForS;
+  bool filled;
 
-  bool trash;
+  bool checked;
 
   bool growingCropsFor;
 
@@ -53,8 +53,8 @@ class PrimaryFarmHoldingTwoState extends Equatable {
         titlesevenController,
         selectedDropDownValue,
         selectedDropDownValue1,
-        aquacultureForS,
-        trash,
+        filled,
+        checked,
         growingCropsFor,
         trashone,
         trashtwo,
@@ -68,8 +68,8 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     TextEditingController? titlesevenController,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
-    bool? aquacultureForS,
-    bool? trash,
+    bool? filled,
+    bool? checked,
     bool? growingCropsFor,
     bool? trashone,
     bool? trashtwo,
@@ -85,8 +85,8 @@ class PrimaryFarmHoldingTwoState extends Equatable {
           selectedDropDownValue ?? this.selectedDropDownValue,
       selectedDropDownValue1:
           selectedDropDownValue1 ?? this.selectedDropDownValue1,
-      aquacultureForS: aquacultureForS ?? this.aquacultureForS,
-      trash: trash ?? this.trash,
+      filled: filled ?? this.filled,
+      checked: checked ?? this.checked,
       growingCropsFor: growingCropsFor ?? this.growingCropsFor,
       trashone: trashone ?? this.trashone,
       trashtwo: trashtwo ?? this.trashtwo,

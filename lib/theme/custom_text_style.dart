@@ -309,6 +309,9 @@ class CustomTextStyles {
   static get labelMediumPrimary_1 => theme.textTheme.labelMedium!.copyWith(
         color: theme.colorScheme.primary,
       );
+  static get labelMediumPrimary_1red => theme.textTheme.labelMedium!.copyWith(
+        color: const Color.fromARGB(255, 252, 17, 0),
+      );
   // Title text style
   static get titleLargeInterBluegray900 =>
       theme.textTheme.titleLarge!.inter.copyWith(

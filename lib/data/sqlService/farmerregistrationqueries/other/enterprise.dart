@@ -67,12 +67,12 @@ class FarmerEnterprisesDB {
     }
   }
 
-  Future<int> delete(FarmerEnterprise farmerEnterprise) async {
+  Future<int> delete(int farmerEnterprise) async {
     final database = await DatabaseService().database;
     return await database.rawDelete('''
      DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [
-      farmerEnterprise.farmerFarmId,
+      farmerEnterprise,
     ]);
   }
 

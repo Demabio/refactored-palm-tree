@@ -83,6 +83,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setFarmId(int value) {
+    return _sharedPreferences!.setInt('farmid', value);
+  }
+
+  int getFarmId() {
+    try {
+      return _sharedPreferences!.getInt('farmid') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   Future<void> setAddorEdit(bool value) {
     return _sharedPreferences!.setBool('addoredit', value);
   }
