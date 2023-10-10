@@ -71,13 +71,12 @@ class FarmerCropsDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, crop_id, crop_code, date_created, created_by
+        farmer_id, farmer_farm_id, crop_id, date_created, created_by
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       farmerCrop.farmerId,
       farmerCrop.farmerFarmId,
       farmerCrop.cropId,
-      farmerCrop.cropCode,
       DateTime.now().toLocal().toIso8601String(),
       farmerCrop.createdBy,
     ]);
@@ -87,9 +86,11 @@ class FarmerCropsDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      crop_area = ?, area_unit_id = ?, usage_of_certified_seeds = ?
+       crop_id = ?, crop_code = ?, crop_area = ?, area_unit_id = ?, usage_of_certified_seeds = ?
       WHERE crop_id = ?
     ''', [
+      farmerCrop.cropId,
+      farmerCrop.cropCode,
       farmerCrop.cropArea,
       farmerCrop.areaUnitId,
       farmerCrop.usageOfCertifiedSeeds! ? 1 : 0,

@@ -1,8 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropmotive.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropwatersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_crop_two_screen/models/add_crop_two_model.dart';
 part 'add_crop_two_event.dart';
@@ -17,22 +21,135 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
     on<ChangeDropDown2Event>(_changeDropDown2);
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
-    on<StepDownEvent>(_onSteppedDown);
-    on<OnSteppedEvent>(_onStepped);
-    on<StepUpEvent>(_onSteppedUp);
+    on<SaveTapEvent>(_saveTap);
   }
 
   _onInitialize(
     AddCropTwoInitialEvent event,
     Emitter<AddCropTwoState> emit,
   ) async {
-    emit(state.copyWith(
+    FarmerCrop crop = await getFarm() ??
+        FarmerCrop(
+          farmerId: PrefUtils().getFarmerId(),
+          farmerFarmId: PrefUtils().getFarmId(),
+          farmerCropId: 0,
+        );
+    CAProgress caProgress = await getProgress() ??
+        CAProgress(
+          cropId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    List<SelectionPopupModel> motive = await fetchMotives();
+    List<SelectionPopupModel> syst = await fetchProductionSytems();
+    List<SelectionPopupModel> water = await fetchWaterSources();
+    List<SelectionPopupModel> fert = await fillDropdownItemList3();
+    List<SelectionPopupModel> pest = fillDropdownItemList2();
+
+    SelectionPopupModel? selectedmotive;
+    SelectionPopupModel? selectedsyst;
+    SelectionPopupModel? selectedwater;
+    SelectionPopupModel? selectedfert;
+    SelectionPopupModel? selectedpest;
+
+    if (caProgress.pageTwo == 1 && crop.farmerCropId != 0) {
+      selectedmotive = motive.firstWhere(
+        (model) => model.id == crop.cropMotiveId,
+      );
+
+      selectedsyst = syst.firstWhere(
+        (model) => model.id == crop.cropSystemId,
+      );
+
+      selectedwater = water.firstWhere(
+        (model) => model.id == (crop.waterSourceId),
+      );
+
+      selectedfert = fert.firstWhere(
+        (model) => model.id == (crop.fertilizerUse!),
+      );
+
+      selectedpest = pest.firstWhere(
+        (model) => model.id == (crop.pesticideUse!),
+      );
+    }
+    int stepper = 0;
+    if (caProgress.pageTwo == 1) {
+      stepper = 1;
+    }
+    emit(
+      state.copyWith(
         addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
-            dropdownItemList: await fetchMotives(),
-            dropdownItemList1: await fetchProductionSytems(),
-            dropdownItemList2: await fetchWaterSources(),
-            dropdownItemList3: fillDropdownItemList3(),
-            dropdownItemList4: fillDropdownItemList4())));
+          dropdownItemList: water,
+          dropdownItemList1: syst,
+          dropdownItemList2: water,
+          dropdownItemList3: pest,
+          dropdownItemList4: fert,
+          caProgressDB: caProgress,
+          crop: crop,
+          selectedDropDownValue: selectedmotive,
+          selectedDropDownValue1: selectedsyst,
+          selectedDropDownValue2: selectedwater,
+          selectedDropDownValue3: selectedpest,
+          selectedDropDownValue4: selectedfert,
+          stepped2: stepper,
+        ),
+      ),
+    );
+  }
+
+  Future<FarmerCrop?> getFarm() async {
+    int cropId = PrefUtils().getCropId();
+    FarmerCropsDB farmerCropsDB = FarmerCropsDB();
+    return await farmerCropsDB.fetchByFarmerCropId(cropId);
+  }
+
+  Future<CAProgress?> getProgress() async {
+    int cropid = PrefUtils().getCropId();
+    CAProgressDB caProgressDB = CAProgressDB();
+    return await caProgressDB.fetchByCropId(cropid);
+  }
+
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<AddCropTwoState> emit,
+  ) {
+    FarmerCropsDB cropsDB = FarmerCropsDB();
+    int farmerid = PrefUtils().getFarmId();
+
+    try {
+      cropsDB
+          .updatePageTwo(FarmerCrop(
+        farmerCropId: PrefUtils().getCropId(),
+        cropMotiveId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        cropSystemId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        waterSourceId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        pesticideUse: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        fertilizerUse: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        farmerId: farmerid,
+        farmerFarmId: PrefUtils().getFarmId(),
+      ))
+          .then((value) async {
+        if (value > 0) {
+          CAProgressDB caProgressDB = CAProgressDB();
+
+          caProgressDB
+              .insert(CAProgress(
+                cropId: value,
+                pageOne: state.addCropTwoModelObj!.caProgressDB!.pageOne,
+                pageTwo: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
+      });
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
   _changeDropDown(
@@ -151,72 +268,5 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
       }
     });
     return list;
-  }
-
-  _onSteppedDown(
-    StepDownEvent event,
-    Emitter<AddCropTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
-          stepped: --state.addCropTwoModelObj?.stepped,
-          page1: state.addCropTwoModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addCropTwoModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addCropTwoModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addCropTwoModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onSteppedUp(
-    StepUpEvent event,
-    Emitter<AddCropTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
-          stepped: ++state.addCropTwoModelObj?.stepped,
-          page1: state.addCropTwoModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addCropTwoModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addCropTwoModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addCropTwoModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onStepped(
-    OnSteppedEvent event,
-    Emitter<AddCropTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addCropTwoModelObj: state.addCropTwoModelObj?.copyWith(
-          stepped: event.value,
-          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
-          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
-          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
-          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
-        ),
-      ),
-    );
   }
 }

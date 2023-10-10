@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
 import 'chipviewalbert_item_model.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
@@ -21,6 +23,12 @@ class AddCropOneModel extends Equatable {
     this.selectedCrop,
     this.search = false,
     this.searchValues,
+    this.crop,
+    this.caProgressDB,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
+    this.stepped2 = 0,
   }) {}
 
   List<ChipviewalbertItemModel> chipviewalbertItemList;
@@ -47,6 +55,16 @@ class AddCropOneModel extends Equatable {
 
   List<ChipviewalbertItemModel>? searchValues;
 
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+
+  SelectionPopupModel? selectedDropDownValue2;
+
+  CAProgress? caProgressDB;
+  FarmerCrop? crop;
+  int stepped2;
+
   AddCropOneModel copyWith({
     List<ChipviewalbertItemModel>? chipviewalbertItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -59,7 +77,13 @@ class AddCropOneModel extends Equatable {
     StepState? page4,
     SelectionPopupModel? selectedCrop,
     bool? search,
+    CAProgress? caProgressDB,
+    FarmerCrop? crop,
     List<ChipviewalbertItemModel>? searchValues,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
+    int? stepped2,
   }) {
     return AddCropOneModel(
       chipviewalbertItemList:
@@ -75,6 +99,12 @@ class AddCropOneModel extends Equatable {
       selectedCrop: selectedCrop,
       search: search ?? this.search,
       searchValues: searchValues ?? this.searchValues,
+      caProgressDB: caProgressDB ?? this.caProgressDB,
+      crop: crop ?? this.crop,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
+      stepped2: stepped2 ?? this.stepped2,
     );
   }
 
@@ -91,6 +121,12 @@ class AddCropOneModel extends Equatable {
         page4,
         selectedCrop,
         search,
-        searchValues
+        searchValues,
+        caProgressDB,
+        crop,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        selectedDropDownValue2,
+        stepped2,
       ];
 }

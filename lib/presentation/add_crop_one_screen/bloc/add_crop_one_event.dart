@@ -15,6 +15,44 @@ class AddCropOneInitialEvent extends AddCropOneEvent {
   List<Object?> get props => [];
 }
 
+class NextTapEvent extends AddCropOneEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddCropOneEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///Event for changing ChipView selection
 class UpdateChipViewEvent extends AddCropOneEvent {
   UpdateChipViewEvent({

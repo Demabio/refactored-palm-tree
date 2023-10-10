@@ -41,10 +41,10 @@ class CAProgressDB {
     ]);
   }
 
-  Future<CAProgress?> fetchByFarmerId(int farmerId) async {
+  Future<CAProgress?> fetchByCropId(int cropid) async {
     final database = await DatabaseService().database;
     final progress = await database
-        .rawQuery('SELECT * FROM $tableName WHERE "farmerId" = ?', [farmerId]);
+        .rawQuery('SELECT * FROM $tableName WHERE "cropId" = ?', [cropid]);
 
     return progress.isNotEmpty
         ? CAProgress.fromSqfliteDatabase(progress.first)

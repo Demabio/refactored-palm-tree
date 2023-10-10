@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
 /// This class defines the variables used in the [add_crop_two_screen],
@@ -18,6 +20,14 @@ class AddCropTwoModel extends Equatable {
     this.page2 = StepState.indexed,
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
+    this.crop,
+    this.caProgressDB,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
+    this.stepped2 = 0,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -40,6 +50,19 @@ class AddCropTwoModel extends Equatable {
 
   StepState? page4;
 
+  CAProgress? caProgressDB;
+  FarmerCrop? crop;
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+
+  SelectionPopupModel? selectedDropDownValue2;
+
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
+  int stepped2;
+
   AddCropTwoModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -51,6 +74,14 @@ class AddCropTwoModel extends Equatable {
     StepState? page2,
     StepState? page3,
     StepState? page4,
+    CAProgress? caProgressDB,
+    FarmerCrop? crop,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
+    int? stepped2,
   }) {
     return AddCropTwoModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -63,6 +94,17 @@ class AddCropTwoModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
+      selectedDropDownValue:
+          selectedDropDownValue ?? this.selectedDropDownValue,
+      selectedDropDownValue1:
+          selectedDropDownValue1 ?? this.selectedDropDownValue1,
+      selectedDropDownValue2:
+          selectedDropDownValue2 ?? this.selectedDropDownValue2,
+      selectedDropDownValue3:
+          selectedDropDownValue3 ?? this.selectedDropDownValue3,
+      selectedDropDownValue4:
+          selectedDropDownValue4 ?? this.selectedDropDownValue4,
+      stepped2: stepped2 ?? this.stepped2,
     );
   }
 
@@ -78,5 +120,8 @@ class AddCropTwoModel extends Equatable {
         page2,
         page3,
         page4,
+        caProgressDB,
+        crop,
+        stepped2,
       ];
 }

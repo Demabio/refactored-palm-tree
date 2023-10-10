@@ -95,6 +95,30 @@ class PrefUtils {
     }
   }
 
+  Future<void> setCropId(int value) {
+    return _sharedPreferences!.setInt('cropid', value);
+  }
+
+  int getCropId() {
+    try {
+      return _sharedPreferences!.getInt('cropid') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<void> setLivestockId(int value) {
+    return _sharedPreferences!.setInt('livestockid', value);
+  }
+
+  int getLivestockId() {
+    try {
+      return _sharedPreferences!.getInt('livestockid') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   Future<void> setAddorEdit(bool value) {
     return _sharedPreferences!.setBool('addoredit', value);
   }
