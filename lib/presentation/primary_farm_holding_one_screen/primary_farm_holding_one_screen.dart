@@ -384,7 +384,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                               margin:
                                                   EdgeInsets.only(left: 1.h),
                                               onTap: () {
-                                                onTapNext(context);
+                                                nextPage(context);
                                               }))
                                     ]),
                                 SizedBox(height: 12.v),
@@ -396,7 +396,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                             svgPath: ImageConstant
                                                 .imgSaveWhiteA700)),
                                     onTap: () {
-                                      onTapSave(context);
+                                      saveDraft(context);
                                     })
                               ])))))),
     );
@@ -443,7 +443,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
 
   _navToStep(int val, BuildContext context, PFProgress pfProgress) {
     if (_formKey.currentState!.validate()) {
-      if (val == 0 && pfProgress.pageOne == 1) {
+      if (val == 1 && pfProgress.pageOne == 1) {
         Navigator.popAndPushNamed(
             context, AppRoutes.primaryFarmHoldingTwoScreen);
       }

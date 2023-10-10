@@ -63,8 +63,8 @@ class FarmersIdentificationBloc
           farmerName: "NA",
         );
     EducationLevel? level = await getEducation(farmer.educationLevelId ?? 0);
-    RespondentRelationship? relationship =
-        await getRship(farmer.respondentRlshpId ?? 0);
+    RespondentRelationship? relationship = await getRship(
+        !farmer.farmerTheRespodent! ? farmer.respondentRlshpId! : 1);
     MaritalStatus? maritalStatus =
         await getMarstatus(farmer.maritalStatusId ?? 0);
 

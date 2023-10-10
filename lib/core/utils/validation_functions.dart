@@ -75,7 +75,7 @@ bool isNumeric(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^\d+$';
+    const pattern = r'^\d+(\.\d+)?$';
 
     final regExp = RegExp(pattern);
 

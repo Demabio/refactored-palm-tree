@@ -18,13 +18,20 @@ class PrimaryFarmHoldingOneBloc
       : super(initialState) {
     on<PrimaryFarmHoldingOneInitialEvent>(_onInitialize);
     on<ChangeDropDownEvent>(_changeDropDown);
+    on<NextTapEvent>(_nextTap);
+    on<SaveTapEvent>(_saveTap);
   }
 
   _changeDropDown(
     ChangeDropDownEvent event,
     Emitter<PrimaryFarmHoldingOneState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(state.copyWith(
+        selectedDropDownValue: event.value,
+        primaryFarmHoldingOneModelObj:
+            state.primaryFarmHoldingOneModelObj?.copyWith(
+          selectedDropDownValue: event.value,
+        )));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -148,7 +155,7 @@ class PrimaryFarmHoldingOneBloc
         farmDB
             .create(FarmerFarm(
           farmerFarmId: 0,
-          farmerId: 0,
+          farmerId: PrefUtils().getFarmerId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
         ))
@@ -229,7 +236,7 @@ class PrimaryFarmHoldingOneBloc
   }
 
   Future<PFProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     PFProgressDB pfProgressDB = PFProgressDB();
     return await pfProgressDB.fetchByFarmerId(farmerid);
   }
@@ -261,7 +268,7 @@ class PrimaryFarmHoldingOneBloc
     List<SelectionPopupModel> area = await fetchAreaUnits();
     SelectionPopupModel? selectedarea;
 
-    if (pfProgress.pageOne == 1 && farm.farmerId != 0) {
+    if (pfProgress.pageOne == 1 && farm.farmerFarmId != 0) {
       nameController = TextEditingController(text: farm.farmName);
       sizeController = TextEditingController(text: farm.farmSize.toString());
       sizeoneController =

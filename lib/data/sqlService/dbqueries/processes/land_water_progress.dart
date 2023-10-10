@@ -2,7 +2,7 @@ import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.da
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
-class LSProgressDB {
+class LWProgressDB {
   final String tableName = 'lw_progress';
 
   Future<void> createTable(Database database) async {

@@ -72,7 +72,9 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
       );
 
       selectedDropDownValue1 = relationshipFarmer.firstWhere(
-        (model) => model.id == farmer.respondentRlshpId,
+        (model) =>
+            model.id ==
+            (!farmer.farmerTheRespodent! ? farmer.respondentRlshpId : 1),
       );
       selectedDropDownValue2 = crop.firstWhere(
         (model) => model.id == (farmer.cropProd! ? 1 : 0),
@@ -111,6 +113,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           selectedDropDownValue3: selectedDropDownValue3,
           selectedDropDownValue4: selectedDropDownValue4,
           stepped2: stepper,
+          isFarmer: farmer.farmerTheRespodent,
         ),
       ),
     );
@@ -254,7 +257,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
             1,
         respondentRlshpId: state.farmersIdentificationFourModelObj!
                 .selectedDropDownValue1?.id ??
-            0,
+            1,
         cropProd: state.farmersIdentificationFourModelObj!
                 .selectedDropDownValue2!.id ==
             1,

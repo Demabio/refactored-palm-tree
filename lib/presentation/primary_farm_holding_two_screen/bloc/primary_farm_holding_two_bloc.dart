@@ -23,7 +23,8 @@ class PrimaryFarmHoldingTwoBloc
     on<PrimaryFarmHoldingTwoInitialEvent>(_onInitialize);
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
-
+    on<NextTapEvent>(_nextTap);
+    on<SaveTapEvent>(_saveTap);
     on<ChangeEnterprisesCheckbox>(_changeEnterpriseCB);
   }
 
@@ -31,14 +32,29 @@ class PrimaryFarmHoldingTwoBloc
     ChangeDropDownEvent event,
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue: event.value,
+      primaryFarmHoldingTwoModelObj:
+          state.primaryFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue1:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue: event.value,
+      ),
+    ));
   }
 
   _changeDropDown1(
     ChangeDropDown1Event event,
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
+    emit(state.copyWith(
+        selectedDropDownValue1: event.value,
+        primaryFarmHoldingTwoModelObj:
+            state.primaryFarmHoldingTwoModelObj?.copyWith(
+          selectedDropDownValue:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+          selectedDropDownValue1: event.value,
+        )));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -72,8 +88,12 @@ class PrimaryFarmHoldingTwoBloc
         primaryFarmHoldingTwoModelObj:
             state.primaryFarmHoldingTwoModelObj?.copyWith(
       enterprises: newModels,
-      //count: state.primaryFarmHoldingTwoModelObj!.count + 1,
+      count: state.primaryFarmHoldingTwoModelObj!.count + 1,
       enterprisesF: filled,
+      selectedDropDownValue:
+          state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+      selectedDropDownValue1:
+          state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
     )));
   }
 
@@ -116,8 +136,8 @@ class PrimaryFarmHoldingTwoBloc
     try {
       farmDB
           .updatePageTwo(FarmerFarm(
-        farmerId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerId,
-        farmerFarmId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+        farmerId: PrefUtils().getFarmerId(),
+        farmerFarmId: PrefUtils().getFarmId(),
         x: double.parse(state.titlethreeController!.text),
         y: double.parse(state.titleoneController!.text),
         ownershipId:
@@ -156,8 +176,8 @@ class PrimaryFarmHoldingTwoBloc
     try {
       farmDB
           .updatePageTwo(FarmerFarm(
-        farmerId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerId,
-        farmerFarmId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+        farmerId: PrefUtils().getFarmerId(),
+        farmerFarmId: PrefUtils().getFarmId(),
         x: double.parse(state.titlethreeController!.text),
         y: double.parse(state.titleoneController!.text),
         ownershipId:
@@ -172,7 +192,7 @@ class PrimaryFarmHoldingTwoBloc
           PFProgressDB pfProgressDB = PFProgressDB();
           pfProgressDB
               .update(PFProgress(
-                farmId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                farmId: PrefUtils().getFarmId(),
                 pageOne: 1,
                 pageTwo: 1,
               ))
@@ -190,6 +210,7 @@ class PrimaryFarmHoldingTwoBloc
                 farmerFarmId:
                     state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
                 enterpriseId: ent.enterpriseId!,
+                insured: 0,
                 dateCreated: DateTime.now(),
               ));
             }
@@ -214,7 +235,7 @@ class PrimaryFarmHoldingTwoBloc
   }
 
   Future<PFProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     PFProgressDB pfProgressDB = PFProgressDB();
     return await pfProgressDB.fetchByFarmerId(farmerid);
   }
@@ -253,7 +274,7 @@ class PrimaryFarmHoldingTwoBloc
     SelectionPopupModel? selectedowners;
     List<SelectionPopupModel> farms = fillDropdownItemList1();
     SelectionPopupModel? selectedfarms;
-    if (pfProgress.pageOne == 1 && farm.farmerId != 0) {
+    if (pfProgress.pageTwo == 1 && farm.farmerFarmId != 0) {
       titleoneController = TextEditingController(text: farm.y.toString());
       titlethreeController = TextEditingController(text: farm.x.toString());
       titlesevenController = TextEditingController(text: farm.farmLrCert);
@@ -299,6 +320,8 @@ class PrimaryFarmHoldingTwoBloc
           selectedDropDownValue: selectedowners,
           selectedDropDownValue1: selectedfarms,
           stepped2: stepper,
+          farm: farm,
+          pfProgress: pfProgress,
         ),
       ),
     );

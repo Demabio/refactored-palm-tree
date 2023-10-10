@@ -56,8 +56,8 @@ class FarmerFarm {
         x: map['x']?.toDouble(),
         y: map['y']?.toDouble(),
         accuracyLevel: map['accuracy_level']?.toDouble(),
-        otherFarmElsewhere: map['other_farm_elsewhere'],
+        otherFarmElsewhere: map['other_farm_elsewhere'] == 1,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'],
       );
 }

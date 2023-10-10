@@ -417,17 +417,20 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                   BlocSelector<
                                       PrimaryFarmHoldingTwoBloc,
                                       PrimaryFarmHoldingTwoState,
-                                      List<EnterpriseModel>?>(
-                                    selector: (state) => state
-                                        .primaryFarmHoldingTwoModelObj
-                                        ?.enterprises,
-                                    builder: (context, enterprises) {
+                                      PrimaryFarmHoldingTwoModel?>(
+                                    selector: (state) =>
+                                        state.primaryFarmHoldingTwoModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingTwoModelObj) {
                                       return Column(
                                         children: List<Widget>.generate(
-                                          enterprises?.length ?? 0,
+                                          primaryFarmHoldingTwoModelObj
+                                                  ?.enterprises.length ??
+                                              0,
                                           (index) {
                                             EnterpriseModel model =
-                                                enterprises?[index] ??
+                                                primaryFarmHoldingTwoModelObj
+                                                        ?.enterprises[index] ??
                                                     EnterpriseModel();
 
                                             return EnterprisesItemWidget(
@@ -463,7 +466,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                     CustomTextStyles
                                                         .bodyLargePrimary_2,
                                                 onTap: () {
-                                                  onTapBack(context);
+                                                  goBack(context);
                                                 })),
                                         Expanded(
                                             child: CustomElevatedButton(
@@ -482,7 +485,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),
                                       onTap: () {
-                                        onTapSave(context);
+                                        saveDraft(context);
                                       })
                                 ])))),
               ))),
@@ -541,7 +544,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
 
   goBack(BuildContext context) {
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
-    Navigator.popAndPushNamed(context, AppRoutes.primaryFarmHoldingScreen);
+    Navigator.popAndPushNamed(context, AppRoutes.primaryFarmHoldingOneScreen);
   }
 
   /// Navigates to the primaryFarmHoldingOneScreen when the action is triggered.
