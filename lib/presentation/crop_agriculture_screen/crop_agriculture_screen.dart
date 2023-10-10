@@ -24,78 +24,80 @@ class CropAgricultureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
-        child: Scaffold(
-            appBar: CustomAppBar(
-                leadingWidth: 60.h,
-                leading: AppbarImage(
-                    svgPath: ImageConstant.imgSort,
-                    margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
-                    onTap: () {
-                      onTapSortone(context);
-                    }),
-                centerTitle: true,
-                title: AppbarSubtitle1(text: "msg_crop_agriculture".tr),
-                actions: [
-                  AppbarImage1(
-                      svgPath: ImageConstant.imgFrame34WhiteA700,
-                      margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
-                      onTap: () {
-                        addorEdit(context, 0, 0);
-                      })
-                ],
-                styleType: Style.bgFill),
-            body: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.symmetric(horizontal: 11.h, vertical: 2.v),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.only(left: 9.h),
-                          child: Row(children: [
-                            Text("lbl_farmer_info".tr,
-                                style: CustomTextStyles.labelMediumPrimary),
-                            Padding(
-                                padding: EdgeInsets.only(left: 21.h),
-                                child: Text("msg_farmer_felix_faro".tr,
-                                    style: theme.textTheme.labelMedium))
-                          ])),
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.only(left: 9.h, top: 5.v),
-                              child: BlocSelector<
-                                      CropAgricultureBloc,
-                                      CropAgricultureState,
-                                      CropAgricultureModel?>(
-                                  selector: (state) =>
-                                      state.cropAgricultureModelObj,
-                                  builder: (context, cropAgricultureModelObj) {
-                                    return ListView.separated(
-                                        physics: BouncingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        separatorBuilder: (context, index) {
-                                          return SizedBox(height: 18.v);
-                                        },
-                                        itemCount: cropAgricultureModelObj
-                                                ?.cropdetailsItemList.length ??
-                                            0,
-                                        itemBuilder: (context, index) {
-                                          CropdetailsItemModel model =
-                                              cropAgricultureModelObj
-                                                          ?.cropdetailsItemList[
-                                                      index] ??
-                                                  CropdetailsItemModel();
-                                          return CropdetailsItemWidget(
-                                            model,
-                                            edit: () => addorEdit(
-                                              context,
-                                              1,
-                                              model.id!,
-                                            ),
-                                          );
-                                        });
-                                  })))
-                    ]))));
+      child: Scaffold(
+        appBar: CustomAppBar(
+            leadingWidth: 60.h,
+            leading: AppbarImage(
+                svgPath: ImageConstant.imgSort,
+                margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                onTap: () {
+                  onTapSortone(context);
+                }),
+            centerTitle: true,
+            title: AppbarSubtitle1(text: "msg_crop_agriculture".tr),
+            actions: [
+              AppbarImage1(
+                  svgPath: ImageConstant.imgFrame34WhiteA700,
+                  margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                  onTap: () {
+                    addorEdit(context, 0, 0);
+                  })
+            ],
+            styleType: Style.bgFill),
+        body: Container(
+          width: double.maxFinite,
+          padding: EdgeInsets.symmetric(horizontal: 11.h, vertical: 2.v),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 9.h),
+                  child: Row(children: [
+                    Text("lbl_farmer_info".tr,
+                        style: CustomTextStyles.labelMediumPrimary),
+                    Padding(
+                        padding: EdgeInsets.only(left: 21.h),
+                        child: Text("msg_farmer_felix_faro".tr,
+                            style: theme.textTheme.labelMedium))
+                  ])),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                  child: BlocSelector<CropAgricultureBloc, CropAgricultureState,
+                      CropAgricultureModel?>(
+                    selector: (state) => state.cropAgricultureModelObj,
+                    builder: (context, cropAgricultureModelObj) {
+                      return ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 18.v);
+                          },
+                          itemCount: cropAgricultureModelObj
+                                  ?.cropdetailsItemList.length ??
+                              0,
+                          itemBuilder: (context, index) {
+                            CropdetailsItemModel model = cropAgricultureModelObj
+                                    ?.cropdetailsItemList[index] ??
+                                CropdetailsItemModel();
+                            return CropdetailsItemWidget(
+                              model,
+                              edit: () => addorEdit(
+                                context,
+                                1,
+                                model.id!,
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   addorEdit(BuildContext context, int id, int crop) {

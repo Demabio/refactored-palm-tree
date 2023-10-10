@@ -14,3 +14,25 @@ class LivestockOneInitialEvent extends LivestockOneEvent {
   @override
   List<Object?> get props => [];
 }
+
+class AddEditEvent extends LivestockOneEvent {
+  AddEditEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}

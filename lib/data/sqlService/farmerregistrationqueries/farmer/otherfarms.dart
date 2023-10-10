@@ -3,7 +3,7 @@ import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerOtherFarmDB {
-  final tableName = 'tblfrfarmerotherfarms';
+  final tableName = 'tblfrfarmerotherfarm';
 
   Future<void> createTable(Database database) async {
     await database.execute("""
@@ -23,6 +23,7 @@ class FarmerOtherFarmDB {
         "x" DOUBLE,
         "y" DOUBLE,
         "accuracy_level" INTEGER,
+        "other_farm_elsewhere" INTEGER,
         "date_created" DATETIME,
         "created_by" INT,
         PRIMARY KEY("farmer_farm_id")
@@ -47,7 +48,7 @@ class FarmerOtherFarmDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      x = ?, y = ?, ownershipId = ?, farmLrCert = ?, otherFarmElsewhere = ?
+      x = ?, y = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
       WHERE farmer_farm_id = ?
     ''', [
       farm.x,
@@ -86,13 +87,15 @@ class FarmerOtherFarmDB {
     return farmerFarms.map((e) => FarmerFarm.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<FarmerFarm> fetchByFarmerFarmId(int farmerFarmId) async {
+  Future<FarmerFarm?> fetchByFarmerFarmId(int farmerFarmId) async {
     final database = await DatabaseService().database;
     final farmerFarm = await database.rawQuery('''
       SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [farmerFarmId]);
 
-    return FarmerFarm.fromSqfliteDatabase(farmerFarm.first);
+    return farmerFarm.isNotEmpty
+        ? FarmerFarm.fromSqfliteDatabase(farmerFarm.first)
+        : null;
   }
 
   // Add more database methods as needed
