@@ -1,7 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/enterprise.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmownership.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/enterpirses.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/otherfarms.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/enterprise.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farm_holding_two_screen/models/add_farm_holding_two_model.dart';
@@ -15,17 +22,8 @@ class AddFarmHoldingTwoBloc
       : super(initialState) {
     on<AddFarmHoldingTwoInitialEvent>(_onInitialize);
     on<ChangeDropDownEvent>(_changeDropDown);
-    on<ChangeDropDown1Event>(_changeDropDown1);
-    on<ChangeCheckBoxEvent>(_changeCheckBox);
-    on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
-    on<ChangeCheckBox3Event>(_changeCheckBox3);
-    on<ChangeCheckBox4Event>(_changeCheckBox4);
-    on<ChangeCheckBox5Event>(_changeCheckBox5);
-    on<ChangeCheckBox6Event>(_changeCheckBox6);
-    on<StepDownEvent>(_onSteppedDown);
-    on<OnSteppedEvent>(_onStepped);
-    on<StepUpEvent>(_onSteppedUp);
+
+    on<SaveTapEvent>(_saveTap);
     on<ChangeEnterprisesCheckbox>(_changeEnterpriseCB);
   }
 
@@ -33,63 +31,12 @@ class AddFarmHoldingTwoBloc
     ChangeDropDownEvent event,
     Emitter<AddFarmHoldingTwoState> emit,
   ) {
-    emit(state.copyWith(selectedDropDownValue: event.value));
-  }
-
-  _changeDropDown1(
-    ChangeDropDown1Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(selectedDropDownValue1: event.value));
-  }
-
-  _changeCheckBox(
-    ChangeCheckBoxEvent event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(aquacultureForS: event.value));
-  }
-
-  _changeCheckBox1(
-    ChangeCheckBox1Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(trash: event.value));
-  }
-
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(growingCropsFor: event.value));
-  }
-
-  _changeCheckBox3(
-    ChangeCheckBox3Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(trashone: event.value));
-  }
-
-  _changeCheckBox4(
-    ChangeCheckBox4Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(trashtwo: event.value));
-  }
-
-  _changeCheckBox5(
-    ChangeCheckBox5Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(trashthree: event.value));
-  }
-
-  _changeCheckBox6(
-    ChangeCheckBox6Event event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(state.copyWith(treeFarming: event.value));
+    emit(state.copyWith(
+      selectedDropDownValue: event.value,
+      addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -107,87 +54,27 @@ class AddFarmHoldingTwoBloc
     ];
   }
 
-  _onSteppedDown(
-    StepDownEvent event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
-          stepped: --state.addFarmHoldingTwoModelObj?.stepped,
-          page1: state.addFarmHoldingTwoModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addFarmHoldingTwoModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addFarmHoldingTwoModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addFarmHoldingTwoModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onSteppedUp(
-    StepUpEvent event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
-          stepped: ++state.addFarmHoldingTwoModelObj?.stepped,
-          page1: state.addFarmHoldingTwoModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addFarmHoldingTwoModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addFarmHoldingTwoModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addFarmHoldingTwoModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
-  _onStepped(
-    OnSteppedEvent event,
-    Emitter<AddFarmHoldingTwoState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
-          stepped: event.value,
-          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
-          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
-          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
-          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
-        ),
-      ),
-    );
-  }
-
   _changeEnterpriseCB(
     ChangeEnterprisesCheckbox event,
     Emitter<AddFarmHoldingTwoState> emit,
   ) {
+    bool filled = false;
     List<EnterpriseModel> newModels =
         state.addFarmHoldingTwoModelObj!.enterprises;
 
     newModels[event.value].isSelected = event.selected!;
-
+    int selectedCount =
+        newModels.where((enterprise) => enterprise.isSelected).length;
+    filled = selectedCount > 0;
     emit(state.copyWith(
+        filled: filled,
         addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
-      enterprises: newModels,
-      count: state.addFarmHoldingTwoModelObj!.count + 1,
-    )));
+          enterprises: newModels,
+          count: state.addFarmHoldingTwoModelObj!.count + 1,
+          enterprisesF: filled,
+          selectedDropDownValue:
+              state.addFarmHoldingTwoModelObj?.selectedDropDownValue,
+        )));
   }
 
   Future<List<SelectionPopupModel>> fetchOwnerships() async {
@@ -220,23 +107,150 @@ class AddFarmHoldingTwoBloc
     return list;
   }
 
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<AddFarmHoldingTwoState> emit,
+  ) {
+    FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
+    if (state.filled) {
+      try {
+        farmDB
+            .updatePageTwo(FarmerFarm(
+          farmerId: PrefUtils().getFarmerId(),
+          farmerFarmId: PrefUtils().getotherFarmId(),
+          ownershipId:
+              state.addFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
+          farmLrCert: state.titlethreeController?.text,
+          otherFarmElsewhere:
+              state.addFarmHoldingTwoModelObj?.selectedDropDownValue1!.id == 1,
+        ))
+            .then((value) async {
+          if (value > 0) {
+            PFProgressDB pfProgressDB = PFProgressDB();
+            pfProgressDB
+                .update(PFProgress(
+                  farmId: PrefUtils().getotherFarmId(),
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope PF " + value.toString()));
+            FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
+            int deleted = await farmerEnterprisesDB
+                .delete(state.addFarmHoldingTwoModelObj!.farm!.farmerFarmId);
+
+            List<FarmerEnterprise> ents = [];
+
+            for (var ent in state.addFarmHoldingTwoModelObj!.enterprises) {
+              if (ent.isSelected) {
+                ents.add(FarmerEnterprise(
+                  farmerEnterpriseId: 0,
+                  farmerFarmId:
+                      state.addFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                  enterpriseId: ent.enterpriseId!,
+                  insured: 0,
+                  dateCreated: DateTime.now(),
+                ));
+              }
+            }
+            await farmerEnterprisesDB
+                .insertEnterprises(ents)
+                .then((value) => print("inserted $value"));
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      } catch (e) {
+        event.createFailed!.call();
+      }
+    } else {
+      emit(state.copyWith(checked: true));
+      event.createFailed!.call();
+    }
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int farmid = PrefUtils().getotherFarmId();
+    FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
+    return await farmDB.fetchByFarmerFarmId(farmid);
+  }
+
+  Future<PFProgress?> getProgress() async {
+    int farmerid = PrefUtils().getotherFarmId();
+    PFProgressDB pfProgressDB = PFProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
+  }
+
+  Future<List<FarmerEnterprise>?> getEnterprises() async {
+    int farmid = PrefUtils().getotherFarmId();
+    FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
+    return await farmerEnterprisesDB.fetchAllByFarmId(farmid);
+  }
+
   _onInitialize(
     AddFarmHoldingTwoInitialEvent event,
     Emitter<AddFarmHoldingTwoState> emit,
   ) async {
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+        );
+    PFProgress pfProgress = await getProgress() ??
+        PFProgress(
+          farmId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    //print(farmer);
+
+    TextEditingController titlesevenController = TextEditingController();
+
+    List<FarmerEnterprise> farments = await getEnterprises() ?? [];
+    List<EnterpriseModel> ents = await fetchEnterprises();
+
+    List<SelectionPopupModel> owners = await fetchOwnerships();
+    SelectionPopupModel? selectedowners;
+    if (pfProgress.pageTwo == 1 && farm.farmerFarmId != 0) {
+      titlesevenController = TextEditingController(text: farm.farmLrCert);
+
+      selectedowners = owners.firstWhere(
+        (model) => model.id == farm.ownershipId,
+      );
+
+      for (var ent in farments) {
+        int index =
+            ents.indexWhere((obj) => obj.enterpriseId == ent.enterpriseId);
+
+        ents[index].isSelected = true;
+      }
+    }
+    int stepper = 0;
+    if (pfProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (pfProgress.pageOne == 1) {
+      stepper = 1;
+    }
     emit(state.copyWith(
-        titlethreeController: TextEditingController(),
-        aquacultureForS: false,
-        trash: false,
-        growingCropsFor: false,
-        trashone: false,
-        trashtwo: false,
-        trashthree: false,
-        treeFarming: false));
-    emit(state.copyWith(
+      titlethreeController: titlesevenController,
+      growingCropsFor: false,
+      trashone: false,
+      trashtwo: false,
+      trashthree: false,
+      treeFarming: false,
+    ));
+    emit(
+      state.copyWith(
         addFarmHoldingTwoModelObj: state.addFarmHoldingTwoModelObj?.copyWith(
-            enterprises: await fetchEnterprises(),
-            dropdownItemList: await fetchOwnerships(),
-            dropdownItemList1: fillDropdownItemList1())));
+          enterprises: ents,
+          dropdownItemList: owners,
+          selectedDropDownValue: selectedowners,
+          stepped2: stepper,
+          farm: farm,
+          pfProgress: pfProgress,
+        ),
+      ),
+    );
   }
 }

@@ -15,6 +15,8 @@ class AddFarmHoldingTwoState extends Equatable {
     this.trashtwo = false,
     this.trashthree = false,
     this.treeFarming = false,
+    this.filled = false,
+    this.checked = false,
     this.addFarmHoldingTwoModelObj,
   });
 
@@ -25,6 +27,9 @@ class AddFarmHoldingTwoState extends Equatable {
   SelectionPopupModel? selectedDropDownValue1;
 
   AddFarmHoldingTwoModel? addFarmHoldingTwoModelObj;
+  bool filled;
+
+  bool checked;
 
   bool aquacultureForS;
 
@@ -52,6 +57,8 @@ class AddFarmHoldingTwoState extends Equatable {
         trashtwo,
         trashthree,
         treeFarming,
+        filled,
+        checked,
         addFarmHoldingTwoModelObj,
       ];
   AddFarmHoldingTwoState copyWith({
@@ -66,6 +73,8 @@ class AddFarmHoldingTwoState extends Equatable {
     bool? trashthree,
     bool? treeFarming,
     AddFarmHoldingTwoModel? addFarmHoldingTwoModelObj,
+    bool? filled,
+    bool? checked,
   }) {
     return AddFarmHoldingTwoState(
       titlethreeController: titlethreeController ?? this.titlethreeController,
@@ -76,6 +85,8 @@ class AddFarmHoldingTwoState extends Equatable {
       aquacultureForS: aquacultureForS ?? this.aquacultureForS,
       trash: trash ?? this.trash,
       growingCropsFor: growingCropsFor ?? this.growingCropsFor,
+      filled: filled ?? this.filled,
+      checked: checked ?? this.checked,
       trashone: trashone ?? this.trashone,
       trashtwo: trashtwo ?? this.trashtwo,
       trashthree: trashthree ?? this.trashthree,

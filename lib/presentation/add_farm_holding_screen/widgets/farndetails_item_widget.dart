@@ -129,19 +129,6 @@ class FarmdetailsItemWidget extends StatelessWidget {
                     style: theme.textTheme.labelMedium))
           ]),
           SizedBox(height: 11.v),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-                width: 147.h,
-                child: Text("msg_do_you_have_another".tr,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.labelMediumPrimary)),
-            Padding(
-                padding: EdgeInsets.only(bottom: 15.v),
-                child: Text(farmdetailsItemModel.otherfarm!,
-                    style: theme.textTheme.labelMedium))
-          ]),
-          SizedBox(height: 15.v),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text("msg_legal_status_of".tr,
                 style: CustomTextStyles.labelMediumPrimary),

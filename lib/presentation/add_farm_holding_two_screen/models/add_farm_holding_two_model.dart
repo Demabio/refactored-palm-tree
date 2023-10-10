@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 
@@ -18,6 +20,12 @@ class AddFarmHoldingTwoModel extends Equatable {
     this.page4 = StepState.indexed,
     this.count = 0,
     this.enterprises = const [],
+    this.farm,
+    this.pfProgress,
+    this.stepped2 = 0,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.enterprisesF = false,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -32,6 +40,14 @@ class AddFarmHoldingTwoModel extends Equatable {
   StepState? page3;
   int count;
   List<EnterpriseModel> enterprises;
+  FarmerFarm? farm;
+
+  PFProgress? pfProgress;
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+  bool enterprisesF;
+  int stepped2;
 
   StepState? page4;
   AddFarmHoldingTwoModel copyWith({
@@ -44,6 +60,12 @@ class AddFarmHoldingTwoModel extends Equatable {
     StepState? page4,
     List<EnterpriseModel>? enterprises,
     int? count,
+    FarmerFarm? farm,
+    PFProgress? pfProgress,
+    int? stepped2,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? sselectedDropDownValue1,
+    bool? enterprisesF,
   }) {
     return AddFarmHoldingTwoModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -55,6 +77,12 @@ class AddFarmHoldingTwoModel extends Equatable {
       page4: page4 ?? this.page4,
       enterprises: enterprises ?? this.enterprises,
       count: count ?? this.count,
+      farm: farm ?? this.farm,
+      pfProgress: pfProgress ?? this.pfProgress,
+      stepped2: stepped2 ?? this.stepped2,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      enterprisesF: enterprisesF ?? this.enterprisesF,
     );
   }
 
@@ -69,5 +97,11 @@ class AddFarmHoldingTwoModel extends Equatable {
         page4,
         enterprises,
         count,
+        pfProgress,
+        farm,
+        stepped2,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        enterprisesF,
       ];
 }

@@ -95,6 +95,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setotherFarmId(int value) {
+    return _sharedPreferences!.setInt('otherfarmid', value);
+  }
+
+  int getotherFarmId() {
+    try {
+      return _sharedPreferences!.getInt('otherfarmid') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   Future<void> setCropId(int value) {
     return _sharedPreferences!.setInt('cropid', value);
   }

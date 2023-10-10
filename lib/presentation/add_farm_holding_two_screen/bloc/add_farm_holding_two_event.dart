@@ -27,6 +27,44 @@ class ChangeDropDownEvent extends AddFarmHoldingTwoEvent {
       ];
 }
 
+class NextTapEvent extends AddFarmHoldingTwoEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddFarmHoldingTwoEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddFarmHoldingTwoEvent {
   ChangeDropDown1Event({required this.value});

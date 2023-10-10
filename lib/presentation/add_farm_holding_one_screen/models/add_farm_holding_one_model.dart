@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
 /// This class defines the variables used in the [add_farm_holding_one_screen],
@@ -14,6 +16,10 @@ class AddFarmHoldingOneModel extends Equatable {
     this.page2 = StepState.indexed,
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
+    this.farm,
+    this.pfProgress,
+    this.stepped2 = 0,
+    this.selectedDropDownValue,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -26,6 +32,11 @@ class AddFarmHoldingOneModel extends Equatable {
   StepState? page3;
 
   StepState? page4;
+  FarmerFarm? farm;
+
+  PFProgress? pfProgress;
+  int stepped2;
+  SelectionPopupModel? selectedDropDownValue;
   AddFarmHoldingOneModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     int? stepped,
@@ -33,6 +44,10 @@ class AddFarmHoldingOneModel extends Equatable {
     StepState? page2,
     StepState? page3,
     StepState? page4,
+    FarmerFarm? farm,
+    PFProgress? pfProgress,
+    int? stepped2,
+    SelectionPopupModel? selectedDropDownValue,
   }) {
     return AddFarmHoldingOneModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -41,6 +56,11 @@ class AddFarmHoldingOneModel extends Equatable {
       page2: page2 ?? this.page2,
       page3: page3 ?? this.page3,
       page4: page4 ?? this.page4,
+      farm: farm ?? this.farm,
+      pfProgress: pfProgress ?? this.pfProgress,
+      stepped2: stepped2 ?? this.stepped2,
+      selectedDropDownValue:
+          selectedDropDownValue ?? this.selectedDropDownValue,
     );
   }
 
@@ -52,5 +72,9 @@ class AddFarmHoldingOneModel extends Equatable {
         page2,
         page3,
         page4,
+        pfProgress,
+        farm,
+        stepped2,
+        selectedDropDownValue,
       ];
 }

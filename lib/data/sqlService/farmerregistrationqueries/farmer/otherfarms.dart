@@ -48,14 +48,13 @@ class FarmerOtherFarmDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      x = ?, y = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
+      x = ?, y = ?, ownership_id = ?, farm_lr_cert = ?
       WHERE farmer_farm_id = ?
     ''', [
-      farm.x,
-      farm.y,
+      0,
+      0,
       farm.ownershipId,
       farm.farmLrCert,
-      farm.otherFarmElsewhere! ? 1 : 0,
       farm.farmerFarmId,
     ]);
   }
@@ -85,6 +84,17 @@ class FarmerOtherFarmDB {
     ''');
 
     return farmerFarms.map((e) => FarmerFarm.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<FarmerFarm>?> fetchAllByFarmer(int id) async {
+    final database = await DatabaseService().database;
+    final farmerFarms = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ?
+    ''', [id]);
+
+    return farmerFarms.isNotEmpty
+        ? farmerFarms.map((e) => FarmerFarm.fromSqfliteDatabase(e)).toList()
+        : [];
   }
 
   Future<FarmerFarm?> fetchByFarmerFarmId(int farmerFarmId) async {
