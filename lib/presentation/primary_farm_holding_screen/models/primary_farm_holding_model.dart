@@ -12,21 +12,30 @@ class PrimaryFarmHoldingModel extends Equatable {
     this.farm,
     this.pfProgress,
     this.enterprises = const [],
+    this.area,
+    this.owner,
   }) {}
   FarmerFarm? farm;
 
   PFProgress? pfProgress;
   List<EnterpriseModel> enterprises;
 
+  String? owner;
+  String? area;
+
   PrimaryFarmHoldingModel copyWith({
     FarmerFarm? farm,
     PFProgress? pfProgress,
+    String? owner,
+    String? area,
     List<EnterpriseModel>? enterprises,
   }) {
     return PrimaryFarmHoldingModel(
       farm: farm ?? this.farm,
       pfProgress: pfProgress ?? this.pfProgress,
       enterprises: enterprises ?? this.enterprises,
+      owner: owner ?? this.owner,
+      area: area ?? this.area,
     );
   }
 
@@ -35,5 +44,7 @@ class PrimaryFarmHoldingModel extends Equatable {
         pfProgress,
         farm,
         enterprises,
+        owner,
+        area,
       ];
 }

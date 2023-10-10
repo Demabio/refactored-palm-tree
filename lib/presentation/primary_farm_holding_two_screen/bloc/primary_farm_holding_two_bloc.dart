@@ -85,16 +85,17 @@ class PrimaryFarmHoldingTwoBloc
         newModels.where((enterprise) => enterprise.isSelected).length;
     filled = selectedCount > 0;
     emit(state.copyWith(
+        filled: filled,
         primaryFarmHoldingTwoModelObj:
             state.primaryFarmHoldingTwoModelObj?.copyWith(
-      enterprises: newModels,
-      count: state.primaryFarmHoldingTwoModelObj!.count + 1,
-      enterprisesF: filled,
-      selectedDropDownValue:
-          state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
-      selectedDropDownValue1:
-          state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
-    )));
+          enterprises: newModels,
+          count: state.primaryFarmHoldingTwoModelObj!.count + 1,
+          enterprisesF: filled,
+          selectedDropDownValue:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+          selectedDropDownValue1:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+        )));
   }
 
   Future<List<SelectionPopupModel>> fetchOwnerships() async {
@@ -172,58 +173,62 @@ class PrimaryFarmHoldingTwoBloc
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
     FarmerFarmDB farmDB = FarmerFarmDB();
+    if (state.filled) {
+      try {
+        farmDB
+            .updatePageTwo(FarmerFarm(
+          farmerId: PrefUtils().getFarmerId(),
+          farmerFarmId: PrefUtils().getFarmId(),
+          x: double.parse(state.titlethreeController!.text),
+          y: double.parse(state.titleoneController!.text),
+          ownershipId:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
+          farmLrCert: state.titlesevenController?.text,
+          otherFarmElsewhere:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
+                  1,
+        ))
+            .then((value) async {
+          if (value > 0) {
+            PFProgressDB pfProgressDB = PFProgressDB();
+            pfProgressDB
+                .update(PFProgress(
+                  farmId: PrefUtils().getFarmId(),
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope PF " + value.toString()));
+            FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
+            int deleted = await farmerEnterprisesDB.delete(
+                state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
-    try {
-      farmDB
-          .updatePageTwo(FarmerFarm(
-        farmerId: PrefUtils().getFarmerId(),
-        farmerFarmId: PrefUtils().getFarmId(),
-        x: double.parse(state.titlethreeController!.text),
-        y: double.parse(state.titleoneController!.text),
-        ownershipId:
-            state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
-        farmLrCert: state.titlesevenController?.text,
-        otherFarmElsewhere:
-            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
-                1,
-      ))
-          .then((value) async {
-        if (value > 0) {
-          PFProgressDB pfProgressDB = PFProgressDB();
-          pfProgressDB
-              .update(PFProgress(
-                farmId: PrefUtils().getFarmId(),
-                pageOne: 1,
-                pageTwo: 1,
-              ))
-              .then((value) => print("Scope PF " + value.toString()));
-          FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
-          int deleted = await farmerEnterprisesDB
-              .delete(state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
+            List<FarmerEnterprise> ents = [];
 
-          List<FarmerEnterprise> ents = [];
-
-          for (var ent in state.primaryFarmHoldingTwoModelObj!.enterprises) {
-            if (ent.isSelected) {
-              ents.add(FarmerEnterprise(
-                farmerEnterpriseId: 0,
-                farmerFarmId:
-                    state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
-                enterpriseId: ent.enterpriseId!,
-                insured: 0,
-                dateCreated: DateTime.now(),
-              ));
+            for (var ent in state.primaryFarmHoldingTwoModelObj!.enterprises) {
+              if (ent.isSelected) {
+                ents.add(FarmerEnterprise(
+                  farmerEnterpriseId: 0,
+                  farmerFarmId:
+                      state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                  enterpriseId: ent.enterpriseId!,
+                  insured: 0,
+                  dateCreated: DateTime.now(),
+                ));
+              }
             }
+            await farmerEnterprisesDB
+                .insertEnterprises(ents)
+                .then((value) => print("inserted $value"));
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
           }
-          await farmerEnterprisesDB
-              .insertEnterprises(ents)
-              .then((value) => print("inserted $value"));
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
-        }
-      });
-    } catch (e) {
+        });
+      } catch (e) {
+        event.createFailed!.call();
+      }
+    } else {
+      emit(state.copyWith(checked: true));
       event.createFailed!.call();
     }
   }

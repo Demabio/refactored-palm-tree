@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
@@ -8,7 +10,6 @@ class EnterprisesItemWidget extends StatelessWidget {
   EnterprisesItemWidget(
     this.enterpriseModel, {
     Key? key,
-    this.onSelect,
     this.height,
     this.width,
   }) : super(
@@ -17,20 +18,23 @@ class EnterprisesItemWidget extends StatelessWidget {
 
   EnterpriseModel enterpriseModel;
 
-  Function(bool)? onSelect;
-
   double? height;
 
   double? width;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      child: Text(
-        enterpriseModel.title,
-        style: theme.textTheme.labelMedium,
+    return Visibility(
+      visible: enterpriseModel.isSelected,
+      child: Container(
+        alignment: Alignment.centerLeft,
+        height: height,
+        width: width,
+        child: Text(
+          enterpriseModel.title,
+          style: theme.textTheme.labelMedium,
+          textAlign: TextAlign.left,
+        ),
       ),
     );
   }

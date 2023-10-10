@@ -53,6 +53,17 @@ class SaveTapEvent extends PrimaryFarmHoldingTwoEvent {
       ];
 }
 
+class CheckEntsEvent extends PrimaryFarmHoldingTwoEvent {
+  CheckEntsEvent({required this.value});
+
+  bool value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends PrimaryFarmHoldingTwoEvent {
   ChangeDropDownEvent({required this.value});

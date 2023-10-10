@@ -405,11 +405,11 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             "msg_what_enterprises".tr,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
-                                            style: !checked!
+                                            style: checked!
                                                 ? CustomTextStyles
                                                     .labelMediumPrimary_1red
                                                 : CustomTextStyles
-                                                    .labelMediumPrimary_1red,
+                                                    .labelMediumPrimary_1,
                                           ),
                                         );
                                       }),
@@ -512,8 +512,9 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
   }
 
   void _failed(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Something went wrong")));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Something went wrong, Kindly confirm all fields are filled.")));
   }
 
   saveDraft(BuildContext context) {
