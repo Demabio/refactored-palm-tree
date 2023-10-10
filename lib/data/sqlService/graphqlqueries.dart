@@ -569,4 +569,25 @@ class Graphql {
     }
   }
 ''';
+  static const String getallFishInput = r'''
+  query {
+    getallFishInput {
+      fishInputId
+      fishInput
+      description
+      dateCreated
+      createdBy
+    }
+  }
+''';
+
+  static const String getallIrrigationMembership = r'''
+  query {
+    getallIrrigationMembership {
+      membershipTypeId
+      irrigationMembershipType
+      dateCreated
+    }
+  }
+''';
 }

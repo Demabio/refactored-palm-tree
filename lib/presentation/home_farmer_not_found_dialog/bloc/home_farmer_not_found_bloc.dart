@@ -9,11 +9,13 @@ import 'package:kiamis_app/data/models/dbModels/fertiliser/fertilisertype.dart';
 import 'package:kiamis_app/data/models/dbModels/fertiliser/fertilisertypecategory.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fish.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishinput.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishproductionlevels.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishproductionuom.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationwatersources.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/agegroup.dart';
@@ -50,6 +52,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.d
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertypecategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
@@ -57,6 +60,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagenci
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
@@ -2091,6 +2095,82 @@ class HomeFarmerNotFoundBloc
       }).onError((error, stackTrace) {
         print(error.toString());
       });
+//fish input
+//       await _repository.setupServicePost(
+//         headers: {
+//           'Content-type': 'application/json',
+//           'Authorization': 'Bearer ${PrefUtils().getToken()}'
+//         },
+//         requestData: Graphql.getallFishInput,
+//       ).then((value) async {
+//         appraiser += 100;
+//         currentval = appraiser / full;
+//         currentpercentage = currentval * 100;
+//         final updatedState = state.copyWith(
+//           count: state.count + 1,
+//           linebarvalue: currentval,
+//           percentagedone: currentpercentage.toInt(),
+//         );
+//         emit(updatedState);
+//         List<FishInput> data = FishInput.parseFishInputs(value.data);
+//         await FishInputDB().insertFishInputs(data).then((value) {
+//           if (value == 200) {
+//             appraiser += 100;
+//             currentval = appraiser / full;
+//             currentpercentage = currentval * 100;
+//             final updatedState = state.copyWith(
+//               count: state.count + 1,
+//               linebarvalue: currentval,
+//               percentagedone: currentpercentage.toInt(),
+//             );
+//             emit(updatedState);
+//           } else {
+//             print("failed");
+//           }
+//         });
+//       }).onError((error, stackTrace) {
+//         print(error.toString());
+//       });
+
+// //fishcategory
+//       await _repository.setupServicePost(
+//         headers: {
+//           'Content-type': 'application/json',
+//           'Authorization': 'Bearer ${PrefUtils().getToken()}'
+//         },
+//         requestData: Graphql.getallExtensionModes,
+//       ).then((value) async {
+//         appraiser += 100;
+//         currentval = appraiser / full;
+//         currentpercentage = currentval * 100;
+//         final updatedState = state.copyWith(
+//           count: state.count + 1,
+//           linebarvalue: currentval,
+//           percentagedone: currentpercentage.toInt(),
+//         );
+//         emit(updatedState);
+//         List<IrrigationMembershipType> data =
+//             IrrigationMembershipType.parseIrrigationMembershipTypes(value.data);
+//         await IrrigationMembershipTypeDB()
+//             .insertIrrigationMembershipTypes(data)
+//             .then((value) {
+//           if (value == 200) {
+//             appraiser += 100;
+//             currentval = appraiser / full;
+//             currentpercentage = currentval * 100;
+//             final updatedState = state.copyWith(
+//               count: state.count + 1,
+//               linebarvalue: currentval,
+//               percentagedone: currentpercentage.toInt(),
+//             );
+//             emit(updatedState);
+//           } else {
+//             print("failed");
+//           }
+//         });
+//       }).onError((error, stackTrace) {
+//         print(error.toString());
+//       });
     } catch (e) {
       event.onFailed?.call();
     } finally {
@@ -2100,9 +2180,5 @@ class HomeFarmerNotFoundBloc
         event.onFailed?.call();
       }
     }
-
-// Crops
-
-    //event.onSuccess?.call();
   }
 }
