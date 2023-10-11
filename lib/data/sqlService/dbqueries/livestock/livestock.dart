@@ -134,7 +134,7 @@ class LivestockDB {
     ''', [livestockId]);
 
     return livestockItem.isNotEmpty
-        ? Livestock.fromSqfliteDatabase(livestockItem.first)
+        ? Livestock.fromSqfliteDatabaseJoined(livestockItem.first)
         : null;
   }
 

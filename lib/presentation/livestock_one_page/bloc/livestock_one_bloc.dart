@@ -27,6 +27,20 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
   LivestockOneBloc(LivestockOneState initialState) : super(initialState) {
     on<LivestockOneInitialEvent>(_onInitialize);
   }
+
+  _addEdit(
+    AddEditEvent event,
+    Emitter<LivestockOneState> emit,
+  ) {
+    if (event.value! == 1) {
+      PrefUtils().setLivestockId(event.crop!);
+      event.createSuccessful!.call();
+    } else {
+      PrefUtils().setLivestockId(0);
+      event.createSuccessful!.call();
+    }
+  }
+
   List<AgeGroupModel> _ages(
       List<AgeGroupModel> agemodelss, List<FarmerLivestockAgeGroup> agess) {
     List<AgeGroupModel> agemodels = agemodelss;
@@ -162,5 +176,9 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         prod: livestockFarmingSystem.livestockFarmsystem,
       ));
     }
+    emit(state.copyWith(
+        lslist: farmmodels,
+        livestockOneModelObj:
+            state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
   }
 }

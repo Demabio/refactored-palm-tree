@@ -85,6 +85,8 @@ class AddRearedLivestockOneBloc
           subcategories: subcategories,
           livestock: livestock,
           search: false,
+          selectedDropDownValue1:
+              state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
         )
         // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
         //     ?.copyWith(chipviewayrshiItemList: newList),
@@ -468,6 +470,8 @@ class AddRearedLivestockOneBloc
                     farmerLivestockAgegroupId: 0,
                     farmerLivestockId: value,
                     ageGroupId: ent.ageGroupId!,
+                    noOfLivestockMale: int.parse(ent.males!),
+                    noOfLivestockFemale: int.parse(ent.females!),
                     createdBy: userId,
                     dateCreated: DateTime.now(),
                   ));
@@ -552,42 +556,45 @@ class AddRearedLivestockOneBloc
           state.feedsdlist!.isNotEmpty) {
         if (farmerLivestockId != 0) {
           String agegroups = PrefUtils().getAgeGroups();
-          List<dynamic> decageGroupMapList = jsonDecode(agegroups);
+          if (agegroups == "0") {
+            List<dynamic> decageGroupMapList = jsonDecode(agegroups);
 
-          // Create a list of AgeGroupModel objects from the list of dynamic objects
-          List<AgeGroupModel> ageGroupList = decageGroupMapList
-              .map((json) => AgeGroupModel.fromJson(json))
-              .toList();
+            // Create a list of AgeGroupModel objects from the list of dynamic objects
+            List<AgeGroupModel> ageGroupList = decageGroupMapList
+                .map((json) => AgeGroupModel.fromJson(json))
+                .toList();
 
-          FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
-              FarmerLivestockAgeGroupsDB();
-          List<FarmerLivestockAgeGroup> ents = [];
+            FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+                FarmerLivestockAgeGroupsDB();
+            List<FarmerLivestockAgeGroup> ents = [];
 
-          for (var ent in ageGroupList) {
-            if (ent.isSelected) {
-              ents.add(FarmerLivestockAgeGroup(
-                farmerLivestockAgegroupId: 0,
-                farmerLivestockId: PrefUtils().getLivestockId(),
-                ageGroupId: ent.ageGroupId!,
-                createdBy: userId,
-                dateCreated: DateTime.now(),
-              ));
+            for (var ent in ageGroupList) {
+              if (ent.isSelected) {
+                ents.add(FarmerLivestockAgeGroup(
+                  farmerLivestockAgegroupId: 0,
+                  farmerLivestockId: PrefUtils().getLivestockId(),
+                  ageGroupId: ent.ageGroupId!,
+                  noOfLivestockMale: int.parse(ent.males!),
+                  noOfLivestockFemale: int.parse(ent.females!),
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                ));
+              }
             }
+            await farmerLivestockAgeGroupsDB
+                .delete(farmerLivestockId)
+                .then((value) => print("deleted $value"));
+            await farmerLivestockAgeGroupsDB
+                .insertAgeGroups(ents)
+                .then((value) => print("inserted $value"));
           }
-          await farmerLivestockAgeGroupsDB
-              .delete(farmerLivestockId)
-              .then((value) => print("deleted $value"));
-          await farmerLivestockAgeGroupsDB
-              .insertAgeGroups(ents)
-              .then((value) => print("inserted $value"));
 
           String feeds = PrefUtils().getFeeds();
 
           List<dynamic> feedsdlist = jsonDecode(feeds);
 
-          List<FeedsModel> feedslist = decageGroupMapList
-              .map((json) => FeedsModel.fromJson(json))
-              .toList();
+          List<FeedsModel> feedslist =
+              feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
 
           FarmerLivestockFeedsDB farmerLivestockFeedsDB =
               FarmerLivestockFeedsDB();
@@ -767,8 +774,8 @@ class AddRearedLivestockOneBloc
             state.addRearedLivestockOneModelObj?.copyWith(
           chipviewayrshiItemList:
               await fillCommonLivestock(), //fillChipviewayrshiItemList(),
-          categories: await fillCategories(),
-          dropdownItemList1: await fillProduction(),
+          categories: categ,
+          dropdownItemList1: prod,
           selectedCategory: selectedcateg,
           selectedLivestock: selectedlivestock,
           selectedSubCategory: selectedsubcateg,

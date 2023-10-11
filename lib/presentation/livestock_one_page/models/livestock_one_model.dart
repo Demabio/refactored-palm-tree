@@ -11,9 +11,9 @@ class LivestockOneModel extends Equatable {
     this.lsmodels = const [],
   }) {}
   List<LSdetailsItemModel> lsmodels;
-  LivestockOneModel copyWith(
+  LivestockOneModel copyWith({
     List<LSdetailsItemModel>? lsmodels,
-  ) {
+  }) {
     return LivestockOneModel(
       lsmodels: lsmodels ?? this.lsmodels,
     );
