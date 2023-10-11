@@ -6,6 +6,8 @@ import 'package:kiamis_app/presentation/livestock_one_page/models/agesmodel.dart
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 
+import '../../add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
+
 // ignore: must_be_immutable
 class AgeItemWidget extends StatelessWidget {
   AgeItemWidget(
@@ -17,7 +19,7 @@ class AgeItemWidget extends StatelessWidget {
           key: key,
         );
 
-  AgesModel enterpriseModel;
+  AgeGroupModel enterpriseModel;
 
   double? height;
 
@@ -39,11 +41,11 @@ class AgeItemWidget extends StatelessWidget {
               style: theme.textTheme.labelMedium,
             ),
             Text(
-              enterpriseModel.males!,
+              enterpriseModel.males ?? "0",
               style: theme.textTheme.labelMedium,
             ),
             Text(
-              enterpriseModel.females!,
+              enterpriseModel.females ?? "0",
               style: theme.textTheme.labelMedium,
             ),
           ],

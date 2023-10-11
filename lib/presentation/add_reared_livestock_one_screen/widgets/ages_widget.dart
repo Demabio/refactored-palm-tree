@@ -35,11 +35,11 @@ class AgeItemWidget extends StatelessWidget {
               style: theme.textTheme.labelMedium,
             ),
             Text(
-              enterpriseModel.males!,
+              enterpriseModel.males ?? "0",
               style: theme.textTheme.labelMedium,
             ),
             Text(
-              enterpriseModel.females!,
+              enterpriseModel.females ?? "0",
               style: theme.textTheme.labelMedium,
             ),
           ],

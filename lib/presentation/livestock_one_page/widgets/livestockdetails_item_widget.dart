@@ -1,12 +1,10 @@
-import 'package:kiamis_app/data/models/dbModels/livestock/agegroup.dart';
-import 'package:kiamis_app/presentation/livestock_one_page/models/agesmodel.dart';
-import 'package:kiamis_app/presentation/livestock_one_page/models/feedsmodel.dart';
-import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 
+import '../../add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 import '../models/livestock_item_model.dart';
 import 'ages_widget.dart';
 import 'feeds_widget.dart';
@@ -71,7 +69,7 @@ class LSdetailsItemWidget extends StatelessWidget {
               children: List<Widget>.generate(
                 farmdetailsItemModel.ages.length ?? 0,
                 (index) {
-                  AgesModel model = farmdetailsItemModel!.ages[index];
+                  AgeGroupModel model = farmdetailsItemModel!.ages[index];
 
                   return AgeItemWidget(
                     model,

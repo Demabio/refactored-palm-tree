@@ -1,9 +1,7 @@
-import 'package:kiamis_app/data/models/dbModels/livestock/agegroup.dart';
-import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
-import 'package:kiamis_app/data/models/dbModels/livestock/livestockfeedtypes.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
-import 'package:kiamis_app/presentation/livestock_one_page/models/agesmodel.dart';
-import 'package:kiamis_app/presentation/livestock_one_page/models/feedsmodel.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
+
+import '../../add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 
 /// This class is used in the [cropdetails_item_widget] screen.
 class LSdetailsItemModel {
@@ -37,7 +35,7 @@ class LSdetailsItemModel {
 
   String? lease;
   FarmerLivestock? farm;
-  List<AgesModel> ages;
+  List<AgeGroupModel> ages;
   List<FeedsModel> feeds;
 
   String? idle;

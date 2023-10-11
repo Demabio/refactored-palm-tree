@@ -97,7 +97,7 @@ class AddRearedLivestockDialogOneBloc extends Bloc<
       List<dynamic> decageGroupMapList = jsonDecode(feeds);
 
       // Create a list of AgeGroupModel objects from the list of dynamic objects
-      List<FeedsModel> feedmodels =
+      feedmodels =
           decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
     }
 

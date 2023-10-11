@@ -40,73 +40,71 @@ class LivestockOnePageState extends State<LivestockOnePage>
           child: Scaffold(
             body: SizedBox(
               width: mediaQueryData.size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 15.h,
-                        top: 11.v,
-                        right: 15.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "lbl_farmer_info".tr,
-                                style: CustomTextStyles.labelMediumPrimary,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 21.h),
-                                child: Text(
-                                  "msg_farmer_felix_faro".tr,
-                                  style: theme.textTheme.labelMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 13.v),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 9.h, top: 5.v),
-                              child: BlocSelector<LivestockOneBloc,
-                                  LivestockOneState, LivestockOneModel?>(
-                                selector: (state) => state.livestockOneModelObj,
-                                builder: (context, addFarmHoldingModelObj) {
-                                  return ListView.separated(
-                                      physics: BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(height: 18.v);
-                                      },
-                                      itemCount: addFarmHoldingModelObj
-                                              ?.lsmodels.length ??
-                                          0,
-                                      itemBuilder: (context, index) {
-                                        LSdetailsItemModel model =
-                                            addFarmHoldingModelObj
-                                                    ?.lsmodels[index] ??
-                                                LSdetailsItemModel();
-                                        return LSdetailsItemWidget(
-                                          model,
-                                          edit: () => addorEdit(
-                                            context,
-                                            1,
-                                            model.id!,
-                                          ),
-                                        );
-                                      });
-                                },
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 15.h,
+                      top: 11.v,
+                      right: 15.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "lbl_farmer_info".tr,
+                              style: CustomTextStyles.labelMediumPrimary,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 21.h),
+                              child: Text(
+                                "msg_farmer_felix_faro".tr,
+                                style: theme.textTheme.labelMedium,
                               ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: 13.v),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                            child: BlocSelector<LivestockOneBloc,
+                                LivestockOneState, LivestockOneModel?>(
+                              selector: (state) => state.livestockOneModelObj,
+                              builder: (context, addFarmHoldingModelObj) {
+                                return ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(height: 18.v);
+                                    },
+                                    itemCount: addFarmHoldingModelObj
+                                            ?.lsmodels.length ??
+                                        0,
+                                    itemBuilder: (context, index) {
+                                      LSdetailsItemModel model =
+                                          addFarmHoldingModelObj
+                                                  ?.lsmodels[index] ??
+                                              LSdetailsItemModel();
+                                      return LSdetailsItemWidget(
+                                        model,
+                                        edit: () => addorEdit(
+                                          context,
+                                          1,
+                                          model.id!,
+                                        ),
+                                      );
+                                    });
+                              },
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

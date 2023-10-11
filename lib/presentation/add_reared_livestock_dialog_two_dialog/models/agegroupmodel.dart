@@ -100,8 +100,8 @@ class AgeGroupModel extends Equatable {
     return {
       'title': title,
       'isSelected': isSelected,
-      'male': male?.text,
-      'female': female?.text,
+      'male': male?.text == "" ? "0" : male?.text,
+      'female': female?.text == "" ? "0" : female?.text,
       'ageGroupId': ageGroupId,
       // Add other properties as needed...
     };

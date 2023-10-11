@@ -45,6 +45,9 @@ class AddRearedLivestockOneBloc
     on<SaveTapEvent>(_saveTap);
     on<AddEditAgeEvent>(_addeditages);
     on<AddEditFeedEvent>(_addeditfeeds);
+    on<CheckAgeEvent>(_checkages);
+    on<CheckFeedEvent>(_checkfeeds);
+    on<ChangeDropDown1Event>(_changeDropDownProd);
   }
 
   _updateChipView(
@@ -175,6 +178,24 @@ class AddRearedLivestockOneBloc
     ));
   }
 
+  _changeDropDownProd(
+    ChangeDropDown1Event event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    emit(state.copyWith(
+      selectedLivestock: event.value,
+      addRearedLivestockOneModelObj:
+          state.addRearedLivestockOneModelObj?.copyWith(
+        selectedLivestock:
+            state.addRearedLivestockOneModelObj?.selectedLivestock,
+        selectedSubCategory:
+            state.addRearedLivestockOneModelObj?.selectedSubCategory,
+        selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+        selectedDropDownValue1: event.value,
+      ),
+    ));
+  }
+
   _searchLivestock(
     SearchEventLivestock event,
     Emitter<AddRearedLivestockOneState> emit,
@@ -290,8 +311,8 @@ class AddRearedLivestockOneBloc
     return list;
   }
 
-  _checkages(
-    CheckAgeEvent event,
+  _checkfeeds(
+    CheckFeedEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
     String feeds = PrefUtils().getFeeds();
@@ -303,12 +324,14 @@ class AddRearedLivestockOneBloc
       List<FeedsModel> feedmodels =
           decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
 
-      emit(state.copyWith(feedsdlist: feedmodels));
+      emit(state.copyWith(feedsdlist: feedmodels, checkedF: false));
+    } else {
+      emit(state.copyWith(checkedF: true));
     }
   }
 
-  _checkfeeds(
-    CheckFeedEvent event,
+  _checkages(
+    CheckAgeEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
     String ages = PrefUtils().getAgeGroups();
@@ -320,9 +343,9 @@ class AddRearedLivestockOneBloc
       agemodels = decageGroupMapList
           .map((json) => AgeGroupModel.fromJson(json))
           .toList();
-      emit(state.copyWith(ageGroupMapList: agemodels, checkedF: true));
-    } else {
-      emit(state.copyWith(checkedF: false));
+      emit(state.copyWith(
+        ageGroupMapList: agemodels,
+      ));
     }
   }
 
@@ -346,7 +369,7 @@ class AddRearedLivestockOneBloc
     AddEditAgeEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) {
-    if (state.feedsdlist!.isNotEmpty) {
+    if (state.ageGroupMapList!.isNotEmpty) {
       List<Map<String, dynamic>> ageGroupMapList =
           state.ageGroupMapList!.map((ageGroup) => ageGroup.toJson()).toList();
 
@@ -411,9 +434,9 @@ class AddRearedLivestockOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     FarmerLivestockDB farmDB = FarmerLivestockDB();
-    int farmerid = PrefUtils().getFarmId();
     try {
-      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0 &&
+          state.feedsdlist!.isNotEmpty) {
         farmDB
             .insertNonNulls(FarmerLivestock(
           farmerFarmId: PrefUtils().getFarmId(),
@@ -427,40 +450,41 @@ class AddRearedLivestockOneBloc
             PrefUtils().setLivestockId(value);
 
             String agegroups = PrefUtils().getAgeGroups();
-            List<dynamic> decageGroupMapList = jsonDecode(agegroups);
+            if (agegroups != "0") {
+              List<dynamic> decageGroupMapList = jsonDecode(agegroups);
 
-            // Create a list of AgeGroupModel objects from the list of dynamic objects
-            List<AgeGroupModel> ageGroupList = decageGroupMapList
-                .map((json) => AgeGroupModel.fromJson(json))
-                .toList();
+              // Create a list of AgeGroupModel objects from the list of dynamic objects
+              List<AgeGroupModel> ageGroupList = decageGroupMapList
+                  .map((json) => AgeGroupModel.fromJson(json))
+                  .toList();
 
-            FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
-                FarmerLivestockAgeGroupsDB();
-            List<FarmerLivestockAgeGroup> ents = [];
+              FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+                  FarmerLivestockAgeGroupsDB();
+              List<FarmerLivestockAgeGroup> ents = [];
 
-            for (var ent in ageGroupList) {
-              if (ent.isSelected) {
-                ents.add(FarmerLivestockAgeGroup(
-                  farmerLivestockAgegroupId: 0,
-                  farmerLivestockId: value,
-                  ageGroupId: ent.ageGroupId!,
-                  createdBy: userId,
-                  dateCreated: DateTime.now(),
-                ));
+              for (var ent in ageGroupList) {
+                if (ent.isSelected) {
+                  ents.add(FarmerLivestockAgeGroup(
+                    farmerLivestockAgegroupId: 0,
+                    farmerLivestockId: value,
+                    ageGroupId: ent.ageGroupId!,
+                    createdBy: userId,
+                    dateCreated: DateTime.now(),
+                  ));
+                }
               }
-            }
 
-            await farmerLivestockAgeGroupsDB
-                .insertAgeGroups(ents)
-                .then((value) => print("inserted $value"));
+              await farmerLivestockAgeGroupsDB
+                  .insertAgeGroups(ents)
+                  .then((value) => print("inserted $value"));
+            }
 
             String feeds = PrefUtils().getFeeds();
 
             List<dynamic> feedsdlist = jsonDecode(feeds);
 
-            List<FeedsModel> feedslist = decageGroupMapList
-                .map((json) => FeedsModel.fromJson(json))
-                .toList();
+            List<FeedsModel> feedslist =
+                feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
 
             FarmerLivestockFeedsDB farmerLivestockFeedsDB =
                 FarmerLivestockFeedsDB();
@@ -515,8 +539,8 @@ class AddRearedLivestockOneBloc
                         .addRearedLivestockOneModelObj!.lsProgress!.pageTwo,
                   ))
                   .then((value) => print("Scope FI" + value.toString()));
-              event.createSuccessful!.call();
             }
+            event.createSuccessful!.call();
           } else {
             event.createFailed!.call();
           }
@@ -524,7 +548,8 @@ class AddRearedLivestockOneBloc
       }
       int farmerLivestockId = PrefUtils().getLivestockId();
 
-      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1) {
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1 &&
+          state.feedsdlist!.isNotEmpty) {
         if (farmerLivestockId != 0) {
           String agegroups = PrefUtils().getAgeGroups();
           List<dynamic> decageGroupMapList = jsonDecode(agegroups);
@@ -606,8 +631,6 @@ class AddRearedLivestockOneBloc
     } catch (e) {
       event.createFailed!.call();
     }
-
-    event.createSuccessful!.call();
   }
 
   Future<List<FeedsModel>> fetchFeeds() async {
@@ -691,8 +714,8 @@ class AddRearedLivestockOneBloc
 
     LivestockDB livestockDB = LivestockDB();
 
-    List<AgeGroupModel>? ageGroupList = await fetchAgeGroups();
-    List<FeedsModel>? feedslist = await fetchFeeds();
+    List<AgeGroupModel>? ageGroupList = [];
+    List<FeedsModel>? feedslist = [];
     List<SelectionPopupModel> livestockmodels = [];
     SelectionPopupModel? selectedlivestock;
     List<SelectionPopupModel> categ = await fillCategories();
@@ -728,7 +751,8 @@ class AddRearedLivestockOneBloc
       List<FarmerLivestockAgeGroup>? ages = await getAges();
 
       List<FarmerLivestockFeed>? feeds = await getFeeds();
-
+      ageGroupList = await fetchAgeGroups();
+      feedslist = await fetchFeeds();
       feedslist = _feeds(feedslist, feeds!);
       ageGroupList = _ages(ageGroupList, ages!);
     }
@@ -752,6 +776,7 @@ class AddRearedLivestockOneBloc
           subcategories: subcateg,
           livestock: livestockmodels,
           livestockF: livestock,
+          lsProgress: pfProgress,
         ),
         feedsdlist: feedslist,
         ageGroupMapList: ageGroupList,
