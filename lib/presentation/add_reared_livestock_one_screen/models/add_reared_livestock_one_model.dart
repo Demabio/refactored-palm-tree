@@ -109,8 +109,7 @@ class AddRearedLivestockOneModel extends Equatable {
       feeds: feeds ?? this.feeds,
       beehive: beehive ?? this.beehive,
       system: system ?? this.system,
-      selectedDropDownValue1:
-          selectedDropDownValue1 ?? this.selectedDropDownValue1,
+      selectedDropDownValue1: selectedDropDownValue1,
     );
   }
 

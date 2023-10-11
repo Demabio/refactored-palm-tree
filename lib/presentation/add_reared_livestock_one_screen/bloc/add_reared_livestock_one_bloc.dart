@@ -110,6 +110,8 @@ class AddRearedLivestockOneBloc
       selectedCategory: categorymodel,
       selectedSubCategory: subcategorymodel,
       selectedLivestock: livestockmodel,
+      selectedDropDownValue1:
+          state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
     )));
   }
 
@@ -125,6 +127,8 @@ class AddRearedLivestockOneBloc
         selectedSubCategory:
             state.addRearedLivestockOneModelObj?.selectedSubCategory,
         selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+        selectedDropDownValue1:
+            state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
       ),
     ));
   }
@@ -141,6 +145,8 @@ class AddRearedLivestockOneBloc
           selectedCategory: event.value,
           selectedSubCategory: null,
           selectedLivestock: null,
+          selectedDropDownValue1:
+              state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
           subcategories: await fillSubCategory(
             event.value.id!,
           ),
@@ -160,6 +166,8 @@ class AddRearedLivestockOneBloc
         selectedSubCategory: event.value,
         selectedLivestock: null,
         selectedCategory: state.addRearedLivestockOneModelObj?.selectedCategory,
+        selectedDropDownValue1:
+            state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
         livestock: await fillLivestock(
           event.value.id!,
         ),
@@ -178,6 +186,8 @@ class AddRearedLivestockOneBloc
       selectedSubCategory:
           state.addRearedLivestockOneModelObj?.selectedSubCategory,
       selectedLivestock: state.addRearedLivestockOneModelObj?.selectedLivestock,
+      selectedDropDownValue1:
+          state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
       search: true,
       searchResults: await searchLivestock(event.value),
     )));
@@ -278,6 +288,42 @@ class AddRearedLivestockOneBloc
       }
     });
     return list;
+  }
+
+  _checkages(
+    CheckAgeEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    String feeds = PrefUtils().getFeeds();
+    List<FeedsModel>? feedmodels = [];
+    if (feeds != "0") {
+      List<dynamic> decageGroupMapList = jsonDecode(feeds);
+
+      // Create a list of AgeGroupModel objects from the list of dynamic objects
+      List<FeedsModel> feedmodels =
+          decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
+
+      emit(state.copyWith(feedsdlist: feedmodels));
+    }
+  }
+
+  _checkfeeds(
+    CheckFeedEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    String ages = PrefUtils().getAgeGroups();
+    List<AgeGroupModel>? agemodels = [];
+    if (ages != "0") {
+      List<dynamic> decageGroupMapList = jsonDecode(ages);
+
+      // Create a list of AgeGroupModel objects from the list of dynamic objects
+      agemodels = decageGroupMapList
+          .map((json) => AgeGroupModel.fromJson(json))
+          .toList();
+      emit(state.copyWith(ageGroupMapList: agemodels, checkedF: true));
+    } else {
+      emit(state.copyWith(checkedF: false));
+    }
   }
 
   _addeditfeeds(

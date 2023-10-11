@@ -94,22 +94,14 @@ class AddLiverstockinputModel extends Equatable {
       dropdownItemList7: dropdownItemList7 ?? this.dropdownItemList7,
       lsProgress: lsProgress ?? this.lsProgress,
       livestockins: livestockins ?? this.livestockins,
-      selectedDropDownValue:
-          selectedDropDownValue ?? this.selectedDropDownValue,
-      selectedDropDownValue1:
-          selectedDropDownValue1 ?? this.selectedDropDownValue1,
-      selectedDropDownValue2:
-          selectedDropDownValue2 ?? this.selectedDropDownValue2,
-      selectedDropDownValue3:
-          selectedDropDownValue3 ?? this.selectedDropDownValue3,
-      selectedDropDownValue4:
-          selectedDropDownValue4 ?? this.selectedDropDownValue4,
-      selectedDropDownValue5:
-          selectedDropDownValue5 ?? this.selectedDropDownValue5,
-      selectedDropDownValue6:
-          selectedDropDownValue6 ?? this.selectedDropDownValue6,
-      selectedDropDownValue7:
-          selectedDropDownValue7 ?? this.selectedDropDownValue7,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
+      selectedDropDownValue5: selectedDropDownValue5,
+      selectedDropDownValue6: selectedDropDownValue6,
+      selectedDropDownValue7: selectedDropDownValue7,
     );
   }
 

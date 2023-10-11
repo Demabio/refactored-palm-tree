@@ -396,10 +396,17 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                               );
                             }),
                         SizedBox(height: 18.v),
-                        Text(
-                          "msg_what_are_your_main".tr,
-                          style: theme.textTheme.titleSmall,
-                        ),
+                        BlocSelector<AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState, bool?>(
+                            selector: (state) => state.checkedF,
+                            builder: (context, checked) {
+                              return Text(
+                                "msg_what_are_your_main".tr,
+                                style: checked!
+                                    ? CustomTextStyles.labelMediumPrimary_1red
+                                    : CustomTextStyles.labelMediumPrimary_1,
+                              );
+                            }),
                         SizedBox(height: 18.v),
                         BlocSelector<AddRearedLivestockOneBloc,
                                 AddRearedLivestockOneState, List<FeedsModel>?>(
@@ -553,8 +560,12 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         context, AppRoutes.livestockOneTabContainerScreen);
   }
 
-  addAgeGroup(BuildContext context) {
-    showDialog(
+  addAgeGroup(BuildContext context) async {
+    context.read<AddRearedLivestockOneBloc>().add(
+          AddEditAgeEvent(),
+        );
+
+    await showDialog(
         context: context,
         barrierDismissible: false,
         //barrierColor: const Color.fromARGB(255, 50, 50, 50),
@@ -567,6 +578,9 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
   }
 
   addFeed(BuildContext context) async {
+    context.read<AddRearedLivestockOneBloc>().add(
+          AddEditFeedEvent(),
+        );
     await showDialog(
         context: context,
         barrierDismissible: false,

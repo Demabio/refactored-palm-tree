@@ -87,6 +87,20 @@ class AddEditFeedEvent extends AddRearedLivestockOneEvent {
   List<Object?> get props => [];
 }
 
+class CheckAgeEvent extends AddRearedLivestockOneEvent {
+  CheckAgeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckFeedEvent extends AddRearedLivestockOneEvent {
+  CheckFeedEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddRearedLivestockOneEvent {
   ChangeDropDownEvent({required this.value});
