@@ -200,6 +200,7 @@ class PrimaryFarmHoldingOneBloc
           } else {
             event.createFailed!.call();
           }
+          event.createSuccessful!.call();
         });
       }
       if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
@@ -220,13 +221,12 @@ class PrimaryFarmHoldingOneBloc
               .then((value) => print(
                     "Updated scop: " + value.toString(),
                   ));
+          event.createSuccessful!.call();
         }
       }
     } catch (e) {
       event.createFailed!.call();
     }
-
-    event.createSuccessful!.call();
   }
 
   Future<FarmerFarm?> getFarm() async {

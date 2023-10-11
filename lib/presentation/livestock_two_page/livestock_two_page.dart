@@ -98,7 +98,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_yes".tr,
+                                        state.livestockTwoModelObj!
+                                                .livestockins!.fodderSeeds!
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],
@@ -119,28 +122,12 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_no".tr,
-                                        style: theme.textTheme.labelMedium,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 3.h,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "msg_do_you_utilize_fodder".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
-                                      ),
-                                      Text(
-                                        "lbl_yes".tr,
+                                        state
+                                                .livestockTwoModelObj!
+                                                .livestockins!
+                                                .fertilizerForFodder!
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],
@@ -175,7 +162,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_yes".tr,
+                                        state.livestockTwoModelObj!
+                                                    .livestockins!.aiUse ==
+                                                1
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],
@@ -196,7 +187,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_yes".tr,
+                                        state.livestockTwoModelObj!
+                                                    .livestockins!.hormoneUse ==
+                                                1
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],
@@ -217,7 +212,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_no".tr,
+                                        state.livestockTwoModelObj!
+                                                .livestockins!.embryoTransfer!
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],
@@ -252,7 +250,36 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        "lbl_no".tr,
+                                        state
+                                                .livestockTwoModelObj!
+                                                .livestockins!
+                                                .routineVaccination!
+                                            ? "Yes"
+                                            : "No",
+                                        style: theme.textTheme.labelMedium,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 9.v,
+                                    right: 3.h,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Curative Measures".tr,
+                                        style:
+                                            CustomTextStyles.labelMediumPrimary,
+                                      ),
+                                      Text(
+                                        state.livestockTwoModelObj!
+                                                .livestockins!.curativeMeasures!
+                                            ? "Yes"
+                                            : "No",
                                         style: theme.textTheme.labelMedium,
                                       ),
                                     ],

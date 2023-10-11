@@ -305,7 +305,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   onTapAdddetails(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addRearedLivestockOneScreen,
+    NavigatorService.pushNamed(AppRoutes.livestockOneTabContainerScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });

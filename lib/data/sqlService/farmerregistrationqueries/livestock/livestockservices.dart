@@ -90,7 +90,7 @@ class FarmerLivestockServicesDB {
     return await database.rawUpdate('''
         UPDATE  $tableName SET
         area_unit_id = ?, fodder_seeds = ?, fertilizer_for_fodder = ?,  ai_use = ?, hormone_use = ?, embryo_transfer = ?, routine_vaccination = ?, curative_measures = ? 
-      WHERE farmer_livestock_services_id = ?
+      WHERE farmer_id = ?
     ''', [
       farmerLivestockService.areaUnitId,
       farmerLivestockService.fodderSeeds! ? 1 : 0,
@@ -100,7 +100,7 @@ class FarmerLivestockServicesDB {
       farmerLivestockService.embryoTransfer,
       farmerLivestockService.routineVaccination! ? 1 : 0,
       farmerLivestockService.curativeMeasures! ? 1 : 0,
-      farmerLivestockService.farmerLivestockServicesId,
+      farmerLivestockService.farmerId,
     ]);
   }
 
@@ -150,5 +150,16 @@ class FarmerLivestockServicesDB {
     return feeds
         .map((e) => FarmerLivestockService.fromSqfliteDatabase(e))
         .toList();
+  }
+
+  Future<FarmerLivestockService?> fetchByFarmer(int id) async {
+    final database = await DatabaseService().database;
+    final feeds = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ? 
+    ''', [id]);
+
+    return feeds.isNotEmpty
+        ? FarmerLivestockService.fromSqfliteDatabase(feeds.first)
+        : null;
   }
 }

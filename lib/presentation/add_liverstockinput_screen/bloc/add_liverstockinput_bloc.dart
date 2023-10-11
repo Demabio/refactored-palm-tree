@@ -1,5 +1,10 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_liverstockinput_screen/models/add_liverstockinput_model.dart';
 part 'add_liverstockinput_event.dart';
@@ -25,17 +30,174 @@ class AddLiverstockinputBloc
     AddLiverstockinputInitialEvent event,
     Emitter<AddLiverstockinputState> emit,
   ) async {
+    FarmerLivestockService livestock = await getFarm() ??
+        FarmerLivestockService(
+          farmerId: 0,
+          farmerFarmId: 0,
+          farmerLivestockServicesId: 0,
+        );
+    LSProgress pfProgress = await getProgress() ??
+        LSProgress(
+          livestockId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+    List<SelectionPopupModel>? dropdownItemList = fillDropdownItemList1();
+    SelectionPopupModel? selectedDropDownValue1;
+
+    SelectionPopupModel? selectedDropDownValue2 = null;
+    SelectionPopupModel? selectedDropDownValue3 = null;
+    SelectionPopupModel? selectedDropDownValue4 = null;
+    SelectionPopupModel? selectedDropDownValue5 = null;
+    SelectionPopupModel? selectedDropDownValue6 = null;
+    SelectionPopupModel? selectedDropDownValue7 = null;
+
+    if (pfProgress.pageTwo == 1 && livestock.farmerLivestockServicesId != 0) {
+      selectedDropDownValue1 = dropdownItemList.firstWhere(
+        (model) => model.id == (livestock.fertilizerForFodder! ? 1 : 0),
+      );
+      selectedDropDownValue2 = dropdownItemList.firstWhere(
+        (model) => model.id == (livestock.fodderSeeds! ? 1 : 0),
+      );
+      selectedDropDownValue3 = dropdownItemList.firstWhere(
+        (model) => model.id == livestock.aiUse,
+      );
+      selectedDropDownValue4 = dropdownItemList.firstWhere(
+        (model) => model.id == livestock.hormoneUse,
+      );
+      selectedDropDownValue5 = dropdownItemList.firstWhere(
+        (model) => model.id == (livestock.embryoTransfer! ? 1 : 0),
+      );
+      selectedDropDownValue6 = dropdownItemList.firstWhere(
+        (model) => model.id == (livestock.routineVaccination! ? 1 : 0),
+      );
+      selectedDropDownValue7 = dropdownItemList.firstWhere(
+        (model) => model.id == (livestock.curativeMeasures! ? 1 : 0),
+      );
+    }
+
     emit(state.copyWith(
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
-      dropdownItemList2: fillDropdownItemList2(),
-      dropdownItemList3: fillDropdownItemList3(),
-      dropdownItemList4: fillDropdownItemList4(),
-      dropdownItemList5: fillDropdownItemList5(),
-      dropdownItemList6: fillDropdownItemList6(),
-      dropdownItemList7: fillDropdownItemList7(),
+      dropdownItemList: dropdownItemList,
+      dropdownItemList1: dropdownItemList,
+      dropdownItemList2: dropdownItemList,
+      dropdownItemList3: dropdownItemList,
+      dropdownItemList4: dropdownItemList,
+      dropdownItemList5: dropdownItemList,
+      dropdownItemList6: dropdownItemList,
+      dropdownItemList7: dropdownItemList,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
+      selectedDropDownValue5: selectedDropDownValue5,
+      selectedDropDownValue6: selectedDropDownValue6,
+      selectedDropDownValue7: selectedDropDownValue7,
     )));
+  }
+
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<AddLiverstockinputState> emit,
+  ) {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    FarmerLivestockServicesDB farmDB = FarmerLivestockServicesDB();
+    int farmerid = PrefUtils().getFarmId();
+    try {
+      if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 0) {
+        farmDB
+            .insertNonNulls(FarmerLivestockService(
+          farmerFarmId: PrefUtils().getFarmId(),
+          farmerId: PrefUtils().getFarmerId(),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+          farmerLivestockServicesId: 0,
+          fertilizerForFodder:
+              state.addLiverstockinputModelObj!.selectedDropDownValue1?.id == 1,
+          fodderSeeds:
+              state.addLiverstockinputModelObj!.selectedDropDownValue2?.id == 1,
+          aiUse: state.addLiverstockinputModelObj!.selectedDropDownValue3?.id,
+          hormoneUse:
+              state.addLiverstockinputModelObj!.selectedDropDownValue4?.id,
+          embryoTransfer:
+              state.addLiverstockinputModelObj!.selectedDropDownValue5?.id == 1,
+          routineVaccination:
+              state.addLiverstockinputModelObj!.selectedDropDownValue6?.id == 1,
+          curativeMeasures:
+              state.addLiverstockinputModelObj!.selectedDropDownValue7?.id == 1,
+          areaUnitId: 1,
+        ))
+            .then((value) {
+          if (value > 0) {
+            LSProgressDB pfProgressDB = LSProgressDB();
+            if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 0) {
+              pfProgressDB
+                  .update(LSProgress(
+                    livestockId: PrefUtils().getLivestockId(),
+                    pageOne:
+                        state.addLiverstockinputModelObj!.lsProgress!.pageOne,
+                    pageTwo: 1,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            }
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      }
+      if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 1) {
+        if (farmerid != 0) {
+          farmDB
+              .update(FarmerLivestockService(
+                farmerFarmId: PrefUtils().getFarmId(),
+                farmerId: PrefUtils().getFarmerId(),
+                dateCreated: DateTime.now(),
+                createdBy: userId,
+                farmerLivestockServicesId: 0,
+                fertilizerForFodder: state.addLiverstockinputModelObj!
+                        .selectedDropDownValue1?.id ==
+                    1,
+                fodderSeeds: state.addLiverstockinputModelObj!
+                        .selectedDropDownValue2?.id ==
+                    1,
+                aiUse: state
+                    .addLiverstockinputModelObj!.selectedDropDownValue3?.id,
+                hormoneUse: state
+                    .addLiverstockinputModelObj!.selectedDropDownValue4?.id,
+                embryoTransfer: state.addLiverstockinputModelObj!
+                        .selectedDropDownValue5?.id ==
+                    1,
+                routineVaccination: state.addLiverstockinputModelObj!
+                        .selectedDropDownValue6?.id ==
+                    1,
+                curativeMeasures: state.addLiverstockinputModelObj!
+                        .selectedDropDownValue7?.id ==
+                    1,
+                areaUnitId: 1,
+              ))
+              .then((value) => print(
+                    "Updated scop: " + value.toString(),
+                  ));
+          event.createSuccessful!.call();
+        }
+      }
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
+
+  Future<FarmerLivestockService?> getFarm() async {
+    int farmid = PrefUtils().getFarmerId();
+    FarmerLivestockServicesDB farmDB = FarmerLivestockServicesDB();
+    return await farmDB.fetchByFarmer(farmid);
+  }
+
+  Future<LSProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmId();
+    LSProgressDB pfProgressDB = LSProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _changeDropDown(
