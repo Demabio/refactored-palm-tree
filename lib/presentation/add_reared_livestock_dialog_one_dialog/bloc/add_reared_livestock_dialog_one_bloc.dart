@@ -74,7 +74,7 @@ class AddRearedLivestockDialogOneBloc extends Bloc<
 
     // Convert the list of maps to a JSON string
     String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    PrefUtils().setFeeds(jsonString);
 
     List<dynamic> decageGroupMapList = jsonDecode(jsonString);
 
@@ -91,10 +91,20 @@ class AddRearedLivestockDialogOneBloc extends Bloc<
     AddRearedLivestockDialogOneInitialEvent event,
     Emitter<AddRearedLivestockDialogOneState> emit,
   ) async {
+    String feeds = PrefUtils().getFeeds();
+    List<FeedsModel> feedmodels = await fetchFeeds();
+    if (feeds != "0") {
+      List<dynamic> decageGroupMapList = jsonDecode(feeds);
+
+      // Create a list of AgeGroupModel objects from the list of dynamic objects
+      List<FeedsModel> feedmodels =
+          decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
+    }
+
     emit(state.copyWith(
         addRearedLivestockDialogOneModelObj:
             state.addRearedLivestockDialogOneModelObj?.copyWith(
-      models: await fetchFeeds(),
+      models: feedmodels,
     )));
   }
 }

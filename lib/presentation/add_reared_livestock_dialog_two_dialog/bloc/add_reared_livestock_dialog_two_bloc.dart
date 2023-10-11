@@ -116,13 +116,23 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     AddRearedLivestockDialogTwoInitialEvent event,
     Emitter<AddRearedLivestockDialogTwoState> emit,
   ) async {
+    String ages = PrefUtils().getAgeGroups();
+    List<AgeGroupModel> agemodels = await fetchAgeGroups();
+    if (ages != "0") {
+      List<dynamic> decageGroupMapList = jsonDecode(ages);
+
+      // Create a list of AgeGroupModel objects from the list of dynamic objects
+      agemodels = decageGroupMapList
+          .map((json) => AgeGroupModel.fromJson(json))
+          .toList();
+    }
     emit(
       state.copyWith(
         lessThanThreeWe: false,
         threeToEightWee: false,
         addRearedLivestockDialogTwoModelObj:
             state.addRearedLivestockDialogTwoModelObj?.copyWith(
-          ageGroupmModels: await fetchAgeGroups(),
+          ageGroupmModels: agemodels,
         ),
       ),
     );

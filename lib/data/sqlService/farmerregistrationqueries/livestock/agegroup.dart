@@ -68,7 +68,7 @@ class FarmerLivestockAgeGroupsDB {
     }
   }
 
-  Future<int> delete({required int id}) async {
+  Future<int> delete(int id) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
     DELETE FROM $tableName WHERE farmer_livestock_id = ?
@@ -84,6 +84,28 @@ class FarmerLivestockAgeGroupsDB {
     return ageGroups
         .map((e) => FarmerLivestockAgeGroup.fromSqfliteDatabase(e))
         .toList();
+  }
+
+  Future<List<FarmerLivestockAgeGroup>> fetchByLive(int id) async {
+    final database = await DatabaseService().database;
+    final ageGroups = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
+
+    return ageGroups
+        .map((e) => FarmerLivestockAgeGroup.fromSqfliteDatabase(e))
+        .toList();
+  }
+
+  Future<FarmerLivestockAgeGroup?> fetchById(int id) async {
+    final database = await DatabaseService().database;
+    final ageGroups = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_livestockagegroup_id = ?
+    ''', [id]);
+
+    return ageGroups.isNotEmpty
+        ? FarmerLivestockAgeGroup.fromSqfliteDatabase(ageGroups.first)
+        : null;
   }
 
   // Add more database methods as needed

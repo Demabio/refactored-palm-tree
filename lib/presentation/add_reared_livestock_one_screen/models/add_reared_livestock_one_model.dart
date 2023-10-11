@@ -2,6 +2,12 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/agegroup.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/beehivetype.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/feed.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestocksystem.dart';
 import 'chipviewayrshi_item_model.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
@@ -21,6 +27,13 @@ class AddRearedLivestockOneModel extends Equatable {
     this.search = false,
     this.searchResults,
     this.searchController,
+    this.ageGroup,
+    this.beehive,
+    this.feeds,
+    this.livestockF,
+    this.lsProgress,
+    this.system,
+    this.selectedDropDownValue1,
   }) {}
 
   TextEditingController? searchController;
@@ -47,6 +60,14 @@ class AddRearedLivestockOneModel extends Equatable {
 
   bool search;
 
+  LSProgress? lsProgress;
+  FarmerLivestock? livestockF;
+  FarmerLivestockAgeGroup? ageGroup;
+  FarmerLivestockFeed? feeds;
+  FarmerLivestockBeehiveType? beehive;
+  FarmerLivestockFarmSystem? system;
+  SelectionPopupModel? selectedDropDownValue1;
+
   AddRearedLivestockOneModel copyWith({
     List<ChipviewayrshiItemModel>? chipviewayrshiItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -60,21 +81,37 @@ class AddRearedLivestockOneModel extends Equatable {
     List<ChipviewayrshiItemModel>? searchResults,
     bool? search,
     TextEditingController? searchController,
+    LSProgress? lsProgress,
+    FarmerLivestock? livestockF,
+    FarmerLivestockAgeGroup? ageGroup,
+    FarmerLivestockFeed? feeds,
+    FarmerLivestockBeehiveType? beehive,
+    FarmerLivestockFarmSystem? system,
+    SelectionPopupModel? selectedDropDownValue1,
   }) {
     return AddRearedLivestockOneModel(
-        chipviewayrshiItemList:
-            chipviewayrshiItemList ?? this.chipviewayrshiItemList,
-        dropdownItemList: dropdownItemList ?? this.dropdownItemList,
-        dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
-        livestock: livestock ?? this.livestock,
-        categories: categories ?? this.categories,
-        subcategories: subcategories ?? this.subcategories,
-        selectedLivestock: selectedLivestock,
-        selectedCategory: selectedCategory,
-        selectedSubCategory: selectedSubCategory,
-        search: search ?? this.search,
-        searchResults: searchResults ?? this.searchResults,
-        searchController: searchController ?? this.searchController);
+      chipviewayrshiItemList:
+          chipviewayrshiItemList ?? this.chipviewayrshiItemList,
+      dropdownItemList: dropdownItemList ?? this.dropdownItemList,
+      dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
+      livestock: livestock ?? this.livestock,
+      categories: categories ?? this.categories,
+      subcategories: subcategories ?? this.subcategories,
+      selectedLivestock: selectedLivestock,
+      selectedCategory: selectedCategory,
+      selectedSubCategory: selectedSubCategory,
+      search: search ?? this.search,
+      searchResults: searchResults ?? this.searchResults,
+      searchController: searchController ?? this.searchController,
+      lsProgress: lsProgress ?? this.lsProgress,
+      livestockF: livestockF ?? this.livestockF,
+      ageGroup: ageGroup ?? this.ageGroup,
+      feeds: feeds ?? this.feeds,
+      beehive: beehive ?? this.beehive,
+      system: system ?? this.system,
+      selectedDropDownValue1:
+          selectedDropDownValue1 ?? this.selectedDropDownValue1,
+    );
   }
 
   @override
@@ -91,5 +128,12 @@ class AddRearedLivestockOneModel extends Equatable {
         search,
         searchResults,
         searchController,
+        lsProgress,
+        livestockF,
+        ageGroup,
+        feeds,
+        beehive,
+        system,
+        selectedDropDownValue1,
       ];
 }

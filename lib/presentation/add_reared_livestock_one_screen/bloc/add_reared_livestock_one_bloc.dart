@@ -1,11 +1,29 @@
+import 'dart:convert';
+
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockcategory.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestocksubcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/agegroup.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/feed.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfeedtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmcategory.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmsystem.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfeed.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import '/core/app_export.dart';
 import '../models/chipviewayrshi_item_model.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_one_screen/models/add_reared_livestock_one_model.dart';
@@ -24,6 +42,9 @@ class AddRearedLivestockOneBloc
     on<ChangeDropDownEventCategory>(_changeDropDownCategory);
     on<SearchEventLivestock>(_searchLivestock);
     on<ReturnCommonEventLivestock>(_restoreCommonLivestock);
+    on<SaveTapEvent>(_saveTap);
+    on<AddEditAgeEvent>(_addeditages);
+    on<AddEditFeedEvent>(_addeditfeeds);
   }
 
   _updateChipView(
@@ -259,10 +280,412 @@ class AddRearedLivestockOneBloc
     return list;
   }
 
+  _addeditfeeds(
+    AddEditFeedEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) {
+    if (state.feedsdlist!.isNotEmpty) {
+      List<Map<String, dynamic>> ageGroupMapList =
+          state.feedsdlist!.map((ageGroup) => ageGroup.toJson()).toList();
+
+      // Convert the list of maps to a JSON string
+      String jsonString = jsonEncode(ageGroupMapList);
+      PrefUtils().setFeeds(jsonString);
+    } else {
+      PrefUtils().setFeeds("0");
+    }
+  }
+
+  _addeditages(
+    AddEditAgeEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) {
+    if (state.feedsdlist!.isNotEmpty) {
+      List<Map<String, dynamic>> ageGroupMapList =
+          state.ageGroupMapList!.map((ageGroup) => ageGroup.toJson()).toList();
+
+      // Convert the list of maps to a JSON string
+      String jsonString = jsonEncode(ageGroupMapList);
+      PrefUtils().setAgeGroups(jsonString);
+    } else {
+      PrefUtils().setAgeGroups("0");
+    }
+  }
+
+  Future<List<SelectionPopupModel>> fillProduction() async {
+    List<SelectionPopupModel> list = [];
+    LivestockFarmingSystemDB livestockFarmingSystemDB =
+        LivestockFarmingSystemDB();
+    await livestockFarmingSystemDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].livestockFarmsystem,
+          id: value[i].livestockFarmsystemId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  List<AgeGroupModel> _ages(
+      List<AgeGroupModel> agemodelss, List<FarmerLivestockAgeGroup> agess) {
+    List<AgeGroupModel> agemodels = agemodelss;
+    List<FarmerLivestockAgeGroup> ages = agess;
+
+    for (var ent in ages) {
+      int index =
+          agemodels.indexWhere((obj) => obj.ageGroupId == ent.ageGroupId);
+
+      agemodels[index].isSelected = true;
+      agemodels[index].males = ent.noOfLivestockMale.toString();
+      agemodels[index].females = ent.noOfLivestockFemale.toString();
+    }
+
+    return agemodels;
+  }
+
+  List<FeedsModel> _feeds(
+      List<FeedsModel> feedmodelss, List<FarmerLivestockFeed> feedss) {
+    List<FeedsModel> feedmodels = feedmodelss;
+    List<FarmerLivestockFeed> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.feedTypeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  _saveTap(
+    SaveTapEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    FarmerLivestockDB farmDB = FarmerLivestockDB();
+    int farmerid = PrefUtils().getFarmId();
+    try {
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
+        farmDB
+            .insertNonNulls(FarmerLivestock(
+          farmerFarmId: PrefUtils().getFarmId(),
+          farmerId: PrefUtils().getFarmerId(),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+          farmerLivestockId: 0,
+        ))
+            .then((value) async {
+          if (value > 0) {
+            PrefUtils().setLivestockId(value);
+
+            String agegroups = PrefUtils().getAgeGroups();
+            List<dynamic> decageGroupMapList = jsonDecode(agegroups);
+
+            // Create a list of AgeGroupModel objects from the list of dynamic objects
+            List<AgeGroupModel> ageGroupList = decageGroupMapList
+                .map((json) => AgeGroupModel.fromJson(json))
+                .toList();
+
+            FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+                FarmerLivestockAgeGroupsDB();
+            List<FarmerLivestockAgeGroup> ents = [];
+
+            for (var ent in ageGroupList) {
+              if (ent.isSelected) {
+                ents.add(FarmerLivestockAgeGroup(
+                  farmerLivestockAgegroupId: 0,
+                  farmerLivestockId: value,
+                  ageGroupId: ent.ageGroupId!,
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                ));
+              }
+            }
+
+            await farmerLivestockAgeGroupsDB
+                .insertAgeGroups(ents)
+                .then((value) => print("inserted $value"));
+
+            String feeds = PrefUtils().getFeeds();
+
+            List<dynamic> feedsdlist = jsonDecode(feeds);
+
+            List<FeedsModel> feedslist = decageGroupMapList
+                .map((json) => FeedsModel.fromJson(json))
+                .toList();
+
+            FarmerLivestockFeedsDB farmerLivestockFeedsDB =
+                FarmerLivestockFeedsDB();
+
+            List<FarmerLivestockFeed> feedlist = [];
+
+            for (var ent in feedslist) {
+              if (ent.isSelected) {
+                feedlist.add(FarmerLivestockFeed(
+                  farmerLivestockId: value,
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                  farmerLivestockFeedId: 0,
+                  feedQuantity: 0,
+                  feedTypeId: ent.id!,
+                ));
+              }
+            }
+
+            await farmerLivestockFeedsDB
+                .insertFeeds(feedlist)
+                .then((value) => print("inserted $value"));
+
+            farmDB.update(FarmerLivestock(
+              farmerFarmId: PrefUtils().getFarmId(),
+              farmerId: PrefUtils().getFarmerId(),
+              dateCreated: DateTime.now(),
+              createdBy: userId,
+              farmerLivestockId: value,
+              noOfBeehives: 0,
+              livestockFarmsystemCatId: state
+                  .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+              livestockId:
+                  state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+            ));
+
+            LSProgressDB lsProgressDB = LSProgressDB();
+            if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
+              lsProgressDB
+                  .insert(LSProgress(
+                    livestockId: value,
+                    pageOne: 1,
+                    pageTwo: 0,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            } else {
+              lsProgressDB
+                  .update(LSProgress(
+                    livestockId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .addRearedLivestockOneModelObj!.lsProgress!.pageTwo,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+              event.createSuccessful!.call();
+            }
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      }
+      int farmerLivestockId = PrefUtils().getLivestockId();
+
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1) {
+        if (farmerLivestockId != 0) {
+          String agegroups = PrefUtils().getAgeGroups();
+          List<dynamic> decageGroupMapList = jsonDecode(agegroups);
+
+          // Create a list of AgeGroupModel objects from the list of dynamic objects
+          List<AgeGroupModel> ageGroupList = decageGroupMapList
+              .map((json) => AgeGroupModel.fromJson(json))
+              .toList();
+
+          FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+              FarmerLivestockAgeGroupsDB();
+          List<FarmerLivestockAgeGroup> ents = [];
+
+          for (var ent in ageGroupList) {
+            if (ent.isSelected) {
+              ents.add(FarmerLivestockAgeGroup(
+                farmerLivestockAgegroupId: 0,
+                farmerLivestockId: PrefUtils().getLivestockId(),
+                ageGroupId: ent.ageGroupId!,
+                createdBy: userId,
+                dateCreated: DateTime.now(),
+              ));
+            }
+          }
+          await farmerLivestockAgeGroupsDB
+              .delete(farmerLivestockId)
+              .then((value) => print("deleted $value"));
+          await farmerLivestockAgeGroupsDB
+              .insertAgeGroups(ents)
+              .then((value) => print("inserted $value"));
+
+          String feeds = PrefUtils().getFeeds();
+
+          List<dynamic> feedsdlist = jsonDecode(feeds);
+
+          List<FeedsModel> feedslist = decageGroupMapList
+              .map((json) => FeedsModel.fromJson(json))
+              .toList();
+
+          FarmerLivestockFeedsDB farmerLivestockFeedsDB =
+              FarmerLivestockFeedsDB();
+
+          List<FarmerLivestockFeed> feedlist = [];
+
+          for (var ent in feedslist) {
+            if (ent.isSelected) {
+              feedlist.add(FarmerLivestockFeed(
+                farmerLivestockId: PrefUtils().getLivestockId(),
+                createdBy: userId,
+                dateCreated: DateTime.now(),
+                farmerLivestockFeedId: 0,
+                feedQuantity: 0,
+                feedTypeId: ent.id!,
+              ));
+            }
+          }
+          await farmerLivestockFeedsDB
+              .delete(farmerLivestockId)
+              .then((value) => print("deleted $value"));
+          await farmerLivestockFeedsDB
+              .insertFeeds(feedlist)
+              .then((value) => print("inserted $value"));
+
+          farmDB.update(FarmerLivestock(
+            farmerFarmId: PrefUtils().getFarmId(),
+            farmerId: PrefUtils().getFarmerId(),
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+            farmerLivestockId: PrefUtils().getLivestockId(),
+            noOfBeehives: 0,
+            livestockFarmsystemCatId:
+                state.addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+            livestockId:
+                state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+          ));
+          event.createSuccessful!.call();
+        }
+      }
+    } catch (e) {
+      event.createFailed!.call();
+    }
+
+    event.createSuccessful!.call();
+  }
+
+  Future<List<FeedsModel>> fetchFeeds() async {
+    List<FeedsModel> list = [];
+    LivestockFeedTypeDB livestockFeedTypeDB = LivestockFeedTypeDB();
+    TextEditingController stored = TextEditingController();
+    stored.value = TextEditingValue(text: "999");
+    await livestockFeedTypeDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(FeedsModel(
+          title: value[i].feedType,
+          id: value[i].feedTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<AgeGroupModel>> fetchAgeGroups() async {
+    List<AgeGroupModel> list = [];
+    LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
+    TextEditingController stored = TextEditingController();
+    stored.value = TextEditingValue(text: "999");
+    await livestockAgeGroupDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(AgeGroupModel(
+          title: value[i].ageGroup,
+          ageGroupId: value[i].ageGroupId,
+          female: TextEditingController(),
+          male: TextEditingController(),
+          focusNode: FocusNode(),
+          femalefocusNode: FocusNode(),
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<FarmerLivestock?> getLiv() async {
+    int livid = PrefUtils().getLivestockId();
+    FarmerLivestockDB farmDB = FarmerLivestockDB();
+    return await farmDB.fetchById(livid);
+  }
+
+  Future<List<FarmerLivestockAgeGroup>?> getAges() async {
+    int livid = PrefUtils().getLivestockId();
+    FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+        FarmerLivestockAgeGroupsDB();
+    return await farmerLivestockAgeGroupsDB.fetchByLive(livid);
+  }
+
+  Future<List<FarmerLivestockFeed>?> getFeeds() async {
+    int livid = PrefUtils().getLivestockId();
+    FarmerLivestockFeedsDB farmerLivestockFeedsDB = FarmerLivestockFeedsDB();
+    return await farmerLivestockFeedsDB.fetchAllByLivestock(livid);
+  }
+
+  Future<LSProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmId();
+    LSProgressDB lsProgressDB = LSProgressDB();
+    return await lsProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     AddRearedLivestockOneInitialEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
+    FarmerLivestock livestock = await getLiv() ??
+        FarmerLivestock(
+          farmerId: 0,
+          farmerFarmId: 0,
+          farmerLivestockId: 0,
+          livestockId: 0,
+        );
+    LSProgress pfProgress = await getProgress() ??
+        LSProgress(
+          livestockId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    LivestockDB livestockDB = LivestockDB();
+
+    List<AgeGroupModel>? ageGroupList = await fetchAgeGroups();
+    List<FeedsModel>? feedslist = await fetchFeeds();
+    List<SelectionPopupModel> livestockmodels = [];
+    SelectionPopupModel? selectedlivestock;
+    List<SelectionPopupModel> categ = await fillCategories();
+    SelectionPopupModel? selectedcateg;
+    List<SelectionPopupModel> subcateg = [];
+    SelectionPopupModel? selectedsubcateg;
+    List<SelectionPopupModel> prod = await fillProduction();
+    SelectionPopupModel? selectedprod;
+
+    if (pfProgress.pageOne == 1 && livestock.farmerLivestockId != 0) {
+      Livestock? lives =
+          await livestockDB.fetchByLivestockId(livestock.livestockId!);
+
+      subcateg = await fillSubCategory(lives!.livestockCatId!);
+      livestockmodels = await fillLivestock(lives!.livestockSubCatId);
+
+      selectedcateg = categ.firstWhere(
+        (model) => model.id == lives.livestockCatId,
+      );
+
+      selectedsubcateg = subcateg.firstWhere(
+        (model) => model.id == lives.livestockSubCatId,
+      );
+
+      selectedlivestock = livestockmodels.firstWhere(
+        (model) => model.id == lives.livestockId,
+      );
+
+      selectedprod = prod.firstWhere(
+        (model) => model.id == livestock.livestockFarmsystemCatId,
+      );
+
+      List<FarmerLivestockAgeGroup>? ages = await getAges();
+
+      List<FarmerLivestockFeed>? feeds = await getFeeds();
+
+      feedslist = _feeds(feedslist, feeds!);
+      ageGroupList = _ages(ageGroupList, ages!);
+    }
     emit(state.copyWith(
       searchController: TextEditingController(),
       categoryvalueController: TextEditingController(),
@@ -275,7 +698,17 @@ class AddRearedLivestockOneBloc
           chipviewayrshiItemList:
               await fillCommonLivestock(), //fillChipviewayrshiItemList(),
           categories: await fillCategories(),
+          dropdownItemList1: await fillProduction(),
+          selectedCategory: selectedcateg,
+          selectedLivestock: selectedlivestock,
+          selectedSubCategory: selectedsubcateg,
+          selectedDropDownValue1: selectedprod,
+          subcategories: subcateg,
+          livestock: livestockmodels,
+          livestockF: livestock,
         ),
+        feedsdlist: feedslist,
+        ageGroupMapList: ageGroupList,
       ),
     );
   }

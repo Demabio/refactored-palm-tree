@@ -71,6 +71,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setFeeds(String value) {
+    return _sharedPreferences!.setString('feeds', value);
+  }
+
+  String getFeeds() {
+    try {
+      return _sharedPreferences!.getString('feeds') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setFarmerId(int value) {
     return _sharedPreferences!.setInt('farmerid', value);
   }

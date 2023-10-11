@@ -124,13 +124,18 @@ class LivestockDB {
         .toList();
   }
 
-  Future<Livestock> fetchByLivestockId(int livestockId) async {
+  Future<Livestock?> fetchByLivestockId(int livestockId) async {
     final database = await DatabaseService().database;
     final livestockItem = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE livestock_id = ?
+     SELECT tblfrlivestock.*,tblfrlivestocksubcategories.livestock_cat_id,tblfrlivestocksubcategories.livestock_subcategory,tblfrlivestockcategories.livestock_category FROM $tableName 
+      LEFT JOIN tblfrlivestocksubcategories ON tblfrlivestock.livestock_sub_cat_id = tblfrlivestocksubcategories.livestock_sub_cat_id
+      LEFT JOIN tblfrlivestockcategories ON tblfrlivestocksubcategories.livestock_cat_id = tblfrlivestockcategories.livestock_cat_id
+      WHERE tblfrlivestock.livestock_id = ?
     ''', [livestockId]);
 
-    return Livestock.fromSqfliteDatabase(livestockItem.first);
+    return livestockItem.isNotEmpty
+        ? Livestock.fromSqfliteDatabase(livestockItem.first)
+        : null;
   }
 
   // Add more database methods as needed

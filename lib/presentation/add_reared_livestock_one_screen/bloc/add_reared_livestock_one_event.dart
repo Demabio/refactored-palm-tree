@@ -15,6 +15,44 @@ class AddRearedLivestockOneInitialEvent extends AddRearedLivestockOneEvent {
   List<Object?> get props => [];
 }
 
+class NextTapEvent extends AddRearedLivestockOneEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddRearedLivestockOneEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///Event for changing ChipView selection
 class UpdateChipViewEvent extends AddRearedLivestockOneEvent {
   UpdateChipViewEvent({
@@ -33,6 +71,20 @@ class UpdateChipViewEvent extends AddRearedLivestockOneEvent {
         isSelected,
         model,
       ];
+}
+
+class AddEditAgeEvent extends AddRearedLivestockOneEvent {
+  AddEditAgeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddEditFeedEvent extends AddRearedLivestockOneEvent {
+  AddEditFeedEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 ///event for dropdown selection

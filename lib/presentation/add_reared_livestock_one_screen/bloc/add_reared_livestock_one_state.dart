@@ -20,6 +20,12 @@ class AddRearedLivestockOneState extends Equatable {
     this.categoryDB,
     this.livestockDB,
     this.subcategoryDB,
+    this.checkedA = false,
+    this.checkedF = false,
+    this.filledA = false,
+    this.filledF = false,
+    this.ageGroupMapList,
+    this.feedsdlist,
   });
 
   TextEditingController? searchController;
@@ -49,8 +55,14 @@ class AddRearedLivestockOneState extends Equatable {
   LivestockCategoryDB? categoryDB;
 
   LivestockSubcategoryDB? subcategoryDB;
+  List<AgeGroupModel>? ageGroupMapList;
+  List<FeedsModel>? feedsdlist;
 
   AddRearedLivestockOneModel? addRearedLivestockOneModelObj;
+  bool checkedA;
+  bool filledA;
+  bool checkedF;
+  bool filledF;
 
   @override
   List<Object?> get props => [
@@ -69,6 +81,12 @@ class AddRearedLivestockOneState extends Equatable {
         categoryDB,
         livestockDB,
         subcategoryDB,
+        checkedA,
+        filledA,
+        checkedF,
+        filledF,
+        feedsdlist,
+        ageGroupMapList,
       ];
   AddRearedLivestockOneState copyWith({
     TextEditingController? searchController,
@@ -86,6 +104,12 @@ class AddRearedLivestockOneState extends Equatable {
     LivestockDB? livestockDB,
     LivestockCategoryDB? categoryDB,
     LivestockSubcategoryDB? subcategoryDB,
+    bool? checkedA,
+    bool? filledA,
+    bool? checkedF,
+    bool? filledF,
+    List<AgeGroupModel>? ageGroupMapList,
+    List<FeedsModel>? feedsdlist,
   }) {
     return AddRearedLivestockOneState(
       searchController: searchController ?? this.searchController,
@@ -108,6 +132,12 @@ class AddRearedLivestockOneState extends Equatable {
       livestockDB: livestockDB ?? this.livestockDB,
       categoryDB: categoryDB ?? this.categoryDB,
       subcategoryDB: subcategoryDB ?? this.subcategoryDB,
+      checkedA: checkedA ?? this.checkedA,
+      filledA: filledA ?? this.filledA,
+      checkedF: checkedF ?? this.checkedF,
+      filledF: filledF ?? this.filledF,
+      ageGroupMapList: ageGroupMapList ?? this.ageGroupMapList,
+      feedsdlist: feedsdlist ?? this.feedsdlist,
     );
   }
 }

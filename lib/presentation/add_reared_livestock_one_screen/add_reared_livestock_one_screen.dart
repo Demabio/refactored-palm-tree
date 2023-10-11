@@ -1,6 +1,8 @@
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/add_reared_livestock_dialog_one_dialog.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_three_dialog/add_reared_livestock_dialog_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/add_reared_livestock_dialog_two_dialog.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 
 import '../add_reared_livestock_one_screen/widgets/chipviewayrshi_item_widget.dart';
 import 'bloc/add_reared_livestock_one_bloc.dart';
@@ -16,11 +18,15 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
+import 'widgets/ages_widget.dart';
+import 'widgets/feeds_widget.dart';
+
 class AddRearedLivestockOneScreen extends StatelessWidget {
   AddRearedLivestockOneScreen({Key? key})
       : super(
           key: key,
         );
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static Widget builder(BuildContext context) {
     return BlocProvider<AddRearedLivestockOneBloc>(
@@ -240,6 +246,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 ),
                               ),
                               hintText: "lbl_select".tr,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Field is required";
+                                }
+                              },
                               val: addRearedLivestockOneModelObj
                                   ?.selectedCategory,
                               items: addRearedLivestockOneModelObj!
@@ -278,6 +289,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 ),
                               ),
                               hintText: "lbl_select".tr,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Field is required";
+                                }
+                              },
                               val: addRearedLivestockOneModelObj
                                   ?.selectedSubCategory,
                               items: addRearedLivestockOneModelObj!
@@ -317,6 +333,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 ),
                               ),
                               hintText: "lbl_select".tr,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Field is required";
+                                }
+                              },
                               val: addRearedLivestockOneModelObj
                                   ?.selectedLivestock,
                               items: addRearedLivestockOneModelObj!
@@ -349,10 +370,60 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                           style: theme.textTheme.titleSmall,
                         ),
                         SizedBox(height: 18.v),
+                        BlocSelector<
+                                AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState,
+                                List<AgeGroupModel>?>(
+                            selector: (state) => state.ageGroupMapList,
+                            builder: (context, ages) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  top: 15.v,
+                                  right: 16.h,
+                                ),
+                                child: Column(
+                                  children: List<Widget>.generate(
+                                    ages?.length ?? 0,
+                                    (index) {
+                                      AgeGroupModel model = ages![index];
+
+                                      return AgeItemWidget(
+                                        model,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            }),
+                        SizedBox(height: 18.v),
                         Text(
                           "msg_what_are_your_main".tr,
                           style: theme.textTheme.titleSmall,
                         ),
+                        SizedBox(height: 18.v),
+                        BlocSelector<AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState, List<FeedsModel>?>(
+                            selector: (state) => state.feedsdlist,
+                            builder: (context, feeds) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  top: 15.v,
+                                  right: 16.h,
+                                ),
+                                child: Column(
+                                  children: List<Widget>.generate(
+                                    feeds?.length ?? 0,
+                                    (index) {
+                                      FeedsModel model = feeds![index];
+
+                                      return FeedItemWidget(
+                                        model,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            }),
                         SizedBox(height: 65.v),
                         CustomElevatedButton(
                           width: 152.h,
@@ -385,6 +456,13 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 ),
                               ),
                               hintText: "lbl_select".tr,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Field is required";
+                                }
+                              },
+                              val: addRearedLivestockOneModelObj
+                                  ?.selectedDropDownValue1,
                               items: addRearedLivestockOneModelObj
                                       ?.dropdownItemList1 ??
                                   [],
@@ -406,6 +484,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         ),
         bottomNavigationBar: CustomElevatedButton(
           text: "lbl_save".tr,
+          onTap: () => saveDraft(context),
           margin: EdgeInsets.only(
             left: 16.h,
             right: 16.h,
@@ -420,6 +499,58 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  nextPage(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AddRearedLivestockOneBloc>().add(
+            NextTapEvent(
+              createSuccessful: () {
+                _success(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
+    }
+  }
+
+  _success(BuildContext context) {
+    NavigatorService.popAndPushNamed(AppRoutes.livestockOneTabContainerScreen);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Something went wrong, Kindly confirm all fields are filled.")));
+  }
+
+  saveDraft(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AddRearedLivestockOneBloc>().add(
+            SaveTapEvent(
+              createSuccessful: () {
+                _successSaved(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
+    }
+  }
+
+  _successSaved(BuildContext context) {
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.livestockOneTabContainerScreen);
+  }
+
+  goBack(BuildContext context) {
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.livestockOneTabContainerScreen);
   }
 
   addAgeGroup(BuildContext context) {

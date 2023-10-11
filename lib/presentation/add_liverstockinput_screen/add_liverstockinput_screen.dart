@@ -8,11 +8,13 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
+// ignore: must_be_immutable
 class AddLiverstockinputScreen extends StatelessWidget {
-  const AddLiverstockinputScreen({Key? key})
+  AddLiverstockinputScreen({Key? key})
       : super(
           key: key,
         );
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   static Widget builder(BuildContext context) {
     return BlocProvider<AddLiverstockinputBloc>(
@@ -112,6 +114,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue1,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList1 ?? [],
                         onChanged: (value) {
@@ -144,6 +152,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue2,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList2 ?? [],
                         onChanged: (value) {
@@ -189,6 +203,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue3,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList3 ?? [],
                         onChanged: (value) {
@@ -221,6 +241,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue4,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList4 ?? [],
                         onChanged: (value) {
@@ -253,6 +279,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue5,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList5 ?? [],
                         onChanged: (value) {
@@ -290,6 +322,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue6,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList6 ?? [],
                         onChanged: (value) {
@@ -322,6 +360,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           ),
                         ),
                         hintText: "lbl_select".tr,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Field is required";
+                          }
+                        },
+                        val: addLiverstockinputModelObj?.selectedDropDownValue7,
                         items:
                             addLiverstockinputModelObj?.dropdownItemList7 ?? [],
                         onChanged: (value) {
@@ -335,6 +379,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                   SizedBox(height: 51.v),
                   CustomElevatedButton(
                     text: "lbl_save".tr,
+                    onTap: () => saveDraft(context),
                     leftIcon: Container(
                       margin: EdgeInsets.only(right: 10.h),
                       child: CustomImageView(
@@ -349,5 +394,57 @@ class AddLiverstockinputScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  nextPage(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AddLiverstockinputBloc>().add(
+            NextTapEvent(
+              createSuccessful: () {
+                _success(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
+    }
+  }
+
+  _success(BuildContext context) {
+    NavigatorService.popAndPushNamed(AppRoutes.livestockOneTabContainerScreen);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Something went wrong, Kindly confirm all fields are filled.")));
+  }
+
+  saveDraft(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AddLiverstockinputBloc>().add(
+            SaveTapEvent(
+              createSuccessful: () {
+                _successSaved(context);
+              },
+              createFailed: () {
+                _failed(context);
+              },
+            ),
+          );
+    }
+  }
+
+  _successSaved(BuildContext context) {
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.livestockOneTabContainerScreen);
+  }
+
+  goBack(BuildContext context) {
+    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.livestockOneTabContainerScreen);
   }
 }

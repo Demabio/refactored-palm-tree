@@ -15,6 +15,8 @@ class AgeGroupModel extends Equatable {
     this.livestockSubCat,
     this.female,
     this.male,
+    this.females,
+    this.males,
     this.focusNode,
     this.femalefocusNode,
   }) {}
@@ -37,6 +39,10 @@ class AgeGroupModel extends Equatable {
 
   String? livestockSubCat;
 
+  String? males;
+
+  String? females;
+
   FocusNode? focusNode;
 
   FocusNode? femalefocusNode;
@@ -51,6 +57,8 @@ class AgeGroupModel extends Equatable {
     String? livestockSubCat,
     TextEditingController? male,
     TextEditingController? female,
+    String? males,
+    String? females,
     FocusNode? focusNode,
     FocusNode? femalefocusNode,
   }) {
@@ -66,6 +74,8 @@ class AgeGroupModel extends Equatable {
       female: female ?? this.female,
       focusNode: focusNode ?? this.focusNode,
       femalefocusNode: femalefocusNode ?? this.femalefocusNode,
+      males: males ?? this.males,
+      females: females ?? this.females,
     );
   }
 
@@ -80,6 +90,8 @@ class AgeGroupModel extends Equatable {
         livestockCat,
         female,
         male,
+        females,
+        males,
         focusNode,
         femalefocusNode,
       ];
@@ -110,6 +122,8 @@ class AgeGroupModel extends Equatable {
       subcategoryid: json['subcategoryid'],
       livestockCat: json['livestockCat'],
       livestockSubCat: json['livestockSubCat'],
+      females: json['male'],
+      males: json['male'],
       // Add other properties as needed...
     );
   }
