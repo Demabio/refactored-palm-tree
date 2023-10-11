@@ -57,12 +57,20 @@ class LivestockOneTabContainerScreenState
                   centerTitle: true,
                   title: AppbarSubtitle1(text: "lbl_livestock".tr),
                   actions: [
-                    AppbarImage1(
-                        svgPath: ImageConstant.imgFrame34WhiteA70044x44,
-                        margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
-                        onTap: () {
-                          onTapImage(context);
-                        })
+                    if (state.liveorins)
+                      AppbarImage1(
+                          svgPath: ImageConstant.imgFrame34WhiteA70044x44,
+                          margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                          onTap: () {
+                            onTapImage(context);
+                          }),
+                    if (!state.liveorins)
+                      AppbarImage1(
+                          svgPath: ImageConstant.imgFrame33,
+                          margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                          onTap: () {
+                            gotoInputs(context);
+                          })
                   ],
                   styleType: Style.bgFill),
               body: SizedBox(
@@ -78,6 +86,7 @@ class LivestockOneTabContainerScreenState
                                 border: Border.all(
                                     color: appTheme.whiteA700, width: 1.h)),
                             child: TabBar(
+                                onTap: (value) => changeTab(context, value),
                                 controller: tabviewController,
                                 labelPadding: EdgeInsets.zero,
                                 labelColor: theme.colorScheme.primary,
@@ -113,9 +122,21 @@ class LivestockOneTabContainerScreenState
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmerRegistrationScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmerRegistrationScreen,
     );
+  }
+
+  gotoInputs(BuildContext context) {
+    NavigatorService.popAndPushNamed(
+      AppRoutes.addLiverstockinputScreen,
+    );
+  }
+
+  changeTab(BuildContext context, int value) {
+    context
+        .read<LivestockOneTabContainerBloc>()
+        .add(ChangeTabEvent(value: value));
   }
 
   /// Navigates to the addRearedLivestockOneScreen when the action is triggered.
@@ -124,7 +145,7 @@ class LivestockOneTabContainerScreenState
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the addRearedLivestockOneScreen.
   onTapImage(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.addRearedLivestockOneScreen,
     );
   }

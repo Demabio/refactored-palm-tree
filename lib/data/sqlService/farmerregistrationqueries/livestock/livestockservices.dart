@@ -74,12 +74,25 @@ class FarmerLivestockServicesDB {
       FarmerLivestockService farmerLivestockService) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, date_created, created_by
-      ) VALUES (?, ?, ?, ?)
+       INSERT INTO $tableName (
+        farmer_id, farmer_farm_id, livestock_area, area_unit_id, 
+        fertilizer_for_fodder, fodder_seeds, fertilizer_seeds, ai_use, 
+        hormone_use, embryo_transfer, routine_vaccination, curative_measures, 
+        date_created, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerLivestockService.farmerId,
       farmerLivestockService.farmerFarmId,
+      farmerLivestockService.livestockArea,
+      farmerLivestockService.areaUnitId,
+      farmerLivestockService.fertilizerForFodder,
+      farmerLivestockService.fodderSeeds,
+      farmerLivestockService.fertilizerSeeds,
+      farmerLivestockService.aiUse,
+      farmerLivestockService.hormoneUse,
+      farmerLivestockService.embryoTransfer,
+      farmerLivestockService.routineVaccination,
+      farmerLivestockService.curativeMeasures,
       DateTime.now().toLocal().toIso8601String(),
       farmerLivestockService.createdBy,
     ]);
@@ -159,7 +172,7 @@ class FarmerLivestockServicesDB {
     ''', [id]);
 
     return feeds.isNotEmpty
-        ? FarmerLivestockService.fromSqfliteDatabase(feeds.first)
+        ? FarmerLivestockService.fromSqfliteDatabase(feeds.last)
         : null;
   }
 }

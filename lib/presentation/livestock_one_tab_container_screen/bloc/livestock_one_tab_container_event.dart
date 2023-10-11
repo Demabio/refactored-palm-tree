@@ -15,3 +15,22 @@ class LivestockOneTabContainerInitialEvent
   @override
   List<Object?> get props => [];
 }
+
+class ChangeTabEvent extends LivestockOneTabContainerEvent {
+  ChangeTabEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}

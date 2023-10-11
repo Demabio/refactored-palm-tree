@@ -62,7 +62,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                 Padding(
                                   padding: EdgeInsets.only(left: 21.h),
                                   child: Text(
-                                    "msg_farmer_felix_faro".tr,
+                                    state.livestockTwoModelObj!.livestockins
+                                            ?.createdBy
+                                            ?.toString() ??
+                                        "NONE", // "msg_farmer_felix_faro".tr,
                                     style: theme.textTheme.labelMedium,
                                   ),
                                 ),
@@ -98,8 +101,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state.livestockTwoModelObj!
-                                                .livestockins!.fodderSeeds!
+                                        (state
+                                                    .livestockTwoModelObj!
+                                                    .livestockins
+                                                    ?.fertilizerSeeds ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,
@@ -122,10 +128,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state
-                                                .livestockTwoModelObj!
-                                                .livestockins!
-                                                .fertilizerForFodder!
+                                        (state
+                                                    .livestockTwoModelObj!
+                                                    .livestockins
+                                                    ?.fertilizerForFodder ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,
@@ -162,9 +169,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state.livestockTwoModelObj!
-                                                    .livestockins!.aiUse ==
-                                                1
+                                        (state.livestockTwoModelObj!
+                                                        .livestockins?.aiUse ==
+                                                    1 ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,
@@ -187,8 +195,8 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state.livestockTwoModelObj!
-                                                    .livestockins!.hormoneUse ==
+                                        state.livestockTwoModelObj!.livestockins
+                                                    ?.hormoneUse ==
                                                 1
                                             ? "Yes"
                                             : "No",
@@ -212,8 +220,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state.livestockTwoModelObj!
-                                                .livestockins!.embryoTransfer!
+                                        (state
+                                                    .livestockTwoModelObj!
+                                                    .livestockins
+                                                    ?.embryoTransfer ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,
@@ -250,10 +261,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state
-                                                .livestockTwoModelObj!
-                                                .livestockins!
-                                                .routineVaccination!
+                                        (state
+                                                    .livestockTwoModelObj!
+                                                    .livestockins
+                                                    ?.routineVaccination ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,
@@ -276,8 +288,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             CustomTextStyles.labelMediumPrimary,
                                       ),
                                       Text(
-                                        state.livestockTwoModelObj!
-                                                .livestockins!.curativeMeasures!
+                                        (state
+                                                    .livestockTwoModelObj!
+                                                    .livestockins
+                                                    ?.curativeMeasures ??
+                                                false)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,

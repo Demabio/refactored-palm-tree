@@ -47,7 +47,7 @@ class LSProgressDB {
         'SELECT * FROM $tableName WHERE "livestockId" = ?', [farmerId]);
 
     return progress.isNotEmpty
-        ? LSProgress.fromSqfliteDatabase(progress.first)
+        ? LSProgress.fromSqfliteDatabase(progress.last)
         : null;
   }
 }

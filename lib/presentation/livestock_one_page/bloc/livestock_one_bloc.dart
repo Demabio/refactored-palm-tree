@@ -26,6 +26,7 @@ part 'livestock_one_state.dart';
 class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
   LivestockOneBloc(LivestockOneState initialState) : super(initialState) {
     on<LivestockOneInitialEvent>(_onInitialize);
+    on<AddEditEvent>(_addEdit);
   }
 
   _addEdit(
