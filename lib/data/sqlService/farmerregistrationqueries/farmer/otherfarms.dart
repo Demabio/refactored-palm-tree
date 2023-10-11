@@ -3,7 +3,8 @@ import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerOtherFarmDB {
-  final tableName = 'tblfrfarmerotherfarm';
+  // final tableName = 'tblfrfarmerotherfarm';
+  final tableName = 'tblfrfarmerfarm';
 
   Future<void> createTable(Database database) async {
     await database.execute("""

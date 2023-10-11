@@ -121,8 +121,7 @@ class AddFarmHoldingTwoBloc
           ownershipId:
               state.addFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
           farmLrCert: state.titlethreeController?.text,
-          otherFarmElsewhere:
-              state.addFarmHoldingTwoModelObj?.selectedDropDownValue1!.id == 1,
+          otherFarmElsewhere: true,
         ))
             .then((value) async {
           if (value > 0) {

@@ -70,7 +70,7 @@ class PrimaryFarmHoldingOneBloc
         farmDB
             .create(FarmerFarm(
           farmerFarmId: 0,
-          farmerId: 0,
+          farmerId: PrefUtils().getFarmerId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
         ))

@@ -70,7 +70,7 @@ class AddFarmHoldingOneBloc
         farmDB
             .create(FarmerFarm(
           farmerFarmId: 0,
-          farmerId: 0,
+          farmerId: PrefUtils().getFarmerId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
         ))
@@ -125,10 +125,12 @@ class AddFarmHoldingOneBloc
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId:
                     state.addFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                cropFarmSize: double.parse(state.sizeController!.text),
-                livestockFarmSize: double.parse(state.sizeController!.text),
-                leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-                idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                cropFarmSize: double.parse(state.sizeoneController!.text),
+                livestockFarmSize: double.parse(state.areaController!.text),
+                leasedFarmSize:
+                    double.parse(state.sizetwoController?.text ?? "0"),
+                idleFarmSize:
+                    double.parse(state.sizethreeController?.text ?? "0"),
               ))
               .then((value) => print(
                     "Updated scop: " + value.toString(),
@@ -212,10 +214,12 @@ class AddFarmHoldingOneBloc
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId:
                     state.addFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                cropFarmSize: double.parse(state.sizeController!.text),
-                livestockFarmSize: double.parse(state.sizeController!.text),
-                leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-                idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                cropFarmSize: double.parse(state.sizeoneController!.text),
+                livestockFarmSize: double.parse(state.areaController!.text),
+                leasedFarmSize:
+                    double.parse(state.sizetwoController?.text ?? "0"),
+                idleFarmSize:
+                    double.parse(state.sizethreeController?.text ?? "0"),
               ))
               .then((value) => print(
                     "Updated scop: " + value.toString(),

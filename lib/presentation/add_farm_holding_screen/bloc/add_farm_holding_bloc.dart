@@ -27,13 +27,13 @@ class AddFarmHoldingBloc
   }
 
   Future<List<FarmerFarm>?> getFarm() async {
-    int farmerid = PrefUtils().getFarmId();
+    int farmerid = PrefUtils().getFarmerId();
     FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
-    return await farmDB.fetchAllByFarmer(farmerid);
+    return await farmDB.fetchAllByFarmer(0);
   }
 
   Future<PFProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmId();
+    int farmerid = PrefUtils().getotherFarmId();
     PFProgressDB pfProgressDB = PFProgressDB();
     return await pfProgressDB.fetchByFarmerId(farmerid);
   }
@@ -75,10 +75,10 @@ class AddFarmHoldingBloc
     Emitter<AddFarmHoldingState> emit,
   ) {
     if (event.value! == 1) {
-      PrefUtils().setCropId(event.crop!);
+      PrefUtils().setotherFarmId(event.id!);
       event.createSuccessful!.call();
     } else {
-      PrefUtils().setCropId(0);
+      PrefUtils().setotherFarmId(0);
       event.createSuccessful!.call();
     }
   }
@@ -92,10 +92,13 @@ class AddFarmHoldingBloc
     List<FarmdetailsItemModel> farmmodels = [];
 
     for (var farm in farms) {
-      CropAreaUnit? level = await getArea(farm.areaUnitId ?? 1);
-      FarmerFarmOwnership? relationship = await getOwner(farm.ownershipId ?? 1);
-      List<FarmerEnterprise> farments =
-          await getEnterprises(farm.farmerFarmId) ?? [];
+      CropAreaUnit? level =
+          await getArea(farm.areaUnitId == 0 ? 1 : farm.areaUnitId!);
+      FarmerFarmOwnership? relationship =
+          await getOwner(farm.ownershipId == 0 ? 1 : farm.ownershipId!);
+      List<FarmerEnterprise> farments = await getEnterprises(
+              farm.farmerFarmId == 0 ? 1 : farm.farmerFarmId) ??
+          [];
       List<EnterpriseModel> ents = await fetchEnterprises();
       for (var ent in farments) {
         int index =
@@ -115,6 +118,8 @@ class AddFarmHoldingBloc
         idle: farm.idleFarmSize.toString(),
         landsize: farm.farmSize.toString(),
         enterprises: ents,
+        lr: farm.farmLrCert ?? "N/A",
+        owner: relationship!.ownershipDesc,
       ));
     }
 

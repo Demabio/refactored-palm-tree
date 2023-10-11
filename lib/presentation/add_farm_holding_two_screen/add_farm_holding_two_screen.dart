@@ -349,7 +349,7 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
   }
 
   _success(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.primaryFarmHoldingScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.addFarmHoldingScreen);
   }
 
   void _failed(BuildContext context) {
@@ -375,18 +375,18 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
 
   _navToStep(int val, BuildContext context, PFProgress pfProgress) {
     if (val == 0 && pfProgress.pageOne == 1) {
-      Navigator.popAndPushNamed(context, AppRoutes.primaryFarmHoldingOneScreen);
+      Navigator.popAndPushNamed(context, AppRoutes.addFarmHoldingOneScreen);
     }
   }
 
   _successSaved(BuildContext context) {
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
-    Navigator.popAndPushNamed(context, AppRoutes.primaryFarmHoldingScreen);
+    Navigator.popAndPushNamed(context, AppRoutes.addFarmHoldingScreen);
   }
 
   goBack(BuildContext context) {
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
-    Navigator.popAndPushNamed(context, AppRoutes.primaryFarmHoldingOneScreen);
+    Navigator.popAndPushNamed(context, AppRoutes.addFarmHoldingOneScreen);
   }
 
   /// Navigates to the addFarmHoldingOneScreen when the action is triggered.

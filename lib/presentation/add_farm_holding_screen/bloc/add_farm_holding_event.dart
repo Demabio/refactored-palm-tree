@@ -20,11 +20,11 @@ class AddEditEvent extends AddFarmHoldingEvent {
     this.createFailed,
     this.createSuccessful,
     this.value,
-    this.crop,
+    this.id,
   });
 
   int? value;
-  int? crop;
+  int? id;
   Function? createSuccessful;
 
   Function? createFailed;
@@ -33,6 +33,6 @@ class AddEditEvent extends AddFarmHoldingEvent {
         value,
         createFailed,
         createSuccessful,
-        crop,
+        id,
       ];
 }

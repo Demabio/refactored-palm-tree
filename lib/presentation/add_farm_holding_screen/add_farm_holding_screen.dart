@@ -50,59 +50,56 @@ class AddFarmHoldingScreen extends StatelessWidget {
               styleType: Style.bgFill),
           body: SizedBox(
             width: mediaQueryData.size.width,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: 2.v),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.h, right: 14.h, bottom: 5.v),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [
-                      Text("lbl_farmer_info".tr,
-                          style: CustomTextStyles.labelMediumPrimary),
-                      Padding(
-                          padding: EdgeInsets.only(left: 21.h),
-                          child: Text("msg_farmer_felix_faro".tr,
-                              style: theme.textTheme.labelMedium))
-                    ]),
+            child: Padding(
+              padding: EdgeInsets.only(left: 20.h, right: 14.h, bottom: 5.v),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Text("lbl_farmer_info".tr,
+                        style: CustomTextStyles.labelMediumPrimary),
                     Padding(
-                        padding: EdgeInsets.only(left: 1.h, top: 7.v),
-                        child: Text("Other Farms".tr,
-                            style: CustomTextStyles.titleMediumSemiBold)),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 9.h, top: 5.v),
-                        child: BlocSelector<AddFarmHoldingBloc,
-                            AddFarmHoldingState, AddFarmHoldingModel?>(
-                          selector: (state) => state.addFarmHoldingModelObj,
-                          builder: (context, addFarmHoldingModelObj) {
-                            return ListView.separated(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height: 18.v);
-                                },
-                                itemCount:
-                                    addFarmHoldingModelObj?.farms.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  FarmdetailsItemModel model =
-                                      addFarmHoldingModelObj?.farms[index] ??
-                                          FarmdetailsItemModel();
-                                  return FarmdetailsItemWidget(
-                                    model,
-                                    edit: () => addorEdit(
-                                      context,
-                                      1,
-                                      model.id!,
-                                    ),
-                                  );
-                                });
-                          },
-                        ),
+                        padding: EdgeInsets.only(left: 21.h),
+                        child: Text("msg_farmer_felix_faro".tr,
+                            style: theme.textTheme.labelMedium))
+                  ]),
+                  Padding(
+                      padding: EdgeInsets.only(left: 1.h, top: 7.v),
+                      child: Text("Other Farms".tr,
+                          style: CustomTextStyles.titleMediumSemiBold)),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                      child: BlocSelector<AddFarmHoldingBloc,
+                          AddFarmHoldingState, AddFarmHoldingModel?>(
+                        selector: (state) => state.addFarmHoldingModelObj,
+                        builder: (context, addFarmHoldingModelObj) {
+                          return ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: 18.v);
+                              },
+                              itemCount:
+                                  addFarmHoldingModelObj?.farms.length ?? 0,
+                              itemBuilder: (context, index) {
+                                FarmdetailsItemModel model =
+                                    addFarmHoldingModelObj?.farms[index] ??
+                                        FarmdetailsItemModel();
+                                return FarmdetailsItemWidget(
+                                  model,
+                                  edit: () => addorEdit(
+                                    context,
+                                    1,
+                                    model.id!,
+                                  ),
+                                );
+                              });
+                        },
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -111,11 +108,11 @@ class AddFarmHoldingScreen extends StatelessWidget {
     });
   }
 
-  addorEdit(BuildContext context, int id, int crop) {
+  addorEdit(BuildContext context, int id, int val) {
     context.read<AddFarmHoldingBloc>().add(
           AddEditEvent(
             value: id,
-            crop: crop,
+            id: val,
             createSuccessful: () {
               onTapImage(context);
             },
