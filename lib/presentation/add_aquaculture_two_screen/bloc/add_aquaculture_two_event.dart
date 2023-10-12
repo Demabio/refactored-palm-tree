@@ -84,6 +84,41 @@ class ClearEvent extends AddAquacultureTwoEvent {
       ];
 }
 
+class AddEditOneEvent extends AddAquacultureTwoEvent {
+  AddEditOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddEditTwoEvent extends AddAquacultureTwoEvent {
+  AddEditTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckOneEvent extends AddAquacultureTwoEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddAquacultureTwoEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddAquacultureTwoEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddAquacultureTwoEvent {
   ChangeDropDown1Event({required this.value});

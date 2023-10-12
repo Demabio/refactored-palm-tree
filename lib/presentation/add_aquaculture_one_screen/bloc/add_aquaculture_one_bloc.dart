@@ -41,10 +41,13 @@ class AddAquacultureOneBloc
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
-    int farmerid = PrefUtils().getFarmId();
+    int farmerid = PrefUtils().getFarmerId();
     try {
       AQProgressDB aqProgressDB = AQProgressDB();
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
+          state.aquatypes.isNotEmpty &&
+          state.fish.isNotEmpty &&
+          state.prodsyss.isNotEmpty) {
         aqProgressDB
             .insert(AQProgress(
               fishId: farmerid,
@@ -52,7 +55,10 @@ class AddAquacultureOneBloc
               pageTwo: 0,
             ))
             .then((value) => print("Scope FI" + value.toString()));
-      } else {
+        event.createSuccessful!.call();
+      } else if (state.aquatypes.isNotEmpty &&
+          state.fish.isNotEmpty &&
+          state.prodsyss.isNotEmpty) {
         aqProgressDB
             .update(AQProgress(
               fishId: farmerid,
@@ -60,9 +66,9 @@ class AddAquacultureOneBloc
               pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
             ))
             .then((value) => print("Scope FI" + value.toString()));
-      }
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 1) {
         event.createSuccessful!.call();
+      } else {
+        event.createFailed!.call();
       }
     } catch (e) {
       event.createFailed!.call();
@@ -75,10 +81,13 @@ class AddAquacultureOneBloc
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
-    int farmerid = PrefUtils().getFarmId();
+    int farmerid = PrefUtils().getFarmerId();
     try {
       AQProgressDB aqProgressDB = AQProgressDB();
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
+          state.aquatypes.isNotEmpty &&
+          state.fish.isNotEmpty &&
+          state.prodsyss.isNotEmpty) {
         aqProgressDB
             .insert(AQProgress(
               fishId: farmerid,
@@ -86,7 +95,10 @@ class AddAquacultureOneBloc
               pageTwo: 0,
             ))
             .then((value) => print("Scope FI" + value.toString()));
-      } else {
+        event.createSuccessful!.call();
+      } else if (state.aquatypes.isNotEmpty &&
+          state.fish.isNotEmpty &&
+          state.prodsyss.isNotEmpty) {
         aqProgressDB
             .update(AQProgress(
               fishId: farmerid,
@@ -94,10 +106,14 @@ class AddAquacultureOneBloc
               pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
             ))
             .then((value) => print("Scope FI" + value.toString()));
-      }
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {}
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 1) {
         event.createSuccessful!.call();
+      } else {
+        event.createFailed!.call();
+        emit(state.copyWith(
+          checkedA: state.aquatypes.isEmpty,
+          checkedF: state.fish.isEmpty,
+          checkedP: state.prodsyss.isEmpty,
+        ));
       }
     } catch (e) {
       event.createFailed!.call();
@@ -115,7 +131,7 @@ class AddAquacultureOneBloc
 
     feedmodels = await _fish(feedmodels, fishes!);
 
-    if (feedmodels.isNotEmpty) {
+    if (fishes.isNotEmpty) {
       emit(state.copyWith(fish: feedmodels, checkedF: false));
     } else {
       emit(state.copyWith(checkedF: true));
@@ -133,10 +149,10 @@ class AddAquacultureOneBloc
 
     feedmodels = _systems(feedmodels, prods!);
 
-    if (feedmodels.isNotEmpty) {
+    if (prods.isNotEmpty) {
       emit(state.copyWith(prodsyss: feedmodels, checkedP: false));
     } else {
-      emit(state.copyWith(checkedF: true));
+      emit(state.copyWith(checkedP: true));
     }
   }
 
@@ -151,10 +167,10 @@ class AddAquacultureOneBloc
 
     feedmodels = _types(feedmodels, fishes!);
 
-    if (feedmodels.isNotEmpty) {
+    if (fishes.isNotEmpty) {
       emit(state.copyWith(aquatypes: feedmodels, checkedA: false));
     } else {
-      emit(state.copyWith(checkedF: true));
+      emit(state.copyWith(checkedA: true));
     }
   }
 
@@ -230,6 +246,7 @@ class AddAquacultureOneBloc
         list.add(CheckBoxList(
           title: value[i].fishType,
           id: value[i].fishTypeId,
+          subcategoryid: value[i].fishCategoryId,
         ));
       }
     });
@@ -245,17 +262,19 @@ class AddAquacultureOneBloc
 
     FishCategoryDB categoryDB = FishCategoryDB();
     FishCategory? category;
-    for (var ent in ages) {
-      int index = agemodels.indexWhere((obj) => obj.id == ent.fishTypeId);
-      fishProductionType = await fishProductionTypeDB
-          .fetchByProductionTypeId(ent.productionTypeId!);
+    if (ages.isNotEmpty) {
+      for (var ent in ages) {
+        int index = agemodels.indexWhere((obj) => obj.id == ent.fishTypeId);
+        fishProductionType = await fishProductionTypeDB
+            .fetchByProductionTypeId(ent.productionTypeId!);
 
-      category = await categoryDB
-          .fetchByFishCategoryId(int.parse(agemodels[index].var1!));
-      agemodels[index].isSelected = true;
-      agemodels[index].var2 = fishProductionType.fishProductionType;
-      agemodels[index].var1 = category.fishCategory;
-      agemodels[index].var3 = ent.noOfFingerlings.toString();
+        category = await categoryDB
+            .fetchByFishCategoryId(agemodels[index].subcategoryid!);
+        agemodels[index].isSelected = true;
+        agemodels[index].var2 = fishProductionType.fishProductionType;
+        agemodels[index].var1 = category.fishCategory;
+        agemodels[index].var3 = ent.noOfFingerlings.toString();
+      }
     }
 
     return agemodels;
@@ -266,15 +285,17 @@ class AddAquacultureOneBloc
     List<CheckBoxList> feedmodels = feedmodelss;
     List<FarmerFishProductionSystem> feeds = feedss;
 
-    for (var ent in feeds) {
-      int index =
-          feedmodels.indexWhere((obj) => obj.id == ent.productionTypeId);
+    if (feeds.isNotEmpty) {
+      for (var ent in feeds) {
+        int index =
+            feedmodels.indexWhere((obj) => obj.id == ent.productionTypeId);
 
-      feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = ent.noOfActiveUnits.toString();
-      feedmodels[index].var2 = ent.activeArea.toString();
-      feedmodels[index].var3 = ent.noOfInactiveUnits.toString();
-      feedmodels[index].var4 = ent.inactiveArea.toString();
+        feedmodels[index].isSelected = true;
+        feedmodels[index].var1 = ent.noOfActiveUnits.toString();
+        feedmodels[index].var2 = ent.activeArea.toString();
+        feedmodels[index].var3 = ent.noOfInactiveUnits.toString();
+        feedmodels[index].var4 = ent.inactiveArea.toString();
+      }
     }
 
     return feedmodels;
@@ -284,11 +305,13 @@ class AddAquacultureOneBloc
       List<CheckBoxList> feedmodelss, List<FarmerFishCategory> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
     List<FarmerFishCategory> feeds = feedss;
+    if (feeds.isNotEmpty) {
+      for (var ent in feeds) {
+        int index =
+            feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
 
-    for (var ent in feeds) {
-      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
-
-      feedmodels[index].isSelected = true;
+        feedmodels[index].isSelected = true;
+      }
     }
 
     return feedmodels;
@@ -355,9 +378,11 @@ class AddAquacultureOneBloc
     }
 
     emit(state.copyWith(
-      fish: fish,
-      aquatypes: atypes,
-      prodsyss: prods,
-    ));
+        fish: fish,
+        aquatypes: atypes,
+        prodsyss: prods,
+        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
+          aqProgress: pfProgress,
+        )));
   }
 }

@@ -25,14 +25,17 @@ class AquaTypeItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      height: height,
-      width: width,
-      child: Text(
-        enterpriseModel.title,
-        style: theme.textTheme.labelMedium,
-        textAlign: TextAlign.left,
+    return Visibility(
+      visible: enterpriseModel.isSelected,
+      child: Container(
+        alignment: Alignment.centerLeft,
+        height: height,
+        width: width,
+        child: Text(
+          enterpriseModel.title,
+          style: theme.textTheme.labelMedium,
+          textAlign: TextAlign.left,
+        ),
       ),
     );
   }

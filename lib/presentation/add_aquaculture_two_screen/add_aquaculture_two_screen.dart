@@ -331,6 +331,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
+                              onTap: () => goBack(context),
                               margin: EdgeInsets.only(right: 1.h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
@@ -348,6 +349,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 12.v),
                       CustomElevatedButton(
+                        onTap: () => saveDraft(context),
                         text: "lbl_save".tr,
                         leftIcon: Container(
                           margin: EdgeInsets.only(right: 10.h),
@@ -420,7 +422,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
 
   goBack(BuildContext context) {
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
-    Navigator.popAndPushNamed(context, AppRoutes.aquacultureScreen);
+    Navigator.popAndPushNamed(context, AppRoutes.addAquacultureOneScreen);
   }
 
   addMainInputs(BuildContext context) {

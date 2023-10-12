@@ -88,6 +88,11 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_select".tr,
+                    validator: (value) {
+                      if (value == null) {
+                        return "Field is required";
+                      }
+                    },
                     items: addAquacultureFourModelObj?.dropdownItemList ?? [],
                     onChanged: (value) {
                       context
@@ -125,6 +130,12 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_select".tr,
+                    val: addAquacultureFourModelObj?.selectedDropDownValue1,
+                    validator: (value) {
+                      if (value == null) {
+                        return "Field is required";
+                      }
+                    },
                     items: addAquacultureFourModelObj?.dropdownItemList1 ?? [],
                     onChanged: (value) {
                       context
@@ -157,7 +168,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
-                      if (!isNumeric(value)) {
+                      if (!isNumeric(value, isRequired: true)) {
                         return "Please enter valid number";
                       }
                       return null;
@@ -188,7 +199,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
-                      if (!isNumeric(value)) {
+                      if (!isNumeric(value, isRequired: true)) {
                         return "Please enter valid number";
                       }
                       return null;
@@ -219,7 +230,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
-                      if (!isNumeric(value)) {
+                      if (!isNumeric(value, isRequired: true)) {
                         return "Please enter valid number";
                       }
                       return null;
@@ -250,7 +261,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
-                      if (!isNumeric(value)) {
+                      if (!isNumeric(value, isRequired: true)) {
                         return "Please enter valid number";
                       }
                       return null;

@@ -273,7 +273,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
 
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, bool?>(
-                            selector: (state) => state.checkedP,
+                            selector: (state) => state.checkedF,
                             builder: (context, checked) {
                               return Container(
                                 width: 316.h,
@@ -343,6 +343,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             Expanded(
                               child: CustomElevatedButton(
                                 text: "lbl_next".tr,
+                                onTap: () => nextPage(context),
                                 margin: EdgeInsets.only(left: 1.h),
                               ),
                             ),
@@ -351,6 +352,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                         SizedBox(height: 12.v),
                         CustomElevatedButton(
                           text: "lbl_save".tr,
+                          onTap: () => saveDraft(context),
                           leftIcon: Container(
                             margin: EdgeInsets.only(right: 10.h),
                             child: CustomImageView(

@@ -25,73 +25,76 @@ class FishtemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      height: height,
-      width: width,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                "Fish:",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-              Spacer(),
-              Text(
-                enterpriseModel.title,
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                "Fish Category:",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-              Spacer(),
-              Text(
-                enterpriseModel.var1 ?? "N/A",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                "Production System:",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-              Spacer(),
-              Text(
-                enterpriseModel.var2 ?? "N/A",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                "Number of Fingerlings:",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-              Spacer(),
-              Text(
-                enterpriseModel.var3 ?? "N/A",
-                style: theme.textTheme.labelMedium,
-                textAlign: TextAlign.left,
-              ),
-            ],
-          ),
-        ],
+    return Visibility(
+      visible: enterpriseModel.isSelected,
+      child: Container(
+        alignment: Alignment.centerLeft,
+        height: height,
+        width: width,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  "Fish:",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+                Spacer(),
+                Text(
+                  enterpriseModel.title,
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Fish Category:",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+                Spacer(),
+                Text(
+                  enterpriseModel.var1 ?? "N/A",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Production System:",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+                Spacer(),
+                Text(
+                  enterpriseModel.var2 ?? "N/A",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Number of Fingerlings:",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+                Spacer(),
+                Text(
+                  enterpriseModel.var3 ?? "N/A",
+                  style: theme.textTheme.labelMedium,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

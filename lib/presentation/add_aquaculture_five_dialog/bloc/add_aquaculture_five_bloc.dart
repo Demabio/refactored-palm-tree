@@ -53,6 +53,8 @@ class AddAquacultureFiveBloc
           selectedCategory: null,
           dropdownItemList1: fish,
           search: false,
+          selectedDropDownValue2:
+              state.addAquacultureFiveModelObj?.selectedDropDownValue2,
         )
         // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
         //     ?.copyWith(chipviewayrshiItemList: newList),
@@ -87,6 +89,8 @@ class AddAquacultureFiveBloc
         addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
           selectedCategory: event.value,
           selectedFish: null,
+          selectedDropDownValue2:
+              state.addAquacultureFiveModelObj?.selectedDropDownValue2,
           dropdownItemList1: await fetchFish(event.value.id!),
         )));
   }
@@ -98,9 +102,11 @@ class AddAquacultureFiveBloc
     emit(state.copyWith(
         selectedDropDownValue1: event.value,
         addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
-            selectedCategory:
-                state.addAquacultureFiveModelObj?.selectedCategory,
-            selectedFish: event.value)));
+          selectedCategory: state.addAquacultureFiveModelObj?.selectedCategory,
+          selectedFish: event.value,
+          selectedDropDownValue2:
+              state.addAquacultureFiveModelObj?.selectedDropDownValue2,
+        )));
   }
 
   _changeDropDown2(
@@ -108,8 +114,12 @@ class AddAquacultureFiveBloc
     Emitter<AddAquacultureFiveState> emit,
   ) {
     emit(state.copyWith(
-      selectedDropDownValue2: event.value,
-    ));
+        selectedDropDownValue2: event.value,
+        addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
+          selectedCategory: state.addAquacultureFiveModelObj?.selectedCategory,
+          selectedDropDownValue2: event.value,
+          selectedFish: state.addAquacultureFiveModelObj?.selectedFish,
+        )));
   }
 
   _searchFish(
@@ -223,7 +233,7 @@ class AddAquacultureFiveBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
-    int farmid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
 
     try {
       farmerFishDB.create(FarmerFish(

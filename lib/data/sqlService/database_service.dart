@@ -1,4 +1,5 @@
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropmotive.dart';
@@ -56,6 +57,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/farmer_identification_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/process_status.dart';
@@ -65,6 +67,8 @@ import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser_source.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionlevel.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionsystem.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/agency.dart';
@@ -204,6 +208,8 @@ class DatabaseService {
     await FarmerFishDB().createTable(database);
     await FarmerFishProductionLevelsDB().createTable(database);
     await FarmerFishProductionSystemDB().createTable(database);
+    await FarmerFishCategoryDB().createTable(database);
+    await FarmerFishInputDB().createTable(database);
 
     //
     await FarmerIrrigationAgencyDB().createTable(database);
@@ -253,5 +259,6 @@ class DatabaseService {
     await LWProgressDB().createTable(database);
     await CAProgressDB().createTable(database);
     await ATProgressDB().createTable(database);
+    await LSIProgressDB().createTable(database);
   }
 }

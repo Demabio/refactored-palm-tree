@@ -336,7 +336,7 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
-                      if (!isNumeric(value)) {
+                      if (!isNumeric(value, isRequired: true)) {
                         return "Please enter valid number";
                       }
                       return null;

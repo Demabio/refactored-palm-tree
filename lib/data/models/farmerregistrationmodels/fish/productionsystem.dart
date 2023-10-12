@@ -32,7 +32,7 @@ class FarmerFishProductionSystem {
         farmerId: map['farmer_id']?.toInt() ?? 0,
         farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         productionTypeId: map['production_type_id']?.toInt() ?? 0,
-        productionStatus: map['production_status']?.toInt(),
+        productionStatus: int.parse(map['production_status'] ?? "0"),
         activeArea: map['active_area']?.toDouble(),
         noOfActiveUnits: map['no_of_active_units']?.toInt(),
         inactiveArea: map['inactive_area']?.toDouble(),

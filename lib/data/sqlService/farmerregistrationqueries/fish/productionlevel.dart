@@ -93,5 +93,18 @@ class FarmerFishProductionLevelsDB {
         .toList();
   }
 
+  Future<FarmerFishProductionLevel?> fetchByFarmer(int id) async {
+    final database = await DatabaseService().database;
+    final productionLevels = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+
+    return productionLevels.isNotEmpty
+        ? FarmerFishProductionLevel.fromSqfliteDatabase(productionLevels.first)
+        : null;
+  }
+
   // Add more database methods as needed
 }

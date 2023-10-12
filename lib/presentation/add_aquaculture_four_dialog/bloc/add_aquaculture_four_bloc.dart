@@ -51,7 +51,7 @@ class AddAquacultureFourBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
-    int farmid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
 
     try {
       farmerFishProductionSystemDB.create(FarmerFishProductionSystem(
@@ -80,6 +80,11 @@ class AddAquacultureFourBloc
   ) {
     emit(state.copyWith(
       selectedDropDownValue: event.value,
+      addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
+        selectedDropDownValue1:
+            state.addAquacultureFourModelObj?.selectedDropDownValue1,
+        selectedDropDownValue: event.value,
+      ),
     ));
   }
 
@@ -89,6 +94,11 @@ class AddAquacultureFourBloc
   ) {
     emit(state.copyWith(
       selectedDropDownValue1: event.value,
+      addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
+        selectedDropDownValue:
+            state.addAquacultureFourModelObj?.selectedDropDownValue,
+        selectedDropDownValue1: event.value,
+      ),
     ));
   }
 
@@ -240,7 +250,7 @@ class AddAquacultureFourBloc
     List<SelectionPopupModel> list = [];
     FishProductionUnitOfMeasureDB fishProductionUnitOfMeasureDB =
         FishProductionUnitOfMeasureDB();
-    await fishProductionUnitOfMeasureDB?.fetchAll().then((value) {
+    await fishProductionUnitOfMeasureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].unitOfMeasure,
@@ -254,7 +264,7 @@ class AddAquacultureFourBloc
   Future<List<SelectionPopupModel>> fillProdsystems() async {
     List<SelectionPopupModel> list = [];
     FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
-    await fishProductionTypeDB?.fetchAll().then((value) {
+    await fishProductionTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].fishProductionType,
