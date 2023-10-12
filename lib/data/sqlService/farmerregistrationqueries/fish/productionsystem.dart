@@ -52,7 +52,7 @@ class FarmerFishProductionSystemDB {
     return await database.rawInsert('''
       UPDATE  $tableName SET
         production_type_id = ?, production_status = ?, active_area = ?, no_of_active_units = ?, inactive_area = ?, no_of_inactive_units = ?
-      WHERE farmer_fish_id = ?
+      WHERE farmer_fishprod_id = ?
     ''', [
       farmerFishProductionSystem.productionTypeId,
       farmerFishProductionSystem.productionStatus,
@@ -107,5 +107,26 @@ class FarmerFishProductionSystemDB {
         .toList();
   }
 
+  Future<List<FarmerFishProductionSystem>> fetchAllByFarmer(int id) async {
+    final database = await DatabaseService().database;
+    final productionSystems = await database.rawQuery(''' 
+      SELECT * FROM $tableName  WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+
+    return productionSystems
+        .map((e) => FarmerFishProductionSystem.fromSqfliteDatabase(e))
+        .toList();
+  }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawDelete('''
+      DELETE FROM $tableName WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+  }
   // Add more database methods as needed
 }

@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 
 /// This class defines the variables used in the [add_aquaculture_six_dialog],
 /// and is typically used to hold data that is passed between different parts of the application.
@@ -9,17 +10,22 @@ class AddAquacultureSixModel extends Equatable {
   AddAquacultureSixModel({
     this.models = const [],
     this.count = 0,
+    this.aqProgress,
   }) {}
   List<CheckBoxList> models;
 
   int count;
+  AQProgress? aqProgress;
+
   AddAquacultureSixModel copyWith({
     List<CheckBoxList>? models,
     int? count,
+    AQProgress? aqProgress,
   }) {
     return AddAquacultureSixModel(
       models: models ?? this.models,
       count: count ?? this.count,
+      aqProgress: aqProgress ?? this.aqProgress,
     );
   }
 
@@ -27,5 +33,6 @@ class AddAquacultureSixModel extends Equatable {
   List<Object?> get props => [
         models,
         count,
+        aqProgress,
       ];
 }

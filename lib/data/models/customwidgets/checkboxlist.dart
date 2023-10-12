@@ -17,6 +17,12 @@ class CheckBoxList extends Equatable {
     this.male,
     this.focusNode,
     this.femalefocusNode,
+    this.var1,
+    this.var2,
+    this.var3,
+    this.var4,
+    this.var5,
+    this.var6,
   }) {}
 
   String title;
@@ -37,6 +43,13 @@ class CheckBoxList extends Equatable {
 
   String? livestockSubCat;
 
+  String? var1;
+  String? var2;
+  String? var3;
+  String? var4;
+  String? var5;
+  String? var6;
+
   FocusNode? focusNode;
 
   FocusNode? femalefocusNode;
@@ -53,6 +66,12 @@ class CheckBoxList extends Equatable {
     TextEditingController? female,
     FocusNode? focusNode,
     FocusNode? femalefocusNode,
+    String? var1,
+    String? var2,
+    String? var3,
+    String? var4,
+    String? var5,
+    String? var6,
   }) {
     return CheckBoxList(
       title: ayrshi ?? this.title,
@@ -66,6 +85,12 @@ class CheckBoxList extends Equatable {
       female: female ?? this.female,
       focusNode: focusNode ?? this.focusNode,
       femalefocusNode: femalefocusNode ?? this.femalefocusNode,
+      var1: var1 ?? this.var1,
+      var2: var2 ?? this.var2,
+      var3: var3 ?? this.var3,
+      var4: var4 ?? this.var4,
+      var5: var5 ?? this.var5,
+      var6: var6 ?? this.var6,
     );
   }
 
@@ -82,6 +107,12 @@ class CheckBoxList extends Equatable {
         male,
         focusNode,
         femalefocusNode,
+        var1,
+        var2,
+        var3,
+        var4,
+        var5,
+        var6,
       ];
 
   Map<String, dynamic> toJson() {
@@ -91,6 +122,13 @@ class CheckBoxList extends Equatable {
       'male': male?.text,
       'female': female?.text,
       'enterpriseId': id,
+      'var1': var1,
+      'var2': var2,
+      'var3': var3,
+      'var4': var4,
+      'var5': var5,
+      'var6': var6,
+
       // Add other properties as needed...
     };
   }
@@ -110,6 +148,13 @@ class CheckBoxList extends Equatable {
       subcategoryid: json['subcategoryid'],
       livestockCat: json['livestockCat'],
       livestockSubCat: json['livestockSubCat'],
+      var1: json['var1'],
+      var2: json['var2'],
+      var3: json['var3'],
+      var4: json['var4'],
+      var5: json['var5'],
+      var6: json['var6'],
+
       // Add other properties as needed...
     );
   }

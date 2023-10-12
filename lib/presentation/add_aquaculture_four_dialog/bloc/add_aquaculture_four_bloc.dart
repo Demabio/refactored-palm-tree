@@ -1,8 +1,11 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/productionsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionsystem.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/models/add_aquaculture_four_model.dart';
 part 'add_aquaculture_four_event.dart';
@@ -20,6 +23,7 @@ class AddAquacultureFourBloc
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
     on<ChangeDropDown5Event>(_changeDropDown5);
+    on<AddCBs>(_addAgeGroups);
   }
 
   _onInitialize(
@@ -35,6 +39,39 @@ class AddAquacultureFourBloc
           dropdownItemList: await fillProdsystems(),
           dropdownItemList1: await fillUOMs(),
         )));
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddAquacultureFourState> emit,
+  ) {
+    FarmerFishProductionSystemDB farmerFishProductionSystemDB =
+        FarmerFishProductionSystemDB();
+    List<FarmerFishProductionSystem>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmerId();
+
+    try {
+      farmerFishProductionSystemDB.create(FarmerFishProductionSystem(
+        farmerFishprodId: 0,
+        farmerId: farmerid,
+        farmerFarmId: farmid,
+        productionTypeId:
+            state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
+        productionStatus: 0,
+        noOfActiveUnits: int.parse(state.inp1!.text),
+        activeArea: double.parse(state.inp2!.text),
+        noOfInactiveUnits: int.parse(state.inp3!.text),
+        inactiveArea: double.parse(state.inp4!.text),
+        dateCreated: DateTime.now(),
+        createdBy: userId,
+      ));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
   _changeDropDown(

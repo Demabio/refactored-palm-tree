@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/chipvieway_item_model.dart';
 
@@ -16,6 +17,8 @@ class AddAquacultureFiveModel extends Equatable {
     this.selectedCategory,
     this.selectedFish,
     this.search = false,
+    this.aqProgress,
+    this.selectedDropDownValue2,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -28,11 +31,14 @@ class AddAquacultureFiveModel extends Equatable {
 
   SelectionPopupModel? selectedCategory;
 
+  SelectionPopupModel? selectedDropDownValue2;
+
   List<ChipviewayItemModel> searchResults;
 
   List<ChipviewayItemModel> commons;
 
   bool search;
+  AQProgress? aqProgress;
 
   AddAquacultureFiveModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
@@ -41,8 +47,10 @@ class AddAquacultureFiveModel extends Equatable {
     SelectionPopupModel? selectedFish,
     SelectionPopupModel? selectedCategory,
     List<ChipviewayItemModel>? searchResults,
+    SelectionPopupModel? selectedDropDownValue2,
     List<ChipviewayItemModel>? commons,
     bool? search,
+    AQProgress? aqProgress,
   }) {
     return AddAquacultureFiveModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -53,6 +61,8 @@ class AddAquacultureFiveModel extends Equatable {
       searchResults: searchResults ?? this.searchResults,
       commons: commons ?? this.commons,
       search: search ?? this.search,
+      aqProgress: aqProgress ?? this.aqProgress,
+      selectedDropDownValue2: selectedDropDownValue2,
     );
   }
 
@@ -66,5 +76,7 @@ class AddAquacultureFiveModel extends Equatable {
         searchResults,
         commons,
         search,
+        aqProgress,
+        selectedDropDownValue2,
       ];
 }

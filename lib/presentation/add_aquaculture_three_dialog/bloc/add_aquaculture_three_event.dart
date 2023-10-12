@@ -61,12 +61,18 @@ class ResetCBs extends AddAquacultureThreeEvent {
 class AddCBs extends AddAquacultureThreeEvent {
   AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
+  Function? createFailed;
   List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
       ];
 }
 

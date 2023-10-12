@@ -15,6 +15,98 @@ class AddAquacultureOneInitialEvent extends AddAquacultureOneEvent {
   List<Object?> get props => [];
 }
 
+class NextTapEvent extends AddAquacultureOneEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddAquacultureOneEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class ClearEvent extends AddAquacultureOneEvent {
+  ClearEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class AddEditOneEvent extends AddAquacultureOneEvent {
+  AddEditOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddEditTwoEvent extends AddAquacultureOneEvent {
+  AddEditTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckOneEvent extends AddAquacultureOneEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddAquacultureOneEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddAquacultureOneEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class StepUpEvent extends AddAquacultureOneEvent {
   StepUpEvent({this.value});
 

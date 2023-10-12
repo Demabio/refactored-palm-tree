@@ -15,12 +15,12 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
 import 'widgets/ages_widget.dart';
 import 'widgets/feeds_widget.dart';
 
+// ignore: must_be_immutable
 class AddRearedLivestockOneScreen extends StatelessWidget {
   AddRearedLivestockOneScreen({Key? key})
       : super(

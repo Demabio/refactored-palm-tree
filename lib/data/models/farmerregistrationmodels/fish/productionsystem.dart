@@ -38,6 +38,6 @@ class FarmerFishProductionSystem {
         inactiveArea: map['inactive_area']?.toDouble(),
         noOfInactiveUnits: map['no_of_inactive_units']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

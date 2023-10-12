@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_two_screen/models/add_aquaculture_two_model.dart';

@@ -9,6 +9,8 @@ class AddAquacultureTwoState extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.addAquacultureTwoModelObj,
+    this.inputs = const [],
+    this.checked = false,
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -18,19 +20,24 @@ class AddAquacultureTwoState extends Equatable {
   SelectionPopupModel? selectedDropDownValue2;
 
   AddAquacultureTwoModel? addAquacultureTwoModelObj;
-
+  List<CheckBoxList> inputs;
+  bool checked;
   @override
   List<Object?> get props => [
         selectedDropDownValue,
         selectedDropDownValue1,
         selectedDropDownValue2,
         addAquacultureTwoModelObj,
+        inputs,
+        checked,
       ];
   AddAquacultureTwoState copyWith({
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     AddAquacultureTwoModel? addAquacultureTwoModelObj,
+    List<CheckBoxList>? inputs,
+    bool? checked,
   }) {
     return AddAquacultureTwoState(
       selectedDropDownValue:
@@ -41,6 +48,8 @@ class AddAquacultureTwoState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       addAquacultureTwoModelObj:
           addAquacultureTwoModelObj ?? this.addAquacultureTwoModelObj,
+      inputs: inputs ?? this.inputs,
+      checked: checked ?? this.checked,
     );
   }
 }

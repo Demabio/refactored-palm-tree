@@ -1,9 +1,15 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishinput.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishinput.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/models/add_aquaculture_six_model.dart';
 part 'add_aquaculture_six_event.dart';
@@ -53,14 +59,13 @@ class AddAquacultureSixBloc
 
   Future<List<CheckBoxList>> fetchFeeds() async {
     List<CheckBoxList> list = [];
-    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
-    TextEditingController stored = TextEditingController();
-    stored.value = TextEditingValue(text: "999");
+    FishInputDB fishProductionTypeDB = FishInputDB();
+
     await fishProductionTypeDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
-          title: value[i].fishProductionType,
-          id: value[i].productionTypeId,
+          title: value[i].fishInput,
+          id: value[i].fishInputId,
         ));
       }
     });
@@ -93,34 +98,93 @@ class AddAquacultureSixBloc
     )));
   }
 
+  Future<List<FarmerFishInput>?> getCategs() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFishInputDB farmerLivestockAgeGroupsDB = FarmerFishInputDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+  }
+
+  List<CheckBoxList> _types(
+      List<CheckBoxList> feedmodelss, List<FarmerFishInput> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFishInput> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishInputId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
   _addAgeGroups(
     AddCBs event,
     Emitter<AddAquacultureSixState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerFishInputDB farmerFishInputDB = FarmerFishInputDB();
+    List<FarmerFishInput>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerFishInput(
+                farmerFishInputId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                farmerFarmId: PrefUtils().getFarmId(),
+                fishInputId: model.id!,
+                createdBy: userId,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addAquacultureSixModelObj!.aqProgress?.pageOne == 0) {
+        farmerFishInputDB.insertFishInputs(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertFishInputs(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
 
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addAquacultureSixModelObj: state.addAquacultureSixModelObj));
+  Future<AQProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    AQProgressDB pfProgressDB = AQProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddAquacultureSixInitialEvent event,
     Emitter<AddAquacultureSixState> emit,
   ) async {
+    List<CheckBoxList>? atypes = await fetchFeeds();
+
+    AQProgress pfProgress = await getProgress() ??
+        AQProgress(
+          fishId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+    if (pfProgress.pageOne == 1) {
+      List<FarmerFishInput>? categs = await getCategs();
+      atypes = _types(atypes, categs!);
+    }
     emit(state.copyWith(
         addAquacultureSixModelObj: state.addAquacultureSixModelObj?.copyWith(
-      models: await fetchFeeds(),
+      models: atypes,
     )));
   }
 }

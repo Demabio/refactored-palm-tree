@@ -28,6 +28,6 @@ class FarmerFish {
         productionTypeId: map['production_type_id']?.toInt() ?? 0,
         noOfFingerlings: map['no_of_fingerlings']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

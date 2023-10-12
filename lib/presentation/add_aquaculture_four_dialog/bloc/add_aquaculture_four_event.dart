@@ -15,6 +15,21 @@ class AddAquacultureFourInitialEvent extends AddAquacultureFourEvent {
   List<Object?> get props => [];
 }
 
+class AddCBs extends AddAquacultureFourEvent {
+  AddCBs({
+    this.createFailed,
+    this.createSuccessful,
+  });
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddAquacultureFourEvent {
   ChangeDropDownEvent({required this.value});

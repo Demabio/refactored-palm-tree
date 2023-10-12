@@ -1,10 +1,15 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/models/add_aquaculture_three_model.dart';
 part 'add_aquaculture_three_event.dart';
@@ -96,35 +101,95 @@ class AddAquacultureThreeBloc
     )));
   }
 
+  Future<List<FarmerFishCategory>?> getCategs() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+  }
+
+  List<CheckBoxList> _types(
+      List<CheckBoxList> feedmodelss, List<FarmerFishCategory> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFishCategory> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
   _addAgeGroups(
     AddCBs event,
     Emitter<AddAquacultureThreeState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
+    List<FarmerFishCategory>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerFishCategory(
+                farmerFishCategoryId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                farmerFarmId: PrefUtils().getFarmId(),
+                fishCategoryId: model.id!,
+                createdBy: userId,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addAquacultureThreeModelObj!.aqProgress?.pageOne == 0) {
+        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishCategoryDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
 
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addAquacultureThreeModelObj: state.addAquacultureThreeModelObj));
+  Future<AQProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    AQProgressDB pfProgressDB = AQProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddAquacultureThreeInitialEvent event,
     Emitter<AddAquacultureThreeState> emit,
   ) async {
+    List<CheckBoxList>? atypes = await fetchFeeds();
+
+    AQProgress pfProgress = await getProgress() ??
+        AQProgress(
+          fishId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+    if (pfProgress.pageOne == 1) {
+      List<FarmerFishCategory>? categs = await getCategs();
+      atypes = _types(atypes, categs!);
+    }
     emit(state.copyWith(
         addAquacultureThreeModelObj:
             state.addAquacultureThreeModelObj?.copyWith(
-      models: await fetchFeeds(),
+      models: atypes,
+      aqProgress: pfProgress,
     )));
   }
 }

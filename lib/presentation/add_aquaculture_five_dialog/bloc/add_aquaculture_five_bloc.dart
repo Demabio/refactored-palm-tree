@@ -1,8 +1,11 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fish.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/chipvieway_item_model.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/models/add_aquaculture_five_model.dart';
@@ -21,6 +24,7 @@ class AddAquacultureFiveBloc
     on<UpdateChipViewEvent>(_updateChipView);
     on<SearchEventFish>(_searchFish);
     on<ReturnCommonEvent>(_restoreCommon);
+    on<AddCBs>(_addAgeGroups);
   }
 
   _updateChipView(
@@ -209,6 +213,34 @@ class AddAquacultureFiveBloc
       }
     });
     return list;
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddAquacultureFiveState> emit,
+  ) {
+    FarmerFishDB farmerFishDB = FarmerFishDB();
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmerId();
+
+    try {
+      farmerFishDB.create(FarmerFish(
+        farmerFishId: 0,
+        farmerId: farmerid,
+        farmerFarmId: farmid,
+        productionTypeId:
+            state.addAquacultureFiveModelObj!.selectedDropDownValue2!.id!,
+        fishTypeId: state.addAquacultureFiveModelObj!.selectedFish!.id!,
+        noOfFingerlings: int.parse(state.numbervalueoneController!.text),
+        dateCreated: DateTime.now(),
+        createdBy: userId,
+      ));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
   _onInitialize(

@@ -1,5 +1,21 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fish.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/productionsystem.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/productionsystem.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_one_screen/models/add_aquaculture_one_model.dart';
 part 'add_aquaculture_one_event.dart';
@@ -11,77 +27,337 @@ class AddAquacultureOneBloc
   AddAquacultureOneBloc(AddAquacultureOneState initialState)
       : super(initialState) {
     on<AddAquacultureOneInitialEvent>(_onInitialize);
+    on<SaveTapEvent>(_saveTap);
+    on<NextTapEvent>(_nextTap);
+    on<CheckOneEvent>(_checkcategs);
+    on<CheckThreeEvent>(_checkfishes);
+    on<CheckTwoEvent>(_checkProds);
+    on<ClearEvent>(_clear);
   }
 
-  _onSteppedDown(
-    StepDownEvent event,
+  _nextTap(
+    NextTapEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) {
-    emit(
-      state.copyWith(
-        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
-          stepped: --state.addAquacultureOneModelObj?.stepped,
-          page1: state.addAquacultureOneModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addAquacultureOneModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addAquacultureOneModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addAquacultureOneModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    int farmerid = PrefUtils().getFarmId();
+    try {
+      AQProgressDB aqProgressDB = AQProgressDB();
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {
+        aqProgressDB
+            .insert(AQProgress(
+              fishId: farmerid,
+              pageOne: 1,
+              pageTwo: 0,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+      } else {
+        aqProgressDB
+            .update(AQProgress(
+              fishId: farmerid,
+              pageOne: 1,
+              pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+      }
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 1) {
+        event.createSuccessful!.call();
+      }
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
-  _onSteppedUp(
-    StepUpEvent event,
+  _saveTap(
+    SaveTapEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) {
-    emit(
-      state.copyWith(
-        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
-          stepped: ++state.addAquacultureOneModelObj?.stepped,
-          page1: state.addAquacultureOneModelObj!.stepped > 0
-              ? StepState.complete
-              : StepState.indexed,
-          page2: state.addAquacultureOneModelObj!.stepped > 1
-              ? StepState.complete
-              : StepState.indexed,
-          page3: state.addAquacultureOneModelObj!.stepped > 2
-              ? StepState.complete
-              : StepState.indexed,
-          page4: state.addAquacultureOneModelObj!.stepped > 3
-              ? StepState.complete
-              : StepState.indexed,
-        ),
-      ),
-    );
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    int farmerid = PrefUtils().getFarmId();
+    try {
+      AQProgressDB aqProgressDB = AQProgressDB();
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {
+        aqProgressDB
+            .insert(AQProgress(
+              fishId: farmerid,
+              pageOne: 1,
+              pageTwo: 0,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+      } else {
+        aqProgressDB
+            .update(AQProgress(
+              fishId: farmerid,
+              pageOne: 1,
+              pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+      }
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0) {}
+      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 1) {
+        event.createSuccessful!.call();
+      }
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
-  _onStepped(
-    OnSteppedEvent event,
+  _checkfishes(
+    CheckThreeEvent event,
     Emitter<AddAquacultureOneState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
-          stepped: event.value,
-          page1: event.value! > 0 ? StepState.complete : StepState.indexed,
-          page2: event.value! > 1 ? StepState.complete : StepState.indexed,
-          page3: event.value! > 2 ? StepState.complete : StepState.indexed,
-          page4: event.value! > 3 ? StepState.complete : StepState.indexed,
-        ),
-      ),
-    );
+  ) async {
+    List<FarmerFish>? fishes = await getFishes();
+
+    List<CheckBoxList>? feedmodels = [];
+    feedmodels = await fetchFish();
+
+    feedmodels = await _fish(feedmodels, fishes!);
+
+    if (feedmodels.isNotEmpty) {
+      emit(state.copyWith(fish: feedmodels, checkedF: false));
+    } else {
+      emit(state.copyWith(checkedF: true));
+    }
+  }
+
+  _checkProds(
+    CheckTwoEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    List<FarmerFishProductionSystem>? prods = await getProdSyss();
+
+    List<CheckBoxList>? feedmodels = [];
+    feedmodels = await fillProdsystems();
+
+    feedmodels = _systems(feedmodels, prods!);
+
+    if (feedmodels.isNotEmpty) {
+      emit(state.copyWith(prodsyss: feedmodels, checkedP: false));
+    } else {
+      emit(state.copyWith(checkedF: true));
+    }
+  }
+
+  _checkcategs(
+    CheckOneEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    List<FarmerFishCategory>? fishes = await getCategs();
+
+    List<CheckBoxList>? feedmodels = [];
+    feedmodels = await fetchFish();
+
+    feedmodels = _types(feedmodels, fishes!);
+
+    if (feedmodels.isNotEmpty) {
+      emit(state.copyWith(aquatypes: feedmodels, checkedA: false));
+    } else {
+      emit(state.copyWith(checkedF: true));
+    }
+  }
+
+  _clear(
+    ClearEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    int farmerid = PrefUtils().getFarmerId();
+    FarmerFishDB farmerFishDB = FarmerFishDB();
+    FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
+    FarmerFishProductionSystemDB farmerFishProductionSystemDB =
+        FarmerFishProductionSystemDB();
+
+    farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
+    farmerFishCategoryDB
+        .delete(farmerid)
+        .then((value) => print("Deleted: $value"));
+    farmerFishProductionSystemDB
+        .delete(farmerid)
+        .then((value) => print("Deleted: $value"));
+  }
+
+  Future<List<CheckBoxList>> fetchCategs() async {
+    List<CheckBoxList> list = [];
+    FishCategoryDB fishCategoryDB = FishCategoryDB();
+
+    await fishCategoryDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].fishCategory,
+          id: value[i].fishCategoryId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fillUOMs() async {
+    List<CheckBoxList> list = [];
+    FishProductionUnitOfMeasureDB fishProductionUnitOfMeasureDB =
+        FishProductionUnitOfMeasureDB();
+    await fishProductionUnitOfMeasureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].unitOfMeasure,
+          id: value[i].unitOfMeasureId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fillProdsystems() async {
+    List<CheckBoxList> list = [];
+    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    await fishProductionTypeDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].fishProductionType,
+          id: value[i].productionTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fetchFish() async {
+    List<CheckBoxList> list = [];
+    FishTypeDB fishCategoryDB = FishTypeDB();
+
+    await fishCategoryDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].fishType,
+          id: value[i].fishTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> _fish(
+      List<CheckBoxList> agemodelss, List<FarmerFish> agess) async {
+    List<CheckBoxList> agemodels = agemodelss;
+    List<FarmerFish> ages = agess;
+    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    FishProductionType? fishProductionType;
+
+    FishCategoryDB categoryDB = FishCategoryDB();
+    FishCategory? category;
+    for (var ent in ages) {
+      int index = agemodels.indexWhere((obj) => obj.id == ent.fishTypeId);
+      fishProductionType = await fishProductionTypeDB
+          .fetchByProductionTypeId(ent.productionTypeId!);
+
+      category = await categoryDB
+          .fetchByFishCategoryId(int.parse(agemodels[index].var1!));
+      agemodels[index].isSelected = true;
+      agemodels[index].var2 = fishProductionType.fishProductionType;
+      agemodels[index].var1 = category.fishCategory;
+      agemodels[index].var3 = ent.noOfFingerlings.toString();
+    }
+
+    return agemodels;
+  }
+
+  List<CheckBoxList> _systems(
+      List<CheckBoxList> feedmodelss, List<FarmerFishProductionSystem> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFishProductionSystem> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.productionTypeId);
+
+      feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.noOfActiveUnits.toString();
+      feedmodels[index].var2 = ent.activeArea.toString();
+      feedmodels[index].var3 = ent.noOfInactiveUnits.toString();
+      feedmodels[index].var4 = ent.inactiveArea.toString();
+    }
+
+    return feedmodels;
+  }
+
+  List<CheckBoxList> _types(
+      List<CheckBoxList> feedmodelss, List<FarmerFishCategory> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFishCategory> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerFish>?> getFishes() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFishDB farmerLivestockAgeGroupsDB = FarmerFishDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+  }
+
+  Future<List<FarmerFishCategory>?> getCategs() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+  }
+
+  Future<List<FarmerFishProductionSystem>?> getProdSyss() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFishProductionSystemDB farmerLivestockAgeGroupsDB =
+        FarmerFishProductionSystemDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+  }
+
+  Future<AQProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    AQProgressDB pfProgressDB = AQProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddAquacultureOneInitialEvent event,
     Emitter<AddAquacultureOneState> emit,
-  ) async {}
+  ) async {
+    AQProgress pfProgress = await getProgress() ??
+        AQProgress(
+          fishId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    List<CheckBoxList>? atypes = [];
+    List<CheckBoxList>? fish = [];
+    List<CheckBoxList>? prods = [];
+
+    // FishCategoryDB fishCategoryDB = FishCategoryDB();
+    // FishTypeDB fishTypeDB = FishTypeDB();
+    // FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+
+    if (pfProgress.pageOne == 1) {
+      List<FarmerFish>? fishes = await getFishes();
+
+      List<FarmerFishCategory>? categs = await getCategs();
+
+      List<FarmerFishProductionSystem>? prodsyss = await getProdSyss();
+
+      atypes = await fetchCategs();
+      fish = await fetchFish();
+      prods = await fillProdsystems();
+
+      atypes = _types(atypes, categs!);
+      fish = await _fish(fish, fishes!);
+      prods = _systems(prods, prodsyss!);
+    }
+
+    emit(state.copyWith(
+      fish: fish,
+      aquatypes: atypes,
+      prodsyss: prods,
+    ));
+  }
 }
