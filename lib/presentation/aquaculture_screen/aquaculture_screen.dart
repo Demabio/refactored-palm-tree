@@ -1,3 +1,9 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/widgets/fish_widget.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/widgets/ProdSys_widget.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/widgets/aqua_types_widget.dart';
+
 import 'bloc/aquaculture_bloc.dart';
 import 'models/aquaculture_model.dart';
 import 'package:flutter/material.dart';
@@ -88,26 +94,34 @@ class AquacultureScreen extends StatelessWidget {
                                                   "msg_aquaculture_type".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 3.v),
-                                              child: Text(
-                                                  "msg_what_types_of_aquaculture"
-                                                      .tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 2.v),
-                                              child: Text("lbl_brackish".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 15.v),
-                                              child: Text("lbl_fresh_water".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
+                                          BlocSelector<
+                                                  AquacultureBloc,
+                                                  AquacultureState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) =>
+                                                  state.aquatypes,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return AquaTypeItemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 4.v),
@@ -115,101 +129,34 @@ class AquacultureScreen extends StatelessWidget {
                                                   "msg_production_system2".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 3.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_production_system2"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_cages".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 8.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_no_of_active_units"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 10.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_active_volume_m3"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 9.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_no_of_inactive_units"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 10.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_inactive_volume_m3"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
+                                          BlocSelector<
+                                                  AquacultureBloc,
+                                                  AquacultureState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) =>
+                                                  state.prodsyss,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return ProdSysItemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Container(
                                               width: 313.h,
                                               margin: EdgeInsets.only(
@@ -223,101 +170,33 @@ class AquacultureScreen extends StatelessWidget {
                                                       TextOverflow.ellipsis,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 5.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "lbl_fish_type".tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_catfish".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 8.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "lbl_fish_category"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 8.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "msg_production_system2"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 8.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "msg_estimated_no_of"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
+                                          BlocSelector<
+                                                  AquacultureBloc,
+                                                  AquacultureState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.fish,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return FishtemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 3.v),
@@ -325,18 +204,33 @@ class AquacultureScreen extends StatelessWidget {
                                                   "msg_what_are_your_main2".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 3.v),
-                                              child: Text("lbl_fingerlings".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 13.v),
-                                              child: Text("lbl_fertilizers".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
+                                          BlocSelector<
+                                                  AquacultureBloc,
+                                                  AquacultureState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.inputs,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 4.v),
@@ -350,7 +244,11 @@ class AquacultureScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state.farmerFishProductionLevel!
+                                                                .fertilizerInPonds!
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -375,7 +273,9 @@ class AquacultureScreen extends StatelessWidget {
                                                                     .tr,
                                                                 style: CustomTextStyles
                                                                     .labelMediumPrimary)),
-                                                        Text("lbl_intensive".tr,
+                                                        Text(
+                                                            state.level ??
+                                                                "N/A",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium)
@@ -403,28 +303,15 @@ class AquacultureScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 18.v),
                                                         child: Text(
-                                                            "lbl_yes".tr,
+                                                            state.farmerFishProductionLevel
+                                                                        ?.espBenefit ==
+                                                                    1
+                                                                ? "Yes"
+                                                                : "No",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium))
                                                   ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, bottom: 15.v),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_do_you_insure_your"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ]))
                                         ]))
                               ]))))));
     });

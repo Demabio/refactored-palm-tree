@@ -42,12 +42,18 @@ class AddAquacultureOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
+    int selectedCount =
+        state.aquatypes.where((enterprise) => enterprise.isSelected).length;
+    int selectedCount2 =
+        state.fish.where((enterprise) => enterprise.isSelected).length;
+    int selectedCount3 =
+        state.prodsyss.where((enterprise) => enterprise.isSelected).length;
     try {
       AQProgressDB aqProgressDB = AQProgressDB();
       if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
-          state.aquatypes.isNotEmpty &&
-          state.fish.isNotEmpty &&
-          state.prodsyss.isNotEmpty) {
+          selectedCount != 0 &&
+          selectedCount2 != 0 &&
+          selectedCount3 != 0) {
         aqProgressDB
             .insert(AQProgress(
               fishId: farmerid,
@@ -56,9 +62,9 @@ class AddAquacultureOneBloc
             ))
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
-      } else if (state.aquatypes.isNotEmpty &&
-          state.fish.isNotEmpty &&
-          state.prodsyss.isNotEmpty) {
+      } else if (selectedCount != 0 &&
+          selectedCount2 != 0 &&
+          selectedCount3 != 0) {
         aqProgressDB
             .update(AQProgress(
               fishId: farmerid,
@@ -68,7 +74,12 @@ class AddAquacultureOneBloc
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
       } else {
-        event.createFailed!.call();
+        emit(state.copyWith(
+          checkedA: selectedCount == 0,
+          checkedF: selectedCount2 == 0,
+          checkedP: selectedCount3 == 0,
+        ));
+        // event.createFailed!.call();
       }
     } catch (e) {
       event.createFailed!.call();
@@ -82,12 +93,18 @@ class AddAquacultureOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
+    int selectedCount =
+        state.aquatypes.where((enterprise) => enterprise.isSelected).length;
+    int selectedCount2 =
+        state.fish.where((enterprise) => enterprise.isSelected).length;
+    int selectedCount3 =
+        state.prodsyss.where((enterprise) => enterprise.isSelected).length;
     try {
       AQProgressDB aqProgressDB = AQProgressDB();
       if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
-          state.aquatypes.isNotEmpty &&
-          state.fish.isNotEmpty &&
-          state.prodsyss.isNotEmpty) {
+          selectedCount != 0 &&
+          selectedCount2 != 0 &&
+          selectedCount3 != 0) {
         aqProgressDB
             .insert(AQProgress(
               fishId: farmerid,
@@ -96,9 +113,9 @@ class AddAquacultureOneBloc
             ))
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
-      } else if (state.aquatypes.isNotEmpty &&
-          state.fish.isNotEmpty &&
-          state.prodsyss.isNotEmpty) {
+      } else if (selectedCount != 0 &&
+          selectedCount2 != 0 &&
+          selectedCount3 != 0) {
         aqProgressDB
             .update(AQProgress(
               fishId: farmerid,
@@ -108,12 +125,12 @@ class AddAquacultureOneBloc
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
       } else {
-        event.createFailed!.call();
         emit(state.copyWith(
-          checkedA: state.aquatypes.isEmpty,
-          checkedF: state.fish.isEmpty,
-          checkedP: state.prodsyss.isEmpty,
+          checkedA: selectedCount == 0,
+          checkedF: selectedCount2 == 0,
+          checkedP: selectedCount3 == 0,
         ));
+        event.createFailed!.call();
       }
     } catch (e) {
       event.createFailed!.call();
@@ -178,19 +195,21 @@ class AddAquacultureOneBloc
     ClearEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) async {
-    int farmerid = PrefUtils().getFarmerId();
-    FarmerFishDB farmerFishDB = FarmerFishDB();
-    FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
-    FarmerFishProductionSystemDB farmerFishProductionSystemDB =
-        FarmerFishProductionSystemDB();
+    if (state.addAquacultureOneModelObj?.aqProgress!.pageOne == 0) {
+      int farmerid = PrefUtils().getFarmerId();
+      FarmerFishDB farmerFishDB = FarmerFishDB();
+      FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
+      FarmerFishProductionSystemDB farmerFishProductionSystemDB =
+          FarmerFishProductionSystemDB();
 
-    farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
-    farmerFishCategoryDB
-        .delete(farmerid)
-        .then((value) => print("Deleted: $value"));
-    farmerFishProductionSystemDB
-        .delete(farmerid)
-        .then((value) => print("Deleted: $value"));
+      farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
+      farmerFishCategoryDB
+          .delete(farmerid)
+          .then((value) => print("Deleted: $value"));
+      farmerFishProductionSystemDB
+          .delete(farmerid)
+          .then((value) => print("Deleted: $value"));
+    }
   }
 
   Future<List<CheckBoxList>> fetchCategs() async {

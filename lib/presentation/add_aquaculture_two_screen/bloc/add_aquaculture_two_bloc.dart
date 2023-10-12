@@ -24,6 +24,9 @@ class AddAquacultureTwoBloc
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
     on<ChangeDropDown2Event>(_changeDropDown2);
+    on<SaveTapEvent>(_saveTap);
+    on<CheckThreeEvent>(_checkfishes);
+    on<ClearEvent>(_clear);
   }
 
   _onInitialize(
@@ -53,7 +56,7 @@ class AddAquacultureTwoBloc
               farmerFarmId: 0,
               productionLevelId: 0,
             );
-    if (pfProgress.pageOne == 1 &&
+    if (pfProgress.pageTwo == 1 &&
         farmerFishProductionLevel.farmerProductionLevelId != 0) {
       List<FarmerFishInput>? fishes = await getFishes();
 
@@ -113,7 +116,7 @@ class AddAquacultureTwoBloc
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchFish();
 
-    feedmodels = await _inputs(feedmodels, fishes!);
+    feedmodels = _inputs(feedmodels, fishes!);
 
     if (fishes.isNotEmpty) {
       emit(state.copyWith(inputs: feedmodels, checked: false));
@@ -161,10 +164,12 @@ class AddAquacultureTwoBloc
     ClearEvent event,
     Emitter<AddAquacultureTwoState> emit,
   ) async {
-    int farmerid = PrefUtils().getFarmerId();
-    FarmerFishInputDB farmerFishDB = FarmerFishInputDB();
+    if (state.addAquacultureTwoModelObj?.aqProgress!.pageTwo == 0) {
+      int farmerid = PrefUtils().getFarmerId();
+      FarmerFishInputDB farmerFishDB = FarmerFishInputDB();
 
-    farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
+      farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
+    }
   }
 
   _saveTap(
@@ -175,13 +180,15 @@ class AddAquacultureTwoBloc
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
     int farmid = PrefUtils().getFarmId();
+    int selectedCount =
+        state.inputs.where((enterprise) => enterprise.isSelected).length;
 
     FarmerFishProductionLevelsDB farmerFishProductionLevelsDB =
         FarmerFishProductionLevelsDB();
     try {
       AQProgressDB aqProgressDB = AQProgressDB();
       if (state.addAquacultureTwoModelObj!.aqProgress!.pageTwo == 0 &&
-          state.inputs.isNotEmpty) {
+          selectedCount != 0) {
         int id = await farmerFishProductionLevelsDB.create(
           FarmerFishProductionLevel(
             farmerProductionLevelId: 0,
@@ -208,7 +215,7 @@ class AddAquacultureTwoBloc
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         }
-      } else if (state.inputs.isNotEmpty) {
+      } else if (selectedCount != 0) {
         int id = await farmerFishProductionLevelsDB.update(
           FarmerFishProductionLevel(
             farmerProductionLevelId: 0,
@@ -237,9 +244,11 @@ class AddAquacultureTwoBloc
           event.createSuccessful!.call();
         }
       } else {
-        event.createFailed!.call();
+        //   event.createFailed!.call();
+        int selectedCount =
+            state.inputs.where((enterprise) => enterprise.isSelected).length;
         emit(state.copyWith(
-          checked: state.inputs.isEmpty,
+          checked: selectedCount == 0,
         ));
       }
     } catch (e) {

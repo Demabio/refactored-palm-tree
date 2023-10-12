@@ -74,14 +74,16 @@ class FishProductionLevelDB {
         .toList();
   }
 
-  Future<FishProductionLevel> fetchByProductionLevelId(
+  Future<FishProductionLevel?> fetchByProductionLevelId(
       int productionLevelId) async {
     final database = await DatabaseService().database;
     final productionLevel = await database.rawQuery('''
       SELECT * FROM $tableName WHERE production_level_id = ?
     ''', [productionLevelId]);
 
-    return FishProductionLevel.fromSqfliteDatabase(productionLevel.first);
+    return productionLevel.isNotEmpty
+        ? FishProductionLevel.fromSqfliteDatabase(productionLevel.first)
+        : null;
   }
 
   // Add more database methods as needed

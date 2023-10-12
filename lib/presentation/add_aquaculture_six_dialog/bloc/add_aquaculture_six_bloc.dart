@@ -5,10 +5,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishinput.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishinput.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/models/add_aquaculture_six_model.dart';
@@ -57,15 +60,30 @@ class AddAquacultureSixBloc
     ));
   }
 
+  // Future<List<CheckBoxList>> fetchFeeds() async {
+  //   List<CheckBoxList> list = [];
+  //   FishInputDB fishProductionTypeDB = FishInputDB();
+
+  //   await fishProductionTypeDB?.fetchAll().then((value) {
+  //     for (int i = 0; i < value.length; i++) {
+  //       list.add(CheckBoxList(
+  //         title: value[i].fishInput,
+  //         id: value[i].fishInputId,
+  //       ));
+  //     }
+  //   });
+  //   return list;
+  // }
   Future<List<CheckBoxList>> fetchFeeds() async {
     List<CheckBoxList> list = [];
-    FishInputDB fishProductionTypeDB = FishInputDB();
+    FishCategoryDB fishCategoryDB = FishCategoryDB();
+    TextEditingController stored = TextEditingController();
 
-    await fishProductionTypeDB?.fetchAll().then((value) {
+    await fishCategoryDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
-          title: value[i].fishInput,
-          id: value[i].fishInputId,
+          title: value[i].fishCategory,
+          id: value[i].fishCategoryId,
         ));
       }
     });
@@ -98,19 +116,25 @@ class AddAquacultureSixBloc
     )));
   }
 
-  Future<List<FarmerFishInput>?> getCategs() async {
+  // Future<List<FarmerFishInput>?> getCategs() async {
+  //   int id = PrefUtils().getFarmerId();
+  //   FarmerFishInputDB farmerLivestockAgeGroupsDB = FarmerFishInputDB();
+  //   return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+  // }
+
+  Future<List<FarmerFishCategory>?> getCategs() async {
     int id = PrefUtils().getFarmerId();
-    FarmerFishInputDB farmerLivestockAgeGroupsDB = FarmerFishInputDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+    FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
   }
 
   List<CheckBoxList> _types(
-      List<CheckBoxList> feedmodelss, List<FarmerFishInput> feedss) {
+      List<CheckBoxList> feedmodelss, List<FarmerFishCategory> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
-    List<FarmerFishInput> feeds = feedss;
+    List<FarmerFishCategory> feeds = feedss;
 
     for (var ent in feeds) {
-      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishInputId);
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
 
       feedmodels[index].isSelected = true;
     }
@@ -118,12 +142,54 @@ class AddAquacultureSixBloc
     return feedmodels;
   }
 
+  // _addAgeGroups(
+  //   AddCBs event,
+  //   Emitter<AddAquacultureSixState> emit,
+  // ) {
+  //   FarmerFishInputDB farmerFishInputDB = FarmerFishInputDB();
+  //   List<FarmerFishInput>? categs = [];
+  //   final claims = JWT.decode(PrefUtils().getToken());
+  //   int userId = int.parse(claims.payload['nameidentifier']);
+
+  //   try {
+  //     for (CheckBoxList model in event.models) {
+  //       if (model.isSelected) {
+  //         categs.add(
+  //           FarmerFishInput(
+  //               farmerFishInputId: 0,
+  //               farmerId: PrefUtils().getFarmerId(),
+  //               farmerFarmId: PrefUtils().getFarmId(),
+  //               fishInputId: model.id!,
+  //               createdBy: userId,
+  //               dateCreated: DateTime.now()),
+  //         );
+  //       }
+  //     }
+  //     if (state.addAquacultureSixModelObj!.aqProgress?.pageTwo == 0) {
+  //       farmerFishInputDB.insertFishInputs(categs).then((value) {
+  //         print("inserted: $value");
+  //       });
+  //     } else {
+  //       farmerFishInputDB
+  //           .delete(PrefUtils().getFarmerId())
+  //           .then((value) => print("deleted: $value"));
+  //       farmerFishInputDB.insertFishInputs(categs).then((value) {
+  //         print("inserted: $value");
+  //       });
+  //     }
+
+  //     event.createSuccessful?.call();
+  //   } catch (e) {
+  //     event.createFailed!.call();
+  //   }
+  // }
+
   _addAgeGroups(
     AddCBs event,
     Emitter<AddAquacultureSixState> emit,
   ) {
-    FarmerFishInputDB farmerFishInputDB = FarmerFishInputDB();
-    List<FarmerFishInput>? categs = [];
+    FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
+    List<FarmerFishCategory>? categs = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
 
@@ -131,25 +197,25 @@ class AddAquacultureSixBloc
       for (CheckBoxList model in event.models) {
         if (model.isSelected) {
           categs.add(
-            FarmerFishInput(
-                farmerFishInputId: 0,
+            FarmerFishCategory(
+                farmerFishCategoryId: 0,
                 farmerId: PrefUtils().getFarmerId(),
                 farmerFarmId: PrefUtils().getFarmId(),
-                fishInputId: model.id!,
+                fishCategoryId: model.id!,
                 createdBy: userId,
                 dateCreated: DateTime.now()),
           );
         }
       }
-      if (state.addAquacultureSixModelObj!.aqProgress?.pageOne == 0) {
-        farmerFishInputDB.insertFishInputs(categs).then((value) {
+      if (state.addAquacultureSixModelObj!.aqProgress?.pageTwo == 0) {
+        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
           print("inserted: $value");
         });
       } else {
-        farmerFishInputDB
+        farmerFishCategoryDB
             .delete(PrefUtils().getFarmerId())
             .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertFishInputs(categs).then((value) {
+        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
           print("inserted: $value");
         });
       }
@@ -179,7 +245,9 @@ class AddAquacultureSixBloc
           pageTwo: 0,
         );
     if (pfProgress.pageOne == 1) {
-      List<FarmerFishInput>? categs = await getCategs();
+      // List<FarmerFishInput>? categs = await getCategs();
+
+      List<FarmerFishCategory>? categs = await getCategs();
       atypes = _types(atypes, categs!);
     }
     emit(state.copyWith(

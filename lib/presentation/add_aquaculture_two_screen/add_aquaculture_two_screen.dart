@@ -421,12 +421,15 @@ class AddAquacultureTwoScreen extends StatelessWidget {
   }
 
   goBack(BuildContext context) {
+    context.read<AddAquacultureTwoBloc>().add(
+          ClearEvent(),
+        );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.addAquacultureOneScreen);
   }
 
-  addMainInputs(BuildContext context) {
-    showDialog(
+  addMainInputs(BuildContext context) async {
+    await showDialog(
         context: context,
         barrierDismissible: false,
         //barrierColor: const Color.fromARGB(255, 50, 50, 50),
@@ -436,5 +439,8 @@ class AddAquacultureTwoScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),
             ));
+    context.read<AddAquacultureTwoBloc>().add(
+          CheckThreeEvent(),
+        );
   }
 }

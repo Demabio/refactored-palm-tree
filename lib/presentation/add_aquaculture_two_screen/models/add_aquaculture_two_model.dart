@@ -15,7 +15,7 @@ class AddAquacultureTwoModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
-    this.stepped = 0,
+    this.stepped = 1,
     this.stepped2 = 0,
     this.page1 = StepState.indexed,
     this.page2 = StepState.indexed,
