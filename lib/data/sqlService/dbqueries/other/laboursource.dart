@@ -73,13 +73,15 @@ class LabourSourceDB {
         .toList();
   }
 
-  Future<LabourSource> fetchByLabourSourceId(int labourSourceId) async {
+  Future<LabourSource?> fetchByLabourSourceId(int labourSourceId) async {
     final database = await DatabaseService().database;
     final labourSource = await database.rawQuery('''
       SELECT * FROM $tableName WHERE labour_source_id = ?
     ''', [labourSourceId]);
 
-    return LabourSource.fromSqfliteDatabase(labourSource.first);
+    return labourSource.isNotEmpty
+        ? LabourSource.fromSqfliteDatabase(labourSource.first)
+        : null;
   }
 
   // Add more database methods as needed

@@ -50,6 +50,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
           appBar: CustomAppBar(
             leadingWidth: 60.h,
             leading: AppbarImage(
+              onTap: () => goBack(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
                 left: 16.h,

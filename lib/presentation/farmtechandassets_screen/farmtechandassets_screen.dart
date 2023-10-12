@@ -1,3 +1,7 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/widgets/techassets_widget.dart';
+
 import 'bloc/farmtechandassets_bloc.dart';
 import 'models/farmtechandassets_model.dart';
 import 'package:flutter/material.dart';
@@ -90,26 +94,33 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                   "msg_source_of_power".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 10.v),
-                                              child: Text("lbl_animal_draft".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 16.v),
-                                              child: Text(
-                                                  "msg_grid_electricity".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 10.v),
-                                              child: Text(
-                                                  "lbl_labour_source".tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
+                                          BlocSelector<
+                                                  FarmtechandassetsBloc,
+                                                  FarmtechandassetsState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.p,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 2.h,
@@ -131,7 +142,9 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                                 .textTheme
                                                                 .labelMedium)),
                                                     Text(
-                                                        "lbl_family_members".tr,
+                                                        state.farm
+                                                                ?.labourSource ??
+                                                            "N/A",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -142,82 +155,33 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                   "msg_farmer_machinery".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h,
-                                                  top: 12.v,
-                                                  right: 7.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text("lbl_asset_type".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_crops".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h,
-                                                  top: 8.v,
-                                                  right: 7.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text("lbl_asset".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_tractor".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h,
-                                                  top: 9.v,
-                                                  right: 7.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "lbl_quantity".tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_2".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h,
-                                                  top: 8.v,
-                                                  right: 7.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_usable_condition"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_yes".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
+                                          BlocSelector<
+                                                  FarmtechandassetsBloc,
+                                                  FarmtechandassetsState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.a,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return TechtemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 2.h, top: 11.v),
@@ -256,18 +220,33 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                       .tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 10.v),
-                                              child: Text("lbl_bee_house".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 15.v),
-                                              child: Text("lbl_cattle_boma".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium))
+                                          BlocSelector<
+                                                  FarmtechandassetsBloc,
+                                                  FarmtechandassetsState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.s,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                         ]))
                               ]))))));
     });

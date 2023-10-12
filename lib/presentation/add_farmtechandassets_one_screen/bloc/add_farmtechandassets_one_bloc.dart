@@ -82,7 +82,7 @@ class AddFarmtechandassetsOneBloc
       assets = _assets(assets, assetss!);
       List<FarmerStructure>? structss = await getStructs();
 
-      strucs = _structs(atypes, structss!);
+      strucs = _structs(strucs, structss!);
       if (farmer.labourSourceId != 0) {
         aa = a.firstWhere(
           (model) => model.id == farmer.labourSourceId,
