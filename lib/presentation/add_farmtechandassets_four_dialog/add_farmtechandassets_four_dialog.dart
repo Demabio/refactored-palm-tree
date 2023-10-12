@@ -118,7 +118,6 @@ class AddFarmtechandassetsFourDialog extends StatelessWidget {
                                 _failed(context);
                               },
                             ));
-                        Navigator.pop(context);
                       },
                     ),
                     CustomOutlinedButton(

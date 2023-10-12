@@ -274,26 +274,16 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                     focusNode: node,
                     hintText: "Number".tr,
                     validator: (value) {
-                      if (isNumeric(value, isRequired: true)) {
+                      if (!isNumeric(
+                        value,
+                        isRequired: true,
+                      )) {
                         return "Field is Required";
                       }
                     },
                     hintStyle: CustomTextStyles.titleMediumBluegray40003,
                     textInputType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    suffix: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          10.h,
-                        ),
-                      ),
-                      child: CustomImageView(
-                        svgPath: ImageConstant.imgArrowdownPrimary,
-                      ),
-                    ),
-                    suffixConstraints: BoxConstraints(
-                      maxHeight: 66.v,
-                    ),
                   );
                 },
               ),

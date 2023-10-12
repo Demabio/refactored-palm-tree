@@ -28,6 +28,6 @@ class FarmerAsset {
         qty: map['qty']?.toInt() ?? 0,
         usableCondition: map['usable_condition']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

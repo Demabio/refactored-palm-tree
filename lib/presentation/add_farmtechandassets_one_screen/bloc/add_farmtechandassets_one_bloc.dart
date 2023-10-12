@@ -2,6 +2,7 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/farm/farmassettypes.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
@@ -82,21 +83,28 @@ class AddFarmtechandassetsOneBloc
       List<FarmerStructure>? structss = await getStructs();
 
       strucs = _structs(atypes, structss!);
-
-      aa = a.firstWhere(
-        (model) => model.id == farmer.labourSourceId,
-      );
+      if (farmer.labourSourceId != 0) {
+        aa = a.firstWhere(
+          (model) => model.id == farmer.labourSourceId,
+        );
+      }
 
       bb = b.firstWhere(
-        (model) => model.id == farmerFishProductionLevel.farmerAssetSource,
+        (model) => model.id == farmerFishProductionLevel.assetSourceId,
       );
     }
     emit(state.copyWith(
+        a: assets,
+        p: atypes,
+        s: strucs,
         addFarmtechandassetsOneModelObj:
             state.addFarmtechandassetsOneModelObj?.copyWith(
-      dropdownItemList: await fetchLabourSources(),
-      dropdownItemList1: await fetchOwnerships(),
-    )));
+          dropdownItemList: a,
+          dropdownItemList1: b,
+          selectedDropDownValue: aa,
+          selectedDropDownValue1: bb,
+          atProgress: pfProgress,
+        )));
   }
 
   Future<ATProgress?> getProgress() async {
@@ -168,13 +176,16 @@ class AddFarmtechandassetsOneBloc
 
   Future<List<CheckBoxList>> fillAssets() async {
     List<CheckBoxList> list = [];
+
     FarmAssetDB farmAssetDB = FarmAssetDB();
-    await farmAssetDB.fetchAll().then((value) {
+    await farmAssetDB.fetchAll().then((value) async {
       for (int i = 0; i < value.length; i++) {
+        FarmAssetType? type = await getAssetTypeById(value[i].assetTypeId);
+
         list.add(CheckBoxList(
           title: value[i].asset,
           id: value[i].farmAssetId,
-          var1: value[i].assetType,
+          var1: type?.assetName,
         ));
       }
     });
@@ -208,6 +219,11 @@ class AddFarmtechandassetsOneBloc
       }
     });
     return list;
+  }
+
+  Future<FarmAssetType?> getAssetTypeById(int id) async {
+    FarmAssetTypeDB farmerFishProductionLevelsDB = FarmAssetTypeDB();
+    return await farmerFishProductionLevelsDB.fetchByAssetTypeId(id);
   }
 
   Future<List<FarmerAsset>?> getFAssets() async {
@@ -303,9 +319,9 @@ class AddFarmtechandassetsOneBloc
         ));
         if (id > 0) {
           atProgressDB
-              .update(ATProgress(
+              .insert(ATProgress(
                 farmerId: farmerid,
-                pageTwo: 0,
+                pageTwo: 1,
                 pageOne: 1,
               ))
               .then((value) => print("Scope FI" + value.toString()));
