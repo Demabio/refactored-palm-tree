@@ -1,9 +1,14 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/powersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmpowersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/powersource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_two_dialog/models/add_farmtechandassets_two_model.dart';
 part 'add_farmtechandassets_two_event.dart';
@@ -120,26 +125,67 @@ class AddFarmtechandassetsTwoBloc
     )));
   }
 
+  List<CheckBoxList> _sources(
+      List<CheckBoxList> feedmodelss, List<FarmerPowerSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerPowerSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.powerSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
   _addAgeGroups(
     AddCBs event,
     Emitter<AddFarmtechandassetsTwoState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerPowerSourceDB farmerFishInputDB = FarmerPowerSourceDB();
+    List<FarmerPowerSource>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerPowerSource(
+                farmPowerSourceId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                farmerFarmId: PrefUtils().getFarmId(),
+                powerSourceId: model.id!,
+                othersName: model.title,
+                createdBy: userId,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addFarmtechandassetsTwoModelObj!.atProgress?.pageOne == 0) {
+        farmerFishInputDB.insertPowerSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertPowerSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
 
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addFarmtechandassetsTwoModelObj:
-            state.addFarmtechandassetsTwoModelObj));
+  Future<List<FarmerPowerSource>?> getSources() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerPowerSourceDB farmerLivestockAgeGroupsDB = FarmerPowerSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
   }
 
   Future<List<CheckBoxList>> fetchPowerSources() async {
@@ -157,14 +203,33 @@ class AddFarmtechandassetsTwoBloc
     return list;
   }
 
+  Future<ATProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    ATProgressDB pfProgressDB = ATProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     AddFarmtechandassetsTwoInitialEvent event,
     Emitter<AddFarmtechandassetsTwoState> emit,
   ) async {
+    ATProgress pfProgress = await getProgress() ??
+        ATProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    List<CheckBoxList>? atypes = await fetchPowerSources();
+
+    if (pfProgress.pageOne == 1) {
+      List<FarmerPowerSource>? categs = await getSources();
+      atypes = _sources(atypes, categs!);
+    }
     emit(state.copyWith(
         addFarmtechandassetsTwoModelObj:
             state.addFarmtechandassetsTwoModelObj?.copyWith(
-      models: await fetchPowerSources(),
+      models: atypes,
     )));
   }
 }

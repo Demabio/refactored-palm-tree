@@ -82,5 +82,27 @@ class FarmerAssetSourceDB {
         .toList();
   }
 
+  Future<FarmerAssetSource?> fetchByfarmer(int id) async {
+    final database = await DatabaseService().database;
+    final fishCategories = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+
+    return fishCategories.isNotEmpty
+        ? FarmerAssetSource.fromSqfliteDatabase(fishCategories.first)
+        : null;
+  }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawDelete('''
+      DELETE FROM $tableName WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+  }
+
   // Add more database methods as needed
 }

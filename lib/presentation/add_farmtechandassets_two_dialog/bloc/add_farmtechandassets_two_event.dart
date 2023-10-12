@@ -15,6 +15,24 @@ class AddFarmtechandassetsTwoInitialEvent extends AddFarmtechandassetsTwoEvent {
   List<Object?> get props => [];
 }
 
+class AddCBs extends AddFarmtechandassetsTwoEvent {
+  AddCBs({
+    required this.models,
+    this.createFailed,
+    this.createSuccessful,
+  });
+  Function? createSuccessful;
+
+  Function? createFailed;
+  List<CheckBoxList> models;
+  @override
+  List<Object?> get props => [
+        models,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///Event for changing checkbox
 class ChangeCheckBoxEvent extends AddFarmtechandassetsTwoEvent {
   ChangeCheckBoxEvent({required this.value});
@@ -104,18 +122,6 @@ class ResetCBs extends AddFarmtechandassetsTwoEvent {
 
   @override
   List<Object?> get props => [];
-}
-
-class AddCBs extends AddFarmtechandassetsTwoEvent {
-  AddCBs({
-    required this.models,
-  });
-
-  List<CheckBoxList> models;
-  @override
-  List<Object?> get props => [
-        models,
-      ];
 }
 
 class ChangeCheckbox extends AddFarmtechandassetsTwoEvent {

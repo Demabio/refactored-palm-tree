@@ -27,6 +27,98 @@ class ChangeDropDownEvent extends AddFarmtechandassetsOneEvent {
       ];
 }
 
+class NextTapEvent extends AddFarmtechandassetsOneEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddFarmtechandassetsOneEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class ClearEvent extends AddFarmtechandassetsOneEvent {
+  ClearEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class AddEditOneEvent extends AddFarmtechandassetsOneEvent {
+  AddEditOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AddEditTwoEvent extends AddFarmtechandassetsOneEvent {
+  AddEditTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckOneEvent extends AddFarmtechandassetsOneEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddFarmtechandassetsOneEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddFarmtechandassetsOneEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddFarmtechandassetsOneEvent {
   ChangeDropDown1Event({required this.value});

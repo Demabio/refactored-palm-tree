@@ -1,7 +1,11 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassettypes.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
 import '../models/chipvieway_item_model.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/models/add_farmtechandassets_three_model.dart';
@@ -20,6 +24,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     on<UpdateChipViewEvent>(_updateChipView);
     on<SearchEventFish>(_searchFish);
     on<ReturnCommonEvent>(_restoreCommon);
+    on<AddCBs>(_addAgeGroups);
   }
   _updateChipView(
     UpdateChipViewEvent event,
@@ -48,6 +53,8 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
           selectedCategory: null,
           dropdownItemList1: fish,
           search: false,
+          selectedDropDownValue2:
+              state.addFarmtechandassetsThreeModelObj?.selectedDropDownValue2,
         )
         // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
         //     ?.copyWith(chipviewayrshiItemList: newList),
@@ -85,6 +92,8 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
             state.addFarmtechandassetsThreeModelObj?.copyWith(
           selectedCategory: event.value,
           selected: null,
+          selectedDropDownValue2:
+              state.addFarmtechandassetsThreeModelObj?.selectedDropDownValue2,
           dropdownItemList1: await fillAssets(event.value.id!),
         ),
       ),
@@ -102,6 +111,8 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
           selectedCategory:
               state.addFarmtechandassetsThreeModelObj?.selectedCategory,
           selected: event.value,
+          selectedDropDownValue2:
+              state.addFarmtechandassetsThreeModelObj?.selectedDropDownValue2,
         )));
   }
 
@@ -111,6 +122,13 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
   ) {
     emit(state.copyWith(
       selectedDropDownValue2: event.value,
+      addFarmtechandassetsThreeModelObj:
+          state.addFarmtechandassetsThreeModelObj?.copyWith(
+        selectedCategory:
+            state.addFarmtechandassetsThreeModelObj?.selectedCategory,
+        selectedDropDownValue2: event.value,
+        selected: state.addFarmtechandassetsThreeModelObj?.selected,
+      ),
     ));
   }
 
@@ -235,6 +253,35 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
       }
     });
     return list;
+  }
+
+  _addAgeGroups(
+    AddCBs event,
+    Emitter<AddFarmtechandassetsThreeState> emit,
+  ) {
+    FarmerAssetsDB farmerFishDB = FarmerAssetsDB();
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
+
+    try {
+      farmerFishDB.create(FarmerAsset(
+        farmerAssetId: 0,
+        farmerId: farmerid,
+        farmerFarmId: farmid,
+        farmAssetId: state
+            .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
+        usableCondition: state
+            .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
+        qty: int.parse(state.usableConditionController!.text),
+        dateCreated: DateTime.now(),
+        createdBy: userId,
+      ));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
   _onInitialize(

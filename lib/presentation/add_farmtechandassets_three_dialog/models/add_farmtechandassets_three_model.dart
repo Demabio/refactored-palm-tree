@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/models/chipvieway_item_model.dart';
 
@@ -16,6 +17,10 @@ class AddFarmtechandassetsThreeModel extends Equatable {
     this.selectedCategory,
     this.selected,
     this.search = false,
+    this.atProgress,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
@@ -34,6 +39,14 @@ class AddFarmtechandassetsThreeModel extends Equatable {
 
   SelectionPopupModel? selectedCategory;
 
+  ATProgress? atProgress;
+
+  SelectionPopupModel? selectedDropDownValue;
+
+  SelectionPopupModel? selectedDropDownValue1;
+
+  SelectionPopupModel? selectedDropDownValue2;
+
   AddFarmtechandassetsThreeModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -43,6 +56,10 @@ class AddFarmtechandassetsThreeModel extends Equatable {
     List<ChipviewayItemModel>? searchResults,
     List<ChipviewayItemModel>? commons,
     bool? search,
+    ATProgress? atProgress,
+    SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
   }) {
     return AddFarmtechandassetsThreeModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -51,8 +68,12 @@ class AddFarmtechandassetsThreeModel extends Equatable {
       selectedCategory: selectedCategory,
       selected: selected,
       searchResults: searchResults ?? this.searchResults,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
+      selectedDropDownValue2: selectedDropDownValue2,
       commons: commons ?? this.commons,
       search: search ?? this.search,
+      atProgress: atProgress ?? this.atProgress,
     );
   }
 
@@ -66,5 +87,9 @@ class AddFarmtechandassetsThreeModel extends Equatable {
         searchResults,
         commons,
         search,
+        atProgress,
+        selectedDropDownValue,
+        selectedDropDownValue1,
+        selectedDropDownValue2,
       ];
 }

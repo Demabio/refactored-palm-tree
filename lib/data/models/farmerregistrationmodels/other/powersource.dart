@@ -25,6 +25,6 @@ class FarmerPowerSource {
         powerSourceId: map['power_source_id']?.toInt() ?? 0,
         othersName: map['others_name'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

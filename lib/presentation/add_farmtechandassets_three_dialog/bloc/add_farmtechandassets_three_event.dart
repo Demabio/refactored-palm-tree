@@ -93,3 +93,20 @@ class UpdateChipViewEvent extends AddFarmtechandassetsThreeEvent {
         model,
       ];
 }
+
+class AddCBs extends AddFarmtechandassetsThreeEvent {
+  AddCBs({
+    this.createFailed,
+    this.createSuccessful,
+  });
+  Function? createSuccessful;
+
+  Function? createFailed;
+  List<CheckBoxList>? models;
+  @override
+  List<Object?> get props => [
+        models,
+        createFailed,
+        createSuccessful,
+      ];
+}
