@@ -8,6 +8,11 @@ class AddFinancialandservicesOneState extends Equatable {
     this.selectvalueoneController,
     this.selectedDropDownValue,
     this.addFinancialandservicesOneModelObj,
+    this.checka = false,
+    this.checkb = false,
+    this.i = const [],
+    this.c = const [],
+    this.s = const [],
   });
 
   TextEditingController? selectvalueoneController;
@@ -15,17 +20,31 @@ class AddFinancialandservicesOneState extends Equatable {
   SelectionPopupModel? selectedDropDownValue;
 
   AddFinancialandservicesOneModel? addFinancialandservicesOneModelObj;
-
+  bool checka;
+  bool checkb;
+  List<CheckBoxList> i;
+  List<CheckBoxList> c;
+  List<CheckBoxList> s;
   @override
   List<Object?> get props => [
         selectvalueoneController,
         selectedDropDownValue,
         addFinancialandservicesOneModelObj,
+        i,
+        c,
+        s,
+        checka,
+        checkb,
       ];
   AddFinancialandservicesOneState copyWith({
     TextEditingController? selectvalueoneController,
     SelectionPopupModel? selectedDropDownValue,
     AddFinancialandservicesOneModel? addFinancialandservicesOneModelObj,
+    bool? checka,
+    bool? checkb,
+    List<CheckBoxList>? i,
+    List<CheckBoxList>? c,
+    List<CheckBoxList>? s,
   }) {
     return AddFinancialandservicesOneState(
       selectvalueoneController:
@@ -34,6 +53,11 @@ class AddFinancialandservicesOneState extends Equatable {
           selectedDropDownValue ?? this.selectedDropDownValue,
       addFinancialandservicesOneModelObj: addFinancialandservicesOneModelObj ??
           this.addFinancialandservicesOneModelObj,
+      checka: checka ?? this.checka,
+      checkb: checkb ?? this.checkb,
+      i: i ?? this.i,
+      c: c ?? this.c,
+      s: s ?? this.s,
     );
   }
 }

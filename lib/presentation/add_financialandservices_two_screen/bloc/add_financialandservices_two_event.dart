@@ -16,6 +16,84 @@ class AddFinancialandservicesTwoInitialEvent
   List<Object?> get props => [];
 }
 
+class NextTapEvent extends AddFinancialandservicesTwoEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddFinancialandservicesTwoEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class ClearEvent extends AddFinancialandservicesTwoEvent {
+  ClearEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class CheckOneEvent extends AddFinancialandservicesTwoEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddFinancialandservicesTwoEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddFinancialandservicesTwoEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddFinancialandservicesTwoEvent {
   ChangeDropDownEvent({required this.value});

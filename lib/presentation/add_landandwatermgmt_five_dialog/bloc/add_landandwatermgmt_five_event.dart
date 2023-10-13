@@ -25,12 +25,18 @@ class ResetCBs extends AddLandandwatermgmtFiveEvent {
 class AddCBs extends AddLandandwatermgmtFiveEvent {
   AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
+  Function? createFailed;
   List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
       ];
 }
 

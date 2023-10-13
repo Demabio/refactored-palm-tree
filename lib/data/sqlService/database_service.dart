@@ -20,6 +20,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.d
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertypecategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
@@ -27,6 +28,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagenci
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
@@ -156,11 +158,14 @@ class DatabaseService {
     await FishProductionTypeDB().createTable(database);
     await FishProductionLevelDB().createTable(database);
     await FishProductionUnitOfMeasureDB().createTable(database);
+    await FishInputDB().createTable(database);
+
 //
     await IrrigationAgencyDB().createTable(database);
     await IrrigationCategoryDB().createTable(database);
     await IrrigationTypeDB().createTable(database);
     await IrrigationWaterSourceDB().createTable(database);
+    await IrrigationMembershipTypeDB().createTable(database);
 //
     await LivestockDB().createTable(database);
     await LivestockCategoryDB().createTable(database);

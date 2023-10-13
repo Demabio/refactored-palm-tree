@@ -26,12 +26,32 @@ class ResetCBs extends AddFinancialandservicesSevenEvent {
 class AddCBs extends AddFinancialandservicesSevenEvent {
   AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
+  Function? createFailed;
   List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class ChangeAgeGroupCheckbox extends AddFinancialandservicesSevenEvent {
+  ChangeAgeGroupCheckbox({required this.value, this.selected});
+
+  int value;
+
+  bool? selected;
+
+  @override
+  List<Object?> get props => [
+        value,
+        selected,
       ];
 }
 

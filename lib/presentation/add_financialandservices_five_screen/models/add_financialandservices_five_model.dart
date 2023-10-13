@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
 /// This class defines the variables used in the [add_financialandservices_five_screen],
@@ -11,21 +12,25 @@ class AddFinancialandservicesFiveModel extends Equatable {
     this.dropdownItemList = const [],
     this.models = const [],
     this.count = 0,
+    this.fsProgress,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
   List<CheckBoxList> models;
+  FSProgress? fsProgress;
 
   int count;
   AddFinancialandservicesFiveModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<CheckBoxList>? models,
+    FSProgress? fsProgress,
     int? count,
   }) {
     return AddFinancialandservicesFiveModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
       models: models ?? this.models,
       count: count ?? this.count,
+      fsProgress: fsProgress ?? this.fsProgress,
     );
   }
 
@@ -34,5 +39,6 @@ class AddFinancialandservicesFiveModel extends Equatable {
         dropdownItemList,
         models,
         count,
+        fsProgress,
       ];
 }

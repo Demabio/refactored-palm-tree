@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/core/app_export.dart';
 
 /// This class is used in the [chipviewayrshi_item_widget] screen.
 class CheckBoxList extends Equatable {
@@ -23,6 +24,7 @@ class CheckBoxList extends Equatable {
     this.var4,
     this.var5,
     this.var6,
+    this.model = const [],
   }) {}
 
   String title;
@@ -54,6 +56,8 @@ class CheckBoxList extends Equatable {
 
   FocusNode? femalefocusNode;
 
+  List<SelectionPopupModel> model;
+
   CheckBoxList copyWith({
     String? ayrshi,
     bool? isSelected,
@@ -72,6 +76,7 @@ class CheckBoxList extends Equatable {
     String? var4,
     String? var5,
     String? var6,
+    List<SelectionPopupModel>? model,
   }) {
     return CheckBoxList(
       title: ayrshi ?? this.title,
@@ -91,6 +96,7 @@ class CheckBoxList extends Equatable {
       var4: var4 ?? this.var4,
       var5: var5 ?? this.var5,
       var6: var6 ?? this.var6,
+      model: model ?? this.model,
     );
   }
 
@@ -113,6 +119,7 @@ class CheckBoxList extends Equatable {
         var4,
         var5,
         var6,
+        model,
       ];
 
   Map<String, dynamic> toJson() {

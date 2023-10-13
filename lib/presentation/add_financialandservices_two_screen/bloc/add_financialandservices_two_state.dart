@@ -12,6 +12,11 @@ class AddFinancialandservicesTwoState extends Equatable {
     this.selectedDropDownValue4,
     this.selectedDropDownValue5,
     this.addFinancialandservicesTwoModelObj,
+    this.p = const [],
+    this.e = const [],
+    this.m = const [],
+    this.checka = false,
+    this.checkb = false,
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -27,7 +32,11 @@ class AddFinancialandservicesTwoState extends Equatable {
   SelectionPopupModel? selectedDropDownValue5;
 
   AddFinancialandservicesTwoModel? addFinancialandservicesTwoModelObj;
-
+  List<CheckBoxList> p;
+  List<CheckBoxList> e;
+  List<CheckBoxList> m;
+  bool checka;
+  bool checkb;
   @override
   List<Object?> get props => [
         selectedDropDownValue,
@@ -36,6 +45,9 @@ class AddFinancialandservicesTwoState extends Equatable {
         selectedDropDownValue3,
         selectedDropDownValue4,
         selectedDropDownValue5,
+        p,
+        e,
+        m,
         addFinancialandservicesTwoModelObj,
       ];
   AddFinancialandservicesTwoState copyWith({
@@ -45,6 +57,11 @@ class AddFinancialandservicesTwoState extends Equatable {
     SelectionPopupModel? selectedDropDownValue3,
     SelectionPopupModel? selectedDropDownValue4,
     SelectionPopupModel? selectedDropDownValue5,
+    List<CheckBoxList>? p,
+    List<CheckBoxList>? e,
+    List<CheckBoxList>? m,
+    bool? checka,
+    bool? checkb,
     AddFinancialandservicesTwoModel? addFinancialandservicesTwoModelObj,
   }) {
     return AddFinancialandservicesTwoState(
@@ -60,6 +77,11 @@ class AddFinancialandservicesTwoState extends Equatable {
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
       selectedDropDownValue5:
           selectedDropDownValue5 ?? this.selectedDropDownValue5,
+      p: p ?? this.p,
+      e: e ?? this.e,
+      m: m ?? this.m,
+      checka: checka ?? this.checka,
+      checkb: checkb ?? this.checkb,
       addFinancialandservicesTwoModelObj: addFinancialandservicesTwoModelObj ??
           this.addFinancialandservicesTwoModelObj,
     );

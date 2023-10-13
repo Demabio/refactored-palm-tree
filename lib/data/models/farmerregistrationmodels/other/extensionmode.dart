@@ -25,6 +25,6 @@ class FarmerExtensionMode {
         extensionModeId: map['extension_mode_id']?.toInt() ?? 0,
         other: map['other'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

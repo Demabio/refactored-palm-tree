@@ -29,7 +29,7 @@ class FarmerCooperativeGroup {
         cooperateiveGroupId: map['cooperateive_group_id']?.toInt() ?? 0,
         cooperateiveGroupName: map['cooperateive_group_name'],
         other: map['other'],
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
       );
 }

@@ -23,6 +23,6 @@ class FarmerExtensionAccess {
         farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         extensionSourceId: map['extension_source_id']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

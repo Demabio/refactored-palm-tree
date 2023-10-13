@@ -26,12 +26,18 @@ class ResetCBs extends AddFinancialandservicesThreeEvent {
 class AddCBs extends AddFinancialandservicesThreeEvent {
   AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
+  Function? createFailed;
   List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
       ];
 }
 

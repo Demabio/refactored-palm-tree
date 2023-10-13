@@ -104,8 +104,14 @@ class AddFinancialandservicesSixDialog extends StatelessWidget {
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
                     onTap: () {
                       context.read<AddFinancialandservicesSixBloc>().add(AddCBs(
-                          models: addRearedLivestockDialogOneModelObj!.models));
-                      Navigator.pop(context);
+                            models: addRearedLivestockDialogOneModelObj!.models,
+                            createSuccessful: () {
+                              _success(context);
+                            },
+                            createFailed: () {
+                              _failed(context);
+                            },
+                          ));
                     },
                   ),
                   CustomOutlinedButton(
@@ -122,5 +128,14 @@ class AddFinancialandservicesSixDialog extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+  _success(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 }

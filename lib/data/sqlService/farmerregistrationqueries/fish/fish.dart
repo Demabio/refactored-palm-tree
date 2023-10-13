@@ -97,7 +97,7 @@ class FarmerFishDB {
     return FarmerFish.fromSqfliteDatabase(fish.first);
   }
 
-  Future<List<FarmerFish>> fetchByFarmerId(int id) async {
+  Future<List<FarmerFish>?> fetchByFarmerId(int id) async {
     final database = await DatabaseService().database;
     final fish = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_id = ?
@@ -105,7 +105,9 @@ class FarmerFishDB {
       id,
     ]);
 
-    return fish.map((e) => FarmerFish.fromSqfliteDatabase(e)).toList();
+    return fish.isNotEmpty
+        ? fish.map((e) => FarmerFish.fromSqfliteDatabase(e)).toList()
+        : null;
   }
 
   Future<int> delete(int id) async {

@@ -1,3 +1,5 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+
 import 'bloc/add_financialandservices_four_bloc.dart';
 import 'models/add_financialandservices_four_model.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +66,9 @@ class AddFinancialandservicesFourScreen extends StatelessWidget {
                               ?.ageGroupmModels.length ??
                           0,
                       (index) {
-                        IrrigationProjectModel model =
-                            addRearedLivestockDialogTwoModelObj
-                                    ?.ageGroupmModels[index] ??
-                                IrrigationProjectModel();
+                        CheckBoxList model = addRearedLivestockDialogTwoModelObj
+                                ?.ageGroupmModels[index] ??
+                            CheckBoxList();
 
                         return IrrigationProjectGroupItemWidget(
                           model,
@@ -114,11 +115,18 @@ class AddFinancialandservicesFourScreen extends StatelessWidget {
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
                     onTap: () {
-                      context.read<AddFinancialandservicesFourBloc>().add(
-                          AddAGs(
-                              models: addRearedLivestockDialogTwoModelObj!
-                                  .ageGroupmModels));
-                      Navigator.pop(context);
+                      context
+                          .read<AddFinancialandservicesFourBloc>()
+                          .add(AddCBs(
+                            models: addRearedLivestockDialogTwoModelObj!
+                                .ageGroupmModels,
+                            createSuccessful: () {
+                              _success(context);
+                            },
+                            createFailed: () {
+                              _failed(context);
+                            },
+                          ));
                     },
                   ),
                   CustomOutlinedButton(
@@ -135,5 +143,14 @@ class AddFinancialandservicesFourScreen extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+  _success(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 }

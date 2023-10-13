@@ -1,9 +1,14 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/incomesource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/incomesource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/incomesource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_three_dialog/models/add_financialandservices_three_model.dart';
 part 'add_financialandservices_three_event.dart';
@@ -16,14 +21,9 @@ class AddFinancialandservicesThreeBloc extends Bloc<
       AddFinancialandservicesThreeState initialState)
       : super(initialState) {
     on<AddFinancialandservicesThreeInitialEvent>(_onInitialize);
-    on<ChangeCheckBoxEvent>(_changeCheckBox);
-    on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
-    on<ChangeCheckBox3Event>(_changeCheckBox3);
-    on<ChangeCheckBox4Event>(_changeCheckBox4);
-    on<ChangeCheckBox5Event>(_changeCheckBox5);
-    on<ChangeCheckBox6Event>(_changeCheckBox6);
-    on<ChangeCheckBox7Event>(_changeCheckBox7);
+    on<AddCBs>(_addAgeGroups);
+    on<ResetCBs>(_resetCBs);
+    on<ChangeCheckbox>(_changeAgeGroupCB);
   }
 
   _changeAgeGroupCB(
@@ -43,7 +43,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
     )));
   }
 
-  Future<List<CheckBoxList>> fetchFarmStructure() async {
+  Future<List<CheckBoxList>> fetchIncomes() async {
     List<CheckBoxList> list = [];
     IncomeSourceDB farmStructureDB = IncomeSourceDB();
 
@@ -65,113 +65,100 @@ class AddFinancialandservicesThreeBloc extends Bloc<
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: await fetchIncomes(),
       count: 0,
     )));
+  }
+
+  List<CheckBoxList> _incomes(
+      List<CheckBoxList> feedmodelss, List<FarmerIncomeSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerIncomeSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.incomeSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
   }
 
   _addAgeGroups(
     AddCBs event,
     Emitter<AddFinancialandservicesThreeState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerIncomeSourceDB farmerFishInputDB = FarmerIncomeSourceDB();
+    List<FarmerIncomeSource>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerIncomeSource(
+              farmerIncomeId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              priorityLevel: 0,
+              incomeSourceId: model.id!,
+            ),
+          );
+        }
+      }
+      if (state.addFinancialandservicesThreeModelObj!.fsProgress?.pageOne ==
+          0) {
+        farmerFishInputDB.insertIncome(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertIncome(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
-
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addFinancialandservicesThreeModelObj:
-            state.addFinancialandservicesThreeModelObj));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
-  _changeCheckBox(
-    ChangeCheckBoxEvent event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      trash: event.value,
-    ));
+  Future<List<FarmerIncomeSource>?> getIncomes() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerIncomeSourceDB farmerLivestockAgeGroupsDB = FarmerIncomeSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
-  _changeCheckBox1(
-    ChangeCheckBox1Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      nonFarmTrading: event.value,
-    ));
-  }
-
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      trashone: event.value,
-    ));
-  }
-
-  _changeCheckBox3(
-    ChangeCheckBox3Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      trashtwo: event.value,
-    ));
-  }
-
-  _changeCheckBox4(
-    ChangeCheckBox4Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      remittancesvalu: event.value,
-    ));
-  }
-
-  _changeCheckBox5(
-    ChangeCheckBox5Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      pensionvalue: event.value,
-    ));
-  }
-
-  _changeCheckBox6(
-    ChangeCheckBox6Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      otherIncomeSour: event.value,
-    ));
-  }
-
-  _changeCheckBox7(
-    ChangeCheckBox7Event event,
-    Emitter<AddFinancialandservicesThreeState> emit,
-  ) {
-    emit(state.copyWith(
-      cashTransfer: event.value,
-    ));
+  Future<FSProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FSProgressDB pfProgressDB = FSProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddFinancialandservicesThreeInitialEvent event,
     Emitter<AddFinancialandservicesThreeState> emit,
   ) async {
+    FSProgress pfProgress = await getProgress() ??
+        FSProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    List<CheckBoxList>? incomemodels = await fetchIncomes();
+
+    if (pfProgress.pageOne == 1) {
+      List<FarmerIncomeSource>? incomes = await getIncomes();
+      incomemodels = _incomes(incomemodels, incomes!);
+    }
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: incomemodels,
     )));
   }
 }

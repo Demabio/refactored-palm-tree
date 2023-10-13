@@ -333,11 +333,26 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? 
+    UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ?  
     WHERE farmerId = ? 
   ''', [
-        farmer.livelihoodSourceId,
+        farmer.cooperativeGroup! ? 1 : 0,
         farmer.farmingIncomePercent,
+        farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromFinancialTwo(Farmer farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET cropsInsurance = ?, livestockInsurance = ?, fishInsurance = ?, assetsInsurance = ?, extensionsericeAccess = ? 
+    WHERE farmerId = ? 
+  ''', [
         farmer.cropsInsurance! ? 1 : 0,
         farmer.livestockInsurance! ? 1 : 0,
         farmer.fishInsurance! ? 1 : 0,

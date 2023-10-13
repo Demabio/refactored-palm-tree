@@ -2096,81 +2096,81 @@ class HomeFarmerNotFoundBloc
         print(error.toString());
       });
 //fish input
-//       await _repository.setupServicePost(
-//         headers: {
-//           'Content-type': 'application/json',
-//           'Authorization': 'Bearer ${PrefUtils().getToken()}'
-//         },
-//         requestData: Graphql.getallFishInput,
-//       ).then((value) async {
-//         appraiser += 100;
-//         currentval = appraiser / full;
-//         currentpercentage = currentval * 100;
-//         final updatedState = state.copyWith(
-//           count: state.count + 1,
-//           linebarvalue: currentval,
-//           percentagedone: currentpercentage.toInt(),
-//         );
-//         emit(updatedState);
-//         List<FishInput> data = FishInput.parseFishInputs(value.data);
-//         await FishInputDB().insertFishInputs(data).then((value) {
-//           if (value == 200) {
-//             appraiser += 100;
-//             currentval = appraiser / full;
-//             currentpercentage = currentval * 100;
-//             final updatedState = state.copyWith(
-//               count: state.count + 1,
-//               linebarvalue: currentval,
-//               percentagedone: currentpercentage.toInt(),
-//             );
-//             emit(updatedState);
-//           } else {
-//             print("failed");
-//           }
-//         });
-//       }).onError((error, stackTrace) {
-//         print(error.toString());
-//       });
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallFishInput,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<FishInput> data = FishInput.parseFishInputs(value.data);
+        await FishInputDB().insertFishInputs(data).then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
 
-// //fishcategory
-//       await _repository.setupServicePost(
-//         headers: {
-//           'Content-type': 'application/json',
-//           'Authorization': 'Bearer ${PrefUtils().getToken()}'
-//         },
-//         requestData: Graphql.getallExtensionModes,
-//       ).then((value) async {
-//         appraiser += 100;
-//         currentval = appraiser / full;
-//         currentpercentage = currentval * 100;
-//         final updatedState = state.copyWith(
-//           count: state.count + 1,
-//           linebarvalue: currentval,
-//           percentagedone: currentpercentage.toInt(),
-//         );
-//         emit(updatedState);
-//         List<IrrigationMembershipType> data =
-//             IrrigationMembershipType.parseIrrigationMembershipTypes(value.data);
-//         await IrrigationMembershipTypeDB()
-//             .insertIrrigationMembershipTypes(data)
-//             .then((value) {
-//           if (value == 200) {
-//             appraiser += 100;
-//             currentval = appraiser / full;
-//             currentpercentage = currentval * 100;
-//             final updatedState = state.copyWith(
-//               count: state.count + 1,
-//               linebarvalue: currentval,
-//               percentagedone: currentpercentage.toInt(),
-//             );
-//             emit(updatedState);
-//           } else {
-//             print("failed");
-//           }
-//         });
-//       }).onError((error, stackTrace) {
-//         print(error.toString());
-//       });
+// //Irrigation membership types
+      await _repository.setupServicePost(
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${PrefUtils().getToken()}'
+        },
+        requestData: Graphql.getallIrrigationMembership,
+      ).then((value) async {
+        appraiser += 100;
+        currentval = appraiser / full;
+        currentpercentage = currentval * 100;
+        final updatedState = state.copyWith(
+          count: state.count + 1,
+          linebarvalue: currentval,
+          percentagedone: currentpercentage.toInt(),
+        );
+        emit(updatedState);
+        List<IrrigationMembershipType> data =
+            IrrigationMembershipType.parseIrrigationMembershipTypes(value.data);
+        await IrrigationMembershipTypeDB()
+            .insertIrrigationMembershipTypes(data)
+            .then((value) {
+          if (value == 200) {
+            appraiser += 100;
+            currentval = appraiser / full;
+            currentpercentage = currentval * 100;
+            final updatedState = state.copyWith(
+              count: state.count + 1,
+              linebarvalue: currentval,
+              percentagedone: currentpercentage.toInt(),
+            );
+            emit(updatedState);
+          } else {
+            print("failed");
+          }
+        });
+      }).onError((error, stackTrace) {
+        print(error.toString());
+      });
     } catch (e) {
       event.onFailed?.call();
     } finally {

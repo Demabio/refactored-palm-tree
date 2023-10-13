@@ -121,14 +121,20 @@ class ResetCBs extends AddFinancialandservicesFourEvent {
   List<Object?> get props => [];
 }
 
-class AddAGs extends AddFinancialandservicesFourEvent {
-  AddAGs({
+class AddCBs extends AddFinancialandservicesFourEvent {
+  AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
-  List<IrrigationProjectModel> models;
+  Function? createFailed;
+  List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
       ];
 }

@@ -5,14 +5,8 @@ import 'bloc/add_financialandservices_five_bloc.dart';
 import 'models/add_financialandservices_five_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
-import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
-import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
-import 'package:kiamis_app/widgets/custom_drop_down.dart';
+
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 class AddFinancialandservicesFiveScreen extends StatelessWidget {
@@ -110,11 +104,17 @@ class AddFinancialandservicesFiveScreen extends StatelessWidget {
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
                     onTap: () {
-                      context.read<AddFinancialandservicesFiveBloc>().add(
-                          AddCBs(
-                              models:
-                                  addRearedLivestockDialogOneModelObj!.models));
-                      Navigator.pop(context);
+                      context
+                          .read<AddFinancialandservicesFiveBloc>()
+                          .add(AddCBs(
+                            models: addRearedLivestockDialogOneModelObj!.models,
+                            createSuccessful: () {
+                              _success(context);
+                            },
+                            createFailed: () {
+                              _failed(context);
+                            },
+                          ));
                     },
                   ),
                   CustomOutlinedButton(
@@ -131,5 +131,14 @@ class AddFinancialandservicesFiveScreen extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+  _success(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _failed(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 }

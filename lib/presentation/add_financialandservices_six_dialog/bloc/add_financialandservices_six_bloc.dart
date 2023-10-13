@@ -1,9 +1,14 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/agriinfosource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/models/add_financialandservices_six_model.dart';
 part 'add_financialandservices_six_event.dart';
@@ -15,11 +20,10 @@ class AddFinancialandservicesSixBloc extends Bloc<
   AddFinancialandservicesSixBloc(AddFinancialandservicesSixState initialState)
       : super(initialState) {
     on<AddFinancialandservicesSixInitialEvent>(_onInitialize);
-    on<ChangeCheckBoxEvent>(_changeCheckBox);
-    on<ChangeCheckBox1Event>(_changeCheckBox1);
-    on<ChangeCheckBox2Event>(_changeCheckBox2);
-    on<ChangeCheckBox3Event>(_changeCheckBox3);
-    on<ChangeCheckBox4Event>(_changeCheckBox4);
+    on<ChangeCheckbox>(_changeAgeGroupCB);
+    on<ResetCBs>(_resetCBs);
+
+    on<AddCBs>(_addAgeGroups);
   }
 
   _changeAgeGroupCB(
@@ -39,7 +43,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
     )));
   }
 
-  Future<List<CheckBoxList>> fetchFarmStructure() async {
+  Future<List<CheckBoxList>> fetchInfo() async {
     List<CheckBoxList> list = [];
     AgriInfoSourceDB farmStructureDB = AgriInfoSourceDB();
 
@@ -61,86 +65,100 @@ class AddFinancialandservicesSixBloc extends Bloc<
     emit(state.copyWith(
         addFinancialandservicesSixModelObj:
             state.addFinancialandservicesSixModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: await fetchInfo(),
       count: 0,
     )));
+  }
+
+  List<CheckBoxList> _infos(
+      List<CheckBoxList> feedmodelss, List<FarmerAgriInfoSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerAgriInfoSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.agriInfoSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
   }
 
   _addAgeGroups(
     AddCBs event,
     Emitter<AddFinancialandservicesSixState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerAgriInfoSourceDB farmerFishInputDB = FarmerAgriInfoSourceDB();
+    List<FarmerAgriInfoSource>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerAgriInfoSource(
+              farmerAgriInfoSourceId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              agriInfoSourceId: model.id!,
+            ),
+          );
+        }
+      }
+      if (state.addFinancialandservicesSixModelObj!.fsProgress?.pageTwo == 0) {
+        farmerFishInputDB.insertAgriInfoSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertAgriInfoSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
-
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addFinancialandservicesSixModelObj:
-            state.addFinancialandservicesSixModelObj));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
-  _changeCheckBox(
-    ChangeCheckBoxEvent event,
-    Emitter<AddFinancialandservicesSixState> emit,
-  ) {
-    emit(state.copyWith(
-      publicGathering: event.value,
-    ));
+  Future<List<FarmerAgriInfoSource>?> getInfo() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerAgriInfoSourceDB farmerLivestockAgeGroupsDB =
+        FarmerAgriInfoSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
-  _changeCheckBox1(
-    ChangeCheckBox1Event event,
-    Emitter<AddFinancialandservicesSixState> emit,
-  ) {
-    emit(state.copyWith(
-      radiovalue: event.value,
-    ));
-  }
-
-  _changeCheckBox2(
-    ChangeCheckBox2Event event,
-    Emitter<AddFinancialandservicesSixState> emit,
-  ) {
-    emit(state.copyWith(
-      trash: event.value,
-    ));
-  }
-
-  _changeCheckBox3(
-    ChangeCheckBox3Event event,
-    Emitter<AddFinancialandservicesSixState> emit,
-  ) {
-    emit(state.copyWith(
-      internetvalue: event.value,
-    ));
-  }
-
-  _changeCheckBox4(
-    ChangeCheckBox4Event event,
-    Emitter<AddFinancialandservicesSixState> emit,
-  ) {
-    emit(state.copyWith(
-      extensionMeetin: event.value,
-    ));
+  Future<FSProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FSProgressDB pfProgressDB = FSProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddFinancialandservicesSixInitialEvent event,
     Emitter<AddFinancialandservicesSixState> emit,
   ) async {
+    FSProgress pfProgress = await getProgress() ??
+        FSProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    List<CheckBoxList>? infomodels = await fetchInfo();
+
+    if (pfProgress.pageTwo == 1) {
+      List<FarmerAgriInfoSource>? info = await getInfo();
+      infomodels = _infos(infomodels, info!);
+    }
     emit(state.copyWith(
         addFinancialandservicesSixModelObj:
             state.addFinancialandservicesSixModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: infomodels,
     )));
   }
 }

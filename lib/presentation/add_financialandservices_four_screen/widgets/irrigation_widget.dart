@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
@@ -18,7 +19,7 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
           key: key,
         );
 
-  IrrigationProjectModel ageGroupmModel;
+  CheckBoxList ageGroupmModel;
 
   Function(bool)? onSelect;
 
