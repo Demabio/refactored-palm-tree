@@ -107,20 +107,20 @@ class AddLandandwatermgmtTwoBloc
     Emitter<AddLandandwatermgmtTwoState> emit,
   ) async {
     if (state.addLandandwatermgmtTwoModelObj?.lwProgress!.pageTwo == 0) {
-      int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerIrrigationAgencyDB farmerIrrigationAgencyDB =
           FarmerIrrigationAgencyDB();
       FarmerIrrigationTypeDB farmerIrrigationTypeDB = FarmerIrrigationTypeDB();
       FarmerIrrigationCategoryDB farmerIrrigationCategoryDB =
           FarmerIrrigationCategoryDB();
       farmerIrrigationCategoryDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerIrrigationTypeDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerIrrigationAgencyDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
     }
   }
@@ -181,6 +181,7 @@ class AddLandandwatermgmtTwoBloc
     Emitter<AddLandandwatermgmtTwoState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     int selectedCount =
         state.u.where((enterprise) => enterprise.isSelected).length;
 
@@ -213,7 +214,7 @@ class AddLandandwatermgmtTwoBloc
         //   if (id > 0) {
         atProgressDB
             .update(LWProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageOne:
                   state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
               pageTwo: 1,
@@ -243,7 +244,7 @@ class AddLandandwatermgmtTwoBloc
         //  if (id > 0) {
         atProgressDB
             .update(LWProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageOne:
                   state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
               pageTwo: 1,
@@ -417,30 +418,30 @@ class AddLandandwatermgmtTwoBloc
   }
 
   Future<List<FarmerIrrigationAgency>?> getAgency() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationAgencyDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationAgencyDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerIrrigationCategory>?> getCategs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationCategoryDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationCategoryDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerIrrigationType>?> getType() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationTypeDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationTypeDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<LWProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   Future<Farmer?> getFarmer() async {
@@ -455,7 +456,7 @@ class AddLandandwatermgmtTwoBloc
   ) async {
     LWProgress pfProgress = await getProgress() ??
         LWProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

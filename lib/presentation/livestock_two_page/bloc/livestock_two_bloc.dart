@@ -14,9 +14,9 @@ class LivestockTwoBloc extends Bloc<LivestockTwoEvent, LivestockTwoState> {
   }
 
   Future<FarmerLivestockService?> getFarm() async {
-    int farmid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     FarmerLivestockServicesDB farmDB = FarmerLivestockServicesDB();
-    return await farmDB.fetchByFarmer(farmid);
+    return await farmDB.fetchByFarm(farmid);
   }
 
   _onInitialize(

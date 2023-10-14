@@ -42,7 +42,7 @@ class FinancialandservicesBloc
   ) async {
     FSProgress pfProgress = await getProgress() ??
         FSProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -210,9 +210,9 @@ class FinancialandservicesBloc
   }
 
   Future<FSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   Future<List<FarmerCreditService>?> getCredits() async {
@@ -229,16 +229,16 @@ class FinancialandservicesBloc
   }
 
   Future<List<FarmerExtensionAccess>?> getEAccess() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerExtensionAccessDB farmerLivestockAgeGroupsDB =
         FarmerExtensionAccessDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerExtensionMode>?> getModes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerExtensionModeDB farmerLivestockAgeGroupsDB = FarmerExtensionModeDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _infos(

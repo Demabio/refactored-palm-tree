@@ -39,7 +39,7 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
   ) async {
     AQProgress pfProgress = await getProgress() ??
         AQProgress(
-          fishId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -94,22 +94,22 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
   }
 
   Future<AQProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     AQProgressDB pfProgressDB = AQProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(id);
   }
 
   Future<FarmerFishProductionLevel?> getProdlevel() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     FarmerFishProductionLevelsDB farmerFishProductionLevelsDB =
         FarmerFishProductionLevelsDB();
-    return await farmerFishProductionLevelsDB.fetchByFarmer(farmerid);
+    return await farmerFishProductionLevelsDB.fetchByFarm(farmerid);
   }
 
   Future<List<FarmerFishInput>?> getFishInputs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishInputDB farmerLivestockAgeGroupsDB = FarmerFishInputDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<CheckBoxList>> fetchFishInputs() async {
@@ -266,22 +266,22 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
   }
 
   Future<List<FarmerFish>?> getFishes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishDB farmerLivestockAgeGroupsDB = FarmerFishDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerFishCategory>?> getCategs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerFishProductionSystem>?> getProdSyss() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishProductionSystemDB farmerLivestockAgeGroupsDB =
         FarmerFishProductionSystemDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<FishProductionLevel?> getProdlevelByid(int id) async {

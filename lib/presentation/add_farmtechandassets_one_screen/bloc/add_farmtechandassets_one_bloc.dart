@@ -245,9 +245,9 @@ class AddFarmtechandassetsOneBloc
   }
 
   Future<FarmerAssetSource?> getAssetSource() async {
-    int farmerid = PrefUtils().getFarmId();
+    int id = PrefUtils().getFarmId();
     FarmerAssetSourceDB farmerFishProductionLevelsDB = FarmerAssetSourceDB();
-    return await farmerFishProductionLevelsDB.fetchByfarmer(farmerid);
+    return await farmerFishProductionLevelsDB.fetchByFarm(id);
   }
 
   Future<Farmer?> getFarmer() async {

@@ -129,13 +129,13 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
   Future<LSProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     LSProgressDB lsProgressDB = LSProgressDB();
-    return await lsProgressDB.fetchByFarmerId(farmerid);
+    return await lsProgressDB.fetchByFarm(farmerid);
   }
 
   Future<List<FarmerLivestock>?> getLivestocks() async {
-    int livid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerLivestockDB farmDB = FarmerLivestockDB();
-    return await farmDB.fetchAllByFarmer(livid);
+    return await farmDB.fetchByFarm(id);
   }
 
   _onInitialize(

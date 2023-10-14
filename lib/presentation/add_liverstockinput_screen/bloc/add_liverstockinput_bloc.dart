@@ -199,15 +199,15 @@ class AddLiverstockinputBloc
   }
 
   Future<FarmerLivestockService?> getFarm() async {
-    int farmid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     FarmerLivestockServicesDB farmDB = FarmerLivestockServicesDB();
-    return await farmDB.fetchByFarmer(farmid);
+    return await farmDB.fetchByFarm(farmid);
   }
 
   Future<LSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmId();
+    int id = PrefUtils().getFarmId();
     LSProgressDB pfProgressDB = LSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   _changeDropDown(

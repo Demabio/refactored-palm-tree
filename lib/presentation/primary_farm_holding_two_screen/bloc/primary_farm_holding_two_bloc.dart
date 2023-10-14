@@ -364,7 +364,7 @@ class PrimaryFarmHoldingTwoBloc
   Future<PFProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     PFProgressDB pfProgressDB = PFProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(farmerid);
   }
 
   Future<List<FarmerEnterprise>?> getEnterprises() async {

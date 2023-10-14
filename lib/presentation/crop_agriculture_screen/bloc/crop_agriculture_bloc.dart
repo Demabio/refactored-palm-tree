@@ -84,9 +84,9 @@ class CropAgricultureBloc
   // }
 
   Future<List<FarmerCrop>?> fetchFCrops() async {
-    int farmerid = PrefUtils().getFarmId();
+    int id = PrefUtils().getFarmId();
     FarmerCropsDB farmerCropsDB = FarmerCropsDB();
-    return await farmerCropsDB.fetchAllByFarmer(farmerid);
+    return await farmerCropsDB.fetchAllByFarm(id);
   }
 
   Future<FarmerCrop?> getOwnership() async {

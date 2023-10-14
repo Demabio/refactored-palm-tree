@@ -696,9 +696,9 @@ class AddRearedLivestockOneBloc
   }
 
   Future<LSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmId();
+    int id = PrefUtils().getFarmId();
     LSProgressDB lsProgressDB = LSProgressDB();
-    return await lsProgressDB.fetchByFarmerId(farmerid);
+    return await lsProgressDB.fetchByFarm(id);
   }
 
   _onInitialize(

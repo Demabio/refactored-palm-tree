@@ -126,9 +126,9 @@ class AddLandandwatermgmtOneBloc
   }
 
   Future<LWProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarm(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   Future<Farmer?> getFarmer() async {
@@ -146,7 +146,7 @@ class AddLandandwatermgmtOneBloc
   Future<List<FarmerLandPractice>?> getLandP() async {
     int id = PrefUtils().getFarmId();
     FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _land(
@@ -213,6 +213,7 @@ class AddLandandwatermgmtOneBloc
     Emitter<AddLandandwatermgmtOneState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     int selectedCount =
         state.p.where((enterprise) => enterprise.isSelected).length;
 
@@ -246,17 +247,17 @@ class AddLandandwatermgmtOneBloc
           soilTestYear: 0,
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .insert(LWProgress(
-              farmerId: farmerid,
-              pageTwo:
-                  state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .insert(LWProgress(
+                farmId: farmid,
+                pageTwo:
+                    state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else if (selectedCount != 0) {
         int id = await farmerDB.updateFromLandWater(Farmer(
           farmerId: farmerid,
@@ -276,17 +277,17 @@ class AddLandandwatermgmtOneBloc
                   .addLandandwatermgmtOneModelObj!.selectedDropDownValue2?.id ??
               0,
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(LWProgress(
-              farmerId: farmerid,
-              pageTwo:
-                  state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (id > 0) {
+          atProgressDB
+              .update(LWProgress(
+                farmId: farmid,
+                pageTwo:
+                    state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =
@@ -306,6 +307,7 @@ class AddLandandwatermgmtOneBloc
     Emitter<AddLandandwatermgmtOneState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     int selectedCount =
         state.p.where((enterprise) => enterprise.isSelected).length;
 
@@ -339,17 +341,17 @@ class AddLandandwatermgmtOneBloc
           soilTestYear: 0,
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .insert(LWProgress(
-              farmerId: farmerid,
-              pageTwo:
-                  state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .insert(LWProgress(
+                farmId: farmid,
+                pageTwo:
+                    state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else if (selectedCount != 0) {
         int id = await farmerDB.updateFromLandWater(Farmer(
           farmerId: farmerid,
@@ -369,17 +371,17 @@ class AddLandandwatermgmtOneBloc
                   .addLandandwatermgmtOneModelObj!.selectedDropDownValue2?.id ??
               0,
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(LWProgress(
-              farmerId: farmerid,
-              pageTwo:
-                  state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (id > 0) {
+          atProgressDB
+              .update(LWProgress(
+                farmId: farmid,
+                pageTwo:
+                    state.addLandandwatermgmtOneModelObj!.lwProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =
@@ -435,16 +437,16 @@ class AddLandandwatermgmtOneBloc
     Emitter<AddLandandwatermgmtOneState> emit,
   ) async {
     if (state.addLandandwatermgmtOneModelObj?.lwProgress!.pageOne == 0) {
-      int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerIrrigationWaterSourceDB farmerIrrigationWaterSourceDB =
           FarmerIrrigationWaterSourceDB();
       FarmerLandPracticesDB farmerLandPracticesDB = FarmerLandPracticesDB();
 
       farmerIrrigationWaterSourceDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerLandPracticesDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
     }
   }

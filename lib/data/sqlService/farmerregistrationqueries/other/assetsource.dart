@@ -82,7 +82,7 @@ class FarmerAssetSourceDB {
         .toList();
   }
 
-  Future<FarmerAssetSource?> fetchByfarmer(int id) async {
+  Future<FarmerAssetSource?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?

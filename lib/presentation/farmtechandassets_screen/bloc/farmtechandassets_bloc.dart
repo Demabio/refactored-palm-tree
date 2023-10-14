@@ -42,7 +42,7 @@ class FarmtechandassetsBloc
   ) async {
     ATProgress pfProgress = await getProgress() ??
         ATProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -108,9 +108,9 @@ class FarmtechandassetsBloc
   }
 
   Future<ATProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     ATProgressDB pfProgressDB = ATProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   List<CheckBoxList> _assets(
@@ -227,27 +227,27 @@ class FarmtechandassetsBloc
   }
 
   Future<List<FarmerAsset>?> getFAssets() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerAssetsDB farmerLivestockAgeGroupsDB = FarmerAssetsDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerPowerSource>?> getSources() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerPowerSourceDB farmerLivestockAgeGroupsDB = FarmerPowerSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerStructure>?> getStructs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerStructureDB farmerLivestockAgeGroupsDB = FarmerStructureDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<FarmerAssetSource?> getAssetSource() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerAssetSourceDB farmerFishProductionLevelsDB = FarmerAssetSourceDB();
-    return await farmerFishProductionLevelsDB.fetchByfarmer(farmerid);
+    return await farmerFishProductionLevelsDB.fetchByFarm(id);
   }
 
   Future<Farmer?> getFarmer() async {

@@ -43,7 +43,7 @@ class LandandwatermgmtBloc
   ) async {
     LWProgress pfProgress = await getProgress() ??
         LWProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -250,37 +250,37 @@ class LandandwatermgmtBloc
   }
 
   Future<List<FarmerIrrigationAgency>?> getAgency() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationAgencyDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationAgencyDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerIrrigationCategory>?> getCategs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationCategoryDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationCategoryDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerIrrigationType>?> getType() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationTypeDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationTypeDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerIrrigationWaterSource>?> getWater() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationWaterSourceDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationWaterSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<LWProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   Future<Farmer?> getFarmer() async {
@@ -298,7 +298,7 @@ class LandandwatermgmtBloc
   Future<List<FarmerLandPractice>?> getLandP() async {
     int id = PrefUtils().getFarmId();
     FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _land(

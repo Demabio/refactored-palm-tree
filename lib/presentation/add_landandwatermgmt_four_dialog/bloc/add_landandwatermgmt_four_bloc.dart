@@ -139,7 +139,7 @@ class AddLandandwatermgmtFourBloc
   Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarmId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   _onInitialize(
