@@ -41,10 +41,10 @@ class LSProgressDB {
     ]);
   }
 
-  Future<LSProgress?> fetchByFarmerId(int farmerId) async {
+  Future<LSProgress?> fetchByFarmerId(int livestockId) async {
     final database = await DatabaseService().database;
     final progress = await database.rawQuery(
-        'SELECT * FROM $tableName WHERE "livestockId" = ?', [farmerId]);
+        'SELECT * FROM $tableName WHERE "livestockId" = ?', [livestockId]);
 
     return progress.isNotEmpty
         ? LSProgress.fromSqfliteDatabase(progress.last)

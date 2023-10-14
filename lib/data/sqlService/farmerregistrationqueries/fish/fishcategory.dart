@@ -83,7 +83,7 @@ class FarmerFishCategoryDB {
         .toList();
   }
 
-  Future<List<FarmerFishCategory>> fetchByFarmer(int id) async {
+  Future<List<FarmerFishCategory>> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?

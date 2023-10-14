@@ -8,10 +8,10 @@ class AQProgressDB {
   Future<void> createTable(Database database) async {
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
-        "fishId" INTEGER NOT NULL,
+        "farmId" INTEGER NOT NULL,
         "pageOne" INTEGER NOT NULL,
         "pageTwo" INTEGER NOT NULL,
-        PRIMARY KEY("fishId")
+        PRIMARY KEY("farmid")
       );
     ''');
   }
@@ -19,10 +19,10 @@ class AQProgressDB {
   Future<int> insert(AQProgress fiProgress) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName ("fishId", "pageOne", "pageTwo")
+      INSERT INTO $tableName ("farmId", "pageOne", "pageTwo")
       VALUES (?, ?, ?)
     ''', [
-      fiProgress.fishId,
+      fiProgress.farmId,
       fiProgress.pageOne,
       fiProgress.pageTwo,
     ]);
@@ -33,18 +33,18 @@ class AQProgressDB {
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
-      WHERE "fishId" = ?
+      WHERE "farmId" = ?
     ''', [
       fiProgress.pageOne,
       fiProgress.pageTwo,
-      fiProgress.fishId,
+      fiProgress.farmId,
     ]);
   }
 
-  Future<AQProgress?> fetchByFarmerId(int farmerId) async {
+  Future<AQProgress?> fetchByFarmId(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
-        .rawQuery('SELECT * FROM $tableName WHERE "fishId" = ?', [farmerId]);
+        .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);
 
     return progress.isNotEmpty
         ? AQProgress.fromSqfliteDatabase(progress.first)

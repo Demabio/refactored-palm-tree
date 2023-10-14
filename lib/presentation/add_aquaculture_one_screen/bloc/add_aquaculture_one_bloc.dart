@@ -42,6 +42,8 @@ class AddAquacultureOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
+
     int selectedCount =
         state.aquatypes.where((enterprise) => enterprise.isSelected).length;
     int selectedCount2 =
@@ -56,7 +58,7 @@ class AddAquacultureOneBloc
           selectedCount3 != 0) {
         aqProgressDB
             .insert(AQProgress(
-              fishId: farmerid,
+              farmId: farmid,
               pageOne: 1,
               pageTwo: 0,
             ))
@@ -67,7 +69,7 @@ class AddAquacultureOneBloc
           selectedCount3 != 0) {
         aqProgressDB
             .update(AQProgress(
-              fishId: farmerid,
+              farmId: farmid,
               pageOne: 1,
               pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
             ))
@@ -79,7 +81,7 @@ class AddAquacultureOneBloc
           checkedF: selectedCount2 == 0,
           checkedP: selectedCount3 == 0,
         ));
-        // event.createFailed!.call();
+        event.createFailed!.call();
       }
     } catch (e) {
       event.createFailed!.call();
@@ -93,6 +95,8 @@ class AddAquacultureOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
+
     int selectedCount =
         state.aquatypes.where((enterprise) => enterprise.isSelected).length;
     int selectedCount2 =
@@ -107,7 +111,7 @@ class AddAquacultureOneBloc
           selectedCount3 != 0) {
         aqProgressDB
             .insert(AQProgress(
-              fishId: farmerid,
+              farmId: farmid,
               pageOne: 1,
               pageTwo: 0,
             ))
@@ -118,7 +122,7 @@ class AddAquacultureOneBloc
           selectedCount3 != 0) {
         aqProgressDB
             .update(AQProgress(
-              fishId: farmerid,
+              farmId: farmid,
               pageOne: 1,
               pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
             ))
@@ -196,18 +200,16 @@ class AddAquacultureOneBloc
     Emitter<AddAquacultureOneState> emit,
   ) async {
     if (state.addAquacultureOneModelObj?.aqProgress!.pageOne == 0) {
-      int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerFishDB farmerFishDB = FarmerFishDB();
       FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
       FarmerFishProductionSystemDB farmerFishProductionSystemDB =
           FarmerFishProductionSystemDB();
 
-      farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
-      farmerFishCategoryDB
-          .delete(farmerid)
-          .then((value) => print("Deleted: $value"));
+      farmerFishDB.delete(id).then((value) => print("Deleted: $value"));
+      farmerFishCategoryDB.delete(id).then((value) => print("Deleted: $value"));
       farmerFishProductionSystemDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
     }
   }
@@ -337,28 +339,28 @@ class AddAquacultureOneBloc
   }
 
   Future<List<FarmerFish>?> getFishes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishDB farmerLivestockAgeGroupsDB = FarmerFishDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerFishCategory>?> getCategs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerFishProductionSystem>?> getProdSyss() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishProductionSystemDB farmerLivestockAgeGroupsDB =
         FarmerFishProductionSystemDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<AQProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     AQProgressDB pfProgressDB = AQProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(id);
   }
 
   _onInitialize(
@@ -367,7 +369,7 @@ class AddAquacultureOneBloc
   ) async {
     AQProgress pfProgress = await getProgress() ??
         AQProgress(
-          fishId: 0,
+          farmId: PrefUtils().getFarmId(),
           pageOne: 0,
           pageTwo: 0,
         );

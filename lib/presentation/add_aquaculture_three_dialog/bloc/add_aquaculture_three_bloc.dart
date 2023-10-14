@@ -102,9 +102,9 @@ class AddAquacultureThreeBloc
   }
 
   Future<List<FarmerFishCategory>?> getCategs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _types(
@@ -150,7 +150,7 @@ class AddAquacultureThreeBloc
         });
       } else {
         farmerFishCategoryDB
-            .delete(PrefUtils().getFarmerId())
+            .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
         farmerFishCategoryDB.insertFishCategories(categs).then((value) {
           print("inserted: $value");
@@ -164,9 +164,9 @@ class AddAquacultureThreeBloc
   }
 
   Future<AQProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     AQProgressDB pfProgressDB = AQProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(id);
   }
 
   _onInitialize(
@@ -177,7 +177,7 @@ class AddAquacultureThreeBloc
 
     AQProgress pfProgress = await getProgress() ??
         AQProgress(
-          fishId: 0,
+          farmId: PrefUtils().getFarmId(),
           pageOne: 0,
           pageTwo: 0,
         );

@@ -11,7 +11,7 @@ class PFProgress {
 
   factory PFProgress.fromSqfliteDatabase(Map<String, dynamic> map) =>
       PFProgress(
-        farmId: map['farmerId'] ?? 0,
+        farmId: map['farmId'] ?? 0,
         pageOne: map['pageOne'] ?? 0,
         pageTwo: map['pageTwo'] ?? 0,
       );

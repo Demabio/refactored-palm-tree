@@ -1,17 +1,17 @@
 class ATProgress {
-  final int farmerId;
+  final int farmId;
   final int pageOne;
   final int pageTwo;
 
   ATProgress({
-    required this.farmerId,
+    required this.farmId,
     required this.pageOne,
     required this.pageTwo,
   });
 
   factory ATProgress.fromSqfliteDatabase(Map<String, dynamic> map) =>
       ATProgress(
-        farmerId: map['farmerId'] ?? 0,
+        farmId: map['farmId'] ?? 0,
         pageOne: map['pageOne'] ?? 0,
         pageTwo: map['pageTwo'] ?? 0,
       );

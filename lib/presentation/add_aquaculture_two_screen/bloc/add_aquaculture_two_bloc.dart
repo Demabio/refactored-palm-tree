@@ -35,7 +35,7 @@ class AddAquacultureTwoBloc
   ) async {
     AQProgress pfProgress = await getProgress() ??
         AQProgress(
-          fishId: 0,
+          farmId: PrefUtils().getFarmId(),
           pageOne: 0,
           pageTwo: 0,
         );
@@ -95,16 +95,16 @@ class AddAquacultureTwoBloc
   }
 
   Future<AQProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     AQProgressDB pfProgressDB = AQProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(id);
   }
 
   Future<FarmerFishProductionLevel?> getProdlevel() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishProductionLevelsDB farmerFishProductionLevelsDB =
         FarmerFishProductionLevelsDB();
-    return await farmerFishProductionLevelsDB.fetchByFarmer(farmerid);
+    return await farmerFishProductionLevelsDB.fetchByFarm(id);
   }
 
   _checkfishes(
@@ -126,9 +126,9 @@ class AddAquacultureTwoBloc
   }
 
   Future<List<FarmerFishInput>?> getFishes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFishInputDB farmerLivestockAgeGroupsDB = FarmerFishInputDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByFarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<CheckBoxList>> fetchFish() async {
@@ -165,10 +165,10 @@ class AddAquacultureTwoBloc
     Emitter<AddAquacultureTwoState> emit,
   ) async {
     if (state.addAquacultureTwoModelObj?.aqProgress!.pageTwo == 0) {
-      int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerFishInputDB farmerFishDB = FarmerFishInputDB();
 
-      farmerFishDB.delete(farmerid).then((value) => print("Deleted: $value"));
+      farmerFishDB.delete(id).then((value) => print("Deleted: $value"));
     }
   }
 
@@ -208,7 +208,7 @@ class AddAquacultureTwoBloc
         if (id > 0) {
           aqProgressDB
               .update(AQProgress(
-                fishId: farmerid,
+                farmId: farmid,
                 pageTwo: 1,
                 pageOne: state.addAquacultureTwoModelObj!.aqProgress!.pageOne,
               ))
@@ -236,7 +236,7 @@ class AddAquacultureTwoBloc
         if (id > 0) {
           aqProgressDB
               .update(AQProgress(
-                fishId: farmerid,
+                farmId: farmid,
                 pageTwo: 1,
                 pageOne: state.addAquacultureTwoModelObj!.aqProgress!.pageOne,
               ))

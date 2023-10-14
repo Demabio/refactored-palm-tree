@@ -166,4 +166,16 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setEditing(bool value) {
+    return _sharedPreferences!.setBool('edit', value);
+  }
+
+  bool getEditing() {
+    try {
+      return _sharedPreferences!.getBool('edit') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

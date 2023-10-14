@@ -41,10 +41,10 @@ class PFProgressDB {
     ]);
   }
 
-  Future<PFProgress?> fetchByFarmerId(int farmerId) async {
+  Future<PFProgress?> fetchByFarmId(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
-        .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmerId]);
+        .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);
 
     return progress.isNotEmpty
         ? PFProgress.fromSqfliteDatabase(progress.first)

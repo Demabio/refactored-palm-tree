@@ -8,10 +8,10 @@ class LWProgressDB {
   Future<void> createTable(Database database) async {
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
-        "farmerId" INTEGER NOT NULL,
+        "farmId" INTEGER NOT NULL,
         "pageOne" INTEGER NOT NULL,
         "pageTwo" INTEGER NOT NULL,
-        PRIMARY KEY("farmerId")
+        PRIMARY KEY("farmId")
       );
     ''');
   }
@@ -19,10 +19,10 @@ class LWProgressDB {
   Future<int> insert(LWProgress fiProgress) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName ("farmerId", "pageOne", "pageTwo")
+      INSERT INTO $tableName ("farmId", "pageOne", "pageTwo")
       VALUES (?, ?, ?)
     ''', [
-      fiProgress.farmerId,
+      fiProgress.farmId,
       fiProgress.pageOne,
       fiProgress.pageTwo,
     ]);
@@ -33,18 +33,18 @@ class LWProgressDB {
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
-      WHERE "farmerId" = ?
+      WHERE "farmId" = ?
     ''', [
       fiProgress.pageOne,
       fiProgress.pageTwo,
-      fiProgress.farmerId,
+      fiProgress.farmId,
     ]);
   }
 
-  Future<LWProgress?> fetchByFarmerId(int farmerId) async {
+  Future<LWProgress?> fetchByFarmId(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
-        .rawQuery('SELECT * FROM $tableName WHERE "farmerId" = ?', [farmerId]);
+        .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);
 
     return progress.isNotEmpty
         ? LWProgress.fromSqfliteDatabase(progress.first)

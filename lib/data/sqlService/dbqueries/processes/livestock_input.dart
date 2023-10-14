@@ -1,4 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,46 +9,46 @@ class LSIProgressDB {
   Future<void> createTable(Database database) async {
     await database.execute('''
       CREATE TABLE IF NOT EXISTS $tableName (
-        "farmerId" INTEGER NOT NULL,
+        "farmId" INTEGER NOT NULL,
         "pageOne" INTEGER NOT NULL,
         "pageTwo" INTEGER NOT NULL,
-        PRIMARY KEY("farmerId")
+        PRIMARY KEY("farmId")
       );
     ''');
   }
 
-  Future<int> insert(FIProgress fiProgress) async {
+  Future<int> insert(PFProgress fiProgress) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
-      INSERT INTO $tableName ("farmerId", "pageOne", "pageTwo")
+      INSERT INTO $tableName ("farmId", "pageOne", "pageTwo")
       VALUES (?, ?, ?, ?, ?)
     ''', [
-      fiProgress.farmerId,
+      fiProgress.farmId,
       fiProgress.pageOne,
       fiProgress.pageTwo,
     ]);
   }
 
-  Future<int> update(FIProgress fiProgress) async {
+  Future<int> update(PFProgress fiProgress) async {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
-      WHERE "farmerId" = ?
+      WHERE "farmId" = ?
     ''', [
       fiProgress.pageOne,
       fiProgress.pageTwo,
-      fiProgress.farmerId,
+      fiProgress.farmId,
     ]);
   }
 
-  Future<FIProgress?> fetchByFarmerId(int farmerId) async {
+  Future<PFProgress?> fetchByFarmId(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
-        .rawQuery('SELECT * FROM $tableName WHERE "farmerId" = ?', [farmerId]);
+        .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);
 
     return progress.isNotEmpty
-        ? FIProgress.fromSqfliteDatabase(progress.first)
+        ? PFProgress.fromSqfliteDatabase(progress.first)
         : null;
   }
 }
