@@ -169,7 +169,7 @@ class AddFarmtechandassetsTwoBloc
         });
       } else {
         farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
+            .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
         farmerFishInputDB.insertPowerSources(categs).then((value) {
           print("inserted: $value");
@@ -183,9 +183,9 @@ class AddFarmtechandassetsTwoBloc
   }
 
   Future<List<FarmerPowerSource>?> getSources() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerPowerSourceDB farmerLivestockAgeGroupsDB = FarmerPowerSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<CheckBoxList>> fetchPowerSources() async {
@@ -204,9 +204,9 @@ class AddFarmtechandassetsTwoBloc
   }
 
   Future<ATProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     ATProgressDB pfProgressDB = ATProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   _onInitialize(
@@ -215,7 +215,7 @@ class AddFarmtechandassetsTwoBloc
   ) async {
     ATProgress pfProgress = await getProgress() ??
         ATProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

@@ -48,7 +48,7 @@ class AddFarmtechandassetsOneBloc
   ) async {
     ATProgress pfProgress = await getProgress() ??
         ATProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -108,9 +108,9 @@ class AddFarmtechandassetsOneBloc
   }
 
   Future<ATProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     ATProgressDB pfProgressDB = ATProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _assets(
@@ -227,31 +227,31 @@ class AddFarmtechandassetsOneBloc
   }
 
   Future<List<FarmerAsset>?> getFAssets() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerAssetsDB farmerLivestockAgeGroupsDB = FarmerAssetsDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerPowerSource>?> getSources() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerPowerSourceDB farmerLivestockAgeGroupsDB = FarmerPowerSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerStructure>?> getStructs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerStructureDB farmerLivestockAgeGroupsDB = FarmerStructureDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<FarmerAssetSource?> getAssetSource() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     FarmerAssetSourceDB farmerFishProductionLevelsDB = FarmerAssetSourceDB();
     return await farmerFishProductionLevelsDB.fetchByfarmer(farmerid);
   }
 
   Future<Farmer?> getFarmer() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     FarmerDB farmerFishProductionLevelsDB = FarmerDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
   }
@@ -261,18 +261,14 @@ class AddFarmtechandassetsOneBloc
     Emitter<AddFarmtechandassetsOneState> emit,
   ) async {
     if (state.addFarmtechandassetsOneModelObj?.atProgress!.pageOne == 0) {
-      int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerPowerSourceDB farmerPowerSourceDB = FarmerPowerSourceDB();
       FarmerStructureDB farmerStructureDB = FarmerStructureDB();
       FarmerAssetsDB farmerAssetsDB = FarmerAssetsDB();
 
-      farmerPowerSourceDB
-          .delete(farmerid)
-          .then((value) => print("Deleted: $value"));
-      farmerStructureDB
-          .delete(farmerid)
-          .then((value) => print("Deleted: $value"));
-      farmerAssetsDB.delete(farmerid).then((value) => print("Deleted: $value"));
+      farmerPowerSourceDB.delete(id).then((value) => print("Deleted: $value"));
+      farmerStructureDB.delete(id).then((value) => print("Deleted: $value"));
+      farmerAssetsDB.delete(id).then((value) => print("Deleted: $value"));
     }
   }
 
@@ -320,7 +316,7 @@ class AddFarmtechandassetsOneBloc
         if (id > 0) {
           atProgressDB
               .insert(ATProgress(
-                farmerId: farmerid,
+                farmId: farmid,
                 pageTwo: 1,
                 pageOne: 1,
               ))
@@ -352,7 +348,7 @@ class AddFarmtechandassetsOneBloc
         if (id > 0) {
           atProgressDB
               .update(ATProgress(
-                farmerId: farmerid,
+                farmId: farmid,
                 pageTwo: 1,
                 pageOne: 1,
               ))

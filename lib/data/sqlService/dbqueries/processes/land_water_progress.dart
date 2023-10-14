@@ -41,7 +41,7 @@ class LWProgressDB {
     ]);
   }
 
-  Future<LWProgress?> fetchByFarmId(int farmId) async {
+  Future<LWProgress?> fetchByFarm(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
         .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);

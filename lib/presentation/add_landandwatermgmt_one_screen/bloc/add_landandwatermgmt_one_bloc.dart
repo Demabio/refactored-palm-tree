@@ -45,7 +45,7 @@ class AddLandandwatermgmtOneBloc
   ) async {
     LWProgress pfProgress = await getProgress() ??
         LWProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -119,16 +119,16 @@ class AddLandandwatermgmtOneBloc
   }
 
   Future<List<FarmerIrrigationWaterSource>?> getWater() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationWaterSourceDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationWaterSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmerId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   Future<Farmer?> getFarmer() async {

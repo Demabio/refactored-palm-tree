@@ -87,6 +87,7 @@ class AddLandandwatermgmtFourBloc
             FarmerIrrigationWaterSource(
                 irrigationCropId: 0,
                 farmerId: PrefUtils().getFarmerId(),
+                farmerFarmId: PrefUtils().getFarmId(),
                 irrigationWaterSourceId: model.id!,
                 createdBy: userId,
                 sourceName: model.title,
@@ -100,7 +101,7 @@ class AddLandandwatermgmtFourBloc
         });
       } else {
         farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
+            .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
         farmerFishInputDB.insertIrrigationWaterSources(categs).then((value) {
           print("inserted: $value");
@@ -129,16 +130,16 @@ class AddLandandwatermgmtFourBloc
   }
 
   Future<List<FarmerIrrigationWaterSource>?> getWater() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerIrrigationWaterSourceDB farmerLivestockAgeGroupsDB =
         FarmerIrrigationWaterSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<LWProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarmId(farmerid);
   }
 
   _onInitialize(
@@ -147,7 +148,7 @@ class AddLandandwatermgmtFourBloc
   ) async {
     LWProgress pfProgress = await getProgress() ??
         LWProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

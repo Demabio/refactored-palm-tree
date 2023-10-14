@@ -115,7 +115,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
         });
       } else {
         farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
+            .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
         farmerFishInputDB.insertExtensionModes(categs).then((value) {
           print("inserted: $value");
@@ -129,15 +129,15 @@ class AddFinancialandservicesEightBloc extends Bloc<
   }
 
   Future<List<FarmerExtensionMode>?> getModes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerExtensionModeDB farmerLivestockAgeGroupsDB = FarmerExtensionModeDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<FSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   _onInitialize(
@@ -146,7 +146,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
   ) async {
     FSProgress pfProgress = await getProgress() ??
         FSProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

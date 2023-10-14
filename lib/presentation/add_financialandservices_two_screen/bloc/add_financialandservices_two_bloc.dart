@@ -47,7 +47,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
   ) async {
     FSProgress pfProgress = await getProgress() ??
         FSProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -135,9 +135,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
   }
 
   Future<FSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int farmerid = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(farmerid);
   }
 
   Future<Farmer?> getFarmer() async {
@@ -154,16 +154,16 @@ class AddFinancialandservicesTwoBloc extends Bloc<
   }
 
   Future<List<FarmerExtensionAccess>?> getEAccess() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerExtensionAccessDB farmerLivestockAgeGroupsDB =
         FarmerExtensionAccessDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<List<FarmerExtensionMode>?> getModes() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerExtensionModeDB farmerLivestockAgeGroupsDB = FarmerExtensionModeDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   List<CheckBoxList> _infos(
@@ -259,6 +259,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     Emitter<AddFinancialandservicesTwoState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
+
     int selectedCount =
         state.p.where((enterprise) => enterprise.isSelected).length;
 
@@ -298,7 +300,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         //   if (id > 0) {
         atProgressDB
             .update(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageOne:
                   state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
               pageTwo: 1,
@@ -335,7 +337,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         //  if (id > 0) {
         atProgressDB
             .update(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageOne:
                   state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
               pageTwo: 1,
@@ -421,15 +423,16 @@ class AddFinancialandservicesTwoBloc extends Bloc<
   ) async {
     if (state.addFinancialandservicesTwoModelObj?.fsProgress!.pageTwo == 0) {
       int farmerid = PrefUtils().getFarmerId();
+      int id = PrefUtils().getFarmId();
       FarmerExtensionModeDB farmerExtensionModeDB = FarmerExtensionModeDB();
       FarmerExtensionAccessDB farmerExtensionAccessDB =
           FarmerExtensionAccessDB();
       FarmerAgriInfoSourceDB farmerAgriInfoSourceDB = FarmerAgriInfoSourceDB();
       farmerExtensionModeDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerExtensionAccessDB
-          .delete(farmerid)
+          .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerAgriInfoSourceDB
           .delete(farmerid)

@@ -41,7 +41,7 @@ class FSProgressDB {
     ]);
   }
 
-  Future<FSProgress?> fetchByFarmId(int farmId) async {
+  Future<FSProgress?> fetchByFarm(int farmId) async {
     final database = await DatabaseService().database;
     final progress = await database
         .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);

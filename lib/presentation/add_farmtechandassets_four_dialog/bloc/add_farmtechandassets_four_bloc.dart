@@ -124,7 +124,7 @@ class AddFarmtechandassetsFourBloc
         });
       } else {
         farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
+            .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
         farmerFishInputDB.insertStructures(categs).then((value) {
           print("inserted: $value");
@@ -138,15 +138,15 @@ class AddFarmtechandassetsFourBloc
   }
 
   Future<List<FarmerStructure>?> getStructs() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerStructureDB farmerLivestockAgeGroupsDB = FarmerStructureDB();
-    return await farmerLivestockAgeGroupsDB.fetchAllByfarmer(id);
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
   Future<ATProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     ATProgressDB pfProgressDB = ATProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   _onInitialize(
@@ -155,7 +155,7 @@ class AddFarmtechandassetsFourBloc
   ) async {
     ATProgress pfProgress = await getProgress() ??
         ATProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

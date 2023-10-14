@@ -66,6 +66,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     Emitter<AddFinancialandservicesOneState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     int selectedCount =
         state.c.where((enterprise) => enterprise.isSelected).length;
 
@@ -91,7 +92,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         //   if (id > 0) {
         atProgressDB
             .insert(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageTwo:
                   state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
               pageOne: 1,
@@ -114,7 +115,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         //  if (id > 0) {
         atProgressDB
             .update(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageTwo:
                   state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
               pageOne: 1,
@@ -148,6 +149,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     Emitter<AddFinancialandservicesOneState> emit,
   ) async {
     int farmerid = PrefUtils().getFarmerId();
+    int farmid = PrefUtils().getFarmId();
     int selectedCount =
         state.c.where((enterprise) => enterprise.isSelected).length;
 
@@ -157,8 +159,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne == 0 &&
-          selectedCount2 != 0 &&
-          (selectedCount != 0 ||
+          selectedCount != 0 &&
+          (selectedCount2 != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -173,7 +175,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         //   if (id > 0) {
         atProgressDB
             .insert(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageTwo:
                   state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
               pageOne: 1,
@@ -181,8 +183,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
         //}
-      } else if (selectedCount2 != 0 &&
-          (selectedCount != 0 ||
+      } else if (selectedCount != 0 &&
+          (selectedCount2 != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -196,7 +198,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         //  if (id > 0) {
         atProgressDB
             .update(FSProgress(
-              farmerId: farmerid,
+              farmId: farmid,
               pageTwo:
                   state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
               pageOne: 1,
@@ -213,8 +215,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
             state.s.where((enterprise) => enterprise.isSelected).length;
 
         emit(state.copyWith(
-          checkb: selectedCount == 0,
-          checka: (selectedCount2 == 0 &&
+          checka: selectedCount == 0,
+          checkb: (selectedCount2 == 0 &&
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id !=
                   0),
@@ -421,9 +423,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
   }
 
   Future<FSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   Future<List<FarmerCreditService>?> getCredits() async {
@@ -438,7 +440,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
   ) async {
     FSProgress pfProgress = await getProgress() ??
         FSProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );

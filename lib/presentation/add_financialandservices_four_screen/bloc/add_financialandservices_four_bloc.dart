@@ -164,9 +164,9 @@ class AddFinancialandservicesFourBloc extends Bloc<
   }
 
   Future<FSProgress?> getProgress() async {
-    int farmerid = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
-    return await pfProgressDB.fetchByFarmerId(farmerid);
+    return await pfProgressDB.fetchByFarm(id);
   }
 
   _onInitialize(
@@ -175,7 +175,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
   ) async {
     FSProgress pfProgress = await getProgress() ??
         FSProgress(
-          farmerId: 0,
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
