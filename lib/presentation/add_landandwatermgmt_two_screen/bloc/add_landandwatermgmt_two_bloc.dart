@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
@@ -10,6 +11,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/type.
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
@@ -301,14 +303,30 @@ class AddLandandwatermgmtTwoBloc
     return list;
   }
 
+  Future<List<SelectionPopupModel>?> memberships() async {
+    List<IrrigationMembershipType>? types = [];
+    List<SelectionPopupModel>? list = [];
+
+    IrrigationMembershipTypeDB membershipTypeDB = IrrigationMembershipTypeDB();
+    types = await membershipTypeDB.fetchAll();
+    if (types != null)
+      for (var type in types) {
+        list.add(SelectionPopupModel(
+          title: type.irrigationMembershipType,
+          id: type.membershipTypeId,
+        ));
+      }
+    return list;
+  }
+
   Future<List<CheckBoxList>> fetchSchemes() async {
     List<CheckBoxList> list = [];
 
-    List<SelectionPopupModel> dpds = [
-      SelectionPopupModel(title: "Full Member", id: 1),
-      SelectionPopupModel(title: "Out Grower Member", id: 0),
-    ];
-
+    List<SelectionPopupModel>? dpds = await memberships();
+    //  List<SelectionPopupModel> dpds = [
+    //     SelectionPopupModel(title: "Full Member", id: 1),
+    //     SelectionPopupModel(title: "Out Grower Member", id: 0),
+    //   ];
     IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
@@ -321,7 +339,7 @@ class AddLandandwatermgmtTwoBloc
           male: TextEditingController(),
           focusNode: FocusNode(),
           femalefocusNode: FocusNode(),
-          model: dpds,
+          model: dpds ?? [],
         ));
       }
     });

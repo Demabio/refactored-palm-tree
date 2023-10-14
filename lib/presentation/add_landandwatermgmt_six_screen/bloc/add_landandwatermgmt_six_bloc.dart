@@ -139,11 +139,11 @@ class AddLandandwatermgmtSixBloc
   Future<List<CheckBoxList>> fetchSchemes() async {
     List<CheckBoxList> list = [];
 
-    List<SelectionPopupModel> dpds = [
-      SelectionPopupModel(title: "Full Member", id: 1),
-      SelectionPopupModel(title: "Out Grower Member", id: 0),
-    ];
-
+    List<SelectionPopupModel>? dpds = await memberships();
+    //  List<SelectionPopupModel> dpds = [
+    //     SelectionPopupModel(title: "Full Member", id: 1),
+    //     SelectionPopupModel(title: "Out Grower Member", id: 0),
+    //   ];
     IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
@@ -156,7 +156,7 @@ class AddLandandwatermgmtSixBloc
           male: TextEditingController(),
           focusNode: FocusNode(),
           femalefocusNode: FocusNode(),
-          model: dpds,
+          model: dpds ?? [],
         ));
       }
     });
