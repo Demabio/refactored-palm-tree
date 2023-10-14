@@ -49,6 +49,8 @@ class AddFinancialandservicesTwoState extends Equatable {
         e,
         m,
         addFinancialandservicesTwoModelObj,
+        checka,
+        checkb,
       ];
   AddFinancialandservicesTwoState copyWith({
     SelectionPopupModel? selectedDropDownValue,

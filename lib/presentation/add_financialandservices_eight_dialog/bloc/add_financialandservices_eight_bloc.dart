@@ -153,10 +153,12 @@ class AddFinancialandservicesEightBloc extends Bloc<
 
     List<CheckBoxList>? modemodels = await fetchEAccess();
 
-    if (pfProgress.pageTwo == 1) {
-      List<FarmerExtensionMode>? mode = await getModes();
-      modemodels = _modes(modemodels, mode!);
-    }
+    //  if (pfProgress.pageTwo == 1) {
+    List<FarmerExtensionMode>? mode = await getModes();
+    modemodels =
+        mode != null ? modemodels = _modes(modemodels, mode) : modemodels;
+
+    /// }
     emit(state.copyWith(
         addFinancialandservicesEightModelObj:
             state.addFinancialandservicesEightModelObj?.copyWith(

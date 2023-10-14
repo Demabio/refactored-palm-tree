@@ -274,7 +274,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     FarmerDB farmerDB = FarmerDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
-      if (state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne == 0 &&
+      if (state.addFinancialandservicesTwoModelObj!.fsProgress!.pageTwo == 0 &&
           selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
@@ -304,7 +304,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         //REMEMBER!!!!!!!!
         //   if (id > 0) {
         atProgressDB
-            .insert(FSProgress(
+            .update(FSProgress(
               farmerId: farmerid,
               pageOne:
                   state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
@@ -380,13 +380,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchInfo();
 
-    feedmodels = _infos(feedmodels, fishes!);
+    feedmodels =
+        fishes != null ? feedmodels = _infos(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(p: feedmodels, checka: false));
-    } else {
-      emit(state.copyWith(checka: true));
-    }
+    fishes != null
+        ? emit(state.copyWith(p: feedmodels, checka: false))
+        : emit(state.copyWith(checkb: true));
   }
 
   _checkAssets(
@@ -398,13 +397,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchEAccess();
 
-    feedmodels = _access(feedmodels, fishes!);
+    feedmodels =
+        fishes != null ? feedmodels = _access(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(e: feedmodels, checkb: false));
-    } else {
-      emit(state.copyWith(checkb: true));
-    }
+    fishes != null
+        ? emit(state.copyWith(e: feedmodels, checka: false))
+        : emit(state.copyWith(checkb: true));
   }
 
   _checkModes(
@@ -416,11 +414,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchEService();
 
-    feedmodels = _modes(feedmodels, fishes!);
+    feedmodels =
+        fishes != null ? feedmodels = _modes(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(e: feedmodels));
-    }
+    fishes != null
+        ? emit(state.copyWith(m: feedmodels))
+        : emit(state.copyWith(m: feedmodels));
   }
 
   _clear(

@@ -157,10 +157,12 @@ class AddFinancialandservicesSevenBloc extends Bloc<
 
     List<CheckBoxList>? accessmodels = await fetchEService();
 
-    if (pfProgress.pageTwo == 1) {
-      List<FarmerExtensionAccess>? access = await getEAccess();
-      accessmodels = _access(accessmodels, access!);
-    }
+    //if (pfProgress.pageTwo == 1) {
+    List<FarmerExtensionAccess>? access = await getEAccess();
+    accessmodels = access != null
+        ? accessmodels = _access(accessmodels, access)
+        : accessmodels;
+    //   }
     emit(state.copyWith(
         addFinancialandservicesSevenModelObj:
             state.addFinancialandservicesSevenModelObj?.copyWith(

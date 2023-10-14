@@ -67,7 +67,7 @@ class AddFinancialandservicesSevenDialog extends StatelessWidget {
                           onSelect: (value) {
                             context
                                 .read<AddFinancialandservicesSevenBloc>()
-                                .add(ChangeCheckbox(
+                                .add(ChangeAgeGroupCheckbox(
                                     value: index, selected: value));
                           },
                         );

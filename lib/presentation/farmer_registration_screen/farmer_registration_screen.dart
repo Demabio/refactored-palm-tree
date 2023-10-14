@@ -196,7 +196,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
               ? StepState.complete
               : StepState.indexed,
           addcallback: () {
-            onTapAdddetails(context);
+            onFinance(context);
           },
           editcallback: () => editFinance(context),
           addoredit: model.processStatus?.financialServices == 1,

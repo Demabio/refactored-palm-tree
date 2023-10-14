@@ -412,7 +412,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                           selector: (state) => state.checka,
                           builder: (context, checked) {
                             return Text(
-                              "What are your main source of information on good agricultural practices (GAP) ?",
+                              "What are your main source of information on good agricultural practices (GAP)?(*)",
                               style: checked!
                                   ? CustomTextStyles.labelMediumPrimary_1red
                                   : CustomTextStyles.labelMediumPrimary_1,

@@ -1,3 +1,7 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_four_screen/widgets/coop_widget.dart';
+
 import 'bloc/financialandservices_bloc.dart';
 import 'models/financialandservices_model.dart';
 import 'package:flutter/material.dart';
@@ -90,8 +94,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
                                           BlocSelector<
-                                                  AddFinancialandservicesOneBloc,
-                                                  AddFinancialandservicesOneState,
+                                                  FinancialandservicesBloc,
+                                                  FinancialandservicesState,
                                                   List<CheckBoxList>?>(
                                               selector: (state) => state.i,
                                               builder: (context, list) {
@@ -140,7 +144,11 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                         padding:
                                                             EdgeInsets.only(
                                                                 bottom: 19.v),
-                                                        child: Text("lbl_25".tr,
+                                                        child: Text(
+                                                            state.farm
+                                                                    ?.farmingIncomePercent
+                                                                    .toString() ??
+                                                                "N/A",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium))
@@ -168,7 +176,10 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 18.v),
                                                         child: Text(
-                                                            "lbl_yes".tr,
+                                                            (state.farm?.cooperativeGroup ??
+                                                                    false)
+                                                                ? "Yes"
+                                                                : "No",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium))
@@ -180,49 +191,33 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                   "msg_cooperative_groups".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 4.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_other_cooperative"
-                                                            .tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium),
-                                                    Text("lbl_faro_group".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 4.v,
-                                                  right: 9.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "msg_common_interest"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text("lbl_common".tr,
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
+                                          BlocSelector<
+                                                  FinancialandservicesBloc,
+                                                  FinancialandservicesState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.c,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return CoopItemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 2.v),
@@ -230,20 +225,33 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                   "msg_financial_services".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 5.v),
-                                              child: Text(
-                                                  "msg_mobile_money_saving".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 14.v),
-                                              child: Text(
-                                                  "msg_self_salary_or".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
+                                          BlocSelector<
+                                                  FinancialandservicesBloc,
+                                                  FinancialandservicesState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.s,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 3.v),
@@ -257,7 +265,11 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        (state.farm?.cropsInsurance ??
+                                                                false)
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -274,7 +286,11 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state.farm?.livestockInsurance ??
+                                                                false
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -291,7 +307,11 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state.farm?.fishInsurance ??
+                                                                false
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
@@ -318,7 +338,10 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 15.v),
                                                         child: Text(
-                                                            "lbl_yes".tr,
+                                                            state.farm?.assetsInsurance ??
+                                                                    false
+                                                                ? "Yes"
+                                                                : "No",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium))
@@ -346,7 +369,10 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 15.v),
                                                         child: Text(
-                                                            "lbl_yes".tr,
+                                                            state.farm?.farmRecords ??
+                                                                    false
+                                                                ? "Yes"
+                                                                : "No",
                                                             style: theme
                                                                 .textTheme
                                                                 .labelMedium))
@@ -371,13 +397,33 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                       TextOverflow.ellipsis,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 3.v),
-                                              child: Text(
-                                                  "msg_extension_meetings".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
+                                          BlocSelector<
+                                                  FinancialandservicesBloc,
+                                                  FinancialandservicesState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.p,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 3.v),
@@ -398,29 +444,58 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             .tr,
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
-                                                    Text("lbl_yes".tr,
+                                                    Text(
+                                                        state.farm?.extensionsericeAccess ==
+                                                                1
+                                                            ? "Yes"
+                                                            : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 4.v),
-                                              child: Text(
-                                                  "msg_if_yes_from_where".tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 2.v),
-                                              child: Text("lbl_television".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 15.v),
-                                              child: Text("lbl_relatives".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
+                                          Visibility(
+                                            visible: state.farm
+                                                    ?.extensionsericeAccess ==
+                                                1,
+                                            child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 4.h, top: 4.v),
+                                                child: Text(
+                                                    "msg_if_yes_from_where".tr,
+                                                    style: CustomTextStyles
+                                                        .labelMediumPrimary)),
+                                          ),
+                                          Visibility(
+                                            visible: state.farm
+                                                    ?.extensionsericeAccess ==
+                                                1,
+                                            child: BlocSelector<
+                                                    FinancialandservicesBloc,
+                                                    FinancialandservicesState,
+                                                    List<CheckBoxList>?>(
+                                                selector: (state) => state.e,
+                                                builder: (context, list) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 15.v,
+                                                      right: 16.h,
+                                                    ),
+                                                    child: Column(
+                                                      children:
+                                                          List<Widget>.generate(
+                                                        list?.length ?? 0,
+                                                        (index) {
+                                                          CheckBoxList model =
+                                                              list![index];
+
+                                                          return InputsWidget(
+                                                            model,
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                          ),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   left: 4.h, top: 4.v),
@@ -428,20 +503,33 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                   "msg_what_is_the_mode".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h, top: 2.v),
-                                              child: Text("lbl_face_to_face".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium)),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 4.h,
-                                                  top: 14.v,
-                                                  bottom: 32.v),
-                                              child: Text("lbl_e_extension".tr,
-                                                  style: theme
-                                                      .textTheme.labelMedium))
+                                          BlocSelector<
+                                                  FinancialandservicesBloc,
+                                                  FinancialandservicesState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.m,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
                                         ]))
                               ]))))));
     });
@@ -465,7 +553,7 @@ class FinancialandservicesScreen extends StatelessWidget {
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapImage(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.primaryFarmHoldingOneScreen,
+      AppRoutes.addFinancialandservicesOneScreen,
     );
   }
 }

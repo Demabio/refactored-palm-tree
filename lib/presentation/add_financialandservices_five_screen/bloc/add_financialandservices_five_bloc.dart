@@ -168,10 +168,12 @@ class AddFinancialandservicesFiveBloc extends Bloc<
 
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerCreditService>? categs = await getCredits();
-      creditmodels = _credits(creditmodels, categs!);
-    }
+    //  if (pfProgress.pageOne == 1) {
+    List<FarmerCreditService>? categs = await getCredits();
+    creditmodels = categs != null
+        ? creditmodels = _credits(creditmodels, categs)
+        : creditmodels;
+    //  }
     emit(state.copyWith(
         addFinancialandservicesFiveModelObj:
             state.addFinancialandservicesFiveModelObj?.copyWith(

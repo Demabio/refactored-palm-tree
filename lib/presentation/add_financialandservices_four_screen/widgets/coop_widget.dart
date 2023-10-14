@@ -40,7 +40,7 @@ class CoopItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var2 ?? "N/A",
+                  enterpriseModel.var1 ?? "N/A",
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),

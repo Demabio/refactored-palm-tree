@@ -11,7 +11,7 @@ class CooperativeGroup {
 
   factory CooperativeGroup.fromSqfliteDatabase(Map<String, dynamic> map) =>
       CooperativeGroup(
-        cooperativeGroupId: map['cooperative_group_id']?.toInt() ?? 0,
+        cooperativeGroupId: map['cooperateive_group_id']?.toInt() ?? 0,
         group: map['group'] ?? '',
         description: map['description'],
       );

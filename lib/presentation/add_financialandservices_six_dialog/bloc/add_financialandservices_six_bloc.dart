@@ -151,10 +151,12 @@ class AddFinancialandservicesSixBloc extends Bloc<
 
     List<CheckBoxList>? infomodels = await fetchInfo();
 
-    if (pfProgress.pageTwo == 1) {
-      List<FarmerAgriInfoSource>? info = await getInfo();
-      infomodels = _infos(infomodels, info!);
-    }
+    //  if (pfProgress.pageTwo == 1) {
+    List<FarmerAgriInfoSource>? info = await getInfo();
+    infomodels =
+        info != null ? infomodels = _infos(infomodels, info) : infomodels;
+
+    ///   }
     emit(state.copyWith(
         addFinancialandservicesSixModelObj:
             state.addFinancialandservicesSixModelObj?.copyWith(

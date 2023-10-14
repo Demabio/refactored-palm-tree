@@ -44,8 +44,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         selectedDropDownValue: event.value,
         addFinancialandservicesOneModelObj:
             state.addFinancialandservicesOneModelObj?.copyWith(
-          selectedDropDownValue:
-              state.addFinancialandservicesOneModelObj?.selectedDropDownValue,
+          selectedDropDownValue: event.value,
         )));
   }
 
@@ -158,8 +157,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne == 0 &&
-          selectedCount != 0 &&
-          (selectedCount2 != 0 ||
+          selectedCount2 != 0 &&
+          (selectedCount != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -182,8 +181,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
             .then((value) => print("Scope FI" + value.toString()));
         event.createSuccessful!.call();
         //}
-      } else if (selectedCount != 0 &&
-          (selectedCount2 != 0 ||
+      } else if (selectedCount2 != 0 &&
+          (selectedCount != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -214,8 +213,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
             state.s.where((enterprise) => enterprise.isSelected).length;
 
         emit(state.copyWith(
-          checka: selectedCount == 0,
-          checkb: (selectedCount2 == 0 &&
+          checkb: selectedCount == 0,
+          checka: (selectedCount2 == 0 &&
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id !=
                   0),
@@ -235,13 +234,14 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchFinancialServ();
 
-    feedmodels = _credits(feedmodels, fishes!);
+    feedmodels =
+        fishes != null ? feedmodels = _credits(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(s: feedmodels, checkb: false));
-    } else {
-      emit(state.copyWith(checkb: true));
-    }
+    fishes != null
+        ? emit(state.copyWith(s: feedmodels, checkb: false))
+        : emit(state.copyWith(
+            s: feedmodels,
+          ));
   }
 
   _checkAssets(
@@ -253,13 +253,14 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchCoops();
 
-    feedmodels = _coops(feedmodels, fishes!);
+    feedmodels = fishes != null ? _coops(feedmodels, fishes) : feedmodels;
+    fishes != null
+        ? emit(state.copyWith(c: feedmodels, checka: false))
+        : emit(state.copyWith(checka: true));
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(c: feedmodels, checka: false));
-    } else {
-      emit(state.copyWith(checka: true));
-    }
+    // if (fishes.isNotEmpty) {
+    // } else {
+    // }
   }
 
   _checkIncomes(
@@ -271,13 +272,12 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchIncomes();
 
-    feedmodels = _incomes(feedmodels, fishes!);
+    feedmodels =
+        fishes != null ? feedmodels = _incomes(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
-      emit(state.copyWith(
-        i: feedmodels,
-      ));
-    }
+    fishes != null
+        ? emit(state.copyWith(i: feedmodels))
+        : emit(state.copyWith(i: feedmodels));
   }
 
   _clear(

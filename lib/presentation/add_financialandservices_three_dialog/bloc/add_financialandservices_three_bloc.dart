@@ -151,10 +151,12 @@ class AddFinancialandservicesThreeBloc extends Bloc<
 
     List<CheckBoxList>? incomemodels = await fetchIncomes();
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerIncomeSource>? incomes = await getIncomes();
-      incomemodels = _incomes(incomemodels, incomes!);
-    }
+    //  if (pfProgress.pageOne == 1) {
+    List<FarmerIncomeSource>? incomes = await getIncomes();
+    incomemodels = incomes != null
+        ? incomemodels = _incomes(incomemodels, incomes)
+        : incomemodels;
+    //  }
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(

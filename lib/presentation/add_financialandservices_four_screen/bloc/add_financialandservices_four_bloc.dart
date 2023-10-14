@@ -182,10 +182,11 @@ class AddFinancialandservicesFourBloc extends Bloc<
 
     List<CheckBoxList>? coopmodels = await fetchCoops();
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerCooperativeGroup>? groups = await getCoops();
-      coopmodels = _coops(coopmodels, groups!);
-    }
+    //if (pfProgress.pageOne == 1) {
+    List<FarmerCooperativeGroup>? groups = await getCoops();
+    if (groups != null) {
+      coopmodels = _coops(coopmodels, groups);
+    } // }
     emit(state.copyWith(
         addFinancialandservicesFourModelObj:
             state.addFinancialandservicesFourModelObj?.copyWith(

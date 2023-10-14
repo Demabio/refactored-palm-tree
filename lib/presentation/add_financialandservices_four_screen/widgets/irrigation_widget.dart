@@ -74,7 +74,7 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
                               autofocus: false,
                               controller: ageGroupmModel.male,
                               hintText: "Group".tr,
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.text,
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 7.h,
                                 vertical: 13.v,
