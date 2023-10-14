@@ -1,6 +1,8 @@
 class FarmerIrrigation {
   final int farmerIrrigationId;
   final int farmerId;
+  int farmerFarmId;
+
   final int? useIrrigation;
   final int? totalAreaIrrigation;
   final int? areaUnitId;
@@ -10,6 +12,7 @@ class FarmerIrrigation {
   FarmerIrrigation({
     required this.farmerIrrigationId,
     required this.farmerId,
+    required this.farmerFarmId,
     this.useIrrigation,
     this.totalAreaIrrigation,
     this.areaUnitId,
@@ -21,6 +24,7 @@ class FarmerIrrigation {
       FarmerIrrigation(
         farmerIrrigationId: map['farmer_irrigation_id']?.toInt() ?? 0,
         farmerId: map['farmer_id']?.toInt() ?? 0,
+        farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         useIrrigation: map['use_irrigation']?.toInt(),
         totalAreaIrrigation: map['total_area_irrigation']?.toInt(),
         areaUnitId: map['area_unit_id']?.toInt() ?? 0,

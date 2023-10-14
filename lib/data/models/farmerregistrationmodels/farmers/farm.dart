@@ -17,6 +17,34 @@ class FarmerFarm {
   bool? otherFarmElsewhere;
   DateTime? dateCreated;
   int? createdBy;
+  final DateTime? dateOfRegistration;
+  final String? villageName;
+
+  final String? enumerationAreaNumber;
+  final String? shoppingCenter;
+  final bool? cropProd;
+  final bool? livestockProd;
+  final bool? fishFarming;
+  final int? livelihoodSourceId;
+  final int? labourSourceId;
+  final int? agriInfoSourceId;
+  final bool? gokFertiliser;
+  final bool? limeUsage;
+  final int? certifiedSeedUse;
+  final bool? cropsInsurance;
+  final bool? livestockInsurance;
+  final bool? fishInsurance;
+  final bool? assetsInsurance;
+  final bool? farmRecords;
+  final bool? irrigationUse;
+  final double? irrigationArea;
+  final int? extensionsericeAccess;
+  final String? enumeratorName;
+  final String? enumeratorId;
+  final String? enumeratorMobile;
+  final DateTime? startOfRegistration;
+  final DateTime? endOfRegistration;
+  final DateTime? dateDeleted;
 
   FarmerFarm({
     required this.farmerFarmId,
@@ -37,6 +65,33 @@ class FarmerFarm {
     this.otherFarmElsewhere,
     this.dateCreated,
     this.createdBy,
+    this.villageName,
+    this.enumerationAreaNumber,
+    this.shoppingCenter,
+    this.cropProd,
+    this.livestockProd,
+    this.fishFarming,
+    this.livelihoodSourceId,
+    this.labourSourceId,
+    this.agriInfoSourceId,
+    this.gokFertiliser,
+    this.limeUsage,
+    this.certifiedSeedUse,
+    this.cropsInsurance,
+    this.livestockInsurance,
+    this.fishInsurance,
+    this.assetsInsurance,
+    this.farmRecords,
+    this.irrigationUse,
+    this.irrigationArea,
+    this.extensionsericeAccess,
+    this.enumeratorName,
+    this.enumeratorId,
+    this.enumeratorMobile,
+    this.startOfRegistration,
+    this.endOfRegistration,
+    this.dateDeleted,
+    this.dateOfRegistration,
   });
 
   factory FarmerFarm.fromSqfliteDatabase(Map<String, dynamic> map) =>
@@ -59,5 +114,28 @@ class FarmerFarm {
         otherFarmElsewhere: map['other_farm_elsewhere'] == 1,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by'],
+        villageName: map['villageName'],
+        enumerationAreaNumber: map['enumerationAreaNumber'],
+        shoppingCenter: map['shoppingCenter'],
+        cropProd: map['cropProd'] == 1,
+        livestockProd: map['livestockProd'] == 1,
+        fishFarming: map['fishFarming'] == 1,
+        livelihoodSourceId: map['livelihoodSourceId']?.toInt(),
+        labourSourceId: map['labourSourceId']?.toInt(),
+        agriInfoSourceId: map['agriInfoSourceId']?.toInt(),
+        gokFertiliser: map['gokFertiliser'],
+        limeUsage: map['limeUsage'],
+        certifiedSeedUse: map['certifiedSeedUse']?.toInt(),
+        cropsInsurance: map['cropsInsurance'],
+        livestockInsurance: map['livestockInsurance'],
+        fishInsurance: map['fishInsurance'],
+        assetsInsurance: map['assetsInsurance'],
+        farmRecords: map['farmRecords'],
+        irrigationUse: map['irrigationUse'],
+        irrigationArea: map['irrigationArea']?.toDouble(),
+        extensionsericeAccess: map['extensionsericeAccess']?.toInt(),
+        enumeratorName: map['enumeratorName'],
+        enumeratorId: map['enumeratorId'],
+        enumeratorMobile: map['enumeratorMobile'],
       );
 }

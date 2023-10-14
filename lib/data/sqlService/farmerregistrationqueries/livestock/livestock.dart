@@ -117,10 +117,10 @@ class FarmerLivestockDB {
         .toList();
   }
 
-  Future<List<FarmerLivestock>> fetchAllByFarmer(int id) async {
+  Future<List<FarmerLivestock>> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final livestockList = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ? 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? 
     ''', [id]);
 
     return livestockList
@@ -137,6 +137,13 @@ class FarmerLivestockDB {
     return livestockList.isNotEmpty
         ? FarmerLivestock.fromSqfliteDatabase(livestockList.first)
         : null;
+  }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
   }
 
   // Add more database methods as needed

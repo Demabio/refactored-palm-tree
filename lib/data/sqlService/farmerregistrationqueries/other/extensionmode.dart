@@ -87,10 +87,10 @@ class FarmerExtensionModeDB {
         .toList();
   }
 
-  Future<List<FarmerExtensionMode>?> fetchByFarmerId(int id) async {
+  Future<List<FarmerExtensionMode>?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);
@@ -103,7 +103,7 @@ class FarmerExtensionModeDB {
   Future<int> delete(int id) async {
     final database = await DatabaseService().database;
     return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
+      DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);

@@ -24,14 +24,11 @@ class FarmerDB {
         "nfrFarmerStatusId" INTEGER ,
         "farmerStatusId" INTEGER,
         "farmerTypeId" INTEGER ,
-        "dateOfRegistration" DATETIME,
         "villageName" VARCHAR(255),
         "constituencyId" INTEGER,
         "divisionId" INTEGER,
         "sublocationId" INTEGER,
         "wardId" INTEGER,
-        "enumerationAreaNumber" VARCHAR(255),
-        "shoppingCenter" VARCHAR(255),
         "gender" INTEGER ,
         "email" VARCHAR(255),
         "mobile" VARCHAR(255),
@@ -40,30 +37,14 @@ class FarmerDB {
         "postalCode" VARCHAR(255),
         "educationLevelId" INTEGER,
         "cultivatedSizeHa" REAL,
-        "cropProd" BOOLEAN,
-        "livestockProd" BOOLEAN,
-        "fishFarming" BOOLEAN,
         "livelihoodSourceId" INTEGER,
         "labourSourceId" INTEGER,
         "agriSkillsId" INTEGER,
         "agriInfoSourceId" INTEGER,
-        "gokFertiliser" BOOLEAN,
-        "limeUsage" BOOLEAN,
-        "certifiedSeedUse" INTEGER,
-        "cropsInsurance" BOOLEAN,
-        "livestockInsurance" BOOLEAN,
-        "fishInsurance" BOOLEAN,
         "farmingIncomePercent" REAL,
-        "assetsInsurance" BOOLEAN,
-        "farmRecords" BOOLEAN,
-        "irrigationUse" BOOLEAN,
-        "irrigationArea" REAL,
         "cooperativeGroup" BOOLEAN,
         "extensionsericeAccess" INTEGER,
         "organizationId" INTEGER,
-        "enumeratorName" VARCHAR(255),
-        "enumeratorId" VARCHAR(255),
-        "enumeratorMobile" VARCHAR(255),
         "dateCreated" DATETIME ,
         "createdBy" INTEGER,
         "dateCaptured" DATETIME,
@@ -88,8 +69,8 @@ class FarmerDB {
         "dateDeleted" DATETIME,
         "campChangeRequestStatus" INTEGER,
         "comments" VARCHAR(255),
-        "startOfRegistration" DATETIME,
-        "endOfRegistration" DATETIME,
+        
+        "alreadyRegistered" BOOLEAN, 
         PRIMARY KEY("farmerId")
       );
     """);
@@ -218,7 +199,8 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET villageName = ?, shoppingCenter = ?, farmerName = ?, idNo = ? WHERE farmerId = ? 
+    UPDATE $tableName SET  farmerName = ?, idNo = ?, dob = ?, gender = ?, idNo = ?, mobile = ?, email = ?, postalAddress = ?  
+    WHERE farmerId = ? 
   ''', [
         farmer.villageName,
         farmer.shoppingCenter,
@@ -275,7 +257,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, cropProd = ?, livestockProd = ?, fishFarming = ? 
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ? 
     WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
@@ -283,9 +265,6 @@ class FarmerDB {
         farmer.respondentName,
         farmer.respNationalId,
         farmer.respondentMobile,
-        farmer.cropProd,
-        farmer.livestockProd,
-        farmer.fishFarming,
         farmer.farmerId,
       ]);
     } catch (e) {

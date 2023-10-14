@@ -9,7 +9,8 @@ class FarmerIrrigationWaterSourceDB {
     await database.execute("""
       CREATE TABLE IF NOT EXISTS $tableName (
         "irrigation_crop_id" INTEGER NOT NULL,
-        "farmer_id" INTEGER NOT NULL,
+        "farmer_id" INTEGER NOT NULL,        
+        "farmer_farm_id" INTEGER NOT NULL,
         "irrigation_water_source_id" INTEGER NOT NULL,
         "source_name" VARCHAR(255) NOT NULL,
         "date_created" DATETIME ,
@@ -23,10 +24,11 @@ class FarmerIrrigationWaterSourceDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, irrigation_water_source_id, source_name, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       irrigationWaterSource.farmerId,
+      irrigationWaterSource.farmerFarmId,
       irrigationWaterSource.irrigationWaterSourceId,
       irrigationWaterSource.sourceName,
       DateTime.now().toLocal().toIso8601String(),
@@ -55,10 +57,11 @@ class FarmerIrrigationWaterSourceDB {
       for (var irrigationWaterSource in irrigationWaterSources) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, irrigation_water_source_id, source_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by
+          ) VALUES (?, ?, ?, ?, ?, ?)
         ''', [
           irrigationWaterSource.farmerId,
+          irrigationWaterSource.farmerFarmId,
           irrigationWaterSource.irrigationWaterSourceId,
           irrigationWaterSource.sourceName,
           DateTime.now().toLocal().toIso8601String(),
@@ -84,10 +87,10 @@ class FarmerIrrigationWaterSourceDB {
         .toList();
   }
 
-  Future<List<FarmerIrrigationWaterSource>?> fetchByFarmerId(int id) async {
+  Future<List<FarmerIrrigationWaterSource>?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);
@@ -102,7 +105,7 @@ class FarmerIrrigationWaterSourceDB {
   Future<int> delete(int id) async {
     final database = await DatabaseService().database;
     return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
+      DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);

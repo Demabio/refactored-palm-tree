@@ -25,7 +25,36 @@ class FarmerFarmDB {
         "accuracy_level" INTEGER,
         "other_farm_elsewhere" INTEGER,
         "date_created" DATETIME,
-        "created_by" INT,
+        "created_by" INT,        
+        "dateOfRegistration" DATETIME,
+        "villageName" VARCHAR(255),
+        "constituencyId" INTEGER,
+        "divisionId" INTEGER,
+        "sublocationId" INTEGER,
+        "wardId" INTEGER,      
+        "enumerationAreaNumber" VARCHAR(255),
+        "shoppingCenter" VARCHAR(255),        
+        "cropProd" BOOLEAN,
+        "livestockProd" BOOLEAN,
+        "fishFarming" BOOLEAN,
+        "labourSourceId" INTEGER,
+        "gokFertiliser" BOOLEAN,
+        "limeUsage" BOOLEAN,
+        "certifiedSeedUse" INTEGER,
+        "cropsInsurance" BOOLEAN,
+        "livestockInsurance" BOOLEAN,
+        "fishInsurance" BOOLEAN,
+        "assetsInsurance" BOOLEAN,
+        "farmRecords" BOOLEAN,
+        "irrigationUse" BOOLEAN,
+        "irrigationArea" REAL,
+        "extensionsericeAccess" INTEGER,
+        "enumeratorName" VARCHAR(255),
+        "enumeratorId" VARCHAR(255),
+        "enumeratorMobile" VARCHAR(255),
+        "startOfRegistration" DATETIME,
+        "endOfRegistration" DATETIME,
+        "dateDeleted" DATETIME,
         PRIMARY KEY("farmer_farm_id")
       );
     """);
@@ -64,9 +93,15 @@ class FarmerFarmDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      farm_name = ?, farm_size = ?, area_unit_id = ?, crop_farm_size = ?, livestock_farm_size = ?, leased_farm_size = ?, idle_farm_size = ? 
+      villageName = ?, shoppingCenter = ?, enumerationAreaNumber = ?, enumeratorId = ?, enumeratorName = ?, enumeratorMobile = ?, farm_name = ?, farm_size = ?, area_unit_id = ?, crop_farm_size = ?, livestock_farm_size = ?, leased_farm_size = ?, idle_farm_size = ? 
       WHERE farmer_farm_id = ?
     ''', [
+      farm.villageName,
+      farm.shoppingCenter,
+      farm.enumerationAreaNumber,
+      farm.enumeratorId,
+      farm.enumeratorName,
+      farm.enumeratorMobile,
       farm.farmName,
       farm.farmSize,
       farm.areaUnitId,
@@ -76,6 +111,77 @@ class FarmerFarmDB {
       farm.idleFarmSize,
       farm.farmerFarmId,
     ]);
+  }
+
+  Future<int> updateFromFarmAsset(FarmerFarm farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET labourSourceId = ?  
+    WHERE farmer_farm_id = ? 
+  ''', [
+        farmer.labourSourceId,
+        farmer.farmerFarmId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromLandWater(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET gokFertiliser = ?, limeUsage = ? 
+    WHERE farmer_farm_id = ? 
+  ''', [
+        farm.gokFertiliser! ? 1 : 0,
+        farm.limeUsage! ? 1 : 0,
+        farm.farmerFarmId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromLandWaterTwo(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET irrigationUse = ?, irrigationArea = ?  
+    WHERE farmer_farm_id = ? 
+  ''', [
+        farm.irrigationUse! ? 1 : 0,
+        farm.irrigationArea,
+        farm.farmerFarmId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateFromFinancialTwo(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET cropsInsurance = ?, livestockInsurance = ?, fishInsurance = ?, farmRecords = ?, assetsInsurance = ?, extensionsericeAccess = ? 
+    WHERE farmer_farm_id = ? 
+  ''', [
+        farm.cropsInsurance! ? 1 : 0,
+        farm.livestockInsurance! ? 1 : 0,
+        farm.fishInsurance! ? 1 : 0,
+        farm.assetsInsurance! ? 1 : 0,
+        farm.farmRecords! ? 1 : 0,
+        farm.extensionsericeAccess,
+        farm.farmerFarmId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
   }
 
   Future<List<FarmerFarm>> fetchAll() async {

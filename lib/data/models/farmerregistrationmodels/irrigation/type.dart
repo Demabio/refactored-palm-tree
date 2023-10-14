@@ -1,6 +1,8 @@
 class FarmerIrrigationType {
   final int irrigationCropId;
   final int farmerId;
+  int farmerFarmId;
+
   final int irrigationTypeId;
   final String? othersName;
   final DateTime? dateCreated;
@@ -9,6 +11,7 @@ class FarmerIrrigationType {
   FarmerIrrigationType({
     required this.irrigationCropId,
     required this.farmerId,
+    required this.farmerFarmId,
     required this.irrigationTypeId,
     this.othersName,
     this.dateCreated,
@@ -19,6 +22,7 @@ class FarmerIrrigationType {
       FarmerIrrigationType(
         irrigationCropId: map['irrigation_crop_id']?.toInt() ?? 0,
         farmerId: map['farmer_id']?.toInt() ?? 0,
+        farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
         irrigationTypeId: map['irrigation_type_id']?.toInt() ?? 0,
         othersName: map['others_name'] ?? '',
         dateCreated: DateTime.parse(map['date_created'] ?? ''),

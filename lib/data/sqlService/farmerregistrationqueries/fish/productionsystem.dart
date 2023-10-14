@@ -107,10 +107,10 @@ class FarmerFishProductionSystemDB {
         .toList();
   }
 
-  Future<List<FarmerFishProductionSystem>> fetchAllByFarmer(int id) async {
+  Future<List<FarmerFishProductionSystem>?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_id = ?
+      SELECT * FROM $tableName  WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);
@@ -120,10 +120,24 @@ class FarmerFishProductionSystemDB {
         .toList();
   }
 
+  Future<FarmerFishProductionSystem?> fetchById(int id) async {
+    final database = await DatabaseService().database;
+    final productionSystems = await database.rawQuery(''' 
+      SELECT * FROM $tableName  WHERE farmer_fishprod_id = ?
+    ''', [
+      id,
+    ]);
+
+    return productionSystems.isNotEmpty
+        ? FarmerFishProductionSystem.fromSqfliteDatabase(
+            productionSystems.first)
+        : null;
+  }
+
   Future<int> delete(int id) async {
     final database = await DatabaseService().database;
     return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
+      DELETE FROM $tableName WHERE farmer_fishprod_id = ?
     ''', [
       id,
     ]);

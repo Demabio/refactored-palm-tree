@@ -10,6 +10,7 @@ class FarmerIrrigationDB {
       CREATE TABLE IF NOT EXISTS $tableName (
         "farmer_irrigation_id" INTEGER NOT NULL,
         "farmer_id" INTEGER NOT NULL,
+        "farmer_farm_id" INTEGER NOT NULL,
         "use_irrigation" BOOLEAN NOT NULL,
         "total_area_irrigation" REAL NOT NULL,
         "area_unit_id" INTEGER NOT NULL,
@@ -24,10 +25,11 @@ class FarmerIrrigationDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, use_irrigation, total_area_irrigation, area_unit_id, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?)
+        farmer_id,farmer_farm_id ,use_irrigation, total_area_irrigation, area_unit_id, date_created, created_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
       irrigation.farmerId,
+      irrigation.farmerFarmId,
       irrigation.useIrrigation,
       irrigation.totalAreaIrrigation,
       irrigation.areaUnitId,
@@ -57,10 +59,11 @@ class FarmerIrrigationDB {
       for (var irrigation in irrigations) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, use_irrigation, total_area_irrigation, area_unit_id, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, use_irrigation, total_area_irrigation, area_unit_id, date_created, created_by
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           irrigation.farmerId,
+          irrigation.farmerFarmId,
           irrigation.useIrrigation,
           irrigation.totalAreaIrrigation,
           irrigation.areaUnitId,

@@ -93,10 +93,10 @@ class FarmerFishProductionLevelsDB {
         .toList();
   }
 
-  Future<FarmerFishProductionLevel?> fetchByFarmer(int id) async {
+  Future<FarmerFishProductionLevel?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final productionLevels = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);
@@ -106,5 +106,17 @@ class FarmerFishProductionLevelsDB {
         : null;
   }
 
+  Future<FarmerFishProductionLevel?> fetchById(int id) async {
+    final database = await DatabaseService().database;
+    final productionSystems = await database.rawQuery(''' 
+      SELECT * FROM $tableName  WHERE farmer_productionlevel_id = ?
+    ''', [
+      id,
+    ]);
+
+    return productionSystems.isNotEmpty
+        ? FarmerFishProductionLevel.fromSqfliteDatabase(productionSystems.first)
+        : null;
+  }
   // Add more database methods as needed
 }

@@ -103,7 +103,7 @@ class FarmerLivestockServicesDB {
     return await database.rawUpdate('''
         UPDATE  $tableName SET
         area_unit_id = ?, fodder_seeds = ?, fertilizer_for_fodder = ?,  ai_use = ?, hormone_use = ?, embryo_transfer = ?, routine_vaccination = ?, curative_measures = ? 
-      WHERE farmer_id = ?
+      WHERE farmer_farm_id = ?
     ''', [
       farmerLivestockService.areaUnitId,
       farmerLivestockService.fodderSeeds! ? 1 : 0,
@@ -113,7 +113,7 @@ class FarmerLivestockServicesDB {
       farmerLivestockService.embryoTransfer,
       farmerLivestockService.routineVaccination! ? 1 : 0,
       farmerLivestockService.curativeMeasures! ? 1 : 0,
-      farmerLivestockService.farmerId,
+      farmerLivestockService.farmerFarmId,
     ]);
   }
 
@@ -165,10 +165,10 @@ class FarmerLivestockServicesDB {
         .toList();
   }
 
-  Future<FarmerLivestockService?> fetchByFarmer(int id) async {
+  Future<FarmerLivestockService?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final feeds = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ? 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? 
     ''', [id]);
 
     return feeds.isNotEmpty

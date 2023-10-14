@@ -72,5 +72,12 @@ class FarmerLivestockBeehiveTypeDB {
         .toList();
   }
 
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawInsert('''
+    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
+  }
+
   // Add more database methods as needed
 }
