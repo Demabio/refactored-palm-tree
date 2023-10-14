@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/watersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/watersource.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_four_dialog/models/add_landandwatermgmt_four_model.dart';
 part 'add_landandwatermgmt_four_event.dart';
@@ -38,7 +41,7 @@ class AddLandandwatermgmtFourBloc
     )));
   }
 
-  Future<List<CheckBoxList>> fetchFarmStructure() async {
+  Future<List<CheckBoxList>> fetchWater() async {
     List<CheckBoxList> list = [];
     IrrigationWaterSourceDB farmStructureDB = IrrigationWaterSourceDB();
 
@@ -60,7 +63,7 @@ class AddLandandwatermgmtFourBloc
     emit(state.copyWith(
         addLandandwatermgmtFourModelObj:
             state.addLandandwatermgmtFourModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: await fetchWater(),
       count: 0,
     )));
   }
@@ -69,32 +72,81 @@ class AddLandandwatermgmtFourBloc
     AddCBs event,
     Emitter<AddLandandwatermgmtFourState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerIrrigationWaterSourceDB farmerFishInputDB =
+        FarmerIrrigationWaterSourceDB();
+    List<FarmerIrrigationWaterSource>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerIrrigationWaterSource(
+                irrigationCropId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                irrigationWaterSourceId: model.id!,
+                createdBy: userId,
+                sourceName: model.title,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addLandandwatermgmtFourModelObj!.lwProgress?.pageOne == 0) {
+        farmerFishInputDB.insertIrrigationWaterSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertIrrigationWaterSources(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
 
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+  List<CheckBoxList> _water(List<CheckBoxList> feedmodelss,
+      List<FarmerIrrigationWaterSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerIrrigationWaterSource> feeds = feedss;
 
-    emit(state.copyWith(
-        addLandandwatermgmtFourModelObj:
-            state.addLandandwatermgmtFourModelObj));
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.irrigationWaterSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerIrrigationWaterSource>?> getWater() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerIrrigationWaterSourceDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationWaterSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
   _onInitialize(
     AddLandandwatermgmtFourInitialEvent event,
     Emitter<AddLandandwatermgmtFourState> emit,
   ) async {
+    List<CheckBoxList>? watermodels = await fetchWater();
+
+    List<FarmerIrrigationWaterSource>? water = await getWater();
+    if (water != null) {
+      watermodels = _water(watermodels, water);
+    }
     emit(state.copyWith(
         addLandandwatermgmtFourModelObj:
             state.addLandandwatermgmtFourModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: watermodels,
     )));
   }
 }

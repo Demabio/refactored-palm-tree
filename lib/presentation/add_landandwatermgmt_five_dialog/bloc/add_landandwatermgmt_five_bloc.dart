@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/type.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/type.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_five_dialog/models/add_landandwatermgmt_five_model.dart';
 part 'add_landandwatermgmt_five_event.dart';
@@ -38,7 +40,7 @@ class AddLandandwatermgmtFiveBloc
     )));
   }
 
-  Future<List<CheckBoxList>> fetchFarmStructure() async {
+  Future<List<CheckBoxList>> fetchType() async {
     List<CheckBoxList> list = [];
     IrrigationTypeDB farmStructureDB = IrrigationTypeDB();
 //        createdBy: int.parse(map['created_by'] ?? "0"),
@@ -61,7 +63,7 @@ class AddLandandwatermgmtFiveBloc
     emit(state.copyWith(
         addLandandwatermgmtFiveModelObj:
             state.addLandandwatermgmtFiveModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: await fetchType(),
       count: 0,
     )));
   }
@@ -88,14 +90,42 @@ class AddLandandwatermgmtFiveBloc
             state.addLandandwatermgmtFiveModelObj));
   }
 
+  List<CheckBoxList> _type(
+      List<CheckBoxList> feedmodelss, List<FarmerIrrigationType> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerIrrigationType> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.irrigationTypeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerIrrigationType>?> getType() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerIrrigationTypeDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationTypeDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+  }
+
   _onInitialize(
     AddLandandwatermgmtFiveInitialEvent event,
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) async {
+    List<CheckBoxList>? typemodels = await fetchType();
+
+    List<FarmerIrrigationType>? type = await getType();
+    if (type != null) {
+      typemodels = _type(typemodels, type);
+    }
     emit(state.copyWith(
         addLandandwatermgmtFiveModelObj:
             state.addLandandwatermgmtFiveModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: typemodels,
     )));
   }
 }

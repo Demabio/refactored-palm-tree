@@ -34,13 +34,13 @@ class MembershipItemWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  enterpriseModel.var1 ?? "N/A",
+                  enterpriseModel.title,
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var2 ?? "N/A",
+                  enterpriseModel.var1 ?? "N/A",
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),

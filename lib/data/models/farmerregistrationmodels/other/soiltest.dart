@@ -3,7 +3,7 @@ class FarmerSoilTest {
   final int farmerId;
   final int farmerFarmId;
   final int? soilTest;
-  final String? soilTestYear;
+  final int? soilTestYear;
   final DateTime? dateCreated;
   final int? createdBy;
 

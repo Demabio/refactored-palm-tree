@@ -15,6 +15,84 @@ class AddLandandwatermgmtOneInitialEvent extends AddLandandwatermgmtOneEvent {
   List<Object?> get props => [];
 }
 
+class ClearEvent extends AddLandandwatermgmtOneEvent {
+  ClearEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class NextTapEvent extends AddLandandwatermgmtOneEvent {
+  NextTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class SaveTapEvent extends AddLandandwatermgmtOneEvent {
+  SaveTapEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
+class CheckOneEvent extends AddLandandwatermgmtOneEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddLandandwatermgmtOneEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddLandandwatermgmtOneEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddLandandwatermgmtOneEvent {
   ChangeDropDownEvent({required this.value});

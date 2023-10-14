@@ -96,14 +96,20 @@ class ResetCBs extends AddLandandwatermgmtSixEvent {
   List<Object?> get props => [];
 }
 
-class AddAGs extends AddLandandwatermgmtSixEvent {
-  AddAGs({
+class AddCBs extends AddLandandwatermgmtSixEvent {
+  AddCBs({
     required this.models,
+    this.createFailed,
+    this.createSuccessful,
   });
+  Function? createSuccessful;
 
-  List<IrrigationProjectModel> models;
+  Function? createFailed;
+  List<CheckBoxList> models;
   @override
   List<Object?> get props => [
         models,
+        createFailed,
+        createSuccessful,
       ];
 }

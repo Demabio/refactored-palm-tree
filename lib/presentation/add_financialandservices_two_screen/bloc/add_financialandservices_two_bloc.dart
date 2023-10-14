@@ -81,36 +81,29 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       List<FarmerExtensionMode>? mode = await getModes();
       modemodels = _modes(modemodels, mode!);
 
-      if (farmer.cropsInsurance!) {
-        aa = a.firstWhere(
-          (model) => model.id == (farmer.cropsInsurance! ? 1 : 0),
-        );
-      }
-      if (farmer.assetsInsurance!) {
-        bb = a.firstWhere(
-          (model) => model.id == (farmer.assetsInsurance! ? 1 : 0),
-        );
-      }
-      if (farmer.farmRecords!) {
-        cc = a.firstWhere(
-          (model) => model.id == (farmer.farmRecords! ? 1 : 0),
-        );
-      }
-      if (farmer.livestockInsurance!) {
-        dd = a.firstWhere(
-          (model) => model.id == (farmer.livestockInsurance! ? 1 : 0),
-        );
-      }
-      if (farmer.fishInsurance!) {
-        ee = a.firstWhere(
-          (model) => model.id == (farmer.fishInsurance! ? 1 : 0),
-        );
-      }
-      if (farmer.extensionsericeAccess != null) {
-        ff = a.firstWhere(
-          (model) => model.id == (farmer.extensionsericeAccess),
-        );
-      }
+      aa = a.firstWhere(
+        (model) => model.id == (farmer.cropsInsurance! ? 1 : 0),
+      );
+
+      bb = a.firstWhere(
+        (model) => model.id == (farmer.assetsInsurance! ? 1 : 0),
+      );
+
+      cc = a.firstWhere(
+        (model) => model.id == (farmer.farmRecords! ? 1 : 0),
+      );
+
+      dd = a.firstWhere(
+        (model) => model.id == (farmer.livestockInsurance! ? 1 : 0),
+      );
+
+      ee = a.firstWhere(
+        (model) => model.id == (farmer.fishInsurance! ? 1 : 0),
+      );
+
+      ff = a.firstWhere(
+        (model) => model.id == (farmer.extensionsericeAccess),
+      );
     }
     int stepped = 0;
     if (pfProgress.pageTwo == 1) {

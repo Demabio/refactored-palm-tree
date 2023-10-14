@@ -427,15 +427,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       //     style: theme.textTheme.titleSmall,
                       //   ),
                       // ),
-                      CustomElevatedButton(
-                        text: "msg_add_financial_services".tr,
-                        onTap: () => addFinancial(context),
-                        margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 37.v,
-                        ),
-                        alignment: Alignment.centerRight,
-                      ),
+
                       BlocSelector<
                               AddFinancialandservicesOneBloc,
                               AddFinancialandservicesOneState,
@@ -461,6 +453,15 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                               ),
                             );
                           }),
+                      CustomElevatedButton(
+                        text: "msg_add_financial_services".tr,
+                        onTap: () => addFinancial(context),
+                        margin: EdgeInsets.only(
+                          left: 82.h,
+                          top: 37.v,
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
                       SizedBox(height: 18.v),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_three_dialog/models/add_landandwatermgmt_three_model.dart';
@@ -39,7 +43,7 @@ class AddLandandwatermgmtThreeBloc
     )));
   }
 
-  Future<List<CheckBoxList>> fetchFarmStructure() async {
+  Future<List<CheckBoxList>> fetchLandP() async {
     List<CheckBoxList> list = [];
     FarmlandPracticeDB farmStructureDB = FarmlandPracticeDB();
 
@@ -61,7 +65,7 @@ class AddLandandwatermgmtThreeBloc
     emit(state.copyWith(
         addLandandwatermgmtThreeModelObj:
             state.addLandandwatermgmtThreeModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: await fetchLandP(),
       count: 0,
     )));
   }
@@ -70,32 +74,91 @@ class AddLandandwatermgmtThreeBloc
     AddCBs event,
     Emitter<AddLandandwatermgmtThreeState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerLandPracticesDB farmerFishInputDB = FarmerLandPracticesDB();
+    List<FarmerLandPractice>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerLandPractice(
+                farmerPracticeId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                farmerFarmId: PrefUtils().getFarmId(),
+                landPracticeId: model.id!,
+                createdBy: userId,
+                quantity: 0,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addLandandwatermgmtThreeModelObj!.lwProgress?.pageOne == 0) {
+        farmerFishInputDB.insertLandPractices(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertLandPractices(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
+  }
 
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
+  List<CheckBoxList> _land(
+      List<CheckBoxList> feedmodelss, List<FarmerLandPractice> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerLandPractice> feeds = feedss;
 
-    emit(state.copyWith(
-        addLandandwatermgmtThreeModelObj:
-            state.addLandandwatermgmtThreeModelObj));
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.landPracticeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerLandPractice>?> getLandP() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+  }
+
+  Future<FSProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FSProgressDB pfProgressDB = FSProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
   _onInitialize(
     AddLandandwatermgmtThreeInitialEvent event,
     Emitter<AddLandandwatermgmtThreeState> emit,
   ) async {
+    FSProgress pfProgress = await getProgress() ??
+        FSProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+    List<CheckBoxList>? landmodels = await fetchLandP();
+
+    List<FarmerLandPractice>? land = await getLandP();
+    if (land != null) {
+      landmodels = _land(landmodels, land);
+    }
     emit(state.copyWith(
         addLandandwatermgmtThreeModelObj:
             state.addLandandwatermgmtThreeModelObj?.copyWith(
-      models: await fetchFarmStructure(),
+      models: landmodels,
     )));
   }
 }

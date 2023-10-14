@@ -1,3 +1,4 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/irrigationprojetmodel.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/widgets/irrigation_widget.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
@@ -55,10 +56,9 @@ class AddLandandwatermgmtSixScreen extends StatelessWidget {
                               ?.ageGroupmModels.length ??
                           0,
                       (index) {
-                        IrrigationProjectModel model =
-                            addRearedLivestockDialogTwoModelObj
-                                    ?.ageGroupmModels[index] ??
-                                IrrigationProjectModel();
+                        CheckBoxList model = addRearedLivestockDialogTwoModelObj
+                                ?.ageGroupmModels[index] ??
+                            CheckBoxList();
 
                         return IrrigationProjectGroupItemWidget(
                           model,
@@ -103,7 +103,7 @@ class AddLandandwatermgmtSixScreen extends StatelessWidget {
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
                     onTap: () {
-                      context.read<AddLandandwatermgmtSixBloc>().add(AddAGs(
+                      context.read<AddLandandwatermgmtSixBloc>().add(AddCBs(
                           models: addRearedLivestockDialogTwoModelObj!
                               .ageGroupmModels));
                       Navigator.pop(context);

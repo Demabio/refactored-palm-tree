@@ -25,6 +25,6 @@ class FarmerLandPractice {
         landPracticeId: map['land_practice_id']?.toInt() ?? 0,
         quantity: map['quantity']?.toDouble(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

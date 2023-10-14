@@ -11,21 +11,21 @@ class AddLandandwatermgmtThreeModel extends Equatable {
   AddLandandwatermgmtThreeModel({
     this.models = const [],
     this.count = 0,
-    this.fsProgress,
+    this.lwProgress,
   }) {}
   List<CheckBoxList> models;
 
   int count;
-  LWProgress? fsProgress;
+  LWProgress? lwProgress;
   AddLandandwatermgmtThreeModel copyWith({
     List<CheckBoxList>? models,
     int? count,
-    LWProgress? fsProgress,
+    LWProgress? lwProgress,
   }) {
     return AddLandandwatermgmtThreeModel(
       models: models ?? this.models,
       count: count ?? this.count,
-      fsProgress: fsProgress ?? this.fsProgress,
+      lwProgress: lwProgress ?? this.lwProgress,
     );
   }
 
@@ -33,6 +33,6 @@ class AddLandandwatermgmtThreeModel extends Equatable {
   List<Object?> get props => [
         models,
         count,
-        fsProgress,
+        lwProgress,
       ];
 }

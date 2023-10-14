@@ -65,7 +65,7 @@ class IrrigationMembershipTypeDB {
     }
   }
 
-  Future<List<IrrigationMembershipType>> fetchAll() async {
+  Future<List<IrrigationMembershipType>?> fetchAll() async {
     final database = await DatabaseService().database;
     final membershipTypes = await database.rawQuery(''' 
       SELECT * FROM $tableName 

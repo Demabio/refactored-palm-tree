@@ -42,11 +42,11 @@ class FarmerSoilTestDB {
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         soiltest = ?, soil_test_year = ? 
-      WHERE farmer_soilseed_id = ?
+      WHERE farmer_farm_id = ?
     ''', [
       soilTest.soilTest,
       soilTest.soilTestYear,
-      soilTest.farmerSoilseedId,
+      soilTest.farmerFarmId,
     ]);
   }
 
@@ -86,5 +86,15 @@ class FarmerSoilTestDB {
     return soilTests.map((e) => FarmerSoilTest.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<FarmerSoilTest?> fetchByFarm(int id) async {
+    final database = await DatabaseService().database;
+    final soilTests = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+    ''', [id]);
+
+    return soilTests.isNotEmpty
+        ? FarmerSoilTest.fromSqfliteDatabase(soilTests.first)
+        : null;
+  }
   // Add more database methods as needed
 }

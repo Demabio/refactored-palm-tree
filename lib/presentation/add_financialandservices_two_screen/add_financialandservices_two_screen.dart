@@ -744,6 +744,9 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
   }
 
   goBack(BuildContext context) {
+    context.read<AddFinancialandservicesTwoBloc>().add(
+          ClearEvent(),
+        );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.addFarmtechandassetsOneScreen);
   }

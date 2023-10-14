@@ -1,9 +1,15 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
 import '../models/irrigationprojetmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/add_landandwatermgmt_six_model.dart';
@@ -19,14 +25,14 @@ class AddLandandwatermgmtSixBloc
     on<ChangeAgeGroupCheckbox>(_changeAgeGroupCB);
     on<ResetCBs>(_resetCBs);
 
-    on<AddAGs>(_addAgeGroups);
+    on<AddCBs>(_addAgeGroups);
   }
 
   _changeAgeGroupCB(
     ChangeAgeGroupCheckbox event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) {
-    List<IrrigationProjectModel> newModels =
+    List<CheckBoxList> newModels =
         state.addLandandwatermgmtSixModelObj!.ageGroupmModels;
 
     newModels[event.value].isSelected = event.selected!;
@@ -52,65 +58,65 @@ class AddLandandwatermgmtSixBloc
   }
 
   _addAgeGroups(
-    AddAGs event,
+    AddCBs event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerIrrigationCategoryDB farmerFishInputDB = FarmerIrrigationCategoryDB();
+    List<FarmerIrrigationCategory>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerIrrigationCategory(
+                irrigationCropId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                irrigationCategoryId: model.id!,
+                createdBy: userId,
+                irrigationProjectName: model.male?.text,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addLandandwatermgmtSixModelObj!.lwProgress?.pageOne == 0) {
+        farmerFishInputDB.insertIrrigationCategories(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertIrrigationCategories(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
-
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<IrrigationProjectModel> ageGroupList = decageGroupMapList
-        .map((json) => IrrigationProjectModel.fromJson(json))
-        .toList();
-
-    emit(state.copyWith(
-        addLandandwatermgmtSixModelObj: state.addLandandwatermgmtSixModelObj));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
-  List<SelectionPopupModel> fillDropdownItemList() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
+  Future<List<SelectionPopupModel>?> memberships() async {
+    List<IrrigationMembershipType>? types = [];
+    List<SelectionPopupModel>? list = [];
+
+    IrrigationMembershipTypeDB membershipTypeDB = IrrigationMembershipTypeDB();
+    types = await membershipTypeDB.fetchAll();
+    if (types != null)
+      for (var type in types) {
+        list.add(SelectionPopupModel(
+          title: type.irrigationMembershipType,
+          id: type.membershipTypeId,
+        ));
+      }
+    return list;
   }
 
-  List<SelectionPopupModel> fillDropdownItemList1() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
-  }
-
-  Future<List<IrrigationProjectModel>> fetchSchemes() async {
-    List<IrrigationProjectModel> list = [];
+  Future<List<CheckBoxList>> fetchSchemes() async {
+    List<CheckBoxList> list = [];
 
     List<SelectionPopupModel> dpds = [
       SelectionPopupModel(title: "Full Member", id: 1),
@@ -122,9 +128,9 @@ class AddLandandwatermgmtSixBloc
     stored.value = TextEditingValue(text: "999");
     await livestockAgeGroupDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
-        list.add(IrrigationProjectModel(
+        list.add(CheckBoxList(
           title: value[i].agencyName,
-          ageGroupId: value[i].irrigationAgencyId,
+          id: value[i].irrigationAgencyId,
           female: TextEditingController(),
           male: TextEditingController(),
           focusNode: FocusNode(),
@@ -136,28 +142,45 @@ class AddLandandwatermgmtSixBloc
     return list;
   }
 
+  List<CheckBoxList> _land(
+      List<CheckBoxList> feedmodelss, List<FarmerIrrigationCategory> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerIrrigationCategory> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
+
+      feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
+      feedmodels[index].male =
+          TextEditingController(text: ent.irrigationProjectName);
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerIrrigationCategory>?> getCategs() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerIrrigationCategoryDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
+  }
+
   _onInitialize(
     AddLandandwatermgmtSixInitialEvent event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) async {
-    emit(state.copyWith(
-      continueController: TextEditingController(),
-      balancehistoryController: TextEditingController(),
-      arrowdownController: TextEditingController(),
-      balancehistoryController1: TextEditingController(),
-      arrowdownoneController: TextEditingController(),
-      schemevalueController: TextEditingController(),
-      arrowdowntwoController: TextEditingController(),
-      trash: false,
-      communityScheme: false,
-      trashone: false,
-    ));
+    List<CheckBoxList>? schememodels = await fetchSchemes();
+
+    List<FarmerIrrigationCategory>? scheme = await getCategs();
+    if (scheme != null) {
+      schememodels = _land(schememodels, scheme);
+    }
     emit(state.copyWith(
         addLandandwatermgmtSixModelObj:
             state.addLandandwatermgmtSixModelObj?.copyWith(
-      dropdownItemList: fillDropdownItemList(),
-      dropdownItemList1: fillDropdownItemList1(),
-      ageGroupmModels: await fetchSchemes(),
+      ageGroupmModels: schememodels,
     )));
   }
 }

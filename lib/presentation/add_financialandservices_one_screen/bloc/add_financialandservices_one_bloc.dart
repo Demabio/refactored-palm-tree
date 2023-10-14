@@ -454,7 +454,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
 
     TextEditingController at = TextEditingController();
-    List<SelectionPopupModel>? a = await fillDropdownItemList();
+    List<SelectionPopupModel>? a = fillDropdownItemList();
     SelectionPopupModel? aa;
 
     if (pfProgress.pageOne == 1) {
@@ -465,11 +465,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
       List<FarmerCreditService>? categs = await getCredits();
       creditmodels = _credits(creditmodels, categs!);
 
-      if (farmer.cooperativeGroup!) {
-        aa = a.firstWhere(
-          (model) => model.id == (farmer.cooperativeGroup! ? 1 : 0),
-        );
-      }
+      aa = a.firstWhere(
+        (model) => model.id == (farmer.cooperativeGroup! ? 1 : 0),
+      );
 
       if (farmer.farmingIncomePercent != null) {
         at =

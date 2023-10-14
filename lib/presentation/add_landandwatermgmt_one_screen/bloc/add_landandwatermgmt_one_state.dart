@@ -9,7 +9,9 @@ class AddLandandwatermgmtOneState extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.addLandandwatermgmtOneModelObj,
-    this.isPageone = false,
+    this.checka = false,
+    this.p = const [],
+    this.s = const [],
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -20,22 +22,27 @@ class AddLandandwatermgmtOneState extends Equatable {
 
   AddLandandwatermgmtOneModel? addLandandwatermgmtOneModelObj;
 
-  bool isPageone;
-
+  bool checka;
+  List<CheckBoxList> p;
+  List<CheckBoxList> s;
   @override
   List<Object?> get props => [
         selectedDropDownValue,
         selectedDropDownValue1,
         selectedDropDownValue2,
         addLandandwatermgmtOneModelObj,
-        isPageone,
+        checka,
+        p,
+        s,
       ];
   AddLandandwatermgmtOneState copyWith({
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     AddLandandwatermgmtOneModel? addLandandwatermgmtOneModelObj,
-    bool? isPageone,
+    bool? checka,
+    List<CheckBoxList>? p,
+    List<CheckBoxList>? s,
   }) {
     return AddLandandwatermgmtOneState(
       selectedDropDownValue:
@@ -46,7 +53,9 @@ class AddLandandwatermgmtOneState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       addLandandwatermgmtOneModelObj:
           addLandandwatermgmtOneModelObj ?? this.addLandandwatermgmtOneModelObj,
-      isPageone: isPageone ?? this.isPageone,
+      checka: checka ?? this.checka,
+      p: p ?? this.p,
+      s: s ?? this.s,
     );
   }
 }
