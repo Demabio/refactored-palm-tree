@@ -17,13 +17,15 @@ class AddLandandwatermgmtSixInitialEvent extends AddLandandwatermgmtSixEvent {
 
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddLandandwatermgmtSixEvent {
-  ChangeDropDownEvent({required this.value});
+  ChangeDropDownEvent({required this.value, required this.id});
 
   SelectionPopupModel value;
+  int id;
 
   @override
   List<Object?> get props => [
         value,
+        id,
       ];
 }
 

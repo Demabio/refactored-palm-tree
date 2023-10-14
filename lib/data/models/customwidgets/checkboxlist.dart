@@ -25,6 +25,7 @@ class CheckBoxList extends Equatable {
     this.var5,
     this.var6,
     this.model = const [],
+    this.drop,
   }) {}
 
   String title;
@@ -57,7 +58,7 @@ class CheckBoxList extends Equatable {
   FocusNode? femalefocusNode;
 
   List<SelectionPopupModel> model;
-
+  SelectionPopupModel? drop;
   CheckBoxList copyWith({
     String? ayrshi,
     bool? isSelected,

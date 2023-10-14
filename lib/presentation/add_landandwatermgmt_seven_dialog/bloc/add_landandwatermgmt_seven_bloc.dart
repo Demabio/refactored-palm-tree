@@ -5,8 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/agency.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/agency.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_seven_dialog/models/add_landandwatermgmt_seven_model.dart';
@@ -133,10 +135,22 @@ class AddLandandwatermgmtSevenBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<LWProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    LWProgressDB pfProgressDB = LWProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     AddLandandwatermgmtSevenInitialEvent event,
     Emitter<AddLandandwatermgmtSevenState> emit,
   ) async {
+    LWProgress pfProgress = await getProgress() ??
+        LWProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
     List<CheckBoxList>? agmodels = await fetchAgency();
 
     List<FarmerIrrigationAgency>? ag = await getAgency();
@@ -147,6 +161,7 @@ class AddLandandwatermgmtSevenBloc
         addLandandwatermgmtSevenModelObj:
             state.addLandandwatermgmtSevenModelObj?.copyWith(
       models: agmodels,
+      lwProgress: pfProgress,
     )));
   }
 }

@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
 import '../models/irrigationprojetmodel.dart';
 import '/core/app_export.dart';
@@ -24,6 +26,7 @@ class AddLandandwatermgmtSixBloc
     on<AddLandandwatermgmtSixInitialEvent>(_onInitialize);
     on<ChangeAgeGroupCheckbox>(_changeAgeGroupCB);
     on<ResetCBs>(_resetCBs);
+    on<ChangeDropDownEvent>(_changeDPD);
 
     on<AddCBs>(_addAgeGroups);
   }
@@ -36,6 +39,23 @@ class AddLandandwatermgmtSixBloc
         state.addLandandwatermgmtSixModelObj!.ageGroupmModels;
 
     newModels[event.value].isSelected = event.selected!;
+
+    emit(state.copyWith(
+        addLandandwatermgmtSixModelObj:
+            state.addLandandwatermgmtSixModelObj?.copyWith(
+      ageGroupmModels: newModels,
+      count: state.addLandandwatermgmtSixModelObj!.count + 1,
+    )));
+  }
+
+  _changeDPD(
+    ChangeDropDownEvent event,
+    Emitter<AddLandandwatermgmtSixState> emit,
+  ) {
+    List<CheckBoxList> newModels =
+        state.addLandandwatermgmtSixModelObj!.ageGroupmModels;
+
+    newModels[event.id].drop = event.value;
 
     emit(state.copyWith(
         addLandandwatermgmtSixModelObj:
@@ -74,6 +94,7 @@ class AddLandandwatermgmtSixBloc
                 irrigationCropId: 0,
                 farmerId: PrefUtils().getFarmerId(),
                 irrigationCategoryId: model.id!,
+                membershipTypeId: model.drop?.id ?? 0,
                 createdBy: userId,
                 irrigationProjectName: model.male?.text,
                 dateCreated: DateTime.now()),
@@ -148,13 +169,20 @@ class AddLandandwatermgmtSixBloc
     List<FarmerIrrigationCategory> feeds = feedss;
 
     for (var ent in feeds) {
+      SelectionPopupModel? drop;
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
+      int index2 = feedmodels[index]
+          .model
+          .indexWhere((obj) => obj.id == ent.membershipTypeId);
+
+      drop = feedmodels[index].model[index2];
 
       feedmodels[index].isSelected = true;
       feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
       feedmodels[index].male =
           TextEditingController(text: ent.irrigationProjectName);
+      feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
     }
 
     return feedmodels;
@@ -167,10 +195,22 @@ class AddLandandwatermgmtSixBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<LWProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    LWProgressDB pfProgressDB = LWProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     AddLandandwatermgmtSixInitialEvent event,
     Emitter<AddLandandwatermgmtSixState> emit,
   ) async {
+    LWProgress pfProgress = await getProgress() ??
+        LWProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
     List<CheckBoxList>? schememodels = await fetchSchemes();
 
     List<FarmerIrrigationCategory>? scheme = await getCategs();
@@ -181,6 +221,7 @@ class AddLandandwatermgmtSixBloc
         addLandandwatermgmtSixModelObj:
             state.addLandandwatermgmtSixModelObj?.copyWith(
       ageGroupmModels: schememodels,
+      lwProgress: pfProgress,
     )));
   }
 }

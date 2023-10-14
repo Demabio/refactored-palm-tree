@@ -13,6 +13,7 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
     this.onSelect,
     this.height,
     this.width,
+    this.onSelectCB,
   }) : super(
           key: key,
         );
@@ -104,6 +105,7 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
                                             ImageConstant.imgArrowdownPrimary)),
                                 hintText: "lbl_select".tr,
                                 items: ageGroupmModel.model,
+                                val: ageGroupmModel.drop,
                                 onChanged: (value) {
                                   onSelectCB?.call(value);
                                 })

@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/type.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/type.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_five_dialog/models/add_landandwatermgmt_five_model.dart';
@@ -72,22 +75,41 @@ class AddLandandwatermgmtFiveBloc
     AddCBs event,
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) {
-    List<Map<String, dynamic>> ageGroupMapList =
-        event.models.map((ageGroup) => ageGroup.toJson()).toList();
+    FarmerIrrigationTypeDB farmerFishInputDB = FarmerIrrigationTypeDB();
+    List<FarmerIrrigationType>? categs = [];
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
 
-    // Convert the list of maps to a JSON string
-    String jsonString = jsonEncode(ageGroupMapList);
-    PrefUtils().setAgeGroups(jsonString);
+    try {
+      for (CheckBoxList model in event.models) {
+        if (model.isSelected) {
+          categs.add(
+            FarmerIrrigationType(
+                irrigationCropId: 0,
+                farmerId: PrefUtils().getFarmerId(),
+                irrigationTypeId: model.id!,
+                createdBy: userId,
+                dateCreated: DateTime.now()),
+          );
+        }
+      }
+      if (state.addLandandwatermgmtFiveModelObj!.lwProgress?.pageOne == 0) {
+        farmerFishInputDB.insertIrrigationTypes(categs).then((value) {
+          print("inserted: $value");
+        });
+      } else {
+        farmerFishInputDB
+            .delete(PrefUtils().getFarmerId())
+            .then((value) => print("deleted: $value"));
+        farmerFishInputDB.insertIrrigationTypes(categs).then((value) {
+          print("inserted: $value");
+        });
+      }
 
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
-
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<CheckBoxList> ageGroupList =
-        decageGroupMapList.map((json) => CheckBoxList.fromJson(json)).toList();
-
-    emit(state.copyWith(
-        addLandandwatermgmtFiveModelObj:
-            state.addLandandwatermgmtFiveModelObj));
+      event.createSuccessful?.call();
+    } catch (e) {
+      event.createFailed!.call();
+    }
   }
 
   List<CheckBoxList> _type(
@@ -112,10 +134,22 @@ class AddLandandwatermgmtFiveBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<LWProgress?> getProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    LWProgressDB pfProgressDB = LWProgressDB();
+    return await pfProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     AddLandandwatermgmtFiveInitialEvent event,
     Emitter<AddLandandwatermgmtFiveState> emit,
   ) async {
+    LWProgress pfProgress = await getProgress() ??
+        LWProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
     List<CheckBoxList>? typemodels = await fetchType();
 
     List<FarmerIrrigationType>? type = await getType();
@@ -126,6 +160,7 @@ class AddLandandwatermgmtFiveBloc
         addLandandwatermgmtFiveModelObj:
             state.addLandandwatermgmtFiveModelObj?.copyWith(
       models: typemodels,
+      lwProgress: pfProgress,
     )));
   }
 }

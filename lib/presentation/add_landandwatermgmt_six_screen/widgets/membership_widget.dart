@@ -40,7 +40,7 @@ class MembershipItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var1 ?? "N/A",
+                  " ${enterpriseModel.var1 ?? "N/A"} - ${enterpriseModel.drop?.title ?? "N/A"}",
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),

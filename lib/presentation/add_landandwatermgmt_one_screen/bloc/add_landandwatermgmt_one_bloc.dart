@@ -144,7 +144,7 @@ class AddLandandwatermgmtOneBloc
   }
 
   Future<List<FarmerLandPractice>?> getLandP() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }

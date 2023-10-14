@@ -197,13 +197,20 @@ class LandandwatermgmtBloc
     List<FarmerIrrigationCategory> feeds = feedss;
 
     for (var ent in feeds) {
+      SelectionPopupModel? drop;
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
+      int index2 = feedmodels[index]
+          .model
+          .indexWhere((obj) => obj.id == ent.membershipTypeId);
+
+      drop = feedmodels[index].model[index2];
 
       feedmodels[index].isSelected = true;
       feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
       feedmodels[index].male =
           TextEditingController(text: ent.irrigationProjectName);
+      feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
     }
 
     return feedmodels;
@@ -271,7 +278,7 @@ class LandandwatermgmtBloc
   }
 
   Future<List<FarmerLandPractice>?> getLandP() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }

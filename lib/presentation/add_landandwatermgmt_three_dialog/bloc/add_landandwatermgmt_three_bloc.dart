@@ -5,9 +5,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_three_dialog/models/add_landandwatermgmt_three_model.dart';
@@ -133,9 +135,9 @@ class AddLandandwatermgmtThreeBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
-  Future<FSProgress?> getProgress() async {
+  Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmerId();
-    FSProgressDB pfProgressDB = FSProgressDB();
+    LWProgressDB pfProgressDB = LWProgressDB();
     return await pfProgressDB.fetchByFarmerId(farmerid);
   }
 
@@ -143,8 +145,8 @@ class AddLandandwatermgmtThreeBloc
     AddLandandwatermgmtThreeInitialEvent event,
     Emitter<AddLandandwatermgmtThreeState> emit,
   ) async {
-    FSProgress pfProgress = await getProgress() ??
-        FSProgress(
+    LWProgress pfProgress = await getProgress() ??
+        LWProgress(
           farmerId: 0,
           pageOne: 0,
           pageTwo: 0,
@@ -159,6 +161,7 @@ class AddLandandwatermgmtThreeBloc
         addLandandwatermgmtThreeModelObj:
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: landmodels,
+      lwProgress: pfProgress,
     )));
   }
 }

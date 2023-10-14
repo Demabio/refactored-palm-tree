@@ -22,7 +22,7 @@ class FarmerSoilTest {
         farmerSoilseedId: map['farmer_soilseed_id']?.toInt() ?? 0,
         farmerId: map['farmer_id']?.toInt() ?? 0,
         farmerFarmId: map['farmer_farm_id']?.toInt() ?? 0,
-        soilTest: map['soiltest']?.toInt(),
+        soilTest: int.parse(map['soiltest'] ?? "0"),
         soilTestYear: map['soil_test_year'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: int.parse(map['created_by'] ?? "0"),

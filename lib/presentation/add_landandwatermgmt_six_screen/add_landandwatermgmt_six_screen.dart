@@ -67,6 +67,14 @@ class AddLandandwatermgmtSixScreen extends StatelessWidget {
                                 ChangeAgeGroupCheckbox(
                                     value: index, selected: value));
                           },
+                          onSelectCB: (p0) {
+                            context
+                                .read<AddLandandwatermgmtSixBloc>()
+                                .add(ChangeDropDownEvent(
+                                  id: index,
+                                  value: p0,
+                                ));
+                          },
                         );
                       },
                     ),
