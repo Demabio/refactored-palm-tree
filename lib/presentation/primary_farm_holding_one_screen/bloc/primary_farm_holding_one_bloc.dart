@@ -63,6 +63,11 @@ class PrimaryFarmHoldingOneBloc
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
+    String enumeratorname = claims.payload['fullName'];
+    String enumeratorarea = claims.payload['roleID'];
+
+    String enumeratormobile = claims.payload['mobilephone'];
+
     FarmerFarmDB farmDB = FarmerFarmDB();
     int farmerid = PrefUtils().getFarmId();
     try {
@@ -81,7 +86,13 @@ class PrimaryFarmHoldingOneBloc
             farmDB.updatePageOne(FarmerFarm(
               farmerFarmId: value,
               farmerId: farmerid,
+              villageName: state.vil?.text,
+              shoppingCenter: state.shop?.text,
               farmName: state.nameController!.text,
+              enumeratorId: userId.toString(),
+              enumerationAreaNumber: enumeratorarea,
+              enumeratorName: enumeratorname,
+              enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),
               areaUnitId: state
                   .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
@@ -148,6 +159,11 @@ class PrimaryFarmHoldingOneBloc
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
+    String enumeratorname = claims.payload['fullName'];
+    String enumeratorarea = claims.payload['roleID'];
+
+    String enumeratormobile = claims.payload['mobilephone'];
+
     FarmerFarmDB farmDB = FarmerFarmDB();
     int farmerid = PrefUtils().getFarmId();
     try {
@@ -166,16 +182,20 @@ class PrimaryFarmHoldingOneBloc
             farmDB.updatePageOne(FarmerFarm(
               farmerFarmId: value,
               farmerId: farmerid,
+              villageName: state.vil?.text,
+              shoppingCenter: state.shop?.text,
               farmName: state.nameController!.text,
+              enumeratorId: userId.toString(),
+              enumerationAreaNumber: enumeratorarea,
+              enumeratorName: enumeratorname,
+              enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),
               areaUnitId: state
                   .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-              cropFarmSize: double.parse(state.sizeoneController!.text),
-              livestockFarmSize: double.parse(state.areaController!.text),
-              leasedFarmSize:
-                  double.parse(state.sizeLandLeasedController?.text ?? "0"),
-              idleFarmSize:
-                  double.parse(state.sizeLandIdleController?.text ?? "0"),
+              cropFarmSize: double.parse(state.sizeController!.text),
+              livestockFarmSize: double.parse(state.sizeController!.text),
+              leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
+              idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
             ));
 
             PFProgressDB pfProgressDB = PFProgressDB();
@@ -200,7 +220,6 @@ class PrimaryFarmHoldingOneBloc
           } else {
             event.createFailed!.call();
           }
-          event.createSuccessful!.call();
         });
       }
       if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
@@ -221,12 +240,13 @@ class PrimaryFarmHoldingOneBloc
               .then((value) => print(
                     "Updated scop: " + value.toString(),
                   ));
-          event.createSuccessful!.call();
         }
       }
     } catch (e) {
       event.createFailed!.call();
     }
+
+    event.createSuccessful!.call();
   }
 
   Future<FarmerFarm?> getFarm() async {
@@ -258,6 +278,8 @@ class PrimaryFarmHoldingOneBloc
         );
 
     //print(farmer);
+    TextEditingController vil = TextEditingController();
+    TextEditingController shop = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController sizeController = TextEditingController();
     TextEditingController sizeoneController = TextEditingController();
@@ -280,6 +302,9 @@ class PrimaryFarmHoldingOneBloc
       sizeLandIdleController =
           TextEditingController(text: farm.idleFarmSize.toString());
 
+      vil = TextEditingController(text: farm.villageName);
+      shop = TextEditingController(text: farm.shoppingCenter);
+
       selectedarea = area.firstWhere(
         (model) => model.id == farm.areaUnitId,
       );
@@ -297,6 +322,8 @@ class PrimaryFarmHoldingOneBloc
       areaController: areaController,
       sizeLandLeasedController: sizeLandLeasedController,
       sizeLandIdleController: sizeLandIdleController,
+      vil: vil,
+      shop: shop,
     ));
     emit(
       state.copyWith(

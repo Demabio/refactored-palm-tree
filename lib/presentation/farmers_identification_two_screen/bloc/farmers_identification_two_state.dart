@@ -12,7 +12,10 @@ class FarmersIdentificationTwoState extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.farmersIdentificationTwoModelObj,
+    this.name,
   });
+
+  TextEditingController? name;
 
   TextEditingController? idnumberoneController;
 
@@ -37,6 +40,7 @@ class FarmersIdentificationTwoState extends Equatable {
         selectedDropDownValue,
         selectedDropDownValue1,
         farmersIdentificationTwoModelObj,
+        name
       ];
   FarmersIdentificationTwoState copyWith({
     TextEditingController? idnumberoneController,
@@ -46,6 +50,7 @@ class FarmersIdentificationTwoState extends Equatable {
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     FarmersIdentificationTwoModel? farmersIdentificationTwoModelObj,
+    TextEditingController? name,
   }) {
     return FarmersIdentificationTwoState(
       idnumberoneController:
@@ -60,6 +65,7 @@ class FarmersIdentificationTwoState extends Equatable {
           selectedDropDownValue1 ?? this.selectedDropDownValue1,
       farmersIdentificationTwoModelObj: farmersIdentificationTwoModelObj ??
           this.farmersIdentificationTwoModelObj,
+      name: name ?? this.name,
     );
   }
 }

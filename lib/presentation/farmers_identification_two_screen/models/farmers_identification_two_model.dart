@@ -12,8 +12,8 @@ class FarmersIdentificationTwoModel extends Equatable {
   FarmersIdentificationTwoModel({
     this.dropdownItemList = const [],
     this.dropdownItemList1 = const [],
-    this.stepped = 1,
-    this.stepped2 = 1,
+    this.stepped = 0,
+    this.stepped2 = 0,
     this.page1 = StepState.complete,
     this.page2 = StepState.indexed,
     this.page3 = StepState.indexed,

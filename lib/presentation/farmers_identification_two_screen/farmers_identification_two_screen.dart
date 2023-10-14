@@ -36,6 +36,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
   FocusNode node3 = FocusNode();
   FocusNode node4 = FocusNode();
   FocusNode node5 = FocusNode();
+  FocusNode node6 = FocusNode();
+  FocusNode node7 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -189,37 +191,6 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                             ),
                                             title: 'Step 3',
                                           ),
-                                          EasyStep(
-                                            customStep: CircleAvatar(
-                                              radius: 35,
-                                              backgroundColor:
-                                                  theme.colorScheme.primary,
-                                              child: CircleAvatar(
-                                                radius: 25,
-                                                backgroundColor:
-                                                    theme.colorScheme.primary,
-                                                child:
-                                                    farmersIdentificationOneModelObj
-                                                                .stepped2 <=
-                                                            3
-                                                        ? Text(
-                                                            '4', // You can replace '1' with the desired number
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
-                                                            ),
-                                                          )
-                                                        : Icon(Icons.check),
-                                              ),
-                                            ),
-                                            title: 'Step 4',
-
-                                            // topTitle: true,
-                                          ),
                                         ],
                                       );
                                     })),
@@ -227,6 +198,66 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                 Text("msg_individual_farmer".tr,
                                     style:
                                         CustomTextStyles.titleMediumSemiBold),
+                                Text("msg_individual_farmer".tr,
+                                    style:
+                                        CustomTextStyles.titleMediumSemiBold),
+                                SizedBox(height: 20.v),
+                                Text("lbl_farmer_name2".tr,
+                                    style:
+                                        CustomTextStyles.labelMediumPrimary_1),
+                                BlocSelector<
+                                        FarmersIdentificationTwoBloc,
+                                        FarmersIdentificationTwoState,
+                                        TextEditingController?>(
+                                    selector: (state) => state.name,
+                                    builder: (context, nameController1) {
+                                      return CustomTextFormField(
+                                          focusNode: node6,
+                                          controller: nameController1,
+                                          autofocus: false,
+                                          hintText: "lbl_name".tr,
+                                          hintStyle: CustomTextStyles
+                                              .titleMediumBluegray40003,
+                                          validator: (value) {
+                                            if (!isText(value)) {
+                                              return "Please enter valid text";
+                                            } else if (isNotEmpty(value)) {
+                                              return "Field is required.";
+                                            }
+                                            return null;
+                                          },
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              16.h, 13.v, 16.h, 12.v));
+                                    }),
+                                SizedBox(height: 21.v),
+
+                                Text("msg_national_id_number2".tr,
+                                    style:
+                                        CustomTextStyles.labelMediumPrimary_1),
+                                BlocSelector<
+                                        FarmersIdentificationTwoBloc,
+                                        FarmersIdentificationTwoState,
+                                        TextEditingController?>(
+                                    selector: (state) =>
+                                        state.idnumberoneController,
+                                    builder: (context, idnumberoneController) {
+                                      return CustomTextFormField(
+                                          focusNode: node7,
+                                          controller: idnumberoneController,
+                                          autofocus: false,
+                                          hintText: "lbl_id_number".tr,
+                                          textInputType: TextInputType.number,
+                                          textInputAction: TextInputAction.done,
+                                          validator: (value) {
+                                            if (!isNumeric(value)) {
+                                              return "Please enter valid number";
+                                            } else if (isNotEmpty(value)) {
+                                              return "Field is required.";
+                                            }
+                                            return null;
+                                          });
+                                    }),
+                                SizedBox(height: 31.v),
                                 Padding(
                                     padding:
                                         EdgeInsets.only(top: 17.v, right: 18.h),

@@ -23,6 +23,9 @@ class PrimaryFarmHoldingTwoBloc
     on<PrimaryFarmHoldingTwoInitialEvent>(_onInitialize);
     on<ChangeDropDownEvent>(_changeDropDown);
     on<ChangeDropDown1Event>(_changeDropDown1);
+    on<ChangeDropDown2Event>(_changeDropDown2);
+    on<ChangeDropDown3Event>(_changeDropDown3);
+    on<ChangeDropDown4Event>(_changeDropDown4);
     on<NextTapEvent>(_nextTap);
     on<SaveTapEvent>(_saveTap);
     on<ChangeEnterprisesCheckbox>(_changeEnterpriseCB);
@@ -36,9 +39,15 @@ class PrimaryFarmHoldingTwoBloc
       selectedDropDownValue: event.value,
       primaryFarmHoldingTwoModelObj:
           state.primaryFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue: event.value,
         selectedDropDownValue1:
             state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
-        selectedDropDownValue: event.value,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue4,
       ),
     ));
   }
@@ -48,13 +57,83 @@ class PrimaryFarmHoldingTwoBloc
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
     emit(state.copyWith(
+      selectedDropDownValue1: event.value,
+      primaryFarmHoldingTwoModelObj:
+          state.primaryFarmHoldingTwoModelObj?.copyWith(
         selectedDropDownValue1: event.value,
-        primaryFarmHoldingTwoModelObj:
-            state.primaryFarmHoldingTwoModelObj?.copyWith(
-          selectedDropDownValue:
-              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
-          selectedDropDownValue1: event.value,
-        )));
+        selectedDropDownValue:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
+  }
+
+  _changeDropDown2(
+    ChangeDropDown2Event event,
+    Emitter<PrimaryFarmHoldingTwoState> emit,
+  ) {
+    emit(state.copyWith(
+      selectedDropDownValue2: event.value,
+      primaryFarmHoldingTwoModelObj:
+          state.primaryFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue2: event.value,
+        selectedDropDownValue1:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
+  }
+
+  _changeDropDown3(
+    ChangeDropDown3Event event,
+    Emitter<PrimaryFarmHoldingTwoState> emit,
+  ) {
+    emit(state.copyWith(
+      selectedDropDownValue3: event.value,
+      primaryFarmHoldingTwoModelObj:
+          state.primaryFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue3: event.value,
+        selectedDropDownValue1:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue4,
+      ),
+    ));
+  }
+
+  _changeDropDown4(
+    ChangeDropDown4Event event,
+    Emitter<PrimaryFarmHoldingTwoState> emit,
+  ) {
+    emit(state.copyWith(
+      selectedDropDownValue4: event.value,
+      primaryFarmHoldingTwoModelObj:
+          state.primaryFarmHoldingTwoModelObj?.copyWith(
+        selectedDropDownValue4: event.value,
+        selectedDropDownValue1:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue3,
+        selectedDropDownValue:
+            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -133,37 +212,71 @@ class PrimaryFarmHoldingTwoBloc
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
     FarmerFarmDB farmDB = FarmerFarmDB();
+    if (state.filled) {
+      try {
+        farmDB
+            .updatePageTwo(FarmerFarm(
+          farmerId: PrefUtils().getFarmerId(),
+          farmerFarmId: PrefUtils().getFarmId(),
+          x: double.parse(state.titlethreeController!.text),
+          y: double.parse(state.titleoneController!.text),
+          ownershipId:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
+          farmLrCert: state.titlesevenController?.text,
+          otherFarmElsewhere:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
+                  1,
+          cropProd:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue2!.id ==
+                  1,
+          livestockProd:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue3!.id ==
+                  1,
+          fishFarming:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue4!.id ==
+                  1,
+        ))
+            .then((value) async {
+          if (value > 0) {
+            PFProgressDB pfProgressDB = PFProgressDB();
+            pfProgressDB
+                .update(PFProgress(
+                  farmId: PrefUtils().getFarmId(),
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope PF " + value.toString()));
+            FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
+            int deleted = await farmerEnterprisesDB.delete(
+                state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
-    try {
-      farmDB
-          .updatePageTwo(FarmerFarm(
-        farmerId: PrefUtils().getFarmerId(),
-        farmerFarmId: PrefUtils().getFarmId(),
-        x: double.parse(state.titlethreeController!.text),
-        y: double.parse(state.titleoneController!.text),
-        ownershipId:
-            state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
-        farmLrCert: state.titlesevenController?.text,
-        otherFarmElsewhere:
-            state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
-                1,
-      ))
-          .then((value) {
-        if (value > 0) {
-          PFProgressDB pfProgressDB = PFProgressDB();
-          pfProgressDB
-              .update(PFProgress(
-                farmId: state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
-                pageOne: 1,
-                pageTwo: 1,
-              ))
-              .then((value) => print("Scope PF " + value.toString()));
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
-        }
-      });
-    } catch (e) {
+            List<FarmerEnterprise> ents = [];
+
+            for (var ent in state.primaryFarmHoldingTwoModelObj!.enterprises) {
+              if (ent.isSelected) {
+                ents.add(FarmerEnterprise(
+                  farmerEnterpriseId: 0,
+                  farmerFarmId:
+                      state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                  enterpriseId: ent.enterpriseId!,
+                  insured: 0,
+                  dateCreated: DateTime.now(),
+                ));
+              }
+            }
+            await farmerEnterprisesDB
+                .insertEnterprises(ents)
+                .then((value) => print("inserted $value"));
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      } catch (e) {
+        event.createFailed!.call();
+      }
+    } else {
+      emit(state.copyWith(checked: true));
       event.createFailed!.call();
     }
   }
@@ -186,6 +299,15 @@ class PrimaryFarmHoldingTwoBloc
           farmLrCert: state.titlesevenController?.text,
           otherFarmElsewhere:
               state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
+                  1,
+          cropProd:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue2!.id ==
+                  1,
+          livestockProd:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue3!.id ==
+                  1,
+          fishFarming:
+              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue4!.id ==
                   1,
         ))
             .then((value) async {
@@ -278,7 +400,16 @@ class PrimaryFarmHoldingTwoBloc
     List<SelectionPopupModel> owners = await fetchOwnerships();
     SelectionPopupModel? selectedowners;
     List<SelectionPopupModel> farms = fillDropdownItemList1();
+
+    List<SelectionPopupModel> crop = fillDropdownItemList1();
+    List<SelectionPopupModel> livestock = fillDropdownItemList1();
+    List<SelectionPopupModel> fish = fillDropdownItemList1();
+
     SelectionPopupModel? selectedfarms;
+    SelectionPopupModel? selectedDropDownValue2;
+    SelectionPopupModel? selectedDropDownValue3;
+    SelectionPopupModel? selectedDropDownValue4;
+
     if (pfProgress.pageTwo == 1 && farm.farmerFarmId != 0) {
       titleoneController = TextEditingController(text: farm.y.toString());
       titlethreeController = TextEditingController(text: farm.x.toString());
@@ -290,6 +421,15 @@ class PrimaryFarmHoldingTwoBloc
 
       selectedfarms = farms.firstWhere(
         (model) => model.id == (farm.otherFarmElsewhere! ? 1 : 0),
+      );
+      selectedDropDownValue2 = crop.firstWhere(
+        (model) => model.id == (farm.cropProd! ? 1 : 0),
+      );
+      selectedDropDownValue3 = livestock.firstWhere(
+        (model) => model.id == (farm.livestockProd! ? 1 : 0),
+      );
+      selectedDropDownValue4 = fish.firstWhere(
+        (model) => model.id == (farm.fishFarming! ? 1 : 0),
       );
 
       for (var ent in farments) {
@@ -322,11 +462,17 @@ class PrimaryFarmHoldingTwoBloc
           enterprises: ents,
           dropdownItemList: owners,
           dropdownItemList1: farms,
+          dropdownItemList2: crop,
+          dropdownItemList3: livestock,
+          dropdownItemList4: fish,
           selectedDropDownValue: selectedowners,
           selectedDropDownValue1: selectedfarms,
           stepped2: stepper,
           farm: farm,
           pfProgress: pfProgress,
+          selectedDropDownValue2: selectedDropDownValue2,
+          selectedDropDownValue3: selectedDropDownValue3,
+          selectedDropDownValue4: selectedDropDownValue4,
         ),
       ),
     );

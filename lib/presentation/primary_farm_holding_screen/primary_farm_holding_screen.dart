@@ -38,7 +38,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                     onTapSortone(context);
                   }),
               centerTitle: true,
-              title: AppbarSubtitle1(text: "msg_primary_farm_holding".tr),
+              title: AppbarSubtitle1(text: "Farm Holding".tr),
               actions: [
                 AppbarImage1(
                     svgPath: ImageConstant.imgFrame33,
@@ -90,6 +90,45 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 3.h, top: 12.v),
+                                        child: Text(
+                                            "msg_enumeration_geography".tr,
+                                            style: CustomTextStyles
+                                                .titleMediumSemiBold)),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 16.v, right: 1.h),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("msg_village_unit_name".tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary),
+                                              Text(
+                                                  state.primaryFarmHoldingModelObj
+                                                          ?.farm?.villageName ??
+                                                      "N/A",
+                                                  style: theme
+                                                      .textTheme.labelMedium)
+                                            ])),
+                                    SizedBox(height: 16.v),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("msg_shopping_center".tr,
+                                              style: CustomTextStyles
+                                                  .labelMediumPrimary),
+                                          Text(
+                                              state.primaryFarmHoldingModelObj
+                                                      ?.farm?.shoppingCenter ??
+                                                  "N/A",
+                                              style:
+                                                  theme.textTheme.labelMedium)
+                                        ]),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -239,6 +278,70 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       .textTheme.labelMedium))
                                         ]),
                                     SizedBox(height: 13.v),
+                                    Text("Production Type".tr,
+                                        style: CustomTextStyles
+                                            .titleMediumSemiBold),
+                                    SizedBox(height: 5.v),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 2.h),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text("msg_crop_production".tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary),
+                                              Text(
+                                                  state.primaryFarmHoldingModelObj
+                                                              ?.farm?.cropProd ??
+                                                          false
+                                                      ? "Yes"
+                                                      : "No",
+                                                  style: theme
+                                                      .textTheme.labelMedium)
+                                            ])),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 2.h, top: 13.v),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  "msg_livestock_production".tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary),
+                                              Text(
+                                                  state.primaryFarmHoldingModelObj?.farm
+                                                              ?.livestockProd ??
+                                                          false
+                                                      ? "Yes"
+                                                      : "No",
+                                                  style: theme
+                                                      .textTheme.labelMedium)
+                                            ])),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 2.h, top: 15.v),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("msg_aquaculture_production".tr,
+                                              style: CustomTextStyles
+                                                  .labelMediumPrimary),
+                                          Text(
+                                              state.primaryFarmHoldingModelObj
+                                                          ?.farm?.fishFarming ??
+                                                      false
+                                                  ? "Yes"
+                                                  : "No",
+                                              style:
+                                                  theme.textTheme.labelMedium)
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 13.v),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -246,7 +349,11 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                           Text("lbl_latitude".tr,
                                               style: CustomTextStyles
                                                   .labelMediumPrimary),
-                                          Text("lbl_3_31341".tr,
+                                          Text(
+                                              state.primaryFarmHoldingModelObj
+                                                      ?.farm?.x
+                                                      .toString() ??
+                                                  "N/A",
                                               style:
                                                   theme.textTheme.labelMedium)
                                         ]),
@@ -282,7 +389,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       .labelMediumPrimary)),
                                           Text(
                                               state.primaryFarmHoldingModelObj
-                                                      ?.farm?.x
+                                                      ?.farm?.accuracyLevel
                                                       .toString() ??
                                                   "N/A",
                                               style:

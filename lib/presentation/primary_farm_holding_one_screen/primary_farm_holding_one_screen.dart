@@ -59,7 +59,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                         onTapSortone(context);
                       }),
                   centerTitle: true,
-                  title: AppbarSubtitle1(text: "msg_primary_farm_holding".tr),
+                  title: AppbarSubtitle1(text: "Farm Holding".tr),
                   styleType: Style.bgFill),
               body: Form(
                   key: _formKey,
@@ -166,6 +166,58 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                         ],
                                       );
                                     })),
+                                SizedBox(height: 13.v),
+                                Text("msg_enumaration_geography".tr,
+                                    style:
+                                        CustomTextStyles.titleMediumSemiBold),
+                                SizedBox(height: 19.v),
+                                Text("Village Unit".tr,
+                                    style:
+                                        CustomTextStyles.labelMediumPrimary_1),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        TextEditingController?>(
+                                    selector: (state) => state.vil,
+                                    builder: (context, nameController) {
+                                      return CustomTextFormField(
+                                          focusNode: node4,
+                                          controller: nameController,
+                                          autofocus: false,
+                                          hintText: "msg_village_unit_name2".tr,
+                                          hintStyle: CustomTextStyles
+                                              .titleMediumBluegray40003,
+                                          validator: (value) {
+                                            if (!isText(value)) {
+                                              return "Please enter valid text";
+                                            }
+                                            return null;
+                                          },
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              12.h, 16.v, 12.h, 9.v));
+                                    }),
+                                SizedBox(height: 21.v),
+                                Text("Shopping Center".tr,
+                                    style:
+                                        CustomTextStyles.labelMediumPrimary_1),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        TextEditingController?>(
+                                    selector: (state) => state.shop,
+                                    builder:
+                                        (context, shoppingCenterController) {
+                                      return CustomTextFormField(
+                                          focusNode: node2,
+                                          controller: shoppingCenterController,
+                                          autofocus: false,
+                                          hintText: "lbl_shopping_center".tr,
+                                          hintStyle: CustomTextStyles
+                                              .titleMediumBluegray40003,
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              16.h, 15.v, 16.h, 10.v));
+                                    }),
+                                SizedBox(height: 20.v),
                                 SizedBox(height: 11.v),
                                 Padding(
                                     padding:

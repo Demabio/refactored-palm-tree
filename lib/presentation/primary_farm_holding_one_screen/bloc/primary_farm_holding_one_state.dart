@@ -13,6 +13,8 @@ class PrimaryFarmHoldingOneState extends Equatable {
     this.sizeLandIdleController,
     this.selectedDropDownValue,
     this.primaryFarmHoldingOneModelObj,
+    this.vil,
+    this.shop,
   });
 
   TextEditingController? nameController;
@@ -31,6 +33,9 @@ class PrimaryFarmHoldingOneState extends Equatable {
 
   PrimaryFarmHoldingOneModel? primaryFarmHoldingOneModelObj;
 
+  TextEditingController? shop;
+
+  TextEditingController? vil;
   @override
   List<Object?> get props => [
         nameController,
@@ -40,6 +45,8 @@ class PrimaryFarmHoldingOneState extends Equatable {
         sizeLandLeasedController,
         sizeLandIdleController,
         selectedDropDownValue,
+        vil,
+        shop,
         primaryFarmHoldingOneModelObj,
       ];
   PrimaryFarmHoldingOneState copyWith({
@@ -51,6 +58,8 @@ class PrimaryFarmHoldingOneState extends Equatable {
     TextEditingController? sizeLandIdleController,
     SelectionPopupModel? selectedDropDownValue,
     PrimaryFarmHoldingOneModel? primaryFarmHoldingOneModelObj,
+    TextEditingController? shop,
+    TextEditingController? vil,
   }) {
     return PrimaryFarmHoldingOneState(
       nameController: nameController ?? this.nameController,
@@ -65,6 +74,8 @@ class PrimaryFarmHoldingOneState extends Equatable {
           selectedDropDownValue ?? this.selectedDropDownValue,
       primaryFarmHoldingOneModelObj:
           primaryFarmHoldingOneModelObj ?? this.primaryFarmHoldingOneModelObj,
+      shop: shop ?? this.shop,
+      vil: vil ?? this.vil,
     );
   }
 }

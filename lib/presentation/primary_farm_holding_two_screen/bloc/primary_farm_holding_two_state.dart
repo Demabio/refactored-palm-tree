@@ -10,6 +10,9 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     this.titlesevenController,
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
     this.filled = false,
     this.checked = false,
     this.growingCropsFor = false,
@@ -29,6 +32,11 @@ class PrimaryFarmHoldingTwoState extends Equatable {
   SelectionPopupModel? selectedDropDownValue;
 
   SelectionPopupModel? selectedDropDownValue1;
+  SelectionPopupModel? selectedDropDownValue2;
+
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
 
   PrimaryFarmHoldingTwoModel? primaryFarmHoldingTwoModelObj;
 
@@ -53,6 +61,9 @@ class PrimaryFarmHoldingTwoState extends Equatable {
         titlesevenController,
         selectedDropDownValue,
         selectedDropDownValue1,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
         filled,
         checked,
         growingCropsFor,
@@ -68,6 +79,9 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     TextEditingController? titlesevenController,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
     bool? filled,
     bool? checked,
     bool? growingCropsFor,
@@ -94,6 +108,12 @@ class PrimaryFarmHoldingTwoState extends Equatable {
       treeFarming: treeFarming ?? this.treeFarming,
       primaryFarmHoldingTwoModelObj:
           primaryFarmHoldingTwoModelObj ?? this.primaryFarmHoldingTwoModelObj,
+      selectedDropDownValue2:
+          selectedDropDownValue2 ?? this.selectedDropDownValue2,
+      selectedDropDownValue3:
+          selectedDropDownValue3 ?? this.selectedDropDownValue3,
+      selectedDropDownValue4:
+          selectedDropDownValue4 ?? this.selectedDropDownValue4,
     );
   }
 }

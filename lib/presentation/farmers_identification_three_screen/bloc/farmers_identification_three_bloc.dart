@@ -278,9 +278,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
     }
 
     int stepper = 2;
-    if (fiProgress.pageFour == 1) {
-      stepper = 4;
-    } else if (fiProgress.pageThree == 1) {
+    if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {
       stepper = 2;

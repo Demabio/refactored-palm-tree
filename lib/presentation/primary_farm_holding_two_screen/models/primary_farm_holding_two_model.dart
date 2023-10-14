@@ -14,6 +14,9 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
     this.dropdownItemList = const [],
     this.dropdownItemList1 = const [],
     this.enterprises = const [],
+    this.dropdownItemList2 = const [],
+    this.dropdownItemList3 = const [],
+    this.dropdownItemList4 = const [],
     this.stepped = 1,
     this.page1 = StepState.complete,
     this.page2 = StepState.indexed,
@@ -26,12 +29,20 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.enterprisesF = false,
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
   }) {}
 
   List<SelectionPopupModel> dropdownItemList;
 
   List<SelectionPopupModel> dropdownItemList1;
 
+  List<SelectionPopupModel> dropdownItemList2;
+
+  List<SelectionPopupModel> dropdownItemList3;
+
+  List<SelectionPopupModel> dropdownItemList4;
   int stepped;
 
   StepState? page1;
@@ -51,12 +62,20 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
   SelectionPopupModel? selectedDropDownValue;
 
   SelectionPopupModel? selectedDropDownValue1;
+  SelectionPopupModel? selectedDropDownValue2;
+
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
 
   bool enterprisesF;
   int stepped2;
   PrimaryFarmHoldingTwoModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
+    List<SelectionPopupModel>? dropdownItemList2,
+    List<SelectionPopupModel>? dropdownItemList3,
+    List<SelectionPopupModel>? dropdownItemList4,
     int? stepped,
     StepState? page1,
     StepState? page2,
@@ -69,11 +88,17 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
     int? stepped2,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
     bool? enterprisesF,
   }) {
     return PrimaryFarmHoldingTwoModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
       dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
+      dropdownItemList2: dropdownItemList2 ?? this.dropdownItemList2,
+      dropdownItemList3: dropdownItemList3 ?? this.dropdownItemList3,
+      dropdownItemList4: dropdownItemList4 ?? this.dropdownItemList4,
       stepped: stepped ?? this.stepped,
       page1: page1 ?? this.page1,
       page2: page2 ?? this.page2,
@@ -87,6 +112,9 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
       selectedDropDownValue: selectedDropDownValue,
       selectedDropDownValue1: selectedDropDownValue1,
       enterprisesF: enterprisesF ?? this.enterprisesF,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
     );
   }
 
@@ -107,5 +135,8 @@ class PrimaryFarmHoldingTwoModel extends Equatable {
         selectedDropDownValue,
         selectedDropDownValue1,
         enterprisesF,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
       ];
 }

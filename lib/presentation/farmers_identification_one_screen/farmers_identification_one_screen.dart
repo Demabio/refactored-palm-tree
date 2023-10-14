@@ -167,108 +167,9 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                 ),
                                 title: 'Step 3',
                               ),
-                              EasyStep(
-                                customStep: CircleAvatar(
-                                  radius: 35,
-                                  backgroundColor: theme.colorScheme.primary,
-                                  child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: theme.colorScheme.primary,
-                                    child: farmersIdentificationOneModelObj
-                                                .stepped2 <=
-                                            3
-                                        ? Text(
-                                            '4', // You can replace '1' with the desired number
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          )
-                                        : Icon(Icons.check),
-                                  ),
-                                ),
-                                title: 'Step 4',
-
-                                // topTitle: true,
-                              ),
                             ],
                           );
                         })),
-                    SizedBox(height: 13.v),
-                    Text("msg_enumaration_geography".tr,
-                        style: CustomTextStyles.titleMediumSemiBold),
-                    SizedBox(height: 19.v),
-                    Text("Village Unit".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1),
-                    BlocSelector<
-                            FarmersIdentificationOneBloc,
-                            FarmersIdentificationOneState,
-                            TextEditingController?>(
-                        selector: (state) => state.nameController,
-                        builder: (context, nameController) {
-                          return CustomTextFormField(
-                              focusNode: node4,
-                              controller: nameController,
-                              autofocus: false,
-                              hintText: "msg_village_unit_name2".tr,
-                              hintStyle:
-                                  CustomTextStyles.titleMediumBluegray40003,
-                              validator: (value) {
-                                if (!isText(value)) {
-                                  return "Please enter valid text";
-                                }
-                                return null;
-                              },
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(12.h, 16.v, 12.h, 9.v));
-                        }),
-                    // SizedBox(height: 20.v),
-                    // Text("msg_enumerator_area2".tr,
-                    //     style: CustomTextStyles.labelMediumPrimary_1),
-                    // BlocSelector<
-                    //         FarmersIdentificationOneBloc,
-                    //         FarmersIdentificationOneState,
-                    //         TextEditingController?>(
-                    //     selector: (state) => state.areaNumberController,
-                    //     builder: (context, areaNumberController) {
-                    //       return CustomTextFormField(
-                    //           focusNode: node1,
-                    //           controller: areaNumberController,
-                    //           autofocus: false,
-                    //           hintText: "lbl_area_number".tr,
-                    //           hintStyle:
-                    //               CustomTextStyles.titleMediumBluegray40003,
-                    //           textInputType: TextInputType.number,
-                    //           validator: (value) {
-                    //             if (!isNumeric(value)) {
-                    //               return "Please enter valid number";
-                    //             }
-                    //             return null;
-                    //           },
-                    //           contentPadding:
-                    //               EdgeInsets.fromLTRB(16.h, 13.v, 16.h, 12.v));
-                    //     }),
-                    SizedBox(height: 21.v),
-                    Text("Shopping Center".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1),
-                    BlocSelector<
-                            FarmersIdentificationOneBloc,
-                            FarmersIdentificationOneState,
-                            TextEditingController?>(
-                        selector: (state) => state.shoppingCenterController,
-                        builder: (context, shoppingCenterController) {
-                          return CustomTextFormField(
-                              focusNode: node2,
-                              controller: shoppingCenterController,
-                              autofocus: false,
-                              hintText: "lbl_shopping_center".tr,
-                              hintStyle:
-                                  CustomTextStyles.titleMediumBluegray40003,
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(16.h, 15.v, 16.h, 10.v));
-                        }),
-                    SizedBox(height: 20.v),
                     Text("msg_individual_farmer".tr,
                         style: CustomTextStyles.titleMediumSemiBold),
                     SizedBox(height: 20.v),
@@ -299,7 +200,6 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                   EdgeInsets.fromLTRB(16.h, 13.v, 16.h, 12.v));
                         }),
                     SizedBox(height: 21.v),
-
                     Text("msg_national_id_number2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1),
                     BlocSelector<

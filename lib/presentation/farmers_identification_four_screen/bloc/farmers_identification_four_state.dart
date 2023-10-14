@@ -10,6 +10,9 @@ class FarmersIdentificationFourState extends Equatable {
     this.selectedDropDownValue2,
     this.selectedDropDownValue3,
     this.selectedDropDownValue4,
+    this.respMob,
+    this.respame,
+    this.respid,
     this.farmersIdentificationFourModelObj,
   });
 
@@ -23,6 +26,12 @@ class FarmersIdentificationFourState extends Equatable {
 
   SelectionPopupModel? selectedDropDownValue4;
 
+  TextEditingController? respame;
+
+  TextEditingController? respMob;
+
+  TextEditingController? respid;
+
   FarmersIdentificationFourModel? farmersIdentificationFourModelObj;
 
   @override
@@ -32,6 +41,9 @@ class FarmersIdentificationFourState extends Equatable {
         selectedDropDownValue2,
         selectedDropDownValue3,
         selectedDropDownValue4,
+        respame,
+        respMob,
+        respid,
         farmersIdentificationFourModelObj,
       ];
   FarmersIdentificationFourState copyWith({
@@ -40,6 +52,9 @@ class FarmersIdentificationFourState extends Equatable {
     SelectionPopupModel? selectedDropDownValue2,
     SelectionPopupModel? selectedDropDownValue3,
     SelectionPopupModel? selectedDropDownValue4,
+    TextEditingController? respame,
+    TextEditingController? respMob,
+    TextEditingController? respid,
     FarmersIdentificationFourModel? farmersIdentificationFourModelObj,
   }) {
     return FarmersIdentificationFourState(
@@ -55,6 +70,9 @@ class FarmersIdentificationFourState extends Equatable {
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
       farmersIdentificationFourModelObj: farmersIdentificationFourModelObj ??
           this.farmersIdentificationFourModelObj,
+      respame: respame ?? this.respame,
+      respMob: respMob ?? this.respMob,
+      respid: respid ?? this.respid,
     );
   }
 }

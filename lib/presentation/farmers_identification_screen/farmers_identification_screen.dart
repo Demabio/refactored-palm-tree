@@ -72,154 +72,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                               style:
                                                   theme.textTheme.labelMedium))
                                     ])),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 3.h, top: 12.v),
-                                    child: Text("msg_enumeration_geography".tr,
-                                        style: CustomTextStyles
-                                            .titleMediumSemiBold)),
-                                Container(
-                                    margin:
-                                        EdgeInsets.only(top: 8.v, right: 6.h),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.h, vertical: 23.v),
-                                    decoration: AppDecoration.outlinePrimary
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder10),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          // Padding(
-                                          //     padding:
-                                          //         EdgeInsets.only(right: 1.h),
-                                          //     child: Row(
-                                          //         mainAxisAlignment:
-                                          //             MainAxisAlignment
-                                          //                 .spaceBetween,
-                                          //         children: [
-                                          //           Padding(
-                                          //               padding:
-                                          //                   EdgeInsets.only(
-                                          //                       bottom: 1.v),
-                                          //               child: Text(
-                                          //                   "lbl_division".tr,
-                                          //                   style: CustomTextStyles
-                                          //                       .labelMediumPrimary)),
-                                          //           Text("lbl_chesegon".tr,
-                                          //               style: theme.textTheme
-                                          //                   .labelMedium)
-                                          //         ])),
-                                          // Padding(
-                                          //     padding: EdgeInsets.only(
-                                          //         top: 13.v, right: 1.h),
-                                          //     child: Row(
-                                          //         mainAxisAlignment:
-                                          //             MainAxisAlignment
-                                          //                 .spaceBetween,
-                                          //         children: [
-                                          //           Padding(
-                                          //               padding:
-                                          //                   EdgeInsets.only(
-                                          //                       top: 1.v),
-                                          //               child: Text(
-                                          //                   "lbl_constituency"
-                                          //                       .tr,
-                                          //                   style: CustomTextStyles
-                                          //                       .labelMediumPrimary)),
-                                          //           Text("lbl_kacheliba".tr,
-                                          //               style: theme.textTheme
-                                          //                   .labelMedium)
-                                          //         ])),
-                                          // Padding(
-                                          //     padding: EdgeInsets.only(
-                                          //         top: 13.v, right: 1.h),
-                                          //     child: Row(
-                                          //         mainAxisAlignment:
-                                          //             MainAxisAlignment
-                                          //                 .spaceBetween,
-                                          //         children: [
-                                          //           Text("lbl_location".tr,
-                                          //               style: CustomTextStyles
-                                          //                   .labelMediumPrimary),
-                                          //           Text("lbl_emboasis".tr,
-                                          //               style: theme.textTheme
-                                          //                   .labelMedium)
-                                          //         ])),
-                                          // Padding(
-                                          //     padding: EdgeInsets.only(
-                                          //         top: 14.v, right: 1.h),
-                                          //     child: Row(
-                                          //         mainAxisAlignment:
-                                          //             MainAxisAlignment
-                                          //                 .spaceBetween,
-                                          //         children: [
-                                          //           Text("lbl_sub_location".tr,
-                                          //               style: CustomTextStyles
-                                          //                   .labelMediumPrimary),
-                                          //           Text("lbl_emboasis".tr,
-                                          //               style: theme.textTheme
-                                          //                   .labelMedium)
-                                          //         ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 16.v, right: 1.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_village_unit_name"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text(
-                                                        state
-                                                                .farmersIdentificationModelObj
-                                                                ?.farmer
-                                                                ?.villageName ??
-                                                            "N/A",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          // Padding(
-                                          //     padding: EdgeInsets.only(
-                                          //         top: 13.v, right: 1.h),
-                                          //     child: Row(
-                                          //         mainAxisAlignment:
-                                          //             MainAxisAlignment
-                                          //                 .spaceBetween,
-                                          //         children: [
-                                          //           Text(
-                                          //               "msg_enumerator_area"
-                                          //                   .tr,
-                                          //               style: CustomTextStyles
-                                          //                   .labelMediumPrimary),
-                                          //           Text("lbl_1234567891234".tr,
-                                          //               style: theme.textTheme
-                                          //                   .labelMedium)
-                                          //         ])),
-                                          SizedBox(height: 16.v),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text("msg_shopping_center".tr,
-                                                    style: CustomTextStyles
-                                                        .labelMediumPrimary),
-                                                Text(
-                                                    state
-                                                            .farmersIdentificationModelObj
-                                                            ?.farmer
-                                                            ?.shoppingCenter ??
-                                                        "N/A",
-                                                    style: theme
-                                                        .textTheme.labelMedium)
-                                              ])
-                                        ])),
-                                SizedBox(height: 9.v),
                                 Text("msg_individual_farmer".tr,
                                     style:
                                         CustomTextStyles.titleMediumSemiBold),
@@ -505,119 +357,140 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
-                                          Padding(
+                                          Visibility(
+                                            visible: state
+                                                    .farmersIdentificationModelObj
+                                                    ?.farmer
+                                                    ?.respondentRlshpId ==
+                                                1,
+                                            child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
                                               child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 1.v),
-                                                        child: Text(
-                                                            "msg_respondent_relationship"
-                                                                .tr,
-                                                            style: CustomTextStyles
-                                                                .labelMediumPrimary)),
-                                                    Text(
-                                                        state.farmersIdentificationModelObj
-                                                                ?.rship ??
-                                                            "N/A",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ]))
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 1.v),
+                                                      child: Text(
+                                                          "msg_respondent_relationship"
+                                                              .tr,
+                                                          style: CustomTextStyles
+                                                              .labelMediumPrimary)),
+                                                  Text(
+                                                      state.farmersIdentificationModelObj
+                                                              ?.rship ??
+                                                          "N/A",
+                                                      style: theme.textTheme
+                                                          .labelMedium),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: state
+                                                    .farmersIdentificationModelObj
+                                                    ?.farmer
+                                                    ?.respondentRlshpId ==
+                                                1,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 1.h, top: 13.v),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 1.v),
+                                                      child: Text(
+                                                          "Respondent Name:".tr,
+                                                          style: CustomTextStyles
+                                                              .labelMediumPrimary)),
+                                                  Text(
+                                                      state
+                                                              .farmersIdentificationModelObj
+                                                              ?.farmer
+                                                              ?.respondentName ??
+                                                          "N/A",
+                                                      style: theme.textTheme
+                                                          .labelMedium),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: state
+                                                    .farmersIdentificationModelObj
+                                                    ?.farmer
+                                                    ?.respondentRlshpId ==
+                                                1,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 1.h, top: 13.v),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 1.v),
+                                                      child: Text(
+                                                          "Respondent ID Number:"
+                                                              .tr,
+                                                          style: CustomTextStyles
+                                                              .labelMediumPrimary)),
+                                                  Text(
+                                                      state
+                                                              .farmersIdentificationModelObj
+                                                              ?.farmer
+                                                              ?.respNationalId ??
+                                                          "N/A",
+                                                      style: theme.textTheme
+                                                          .labelMedium),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: state
+                                                    .farmersIdentificationModelObj
+                                                    ?.farmer
+                                                    ?.respondentRlshpId ==
+                                                1,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 1.h, top: 13.v),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 1.v),
+                                                      child: Text(
+                                                          "Respondent Mobile:"
+                                                              .tr,
+                                                          style: CustomTextStyles
+                                                              .labelMediumPrimary)),
+                                                  Text(
+                                                      state
+                                                              .farmersIdentificationModelObj
+                                                              ?.farmer
+                                                              ?.respondentMobile ??
+                                                          "N/A",
+                                                      style: theme.textTheme
+                                                          .labelMedium),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ])),
-                                SizedBox(height: 11.v),
-                                Text("Production Type".tr,
-                                    style:
-                                        CustomTextStyles.titleMediumSemiBold),
-                                SizedBox(height: 5.v),
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 8.h, vertical: 19.v),
-                                    decoration: AppDecoration.outlinePrimary
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder10),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 2.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_crop_production"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text(
-                                                        state
-                                                                    .farmersIdentificationModelObj
-                                                                    ?.farmer
-                                                                    ?.cropProd ??
-                                                                false
-                                                            ? "Yes"
-                                                            : "No",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 13.v),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_livestock_production"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text(
-                                                        state
-                                                                    .farmersIdentificationModelObj
-                                                                    ?.farmer
-                                                                    ?.livestockProd ??
-                                                                false
-                                                            ? "Yes"
-                                                            : "No",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 15.v),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                        "msg_aquaculture_production"
-                                                            .tr,
-                                                        style: CustomTextStyles
-                                                            .labelMediumPrimary),
-                                                    Text(
-                                                        state
-                                                                    .farmersIdentificationModelObj
-                                                                    ?.farmer
-                                                                    ?.fishFarming ??
-                                                                false
-                                                            ? "Yes"
-                                                            : "No",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ]))
-                                        ]))
                               ]))))));
     });
   }

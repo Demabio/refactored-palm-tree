@@ -189,37 +189,6 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                               ),
                                               title: 'Step 3',
                                             ),
-                                            EasyStep(
-                                              customStep: CircleAvatar(
-                                                radius: 35,
-                                                backgroundColor:
-                                                    theme.colorScheme.primary,
-                                                child: CircleAvatar(
-                                                  radius: 25,
-                                                  backgroundColor:
-                                                      theme.colorScheme.primary,
-                                                  child:
-                                                      farmersIdentificationOneModelObj
-                                                                  .stepped2 <=
-                                                              3
-                                                          ? Text(
-                                                              '4', // You can replace '1' with the desired number
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20,
-                                                              ),
-                                                            )
-                                                          : Icon(Icons.check),
-                                                ),
-                                              ),
-                                              title: 'Step 4',
-
-                                              // topTitle: true,
-                                            ),
                                           ],
                                         );
                                       })),

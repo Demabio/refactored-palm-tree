@@ -1,6 +1,8 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
 import 'bloc/farmers_identification_four_bloc.dart';
 import 'models/farmers_identification_four_model.dart';
@@ -188,37 +190,6 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               ),
                                               title: 'Step 3',
                                             ),
-                                            EasyStep(
-                                              customStep: CircleAvatar(
-                                                radius: 35,
-                                                backgroundColor:
-                                                    theme.colorScheme.primary,
-                                                child: CircleAvatar(
-                                                  radius: 25,
-                                                  backgroundColor:
-                                                      theme.colorScheme.primary,
-                                                  child:
-                                                      farmersIdentificationOneModelObj
-                                                                  .stepped2 <=
-                                                              3
-                                                          ? Text(
-                                                              '4', // You can replace '1' with the desired number
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20,
-                                                              ),
-                                                            )
-                                                          : Icon(Icons.check),
-                                                ),
-                                              ),
-                                              title: 'Step 4',
-
-                                              // topTitle: true,
-                                            ),
                                           ],
                                         );
                                       })),
@@ -340,146 +311,158 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               }),
                                         );
                                       }),
-                                  SizedBox(height: 21.v),
-                                  Text("lbl_production_type".tr,
-                                      style:
-                                          CustomTextStyles.titleMediumSemiBold),
-                                  SizedBox(height: 18.v),
-                                  Text("msg_crop_production2".tr,
-                                      style: CustomTextStyles
-                                          .labelMediumPrimary_1),
-                                  BlocSelector<
-                                          FarmersIdentificationFourBloc,
-                                          FarmersIdentificationFourState,
-                                          FarmersIdentificationFourModel?>(
-                                      selector: (state) => state
-                                          .farmersIdentificationFourModelObj,
-                                      builder: (context,
-                                          farmersIdentificationFourModelObj) {
-                                        return CustomDropDown(
-                                            autofocus: false,
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return "Field is required";
-                                              }
-                                            },
-                                            val:
-                                                farmersIdentificationFourModelObj
-                                                    ?.selectedDropDownValue2,
-                                            icon: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.h)),
-                                                child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgArrowdownPrimary)),
-                                            hintText: "lbl_select".tr,
-                                            items:
-                                                farmersIdentificationFourModelObj
-                                                        ?.dropdownItemList2 ??
-                                                    [],
-                                            onChanged: (value) {
-                                              context
-                                                  .read<
-                                                      FarmersIdentificationFourBloc>()
-                                                  .add(ChangeDropDown2Event(
-                                                      value: value));
-                                            });
-                                      }),
-                                  SizedBox(height: 19.v),
-                                  Text("msg_livestock_production2".tr,
-                                      style: CustomTextStyles
-                                          .labelMediumPrimary_1),
-                                  BlocSelector<
-                                          FarmersIdentificationFourBloc,
-                                          FarmersIdentificationFourState,
-                                          FarmersIdentificationFourModel?>(
-                                      selector: (state) => state
-                                          .farmersIdentificationFourModelObj,
-                                      builder: (context,
-                                          farmersIdentificationFourModelObj) {
-                                        return CustomDropDown(
-                                            autofocus: false,
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return "Field is required";
-                                              }
-                                            },
-                                            val:
-                                                farmersIdentificationFourModelObj
-                                                    ?.selectedDropDownValue3,
-                                            icon: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.h)),
-                                                child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgArrowdownPrimary)),
-                                            hintText: "lbl_select".tr,
-                                            items:
-                                                farmersIdentificationFourModelObj
-                                                        ?.dropdownItemList3 ??
-                                                    [],
-                                            onChanged: (value) {
-                                              context
-                                                  .read<
-                                                      FarmersIdentificationFourBloc>()
-                                                  .add(ChangeDropDown3Event(
-                                                      value: value));
-                                            });
-                                      }),
-                                  SizedBox(height: 19.v),
-                                  Text("msg_aquaculture_production2".tr,
-                                      style: CustomTextStyles
-                                          .labelMediumPrimary_1),
-                                  BlocSelector<
-                                          FarmersIdentificationFourBloc,
-                                          FarmersIdentificationFourState,
-                                          FarmersIdentificationFourModel?>(
-                                      selector: (state) => state
-                                          .farmersIdentificationFourModelObj,
-                                      builder: (context,
-                                          farmersIdentificationFourModelObj) {
-                                        return CustomDropDown(
-                                            autofocus: false,
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return "Field is required";
-                                              }
-                                            },
-                                            val:
-                                                farmersIdentificationFourModelObj
-                                                    ?.selectedDropDownValue4,
-                                            icon: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.h)),
-                                                child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgArrowdownPrimary)),
-                                            hintText: "lbl_select".tr,
-                                            items:
-                                                farmersIdentificationFourModelObj
-                                                        ?.dropdownItemList4 ??
-                                                    [],
-                                            onChanged: (value) {
-                                              context
-                                                  .read<
-                                                      FarmersIdentificationFourBloc>()
-                                                  .add(ChangeDropDown4Event(
-                                                      value: value));
-                                            });
-                                      }),
                                   SizedBox(height: 20.v),
+                                  BlocSelector<
+                                      FarmersIdentificationFourBloc,
+                                      FarmersIdentificationFourState,
+                                      FarmersIdentificationFourModel?>(
+                                    selector: (state) =>
+                                        state.farmersIdentificationFourModelObj,
+                                    builder: (context,
+                                        farmersIdentificationFourModelObj) {
+                                      return Visibility(
+                                        visible:
+                                            !farmersIdentificationFourModelObj!
+                                                .isFarmer,
+                                        child: Text("Respondent name (*)",
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1),
+                                      );
+                                    },
+                                  ),
+                                  BlocSelector<
+                                          FarmersIdentificationFourBloc,
+                                          FarmersIdentificationFourState,
+                                          FarmersIdentificationFourState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: !state
+                                              .farmersIdentificationFourModelObj!
+                                              .isFarmer,
+                                          child: CustomTextFormField(
+                                              focusNode: node3,
+                                              controller: state.respame,
+                                              autofocus: false,
+                                              hintText: "lbl_name".tr,
+                                              textInputType: TextInputType.text,
+                                              hintStyle: CustomTextStyles
+                                                  .titleMediumBluegray40003,
+                                              validator: (value) {
+                                                if (!isText(value)) {
+                                                  return "Please enter valid text";
+                                                } else if (isNotEmpty(value)) {
+                                                  return "Field is required.";
+                                                }
+                                                return null;
+                                              },
+                                              contentPadding:
+                                                  EdgeInsets.fromLTRB(
+                                                      16.h, 13.v, 16.h, 12.v)),
+                                        );
+                                      }),
+                                  SizedBox(height: 21.v),
+                                  BlocSelector<
+                                      FarmersIdentificationFourBloc,
+                                      FarmersIdentificationFourState,
+                                      FarmersIdentificationFourModel?>(
+                                    selector: (state) =>
+                                        state.farmersIdentificationFourModelObj,
+                                    builder: (context,
+                                        farmersIdentificationFourModelObj) {
+                                      return Visibility(
+                                        visible:
+                                            !farmersIdentificationFourModelObj!
+                                                .isFarmer,
+                                        child: Text(
+                                            "Respondent ID Number (*)".tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1),
+                                      );
+                                    },
+                                  ),
+                                  BlocSelector<
+                                          FarmersIdentificationFourBloc,
+                                          FarmersIdentificationFourState,
+                                          FarmersIdentificationFourState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: !state
+                                              .farmersIdentificationFourModelObj!
+                                              .isFarmer,
+                                          child: CustomTextFormField(
+                                              focusNode: node1,
+                                              controller: state.respid,
+                                              autofocus: false,
+                                              hintText: "lbl_id_number".tr,
+                                              textInputType:
+                                                  TextInputType.number,
+                                              textInputAction:
+                                                  TextInputAction.done,
+                                              validator: (value) {
+                                                if (!isNumeric(value)) {
+                                                  return "Please enter valid number";
+                                                } else if (isNotEmpty(value)) {
+                                                  return "Field is required.";
+                                                }
+                                                return null;
+                                              }),
+                                        );
+                                      }),
+                                  SizedBox(height: 31.v),
+                                  BlocSelector<
+                                      FarmersIdentificationFourBloc,
+                                      FarmersIdentificationFourState,
+                                      FarmersIdentificationFourModel?>(
+                                    selector: (state) =>
+                                        state.farmersIdentificationFourModelObj,
+                                    builder: (context,
+                                        farmersIdentificationFourModelObj) {
+                                      return Visibility(
+                                        visible:
+                                            !farmersIdentificationFourModelObj!
+                                                .isFarmer,
+                                        child: Text(
+                                            "Respondent Mobile Number (*)".tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1),
+                                      );
+                                    },
+                                  ),
+                                  BlocSelector<
+                                          FarmersIdentificationFourBloc,
+                                          FarmersIdentificationFourState,
+                                          FarmersIdentificationFourState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
+                                        return Visibility(
+                                          visible: !state
+                                              .farmersIdentificationFourModelObj!
+                                              .isFarmer,
+                                          child: CustomTextFormField(
+                                              focusNode: node3,
+                                              controller: state.respMob,
+                                              autofocus: false,
+                                              hintText: "Mobile Number".tr,
+                                              textInputType:
+                                                  TextInputType.phone,
+                                              hintStyle: CustomTextStyles
+                                                  .titleMediumBluegray40003,
+                                              validator: (value) {
+                                                if (!isText(value)) {
+                                                  return "Please enter valid text";
+                                                } else if (isNotEmpty(value)) {
+                                                  return "Field is required.";
+                                                }
+                                                return null;
+                                              },
+                                              contentPadding:
+                                                  EdgeInsets.fromLTRB(
+                                                      16.h, 13.v, 16.h, 12.v)),
+                                        );
+                                      }),
+                                  SizedBox(height: 21.v),
                                   GestureDetector(
                                       onTap: () {
                                         onTapRowback(context);

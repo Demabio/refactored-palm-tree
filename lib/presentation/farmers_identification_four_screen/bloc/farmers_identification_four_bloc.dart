@@ -44,6 +44,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         Farmer(
           farmerId: 0,
           farmerName: "NA",
+          farmerTheRespodent: true,
         );
     FIProgress fiProgress = await getProgress() ??
         FIProgress(
@@ -62,9 +63,10 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
 
     SelectionPopupModel? selectedDropDownValue;
     SelectionPopupModel? selectedDropDownValue1;
-    SelectionPopupModel? selectedDropDownValue2;
-    SelectionPopupModel? selectedDropDownValue3;
-    SelectionPopupModel? selectedDropDownValue4;
+
+    TextEditingController mobile = TextEditingController();
+    TextEditingController name = TextEditingController();
+    TextEditingController id = TextEditingController();
 
     if (fiProgress.pageFour == 1) {
       selectedDropDownValue = isFarmer.firstWhere(
@@ -76,20 +78,15 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
             model.id ==
             (!farmer.farmerTheRespodent! ? farmer.respondentRlshpId : 1),
       );
-      selectedDropDownValue2 = crop.firstWhere(
-        (model) => model.id == (farmer.cropProd! ? 1 : 0),
-      );
-      selectedDropDownValue3 = livestock.firstWhere(
-        (model) => model.id == (farmer.livestockProd! ? 1 : 0),
-      );
-      selectedDropDownValue4 = fish.firstWhere(
-        (model) => model.id == (farmer.fishFarming! ? 1 : 0),
-      );
+      id = TextEditingController(
+          text: !farmer.farmerTheRespodent! ? farmer.respNationalId : "N/A");
+      name = TextEditingController(
+          text: !farmer.farmerTheRespodent! ? farmer.respondentName : "N/A");
+      mobile = TextEditingController(
+          text: !farmer.farmerTheRespodent! ? farmer.respondentMobile : "N/A");
     }
     int stepper = 3;
-    if (fiProgress.pageFour == 1) {
-      stepper = 4;
-    } else if (fiProgress.pageThree == 1) {
+    if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {
       stepper = 2;
@@ -98,6 +95,9 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     }
     emit(
       state.copyWith(
+        respMob: mobile,
+        respame: name,
+        respid: id,
         farmersIdentificationFourModelObj:
             state.farmersIdentificationFourModelObj?.copyWith(
           dropdownItemList: isFarmer,
@@ -109,9 +109,6 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           farmer: farmer,
           selectedDropDownValue1: selectedDropDownValue1,
           selectedDropDownValue: selectedDropDownValue,
-          selectedDropDownValue2: selectedDropDownValue2,
-          selectedDropDownValue3: selectedDropDownValue3,
-          selectedDropDownValue4: selectedDropDownValue4,
           stepped2: stepper,
           isFarmer: farmer.farmerTheRespodent,
         ),
@@ -252,20 +249,20 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respid!.text
+            : "NA",
+        respondentMobile: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respMob!.text
+            : "N/A",
+        respondentName: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respame!.text
+            : "N/A",
         farmerTheRespodent: state
                 .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
             1,
         respondentRlshpId: state.farmersIdentificationFourModelObj!
                 .selectedDropDownValue1?.id ??
-            1,
-        cropProd: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue2!.id ==
-            1,
-        livestockProd: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue3!.id ==
-            1,
-        fishFarming: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue4!.id ==
             1,
       ))
           .then((value) {
@@ -302,20 +299,20 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respid!.text
+            : "NA",
+        respondentMobile: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respMob!.text
+            : "N/A",
+        respondentName: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.respame!.text
+            : "N/A",
         farmerTheRespodent: state
                 .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
             1,
         respondentRlshpId: state.farmersIdentificationFourModelObj!
                 .selectedDropDownValue1?.id ??
-            0,
-        cropProd: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue2!.id ==
-            1,
-        livestockProd: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue3!.id ==
-            1,
-        fishFarming: state.farmersIdentificationFourModelObj!
-                .selectedDropDownValue4!.id ==
             1,
       ))
           .then((value) {

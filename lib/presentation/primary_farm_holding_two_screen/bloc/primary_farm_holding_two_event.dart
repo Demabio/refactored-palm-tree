@@ -88,6 +88,42 @@ class ChangeDropDown1Event extends PrimaryFarmHoldingTwoEvent {
       ];
 }
 
+///event for dropdown selection
+class ChangeDropDown2Event extends PrimaryFarmHoldingTwoEvent {
+  ChangeDropDown2Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+///event for dropdown selection
+class ChangeDropDown3Event extends PrimaryFarmHoldingTwoEvent {
+  ChangeDropDown3Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+///event for dropdown selection
+class ChangeDropDown4Event extends PrimaryFarmHoldingTwoEvent {
+  ChangeDropDown4Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
 ///Event for changing checkbox
 class ChangeCheckBoxEvent extends PrimaryFarmHoldingTwoEvent {
   ChangeCheckBoxEvent({required this.value});

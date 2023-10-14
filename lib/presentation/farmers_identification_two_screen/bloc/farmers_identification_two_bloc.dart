@@ -79,29 +79,43 @@ class FarmersIdentificationTwoBloc
     NextTapEvent event,
     Emitter<FarmersIdentificationTwoState> emit,
   ) {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
     FarmerDB farmerDB = FarmerDB();
-
     try {
       farmerDB
-          .updatePageTwo(Farmer(
-        farmerId: state.farmersIdentificationTwoModelObj!.farmer!.farmerId,
-        farmerName: state.farmersIdentificationTwoModelObj!.farmer!.farmerName,
-        idNo: state.farmersIdentificationTwoModelObj!.farmer!.idNo,
-        dob: state.farmersIdentificationTwoModelObj!.selectedDropDownValue?.id,
-        gender:
-            state.farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
-        mobile: state.mobileNumberController!.text,
-        email: state.emailController?.text ?? "NA",
-        postalAddress: state.addressController?.text ?? "NA",
+          .insertNonNullable(Farmer(
+        farmerId: 0,
+        farmerName: state.name!.text,
+        idNo: state.idnumberoneController!.text,
+        dateCreated: DateTime.now(),
+        createdBy: userId,
       ))
           .then((value) {
+        PrefUtils().setFarmerId(value);
+
         if (value > 0) {
+          farmerDB.updatePageTwo(Farmer(
+            farmerId: value,
+            farmerName:
+                state.farmersIdentificationTwoModelObj!.farmer!.farmerName,
+            idNo: state.farmersIdentificationTwoModelObj!.farmer!.idNo,
+            dob: state
+                .farmersIdentificationTwoModelObj!.selectedDropDownValue?.id,
+            gender: state
+                .farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
+            mobile: state.mobileNumberController!.text,
+            email: state.emailController?.text ?? "NA",
+            postalAddress: state.addressController?.text ?? "NA",
+          ));
+
           FIProgressDB fiProgressDB = FIProgressDB();
           fiProgressDB
-              .update(FIProgress(
-                farmerId: PrefUtils().getFarmerId(),
+              .insert(FIProgress(
+                farmerId: value,
                 pageOne: 1,
-                pageTwo: 1,
+                pageTwo:
+                    state.farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
                 pageThree: state
                     .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
                 pageFour: state
@@ -197,6 +211,8 @@ class FarmersIdentificationTwoBloc
     TextEditingController mobile = TextEditingController();
     TextEditingController email = TextEditingController();
     TextEditingController padrress = TextEditingController();
+    TextEditingController name = TextEditingController();
+    TextEditingController id = TextEditingController();
     SelectionPopupModel? selectedyear;
     SelectionPopupModel? genderselected;
 
@@ -212,11 +228,11 @@ class FarmersIdentificationTwoBloc
       mobile = TextEditingController(text: farmer.mobile);
       email = TextEditingController(text: farmer.email);
       padrress = TextEditingController(text: farmer.postalAddress);
+      name = TextEditingController(text: farmer.farmerName);
+      id = TextEditingController(text: farmer.idNo);
     }
 
-    if (fiProgress.pageFour == 1) {
-      stepper = 4;
-    } else if (fiProgress.pageThree == 1) {
+    if (fiProgress.pageThree == 1) {
       stepper = 3;
     } else if (fiProgress.pageTwo == 1) {
       stepper = 2;
@@ -229,6 +245,8 @@ class FarmersIdentificationTwoBloc
         mobileNumberController: mobile,
         emailController: email,
         addressController: padrress,
+        idnumberoneController: id,
+        name: name,
       ),
     );
     emit(
