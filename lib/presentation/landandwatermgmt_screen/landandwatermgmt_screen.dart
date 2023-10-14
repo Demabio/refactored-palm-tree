@@ -1,3 +1,7 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/widgets/membership_widget.dart';
+
 import 'bloc/landandwatermgmt_bloc.dart';
 import 'models/landandwatermgmt_model.dart';
 import 'package:flutter/material.dart';
@@ -84,16 +88,32 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: CustomTextStyles
                                               .labelMediumPrimary)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 6.v),
-                                      child: Text("msg_biogas_production".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 13.v),
-                                      child: Text("lbl_cambered_beds".tr,
-                                          style: theme.textTheme.labelMedium)),
+                                  BlocSelector<
+                                          LandandwatermgmtBloc,
+                                          LandandwatermgmtState,
+                                          List<CheckBoxList>?>(
+                                      selector: (state) => state.pp,
+                                      builder: (context, list) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.v,
+                                            right: 16.h,
+                                          ),
+                                          child: Column(
+                                            children: List<Widget>.generate(
+                                              list?.length ?? 0,
+                                              (index) {
+                                                CheckBoxList model =
+                                                    list![index];
+
+                                                return InputsWidget(
+                                                  model,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      }),
                                   Padding(
                                       padding:
                                           EdgeInsets.only(left: 4.h, top: 7.v),
@@ -104,7 +124,10 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Text("msg_do_you_use_lime".tr,
                                                 style: CustomTextStyles
                                                     .labelMediumPrimary),
-                                            Text("lbl_yes".tr,
+                                            Text(
+                                                state.farmer?.limeUsage ?? false
+                                                    ? "Yes"
+                                                    : "No",
                                                 style:
                                                     theme.textTheme.labelMedium)
                                           ])),
@@ -127,7 +150,10 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Padding(
                                                 padding: EdgeInsets.only(
                                                     bottom: 18.v),
-                                                child: Text("lbl_yes".tr,
+                                                child: Text(
+                                                    state.soil?.soilTest == 1
+                                                        ? "Yes"
+                                                        : "No",
                                                     style: theme
                                                         .textTheme.labelMedium))
                                           ])),
@@ -137,22 +163,32 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                       child: Text("msg_what_is_the_main".tr,
                                           style: CustomTextStyles
                                               .labelMediumPrimary)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 7.v),
-                                      child: Text("lbl_water_pan".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 14.v),
-                                      child: Text("lbl_water_trucking".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 7.v),
-                                      child: Text("lbl_irrigation".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary)),
+                                  BlocSelector<
+                                          LandandwatermgmtBloc,
+                                          LandandwatermgmtState,
+                                          List<CheckBoxList>?>(
+                                      selector: (state) => state.s,
+                                      builder: (context, list) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.v,
+                                            right: 16.h,
+                                          ),
+                                          child: Column(
+                                            children: List<Widget>.generate(
+                                              list?.length ?? 0,
+                                              (index) {
+                                                CheckBoxList model =
+                                                    list![index];
+
+                                                return InputsWidget(
+                                                  model,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      }),
                                   Padding(
                                       padding:
                                           EdgeInsets.only(left: 4.h, top: 6.v),
@@ -163,102 +199,171 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Text("msg_do_you_undertake".tr,
                                                 style: CustomTextStyles
                                                     .labelMediumPrimary),
-                                            Text("lbl_yes".tr,
+                                            Text(
+                                                state.farmer?.irrigationUse ??
+                                                        false
+                                                    ? "Yes"
+                                                    : "No",
                                                 style:
                                                     theme.textTheme.labelMedium)
                                           ])),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 22.v),
-                                      child: Text("msg_if_yes_what_type".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 7.v),
-                                      child: Text("lbl_flooding".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 13.v),
-                                      child: Text("lbl_furrow_canal".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 8.v),
-                                      child: Text("msg_type_and_name_of".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary)),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 4.h, top: 7.v, right: 9.h),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 1.v),
-                                                child: Text(
-                                                    "msg_public_irrigation".tr,
-                                                    style: theme.textTheme
-                                                        .labelMedium)),
-                                            Text("msg_faro_full_member".tr,
-                                                style:
-                                                    theme.textTheme.labelMedium)
-                                          ])),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 8.v),
-                                      child: Text(
-                                          "msg_for_irrigation_schemes".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 6.v),
-                                      child: Text("lbl_other".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.h, top: 15.v),
-                                      child: Text("lbl_self_private".tr,
-                                          style: theme.textTheme.labelMedium)),
-                                  Align(
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 4.h, top: 7.v, right: 13.h),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 1.v),
-                                                    child: Text(
-                                                        "lbl_total_accreage".tr,
+                                  Visibility(
+                                      visible:
+                                          state.farmer?.irrigationUse ?? false,
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 4.h, top: 22.v),
+                                              child: Text(
+                                                  "msg_if_yes_what_type".tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary)),
+                                          BlocSelector<
+                                                  LandandwatermgmtBloc,
+                                                  LandandwatermgmtState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.u,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 4.h, top: 8.v),
+                                              child: Text(
+                                                  "msg_type_and_name_of".tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary)),
+                                          BlocSelector<
+                                                  LandandwatermgmtBloc,
+                                                  LandandwatermgmtState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.p,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return MembershipItemWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 4.h, top: 8.v),
+                                              child: Text(
+                                                  "msg_for_irrigation_schemes"
+                                                      .tr,
+                                                  style: CustomTextStyles
+                                                      .labelMediumPrimary)),
+                                          BlocSelector<
+                                                  LandandwatermgmtBloc,
+                                                  LandandwatermgmtState,
+                                                  List<CheckBoxList>?>(
+                                              selector: (state) => state.b,
+                                              builder: (context, list) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 15.v,
+                                                    right: 16.h,
+                                                  ),
+                                                  child: Column(
+                                                    children:
+                                                        List<Widget>.generate(
+                                                      list?.length ?? 0,
+                                                      (index) {
+                                                        CheckBoxList model =
+                                                            list![index];
+
+                                                        return InputsWidget(
+                                                          model,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 4.h,
+                                                      top: 7.v,
+                                                      right: 13.h),
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 1.v),
+                                                            child: Text(
+                                                                "lbl_total_accreage"
+                                                                    .tr,
+                                                                style: CustomTextStyles
+                                                                    .labelMediumPrimary)),
+                                                        Text(
+                                                            state.farmer
+                                                                    ?.irrigationArea
+                                                                    .toString() ??
+                                                                "N/A",
+                                                            style: theme
+                                                                .textTheme
+                                                                .labelMedium)
+                                                      ]))),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 4.h,
+                                                  top: 20.v,
+                                                  right: 2.h),
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text("lbl_unit_of_area2".tr,
                                                         style: CustomTextStyles
-                                                            .labelMediumPrimary)),
-                                                Text("lbl_2".tr,
-                                                    style: theme
-                                                        .textTheme.labelMedium)
-                                              ]))),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 4.h, top: 20.v, right: 2.h),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("lbl_unit_of_area2".tr,
-                                                style: CustomTextStyles
-                                                    .labelMediumPrimary),
-                                            Text("lbl_acre".tr,
-                                                style:
-                                                    theme.textTheme.labelMedium)
-                                          ]))
+                                                            .labelMediumPrimary),
+                                                    Text("lbl_acre".tr,
+                                                        style: theme.textTheme
+                                                            .labelMedium)
+                                                  ]))
+                                        ],
+                                      )),
                                 ]))
                       ]))));
     });
