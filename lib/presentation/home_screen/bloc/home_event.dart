@@ -29,12 +29,12 @@ class FarmerSearchEvent extends HomeEvent {
   FarmerSearchEvent({
     this.onError,
     this.onSuccess,
-    required this.idNo,
+    this.idNo,
   });
   Function? onSuccess;
 
   Function? onError;
-  String idNo;
+  String? idNo;
   @override
   List<Object?> get props => [
         onSuccess,

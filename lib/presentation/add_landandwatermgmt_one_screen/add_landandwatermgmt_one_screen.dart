@@ -50,6 +50,7 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
+              onTap: () => goBack(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,

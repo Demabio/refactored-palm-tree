@@ -217,7 +217,7 @@ class Farmer {
         farmRecords: map['farmRecords'],
         irrigationUse: map['irrigationUse'],
         irrigationArea: map['irrigationArea']?.toDouble(),
-        cooperativeGroup: map['cooperativeGroup'],
+        cooperativeGroup: map['cooperativeGroup'] == 1,
         extensionsericeAccess: map['extensionsericeAccess']?.toInt(),
         organizationId: map['organizationId']?.toInt(),
         enumeratorName: map['enumeratorName'],

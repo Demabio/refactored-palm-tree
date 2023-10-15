@@ -115,6 +115,21 @@ class CropAgricultureScreen extends StatelessWidget {
         );
   }
 
+  delet(BuildContext context, int id, int crop) {
+    context.read<CropAgricultureBloc>().add(
+          DeleteEvent(
+            value: id,
+            crop: crop,
+            createSuccessful: () {
+              onTapImage(context);
+            },
+            createFailed: () {
+              onTapImage(context);
+            },
+          ),
+        );
+  }
+
   /// Navigates to the farmerRegistrationScreen when the action is triggered.
   ///
   /// The [BuildContext] parameter is used to build the navigation stack.

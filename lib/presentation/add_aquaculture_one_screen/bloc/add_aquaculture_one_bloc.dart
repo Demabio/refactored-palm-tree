@@ -397,13 +397,19 @@ class AddAquacultureOneBloc
       fish = await _fish(fish, fishes!);
       prods = _systems(prods, prodsyss!);
     }
-
+    int stepper = 0;
+    if (pfProgress.pageTwo == 1) {
+      stepper = 2;
+    } else if (pfProgress.pageOne == 1) {
+      stepper = 1;
+    }
     emit(state.copyWith(
         fish: fish,
         aquatypes: atypes,
         prodsyss: prods,
         addAquacultureOneModelObj: state.addAquacultureOneModelObj?.copyWith(
           aqProgress: pfProgress,
+          stepped2: stepper,
         )));
   }
 }

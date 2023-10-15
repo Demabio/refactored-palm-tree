@@ -47,10 +47,12 @@ class FarmersIdentificationBloc
     return educationLevelDB.fetchByEducationLevelId(id);
   }
 
-  Future<RespondentRelationship?> getRship(int id) async {
+  Future<RespondentRelationship?> getRship(int? id) async {
     RespondentRelationshipDB maritalStatusDB = RespondentRelationshipDB();
 
-    return maritalStatusDB.fetchByRespondentRelationshipId(id);
+    return id != null
+        ? maritalStatusDB.fetchByRespondentRelationshipId(id)
+        : null;
   }
 
   _onInitialize(
@@ -62,11 +64,16 @@ class FarmersIdentificationBloc
           farmerId: 0,
           farmerName: "NA",
         );
-    EducationLevel? level = await getEducation(farmer.educationLevelId ?? 0);
-    RespondentRelationship? relationship = await getRship(
-        !farmer.farmerTheRespodent! ? farmer.respondentRlshpId! : 1);
-    MaritalStatus? maritalStatus =
-        await getMarstatus(farmer.maritalStatusId ?? 0);
+    EducationLevel? level = farmer.educationLevelId != null
+        ? await getEducation(farmer.educationLevelId ?? 0)
+        : null;
+
+    RespondentRelationship? relationship =
+        await getRship(farmer.respondentRlshpId);
+
+    MaritalStatus? maritalStatus = farmer.maritalStatusId != null
+        ? await getMarstatus(farmer.maritalStatusId ?? 0)
+        : null;
 
     emit(state.copyWith(
       farmersIdentificationModelObj:

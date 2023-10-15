@@ -21,7 +21,7 @@ class FarmersIdentificationFourModel extends Equatable {
     this.page2 = StepState.complete,
     this.page3 = StepState.complete,
     this.page4 = StepState.indexed,
-    this.isFarmer = false,
+    this.isFarmer = true,
     this.fiProgress,
     this.farmer,
     this.selectedDropDownValue,

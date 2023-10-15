@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/process_status.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
@@ -28,9 +29,10 @@ class FarmerRegistrationModel extends Equatable {
     this.at2 = false,
     this.lw2 = false,
     this.fs2 = false,
-    this.crop = false,
-    this.live = false,
-    this.fish = false,
+    this.crop = StepState.indexed,
+    this.live = StepState.indexed,
+    this.fish = StepState.indexed,
+    this.fid = StepState.indexed,
   }) {}
 
   ProcessStatus? processStatus;
@@ -52,9 +54,11 @@ class FarmerRegistrationModel extends Equatable {
   bool at2;
   bool lw2;
   bool fs2;
-  bool crop;
-  bool live;
-  bool fish;
+  StepState crop;
+  StepState live;
+  StepState fish;
+  StepState fid;
+
   int currentStep;
   FarmerRegistrationModel copyWith({
     ProcessStatus? processStatus,
@@ -76,9 +80,10 @@ class FarmerRegistrationModel extends Equatable {
     bool? at2,
     bool? lw2,
     bool? fs2,
-    bool? crop,
-    bool? live,
-    bool? fish,
+    StepState? crop,
+    StepState? live,
+    StepState? fish,
+    StepState? fid,
   }) {
     return FarmerRegistrationModel(
       processStatus: processStatus ?? this.processStatus,
@@ -103,6 +108,7 @@ class FarmerRegistrationModel extends Equatable {
       at2: at2 ?? this.at2,
       lw2: lw2 ?? this.lw2,
       fs2: fs2 ?? this.fs2,
+      fid: fid ?? this.fid,
     );
   }
 
@@ -130,5 +136,6 @@ class FarmerRegistrationModel extends Equatable {
         fish,
         crop,
         live,
+        fid,
       ];
 }

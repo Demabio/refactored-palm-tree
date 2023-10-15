@@ -36,3 +36,25 @@ class AddEditEvent extends CropAgricultureEvent {
         crop,
       ];
 }
+
+class DeleteEvent extends CropAgricultureEvent {
+  DeleteEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}

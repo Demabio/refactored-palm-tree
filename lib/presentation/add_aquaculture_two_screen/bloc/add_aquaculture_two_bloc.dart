@@ -91,6 +91,7 @@ class AddAquacultureTwoBloc
       selectedDropDownValue: aa,
       selectedDropDownValue1: bb,
       selectedDropDownValue2: cc,
+      aqProgress: pfProgress,
     )));
   }
 

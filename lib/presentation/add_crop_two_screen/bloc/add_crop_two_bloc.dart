@@ -122,11 +122,11 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
       cropsDB
           .updatePageTwo(FarmerCrop(
         farmerCropId: PrefUtils().getCropId(),
-        cropMotiveId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        cropMotiveId: state.addCropTwoModelObj!.selectedDropDownValue?.id,
         cropSystemId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
-        waterSourceId: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
-        pesticideUse: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
-        fertilizerUse: state.addCropTwoModelObj!.selectedDropDownValue1?.id,
+        waterSourceId: state.addCropTwoModelObj!.selectedDropDownValue2?.id,
+        pesticideUse: state.addCropTwoModelObj!.selectedDropDownValue3?.id,
+        fertilizerUse: state.addCropTwoModelObj!.selectedDropDownValue4?.id,
         farmerId: farmerid,
         farmerFarmId: PrefUtils().getFarmId(),
       ))

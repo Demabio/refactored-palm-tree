@@ -174,6 +174,12 @@ class PrimaryFarmHoldingTwoBloc
               state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1,
+          selectedDropDownValue2:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue2,
+          selectedDropDownValue3:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue3,
+          selectedDropDownValue4:
+              state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue4,
         )));
   }
 

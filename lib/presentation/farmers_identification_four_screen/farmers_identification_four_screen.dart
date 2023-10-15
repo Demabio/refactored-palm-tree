@@ -349,7 +349,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               hintStyle: CustomTextStyles
                                                   .titleMediumBluegray40003,
                                               validator: (value) {
-                                                if (!isText(value)) {
+                                                if (!isText(value,
+                                                    isRequired: true)) {
                                                   return "Please enter valid text";
                                                 } else if (isNotEmpty(value)) {
                                                   return "Field is required.";
@@ -401,7 +402,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               textInputAction:
                                                   TextInputAction.done,
                                               validator: (value) {
-                                                if (!isNumeric(value)) {
+                                                if (!isNumeric(value,
+                                                    isRequired: true)) {
                                                   return "Please enter valid number";
                                                 } else if (isNotEmpty(value)) {
                                                   return "Field is required.";
@@ -441,7 +443,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               .farmersIdentificationFourModelObj!
                                               .isFarmer,
                                           child: CustomTextFormField(
-                                              focusNode: node3,
+                                              focusNode: node5,
                                               controller: state.respMob,
                                               autofocus: false,
                                               hintText: "Mobile Number".tr,
@@ -450,7 +452,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               hintStyle: CustomTextStyles
                                                   .titleMediumBluegray40003,
                                               validator: (value) {
-                                                if (!isText(value)) {
+                                                if (!isNumeric(value,
+                                                    isRequired: true)) {
                                                   return "Please enter valid text";
                                                 } else if (isNotEmpty(value)) {
                                                   return "Field is required.";
@@ -568,11 +571,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   _navToStep(int val, BuildContext context, FIProgress fiProgress) {
     if (val == 0) {
       Navigator.popAndPushNamed(
-          context, AppRoutes.farmersIdentificationOneScreen);
-    } else if (val == 1) {
-      Navigator.popAndPushNamed(
           context, AppRoutes.farmersIdentificationTwoScreen);
-    } else if (val == 2) {
+    } else if (val == 1) {
       Navigator.popAndPushNamed(
           context, AppRoutes.farmersIdentificationThreeScreen);
     }

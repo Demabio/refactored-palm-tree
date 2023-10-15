@@ -21,7 +21,7 @@ class LSIProgressDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName ("farmId", "pageOne", "pageTwo")
-      VALUES (?, ?, ?, ?, ?)
+      VALUES (?, ?, ?)
     ''', [
       fiProgress.farmId,
       fiProgress.pageOne,

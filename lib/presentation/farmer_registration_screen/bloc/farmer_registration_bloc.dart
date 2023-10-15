@@ -263,12 +263,46 @@ class FarmerRegistrationBloc
           pageOne: 0,
           pageTwo: 0,
         );
+    StepState a = StepState.indexed;
+    StepState b = StepState.indexed;
+    StepState c = StepState.indexed;
+    StepState d = StepState.indexed;
+    if (farm.cropProd!) {
+      if (caProgress.pageOne == 1 && caProgress.pageTwo == 1) {
+        a = StepState.complete;
+      }
+    } else {
+      a = StepState.disabled;
+    }
+    if (farm.livestockProd!) {
+      if (lsProgress.pageOne == 1 && lsiProgress.pageOne == 1) {
+        b = StepState.complete;
+      }
+    } else {
+      b = StepState.disabled;
+    }
+    if (farm.fishFarming!) {
+      if (aqProgress.pageOne == 1 && aqProgress.pageTwo == 1) {
+        c = StepState.complete;
+      }
+    } else {
+      c = StepState.disabled;
+    }
+    if (!PrefUtils().getFound()) {
+      if (fiProgress.pageOne == 1 ||
+          fiProgress.pageTwo == 1 ||
+          fiProgress.pageThree == 1) {
+        d = StepState.complete;
+      }
+    } else {
+      d = StepState.disabled;
+    }
     emit(state.copyWith(
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(
       processStatus: getRegProgress(),
       fi: (fiProgress.pageOne == 1 ||
           fiProgress.pageTwo == 1 ||
-          fiProgress.pageOne == 1),
+          fiProgress.pageThree == 1),
       fh: (fhProgress.pageOne == 1 || fhProgress.pageTwo == 1),
       ca: (caProgress.pageOne == 1 || caProgress.pageTwo == 1),
       ls: (lsProgress.pageOne == 1 || lsiProgress.pageOne == 1),
@@ -276,9 +310,9 @@ class FarmerRegistrationBloc
       at: (atProgress.pageOne == 1 || atProgress.pageTwo == 1),
       lw: (lwProgress.pageOne == 1 || lwProgress.pageTwo == 1),
       fs: (fsProgress.pageOne == 1 || fsProgress.pageTwo == 1),
-      crop: farm.cropProd,
-      fish: farm.fishFarming,
-      live: farm.livestockInsurance,
+      crop: a,
+      fish: c,
+      live: b, fid: d,
       fi2: (fiProgress.pageOne == 1 &&
           fiProgress.pageTwo == 1 &&
           fiProgress.pageOne == 1),

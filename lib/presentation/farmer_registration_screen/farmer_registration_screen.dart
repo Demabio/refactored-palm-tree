@@ -104,52 +104,48 @@ class FarmerRegistrationScreen extends StatelessWidget {
       steps: [
         _buildStep(
           title: Text('Farmers Identification'),
-          state: model.fi2 ? StepState.complete : StepState.indexed,
+          state: model.fid,
           addcallback: () {
             farmersIdentification(context);
           },
           editcallback: () => editfarmersIdentification(context),
           addoredit: model.fi,
-          isActive: !PrefUtils().getFound(),
         ),
         _buildStep(
           title: Text('Primary Farm Holding'),
-          state: model.ff2 ? StepState.complete : StepState.indexed,
+          state: model.fh2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             primaryFarmHolding(context);
           },
           editcallback: () => editprimaryFarmHolding(context),
-          addoredit: model.ff,
+          addoredit: model.fh,
         ),
         _buildStep(
           title: Text('Crop Agriculture'),
-          state: model.ca2 ? StepState.complete : StepState.indexed,
+          state: model.crop,
           addcallback: () {
             cropAgriculture(context);
           },
           editcallback: () => editcropAgriculture(context),
           addoredit: model.ca,
-          isActive: model.crop,
         ),
         _buildStep(
           title: Text('Livestock'),
-          state: model.ls2 ? StepState.complete : StepState.indexed,
+          state: model.live,
           addcallback: () {
             onTapAdddetails(context);
           },
           editcallback: () => editTapAdddetails(context),
           addoredit: model.ls,
-          isActive: model.live,
         ),
         _buildStep(
           title: Text('Aquaculture'),
-          state: model.ff2 ? StepState.complete : StepState.indexed,
+          state: model.fish,
           addcallback: () {
             onTapAqua(context);
           },
           editcallback: () => editTapAqua(context),
           addoredit: model.ff,
-          isActive: model.fish,
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
@@ -257,60 +253,62 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   farmersIdentification(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
   }
 
   primaryFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.primaryFarmHoldingOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.primaryFarmHoldingOneScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
   }
 
   addFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addFarmHoldingOneScreen, arguments: {
-      NavigationArgs.farmerEdit: false,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.addFarmHoldingOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
   cropAgriculture(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addCropOneScreen, arguments: {
+    NavigatorService.popAndPushNamed(AppRoutes.addCropOneScreen, arguments: {
       NavigationArgs.farmerEdit: false,
     });
   }
 
   onTapAdddetails(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.livestockOneTabContainerScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.livestockOneTabContainerScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
   }
 
   onTapAqua(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addAquacultureOneScreen, arguments: {
-      NavigationArgs.farmerEdit: false,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.addAquacultureOneScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: false,
+        });
   }
 
   onFarmasset(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addFarmtechandassetsOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.addFarmtechandassetsOneScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
   }
 
   onLandWater(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addLandandwatermgmtOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.addLandandwatermgmtOneScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
   }
 
   onFinance(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addFinancialandservicesOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.addFinancialandservicesOneScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });
@@ -318,63 +316,68 @@ class FarmerRegistrationScreen extends StatelessWidget {
 
 //EDIT
   editfarmersIdentification(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen,
         arguments: {
           NavigationArgs.farmerEdit: true,
         });
   }
 
   editprimaryFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.primaryFarmHoldingScreen, arguments: {
-      NavigationArgs.farmerEdit: true,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.primaryFarmHoldingScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
   }
 
   editFarmHolding(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.addFarmHoldingScreen, arguments: {
-      NavigationArgs.farmerEdit: true,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.addFarmHoldingScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
   }
 
   editcropAgriculture(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.cropAgricultureScreen, arguments: {
-      NavigationArgs.farmerEdit: true,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.cropAgricultureScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
   }
 
   editTapAdddetails(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.livestockOneTabContainerScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.livestockOneTabContainerScreen,
         arguments: {
           NavigationArgs.farmerEdit: true,
         });
   }
 
   editTapAqua(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.aquacultureScreen, arguments: {
+    NavigatorService.popAndPushNamed(AppRoutes.aquacultureScreen, arguments: {
       NavigationArgs.farmerEdit: true,
     });
   }
 
   editFarmasset(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmtechandassetsScreen, arguments: {
-      NavigationArgs.farmerEdit: true,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.farmtechandassetsScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
   }
 
   editLandWater(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.landandwatermgmtScreen, arguments: {
-      NavigationArgs.farmerEdit: true,
-    });
+    NavigatorService.popAndPushNamed(AppRoutes.landandwatermgmtScreen,
+        arguments: {
+          NavigationArgs.farmerEdit: true,
+        });
   }
 
   editFinance(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.financialandservicesScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.financialandservicesScreen,
         arguments: {
           NavigationArgs.farmerEdit: true,
         });
   }
   // onTapAdddetails(BuildContext context) {
-  //   NavigatorService.pushNamed(
+  //   NavigatorService.popAndPushNamed(
   //     AppRoutes.livestockOneTabContainerScreen,
   //   );
   // }
@@ -385,7 +388,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the homeScreen.
   onTapSave(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.homeScreen,
     );
   }

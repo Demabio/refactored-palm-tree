@@ -41,7 +41,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                     AppbarImage1(
                         onTap: () {
                           NavigatorService.pushNamed(
-                              AppRoutes.farmersIdentificationOneScreen);
+                              AppRoutes.farmersIdentificationTwoScreen);
                         },
                         svgPath: ImageConstant.imgFrame33,
                         margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v))

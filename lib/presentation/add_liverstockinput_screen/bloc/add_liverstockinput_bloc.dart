@@ -140,10 +140,9 @@ class AddLiverstockinputBloc
             LSIProgressDB pfProgressDB = LSIProgressDB();
             if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 0) {
               pfProgressDB
-                  .update(PFProgress(
+                  .insert(PFProgress(
                     farmId: PrefUtils().getFarmId(),
-                    pageOne:
-                        state.addLiverstockinputModelObj!.lsProgress!.pageOne,
+                    pageOne: 1,
                     pageTwo: 1,
                   ))
                   .then((value) => print("Scope FI" + value.toString()));

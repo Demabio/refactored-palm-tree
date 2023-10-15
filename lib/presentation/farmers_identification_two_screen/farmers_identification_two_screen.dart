@@ -195,9 +195,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                       );
                                     })),
                                 SizedBox(height: 11.v),
-                                Text("msg_individual_farmer".tr,
-                                    style:
-                                        CustomTextStyles.titleMediumSemiBold),
+
                                 Text("msg_individual_farmer".tr,
                                     style:
                                         CustomTextStyles.titleMediumSemiBold),
@@ -562,18 +560,13 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
   }
 
   _navToStep(int val, BuildContext context, FIProgress fiProgress) {
-    if (val == 0 && fiProgress.pageOne == 1) {
-      Navigator.popAndPushNamed(
-          context, AppRoutes.farmersIdentificationOneScreen);
-    }
-
     if (_formKey.currentState!.validate()) {
-      if (val == 2 && fiProgress.pageTwo == 1) {
+      if (val == 1 && fiProgress.pageOne == 1) {
         Navigator.popAndPushNamed(
             context, AppRoutes.farmersIdentificationThreeScreen);
-      } else if (val == 3 &&
-          fiProgress.pageThree == 1 &&
-          fiProgress.pageTwo == 1) {
+      } else if (val == 2 &&
+          fiProgress.pageTwo == 1 &&
+          fiProgress.pageOne == 1) {
         Navigator.popAndPushNamed(
             context, AppRoutes.farmersIdentificationFourScreen);
       }

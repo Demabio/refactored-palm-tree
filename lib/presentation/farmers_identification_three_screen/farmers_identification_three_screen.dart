@@ -472,15 +472,12 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   }
 
   _navToStep(int val, BuildContext context, FIProgress fiProgress) {
-    if (val == 0 && fiProgress.pageOne == 1) {
-      Navigator.popAndPushNamed(
-          context, AppRoutes.farmersIdentificationOneScreen);
-    } else if (val == 1 && fiProgress.pageTwo == 1) {
+    if (val == 0) {
       Navigator.popAndPushNamed(
           context, AppRoutes.farmersIdentificationTwoScreen);
     }
     if (_formKey.currentState!.validate()) {
-      if (val == 3 && fiProgress.pageThree == 1) {
+      if (val == 2 && fiProgress.pageTwo == 1) {
         Navigator.popAndPushNamed(
             context, AppRoutes.farmersIdentificationFourScreen);
       }

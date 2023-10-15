@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return SafeArea(
         child: Scaffold(
           key: _scaffoldKey,
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
               height: 47.v,
@@ -381,6 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 key: _formKey,
                                                 child: CustomSearchView(
                                                     enabled: true,
+                                                    autofocus: false,
                                                     focusNode:
                                                         _secondTextFieldFocus,
                                                     controller:
@@ -454,9 +455,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .validate()) {
                                                 context.read<HomeBloc>().add(
                                                     FarmerSearchEvent(
+                                                        onError: () =>
+                                                            onTapSearchfarmer(
+                                                                context),
+                                                        onSuccess: () =>
+                                                            onTapSearchfarmer(
+                                                                context),
                                                         idNo: state
-                                                            .searchController1!
-                                                            .text));
+                                                            .searchController1
+                                                            ?.text));
                                               }
                                             })
                                       ]))),

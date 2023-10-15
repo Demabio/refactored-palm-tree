@@ -69,13 +69,15 @@ class CropPlantingMotiveDB {
         .toList();
   }
 
-  Future<CropPlantingMotive> fetchByCropMotiveId(int cropMotiveId) async {
+  Future<CropPlantingMotive?> fetchByCropMotiveId(int cropMotiveId) async {
     final database = await DatabaseService().database;
     final motive = await database.rawQuery('''
       SELECT * FROM $tableName WHERE crop_motive_id = ?
     ''', [cropMotiveId]);
 
-    return CropPlantingMotive.fromSqfliteDatabase(motive.first);
+    return motive.isNotEmpty
+        ? CropPlantingMotive.fromSqfliteDatabase(motive.first)
+        : null;
   }
 
   // Add more database methods as needed

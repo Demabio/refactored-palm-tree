@@ -53,12 +53,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     FarmerSearchEvent event,
     Emitter<HomeState> emit,
   ) async {
-    Farmer? farmer = await getFarmer(event.idNo);
+    Farmer? farmer = await getFarmer(event.idNo!);
     if (farmer == null) {
       PrefUtils().setFarmerId(0);
       PrefUtils().setFarmerName("N/A");
-      PrefUtils().setFarmerIdNo("Not Found");
+      PrefUtils().setFarmerIdNo("");
       PrefUtils().setFound(false);
+      PrefUtils().setCropId(0);
+      PrefUtils().setFarmId(0);
+      PrefUtils().setLivestockId(0);
 
       event.onError!.call();
     } else {
@@ -66,7 +69,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       PrefUtils().setFarmerName(farmer.farmerName);
       PrefUtils().setFarmerIdNo(farmer.idNo!);
       PrefUtils().setFound(true);
-
+      PrefUtils().setCropId(0);
+      PrefUtils().setFarmId(0);
+      PrefUtils().setLivestockId(0);
       event.onSuccess!.call();
     }
   }

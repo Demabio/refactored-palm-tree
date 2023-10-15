@@ -47,6 +47,7 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                         children: [
                           CustomImageView(
                             imagePath: ImageConstant.imgRectangle9,
+                            onTap: () => Navigator.pop(context),
                             height: 50.v,
                             width: 343.h,
                             margin: EdgeInsets.only(left: 16.h),
@@ -104,7 +105,7 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         (state
                                                     .livestockTwoModelObj!
                                                     .livestockins
-                                                    ?.fertilizerSeeds ??
+                                                    ?.fertilizerForFodder ??
                                                 false)
                                             ? "Yes"
                                             : "No",
@@ -131,7 +132,7 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         (state
                                                     .livestockTwoModelObj!
                                                     .livestockins
-                                                    ?.fertilizerForFodder ??
+                                                    ?.fodderSeeds ??
                                                 false)
                                             ? "Yes"
                                             : "No",

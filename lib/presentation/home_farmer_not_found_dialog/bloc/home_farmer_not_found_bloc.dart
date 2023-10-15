@@ -165,7 +165,7 @@ class HomeFarmerNotFoundBloc
     InnitDBwithDataEvent event,
     Emitter<HomeFarmerNotFoundState> emit,
   ) async {
-    int full = 10200;
+    int full = 10600;
     int appraiser = 0;
     double currentval = 0;
     double currentpercentage = 0;

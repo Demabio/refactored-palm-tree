@@ -245,8 +245,9 @@ class AquacultureScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
                                                     Text(
-                                                        state.farmerFishProductionLevel!
-                                                                .fertilizerInPonds!
+                                                        state.farmerFishProductionLevel
+                                                                    ?.fertilizerInPonds ??
+                                                                false
                                                             ? "Yes"
                                                             : "No",
                                                         style: theme.textTheme
