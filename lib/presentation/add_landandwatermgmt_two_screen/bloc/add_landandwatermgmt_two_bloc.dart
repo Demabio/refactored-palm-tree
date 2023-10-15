@@ -4,6 +4,7 @@ import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/agency.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
@@ -14,6 +15,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/agency.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
@@ -187,16 +189,16 @@ class AddLandandwatermgmtTwoBloc
 
     int selectedCount2 =
         state.p.where((enterprise) => enterprise.isSelected).length;
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       LWProgressDB atProgressDB = LWProgressDB();
       if (state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageTwo == 0 &&
           ((selectedCount != 0 && selectedCount2 != 0) ||
               state.addLandandwatermgmtTwoModelObj?.selectedDropDownValue!.id ==
                   0)) {
-        int id = await farmerDB.updateFromLandWaterTwo(Farmer(
+        int id = await farmerDB.updateFromLandWaterTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           irrigationUse:
               state.addLandandwatermgmtTwoModelObj?.selectedDropDownValue!.id ==
                       0
@@ -211,23 +213,25 @@ class AddLandandwatermgmtTwoBloc
                   : double.parse(state.areavalueoneController!.text),
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .update(LWProgress(
-              farmId: farmid,
-              pageOne:
-                  state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
-              pageTwo: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .update(LWProgress(
+                farmId: farmid,
+                pageOne:
+                    state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
+                pageTwo: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
       } else if ((selectedCount != 0 && selectedCount2 != 0) ||
           state.addLandandwatermgmtTwoModelObj?.selectedDropDownValue!.id ==
               0) {
-        int id = await farmerDB.updateFromLandWaterTwo(Farmer(
+        int id = await farmerDB.updateFromLandWaterTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           irrigationUse:
               state.addLandandwatermgmtTwoModelObj?.selectedDropDownValue!.id ==
                       0
@@ -241,17 +245,19 @@ class AddLandandwatermgmtTwoBloc
                   ? 0
                   : double.parse(state.areavalueoneController!.text),
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(LWProgress(
-              farmId: farmid,
-              pageOne:
-                  state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
-              pageTwo: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (id > 0) {
+          atProgressDB
+              .update(LWProgress(
+                farmId: farmid,
+                pageOne:
+                    state.addLandandwatermgmtTwoModelObj!.lwProgress!.pageOne,
+                pageTwo: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =
@@ -450,6 +456,12 @@ class AddLandandwatermgmtTwoBloc
     return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
   }
 
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
+  }
+
   _onInitialize(
     AddLandandwatermgmtTwoInitialEvent event,
     Emitter<AddLandandwatermgmtTwoState> emit,
@@ -460,10 +472,10 @@ class AddLandandwatermgmtTwoBloc
           pageOne: 0,
           pageTwo: 0,
         );
-    Farmer farmer = await getFarmer() ??
-        Farmer(
+    FarmerFarm farmer = await getFarm() ??
+        FarmerFarm(
           farmerId: 0,
-          farmerName: "farmerName",
+          farmerFarmId: 0,
           labourSourceId: 0,
           irrigationArea: 0,
           irrigationUse: false,

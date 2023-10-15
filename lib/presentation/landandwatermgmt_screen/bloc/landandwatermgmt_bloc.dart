@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/agency.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
@@ -17,6 +18,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/agency.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
@@ -53,6 +55,16 @@ class LandandwatermgmtBloc
           farmerName: "farmerName",
           gokFertiliser: false,
           cooperativeGroup: false,
+          limeUsage: false,
+          irrigationArea: 0,
+          irrigationUse: false,
+        );
+
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          gokFertiliser: false,
+          farmerFarmId: 0,
           limeUsage: false,
           irrigationArea: 0,
           irrigationUse: false,
@@ -287,6 +299,12 @@ class LandandwatermgmtBloc
     int farmerid = PrefUtils().getFarmerId();
     FarmerDB farmerFishProductionLevelsDB = FarmerDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
   Future<FarmerSoilTest?> getSoilTest() async {

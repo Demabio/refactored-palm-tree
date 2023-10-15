@@ -13,6 +13,7 @@ class LandandwatermgmtState extends Equatable {
     this.s = const [],
     this.farmer,
     this.soil,
+    this.farm,
   });
 
   LandandwatermgmtModel? landandwatermgmtModelObj;
@@ -24,6 +25,7 @@ class LandandwatermgmtState extends Equatable {
 
   Farmer? farmer;
   FarmerSoilTest? soil;
+  FarmerFarm? farm;
   @override
   List<Object?> get props => [
         landandwatermgmtModelObj,
@@ -33,6 +35,7 @@ class LandandwatermgmtState extends Equatable {
         p,
         b,
         soil,
+        farm,
         farmer,
       ];
   LandandwatermgmtState copyWith({
@@ -43,6 +46,7 @@ class LandandwatermgmtState extends Equatable {
     List<CheckBoxList>? pp,
     List<CheckBoxList>? s,
     Farmer? farmer,
+    FarmerFarm? farm,
     FarmerSoilTest? soil,
   }) {
     return LandandwatermgmtState(
@@ -54,6 +58,7 @@ class LandandwatermgmtState extends Equatable {
       pp: pp ?? this.pp,
       s: s ?? this.s,
       farmer: farmer ?? this.farmer,
+      farm: farm ?? this.farm,
     );
   }
 }

@@ -24,3 +24,13 @@ class DBCheckEvent extends HomeEvent {
   @override
   List<Object?> get props => [onSuccess, onError];
 }
+
+class FarmerSearchEvent extends HomeEvent {
+  FarmerSearchEvent({this.onError, this.onSuccess});
+  Function? onSuccess;
+
+  Function? onError;
+
+  @override
+  List<Object?> get props => [onSuccess, onError];
+}

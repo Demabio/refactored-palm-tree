@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/farm/farmassettypes.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/assetsource.dart';
@@ -16,6 +17,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmpowersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmstructures.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/laboursource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assetsource.dart';
@@ -59,10 +61,10 @@ class AddFarmtechandassetsOneBloc
           farmerFarmId: 0,
           assetSourceId: 0,
         );
-    Farmer farmer = await getFarmer() ??
-        Farmer(
+    FarmerFarm farmer = await getFarm() ??
+        FarmerFarm(
           farmerId: 0,
-          farmerName: "farmerName",
+          farmerFarmId: 0,
           labourSourceId: 0,
         );
     List<SelectionPopupModel>? a = await fetchLabourSources();
@@ -105,6 +107,12 @@ class AddFarmtechandassetsOneBloc
           selectedDropDownValue1: bb,
           atProgress: pfProgress,
         )));
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
   Future<ATProgress?> getProgress() async {
@@ -288,7 +296,7 @@ class AddFarmtechandassetsOneBloc
     int selectedCount3 =
         state.s.where((enterprise) => enterprise.isSelected).length;
     FarmerAssetSourceDB farmerFishProductionLevelsDB = FarmerAssetSourceDB();
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       ATProgressDB atProgressDB = ATProgressDB();
       if (state.addFarmtechandassetsOneModelObj!.atProgress!.pageOne == 0 &&
@@ -307,13 +315,13 @@ class AddFarmtechandassetsOneBloc
           ),
         );
 
-        int updatedid = await farmerDB.updateFromFarmAsset(Farmer(
+        int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           labourSourceId:
               state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
         ));
-        if (id > 0) {
+        if (id > 0 && updatedid > 0) {
           atProgressDB
               .insert(ATProgress(
                 farmId: farmid,
@@ -322,6 +330,8 @@ class AddFarmtechandassetsOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else if (selectedCount != 0 &&
           selectedCount2 != 0 &&
@@ -339,13 +349,13 @@ class AddFarmtechandassetsOneBloc
             dateCreated: DateTime.now(),
           ),
         );
-        int updatedid = await farmerDB.updateFromFarmAsset(Farmer(
+        int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           labourSourceId:
               state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
         ));
-        if (id > 0) {
+        if (id > 0 && updatedid > 0) {
           atProgressDB
               .update(ATProgress(
                 farmId: farmid,
@@ -354,6 +364,8 @@ class AddFarmtechandassetsOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else {
         //   event.createFailed!.call();

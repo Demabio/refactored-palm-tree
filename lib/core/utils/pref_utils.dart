@@ -178,4 +178,40 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setEditId(int value) {
+    return _sharedPreferences!.setInt('editId', value);
+  }
+
+  int getEditId() {
+    try {
+      return _sharedPreferences!.getInt('editId') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<void> setFarmerName(String value) {
+    return _sharedPreferences!.setString('farmerName', value);
+  }
+
+  String getFarmerName() {
+    try {
+      return _sharedPreferences!.getString('farmerName') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setFarmerID(String value) {
+    return _sharedPreferences!.setString('farmerID', value);
+  }
+
+  String getFarmerID() {
+    try {
+      return _sharedPreferences!.getString('farmerID') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

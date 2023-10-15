@@ -13,6 +13,7 @@ class FinancialandservicesState extends Equatable {
     this.c = const [],
     this.s = const [],
     this.farm,
+    this.f,
   });
 
   FinancialandservicesModel? financialandservicesModelObj;
@@ -23,6 +24,7 @@ class FinancialandservicesState extends Equatable {
   List<CheckBoxList> c;
   List<CheckBoxList> s;
   Farmer? farm;
+  FarmerFarm? f;
   @override
   List<Object?> get props => [
         financialandservicesModelObj,
@@ -33,6 +35,7 @@ class FinancialandservicesState extends Equatable {
         c,
         s,
         farm,
+        f,
       ];
   FinancialandservicesState copyWith({
     FinancialandservicesModel? financialandservicesModelObj,
@@ -43,6 +46,7 @@ class FinancialandservicesState extends Equatable {
     List<CheckBoxList>? c,
     List<CheckBoxList>? s,
     Farmer? farm,
+    FarmerFarm? f,
   }) {
     return FinancialandservicesState(
       financialandservicesModelObj:
@@ -54,6 +58,7 @@ class FinancialandservicesState extends Equatable {
       c: c ?? this.c,
       s: s ?? this.s,
       farm: farm ?? this.farm,
+      f: f ?? this.f,
     );
   }
 }

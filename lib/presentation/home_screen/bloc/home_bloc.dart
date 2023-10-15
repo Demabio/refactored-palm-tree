@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
 import '/core/app_export.dart';
@@ -39,6 +41,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     add(
       DBCheckEvent(),
     );
+  }
+
+  Future<Farmer?> getFarmer() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FarmerDB farmerFishProductionLevelsDB = FarmerDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
   }
 
   Future<void> _TcheckDBExists(

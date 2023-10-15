@@ -375,6 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             builder:
                                                 (context, searchController1) {
                                               return CustomSearchView(
+                                                  enabled: true,
                                                   focusNode:
                                                       _secondTextFieldFocus,
                                                   controller: searchController1,

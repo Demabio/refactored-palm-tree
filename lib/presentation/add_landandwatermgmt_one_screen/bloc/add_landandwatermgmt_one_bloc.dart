@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/watersource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
@@ -12,6 +13,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/watersource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
@@ -49,16 +51,14 @@ class AddLandandwatermgmtOneBloc
           pageOne: 0,
           pageTwo: 0,
         );
-    Farmer farmer = await getFarmer() ??
-        Farmer(
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
           farmerId: 0,
-          farmerName: "farmerName",
           gokFertiliser: false,
-          cooperativeGroup: false,
+          farmerFarmId: 0,
           limeUsage: false,
           irrigationArea: 0,
         );
-
     FarmerSoilTest soilTest = await getSoilTest() ??
         FarmerSoilTest(
           farmerSoilseedId: 0,
@@ -85,14 +85,14 @@ class AddLandandwatermgmtOneBloc
       }
 
       aa = a.firstWhere(
-        (model) => model.id == (farmer.gokFertiliser! ? 1 : 0),
+        (model) => model.id == (farm.gokFertiliser! ? 1 : 0),
       );
       bb = a.firstWhere(
-        (model) => model.id == (farmer.limeUsage! ? 1 : 0),
+        (model) => model.id == (farm.limeUsage! ? 1 : 0),
       );
       if (soilTest.soilTest != null) {
         cc = a.firstWhere(
-          (model) => model.id == (farmer.gokFertiliser! ? 1 : 0),
+          (model) => model.id == (soilTest.soilTest == 1 ? 1 : 0),
         );
       }
     }
@@ -116,6 +116,12 @@ class AddLandandwatermgmtOneBloc
           stepped2: stepped,
           lwProgress: pfProgress,
         )));
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
   Future<List<FarmerIrrigationWaterSource>?> getWater() async {
@@ -217,7 +223,7 @@ class AddLandandwatermgmtOneBloc
     int selectedCount =
         state.p.where((enterprise) => enterprise.isSelected).length;
 
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     FarmerSoilTestDB farmerSoilTestDB = FarmerSoilTestDB();
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
@@ -225,9 +231,9 @@ class AddLandandwatermgmtOneBloc
       LWProgressDB atProgressDB = LWProgressDB();
       if (state.addLandandwatermgmtOneModelObj!.lwProgress!.pageOne == 0 &&
           selectedCount != 0) {
-        int id = await farmerDB.updateFromLandWater(Farmer(
+        int id = await farmerDB.updateFromLandWater(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           gokFertiliser:
               state.addLandandwatermgmtOneModelObj!.selectedDropDownValue?.id ==
                   1,
@@ -247,7 +253,7 @@ class AddLandandwatermgmtOneBloc
           soilTestYear: 0,
         ));
         //REMEMBER!!!!!!!!
-        if (id > 0) {
+        if (id > 0 && soilid > 0) {
           atProgressDB
               .insert(LWProgress(
                 farmId: farmid,
@@ -257,11 +263,13 @@ class AddLandandwatermgmtOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else if (selectedCount != 0) {
-        int id = await farmerDB.updateFromLandWater(Farmer(
+        int id = await farmerDB.updateFromLandWater(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           gokFertiliser:
               state.addLandandwatermgmtOneModelObj!.selectedDropDownValue?.id ==
                   1,
@@ -277,7 +285,7 @@ class AddLandandwatermgmtOneBloc
                   .addLandandwatermgmtOneModelObj!.selectedDropDownValue2?.id ??
               0,
         ));
-        if (id > 0) {
+        if (id > 0 && soilid > 0) {
           atProgressDB
               .update(LWProgress(
                 farmId: farmid,
@@ -287,6 +295,8 @@ class AddLandandwatermgmtOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else {
         //   event.createFailed!.call();
@@ -311,7 +321,7 @@ class AddLandandwatermgmtOneBloc
     int selectedCount =
         state.p.where((enterprise) => enterprise.isSelected).length;
 
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     FarmerSoilTestDB farmerSoilTestDB = FarmerSoilTestDB();
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
@@ -319,9 +329,9 @@ class AddLandandwatermgmtOneBloc
       LWProgressDB atProgressDB = LWProgressDB();
       if (state.addLandandwatermgmtOneModelObj!.lwProgress!.pageOne == 0 &&
           selectedCount != 0) {
-        int id = await farmerDB.updateFromLandWater(Farmer(
+        int id = await farmerDB.updateFromLandWater(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           gokFertiliser:
               state.addLandandwatermgmtOneModelObj!.selectedDropDownValue?.id ==
                   1,
@@ -341,7 +351,7 @@ class AddLandandwatermgmtOneBloc
           soilTestYear: 0,
         ));
         //REMEMBER!!!!!!!!
-        if (id > 0) {
+        if (id > 0 && soilid > 0) {
           atProgressDB
               .insert(LWProgress(
                 farmId: farmid,
@@ -351,11 +361,13 @@ class AddLandandwatermgmtOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else if (selectedCount != 0) {
-        int id = await farmerDB.updateFromLandWater(Farmer(
+        int id = await farmerDB.updateFromLandWater(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           gokFertiliser:
               state.addLandandwatermgmtOneModelObj!.selectedDropDownValue?.id ==
                   1,
@@ -371,7 +383,7 @@ class AddLandandwatermgmtOneBloc
                   .addLandandwatermgmtOneModelObj!.selectedDropDownValue2?.id ??
               0,
         ));
-        if (id > 0) {
+        if (id > 0 && soilid > 0) {
           atProgressDB
               .update(LWProgress(
                 farmId: farmid,
@@ -381,6 +393,8 @@ class AddLandandwatermgmtOneBloc
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
         }
       } else {
         //   event.createFailed!.call();

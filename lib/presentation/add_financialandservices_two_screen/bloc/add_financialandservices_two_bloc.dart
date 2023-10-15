@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/agriinfosource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/extensionaccess.dart';
@@ -10,6 +11,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosourc
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionmodes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionaccess.dart';
@@ -51,10 +53,10 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           pageOne: 0,
           pageTwo: 0,
         );
-    Farmer farmer = await getFarmer() ??
-        Farmer(
+    FarmerFarm farmer = await getFarm() ??
+        FarmerFarm(
           farmerId: 0,
-          farmerName: "farmerName",
+          farmerFarmId: 0,
           labourSourceId: 0,
           cropsInsurance: false,
           fishInsurance: false,
@@ -254,6 +256,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return list;
   }
 
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
+  }
+
   _saveTap(
     SaveTapEvent event,
     Emitter<AddFinancialandservicesTwoState> emit,
@@ -266,7 +274,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
 
     int selectedCount2 =
         state.e.where((enterprise) => enterprise.isSelected).length;
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if (state.addFinancialandservicesTwoModelObj!.fsProgress!.pageTwo == 0 &&
@@ -275,9 +283,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
                       .id ==
                   0)) {
-        int id = await farmerDB.updateFromFinancialTwo(Farmer(
+        int id = await farmerDB.updateFromFinancialTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           cropsInsurance: state.addFinancialandservicesTwoModelObj!
                   .selectedDropDownValue!.id ==
               1,
@@ -297,25 +305,25 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               .addFinancialandservicesTwoModelObj!.selectedDropDownValue!.id,
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .update(FSProgress(
-              farmId: farmid,
-              pageOne:
-                  state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
-              pageTwo: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .update(FSProgress(
+                farmId: farmid,
+                pageOne: state
+                    .addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
+                pageTwo: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else if (selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
                       .id ==
                   0)) {
-        int id = await farmerDB.updateFromFinancialTwo(Farmer(
+        int id = await farmerDB.updateFromFinancialTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           cropsInsurance: state.addFinancialandservicesTwoModelObj!
                   .selectedDropDownValue!.id ==
               1,
@@ -334,17 +342,19 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           extensionsericeAccess: state
               .addFinancialandservicesTwoModelObj!.selectedDropDownValue!.id,
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(FSProgress(
-              farmId: farmid,
-              pageOne:
-                  state.addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
-              pageTwo: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (id > 0) {
+          atProgressDB
+              .update(FSProgress(
+                farmId: farmid,
+                pageOne: state
+                    .addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
+                pageTwo: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        } else {
+          event.createFailed!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =

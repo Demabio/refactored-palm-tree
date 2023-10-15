@@ -266,7 +266,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
                                                     Text(
-                                                        (state.farm?.cropsInsurance ??
+                                                        (state.f?.cropsInsurance ??
                                                                 false)
                                                             ? "Yes"
                                                             : "No",
@@ -287,7 +287,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
                                                     Text(
-                                                        state.farm?.livestockInsurance ??
+                                                        state.f?.livestockInsurance ??
                                                                 false
                                                             ? "Yes"
                                                             : "No",
@@ -308,7 +308,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
                                                     Text(
-                                                        state.farm?.fishInsurance ??
+                                                        state.f?.fishInsurance ??
                                                                 false
                                                             ? "Yes"
                                                             : "No",
@@ -338,7 +338,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 15.v),
                                                         child: Text(
-                                                            state.farm?.assetsInsurance ??
+                                                            state.f?.assetsInsurance ??
                                                                     false
                                                                 ? "Yes"
                                                                 : "No",
@@ -369,7 +369,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                             EdgeInsets.only(
                                                                 bottom: 15.v),
                                                         child: Text(
-                                                            state.farm?.farmRecords ??
+                                                            state.f?.farmRecords ??
                                                                     false
                                                                 ? "Yes"
                                                                 : "No",
@@ -445,7 +445,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                         style: CustomTextStyles
                                                             .labelMediumPrimary),
                                                     Text(
-                                                        state.farm?.extensionsericeAccess ==
+                                                        state.f?.extensionsericeAccess ==
                                                                 1
                                                             ? "Yes"
                                                             : "No",

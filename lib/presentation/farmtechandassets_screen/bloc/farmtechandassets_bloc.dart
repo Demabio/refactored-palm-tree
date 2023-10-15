@@ -6,6 +6,7 @@ import 'package:kiamis_app/data/models/dbModels/farm/farmassettypes.dart';
 import 'package:kiamis_app/data/models/dbModels/farm/farmstructures.dart';
 import 'package:kiamis_app/data/models/dbModels/other/laboursource.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/assetsource.dart';
@@ -18,6 +19,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmpowersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmstructures.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/laboursource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/assets_tech_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assetsource.dart';
@@ -53,10 +55,10 @@ class FarmtechandassetsBloc
           farmerFarmId: 0,
           assetSourceId: 0,
         );
-    Farmer farmer = await getFarmer() ??
-        Farmer(
+    FarmerFarm farmer = await getFarm() ??
+        FarmerFarm(
           farmerId: 0,
-          farmerName: "farmerName",
+          farmerFarmId: 0,
           labourSourceId: 0,
         );
 
@@ -219,6 +221,12 @@ class FarmtechandassetsBloc
       }
     });
     return list;
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
   Future<FarmAssetType?> getAssetTypeById(int id) async {

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/agriinfosource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/cooperativegroup.dart';
@@ -16,6 +17,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionmodes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/incomesource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/cooperativegroups.dart';
@@ -58,6 +60,18 @@ class FinancialandservicesBloc
           livestockInsurance: false,
           farmRecords: false,
         );
+
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+          labourSourceId: 0,
+          cropsInsurance: false,
+          fishInsurance: false,
+          assetsInsurance: false,
+          livestockInsurance: false,
+          farmRecords: false,
+        );
     List<CheckBoxList>? coopmodels = await fetchCoops();
     List<CheckBoxList>? incomemodels = await fetchIncomes();
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
@@ -88,6 +102,7 @@ class FinancialandservicesBloc
       c: coopmodels,
       s: creditmodels,
       farm: farmer,
+      f: farm,
     ));
   }
 
@@ -207,6 +222,12 @@ class FinancialandservicesBloc
     int farmerid = PrefUtils().getFarmerId();
     FarmerDB farmerFishProductionLevelsDB = FarmerDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
+  }
+
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
   Future<FSProgress?> getProgress() async {
