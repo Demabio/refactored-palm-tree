@@ -13,7 +13,7 @@ class FarmerIrrigationCategoryDB {
         "farmer_farm_id" INTEGER NOT NULL,
         "irrigation_category_id" INTEGER NOT NULL,
         "irrigation_project_name" VARCHAR(255) NOT NULL,
-        "membership_type_id" INTEGER NOT NULL,
+        "membership_type_id" INTEGER ,
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
         PRIMARY KEY("irrigation_crop_id")

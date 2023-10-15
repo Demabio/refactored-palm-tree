@@ -392,7 +392,7 @@ class AddLandandwatermgmtTwoBloc
       SelectionPopupModel? drop;
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
-      if (ent.membershipTypeId != null) {
+      if (ent.membershipTypeId != 0) {
         int index2 = feedmodels[index]
             .model
             .indexWhere((obj) => obj.id == ent.membershipTypeId);
