@@ -203,15 +203,27 @@ class PrefUtils {
     }
   }
 
-  Future<void> setFarmerID(String value) {
-    return _sharedPreferences!.setString('farmerID', value);
+  Future<void> setFarmerIdNo(String value) {
+    return _sharedPreferences!.setString('farmerIdNo', value);
   }
 
-  String getFarmerID() {
+  String getFarmerIdNo() {
     try {
-      return _sharedPreferences!.getString('farmerID') ?? '';
+      return _sharedPreferences!.getString('farmerIdNo') ?? '';
     } catch (e) {
       return '';
+    }
+  }
+
+  Future<void> setFound(bool value) {
+    return _sharedPreferences!.setBool('found', value);
+  }
+
+  bool getFound() {
+    try {
+      return _sharedPreferences!.getBool('found') ?? false;
+    } catch (e) {
+      return false;
     }
   }
 }

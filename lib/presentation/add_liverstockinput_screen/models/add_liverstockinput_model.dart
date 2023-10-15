@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
@@ -46,7 +47,7 @@ class AddLiverstockinputModel extends Equatable {
   List<SelectionPopupModel> dropdownItemList7;
 
   FarmerLivestockService? livestockins;
-  LSProgress? lsProgress;
+  PFProgress? lsProgress;
   SelectionPopupModel? selectedDropDownValue;
 
   SelectionPopupModel? selectedDropDownValue1;
@@ -73,7 +74,7 @@ class AddLiverstockinputModel extends Equatable {
     List<SelectionPopupModel>? dropdownItemList6,
     List<SelectionPopupModel>? dropdownItemList7,
     FarmerLivestockService? livestockins,
-    LSProgress? lsProgress,
+    PFProgress? lsProgress,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,

@@ -2,7 +2,9 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
 import '/core/app_export.dart';
@@ -37,9 +39,9 @@ class AddLiverstockinputBloc
           farmerFarmId: 0,
           farmerLivestockServicesId: 0,
         );
-    LSProgress pfProgress = await getProgress() ??
-        LSProgress(
-          livestockId: 0,
+    PFProgress pfProgress = await getProgress() ??
+        PFProgress(
+          farmId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
@@ -135,11 +137,11 @@ class AddLiverstockinputBloc
         ))
             .then((value) {
           if (value > 0) {
-            LSProgressDB pfProgressDB = LSProgressDB();
+            LSIProgressDB pfProgressDB = LSIProgressDB();
             if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 0) {
               pfProgressDB
-                  .update(LSProgress(
-                    livestockId: PrefUtils().getLivestockId(),
+                  .update(PFProgress(
+                    farmId: PrefUtils().getFarmId(),
                     pageOne:
                         state.addLiverstockinputModelObj!.lsProgress!.pageOne,
                     pageTwo: 1,
@@ -204,10 +206,10 @@ class AddLiverstockinputBloc
     return await farmDB.fetchByFarm(farmid);
   }
 
-  Future<LSProgress?> getProgress() async {
+  Future<PFProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
-    LSProgressDB pfProgressDB = LSProgressDB();
-    return await pfProgressDB.fetchByFarm(id);
+    LSIProgressDB pfProgressDB = LSIProgressDB();
+    return await pfProgressDB.fetchByFarmId(id);
   }
 
   _changeDropDown(

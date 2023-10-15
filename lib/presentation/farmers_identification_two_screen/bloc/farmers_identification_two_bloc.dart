@@ -213,7 +213,7 @@ class FarmersIdentificationTwoBloc
     TextEditingController padrress = TextEditingController();
     TextEditingController name = TextEditingController();
     TextEditingController id =
-        TextEditingController(text: PrefUtils().getFarmerID());
+        TextEditingController(text: PrefUtils().getFarmerIdNo());
     SelectionPopupModel? selectedyear;
     SelectionPopupModel? genderselected;
 

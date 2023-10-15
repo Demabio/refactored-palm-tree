@@ -26,11 +26,19 @@ class DBCheckEvent extends HomeEvent {
 }
 
 class FarmerSearchEvent extends HomeEvent {
-  FarmerSearchEvent({this.onError, this.onSuccess});
+  FarmerSearchEvent({
+    this.onError,
+    this.onSuccess,
+    required this.idNo,
+  });
   Function? onSuccess;
 
   Function? onError;
-
+  String idNo;
   @override
-  List<Object?> get props => [onSuccess, onError];
+  List<Object?> get props => [
+        onSuccess,
+        onError,
+        idNo,
+      ];
 }

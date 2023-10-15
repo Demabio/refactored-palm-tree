@@ -18,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(HomeState initialState) : super(initialState) {
     on<HomeInitialEvent>(_onInitialize);
     on<DBCheckEvent>(_TcheckDBExists);
+    on<FarmerSearchEvent>(_searchFarmer);
   }
 
   DBUtils _dbutils = DBUtils();
@@ -43,10 +44,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  Future<Farmer?> getFarmer() async {
-    int farmerid = PrefUtils().getFarmerId();
+  Future<Farmer?> getFarmer(String id) async {
     FarmerDB farmerFishProductionLevelsDB = FarmerDB();
-    return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
+    return await farmerFishProductionLevelsDB.fetchByIDNo(id);
+  }
+
+  _searchFarmer(
+    FarmerSearchEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    Farmer? farmer = await getFarmer(event.idNo);
+    if (farmer == null) {
+      PrefUtils().setFarmerId(0);
+      PrefUtils().setFarmerName("N/A");
+      PrefUtils().setFarmerIdNo("Not Found");
+      PrefUtils().setFound(false);
+
+      event.onError!.call();
+    } else {
+      PrefUtils().setFarmerId(farmer.farmerId);
+      PrefUtils().setFarmerName(farmer.farmerName);
+      PrefUtils().setFarmerIdNo(farmer.idNo!);
+      PrefUtils().setFound(true);
+
+      event.onSuccess!.call();
+    }
   }
 
   Future<void> _TcheckDBExists(

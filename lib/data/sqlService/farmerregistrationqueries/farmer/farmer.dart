@@ -375,5 +375,13 @@ class FarmerDB {
     return farmer.isNotEmpty ? Farmer.fromSqfliteDatabase(farmer.first) : null;
   }
 
+  Future<Farmer?> fetchByIDNo(String id) async {
+    final database = await DatabaseService().database;
+    final farmer = await database
+        .rawQuery('SELECT * FROM $tableName WHERE idNo = ?', [id]);
+    print(farmer);
+    return farmer.isNotEmpty ? Farmer.fromSqfliteDatabase(farmer.first) : null;
+  }
+
   // Add more database methods as needed
 }

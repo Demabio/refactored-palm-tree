@@ -41,12 +41,14 @@ class HomeFarmerFoundDialog extends StatelessWidget {
         children: [
           SizedBox(height: 30.v),
           Text(
-            "msg_farmer_id_xxxxxxxx".tr,
+            "Farmer Id Number: ${PrefUtils().getFarmerIdNo()}".tr,
             style: CustomTextStyles.bodyLargePrimary_2,
           ),
           SizedBox(height: 10.v),
           Text(
-            "msg_farmer_already_exists".tr,
+            PrefUtils().getFound()
+                ? "msg_farmer_already_exists".tr
+                : "Farmer Does Not Exist, Add Farmer?",
             style: CustomTextStyles.bodyMediumPoppinsBlack900,
           ),
           SizedBox(height: 51.v),
@@ -56,12 +58,14 @@ class HomeFarmerFoundDialog extends StatelessWidget {
               Expanded(
                 child: CustomOutlinedButton(
                   text: "lbl_no".tr,
+                  onTap: () => Navigator.pop(context),
                   margin: EdgeInsets.only(right: 4.h),
                 ),
               ),
               Expanded(
                 child: CustomElevatedButton(
                   text: "lbl_yes".tr,
+                  onTap: () => navToRespectivePage(context),
                   margin: EdgeInsets.only(left: 4.h),
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                   buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -72,5 +76,14 @@ class HomeFarmerFoundDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  navToRespectivePage(BuildContext context) {
+    if (PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(AppRoutes.farmerRegistrationScreen);
+    } else {
+      NavigatorService.popAndPushNamed(
+          AppRoutes.farmersIdentificationTwoScreen);
+    }
   }
 }

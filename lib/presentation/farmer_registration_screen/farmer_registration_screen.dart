@@ -83,7 +83,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
   CupertinoStepper _buildStepper(
       StepperType type, BuildContext context, FarmerRegistrationModel model) {
     final canCancel = model.currentStep > 0;
-    final canContinue = model.currentStep < 12;
+    final canContinue = model.currentStep < 11;
     return CupertinoStepper(
       type: type,
       physics: ClampingScrollPhysics(),
@@ -104,106 +104,84 @@ class FarmerRegistrationScreen extends StatelessWidget {
       steps: [
         _buildStep(
           title: Text('Farmers Identification'),
-          state: model.processStatus?.farmeridentification == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.fi2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             farmersIdentification(context);
           },
           editcallback: () => editfarmersIdentification(context),
-          addoredit: model.processStatus?.farmeridentification == 1,
+          addoredit: model.fi,
+          isActive: !PrefUtils().getFound(),
         ),
         _buildStep(
           title: Text('Primary Farm Holding'),
-          state: model.processStatus?.primaryfarmholding == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.ff2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             primaryFarmHolding(context);
           },
           editcallback: () => editprimaryFarmHolding(context),
-          addoredit: model.processStatus?.primaryfarmholding == 1,
-        ),
-        _buildStep(
-          title: Text('Add Other Farm Holdings'),
-          state: model.processStatus?.primaryfarmholding == 1
-              ? StepState.complete
-              : StepState.indexed,
-          addcallback: () {
-            addFarmHolding(context);
-          },
-          editcallback: () => editFarmHolding(context),
-          addoredit: model.processStatus?.primaryfarmholding == 1,
+          addoredit: model.ff,
         ),
         _buildStep(
           title: Text('Crop Agriculture'),
-          state: model.processStatus?.cropAgriculture == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.ca2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             cropAgriculture(context);
           },
           editcallback: () => editcropAgriculture(context),
-          addoredit: model.processStatus?.cropAgriculture == 1,
+          addoredit: model.ca,
+          isActive: model.crop,
         ),
         _buildStep(
           title: Text('Livestock'),
-          state: model.processStatus?.livestock == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.ls2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onTapAdddetails(context);
           },
           editcallback: () => editTapAdddetails(context),
-          addoredit: model.processStatus?.livestock == 1,
+          addoredit: model.ls,
+          isActive: model.live,
         ),
         _buildStep(
           title: Text('Aquaculture'),
-          state: model.processStatus?.aquaculture == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.ff2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onTapAqua(context);
           },
           editcallback: () => editTapAqua(context),
-          addoredit: model.processStatus?.aquaculture == 1,
+          addoredit: model.ff,
+          isActive: model.fish,
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
-          state: model.processStatus?.farmAssets == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.at2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onFarmasset(context);
           },
           editcallback: () => editFarmasset(context),
-          addoredit: model.processStatus?.farmAssets == 1,
+          addoredit: model.at,
         ),
         _buildStep(
           title: Text('Land and Water Management'),
-          state: model.processStatus?.landWater == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.lw2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onLandWater(context);
           },
           editcallback: () => editLandWater(context),
-          addoredit: model.processStatus?.landWater == 1,
+          addoredit: model.lw,
         ),
         _buildStep(
           title: Text('Financial and Services'),
-          state: model.processStatus?.financialServices == 1
-              ? StepState.complete
-              : StepState.indexed,
+          state: model.fs2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onFinance(context);
           },
           editcallback: () => editFinance(context),
-          addoredit: model.processStatus?.financialServices == 1,
+          addoredit: model.fs,
         ),
         _buildStep(
           title: Text('Error'),
           state: StepState.error,
+          isActive: false,
           addcallback: () {
             onTapAdddetails(context);
           },

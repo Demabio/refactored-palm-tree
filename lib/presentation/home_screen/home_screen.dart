@@ -1,3 +1,5 @@
+import 'package:kiamis_app/core/utils/validation_functions.dart';
+
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/graphs/bargraph/bar_chart_sample2.dart';
 import '../../widgets/graphs/donutchart/pie_chart_sample2.dart';
@@ -36,6 +38,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
@@ -374,38 +377,54 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 state.searchController1,
                                             builder:
                                                 (context, searchController1) {
-                                              return CustomSearchView(
-                                                  enabled: true,
-                                                  focusNode:
-                                                      _secondTextFieldFocus,
-                                                  controller: searchController1,
-                                                  hintText:
-                                                      "msg_search_id_number".tr,
-                                                  prefix: Container(
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              16.h,
-                                                              12.v,
-                                                              10.h,
-                                                              12.v),
-                                                      child: CustomImageView(
-                                                          svgPath: ImageConstant
-                                                              .imgSearch)),
-                                                  prefixConstraints:
-                                                      BoxConstraints(
-                                                          maxHeight: 40.v),
-                                                  suffix: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 15.h),
-                                                      child: IconButton(
-                                                          onPressed: () {
-                                                            searchController1!
-                                                                .clear();
-                                                          },
-                                                          icon: Icon(
-                                                              Icons.clear,
-                                                              color: Colors.grey
-                                                                  .shade600))));
+                                              return Form(
+                                                key: _formKey,
+                                                child: CustomSearchView(
+                                                    enabled: true,
+                                                    focusNode:
+                                                        _secondTextFieldFocus,
+                                                    controller:
+                                                        searchController1,
+                                                    validator: (value) {
+                                                      if (!isNumeric(value,
+                                                          isRequired: true)) {
+                                                        return "Please provide a valid ID Number";
+                                                      } else {
+                                                        return null;
+                                                      }
+                                                    },
+                                                    hintText:
+                                                        "msg_search_id_number"
+                                                            .tr,
+                                                    prefix: Container(
+                                                        margin:
+                                                            EdgeInsets.fromLTRB(
+                                                                16.h,
+                                                                12.v,
+                                                                10.h,
+                                                                12.v),
+                                                        child: CustomImageView(
+                                                            svgPath:
+                                                                ImageConstant
+                                                                    .imgSearch)),
+                                                    prefixConstraints:
+                                                        BoxConstraints(
+                                                            maxHeight: 40.v),
+                                                    suffix: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 15.h),
+                                                        child: IconButton(
+                                                            onPressed: () {
+                                                              searchController1!
+                                                                  .clear();
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.clear,
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade600)))),
+                                              );
                                             }),
                                       ]))),
                           Align(
@@ -431,7 +450,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             buttonTextStyle: CustomTextStyles
                                                 .titleMediumWhiteA700,
                                             onTap: () {
-                                              onTapSearchfarmer(context);
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                context.read<HomeBloc>().add(
+                                                    FarmerSearchEvent(
+                                                        idNo: state
+                                                            .searchController1!
+                                                            .text));
+                                              }
                                             })
                                       ]))),
                         ])),
@@ -574,6 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
   onTapSearchfarmer(BuildContext context) {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (_) => AlertDialog(
               content: HomeFarmerFoundDialog.builder(context),
               backgroundColor: Colors.transparent,
