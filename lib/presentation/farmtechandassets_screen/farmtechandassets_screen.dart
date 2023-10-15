@@ -176,6 +176,7 @@ class FarmtechandassetsScreen extends StatelessWidget {
 
                                                         return TechtemWidget(
                                                           model,
+                                                          view: false,
                                                         );
                                                       },
                                                     ),

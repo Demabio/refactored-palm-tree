@@ -14,6 +14,7 @@ class TechtemWidget extends StatelessWidget {
     this.width,
     this.edit,
     this.delete,
+    this.view = true,
   }) : super(
           key: key,
         );
@@ -25,6 +26,8 @@ class TechtemWidget extends StatelessWidget {
   double? width;
   VoidCallback? edit;
   VoidCallback? delete;
+  bool view;
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -96,22 +99,25 @@ class TechtemWidget extends StatelessWidget {
               ],
             ),
             SizedBox(height: 15.v),
-            Row(
-              children: [
-                AppbarImage1(
-                    svgPath: ImageConstant.imgFrame33,
-                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
-                    onTap: () {
-                      edit?.call();
-                    }),
-                Spacer(),
-                AppbarImage1(
-                    svgPath: ImageConstant.imgFrame34,
-                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
-                    onTap: () {
-                      delete?.call();
-                    }),
-              ],
+            Visibility(
+              visible: view,
+              child: Row(
+                children: [
+                  AppbarImage1(
+                      svgPath: ImageConstant.imgFrame33,
+                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      onTap: () {
+                        edit?.call();
+                      }),
+                  Spacer(),
+                  AppbarImage1(
+                      svgPath: ImageConstant.imgFrame34,
+                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      onTap: () {
+                        delete?.call();
+                      }),
+                ],
+              ),
             ),
           ],
         ),

@@ -260,7 +260,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
   _addAgeGroups(
     AddCBs event,
     Emitter<AddFarmtechandassetsThreeState> emit,
-  ) {
+  ) async {
     FarmerAssetsDB farmerFishDB = FarmerAssetsDB();
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
@@ -268,18 +268,33 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     int farmid = PrefUtils().getFarmId();
 
     try {
-      farmerFishDB.create(FarmerAsset(
-        farmerAssetId: 0,
-        farmerId: farmerid,
-        farmerFarmId: farmid,
-        farmAssetId: state.addFarmtechandassetsThreeModelObj!.selected!.id!,
-        usableCondition: state
-            .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
-        qty: int.parse(state.usableConditionController!.text),
-        dateCreated: DateTime.now(),
-        createdBy: userId,
-      ));
-      event.createSuccessful?.call();
+      if (PrefUtils().getEditId() == 0) {
+        await farmerFishDB.create(FarmerAsset(
+          farmerAssetId: 0,
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          farmAssetId: state.addFarmtechandassetsThreeModelObj!.selected!.id!,
+          usableCondition: state
+              .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
+          qty: int.parse(state.usableConditionController!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      } else {
+        await farmerFishDB.update(FarmerAsset(
+          farmerAssetId: PrefUtils().getEditId(),
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          farmAssetId: state.addFarmtechandassetsThreeModelObj!.selected!.id!,
+          usableCondition: state
+              .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
+          qty: int.parse(state.usableConditionController!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      }
     } catch (e) {
       event.createFailed!.call();
     }
@@ -302,7 +317,13 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     agemodels?.var3 = agess.usableCondition.toString();
     agemodels?.var4 = assettype?.assetTypeId.toString();
     agemodels?.id = ages.farmAssetId;
-    return agemodels;
+
+    return CheckBoxList(
+      id: agess.farmAssetId,
+      var2: agess.qty.toString(),
+      var3: agess.usableCondition.toString(),
+      var4: assettype?.assetTypeId.toString(),
+    );
   }
 
   Future<FarmAssetType?> getAssetTypeById(int id) async {

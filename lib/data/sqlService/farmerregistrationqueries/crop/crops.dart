@@ -162,13 +162,15 @@ class FarmerCropsDB {
     return farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<List<FarmerCrop>> fetchAllByFarm(int id) async {
+  Future<List<FarmerCrop>?> fetchAllByFarm(int id) async {
     final database = await DatabaseService().database;
     final farmerCrops = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [id]);
 
-    return farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList();
+    return farmerCrops.isNotEmpty
+        ? farmerCrops.map((e) => FarmerCrop.fromSqfliteDatabase(e)).toList()
+        : null;
   }
 
   Future<FarmerCrop?> fetchByFarmerCropId(int farmerCropId) async {

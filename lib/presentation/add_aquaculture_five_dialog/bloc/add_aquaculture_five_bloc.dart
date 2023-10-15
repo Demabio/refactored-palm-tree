@@ -232,7 +232,7 @@ class AddAquacultureFiveBloc
   _addAgeGroups(
     AddCBs event,
     Emitter<AddAquacultureFiveState> emit,
-  ) {
+  ) async {
     FarmerFishDB farmerFishDB = FarmerFishDB();
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
@@ -240,18 +240,33 @@ class AddAquacultureFiveBloc
     int farmid = PrefUtils().getFarmId();
 
     try {
-      farmerFishDB.create(FarmerFish(
-        farmerFishId: 0,
-        farmerId: farmerid,
-        farmerFarmId: farmid,
-        productionTypeId:
-            state.addAquacultureFiveModelObj!.selectedDropDownValue2!.id!,
-        fishTypeId: state.addAquacultureFiveModelObj!.selectedFish!.id!,
-        noOfFingerlings: int.parse(state.numbervalueoneController!.text),
-        dateCreated: DateTime.now(),
-        createdBy: userId,
-      ));
-      event.createSuccessful?.call();
+      if (PrefUtils().getEditId() == 0) {
+        await farmerFishDB.create(FarmerFish(
+          farmerFishId: 0,
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          productionTypeId:
+              state.addAquacultureFiveModelObj!.selectedDropDownValue2!.id!,
+          fishTypeId: state.addAquacultureFiveModelObj!.selectedFish!.id!,
+          noOfFingerlings: int.parse(state.numbervalueoneController!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      } else {
+        await farmerFishDB.update(FarmerFish(
+          farmerFishId: PrefUtils().getEditId(),
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          productionTypeId:
+              state.addAquacultureFiveModelObj!.selectedDropDownValue2!.id!,
+          fishTypeId: state.addAquacultureFiveModelObj!.selectedFish!.id!,
+          noOfFingerlings: int.parse(state.numbervalueoneController!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      }
     } catch (e) {
       event.createFailed!.call();
     }
@@ -279,13 +294,18 @@ class AddAquacultureFiveBloc
         .fetchByProductionTypeId(agess.productionTypeId!);
 
     category = await categoryDB.fetchByFishCategoryId(fish!.fishCategoryId);
-    agemodels?.id = agess.fishTypeId;
-    agemodels?.isSelected = true;
-    agemodels?.var2 = fishProductionType.productionTypeId.toString();
-    agemodels?.var1 = category.fishCategoryId.toString();
-    agemodels?.var3 = agess.noOfFingerlings.toString();
+    // agemodels?.id = agess.fishTypeId;
+    // agemodels?.isSelected = true;
+    // agemodels?.var2 = fishProductionType.productionTypeId.toString();
+    // agemodels?.var1 = category.fishCategoryId.toString();
+    // agemodels?.var3 = agess.noOfFingerlings.toString();
 
-    return agemodels;
+    return CheckBoxList(
+      id: agess.fishTypeId,
+      var1: category.fishCategoryId.toString(),
+      var2: fishProductionType.productionTypeId.toString(),
+      var3: agess.noOfFingerlings.toString(),
+    );
   }
 
   _onInitialize(

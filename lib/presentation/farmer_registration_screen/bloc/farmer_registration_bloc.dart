@@ -9,8 +9,10 @@ import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.da
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/process_status.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
@@ -21,8 +23,10 @@ import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.d
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/process_status.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/farmer_registration_screen/models/farmer_registration_model.dart';
 part 'farmer_registration_event.dart';
@@ -135,10 +139,10 @@ class FarmerRegistrationBloc
     );
   }
 
-  Future<CAProgress?> getCAProgress() async {
-    int cropid = PrefUtils().getCropId();
+  Future<CAProgress?> getCAProgress(int? id) async {
+    // int cropid = PrefUtils().getCropId();
     CAProgressDB caProgressDB = CAProgressDB();
-    return await caProgressDB.fetchByCropId(cropid);
+    return id != null ? await caProgressDB.fetchByCropId(id) : null;
   }
 
   Future<PFProgress?> getFHProgress() async {
@@ -165,10 +169,22 @@ class FarmerRegistrationBloc
     return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
-  Future<LSProgress?> getLSProgress() async {
-    int id = PrefUtils().getFarmId();
+  Future<List<FarmerCrop>?> getCrops() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerCropsDB farmerFishProductionLevelsDB = FarmerCropsDB();
+    return await farmerFishProductionLevelsDB.fetchAllByFarm(id);
+  }
+
+  Future<List<FarmerLivestock>?> getLuvestocks() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerLivestockDB farmerFishProductionLevelsDB = FarmerLivestockDB();
+    return await farmerFishProductionLevelsDB.fetchByFarm(id);
+  }
+
+  Future<LSProgress?> getLSProgress(int? id) async {
+    //int id = PrefUtils().getFarmId();
     LSProgressDB pfProgressDB = LSProgressDB();
-    return await pfProgressDB.fetchByFarm(id);
+    return id != null ? await pfProgressDB.fetchByLivestock(id) : null;
   }
 
   Future<PFProgress?> getLSIProgress() async {
@@ -199,6 +215,14 @@ class FarmerRegistrationBloc
     FarmerRegistrationInitialEvent event,
     Emitter<FarmerRegistrationState> emit,
   ) async {
+    List<FarmerCrop>? crops = await getCrops();
+
+    List<FarmerLivestock>? livestock = await getLuvestocks();
+
+    int? livestockid = livestock?.last.farmerLivestockId;
+
+    int? cropid = crops?.last.farmerCropId;
+
     LWProgress lwProgress = await getLWProgress() ??
         LWProgress(
           farmId: 0,
@@ -225,13 +249,13 @@ class FarmerRegistrationBloc
           livestockProd: false,
           fishFarming: false,
         );
-    LSProgress lsProgress = await getLSProgress() ??
+    LSProgress lsProgress = await getLSProgress(livestockid) ??
         LSProgress(
           livestockId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
-    CAProgress caProgress = await getCAProgress() ??
+    CAProgress caProgress = await getCAProgress(cropid) ??
         CAProgress(
           cropId: 0,
           pageOne: 0,

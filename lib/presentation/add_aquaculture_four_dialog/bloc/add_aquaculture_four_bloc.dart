@@ -74,23 +74,27 @@ class AddAquacultureFourBloc
 
   Future<CheckBoxList?> _assets(FarmerFishProductionSystem agess) async {
     CheckBoxList? agemodels;
-    FarmerFishProductionSystem ages = agess;
+    // agemodels?.isSelected = true;
+    // agemodels?.var1 = agess.noOfActiveUnits.toString();
+    // agemodels?.var2 = agess.activeArea.toString();
+    // agemodels?.var3 = agess.noOfInactiveUnits.toString();
+    // agemodels?.var4 = agess.inactiveArea.toString();
 
-    agemodels?.isSelected = true;
-    agemodels?.var1 = agess.noOfActiveUnits.toString();
-    agemodels?.var2 = agess.activeArea.toString();
-    agemodels?.var3 = agess.noOfInactiveUnits.toString();
-    agemodels?.var4 = agess.inactiveArea.toString();
+    // agemodels?.id = ages.productionTypeId;
 
-    agemodels?.id = ages.productionTypeId;
-
-    return agemodels;
+    return CheckBoxList(
+      id: agess.productionTypeId,
+      var1: agess.noOfActiveUnits.toString(),
+      var2: agess.activeArea.toString(),
+      var3: agess.noOfInactiveUnits.toString(),
+      var4: agess.inactiveArea.toString(),
+    );
   }
 
   _addAgeGroups(
     AddCBs event,
     Emitter<AddAquacultureFourState> emit,
-  ) {
+  ) async {
     FarmerFishProductionSystemDB farmerFishProductionSystemDB =
         FarmerFishProductionSystemDB();
     List<FarmerFishProductionSystem>? categs = [];
@@ -100,21 +104,39 @@ class AddAquacultureFourBloc
     int farmid = PrefUtils().getFarmId();
 
     try {
-      farmerFishProductionSystemDB.create(FarmerFishProductionSystem(
-        farmerFishprodId: 0,
-        farmerId: farmerid,
-        farmerFarmId: farmid,
-        productionTypeId:
-            state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
-        productionStatus: 0,
-        noOfActiveUnits: int.parse(state.inp1!.text),
-        activeArea: double.parse(state.inp2!.text),
-        noOfInactiveUnits: int.parse(state.inp3!.text),
-        inactiveArea: double.parse(state.inp4!.text),
-        dateCreated: DateTime.now(),
-        createdBy: userId,
-      ));
-      event.createSuccessful?.call();
+      if (PrefUtils().getEditId() == 0) {
+        await farmerFishProductionSystemDB.create(FarmerFishProductionSystem(
+          farmerFishprodId: 0,
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          productionTypeId:
+              state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
+          productionStatus: 0,
+          noOfActiveUnits: int.parse(state.inp1!.text),
+          activeArea: double.parse(state.inp2!.text),
+          noOfInactiveUnits: int.parse(state.inp3!.text),
+          inactiveArea: double.parse(state.inp4!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      } else {
+        await farmerFishProductionSystemDB.update(FarmerFishProductionSystem(
+          farmerFishprodId: PrefUtils().getEditId(),
+          farmerId: farmerid,
+          farmerFarmId: farmid,
+          productionTypeId:
+              state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
+          productionStatus: 0,
+          noOfActiveUnits: int.parse(state.inp1!.text),
+          activeArea: double.parse(state.inp2!.text),
+          noOfInactiveUnits: int.parse(state.inp3!.text),
+          inactiveArea: double.parse(state.inp4!.text),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ));
+        event.createSuccessful?.call();
+      }
     } catch (e) {
       event.createFailed!.call();
     }

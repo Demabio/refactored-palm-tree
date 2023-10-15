@@ -252,6 +252,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                       CheckBoxList model = list![index];
 
                                       return ProdSysItemWidget(
+                                        view: false,
                                         edit: () => addorEdit(
                                           context,
                                           1,
@@ -316,6 +317,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
 
                                       return FishtemWidget(
                                         model,
+                                        view: false,
                                         edit: () => addorEditF(
                                           context,
                                           1,
