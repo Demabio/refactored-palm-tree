@@ -40,7 +40,8 @@ class AddFarmtechandassetsOneBloc
     on<CheckOneEvent>(_checkpowers);
     on<CheckTwoEvent>(_checkAssets);
     on<CheckThreeEvent>(_checkStructs);
-
+    on<AddEditEvent>(_addEdit);
+    on<DeleteEvent>(_delete);
     on<ClearEvent>(_clear);
   }
 
@@ -535,5 +536,37 @@ class AddFarmtechandassetsOneBloc
       }
     });
     return list;
+  }
+
+  _addEdit(
+    AddEditEvent event,
+    Emitter<AddFarmtechandassetsOneState> emit,
+  ) {
+    if (event.value! == 1) {
+      PrefUtils().setEditId(event.crop!);
+      event.createSuccessful!.call();
+    } else {
+      PrefUtils().setEditId(0);
+      event.createSuccessful!.call();
+    }
+  }
+
+  _delete(
+    DeleteEvent event,
+    Emitter<AddFarmtechandassetsOneState> emit,
+  ) async {
+    FarmerAssetsDB farmerAssetsDB = FarmerAssetsDB();
+    int deleted = await farmerAssetsDB.delete(event.value!);
+    if (deleted > 0) {
+      List<CheckBoxList>? assets = await fillAssets();
+
+      if (state.addFarmtechandassetsOneModelObj?.atProgress?.pageOne == 1) {
+        List<FarmerAsset>? assetss = await getFAssets();
+        assets = _assets(assets, assetss!);
+      }
+      emit(state.copyWith(
+        a: assets,
+      ));
+    }
   }
 }

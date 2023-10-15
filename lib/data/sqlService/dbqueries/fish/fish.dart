@@ -123,13 +123,15 @@ class FishTypeDB {
     return fishTypes.map((e) => FishType.fromSqfliteDatabaseJoined(e)).toList();
   }
 
-  Future<FishType> fetchByFishTypeId(int fishTypeId) async {
+  Future<FishType?> fetchByFishTypeId(int fishTypeId) async {
     final database = await DatabaseService().database;
     final fishType = await database.rawQuery('''
       SELECT * FROM $tableName WHERE fish_type_id = ?
     ''', [fishTypeId]);
 
-    return FishType.fromSqfliteDatabase(fishType.first);
+    return fishType.isNotEmpty
+        ? FishType.fromSqfliteDatabase(fishType.first)
+        : null;
   }
 
   // Add more database methods as needed

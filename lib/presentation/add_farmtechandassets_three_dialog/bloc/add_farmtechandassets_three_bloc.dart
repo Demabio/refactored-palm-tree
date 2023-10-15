@@ -2,6 +2,8 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/farm/farmassets.dart';
+import 'package:kiamis_app/data/models/dbModels/farm/farmassettypes.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassettypes.dart';
@@ -270,8 +272,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
         farmerAssetId: 0,
         farmerId: farmerid,
         farmerFarmId: farmid,
-        farmAssetId: state
-            .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
+        farmAssetId: state.addFarmtechandassetsThreeModelObj!.selected!.id!,
         usableCondition: state
             .addFarmtechandassetsThreeModelObj!.selectedDropDownValue2!.id!,
         qty: int.parse(state.usableConditionController!.text),
@@ -284,19 +285,78 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     }
   }
 
+  Future<FarmerAsset?> getFAsset(int id) async {
+    FarmerAssetsDB farmerLivestockAgeGroupsDB = FarmerAssetsDB();
+    return await farmerLivestockAgeGroupsDB.fetchById(id);
+  }
+
+  Future<CheckBoxList?> _assets(FarmerAsset agess) async {
+    CheckBoxList? agemodels;
+    FarmerAsset ages = agess;
+    FarmAssetDB farmAssetDB = FarmAssetDB();
+    FarmAsset? asset = await farmAssetDB.fetchByFarmAssetId(ages.farmAssetId);
+    FarmAssetType? assettype =
+        asset != null ? await getAssetTypeById(asset.assetTypeId) : null;
+    agemodels?.isSelected = true;
+    agemodels?.var2 = agess.qty.toString();
+    agemodels?.var3 = agess.usableCondition.toString();
+    agemodels?.var4 = assettype?.assetTypeId.toString();
+    agemodels?.id = ages.farmAssetId;
+    return agemodels;
+  }
+
+  Future<FarmAssetType?> getAssetTypeById(int id) async {
+    FarmAssetTypeDB farmerFishProductionLevelsDB = FarmAssetTypeDB();
+    return await farmerFishProductionLevelsDB.fetchByAssetTypeId(id);
+  }
+
   _onInitialize(
     AddFarmtechandassetsThreeInitialEvent event,
     Emitter<AddFarmtechandassetsThreeState> emit,
   ) async {
+    int edit = PrefUtils().getEditId();
+    CheckBoxList? data;
+    List<SelectionPopupModel> d1 = await fillAssetTypes();
+    List<SelectionPopupModel> d2 = fillDropdownItemList2();
+    List<SelectionPopupModel>? d3;
+    SelectionPopupModel? aa;
+    SelectionPopupModel? bb;
+    SelectionPopupModel? cc;
+    TextEditingController? at;
+    if (edit != 0) {
+      FarmerAsset? asset = await getFAsset(edit);
+      if (asset != null) {
+        data = await _assets(asset);
+        if (data != null) {
+          at = TextEditingController(text: data.var2);
+          d3 = await fillAssets(int.parse(data.var4!));
+          aa = d1.firstWhere(
+            (model) => model.id == int.parse(data!.var4!),
+          );
+
+          bb = d2.firstWhere(
+            (model) => model.id == int.parse(data!.var3!),
+          );
+
+          cc = d3.firstWhere(
+            (model) => model.id == asset.farmAssetId,
+          );
+        }
+      }
+    }
     emit(state.copyWith(
       searchController: TextEditingController(),
-      usableConditionController: TextEditingController(),
+      usableConditionController: at,
     ));
     emit(state.copyWith(
         addFarmtechandassetsThreeModelObj:
             state.addFarmtechandassetsThreeModelObj?.copyWith(
-      dropdownItemList: await fillAssetTypes(),
-      dropdownItemList2: fillDropdownItemList2(),
+      dropdownItemList: d1,
+      dropdownItemList2: d2,
+      dropdownItemList1: d3,
+      selectedCategory: aa,
+      selected: cc,
+      selectedDropDownValue2: bb,
     )));
   }
 }

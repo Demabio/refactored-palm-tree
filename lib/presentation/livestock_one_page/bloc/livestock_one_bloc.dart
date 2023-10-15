@@ -27,6 +27,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
   LivestockOneBloc(LivestockOneState initialState) : super(initialState) {
     on<LivestockOneInitialEvent>(_onInitialize);
     on<AddEditEvent>(_addEdit);
+    on<DeleteEvent>(_delete);
   }
 
   _addEdit(
@@ -181,5 +182,60 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         lslist: farmmodels,
         livestockOneModelObj:
             state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
+  }
+
+  _delete(
+    DeleteEvent event,
+    Emitter<LivestockOneState> emit,
+  ) async {
+    FarmerLivestockFeedsDB farmerLivestockFeedsDB = FarmerLivestockFeedsDB();
+    FarmerLivestockDB farmDB = FarmerLivestockDB();
+
+    int deletefeeds = await farmerLivestockFeedsDB.delete(event.value!);
+    int deleteagegroup = await farmerLivestockFeedsDB.delete(event.value!);
+    int deletelive = await farmDB.delete(event.value!);
+
+    if (deleteagegroup > 0 || deletelive > 0 || deletefeeds > 0) {
+      List<FarmerLivestock> lives = await getLivestocks() ?? [];
+
+      List<LSdetailsItemModel> farmmodels = [];
+
+      LivestockFarmingSystemDB livestockFarmingSystemDB =
+          LivestockFarmingSystemDB();
+
+      LivestockDB livestockDB = LivestockDB();
+
+      List<AgeGroupModel>? ageGroupList = [];
+      List<FeedsModel>? feedslist = [];
+      for (var live in lives) {
+        Livestock? livestock =
+            await livestockDB.fetchByLivestockId(live.livestockId!);
+        LivestockFarmingSystem livestockFarmingSystem =
+            await livestockFarmingSystemDB.fetchByLivestockFarmingSystemId(
+                live.livestockFarmsystemCatId!);
+        List<FarmerLivestockAgeGroup>? ages =
+            await getAges(live.farmerLivestockId);
+
+        List<FarmerLivestockFeed>? feeds =
+            await getFeeds(live.farmerLivestockId);
+
+        ageGroupList = await fetchAgeGroups();
+        feedslist = await fetchFeeds();
+        feedslist = _feeds(feedslist, feeds!);
+        ageGroupList = _ages(ageGroupList, ages!);
+        farmmodels.add(LSdetailsItemModel(
+          //   crop: crop,
+          id: live.farmerLivestockId,
+          name: livestock?.livestock,
+          ages: ageGroupList,
+          feeds: feedslist,
+          prod: livestockFarmingSystem.livestockFarmsystem,
+        ));
+      }
+      emit(state.copyWith(
+          lslist: farmmodels,
+          livestockOneModelObj:
+              state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
+    }
   }
 }

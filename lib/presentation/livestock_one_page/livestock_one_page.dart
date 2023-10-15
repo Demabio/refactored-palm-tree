@@ -84,6 +84,7 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                     1,
                                     model.id!,
                                   ),
+                                  delete: () => delete(context, model.id!),
                                 );
                               });
                         },
@@ -110,6 +111,14 @@ class LivestockOnePageState extends State<LivestockOnePage>
             createFailed: () {
               onTapImage(context);
             },
+          ),
+        );
+  }
+
+  delete(BuildContext context, int id) {
+    context.read<LivestockOneBloc>().add(
+          DeleteEvent(
+            value: id,
           ),
         );
   }

@@ -33,6 +33,10 @@ class AddAquacultureOneBloc
     on<CheckThreeEvent>(_checkfishes);
     on<CheckTwoEvent>(_checkProds);
     on<ClearEvent>(_clear);
+    on<AddEditEvent>(_addEdit);
+    on<DeleteEvent>(_delete);
+    on<FAddEditEvent>(_addEditF);
+    on<FDeleteEvent>(_deleteF);
   }
 
   _nextTap(
@@ -411,5 +415,70 @@ class AddAquacultureOneBloc
           aqProgress: pfProgress,
           stepped2: stepper,
         )));
+  }
+
+  _addEditF(
+    FAddEditEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) {
+    if (event.value! == 1) {
+      PrefUtils().setEditId(event.crop!);
+      event.createSuccessful!.call();
+    } else {
+      PrefUtils().setEditId(0);
+      event.createSuccessful!.call();
+    }
+  }
+
+  _deleteF(
+    FDeleteEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    FarmerFishDB farmerFishDB = FarmerFishDB();
+    int deleted = await farmerFishDB.delete(event.value!);
+    if (deleted > 0) {
+      List<CheckBoxList>? assets = await fetchFish();
+
+      if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
+        List<FarmerFish>? assetss = await getFishes();
+        assets = await _fish(assets, assetss!);
+      }
+      emit(state.copyWith(
+        fish: assets,
+      ));
+    }
+  }
+
+  _addEdit(
+    AddEditEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) {
+    if (event.value! == 1) {
+      PrefUtils().setEditId(event.crop!);
+      event.createSuccessful!.call();
+    } else {
+      PrefUtils().setEditId(0);
+      event.createSuccessful!.call();
+    }
+  }
+
+  _delete(
+    DeleteEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    FarmerFishProductionSystemDB farmerAssetsDB =
+        FarmerFishProductionSystemDB();
+    int deleted = await farmerAssetsDB.delete(event.value!);
+    if (deleted > 0) {
+      List<CheckBoxList>? assets = await fillProdsystems();
+
+      if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
+        List<FarmerFishProductionSystem>? assetss = await getProdSyss();
+        assets = _systems(assets, assetss!);
+      }
+      emit(state.copyWith(
+        prodsyss: assets,
+      ));
+    }
   }
 }

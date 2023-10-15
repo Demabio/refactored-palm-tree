@@ -252,6 +252,13 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                       CheckBoxList model = list![index];
 
                                       return ProdSysItemWidget(
+                                        edit: () => addorEdit(
+                                          context,
+                                          1,
+                                          model.id!,
+                                        ),
+                                        delete: () =>
+                                            delete(context, model.id!),
                                         model,
                                       );
                                     },
@@ -309,6 +316,13 @@ class AddAquacultureOneScreen extends StatelessWidget {
 
                                       return FishtemWidget(
                                         model,
+                                        edit: () => addorEditF(
+                                          context,
+                                          1,
+                                          model.id!,
+                                        ),
+                                        delete: () =>
+                                            deleteF(context, model.id!),
                                       );
                                     },
                                   ),
@@ -370,6 +384,52 @@ class AddAquacultureOneScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  addorEdit(BuildContext context, int id, int crop) {
+    context.read<AddAquacultureOneBloc>().add(
+          AddEditEvent(
+            value: id,
+            crop: crop,
+            createSuccessful: () {
+              addProductionType(context);
+            },
+            createFailed: () {
+              addProductionType(context);
+            },
+          ),
+        );
+  }
+
+  delete(BuildContext context, int id) {
+    context.read<AddAquacultureOneBloc>().add(
+          DeleteEvent(
+            value: id,
+          ),
+        );
+  }
+
+  addorEditF(BuildContext context, int id, int crop) {
+    context.read<AddAquacultureOneBloc>().add(
+          FAddEditEvent(
+            value: id,
+            crop: crop,
+            createSuccessful: () {
+              addAquaculturespecies(context);
+            },
+            createFailed: () {
+              addAquaculturespecies(context);
+            },
+          ),
+        );
+  }
+
+  deleteF(BuildContext context, int id) {
+    context.read<AddAquacultureOneBloc>().add(
+          FDeleteEvent(
+            value: id,
+          ),
+        );
   }
 
   nextPage(BuildContext context) {

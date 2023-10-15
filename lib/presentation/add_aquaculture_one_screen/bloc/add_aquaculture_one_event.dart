@@ -139,3 +139,91 @@ class OnSteppedEvent extends AddAquacultureOneEvent {
         value,
       ];
 }
+
+class AddEditEvent extends AddAquacultureOneEvent {
+  AddEditEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}
+
+class DeleteEvent extends AddAquacultureOneEvent {
+  DeleteEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}
+
+class FAddEditEvent extends AddAquacultureOneEvent {
+  FAddEditEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}
+
+class FDeleteEvent extends AddAquacultureOneEvent {
+  FDeleteEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}

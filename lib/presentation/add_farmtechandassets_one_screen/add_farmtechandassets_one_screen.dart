@@ -207,6 +207,12 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
 
                                     return TechtemWidget(
                                       model,
+                                      edit: () => addorEdit(
+                                        context,
+                                        1,
+                                        model.id!,
+                                      ),
+                                      delete: () => delete(context, model.id!),
                                     );
                                   },
                                 ),
@@ -360,6 +366,29 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
             ),
           );
     }
+  }
+
+  addorEdit(BuildContext context, int id, int crop) {
+    context.read<AddFarmtechandassetsOneBloc>().add(
+          AddEditEvent(
+            value: id,
+            crop: crop,
+            createSuccessful: () {
+              addFarmMachinery(context);
+            },
+            createFailed: () {
+              addFarmMachinery(context);
+            },
+          ),
+        );
+  }
+
+  delete(BuildContext context, int id) {
+    context.read<AddFarmtechandassetsOneBloc>().add(
+          DeleteEvent(
+            value: id,
+          ),
+        );
   }
 
   _successSaved(BuildContext context) {

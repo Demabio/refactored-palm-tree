@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import '../../add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 
@@ -13,6 +14,8 @@ class FishtemWidget extends StatelessWidget {
     Key? key,
     this.height,
     this.width,
+    this.edit,
+    this.delete,
   }) : super(
           key: key,
         );
@@ -22,7 +25,8 @@ class FishtemWidget extends StatelessWidget {
   double? height;
 
   double? width;
-
+  VoidCallback? edit;
+  VoidCallback? delete;
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -91,6 +95,24 @@ class FishtemWidget extends StatelessWidget {
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),
+              ],
+            ),
+            SizedBox(height: 15.v),
+            Row(
+              children: [
+                AppbarImage1(
+                    svgPath: ImageConstant.imgFrame33,
+                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                    onTap: () {
+                      edit?.call();
+                    }),
+                Spacer(),
+                AppbarImage1(
+                    svgPath: ImageConstant.imgFrame34,
+                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                    onTap: () {
+                      delete?.call();
+                    }),
               ],
             ),
           ],

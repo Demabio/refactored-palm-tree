@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="kiamis_app"
+        android:label="KIAMIS"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

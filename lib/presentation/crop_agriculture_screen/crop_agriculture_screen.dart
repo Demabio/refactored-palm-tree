@@ -87,6 +87,7 @@ class CropAgricultureScreen extends StatelessWidget {
                                 1,
                                 model.id!,
                               ),
+                              delete: () => delete(context, model.id!),
                             );
                           });
                     },
@@ -115,17 +116,10 @@ class CropAgricultureScreen extends StatelessWidget {
         );
   }
 
-  delet(BuildContext context, int id, int crop) {
+  delete(BuildContext context, int id) {
     context.read<CropAgricultureBloc>().add(
           DeleteEvent(
             value: id,
-            crop: crop,
-            createSuccessful: () {
-              onTapImage(context);
-            },
-            createFailed: () {
-              onTapImage(context);
-            },
           ),
         );
   }

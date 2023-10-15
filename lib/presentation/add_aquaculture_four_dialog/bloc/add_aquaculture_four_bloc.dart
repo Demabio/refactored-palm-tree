@@ -30,15 +30,61 @@ class AddAquacultureFourBloc
     AddAquacultureFourInitialEvent event,
     Emitter<AddAquacultureFourState> emit,
   ) async {
+    int edit = PrefUtils().getEditId();
+    CheckBoxList? data;
+    List<SelectionPopupModel> d1 = await fillProdsystems();
+    SelectionPopupModel? aa;
+    TextEditingController? a;
+    TextEditingController? b;
+    TextEditingController? c;
+    TextEditingController? d;
+
+    if (edit != 0) {
+      FarmerFishProductionSystem? asset = await getProdSyss(edit);
+      if (asset != null) {
+        data = await _assets(asset);
+        if (data != null) {
+          a = TextEditingController(text: data.var1);
+          b = TextEditingController(text: data.var2);
+          c = TextEditingController(text: data.var3);
+          d = TextEditingController(text: data.var4);
+          aa = d1.firstWhere(
+            (model) => model.id == data!.id,
+          );
+        }
+      }
+    }
     emit(state.copyWith(
-        inp1: TextEditingController(),
-        inp2: TextEditingController(),
-        inp3: TextEditingController(),
-        inp4: TextEditingController(),
+        inp1: a,
+        inp2: b,
+        inp3: c,
+        inp4: d,
         addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
-          dropdownItemList: await fillProdsystems(),
+          dropdownItemList: d1,
           dropdownItemList1: await fillUOMs(),
+          selectedDropDownValue: aa,
         )));
+  }
+
+  Future<FarmerFishProductionSystem?> getProdSyss(int id) async {
+    FarmerFishProductionSystemDB farmerLivestockAgeGroupsDB =
+        FarmerFishProductionSystemDB();
+    return await farmerLivestockAgeGroupsDB.fetchById(id);
+  }
+
+  Future<CheckBoxList?> _assets(FarmerFishProductionSystem agess) async {
+    CheckBoxList? agemodels;
+    FarmerFishProductionSystem ages = agess;
+
+    agemodels?.isSelected = true;
+    agemodels?.var1 = agess.noOfActiveUnits.toString();
+    agemodels?.var2 = agess.activeArea.toString();
+    agemodels?.var3 = agess.noOfInactiveUnits.toString();
+    agemodels?.var4 = agess.inactiveArea.toString();
+
+    agemodels?.id = ages.productionTypeId;
+
+    return agemodels;
   }
 
   _addAgeGroups(
@@ -108,6 +154,9 @@ class AddAquacultureFourBloc
   ) {
     emit(state.copyWith(
       selectedDropDownValue2: event.value,
+      addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+      ),
     ));
   }
 

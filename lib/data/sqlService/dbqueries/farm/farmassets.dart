@@ -112,13 +112,15 @@ class FarmAssetDB {
     return farmAssets.map((e) => FarmAsset.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<FarmAsset> fetchByFarmAssetId(int farmAssetId) async {
+  Future<FarmAsset?> fetchByFarmAssetId(int farmAssetId) async {
     final database = await DatabaseService().database;
     final farmAsset = await database.rawQuery('''
       SELECT * FROM $tableName WHERE farm_asset_id = ?
     ''', [farmAssetId]);
 
-    return FarmAsset.fromSqfliteDatabase(farmAsset.first);
+    return farmAsset.isNotEmpty
+        ? FarmAsset.fromSqfliteDatabase(farmAsset.first)
+        : null;
   }
 
   // Add more database methods as needed

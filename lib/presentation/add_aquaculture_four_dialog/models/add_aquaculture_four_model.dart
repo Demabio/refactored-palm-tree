@@ -49,10 +49,8 @@ class AddAquacultureFourModel extends Equatable {
     AQProgress? aqProgress,
   }) {
     return AddAquacultureFourModel(
-      selectedDropDownValue:
-          selectedDropDownValue ?? this.selectedDropDownValue,
-      selectedDropDownValue1:
-          selectedDropDownValue1 ?? this.selectedDropDownValue1,
+      selectedDropDownValue: selectedDropDownValue,
+      selectedDropDownValue1: selectedDropDownValue1,
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
       dropdownItemList1: dropdownItemList1 ?? this.dropdownItemList1,
       dropdownItemList2: dropdownItemList2 ?? this.dropdownItemList2,

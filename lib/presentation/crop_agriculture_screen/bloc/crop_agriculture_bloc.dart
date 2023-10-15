@@ -26,6 +26,7 @@ class CropAgricultureBloc
   CropAgricultureBloc(CropAgricultureState initialState) : super(initialState) {
     on<CropAgricultureInitialEvent>(_onInitialize);
     on<AddEditEvent>(_addEdit);
+    on<DeleteEvent>(_delete);
   }
 
   _onInitialize(
@@ -142,6 +143,58 @@ class CropAgricultureBloc
     } else {
       PrefUtils().setCropId(0);
       event.createSuccessful!.call();
+    }
+  }
+
+  _delete(
+    DeleteEvent event,
+    Emitter<CropAgricultureState> emit,
+  ) async {
+    FarmerCropsDB farmerCropsDB = FarmerCropsDB();
+    int deleted = await farmerCropsDB.delete(event.value!);
+
+    if (deleted > 0) {
+      List<FarmerCrop> crops = await fetchFCrops() ?? [];
+
+      List<CropdetailsItemModel> cropmodels = [];
+
+      CropWaterSource? waterSource;
+
+      CropAreaUnit? cropAreaUnit;
+
+      CropSystem? cropSystem;
+
+      CropPlantingMotive? cropPlantingMotive;
+
+      Crop? cropp;
+
+      for (var crop in crops) {
+        waterSource = await getSource(crop.waterSourceId!);
+        cropAreaUnit = await getArea(crop.areaUnitId!);
+        cropSystem = await getSystem(crop.cropSystemId!);
+        cropPlantingMotive = await getmotive(crop.cropMotiveId!);
+        cropp = await getCrop(crop.cropId!);
+        cropmodels.add(CropdetailsItemModel(
+          //   crop: crop,
+          id: crop.farmerCropId,
+          totalAcreage: crop.cropArea.toString(),
+          name: cropp!.crop,
+          unitOfArea: cropAreaUnit!.areaUnit,
+          water: waterSource?.waterSource,
+          purpose: cropPlantingMotive?.cropMotive,
+          system: cropSystem?.croppingSystem,
+          fertiliser: crop.fertilizerUse! == 1 ? "Yes" : "No",
+          pesticide: crop.pesticideUse! == 1 ? "Yes" : "No",
+          seeds: crop.usageOfCertifiedSeeds! ? "Yes" : "No",
+        ));
+      }
+      emit(
+        state.copyWith(
+          cropAgricultureModelObj: state.cropAgricultureModelObj?.copyWith(
+            cropdetailsItemList: cropmodels,
+          ),
+        ),
+      );
     }
   }
 }

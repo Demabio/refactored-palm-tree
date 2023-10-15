@@ -1,6 +1,10 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fish.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishcategory.dart';
+import 'package:kiamis_app/data/models/dbModels/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
@@ -253,19 +257,87 @@ class AddAquacultureFiveBloc
     }
   }
 
+  Future<FarmerFish?> getFishes(int id) async {
+    FarmerFishDB farmerLivestockAgeGroupsDB = FarmerFishDB();
+    return await farmerLivestockAgeGroupsDB.fetchById(id);
+  }
+
+  Future<CheckBoxList?> _fish(FarmerFish agess) async {
+    CheckBoxList? agemodels;
+
+    FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
+    FishProductionType? fishProductionType;
+
+    FishCategoryDB categoryDB = FishCategoryDB();
+    FishCategory? category;
+
+    FishTypeDB fishTypeDB = FishTypeDB();
+    FishType? fish;
+
+    fish = await fishTypeDB.fetchByFishTypeId(agess.fishTypeId);
+    fishProductionType = await fishProductionTypeDB
+        .fetchByProductionTypeId(agess.productionTypeId!);
+
+    category = await categoryDB.fetchByFishCategoryId(fish!.fishCategoryId);
+    agemodels?.id = agess.fishTypeId;
+    agemodels?.isSelected = true;
+    agemodels?.var2 = fishProductionType.productionTypeId.toString();
+    agemodels?.var1 = category.fishCategoryId.toString();
+    agemodels?.var3 = agess.noOfFingerlings.toString();
+
+    return agemodels;
+  }
+
   _onInitialize(
     AddAquacultureFiveInitialEvent event,
     Emitter<AddAquacultureFiveState> emit,
   ) async {
+    int edit = PrefUtils().getEditId();
+    CheckBoxList? data;
+    List<SelectionPopupModel> d1 = await fetchFishCategories();
+    List<SelectionPopupModel>? d2;
+    List<SelectionPopupModel> d3 = await fillProdsystems();
+
+    SelectionPopupModel? aa;
+    TextEditingController? a;
+    SelectionPopupModel? b;
+    SelectionPopupModel? c;
+    SelectionPopupModel? d;
+
+    if (edit != 0) {
+      FarmerFish? asset = await getFishes(edit);
+      if (asset != null) {
+        data = await _fish(asset);
+        if (data != null) {
+          d2 = await fetchFish(int.parse(data.var1!));
+
+          a = TextEditingController(text: data.var3);
+
+          aa = d1.firstWhere(
+            (model) => model.id == int.parse(data!.var1!),
+          );
+          b = d2.firstWhere(
+            (model) => model.id == data!.id,
+          );
+          c = d3.firstWhere(
+            (model) => model.id == int.parse(data!.var2!),
+          );
+        }
+      }
+    }
     emit(state.copyWith(
       searchController: TextEditingController(),
-      numbervalueoneController: TextEditingController(),
+      numbervalueoneController: a,
     ));
     emit(state.copyWith(
         addAquacultureFiveModelObj: state.addAquacultureFiveModelObj?.copyWith(
-      dropdownItemList: await fetchFishCategories(),
-      dropdownItemList2: await fillProdsystems(),
+      dropdownItemList: d1,
+      dropdownItemList1: d2,
+      dropdownItemList2: d3,
       commons: await commonFish(),
+      selectedCategory: aa,
+      selectedFish: b,
+      selectedDropDownValue2: c,
     )));
   }
 }
