@@ -158,14 +158,13 @@ class AddAquacultureFourDialog extends StatelessWidget {
               BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
                   TextEditingController?>(
                 selector: (state) => state.inp1,
-                builder: (context, numbervalueoneController) {
+                builder: (context, numbervalueoneController1) {
                   return CustomTextFormField(
                     autofocus: false,
                     focusNode: node1,
-                    controller: numbervalueoneController,
+                    controller: numbervalueoneController1,
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_number".tr,
-                    textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
                       if (!isNumeric(value, isRequired: true)) {
@@ -189,14 +188,13 @@ class AddAquacultureFourDialog extends StatelessWidget {
               BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
                   TextEditingController?>(
                 selector: (state) => state.inp2,
-                builder: (context, numbervalueoneController) {
+                builder: (context, numbervalueoneController2) {
                   return CustomTextFormField(
                     focusNode: node2,
                     autofocus: false,
-                    controller: numbervalueoneController,
+                    controller: numbervalueoneController2,
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_number".tr,
-                    textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
                       if (!isNumeric(value, isRequired: true)) {
@@ -220,14 +218,13 @@ class AddAquacultureFourDialog extends StatelessWidget {
               BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
                   TextEditingController?>(
                 selector: (state) => state.inp3,
-                builder: (context, numbervalueoneController) {
+                builder: (context, numbervalueoneController3) {
                   return CustomTextFormField(
                     focusNode: node3,
                     autofocus: false,
-                    controller: numbervalueoneController,
+                    controller: numbervalueoneController3,
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_number".tr,
-                    textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
                     validator: (value) {
                       if (!isNumeric(value, isRequired: true)) {
@@ -251,11 +248,11 @@ class AddAquacultureFourDialog extends StatelessWidget {
               BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
                   TextEditingController?>(
                 selector: (state) => state.inp4,
-                builder: (context, numbervalueoneController) {
+                builder: (context, numbervalueoneController4) {
                   return CustomTextFormField(
                     autofocus: false,
                     focusNode: node4,
-                    controller: numbervalueoneController,
+                    controller: numbervalueoneController4,
                     margin: EdgeInsets.symmetric(horizontal: 5.h),
                     hintText: "lbl_number".tr,
                     textInputAction: TextInputAction.done,

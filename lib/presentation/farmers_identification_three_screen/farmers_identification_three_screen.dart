@@ -1,5 +1,6 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 
 import 'bloc/farmers_identification_three_bloc.dart';
@@ -369,6 +370,14 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                             controller:
                                                 hhsizevalueoneController,
                                             hintText: "lbl_hh_size3".tr,
+                                            validator: (value) {
+                                              if (!isNumeric(value,
+                                                  isRequired: true)) {
+                                                return "Field is required";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             textInputType: TextInputType.number,
                                             textInputAction:
                                                 TextInputAction.done);

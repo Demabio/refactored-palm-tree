@@ -151,6 +151,7 @@ class AquacultureScreen extends StatelessWidget {
 
                                                         return ProdSysItemWidget(
                                                           model,
+                                                          view: false,
                                                         );
                                                       },
                                                     ),
@@ -191,6 +192,7 @@ class AquacultureScreen extends StatelessWidget {
 
                                                         return FishtemWidget(
                                                           model,
+                                                          view: false,
                                                         );
                                                       },
                                                     ),

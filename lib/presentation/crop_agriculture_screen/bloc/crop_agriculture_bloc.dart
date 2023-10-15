@@ -152,10 +152,11 @@ class CropAgricultureBloc
   ) async {
     FarmerCropsDB farmerCropsDB = FarmerCropsDB();
     int deleted = await farmerCropsDB.delete(event.value!);
+    CAProgressDB caProgressDB = CAProgressDB();
 
     if (deleted > 0) {
       List<FarmerCrop> crops = await fetchFCrops() ?? [];
-
+      await caProgressDB.delete(event.value!);
       List<CropdetailsItemModel> cropmodels = [];
 
       CropWaterSource? waterSource;

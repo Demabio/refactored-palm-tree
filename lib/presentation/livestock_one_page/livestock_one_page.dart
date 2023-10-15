@@ -65,28 +65,34 @@ class LivestockOnePageState extends State<LivestockOnePage>
                           LivestockOneModel?>(
                         selector: (state) => state.livestockOneModelObj,
                         builder: (context, addFarmHoldingModelObj) {
-                          return ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) {
-                                return SizedBox(height: 18.v);
-                              },
-                              itemCount:
-                                  addFarmHoldingModelObj?.lsmodels.length ?? 0,
-                              itemBuilder: (context, index) {
-                                LSdetailsItemModel model =
-                                    addFarmHoldingModelObj?.lsmodels[index] ??
-                                        LSdetailsItemModel();
-                                return LSdetailsItemWidget(
-                                  model,
-                                  edit: () => addorEdit(
-                                    context,
-                                    1,
-                                    model.id!,
-                                  ),
-                                  delete: () => delete(context, model.id!),
-                                );
-                              });
+                          return Column(
+                            children: [
+                              ListView.separated(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: 18.v);
+                                  },
+                                  itemCount:
+                                      addFarmHoldingModelObj?.lsmodels.length ??
+                                          0,
+                                  itemBuilder: (context, index) {
+                                    LSdetailsItemModel model =
+                                        addFarmHoldingModelObj
+                                                ?.lsmodels[index] ??
+                                            LSdetailsItemModel();
+                                    return LSdetailsItemWidget(
+                                      model,
+                                      edit: () => addorEdit(
+                                        context,
+                                        1,
+                                        model.id!,
+                                      ),
+                                      delete: () => delete(context, model.id!),
+                                    );
+                                  }),
+                            ],
+                          );
                         },
                       ),
                     ),

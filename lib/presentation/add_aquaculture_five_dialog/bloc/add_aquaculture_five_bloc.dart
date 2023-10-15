@@ -319,7 +319,7 @@ class AddAquacultureFiveBloc
     List<SelectionPopupModel> d3 = await fillProdsystems();
 
     SelectionPopupModel? aa;
-    TextEditingController? a;
+    TextEditingController a = TextEditingController();
     SelectionPopupModel? b;
     SelectionPopupModel? c;
     SelectionPopupModel? d;

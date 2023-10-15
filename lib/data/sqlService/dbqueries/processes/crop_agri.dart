@@ -50,4 +50,13 @@ class CAProgressDB {
         ? CAProgress.fromSqfliteDatabase(progress.first)
         : null;
   }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawDelete('''
+      DELETE FROM $tableName WHERE cropId = ?
+    ''', [
+      id,
+    ]);
+  }
 }

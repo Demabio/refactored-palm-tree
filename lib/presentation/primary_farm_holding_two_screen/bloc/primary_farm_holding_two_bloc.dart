@@ -292,7 +292,10 @@ class PrimaryFarmHoldingTwoBloc
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
     FarmerFarmDB farmDB = FarmerFarmDB();
-    if (state.filled) {
+    int selectedCount = state.primaryFarmHoldingTwoModelObj!.enterprises
+        .where((enterprise) => enterprise.isSelected)
+        .length;
+    if (selectedCount != 0) {
       try {
         farmDB
             .updatePageTwo(FarmerFarm(
@@ -356,7 +359,10 @@ class PrimaryFarmHoldingTwoBloc
         event.createFailed!.call();
       }
     } else {
-      emit(state.copyWith(checked: true));
+      int selectedCount = state.primaryFarmHoldingTwoModelObj!.enterprises
+          .where((enterprise) => enterprise.isSelected)
+          .length;
+      emit(state.copyWith(checked: selectedCount == 0));
       event.createFailed!.call();
     }
   }

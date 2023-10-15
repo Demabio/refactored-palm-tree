@@ -82,7 +82,10 @@ class FinancialandservicesBloc
       List<FarmerCooperativeGroup>? groups = await getCoops();
       coopmodels = _coops(coopmodels, groups!);
       List<FarmerIncomeSource>? incomes = await getIncomes();
-      incomemodels = _incomes(incomemodels, incomes!);
+      if (incomes != null) {
+        incomemodels = _incomes(incomemodels, incomes);
+      }
+
       List<FarmerCreditService>? categs = await getCredits();
       creditmodels = _credits(creditmodels, categs!);
     }
@@ -92,7 +95,9 @@ class FinancialandservicesBloc
       List<FarmerExtensionAccess>? access = await getEAccess();
       accessmodels = _access(accessmodels, access!);
       List<FarmerExtensionMode>? mode = await getModes();
-      modemodels = _modes(modemodels, mode!);
+      if (mode != null) {
+        modemodels = _modes(modemodels, mode);
+      }
     }
     emit(state.copyWith(
       p: infomodels,

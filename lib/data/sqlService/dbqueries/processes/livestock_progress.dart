@@ -50,4 +50,13 @@ class LSProgressDB {
         ? LSProgress.fromSqfliteDatabase(progress.last)
         : null;
   }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawDelete('''
+      DELETE FROM $tableName WHERE livestockId = ?
+    ''', [
+      id,
+    ]);
+  }
 }

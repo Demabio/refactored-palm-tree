@@ -62,7 +62,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                           style: CustomTextStyles.labelMediumPrimary),
                       Padding(
                           padding: EdgeInsets.only(left: 21.h),
-                          child: Text("msg_farmer_felix_faro".tr,
+                          child: Text(PrefUtils().getFarmerName(),
                               style: theme.textTheme.labelMedium))
                     ]),
                     Padding(

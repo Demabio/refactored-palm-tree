@@ -154,9 +154,9 @@ class AddAquacultureOneBloc
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchFish();
 
-    feedmodels = await _fish(feedmodels, fishes!);
+    feedmodels = fishes != null ? await _fish(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
+    if (fishes != null) {
       emit(state.copyWith(fish: feedmodels, checkedF: false));
     } else {
       emit(state.copyWith(checkedF: true));
@@ -188,7 +188,7 @@ class AddAquacultureOneBloc
     List<FarmerFishCategory>? fishes = await getCategs();
 
     List<CheckBoxList>? feedmodels = [];
-    feedmodels = await fetchFish();
+    feedmodels = await fetchCategs();
 
     feedmodels = _types(feedmodels, fishes!);
 

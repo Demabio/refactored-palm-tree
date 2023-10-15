@@ -343,7 +343,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     SelectionPopupModel? aa;
     SelectionPopupModel? bb;
     SelectionPopupModel? cc;
-    TextEditingController? at;
+    TextEditingController at = TextEditingController();
     if (edit != 0) {
       FarmerAsset? asset = await getFAsset(edit);
       if (asset != null) {

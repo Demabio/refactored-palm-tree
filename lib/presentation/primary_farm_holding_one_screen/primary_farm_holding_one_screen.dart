@@ -38,6 +38,8 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
   FocusNode node4 = FocusNode();
   FocusNode node5 = FocusNode();
   FocusNode node6 = FocusNode();
+  FocusNode node7 = FocusNode();
+  FocusNode node8 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +183,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                     selector: (state) => state.vil,
                                     builder: (context, nameController) {
                                       return CustomTextFormField(
-                                          focusNode: node4,
+                                          focusNode: node7,
                                           controller: nameController,
                                           autofocus: false,
                                           hintText: "msg_village_unit_name2".tr,
@@ -208,7 +210,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                     builder:
                                         (context, shoppingCenterController) {
                                       return CustomTextFormField(
-                                          focusNode: node2,
+                                          focusNode: node8,
                                           controller: shoppingCenterController,
                                           autofocus: false,
                                           hintText: "lbl_shopping_center".tr,

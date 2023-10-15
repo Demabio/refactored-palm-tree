@@ -145,6 +145,9 @@ class LivestockOneTabContainerScreenState
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the addRearedLivestockOneScreen.
   onTapImage(BuildContext context) {
+    PrefUtils().setLivestockId(0);
+    PrefUtils().setFeeds("0");
+    PrefUtils().setAgeGroups("0");
     NavigatorService.popAndPushNamed(
       AppRoutes.addRearedLivestockOneScreen,
     );

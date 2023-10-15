@@ -68,130 +68,26 @@ class FarmerDB {
         "dateRequestedForDelete" DATETIME,
         "dateDeleted" DATETIME,
         "campChangeRequestStatus" INTEGER,
-        "comments" VARCHAR(255),
-        
-        "alreadyRegistered" BOOLEAN, 
+        "comments" VARCHAR(255),     
+        "completed" BOOLEAN, 
         PRIMARY KEY("farmerId")
       );
     """);
   }
 
-  // Future<int> create(Farmer farmer) async {
-  //   final database = await DatabaseService().database;
-  //   return await database.rawInsert('''
-  //     INSERT INTO $tableName (
-  //       "idNo", "oldNrc", "nrcChanged", "farmerNo", "nfrRegistrationStatusId", "registrationStatusId", "farmerName",
-  //       "farmerTheRespodent", "respondentName", "respondentRlshpId", "respondentMobile", "respNationalId", "nfrFarmerStatusId",
-  //       "farmerStatusId", "farmerTypeId", "dateOfRegistration", "villageName", "constituencyId", "divisionId", "sublocationId",
-  //       "wardId", "enumerationAreaNumber", "shoppingCenter", "gender", "email", "mobile", "dob", "postalAddress", "postalCode",
-  //       "educationLevelId", "cultivatedSizeHa", "cropProd", "livestockProd", "fishFarming", "livelihoodSourceId", "labourSourceId",
-  //       "agriSkillsId", "agriInfoSourceId", "gokFertiliser", "limeUsage", "certifiedSeedUse", "cropsInsurance", "livestockInsurance",
-  //       "fishInsurance", "farmingIncomePercent", "assetsInsurance", "farmRecords", "irrigationUse", "irrigationArea",
-  //       "cooperativeGroup", "extensionsericeAccess", "organizationId", "enumeratorName", "enumeratorId", "enumeratorMobile",
-  //       "dateCreated", "createdBy", "dateCaptured", "approvedBy", "dateApproved", "editedBy", "dateEdited", "editApprovedBy",
-  //       "dateEditApproved", "cooperativeSociety", "maritalStatusId", "avgAnnualHouseholdIncome", "monthlyHhExpenditure", "dataSourceId",
-  //       "hhSize", "formalAgriTraining", "accountNo", "approvedList", "dateApprovedList", "dateOfConflict", "dateRequestedForDelete",
-  //       "dateDeleted", "campChangeRequestStatus", "comments", "startOfRegistration", "endOfRegistration"
-  //     )
-  //     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-  //       ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  //   ''', [
-  //     farmer.idNo,
-  //     farmer.oldNrc,
-  //     farmer.nrcChanged ? 1 : 0,
-  //     farmer.farmerNo,
-  //     farmer.nfrRegistrationStatusId,
-  //     farmer.registrationStatusId,
-  //     farmer.farmerName,
-  //     farmer.farmerTheRespodent ? 1 : 0,
-  //     farmer.respondentName,
-  //     farmer.respondentRlshpId,
-  //     farmer.respondentMobile,
-  //     farmer.respNationalId,
-  //     farmer.nfrFarmerStatusId,
-  //     farmer.farmerStatusId,
-  //     farmer.farmerTypeId,
-  //     farmer.dateOfRegistration?.toLocal().toIso8601String(),
-  //     farmer.villageName,
-  //     farmer.constituencyId,
-  //     farmer.divisionId,
-  //     farmer.sublocationId,
-  //     farmer.wardId,
-  //     farmer.enumerationAreaNumber,
-  //     farmer.shoppingCenter,
-  //     farmer.gender,
-  //     farmer.email,
-  //     farmer.mobile,
-  //     farmer.dob,
-  //     farmer.postalAddress,
-  //     farmer.postalCode,
-  //     farmer.educationLevelId,
-  //     farmer.cultivatedSizeHa,
-  //     farmer.cropProd ? 1 : 0,
-  //     farmer.livestockProd ? 1 : 0,
-  //     farmer.fishFarming ? 1 : 0,
-  //     farmer.livelihoodSourceId,
-  //     farmer.labourSourceId,
-  //     farmer.agriSkillsId,
-  //     farmer.agriInfoSourceId,
-  //     farmer.gokFertiliser ? 1 : 0,
-  //     farmer.limeUsage ? 1 : 0,
-  //     farmer.certifiedSeedUse,
-  //     farmer.cropsInsurance ? 1 : 0,
-  //     farmer.livestockInsurance ? 1 : 0,
-  //     farmer.fishInsurance ? 1 : 0,
-  //     farmer.farmingIncomePercent,
-  //     farmer.assetsInsurance ? 1 : 0,
-  //     farmer.farmRecords ? 1 : 0,
-  //     farmer.irrigationUse ? 1 : 0,
-  //     farmer.irrigationArea,
-  //     farmer.cooperativeGroup ? 1 : 0,
-  //     farmer.extensionsericeAccess,
-  //     farmer.organizationId,
-  //     farmer.enumeratorName,
-  //     farmer.enumeratorId,
-  //     farmer.enumeratorMobile,
-  //     farmer.dateCreated.toLocal().toIso8601String(),
-  //     farmer.createdBy,
-  //     farmer.dateCaptured?.toLocal().toIso8601String(),
-  //     farmer.approvedBy,
-  //     farmer.dateApproved?.toLocal().toIso8601String(),
-  //     farmer.editedBy,
-  //     farmer.dateEdited?.toLocal().toIso8601String(),
-  //     farmer.editApprovedBy,
-  //     farmer.dateEditApproved?.toLocal().toIso8601String(),
-  //     farmer.cooperativeSociety,
-  //     farmer.maritalStatusId,
-  //     farmer.avgAnnualHouseholdIncome,
-  //     farmer.monthlyHhExpenditure,
-  //     farmer.dataSourceId,
-  //     farmer.hhSize,
-  //     farmer.formalAgriTraining ? 1 : 0,
-  //     farmer.accountNo,
-  //     farmer.approvedList,
-  //     farmer.dateApprovedList?.toLocal().toIso8601String(),
-  //     farmer.dateOfConflict?.toLocal().toIso8601String(),
-  //     farmer.dateRequestedForDelete?.toLocal().toIso8601String(),
-  //     farmer.dateDeleted?.toLocal().toIso8601String(),
-  //     farmer.campChangeRequestStatus,
-  //     farmer.comments,
-  //     farmer.startOfRegistration?.toLocal().toIso8601String(),
-  //     farmer.endOfRegistration?.toLocal().toIso8601String(),
-  //   ]);
-  // }
-
   Future<int> insertNonNullable(Farmer farmer) async {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-      "idNo", "farmerName", "dateCreated", "createdBy"
+      "idNo", "farmerName", "dateCreated", "createdBy", completed
     ) 
-    VALUES (?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?)
   ''', [
       farmer.idNo,
       farmer.farmerName,
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
+      0,
     ]);
   }
 
@@ -258,7 +154,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ? 
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, completed = ?
     WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
@@ -266,6 +162,7 @@ class FarmerDB {
         farmer.respondentName,
         farmer.respNationalId,
         farmer.respondentMobile,
+        1,
         farmer.farmerId,
       ]);
     } catch (e) {

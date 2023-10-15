@@ -117,15 +117,17 @@ class FarmerLivestockDB {
         .toList();
   }
 
-  Future<List<FarmerLivestock>> fetchByFarm(int id) async {
+  Future<List<FarmerLivestock>?> fetchByFarm(int id) async {
     final database = await DatabaseService().database;
     final livestockList = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ? 
     ''', [id]);
 
-    return livestockList
-        .map((e) => FarmerLivestock.fromSqfliteDatabase(e))
-        .toList();
+    return livestockList.isNotEmpty
+        ? livestockList
+            .map((e) => FarmerLivestock.fromSqfliteDatabase(e))
+            .toList()
+        : null;
   }
 
   Future<FarmerLivestock?> fetchById(int id) async {

@@ -146,11 +146,10 @@ class PrimaryFarmHoldingOneBloc
                   ));
         }
       }
+      event.createSuccessful!.call();
     } catch (e) {
       event.createFailed!.call();
     }
-
-    event.createSuccessful!.call();
   }
 
   _saveTap(
@@ -242,11 +241,10 @@ class PrimaryFarmHoldingOneBloc
                   ));
         }
       }
+      event.createSuccessful!.call();
     } catch (e) {
       event.createFailed!.call();
     }
-
-    event.createSuccessful!.call();
   }
 
   Future<FarmerFarm?> getFarm() async {

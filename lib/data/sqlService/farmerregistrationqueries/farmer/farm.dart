@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -54,7 +55,8 @@ class FarmerFarmDB {
         "enumeratorMobile" VARCHAR(255),
         "startOfRegistration" DATETIME,
         "endOfRegistration" DATETIME,
-        "dateDeleted" DATETIME,
+        "dateDeleted" DATETIME,        
+        "completed" BOOLEAN,
         PRIMARY KEY("farmer_farm_id")
       );
     """);
@@ -64,12 +66,13 @@ class FarmerFarmDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id,  date_created, created_by
-      ) VALUES (?, ?, ?)
+        farmer_id,  date_created, created_by, completed
+      ) VALUES (?, ?, ?, ?)
     ''', [
       farm.farmerId,
       farm.dateCreated?.toLocal().toIso8601String(),
       farm.createdBy,
+      0,
     ]);
   }
 
@@ -179,6 +182,22 @@ class FarmerFarmDB {
         farm.assetsInsurance! ? 1 : 0,
         farm.farmRecords! ? 1 : 0,
         farm.extensionsericeAccess,
+        farm.farmerFarmId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> completed(FarmerFarm farm) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET completed  = ? 
+    WHERE farmer_farm_id = ? 
+  ''', [
+        1,
         farm.farmerFarmId,
       ]);
     } catch (e) {

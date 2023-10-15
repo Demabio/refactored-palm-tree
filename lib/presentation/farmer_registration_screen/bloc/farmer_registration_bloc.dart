@@ -219,9 +219,10 @@ class FarmerRegistrationBloc
 
     List<FarmerLivestock>? livestock = await getLuvestocks();
 
-    int? livestockid = livestock?.last.farmerLivestockId;
+    int? livestockid =
+        livestock != null ? livestock.last.farmerLivestockId : null;
 
-    int? cropid = crops?.last.farmerCropId;
+    int? cropid = crops != null ? crops?.last.farmerCropId : null;
 
     LWProgress lwProgress = await getLWProgress() ??
         LWProgress(
@@ -328,8 +329,10 @@ class FarmerRegistrationBloc
           fiProgress.pageTwo == 1 ||
           fiProgress.pageThree == 1),
       fh: (fhProgress.pageOne == 1 || fhProgress.pageTwo == 1),
-      ca: (caProgress.pageOne == 1 || caProgress.pageTwo == 1),
-      ls: (lsProgress.pageOne == 1 || lsiProgress.pageOne == 1),
+      ca: (caProgress.pageOne == 1 || caProgress.pageTwo == 1 || crops != null),
+      ls: (lsProgress.pageOne == 1 ||
+          lsiProgress.pageOne == 1 ||
+          livestock != null),
       ff: (aqProgress.pageOne == 1 || aqProgress.pageTwo == 1),
       at: (atProgress.pageOne == 1 || atProgress.pageTwo == 1),
       lw: (lwProgress.pageOne == 1 || lwProgress.pageTwo == 1),

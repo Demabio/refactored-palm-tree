@@ -484,46 +484,47 @@ class AddRearedLivestockOneBloc
             }
 
             String feeds = PrefUtils().getFeeds();
+            if (feeds != "0") {
+              List<dynamic> feedsdlist = jsonDecode(feeds);
 
-            List<dynamic> feedsdlist = jsonDecode(feeds);
+              List<FeedsModel> feedslist =
+                  feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
 
-            List<FeedsModel> feedslist =
-                feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
+              FarmerLivestockFeedsDB farmerLivestockFeedsDB =
+                  FarmerLivestockFeedsDB();
 
-            FarmerLivestockFeedsDB farmerLivestockFeedsDB =
-                FarmerLivestockFeedsDB();
+              List<FarmerLivestockFeed> feedlist = [];
 
-            List<FarmerLivestockFeed> feedlist = [];
-
-            for (var ent in feedslist) {
-              if (ent.isSelected) {
-                feedlist.add(FarmerLivestockFeed(
-                  farmerLivestockId: value,
-                  createdBy: userId,
-                  dateCreated: DateTime.now(),
-                  farmerLivestockFeedId: 0,
-                  feedQuantity: 0,
-                  feedTypeId: ent.id!,
-                ));
+              for (var ent in feedslist) {
+                if (ent.isSelected) {
+                  feedlist.add(FarmerLivestockFeed(
+                    farmerLivestockId: value,
+                    createdBy: userId,
+                    dateCreated: DateTime.now(),
+                    farmerLivestockFeedId: 0,
+                    feedQuantity: 0,
+                    feedTypeId: ent.id!,
+                  ));
+                }
               }
+
+              await farmerLivestockFeedsDB
+                  .insertFeeds(feedlist)
+                  .then((value) => print("inserted $value"));
+
+              farmDB.update(FarmerLivestock(
+                farmerFarmId: PrefUtils().getFarmId(),
+                farmerId: PrefUtils().getFarmerId(),
+                dateCreated: DateTime.now(),
+                createdBy: userId,
+                farmerLivestockId: value,
+                noOfBeehives: 0,
+                livestockFarmsystemCatId: state
+                    .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+                livestockId:
+                    state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+              ));
             }
-
-            await farmerLivestockFeedsDB
-                .insertFeeds(feedlist)
-                .then((value) => print("inserted $value"));
-
-            farmDB.update(FarmerLivestock(
-              farmerFarmId: PrefUtils().getFarmId(),
-              farmerId: PrefUtils().getFarmerId(),
-              dateCreated: DateTime.now(),
-              createdBy: userId,
-              farmerLivestockId: value,
-              noOfBeehives: 0,
-              livestockFarmsystemCatId: state
-                  .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
-              livestockId:
-                  state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
-            ));
 
             LSProgressDB lsProgressDB = LSProgressDB();
             if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
@@ -556,7 +557,7 @@ class AddRearedLivestockOneBloc
           state.feedsdlist!.isNotEmpty) {
         if (farmerLivestockId != 0) {
           String agegroups = PrefUtils().getAgeGroups();
-          if (agegroups == "0") {
+          if (agegroups != "0") {
             List<dynamic> decageGroupMapList = jsonDecode(agegroups);
 
             // Create a list of AgeGroupModel objects from the list of dynamic objects

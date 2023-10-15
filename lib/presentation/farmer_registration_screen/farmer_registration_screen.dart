@@ -9,8 +9,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
-import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+
 import 'package:kiamis_app/presentation/save_draft_modal_dialog/save_draft_modal_dialog.dart';
 import 'package:sizer/sizer.dart';
 
@@ -71,6 +70,34 @@ class FarmerRegistrationScreen extends StatelessWidget {
                       );
                     },
                   ),
+                  BlocSelector<FarmerRegistrationBloc, FarmerRegistrationState,
+                          FarmerRegistrationModel?>(
+                      selector: (state) => state.farmerRegistrationModelObj,
+                      builder: (context, model) {
+                        return Visibility(
+                          visible: (model!.fi2 &&
+                              model.fh2 &&
+                              (model.ca2 || model.crop == StepState.disabled) &&
+                              (model.ls2 || model.live == StepState.disabled) &&
+                              (model.ff2 || model.fish == StepState.disabled) &&
+                              model.at2 &&
+                              model.lw2 &&
+                              model.fs2),
+                          child: CustomElevatedButton(
+                            width: ResponsiveExtension(343).h,
+                            text: "lbl_save".tr,
+                            margin: EdgeInsets.only(bottom: 10.v),
+                            leftIcon: Container(
+                              margin: EdgeInsets.only(
+                                  right: ResponsiveExtension(10).h),
+                              child: CustomImageView(
+                                svgPath: ImageConstant.imgSaveWhiteA700,
+                              ),
+                            ),
+                            alignment: Alignment.bottomCenter,
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),
@@ -83,7 +110,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
   CupertinoStepper _buildStepper(
       StepperType type, BuildContext context, FarmerRegistrationModel model) {
     final canCancel = model.currentStep > 0;
-    final canContinue = model.currentStep < 11;
+    final canContinue = model.currentStep < 7;
     return CupertinoStepper(
       type: type,
       physics: ClampingScrollPhysics(),
@@ -112,7 +139,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.fi,
         ),
         _buildStep(
-          title: Text('Primary Farm Holding'),
+          title: Text('Farm Holding'),
           state: model.fh2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             primaryFarmHolding(context);
@@ -174,35 +201,6 @@ class FarmerRegistrationScreen extends StatelessWidget {
           editcallback: () => editFinance(context),
           addoredit: model.fs,
         ),
-        _buildStep(
-          title: Text('Error'),
-          state: StepState.error,
-          isActive: false,
-          addcallback: () {
-            onTapAdddetails(context);
-          },
-        ),
-        _buildStep(
-          title: Text('Disabled'),
-          state: StepState.disabled,
-          addcallback: () {
-            onTapAdddetails(context);
-          },
-        ),
-        _buildStep(
-          title: Text('Editing'),
-          state: StepState.editing,
-          addcallback: () {
-            onTapAdddetails(context);
-          },
-        ),
-        _buildStep(
-          title: Text('Completed'),
-          state: StepState.complete,
-          addcallback: () {
-            onTapAdddetails(context);
-          },
-        )
       ],
     );
   }
@@ -253,7 +251,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   farmersIdentification(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen,
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen,
         arguments: {
           NavigationArgs.farmerEdit: false,
         });

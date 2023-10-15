@@ -221,7 +221,11 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           }),
                       CustomElevatedButton(
                         text: "msg_add_farmer_marchinery".tr,
-                        onTap: () => addFarmMachinery(context),
+                        onTap: () => addorEdit(
+                          context,
+                          0,
+                          0,
+                        ),
                         margin: EdgeInsets.only(
                           left: 82.h,
                           top: 106.v,

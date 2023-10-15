@@ -252,7 +252,6 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                       CheckBoxList model = list![index];
 
                                       return ProdSysItemWidget(
-                                        view: false,
                                         edit: () => addorEdit(
                                           context,
                                           1,
@@ -270,7 +269,11 @@ class AddAquacultureOneScreen extends StatelessWidget {
                         CustomElevatedButton(
                           text: "msg_add_production_system".tr,
                           onTap: () {
-                            addProductionType(context);
+                            addorEdit(
+                              context,
+                              0,
+                              0,
+                            );
                           },
                           margin: EdgeInsets.only(
                             left: 82.h,
@@ -317,7 +320,6 @@ class AddAquacultureOneScreen extends StatelessWidget {
 
                                       return FishtemWidget(
                                         model,
-                                        view: false,
                                         edit: () => addorEditF(
                                           context,
                                           1,
@@ -334,7 +336,11 @@ class AddAquacultureOneScreen extends StatelessWidget {
                         CustomElevatedButton(
                           text: "msg_add_aquatic_species".tr,
                           onTap: () {
-                            addAquaculturespecies(context);
+                            addorEditF(
+                              context,
+                              0,
+                              0,
+                            );
                           },
                           margin: EdgeInsets.only(
                             left: 82.h,

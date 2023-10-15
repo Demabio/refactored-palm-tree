@@ -70,7 +70,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       PrefUtils().setFarmerIdNo(farmer.idNo!);
       PrefUtils().setFound(true);
       PrefUtils().setCropId(0);
-      PrefUtils().setFarmId(0);
+      // PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
       event.onSuccess!.call();
     }

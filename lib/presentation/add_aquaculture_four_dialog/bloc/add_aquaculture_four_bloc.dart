@@ -34,10 +34,10 @@ class AddAquacultureFourBloc
     CheckBoxList? data;
     List<SelectionPopupModel> d1 = await fillProdsystems();
     SelectionPopupModel? aa;
-    TextEditingController? a;
-    TextEditingController? b;
-    TextEditingController? c;
-    TextEditingController? d;
+    TextEditingController a = TextEditingController();
+    TextEditingController b = TextEditingController();
+    TextEditingController c = TextEditingController();
+    TextEditingController d = TextEditingController();
 
     if (edit != 0) {
       FarmerFishProductionSystem? asset = await getProdSyss(edit);

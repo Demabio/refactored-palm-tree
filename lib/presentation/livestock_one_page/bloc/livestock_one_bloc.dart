@@ -194,8 +194,11 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     int deletefeeds = await farmerLivestockFeedsDB.delete(event.value!);
     int deleteagegroup = await farmerLivestockFeedsDB.delete(event.value!);
     int deletelive = await farmDB.delete(event.value!);
+    LSProgressDB lsProgressDB = LSProgressDB();
 
     if (deleteagegroup > 0 || deletelive > 0 || deletefeeds > 0) {
+      await lsProgressDB.delete(event.value!);
+
       List<FarmerLivestock> lives = await getLivestocks() ?? [];
 
       List<LSdetailsItemModel> farmmodels = [];
