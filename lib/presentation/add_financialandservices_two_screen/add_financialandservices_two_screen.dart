@@ -52,6 +52,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
+              onTap: () => goBack(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,
@@ -750,7 +751,8 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
           ClearEvent(),
         );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
-    Navigator.popAndPushNamed(context, AppRoutes.addFarmtechandassetsOneScreen);
+    Navigator.popAndPushNamed(
+        context, AppRoutes.addFinancialandservicesOneScreen);
   }
 
   addSource(BuildContext context) async {

@@ -61,10 +61,10 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
     FishProductionLevel? fishProductionLevel;
 
     if (pfProgress.pageTwo == 1 &&
-        farmerFishProductionLevel.farmerProductionLevelId != 0) {
+        farmerFishProductionLevel.productionLevelId != 0) {
       List<FarmerFishInput>? fishes = await getFishInputs();
       fishProductionLevel =
-          await getProdlevelByid(farmerFishProductionLevel.productionLevelId!);
+          await getProdlevelByid(farmerFishProductionLevel.productionLevelId);
       fishinputs = await fetchFishInputs();
 
       fishinputs = _inputs(fish, fishes!);

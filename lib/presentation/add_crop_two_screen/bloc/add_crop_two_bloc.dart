@@ -136,7 +136,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
 
           caProgressDB
               .update(CAProgress(
-                cropId: value,
+                cropId: PrefUtils().getCropId(),
                 pageOne: state.addCropTwoModelObj!.caProgressDB!.pageOne,
                 pageTwo: 1,
               ))

@@ -45,12 +45,12 @@ class FarmerFishProductionLevelsDB {
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         production_level_id = ?, fertilizer_in_ponds = ?, esp_benefit = ?
-      WHERE farmer_productionlevel_id = ?
+      WHERE farmer_farm_id = ?
     ''', [
       farmerFishProductionLevel.productionLevelId,
       farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0,
       farmerFishProductionLevel.espBenefit,
-      farmerFishProductionLevel.farmerProductionLevelId,
+      farmerFishProductionLevel.farmerFarmId,
     ]);
   }
 

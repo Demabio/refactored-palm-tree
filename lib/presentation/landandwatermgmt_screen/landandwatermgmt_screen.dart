@@ -213,8 +213,8 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                       .textTheme.labelMedium)
                                             ])),
                                     Visibility(
-                                        visible: state.farmer?.irrigationUse ??
-                                            false,
+                                        visible:
+                                            state.farm?.irrigationUse ?? false,
                                         child: Column(
                                           children: [
                                             Padding(

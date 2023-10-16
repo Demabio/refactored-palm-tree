@@ -59,6 +59,7 @@ class LandandwatermgmtState extends Equatable {
       s: s ?? this.s,
       farmer: farmer ?? this.farmer,
       farm: farm ?? this.farm,
+      soil: soil ?? this.soil,
     );
   }
 }

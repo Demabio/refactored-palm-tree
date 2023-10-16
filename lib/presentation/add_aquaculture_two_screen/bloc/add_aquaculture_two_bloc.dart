@@ -57,7 +57,7 @@ class AddAquacultureTwoBloc
               productionLevelId: 0,
             );
     if (pfProgress.pageTwo == 1 &&
-        farmerFishProductionLevel.farmerProductionLevelId != 0) {
+        farmerFishProductionLevel.productionLevelId != 0) {
       List<FarmerFishInput>? fishes = await getFishes();
 
       fish = await fetchFish();

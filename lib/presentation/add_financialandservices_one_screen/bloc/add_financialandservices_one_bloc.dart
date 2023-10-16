@@ -87,42 +87,46 @@ class AddFinancialandservicesOneBloc extends Bloc<
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
+          farmingIncomePercent:
+              double.parse(state.selectvalueoneController!.text),
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .insert(FSProgress(
-              farmId: farmid,
-              pageTwo:
-                  state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .insert(FSProgress(
+                farmId: farmid,
+                pageTwo: state
+                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else if (selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
-        int updatedid = await farmerDB.updateFromFarmAsset(Farmer(
+        int updatedid = await farmerDB.updateFromFinancial(Farmer(
           farmerId: farmerid,
           farmerName: "NA",
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
+          farmingIncomePercent:
+              double.parse(state.selectvalueoneController!.text),
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(FSProgress(
-              farmId: farmid,
-              pageTwo:
-                  state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (updatedid > 0) {
+          atProgressDB
+              .update(FSProgress(
+                farmId: farmid,
+                pageTwo: state
+                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =
@@ -170,42 +174,46 @@ class AddFinancialandservicesOneBloc extends Bloc<
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
+          farmingIncomePercent:
+              double.parse(state.selectvalueoneController!.text),
         ));
         //REMEMBER!!!!!!!!
-        //   if (id > 0) {
-        atProgressDB
-            .insert(FSProgress(
-              farmId: farmid,
-              pageTwo:
-                  state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //}
+        if (id > 0) {
+          atProgressDB
+              .insert(FSProgress(
+                farmId: farmid,
+                pageTwo: state
+                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else if (selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
-        int updatedid = await farmerDB.updateFromFarmAsset(Farmer(
+        int updatedid = await farmerDB.updateFromFinancial(Farmer(
           farmerId: farmerid,
           farmerName: "NA",
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
+          farmingIncomePercent:
+              double.parse(state.selectvalueoneController!.text),
         ));
-        //  if (id > 0) {
-        atProgressDB
-            .update(FSProgress(
-              farmId: farmid,
-              pageTwo:
-                  state.addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-              pageOne: 1,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-        //   }
+        if (updatedid > 0) {
+          atProgressDB
+              .update(FSProgress(
+                farmId: farmid,
+                pageTwo: state
+                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                pageOne: 1,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
       } else {
         //   event.createFailed!.call();
         int selectedCount =

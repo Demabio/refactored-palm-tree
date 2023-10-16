@@ -81,8 +81,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       List<FarmerExtensionAccess>? access = await getEAccess();
       accessmodels = _access(accessmodels, access!);
       List<FarmerExtensionMode>? mode = await getModes();
-      modemodels = _modes(modemodels, mode!);
-
+      if (mode != null) {
+        modemodels = _modes(modemodels, mode);
+      }
       aa = a.firstWhere(
         (model) => model.id == (farmer.cropsInsurance! ? 1 : 0),
       );

@@ -27,65 +27,69 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
     return BlocBuilder<PrimaryFarmHoldingBloc, PrimaryFarmHoldingState>(
         builder: (context, state) {
-      return SafeArea(
-        child: Scaffold(
-          appBar: CustomAppBar(
-              leadingWidth: 60.h,
-              leading: AppbarImage(
-                  svgPath: ImageConstant.imgSort,
-                  margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
-                  onTap: () {
-                    onTapSortone(context);
-                  }),
-              centerTitle: true,
-              title: AppbarSubtitle1(text: "Farm Holding".tr),
-              actions: [
-                AppbarImage1(
-                    svgPath: ImageConstant.imgFrame33,
-                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+      return WillPopScope(
+        onWillPop: () {
+          return Future.value(false);
+        },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: CustomAppBar(
+                leadingWidth: 60.h,
+                leading: AppbarImage(
+                    svgPath: ImageConstant.imgSort,
+                    margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
                     onTap: () {
-                      onTapImage(context);
-                    })
-              ],
-              styleType: Style.bgFill),
-          body: SizedBox(
-            width: mediaQueryData.size.width,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: 2.v),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.h, right: 14.h, bottom: 5.v),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [
-                      Text("lbl_farmer_info".tr,
-                          style: CustomTextStyles.labelMediumPrimary),
+                      onTapSortone(context);
+                    }),
+                centerTitle: true,
+                title: AppbarSubtitle1(text: "Farm Holding".tr),
+                actions: [
+                  AppbarImage1(
+                      svgPath: ImageConstant.imgFrame33,
+                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      onTap: () {
+                        onTapImage(context);
+                      })
+                ],
+                styleType: Style.bgFill),
+            body: SizedBox(
+              width: mediaQueryData.size.width,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(top: 2.v),
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: 20.h, right: 14.h, bottom: 5.v),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Text("lbl_farmer_info".tr,
+                            style: CustomTextStyles.labelMediumPrimary),
+                        Padding(
+                            padding: EdgeInsets.only(left: 21.h),
+                            child: Text(PrefUtils().getFarmerName(),
+                                style: theme.textTheme.labelMedium))
+                      ]),
                       Padding(
-                          padding: EdgeInsets.only(left: 21.h),
-                          child: Text(PrefUtils().getFarmerName(),
-                              style: theme.textTheme.labelMedium))
-                    ]),
-                    Padding(
-                        padding: EdgeInsets.only(left: 1.h, top: 7.v),
-                        child: Text("msg_main_farm_enterprises".tr,
-                            style: CustomTextStyles.titleMediumSemiBold)),
-                    Container(
-                      // height: 691.v,
-                      width: 340.h,
-                      margin: EdgeInsets.only(left: 1.h, top: 22.v),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.h, vertical: 46.v),
-                              decoration: AppDecoration.outlinePrimary1
-                                  .copyWith(
-                                      borderRadius:
-                                          BorderRadiusStyle.roundedBorder10),
-                              child: Expanded(
+                          padding: EdgeInsets.only(left: 1.h, top: 7.v),
+                          child: Text("msg_main_farm_enterprises".tr,
+                              style: CustomTextStyles.titleMediumSemiBold)),
+                      Container(
+                        // height: 691.v,
+                        width: 340.h,
+                        margin: EdgeInsets.only(left: 1.h, top: 22.v),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 4.h, vertical: 46.v),
+                                decoration: AppDecoration.outlinePrimary1
+                                    .copyWith(
+                                        borderRadius:
+                                            BorderRadiusStyle.roundedBorder10),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,11 +506,11 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -522,7 +526,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmerRegistrationScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmerRegistrationScreen,
     );
   }
@@ -533,7 +537,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapImage(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingOneScreen,
     );
   }

@@ -591,36 +591,36 @@ class AddRearedLivestockOneBloc
           }
 
           String feeds = PrefUtils().getFeeds();
+          if (feeds != "0") {
+            List<dynamic> feedsdlist = jsonDecode(feeds);
 
-          List<dynamic> feedsdlist = jsonDecode(feeds);
+            List<FeedsModel> feedslist =
+                feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
 
-          List<FeedsModel> feedslist =
-              feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
+            FarmerLivestockFeedsDB farmerLivestockFeedsDB =
+                FarmerLivestockFeedsDB();
 
-          FarmerLivestockFeedsDB farmerLivestockFeedsDB =
-              FarmerLivestockFeedsDB();
+            List<FarmerLivestockFeed> feedlist = [];
 
-          List<FarmerLivestockFeed> feedlist = [];
-
-          for (var ent in feedslist) {
-            if (ent.isSelected) {
-              feedlist.add(FarmerLivestockFeed(
-                farmerLivestockId: PrefUtils().getLivestockId(),
-                createdBy: userId,
-                dateCreated: DateTime.now(),
-                farmerLivestockFeedId: 0,
-                feedQuantity: 0,
-                feedTypeId: ent.id!,
-              ));
+            for (var ent in feedslist) {
+              if (ent.isSelected) {
+                feedlist.add(FarmerLivestockFeed(
+                  farmerLivestockId: PrefUtils().getLivestockId(),
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                  farmerLivestockFeedId: 0,
+                  feedQuantity: 0,
+                  feedTypeId: ent.id!,
+                ));
+              }
             }
+            await farmerLivestockFeedsDB
+                .delete(farmerLivestockId)
+                .then((value) => print("deleted $value"));
+            await farmerLivestockFeedsDB
+                .insertFeeds(feedlist)
+                .then((value) => print("inserted $value"));
           }
-          await farmerLivestockFeedsDB
-              .delete(farmerLivestockId)
-              .then((value) => print("deleted $value"));
-          await farmerLivestockFeedsDB
-              .insertFeeds(feedlist)
-              .then((value) => print("inserted $value"));
-
           farmDB.update(FarmerLivestock(
             farmerFarmId: PrefUtils().getFarmId(),
             farmerId: PrefUtils().getFarmerId(),

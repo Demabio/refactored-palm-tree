@@ -122,7 +122,7 @@ class AgeGroupModel extends Equatable {
       subcategoryid: json['subcategoryid'],
       livestockCat: json['livestockCat'],
       livestockSubCat: json['livestockSubCat'],
-      females: json['male'],
+      females: json['female'],
       males: json['male'],
       // Add other properties as needed...
     );

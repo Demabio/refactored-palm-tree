@@ -425,7 +425,12 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                         onTap: () {
                                           context
                                               .read<PrimaryFarmHoldingTwoBloc>()
-                                              .add(GetLocation());
+                                              .add(GetLocation(
+                                                createFailed: () =>
+                                                    nolocation(context),
+                                                createSuccessful: () =>
+                                                    nolocation(context),
+                                              ));
                                         })
                                   ]),
                                   SizedBox(height: 37.v),
@@ -731,5 +736,50 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
     NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingScreen,
     );
+  }
+
+  nolocation(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AlertDialog(
+              content: Container(
+                width: 330.h,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.h,
+                  vertical: 6.v,
+                ),
+                decoration: AppDecoration.fillWhiteA.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder10,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 30.v),
+                    Text(
+                      "Farmer Id Number: ${PrefUtils().getFarmerIdNo()}".tr,
+                      style: CustomTextStyles.bodyLargePrimary_2,
+                    ),
+                    SizedBox(height: 10.v),
+                    Text(
+                      "Kindly Enable Location Services",
+                      style: CustomTextStyles.bodyMediumPoppinsBlack900,
+                    ),
+                    SizedBox(height: 51.v),
+                    Expanded(
+                      child: CustomOutlinedButton(
+                        text: "Close".tr,
+                        onTap: () => Navigator.pop(context),
+                        margin: EdgeInsets.only(right: 4.h),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 }

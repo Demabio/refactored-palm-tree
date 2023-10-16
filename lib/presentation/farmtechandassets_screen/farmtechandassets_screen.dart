@@ -143,9 +143,8 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                           child: Text(
                                                               "lbl_labour_source2"
                                                                   .tr,
-                                                              style: theme
-                                                                  .textTheme
-                                                                  .labelMedium)),
+                                                              style: CustomTextStyles
+                                                                  .labelMediumPrimary)),
                                                       Text(
                                                           state.farm
                                                                   ?.labourSource ??

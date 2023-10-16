@@ -57,21 +57,15 @@ class PrimaryFarmHoldingTwoBloc
       bool isLocationServiceEnabled =
           await Geolocator.isLocationServiceEnabled();
       if (!isLocationServiceEnabled) {
-        print("Location services are not enabled. Please enable them.");
-        // You can prompt the user to enable location services here.
-        return;
+        event.createFailed!.call();
       }
       var status = await Permission.location.request();
       if (status.isDenied) {
-        print(
-            "Location permission is denied. Please grant the permission in your device settings.");
-        return;
+        event.createFailed!.call();
       }
 
       if (status.isPermanentlyDenied) {
-        print(
-            "Location permission is permanently denied. Please grant the permission in your device settings.");
-        return;
+        event.createFailed!.call();
       }
       ProgressDialogUtils.showProgressDialog();
 
@@ -82,7 +76,7 @@ class PrimaryFarmHoldingTwoBloc
 
       double y = position.latitude;
       double x = position.longitude;
-      double accuracy = position.accuracy == 0.0 ? 10 : position.accuracy;
+      int accuracy = position.accuracy == 0.0 ? 10 : position.accuracy.toInt();
       // LatLng? _currentLocation =
       //     (await locationRepository.getCurrentLocation()) as LatLng?;
       // double x = _currentLocation!.longitude;
