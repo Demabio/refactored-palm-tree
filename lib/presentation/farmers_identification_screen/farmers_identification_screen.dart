@@ -350,19 +350,19 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         state
                                                                     .farmersIdentificationModelObj
                                                                     ?.farmer
-                                                                    ?.respondentRlshpId ==
-                                                                1
+                                                                    ?.farmerTheRespodent ??
+                                                                false
                                                             ? "Yes"
                                                             : "No",
                                                         style: theme.textTheme
                                                             .labelMedium)
                                                   ])),
                                           Visibility(
-                                            visible: state
+                                            visible: !(state
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
-                                                    ?.respondentRlshpId ==
-                                                0,
+                                                    ?.farmerTheRespodent! ??
+                                                false),
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -390,11 +390,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Visibility(
-                                            visible: state
+                                            visible: !(state
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
-                                                    ?.respondentRlshpId ==
-                                                0,
+                                                    ?.farmerTheRespodent! ??
+                                                false),
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -423,11 +423,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Visibility(
-                                            visible: state
+                                            visible: !(state
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
-                                                    ?.respondentRlshpId ==
-                                                0,
+                                                    ?.farmerTheRespodent! ??
+                                                false),
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -457,11 +457,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Visibility(
-                                            visible: state
+                                            visible: !(state
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
-                                                    ?.respondentRlshpId ==
-                                                0,
+                                                    ?.farmerTheRespodent! ??
+                                                false),
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),

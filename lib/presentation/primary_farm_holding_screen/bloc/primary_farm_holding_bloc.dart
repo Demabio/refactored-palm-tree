@@ -78,6 +78,7 @@ class PrimaryFarmHoldingBloc
         FarmerFarm(
           farmerId: 0,
           farmerFarmId: 0,
+          ownershipId: 1,
         );
     CropAreaUnit? level = await getArea(farm.areaUnitId ?? 1);
     FarmerFarmOwnership? relationship = await getOwner(farm.ownershipId ?? 1);

@@ -314,12 +314,21 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             child: Text("lbl_accuracy".tr,
                                                 style: CustomTextStyles
                                                     .labelLargePrimary)),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 87.h),
-                                            child: Text("lbl_20_00".tr,
-                                                style: CustomTextStyles
-                                                    .labelLargePrimary))
+                                        Spacer(),
+                                        BlocSelector<
+                                                PrimaryFarmHoldingTwoBloc,
+                                                PrimaryFarmHoldingTwoState,
+                                                PrimaryFarmHoldingTwoState?>(
+                                            selector: (state) => state,
+                                            builder: (context, state) {
+                                              return Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 87.h),
+                                                  child: Text(
+                                                      "${state?.accuracy} metres",
+                                                      style: CustomTextStyles
+                                                          .labelLargePrimary));
+                                            }),
                                       ])),
                                   SizedBox(height: 15.v),
                                   Row(children: [

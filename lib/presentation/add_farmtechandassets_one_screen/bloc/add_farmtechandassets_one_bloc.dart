@@ -398,9 +398,9 @@ class AddFarmtechandassetsOneBloc
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchPowerSources();
 
-    feedmodels = _sources(feedmodels, fishes!);
+    feedmodels = fishes != null ? _sources(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
+    if (fishes != null) {
       emit(state.copyWith(p: feedmodels, checkedP: false));
     } else {
       emit(state.copyWith(checkedP: true));
@@ -416,9 +416,9 @@ class AddFarmtechandassetsOneBloc
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fillAssets();
 
-    feedmodels = _assets(feedmodels, fishes!);
+    feedmodels = fishes != null ? _assets(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
+    if (fishes != null) {
       emit(state.copyWith(a: feedmodels, checkedA: false));
     } else {
       emit(state.copyWith(checkedA: true));
@@ -434,9 +434,9 @@ class AddFarmtechandassetsOneBloc
     List<CheckBoxList>? feedmodels = [];
     feedmodels = await fetchFarmStructure();
 
-    feedmodels = _structs(feedmodels, fishes!);
+    feedmodels = fishes != null ? _structs(feedmodels, fishes) : feedmodels;
 
-    if (fishes.isNotEmpty) {
+    if (fishes != null) {
       emit(state.copyWith(s: feedmodels, checkedS: false));
     } else {
       emit(state.copyWith(checkedS: true));

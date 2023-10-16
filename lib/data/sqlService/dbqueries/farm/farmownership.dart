@@ -69,12 +69,14 @@ class FarmerFarmOwnershipDB {
     }
   }
 
-  Future<FarmerFarmOwnership> fetchByOwnershipId(int ownershipId) async {
+  Future<FarmerFarmOwnership?> fetchByOwnershipId(int ownershipId) async {
     final database = await DatabaseService().database;
     final ownership = await database.rawQuery('''
       SELECT * FROM $tableName WHERE ownership_id = ?
     ''', [ownershipId]);
 
-    return FarmerFarmOwnership.fromSqfliteDatabase(ownership.first);
+    return ownership.isNotEmpty
+        ? FarmerFarmOwnership.fromSqfliteDatabase(ownership.first)
+        : null;
   }
 }

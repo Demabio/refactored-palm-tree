@@ -68,7 +68,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     TextEditingController name = TextEditingController();
     TextEditingController id = TextEditingController();
 
-    if (fiProgress.pageFour == 1) {
+    if (fiProgress.pageThree == 1) {
       selectedDropDownValue = isFarmer.firstWhere(
         (model) => model.id == (farmer.farmerTheRespodent! ? 1 : 0),
       );

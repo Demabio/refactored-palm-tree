@@ -67,12 +67,14 @@ class CropWaterSourceDB {
     ]);
   }
 
-  Future<CropWaterSource> fetchByWaterSourceId(int waterSourceId) async {
+  Future<CropWaterSource?> fetchByWaterSourceId(int waterSourceId) async {
     final database = await DatabaseService().database;
     final source = await database.rawQuery('''
       SELECT * FROM $tableName WHERE water_source_id = ?
     ''', [waterSourceId]);
 
-    return CropWaterSource.fromSqfliteDatabase(source.first);
+    return source.isNotEmpty
+        ? CropWaterSource.fromSqfliteDatabase(source.first)
+        : null;
   }
 }

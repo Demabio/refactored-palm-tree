@@ -115,6 +115,7 @@ class LandandwatermgmtBloc
       s: watermodels,
       soil: soilTest,
       farmer: farmer,
+      farm: farm,
     ));
   }
 

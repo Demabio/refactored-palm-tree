@@ -82,6 +82,7 @@ class PrimaryFarmHoldingTwoBloc
 
       double y = position.latitude;
       double x = position.longitude;
+      double accuracy = position.accuracy == 0.0 ? 10 : position.accuracy;
       // LatLng? _currentLocation =
       //     (await locationRepository.getCurrentLocation()) as LatLng?;
       // double x = _currentLocation!.longitude;
@@ -93,6 +94,7 @@ class PrimaryFarmHoldingTwoBloc
         state.copyWith(
           titleoneController: long,
           titlethreeController: lat,
+          accuracy: accuracy.toString(),
         ),
       );
     } catch (e) {
@@ -370,8 +372,9 @@ class PrimaryFarmHoldingTwoBloc
             .updatePageTwo(FarmerFarm(
           farmerId: PrefUtils().getFarmerId(),
           farmerFarmId: PrefUtils().getFarmId(),
-          x: double.parse(state.titlethreeController!.text),
-          y: double.parse(state.titleoneController!.text),
+          x: double.parse(state.titleoneController!.text),
+          y: double.parse(state.titlethreeController!.text),
+          accuracyLevel: double.parse(state.accuracy!),
           ownershipId:
               state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue!.id,
           farmLrCert: state.titlesevenController?.text,
@@ -492,8 +495,8 @@ class PrimaryFarmHoldingTwoBloc
     SelectionPopupModel? selectedDropDownValue4;
 
     if (pfProgress.pageTwo == 1 && farm.farmerFarmId != 0) {
-      titleoneController = TextEditingController(text: farm.y.toString());
-      titlethreeController = TextEditingController(text: farm.x.toString());
+      titleoneController = TextEditingController(text: farm.x.toString());
+      titlethreeController = TextEditingController(text: farm.y.toString());
       titlesevenController = TextEditingController(text: farm.farmLrCert);
 
       selectedowners = owners.firstWhere(

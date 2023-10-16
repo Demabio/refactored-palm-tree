@@ -64,13 +64,15 @@ class CropSystemDB {
     return systems.map((e) => CropSystem.fromSqfliteDatabase(e)).toList();
   }
 
-  Future<CropSystem> fetchByCropSystemId(int cropSystemId) async {
+  Future<CropSystem?> fetchByCropSystemId(int cropSystemId) async {
     final database = await DatabaseService().database;
     final system = await database.rawQuery('''
       SELECT * FROM $tableName WHERE crop_system_id = ?
     ''', [cropSystemId]);
 
-    return CropSystem.fromSqfliteDatabase(system.first);
+    return system.isNotEmpty
+        ? CropSystem.fromSqfliteDatabase(system.first)
+        : null;
   }
 
   // Add more database methods as needed

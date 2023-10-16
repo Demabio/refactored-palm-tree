@@ -80,7 +80,7 @@ class FarmerFarmDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      cropProd = ?, livestockProd = ?, fishFarming = ?,  x = ?, y = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
+      cropProd = ?, livestockProd = ?, fishFarming = ?,  x = ?, y = ?, accuracy_level = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
       WHERE farmer_farm_id = ?
     ''', [
       farm.cropProd,
@@ -88,6 +88,7 @@ class FarmerFarmDB {
       farm.fishFarming,
       farm.x,
       farm.y,
+      farm.accuracyLevel?.toInt(),
       farm.ownershipId,
       farm.farmLrCert,
       farm.otherFarmElsewhere! ? 1 : 0,

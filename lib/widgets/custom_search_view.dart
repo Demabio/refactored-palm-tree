@@ -97,9 +97,9 @@ class CustomSearchView extends StatelessWidget {
           decoration: decoration,
           validator: validator,
           enabled: enabled,
-          // onChanged: (value) {
-          //   onChanged!(value);
-          // },
+          onChanged: (value) {
+            onChanged!(value);
+          },
         ),
       );
   InputDecoration get decoration => InputDecoration(

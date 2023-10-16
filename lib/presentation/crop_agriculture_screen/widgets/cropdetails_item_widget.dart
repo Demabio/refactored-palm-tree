@@ -45,7 +45,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.name!,
+                  cropdetailsItemModelObj.name ?? "N/A",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelMedium,
                 ),
@@ -68,7 +68,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.totalAcreage!,
+                  cropdetailsItemModelObj.totalAcreage ?? "N/A",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelMedium,
                 ),
@@ -88,7 +88,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.unitOfArea!,
+                  cropdetailsItemModelObj.unitOfArea ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -107,7 +107,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.seeds!,
+                  cropdetailsItemModelObj.seeds ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -129,7 +129,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.purpose!,
+                  cropdetailsItemModelObj.purpose ?? "N/A",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelMedium,
                 ),
@@ -152,7 +152,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.water!,
+                  cropdetailsItemModelObj.water ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -171,7 +171,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.system!,
+                  cropdetailsItemModelObj.system ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -190,7 +190,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.fertiliser!,
+                  cropdetailsItemModelObj.fertiliser ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],
@@ -209,7 +209,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
                 Text(
-                  cropdetailsItemModelObj.pesticide!,
+                  cropdetailsItemModelObj.pesticide ?? "N/A",
                   style: theme.textTheme.labelMedium,
                 ),
               ],

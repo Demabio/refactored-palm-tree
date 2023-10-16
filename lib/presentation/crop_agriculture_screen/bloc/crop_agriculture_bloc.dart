@@ -48,10 +48,10 @@ class CropAgricultureBloc
     Crop? cropp;
 
     for (var crop in crops) {
-      waterSource = await getSource(crop.waterSourceId!);
+      waterSource = await getSource(crop.waterSourceId);
       cropAreaUnit = await getArea(crop.areaUnitId!);
-      cropSystem = await getSystem(crop.cropSystemId!);
-      cropPlantingMotive = await getmotive(crop.cropMotiveId!);
+      cropSystem = await getSystem(crop.cropSystemId);
+      cropPlantingMotive = await getmotive(crop.cropMotiveId);
       cropp = await getCrop(crop.cropId!);
       cropmodels.add(CropdetailsItemModel(
         //   crop: crop,
@@ -106,19 +106,21 @@ class CropAgricultureBloc
     return await cropSystemDB.fetchByCropId(id);
   }
 
-  Future<CropSystem?> getSystem(int id) async {
+  Future<CropSystem?> getSystem(int? id) async {
     CropSystemDB cropSystemDB = CropSystemDB();
-    return await cropSystemDB.fetchByCropSystemId(id);
+    return id != null ? await cropSystemDB.fetchByCropSystemId(id) : null;
   }
 
-  Future<CropWaterSource?> getSource(int id) async {
+  Future<CropWaterSource?> getSource(int? id) async {
     CropWaterSourceDB cropWaterSourceDB = CropWaterSourceDB();
-    return await cropWaterSourceDB.fetchByWaterSourceId(id);
+    return id != null ? await cropWaterSourceDB.fetchByWaterSourceId(id) : null;
   }
 
-  Future<CropPlantingMotive?> getmotive(int id) async {
+  Future<CropPlantingMotive?> getmotive(int? id) async {
     CropPlantingMotiveDB cropPlantingMotiveDB = CropPlantingMotiveDB();
-    return await cropPlantingMotiveDB.fetchByCropMotiveId(id);
+    return id != null
+        ? await cropPlantingMotiveDB.fetchByCropMotiveId(id)
+        : null;
   }
 
   Future<FarmerCrop?> getFarm() async {
@@ -170,10 +172,10 @@ class CropAgricultureBloc
       Crop? cropp;
 
       for (var crop in crops) {
-        waterSource = await getSource(crop.waterSourceId!);
+        waterSource = await getSource(crop.waterSourceId);
         cropAreaUnit = await getArea(crop.areaUnitId!);
-        cropSystem = await getSystem(crop.cropSystemId!);
-        cropPlantingMotive = await getmotive(crop.cropMotiveId!);
+        cropSystem = await getSystem(crop.cropSystemId);
+        cropPlantingMotive = await getmotive(crop.cropMotiveId);
         cropp = await getCrop(crop.cropId!);
         cropmodels.add(CropdetailsItemModel(
           //   crop: crop,

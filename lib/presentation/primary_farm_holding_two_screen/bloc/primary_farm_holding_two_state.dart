@@ -8,7 +8,6 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     this.titleoneController,
     this.titlethreeController,
     this.titlesevenController,
-    this.currentLocation,
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
@@ -21,6 +20,7 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     this.trashtwo = false,
     this.trashthree = false,
     this.treeFarming = false,
+    this.accuracy,
     this.primaryFarmHoldingTwoModelObj,
   });
 
@@ -48,14 +48,13 @@ class PrimaryFarmHoldingTwoState extends Equatable {
   bool growingCropsFor;
 
   bool trashone;
-  LatLng? currentLocation;
 
   bool trashtwo;
 
   bool trashthree;
 
   bool treeFarming;
-
+  String? accuracy;
   @override
   List<Object?> get props => [
         titleoneController,
@@ -73,7 +72,7 @@ class PrimaryFarmHoldingTwoState extends Equatable {
         trashtwo,
         trashthree,
         treeFarming,
-        currentLocation,
+        accuracy,
         primaryFarmHoldingTwoModelObj,
       ];
   PrimaryFarmHoldingTwoState copyWith({
@@ -91,8 +90,8 @@ class PrimaryFarmHoldingTwoState extends Equatable {
     bool? trashone,
     bool? trashtwo,
     bool? trashthree,
-    LatLng? currentLocation,
     bool? treeFarming,
+    String? accuracy,
     PrimaryFarmHoldingTwoModel? primaryFarmHoldingTwoModelObj,
   }) {
     return PrimaryFarmHoldingTwoState(
@@ -118,7 +117,7 @@ class PrimaryFarmHoldingTwoState extends Equatable {
           selectedDropDownValue3 ?? this.selectedDropDownValue3,
       selectedDropDownValue4:
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
-      currentLocation: currentLocation ?? this.currentLocation,
+      accuracy: accuracy ?? this.accuracy,
     );
   }
 }

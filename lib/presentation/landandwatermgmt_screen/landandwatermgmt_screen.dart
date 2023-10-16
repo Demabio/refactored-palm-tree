@@ -125,7 +125,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                 style: CustomTextStyles
                                                     .labelMediumPrimary),
                                             Text(
-                                                state.farmer?.limeUsage ?? false
+                                                state.farm?.limeUsage ?? false
                                                     ? "Yes"
                                                     : "No",
                                                 style:
@@ -200,7 +200,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                 style: CustomTextStyles
                                                     .labelMediumPrimary),
                                             Text(
-                                                state.farmer?.irrigationUse ??
+                                                state.farm?.irrigationUse ??
                                                         false
                                                     ? "Yes"
                                                     : "No",
@@ -337,7 +337,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                                 style: CustomTextStyles
                                                                     .labelMediumPrimary)),
                                                         Text(
-                                                            state.farmer
+                                                            state.farm
                                                                     ?.irrigationArea
                                                                     .toString() ??
                                                                 "N/A",

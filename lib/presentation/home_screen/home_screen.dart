@@ -380,6 +380,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               return Form(
                                                 key: _formKey,
                                                 child: CustomSearchView(
+                                                    onChanged: (p0) {
+                                                      return null;
+                                                    },
                                                     enabled: true,
                                                     autofocus: false,
                                                     focusNode:

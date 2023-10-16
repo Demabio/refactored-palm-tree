@@ -397,7 +397,7 @@ class AddLandandwatermgmtTwoBloc
             .model
             .indexWhere((obj) => obj.id == ent.membershipTypeId);
 
-        drop = feedmodels[index].model[index2];
+        drop = index2 >= 0 ? feedmodels[index].model[index2] : drop;
       }
 
       feedmodels[index].isSelected = true;

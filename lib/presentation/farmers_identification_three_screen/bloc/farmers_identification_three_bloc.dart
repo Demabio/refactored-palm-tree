@@ -160,9 +160,8 @@ class FarmersIdentificationThreeBloc extends Bloc<
                 farmerId: PrefUtils().getFarmerId(),
                 pageOne: 1,
                 pageTwo: 1,
-                pageThree: 1,
-                pageFour: state
-                    .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
+                pageThree: 0,
+                pageFour: 1,
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
@@ -205,7 +204,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
                 farmerId: PrefUtils().getFarmerId(),
                 pageOne: 1,
                 pageTwo: 1,
-                pageThree: 1,
+                pageThree: 0,
                 pageFour: state
                     .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
               ))

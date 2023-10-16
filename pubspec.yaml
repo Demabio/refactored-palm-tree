@@ -29,7 +29,6 @@ dependencies:
   file_picker: ^4.0.0
   dart_jsonwebtoken: ^2.11.0
   easy_stepper: ^0.8.1
-  google_maps_flutter: ^2.5.0
   latlng: ^1.0.0
   geolocator: ^10.0.1
   permission_handler: ^11.0.1
