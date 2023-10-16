@@ -41,6 +41,7 @@ class FarmerRegistrationBloc
     on<StepDownEvent>(_onSteppedDown);
     on<OnSteppedEvent>(_onStepped);
     on<StepUpEvent>(_onSteppedUp);
+    on<CompleteEvent>(_completeRegistration);
   }
 
   ProcessStatus getRegProgress() {
@@ -169,6 +170,18 @@ class FarmerRegistrationBloc
     return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
 
+  _completeRegistration(
+      CompleteEvent event, Emitter<FarmerRegistrationState> emit) async {
+    int id = PrefUtils().getFarmerId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    int complete = await farmerFishProductionLevelsDB.completed(id);
+    if (complete > 0) {
+      event.onSuccess!.call();
+    } else {
+      event.onFailed!.call();
+    }
+  }
+
   Future<List<FarmerCrop>?> getCrops() async {
     int id = PrefUtils().getFarmerId();
     FarmerCropsDB farmerFishProductionLevelsDB = FarmerCropsDB();
@@ -176,7 +189,7 @@ class FarmerRegistrationBloc
   }
 
   Future<List<FarmerLivestock>?> getLuvestocks() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerLivestockDB farmerFishProductionLevelsDB = FarmerLivestockDB();
     return await farmerFishProductionLevelsDB.fetchByFarm(id);
   }

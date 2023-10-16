@@ -191,7 +191,7 @@ class FarmerFarmDB {
     }
   }
 
-  Future<int> completed(FarmerFarm farm) async {
+  Future<int> completed(int id) async {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
@@ -199,7 +199,7 @@ class FarmerFarmDB {
     WHERE farmer_farm_id = ? 
   ''', [
         1,
-        farm.farmerFarmId,
+        id,
       ]);
     } catch (e) {
       print(e.toString());

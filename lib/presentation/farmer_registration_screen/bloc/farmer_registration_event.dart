@@ -26,6 +26,20 @@ class StepUpEvent extends FarmerRegistrationEvent {
       ];
 }
 
+class CompleteEvent extends FarmerRegistrationEvent {
+  CompleteEvent({
+    this.onSuccess,
+    this.onFailed,
+  });
+  Function? onSuccess;
+  Function? onFailed;
+  @override
+  List<Object?> get props => [
+        onSuccess,
+        onFailed,
+      ];
+}
+
 class StepDownEvent extends FarmerRegistrationEvent {
   StepDownEvent({this.value});
 

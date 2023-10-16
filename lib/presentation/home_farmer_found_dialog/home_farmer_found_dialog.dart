@@ -80,8 +80,11 @@ class HomeFarmerFoundDialog extends StatelessWidget {
 
   navToRespectivePage(BuildContext context) {
     if (PrefUtils().getFound()) {
+      Navigator.pop(context);
       NavigatorService.popAndPushNamed(AppRoutes.farmerRegistrationScreen);
     } else {
+      Navigator.pop(context);
+
       NavigatorService.popAndPushNamed(
           AppRoutes.farmersIdentificationTwoScreen);
     }

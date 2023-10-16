@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
           dbNotFound(context);
         }, onSuccess: () {
-          dbNotFound(context);
+          //  dbNotFound(context);
         }));
   }
 
@@ -389,6 +389,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         _secondTextFieldFocus,
                                                     controller:
                                                         searchController1,
+                                                    textInputType:
+                                                        TextInputType.number,
                                                     validator: (value) {
                                                       if (!isNumeric(value,
                                                           isRequired: true)) {

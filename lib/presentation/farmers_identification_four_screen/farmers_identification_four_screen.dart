@@ -40,7 +40,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
     return WillPopScope(
       onWillPop: () {
-        NavigatorService.pushNamed(AppRoutes.farmersIdentificationThreeScreen);
+        NavigatorService.popAndPushNamed(
+            AppRoutes.farmersIdentificationThreeScreen);
         return Future.value(false);
       },
       child: SafeArea(
@@ -525,7 +526,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   }
 
   _success(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.farmersIdentificationTwoScreen);
+    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen);
   }
 
   void _failed(BuildContext context) {
@@ -581,7 +582,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationThreeScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationThreeScreen,
     );
   }
@@ -602,7 +603,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationThreeScreen.
   onTapRowback(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationThreeScreen,
     );
   }
@@ -613,7 +614,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
   onTapSave(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
   }

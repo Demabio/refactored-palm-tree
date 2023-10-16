@@ -499,7 +499,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationTwoScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationTwoScreen,
     );
   }
@@ -520,7 +520,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationTwoScreen.
   onTapBack(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationTwoScreen,
     );
   }
@@ -531,7 +531,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationFourScreen.
   onTapNext(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationFourScreen,
     );
   }
@@ -542,7 +542,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmersIdentificationScreen.
   onTapSave(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmersIdentificationScreen,
     );
   }

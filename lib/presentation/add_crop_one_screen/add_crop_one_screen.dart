@@ -545,7 +545,7 @@ class AddCropOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the cropAgricultureScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.cropAgricultureScreen,
     );
   }
@@ -556,7 +556,7 @@ class AddCropOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the addCropTwoScreen.
   onTapNext(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.addCropTwoScreen,
     );
   }
@@ -567,7 +567,7 @@ class AddCropOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the cropAgricultureScreen.
   onTapSave(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.cropAgricultureScreen,
     );
   }

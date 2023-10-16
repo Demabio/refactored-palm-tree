@@ -160,7 +160,8 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the homeScreen.
   onTapDashboard(BuildContext context) {
-    NavigatorService.pushNamed(
+    Navigator.pop(context);
+    NavigatorService.popAndPushNamed(
       AppRoutes.homeScreen,
     );
   }
@@ -171,7 +172,9 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the draftEntriesScreen.
   onTapDraftentries(BuildContext context) {
-    NavigatorService.pushNamed(
+    Navigator.pop(context);
+
+    NavigatorService.popAndPushNamed(
       AppRoutes.draftEntriesScreen,
     );
   }
@@ -182,7 +185,9 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the searchFarmerScreen.
   onTapRegisterfarmer(BuildContext context) {
-    NavigatorService.pushNamed(
+    Navigator.pop(context);
+
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmerRegistrationScreen,
     );
   }
@@ -193,7 +198,9 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the settingsScreen.
   onTapSettings(BuildContext context) {
-    NavigatorService.pushNamed(
+    Navigator.pop(context);
+
+    NavigatorService.popAndPushNamed(
       AppRoutes.settingsScreen,
     );
   }
@@ -204,7 +211,9 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the loginScreen.
   onTapRowarrowright(BuildContext context) {
-    NavigatorService.pushNamed(
+    Navigator.pop(context);
+
+    NavigatorService.popAndPushNamed(
       AppRoutes.loginScreen,
     );
   }

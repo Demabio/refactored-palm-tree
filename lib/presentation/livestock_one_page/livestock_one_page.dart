@@ -130,7 +130,7 @@ class LivestockOnePageState extends State<LivestockOnePage>
   }
 
   onTapImage(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.addRearedLivestockOneScreen,
     );
   }

@@ -27,229 +27,236 @@ class FarmtechandassetsScreen extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
     return BlocBuilder<FarmtechandassetsBloc, FarmtechandassetsState>(
         builder: (context, state) {
-      return SafeArea(
-          child: Scaffold(
-              appBar: CustomAppBar(
-                  leadingWidth: 60.h,
-                  leading: AppbarImage(
-                      svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
-                      onTap: () {
-                        onTapSortone(context);
-                      }),
-                  centerTitle: true,
-                  title: AppbarSubtitle4(text: "msg_farm_technology2".tr),
-                  actions: [
-                    AppbarImage1(
-                        svgPath: ImageConstant.imgFrame33,
-                        margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+      return WillPopScope(
+        onWillPop: () {
+          return Future.value(false);
+        },
+        child: SafeArea(
+            child: Scaffold(
+                appBar: CustomAppBar(
+                    leadingWidth: 60.h,
+                    leading: AppbarImage(
+                        svgPath: ImageConstant.imgSort,
+                        margin:
+                            EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
                         onTap: () {
-                          onTapImage(context);
-                        })
-                  ],
-                  styleType: Style.bgFill),
-              body: SizedBox(
-                  width: mediaQueryData.size.width,
-                  child: SingleChildScrollView(
-                      padding: EdgeInsets.only(top: 2.v),
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.h, right: 15.h, bottom: 5.v),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(left: 4.h),
-                                    child: Row(children: [
-                                      Text("lbl_farmer_info".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary),
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 21.h),
-                                          child: Text(
-                                              PrefUtils().getFarmerName(),
-                                              style:
-                                                  theme.textTheme.labelMedium))
-                                    ])),
-                                SizedBox(height: 15.v),
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 7.h, vertical: 11.v),
-                                    decoration: AppDecoration.outlinePrimary
-                                        .copyWith(
-                                            borderRadius: BorderRadiusStyle
-                                                .roundedBorder10),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 9.v),
-                                              child: Text(
-                                                  "msg_source_of_power".tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
-                                          BlocSelector<
-                                                  FarmtechandassetsBloc,
-                                                  FarmtechandassetsState,
-                                                  List<CheckBoxList>?>(
-                                              selector: (state) => state.p,
-                                              builder: (context, list) {
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: 15.v,
-                                                    right: 16.h,
-                                                  ),
-                                                  child: Column(
-                                                    children:
-                                                        List<Widget>.generate(
-                                                      list?.length ?? 0,
-                                                      (index) {
-                                                        CheckBoxList model =
-                                                            list![index];
-
-                                                        return InputsWidget(
-                                                          model,
-                                                        );
-                                                      },
+                          onTapSortone(context);
+                        }),
+                    centerTitle: true,
+                    title: AppbarSubtitle4(text: "msg_farm_technology2".tr),
+                    actions: [
+                      AppbarImage1(
+                          svgPath: ImageConstant.imgFrame33,
+                          margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                          onTap: () {
+                            onTapImage(context);
+                          })
+                    ],
+                    styleType: Style.bgFill),
+                body: SizedBox(
+                    width: mediaQueryData.size.width,
+                    child: SingleChildScrollView(
+                        padding: EdgeInsets.only(top: 2.v),
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 15.h, right: 15.h, bottom: 5.v),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: EdgeInsets.only(left: 4.h),
+                                      child: Row(children: [
+                                        Text("lbl_farmer_info".tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 21.h),
+                                            child: Text(
+                                                PrefUtils().getFarmerName(),
+                                                style: theme
+                                                    .textTheme.labelMedium))
+                                      ])),
+                                  SizedBox(height: 15.v),
+                                  Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 7.h, vertical: 11.v),
+                                      decoration: AppDecoration.outlinePrimary
+                                          .copyWith(
+                                              borderRadius: BorderRadiusStyle
+                                                  .roundedBorder10),
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.h, top: 9.v),
+                                                child: Text(
+                                                    "msg_source_of_power".tr,
+                                                    style: CustomTextStyles
+                                                        .labelMediumPrimary)),
+                                            BlocSelector<
+                                                    FarmtechandassetsBloc,
+                                                    FarmtechandassetsState,
+                                                    List<CheckBoxList>?>(
+                                                selector: (state) => state.p,
+                                                builder: (context, list) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 15.v,
+                                                      right: 16.h,
                                                     ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h,
-                                                  top: 11.v,
-                                                  right: 7.h),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 1.v),
-                                                        child: Text(
-                                                            "lbl_labour_source2"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium)),
-                                                    Text(
-                                                        state.farm
-                                                                ?.labourSource ??
-                                                            "N/A",
-                                                        style: theme.textTheme
-                                                            .labelMedium)
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 11.v),
-                                              child: Text(
-                                                  "msg_farmer_machinery".tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
-                                          BlocSelector<
-                                                  FarmtechandassetsBloc,
-                                                  FarmtechandassetsState,
-                                                  List<CheckBoxList>?>(
-                                              selector: (state) => state.a,
-                                              builder: (context, list) {
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: 15.v,
-                                                    right: 16.h,
-                                                  ),
-                                                  child: Column(
-                                                    children:
-                                                        List<Widget>.generate(
-                                                      list?.length ?? 0,
-                                                      (index) {
-                                                        CheckBoxList model =
-                                                            list![index];
+                                                    child: Column(
+                                                      children:
+                                                          List<Widget>.generate(
+                                                        list?.length ?? 0,
+                                                        (index) {
+                                                          CheckBoxList model =
+                                                              list![index];
 
-                                                        return TechtemWidget(
-                                                          model,
-                                                          view: false,
-                                                        );
-                                                      },
+                                                          return InputsWidget(
+                                                            model,
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              }),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 11.v),
-                                              child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                        width: 186.h,
-                                                        child: Text(
-                                                            "msg_who_owns_most_of"
-                                                                .tr,
-                                                            maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: CustomTextStyles
-                                                                .labelMediumPrimary)),
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 77.h,
-                                                                bottom: 18.v),
-                                                        child: Text(
-                                                            "lbl_self_family"
-                                                                .tr,
-                                                            style: theme
-                                                                .textTheme
-                                                                .labelMedium))
-                                                  ])),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 2.h, top: 8.v),
-                                              child: Text(
-                                                  "msg_which_farm_structures"
-                                                      .tr,
-                                                  style: CustomTextStyles
-                                                      .labelMediumPrimary)),
-                                          BlocSelector<
-                                                  FarmtechandassetsBloc,
-                                                  FarmtechandassetsState,
-                                                  List<CheckBoxList>?>(
-                                              selector: (state) => state.s,
-                                              builder: (context, list) {
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: 15.v,
-                                                    right: 16.h,
-                                                  ),
-                                                  child: Column(
-                                                    children:
-                                                        List<Widget>.generate(
-                                                      list?.length ?? 0,
-                                                      (index) {
-                                                        CheckBoxList model =
-                                                            list![index];
+                                                  );
+                                                }),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.h,
+                                                    top: 11.v,
+                                                    right: 7.h),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  bottom: 1.v),
+                                                          child: Text(
+                                                              "lbl_labour_source2"
+                                                                  .tr,
+                                                              style: theme
+                                                                  .textTheme
+                                                                  .labelMedium)),
+                                                      Text(
+                                                          state.farm
+                                                                  ?.labourSource ??
+                                                              "N/A",
+                                                          style: theme.textTheme
+                                                              .labelMedium)
+                                                    ])),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.h, top: 11.v),
+                                                child: Text(
+                                                    "msg_farmer_machinery".tr,
+                                                    style: CustomTextStyles
+                                                        .labelMediumPrimary)),
+                                            BlocSelector<
+                                                    FarmtechandassetsBloc,
+                                                    FarmtechandassetsState,
+                                                    List<CheckBoxList>?>(
+                                                selector: (state) => state.a,
+                                                builder: (context, list) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 15.v,
+                                                      right: 16.h,
+                                                    ),
+                                                    child: Column(
+                                                      children:
+                                                          List<Widget>.generate(
+                                                        list?.length ?? 0,
+                                                        (index) {
+                                                          CheckBoxList model =
+                                                              list![index];
 
-                                                        return InputsWidget(
-                                                          model,
-                                                        );
-                                                      },
+                                                          return TechtemWidget(
+                                                            model,
+                                                            view: false,
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              }),
-                                        ]))
-                              ]))))));
+                                                  );
+                                                }),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.h, top: 11.v),
+                                                child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                          width: 186.h,
+                                                          child: Text(
+                                                              "msg_who_owns_most_of"
+                                                                  .tr,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: CustomTextStyles
+                                                                  .labelMediumPrimary)),
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 77.h,
+                                                                  bottom: 18.v),
+                                                          child: Text(
+                                                              "lbl_self_family"
+                                                                  .tr,
+                                                              style: theme
+                                                                  .textTheme
+                                                                  .labelMedium))
+                                                    ])),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 2.h, top: 8.v),
+                                                child: Text(
+                                                    "msg_which_farm_structures"
+                                                        .tr,
+                                                    style: CustomTextStyles
+                                                        .labelMediumPrimary)),
+                                            BlocSelector<
+                                                    FarmtechandassetsBloc,
+                                                    FarmtechandassetsState,
+                                                    List<CheckBoxList>?>(
+                                                selector: (state) => state.s,
+                                                builder: (context, list) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 15.v,
+                                                      right: 16.h,
+                                                    ),
+                                                    child: Column(
+                                                      children:
+                                                          List<Widget>.generate(
+                                                        list?.length ?? 0,
+                                                        (index) {
+                                                          CheckBoxList model =
+                                                              list![index];
+
+                                                          return InputsWidget(
+                                                            model,
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                          ]))
+                                ])))))),
+      );
     });
   }
 
@@ -259,7 +266,7 @@ class FarmtechandassetsScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the farmerRegistrationScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.farmerRegistrationScreen,
     );
   }
@@ -270,7 +277,7 @@ class FarmtechandassetsScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapImage(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.addFarmtechandassetsOneScreen,
     );
   }

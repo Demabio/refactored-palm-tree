@@ -695,7 +695,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapSortone(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingOneScreen,
     );
   }
@@ -706,7 +706,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the mapScreen.
   onTapSetlocation(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.mapScreen,
     );
   }
@@ -717,7 +717,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapBack(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingOneScreen,
     );
   }
@@ -728,7 +728,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingScreen.
   onTapSave(BuildContext context) {
-    NavigatorService.pushNamed(
+    NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingScreen,
     );
   }

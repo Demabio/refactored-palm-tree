@@ -48,114 +48,197 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(
-          leadingWidth: 60.h,
-          leading: AppbarImage(
-            onTap: () => goBack(context),
-            svgPath: ImageConstant.imgSort,
-            margin: EdgeInsets.only(
-              left: 16.h,
-              top: 3.v,
-              bottom: 11.v,
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: CustomAppBar(
+            leadingWidth: 60.h,
+            leading: AppbarImage(
+              onTap: () => goBack(context),
+              svgPath: ImageConstant.imgSort,
+              margin: EdgeInsets.only(
+                left: 16.h,
+                top: 3.v,
+                bottom: 11.v,
+              ),
             ),
+            centerTitle: true,
+            title: AppbarSubtitle1(
+              text: "msg_add_reared_livestock".tr,
+            ),
+            styleType: Style.bgFill,
           ),
-          centerTitle: true,
-          title: AppbarSubtitle1(
-            text: "msg_add_reared_livestock".tr,
-          ),
-          styleType: Style.bgFill,
-        ),
-        body: Form(
-          key: _formKey,
-          child: SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              children: [
-                SizedBox(height: 4.v),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 16.h,
-                        right: 16.h,
-                        bottom: 5.v,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: BlocSelector<
-                                AddRearedLivestockOneBloc,
-                                AddRearedLivestockOneState,
-                                TextEditingController?>(
-                              selector: (state) => state.searchController,
-                              builder: (context, searchController) {
-                                return CustomSearchView(
-                                  onChanged: (value) {
-                                    context
-                                        .read<AddRearedLivestockOneBloc>()
-                                        .add(
-                                            SearchEventLivestock(value: value));
-                                  },
-                                  enabled: true,
-                                  margin: EdgeInsets.only(
-                                    left: 15.h,
-                                    right: 16.h,
-                                  ),
-                                  controller: searchController,
-                                  autofocus: false,
-                                  focusNode: _firstTextFieldFocus,
-                                  hintText: "msg_search_livestock".tr,
-                                  alignment: Alignment.center,
-                                  prefix: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        15.h, 12.v, 9.h, 12.v),
-                                    child: CustomImageView(
-                                      svgPath: ImageConstant.imgSearch,
+          body: Form(
+            key: _formKey,
+            child: SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                children: [
+                  SizedBox(height: 4.v),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 16.h,
+                          right: 16.h,
+                          bottom: 5.v,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: BlocSelector<
+                                  AddRearedLivestockOneBloc,
+                                  AddRearedLivestockOneState,
+                                  TextEditingController?>(
+                                selector: (state) => state.searchController,
+                                builder: (context, searchController) {
+                                  return CustomSearchView(
+                                    onChanged: (value) {
+                                      context
+                                          .read<AddRearedLivestockOneBloc>()
+                                          .add(SearchEventLivestock(
+                                              value: value));
+                                    },
+                                    enabled: true,
+                                    margin: EdgeInsets.only(
+                                      left: 15.h,
+                                      right: 16.h,
                                     ),
-                                  ),
-                                  prefixConstraints: BoxConstraints(
-                                    maxHeight: 40.v,
-                                  ),
-                                  suffix: Padding(
-                                    padding: EdgeInsets.only(
-                                      right: 15.h,
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        searchController!.clear();
-                                        context
-                                            .read<AddRearedLivestockOneBloc>()
-                                            .add(ReturnCommonEventLivestock());
-                                      },
-                                      icon: Icon(
-                                        Icons.clear,
-                                        color: Colors.grey.shade600,
+                                    controller: searchController,
+                                    autofocus: false,
+                                    focusNode: _firstTextFieldFocus,
+                                    hintText: "msg_search_livestock".tr,
+                                    alignment: Alignment.center,
+                                    prefix: Container(
+                                      margin: EdgeInsets.fromLTRB(
+                                          15.h, 12.v, 9.h, 12.v),
+                                      child: CustomImageView(
+                                        svgPath: ImageConstant.imgSearch,
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                    prefixConstraints: BoxConstraints(
+                                      maxHeight: 40.v,
+                                    ),
+                                    suffix: Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 15.h,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          searchController!.clear();
+                                          context
+                                              .read<AddRearedLivestockOneBloc>()
+                                              .add(
+                                                  ReturnCommonEventLivestock());
+                                        },
+                                        icon: Icon(
+                                          Icons.clear,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 15.h,
-                              top: 5.v,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.h,
+                                top: 5.v,
+                              ),
+                              child: Text(
+                                "msg_common_livestock".tr,
+                                style: CustomTextStyles.labelMediumPrimary_1,
+                              ),
                             ),
-                            child: Text(
-                              "msg_common_livestock".tr,
+                            SizedBox(height: 20.v),
+                            Align(
+                              alignment: Alignment.center,
+                              child: BlocSelector<
+                                  AddRearedLivestockOneBloc,
+                                  AddRearedLivestockOneState,
+                                  AddRearedLivestockOneModel?>(
+                                selector: (state) =>
+                                    state.addRearedLivestockOneModelObj,
+                                builder:
+                                    (context, addRearedLivestockOneModelObj) {
+                                  return !addRearedLivestockOneModelObj!.search
+                                      ? Wrap(
+                                          runSpacing: 10.v,
+                                          spacing: 10.h,
+                                          children: List<Widget>.generate(
+                                            addRearedLivestockOneModelObj
+                                                    ?.chipviewayrshiItemList
+                                                    .length ??
+                                                0,
+                                            (index) {
+                                              ChipviewayrshiItemModel model =
+                                                  addRearedLivestockOneModelObj
+                                                              ?.chipviewayrshiItemList[
+                                                          index] ??
+                                                      ChipviewayrshiItemModel();
+
+                                              return ChipviewayrshiItemWidget(
+                                                model,
+                                                onSelectedChipView: (value) {
+                                                  context
+                                                      .read<
+                                                          AddRearedLivestockOneBloc>()
+                                                      .add(UpdateChipViewEvent(
+                                                          index: index,
+                                                          isSelected: value,
+                                                          model: model));
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        )
+                                      : Wrap(
+                                          runSpacing: 10.v,
+                                          spacing: 10.h,
+                                          children: List<Widget>.generate(
+                                            addRearedLivestockOneModelObj
+                                                    .searchResults?.length ??
+                                                0,
+                                            (index) {
+                                              ChipviewayrshiItemModel model =
+                                                  addRearedLivestockOneModelObj
+                                                              .searchResults?[
+                                                          index] ??
+                                                      ChipviewayrshiItemModel();
+
+                                              return ChipviewayrshiItemWidget(
+                                                model,
+                                                onSelectedChipView: (value) {
+                                                  _firstTextFieldFocus
+                                                      .unfocus();
+                                                  context
+                                                      .read<
+                                                          AddRearedLivestockOneBloc>()
+                                                      .add(UpdateChipViewEvent(
+                                                          index: index,
+                                                          isSelected: value,
+                                                          model: model));
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20.v),
+                            Text(
+                              "Category (*)".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
                             ),
-                          ),
-                          SizedBox(height: 20.v),
-                          Align(
-                            alignment: Alignment.center,
-                            child: BlocSelector<
+                            BlocSelector<
                                 AddRearedLivestockOneBloc,
                                 AddRearedLivestockOneState,
                                 AddRearedLivestockOneModel?>(
@@ -163,356 +246,294 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   state.addRearedLivestockOneModelObj,
                               builder:
                                   (context, addRearedLivestockOneModelObj) {
-                                return !addRearedLivestockOneModelObj!.search
-                                    ? Wrap(
-                                        runSpacing: 10.v,
-                                        spacing: 10.h,
-                                        children: List<Widget>.generate(
-                                          addRearedLivestockOneModelObj
-                                                  ?.chipviewayrshiItemList
-                                                  .length ??
-                                              0,
-                                          (index) {
-                                            ChipviewayrshiItemModel model =
-                                                addRearedLivestockOneModelObj
-                                                            ?.chipviewayrshiItemList[
-                                                        index] ??
-                                                    ChipviewayrshiItemModel();
-
-                                            return ChipviewayrshiItemWidget(
-                                              model,
-                                              onSelectedChipView: (value) {
-                                                context
-                                                    .read<
-                                                        AddRearedLivestockOneBloc>()
-                                                    .add(UpdateChipViewEvent(
-                                                        index: index,
-                                                        isSelected: value,
-                                                        model: model));
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      )
-                                    : Wrap(
-                                        runSpacing: 10.v,
-                                        spacing: 10.h,
-                                        children: List<Widget>.generate(
-                                          addRearedLivestockOneModelObj
-                                                  .searchResults?.length ??
-                                              0,
-                                          (index) {
-                                            ChipviewayrshiItemModel model =
-                                                addRearedLivestockOneModelObj
-                                                            .searchResults?[
-                                                        index] ??
-                                                    ChipviewayrshiItemModel();
-
-                                            return ChipviewayrshiItemWidget(
-                                              model,
-                                              onSelectedChipView: (value) {
-                                                _firstTextFieldFocus.unfocus();
-                                                context
-                                                    .read<
-                                                        AddRearedLivestockOneBloc>()
-                                                    .add(UpdateChipViewEvent(
-                                                        index: index,
-                                                        isSelected: value,
-                                                        model: model));
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      );
+                                return CustomDropDown(
+                                  icon: Container(
+                                    margin: EdgeInsets.only(left: 30.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        10.h,
+                                      ),
+                                    ),
+                                    child: CustomImageView(
+                                      svgPath:
+                                          ImageConstant.imgArrowdownPrimary,
+                                    ),
+                                  ),
+                                  hintText: "lbl_select".tr,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Field is required";
+                                    }
+                                  },
+                                  val: addRearedLivestockOneModelObj
+                                      ?.selectedCategory,
+                                  items: addRearedLivestockOneModelObj!
+                                          .categories.isEmpty
+                                      ? []
+                                      : addRearedLivestockOneModelObj
+                                          .categories,
+                                  onChanged: (value) {
+                                    context
+                                        .read<AddRearedLivestockOneBloc>()
+                                        .add(ChangeDropDownEventCategory(
+                                            value: value));
+                                  },
+                                );
                               },
                             ),
-                          ),
-                          SizedBox(height: 20.v),
-                          Text(
-                            "Category (*)".tr,
-                            style: CustomTextStyles.labelMediumPrimary_1,
-                          ),
-                          BlocSelector<
-                              AddRearedLivestockOneBloc,
-                              AddRearedLivestockOneState,
-                              AddRearedLivestockOneModel?>(
-                            selector: (state) =>
-                                state.addRearedLivestockOneModelObj,
-                            builder: (context, addRearedLivestockOneModelObj) {
-                              return CustomDropDown(
-                                icon: Container(
-                                  margin: EdgeInsets.only(left: 30.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10.h,
-                                    ),
-                                  ),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgArrowdownPrimary,
-                                  ),
-                                ),
-                                hintText: "lbl_select".tr,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Field is required";
-                                  }
-                                },
-                                val: addRearedLivestockOneModelObj
-                                    ?.selectedCategory,
-                                items: addRearedLivestockOneModelObj!
-                                        .categories.isEmpty
-                                    ? []
-                                    : addRearedLivestockOneModelObj.categories,
-                                onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventCategory(
-                                          value: value));
-                                },
-                              );
-                            },
-                          ),
-                          SizedBox(height: 16.v),
-                          Text(
-                            "SubCategory (*)".tr,
-                            style: CustomTextStyles.labelMediumPrimary_1,
-                          ),
-                          BlocSelector<
-                              AddRearedLivestockOneBloc,
-                              AddRearedLivestockOneState,
-                              AddRearedLivestockOneModel?>(
-                            selector: (state) =>
-                                state.addRearedLivestockOneModelObj,
-                            builder: (context, addRearedLivestockOneModelObj) {
-                              return CustomDropDown(
-                                icon: Container(
-                                  margin: EdgeInsets.only(left: 30.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10.h,
-                                    ),
-                                  ),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgArrowdownPrimary,
-                                  ),
-                                ),
-                                hintText: "lbl_select".tr,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Field is required";
-                                  }
-                                },
-                                val: addRearedLivestockOneModelObj
-                                    ?.selectedSubCategory,
-                                items: addRearedLivestockOneModelObj!
-                                        .subcategories.isEmpty
-                                    ? []
-                                    : addRearedLivestockOneModelObj
-                                        .subcategories,
-                                onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventSubCategory(
-                                          value: value));
-                                },
-                              );
-                            },
-                          ),
-                          SizedBox(height: 15.v),
-                          Text(
-                            "lbl_livestock3".tr,
-                            style: CustomTextStyles.labelMediumPrimary_1,
-                          ),
-                          BlocSelector<
-                              AddRearedLivestockOneBloc,
-                              AddRearedLivestockOneState,
-                              AddRearedLivestockOneModel?>(
-                            selector: (state) =>
-                                state.addRearedLivestockOneModelObj,
-                            builder: (context, addRearedLivestockOneModelObj) {
-                              return CustomDropDown(
-                                icon: Container(
-                                  margin: EdgeInsets.only(left: 30.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10.h,
-                                    ),
-                                  ),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgArrowdownPrimary,
-                                  ),
-                                ),
-                                hintText: "lbl_select".tr,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Field is required";
-                                  }
-                                },
-                                val: addRearedLivestockOneModelObj
-                                    ?.selectedLivestock,
-                                items: addRearedLivestockOneModelObj!
-                                        .livestock.isEmpty
-                                    ? []
-                                    : addRearedLivestockOneModelObj.livestock,
-                                onChanged: (value) {
-                                  context.read<AddRearedLivestockOneBloc>().add(
-                                      ChangeDropDownEventLivestock(
-                                          value: value));
-                                },
-                              );
-                            },
-                          ),
-                          CustomElevatedButton(
-                            height: 47.v,
-                            text: "msg_add_livestock_age".tr,
-                            margin: EdgeInsets.only(
-                              left: 15.h,
-                              top: 15.v,
-                              right: 15.h,
+                            SizedBox(height: 16.v),
+                            Text(
+                              "SubCategory (*)".tr,
+                              style: CustomTextStyles.labelMediumPrimary_1,
                             ),
-                            alignment: Alignment.center,
-                            onTap: () {
-                              addAgeGroup(context);
-                            },
-                          ),
-                          SizedBox(height: 35.v),
-                          Text(
-                            "msg_livestock_age_group".tr,
-                            style: theme.textTheme.titleSmall,
-                          ),
-                          SizedBox(height: 18.v),
-                          BlocSelector<
-                                  AddRearedLivestockOneBloc,
-                                  AddRearedLivestockOneState,
-                                  List<AgeGroupModel>?>(
-                              selector: (state) => state.ageGroupMapList,
-                              builder: (context, ages) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 16.h,
+                            BlocSelector<
+                                AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState,
+                                AddRearedLivestockOneModel?>(
+                              selector: (state) =>
+                                  state.addRearedLivestockOneModelObj,
+                              builder:
+                                  (context, addRearedLivestockOneModelObj) {
+                                return CustomDropDown(
+                                  icon: Container(
+                                    margin: EdgeInsets.only(left: 30.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        10.h,
+                                      ),
+                                    ),
+                                    child: CustomImageView(
+                                      svgPath:
+                                          ImageConstant.imgArrowdownPrimary,
+                                    ),
                                   ),
-                                  child: Column(
-                                    children: List<Widget>.generate(
-                                      ages?.length ?? 0,
-                                      (index) {
-                                        AgeGroupModel model = ages![index];
+                                  hintText: "lbl_select".tr,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Field is required";
+                                    }
+                                  },
+                                  val: addRearedLivestockOneModelObj
+                                      ?.selectedSubCategory,
+                                  items: addRearedLivestockOneModelObj!
+                                          .subcategories.isEmpty
+                                      ? []
+                                      : addRearedLivestockOneModelObj
+                                          .subcategories,
+                                  onChanged: (value) {
+                                    context
+                                        .read<AddRearedLivestockOneBloc>()
+                                        .add(ChangeDropDownEventSubCategory(
+                                            value: value));
+                                  },
+                                );
+                              },
+                            ),
+                            SizedBox(height: 15.v),
+                            Text(
+                              "lbl_livestock3".tr,
+                              style: CustomTextStyles.labelMediumPrimary_1,
+                            ),
+                            BlocSelector<
+                                AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState,
+                                AddRearedLivestockOneModel?>(
+                              selector: (state) =>
+                                  state.addRearedLivestockOneModelObj,
+                              builder:
+                                  (context, addRearedLivestockOneModelObj) {
+                                return CustomDropDown(
+                                  icon: Container(
+                                    margin: EdgeInsets.only(left: 30.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        10.h,
+                                      ),
+                                    ),
+                                    child: CustomImageView(
+                                      svgPath:
+                                          ImageConstant.imgArrowdownPrimary,
+                                    ),
+                                  ),
+                                  hintText: "lbl_select".tr,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Field is required";
+                                    }
+                                  },
+                                  val: addRearedLivestockOneModelObj
+                                      ?.selectedLivestock,
+                                  items: addRearedLivestockOneModelObj!
+                                          .livestock.isEmpty
+                                      ? []
+                                      : addRearedLivestockOneModelObj.livestock,
+                                  onChanged: (value) {
+                                    context
+                                        .read<AddRearedLivestockOneBloc>()
+                                        .add(ChangeDropDownEventLivestock(
+                                            value: value));
+                                  },
+                                );
+                              },
+                            ),
+                            CustomElevatedButton(
+                              height: 47.v,
+                              text: "msg_add_livestock_age".tr,
+                              margin: EdgeInsets.only(
+                                left: 15.h,
+                                top: 15.v,
+                                right: 15.h,
+                              ),
+                              alignment: Alignment.center,
+                              onTap: () {
+                                addAgeGroup(context);
+                              },
+                            ),
+                            SizedBox(height: 35.v),
+                            Text(
+                              "msg_livestock_age_group".tr,
+                              style: theme.textTheme.titleSmall,
+                            ),
+                            SizedBox(height: 18.v),
+                            BlocSelector<
+                                    AddRearedLivestockOneBloc,
+                                    AddRearedLivestockOneState,
+                                    List<AgeGroupModel>?>(
+                                selector: (state) => state.ageGroupMapList,
+                                builder: (context, ages) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 15.v,
+                                      right: 16.h,
+                                    ),
+                                    child: Column(
+                                      children: List<Widget>.generate(
+                                        ages?.length ?? 0,
+                                        (index) {
+                                          AgeGroupModel model = ages![index];
 
-                                        return AgeItemWidget(
-                                          model,
-                                        );
-                                      },
+                                          return AgeItemWidget(
+                                            model,
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }),
-                          SizedBox(height: 18.v),
-                          BlocSelector<AddRearedLivestockOneBloc,
-                                  AddRearedLivestockOneState, bool?>(
-                              selector: (state) => state.checkedF,
-                              builder: (context, checked) {
-                                return Text(
-                                  "msg_what_are_your_main".tr,
-                                  style: checked!
-                                      ? CustomTextStyles.labelMediumPrimary_1red
-                                      : CustomTextStyles.labelMediumPrimary_1,
-                                );
-                              }),
-                          SizedBox(height: 18.v),
-                          BlocSelector<
-                                  AddRearedLivestockOneBloc,
-                                  AddRearedLivestockOneState,
-                                  List<FeedsModel>?>(
-                              selector: (state) => state.feedsdlist,
-                              builder: (context, feeds) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 16.h,
-                                  ),
-                                  child: Column(
-                                    children: List<Widget>.generate(
-                                      feeds?.length ?? 0,
-                                      (index) {
-                                        FeedsModel model = feeds![index];
+                                  );
+                                }),
+                            SizedBox(height: 18.v),
+                            BlocSelector<AddRearedLivestockOneBloc,
+                                    AddRearedLivestockOneState, bool?>(
+                                selector: (state) => state.checkedF,
+                                builder: (context, checked) {
+                                  return Text(
+                                    "msg_what_are_your_main".tr,
+                                    style: checked!
+                                        ? CustomTextStyles
+                                            .labelMediumPrimary_1red
+                                        : CustomTextStyles.labelMediumPrimary_1,
+                                  );
+                                }),
+                            SizedBox(height: 18.v),
+                            BlocSelector<
+                                    AddRearedLivestockOneBloc,
+                                    AddRearedLivestockOneState,
+                                    List<FeedsModel>?>(
+                                selector: (state) => state.feedsdlist,
+                                builder: (context, feeds) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 15.v,
+                                      right: 16.h,
+                                    ),
+                                    child: Column(
+                                      children: List<Widget>.generate(
+                                        feeds?.length ?? 0,
+                                        (index) {
+                                          FeedsModel model = feeds![index];
 
-                                        return FeedItemWidget(
-                                          model,
-                                        );
-                                      },
+                                          return FeedItemWidget(
+                                            model,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }),
+                            SizedBox(height: 65.v),
+                            CustomElevatedButton(
+                              width: 152.h,
+                              onTap: () => addFeed(context),
+                              text: "lbl_add_feed".tr,
+                              alignment: Alignment.centerRight,
+                            ),
+                            SizedBox(height: 34.v),
+                            Text(
+                              "msg_farming_production2".tr,
+                              style: CustomTextStyles.labelMediumPrimary_1,
+                            ),
+                            BlocSelector<
+                                AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState,
+                                AddRearedLivestockOneModel?>(
+                              selector: (state) =>
+                                  state.addRearedLivestockOneModelObj,
+                              builder:
+                                  (context, addRearedLivestockOneModelObj) {
+                                return CustomDropDown(
+                                  icon: Container(
+                                    margin: EdgeInsets.only(left: 30.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        10.h,
+                                      ),
+                                    ),
+                                    child: CustomImageView(
+                                      svgPath:
+                                          ImageConstant.imgArrowdownPrimary,
                                     ),
                                   ),
+                                  hintText: "lbl_select".tr,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Field is required";
+                                    }
+                                  },
+                                  val: addRearedLivestockOneModelObj
+                                      ?.selectedDropDownValue1,
+                                  items: addRearedLivestockOneModelObj
+                                          ?.dropdownItemList1 ??
+                                      [],
+                                  onChanged: (value) {
+                                    context
+                                        .read<AddRearedLivestockOneBloc>()
+                                        .add(
+                                            ChangeDropDown1Event(value: value));
+                                  },
                                 );
-                              }),
-                          SizedBox(height: 65.v),
-                          CustomElevatedButton(
-                            width: 152.h,
-                            onTap: () => addFeed(context),
-                            text: "lbl_add_feed".tr,
-                            alignment: Alignment.centerRight,
-                          ),
-                          SizedBox(height: 34.v),
-                          Text(
-                            "msg_farming_production2".tr,
-                            style: CustomTextStyles.labelMediumPrimary_1,
-                          ),
-                          BlocSelector<
-                              AddRearedLivestockOneBloc,
-                              AddRearedLivestockOneState,
-                              AddRearedLivestockOneModel?>(
-                            selector: (state) =>
-                                state.addRearedLivestockOneModelObj,
-                            builder: (context, addRearedLivestockOneModelObj) {
-                              return CustomDropDown(
-                                icon: Container(
-                                  margin: EdgeInsets.only(left: 30.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10.h,
-                                    ),
-                                  ),
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgArrowdownPrimary,
-                                  ),
-                                ),
-                                hintText: "lbl_select".tr,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Field is required";
-                                  }
-                                },
-                                val: addRearedLivestockOneModelObj
-                                    ?.selectedDropDownValue1,
-                                items: addRearedLivestockOneModelObj
-                                        ?.dropdownItemList1 ??
-                                    [],
-                                onChanged: (value) {
-                                  context
-                                      .read<AddRearedLivestockOneBloc>()
-                                      .add(ChangeDropDown1Event(value: value));
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        bottomNavigationBar: CustomElevatedButton(
-          text: "lbl_save".tr,
-          onTap: () => saveDraft(context),
-          margin: EdgeInsets.only(
-            left: 16.h,
-            right: 16.h,
-            bottom: 20.v,
-          ),
-          leftIcon: Container(
-            margin: EdgeInsets.only(right: 10.h),
-            child: CustomImageView(
-              svgPath: ImageConstant.imgSaveWhiteA700,
+          bottomNavigationBar: CustomElevatedButton(
+            text: "lbl_save".tr,
+            onTap: () => saveDraft(context),
+            margin: EdgeInsets.only(
+              left: 16.h,
+              right: 16.h,
+              bottom: 20.v,
+            ),
+            leftIcon: Container(
+              margin: EdgeInsets.only(right: 10.h),
+              child: CustomImageView(
+                svgPath: ImageConstant.imgSaveWhiteA700,
+              ),
             ),
           ),
         ),

@@ -34,85 +34,110 @@ class FarmerRegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: SideMenuDraweritem(),
-        appBar: CustomAppBar(
-          height: 47.v,
-          leadingWidth: ResponsiveExtension(48).h,
-          leading: AppbarImage(
-            onTap: () {
-              onTapMenuone(context);
-            },
-            svgPath: ImageConstant.imgMenu,
-            margin: EdgeInsets.only(
-              left: ResponsiveExtension(24).h,
-              top: 8.v,
-              bottom: 15.v,
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: SafeArea(
+        child: Scaffold(
+          key: _scaffoldKey,
+          drawer: SideMenuDraweritem(),
+          appBar: CustomAppBar(
+            height: 47.v,
+            leadingWidth: ResponsiveExtension(48).h,
+            leading: AppbarImage(
+              onTap: () {
+                onTapMenuone(context);
+              },
+              svgPath: ImageConstant.imgMenu,
+              margin: EdgeInsets.only(
+                left: ResponsiveExtension(24).h,
+                top: 8.v,
+                bottom: 15.v,
+              ),
             ),
+            centerTitle: true,
+            title: AppbarSubtitle1(text: "msg_farmer_registration".tr),
           ),
-          centerTitle: true,
-          title: AppbarSubtitle1(text: "msg_farmer_registration".tr),
-        ),
-        body: SizedBox(
-          width: mediaQueryData.size.width,
-          height: mediaQueryData.size.height,
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: ResponsiveExtension(22).h,
-              right: ResponsiveExtension(10).h,
-              bottom: 5.v,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  BlocSelector<FarmerRegistrationBloc, FarmerRegistrationState,
-                      FarmerRegistrationModel?>(
-                    selector: (state) => state.farmerRegistrationModelObj,
-                    builder: (context, farmerRegistrationModelObj) {
-                      return _buildStepper(
-                        StepperType.vertical,
-                        context,
-                        farmerRegistrationModelObj!,
-                      );
-                    },
-                  ),
-                  BlocSelector<FarmerRegistrationBloc, FarmerRegistrationState,
-                          FarmerRegistrationModel?>(
+          body: SizedBox(
+            width: mediaQueryData.size.width,
+            height: mediaQueryData.size.height,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: ResponsiveExtension(22).h,
+                right: ResponsiveExtension(10).h,
+                bottom: 5.v,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    BlocSelector<FarmerRegistrationBloc,
+                        FarmerRegistrationState, FarmerRegistrationModel?>(
                       selector: (state) => state.farmerRegistrationModelObj,
-                      builder: (context, model) {
-                        return Visibility(
-                          visible: (model!.fi2 &&
-                              model.fh2 &&
-                              (model.ca2 || model.crop == StepState.disabled) &&
-                              (model.ls2 || model.live == StepState.disabled) &&
-                              (model.ff2 || model.fish == StepState.disabled) &&
-                              model.at2 &&
-                              model.lw2 &&
-                              model.fs2),
-                          child: CustomElevatedButton(
-                            width: ResponsiveExtension(343).h,
-                            text: "lbl_save".tr,
-                            margin: EdgeInsets.only(bottom: 10.v),
-                            leftIcon: Container(
-                              margin: EdgeInsets.only(
-                                  right: ResponsiveExtension(10).h),
-                              child: CustomImageView(
-                                svgPath: ImageConstant.imgSaveWhiteA700,
-                              ),
-                            ),
-                            alignment: Alignment.bottomCenter,
-                          ),
+                      builder: (context, farmerRegistrationModelObj) {
+                        return _buildStepper(
+                          StepperType.vertical,
+                          context,
+                          farmerRegistrationModelObj!,
                         );
-                      }),
-                ],
+                      },
+                    ),
+                    BlocSelector<FarmerRegistrationBloc,
+                            FarmerRegistrationState, FarmerRegistrationModel?>(
+                        selector: (state) => state.farmerRegistrationModelObj,
+                        builder: (context, model) {
+                          return Visibility(
+                            visible: (model!.fi2 &&
+                                model.fh2 &&
+                                (model.ca2 ||
+                                    model.crop == StepState.disabled) &&
+                                (model.ls2 ||
+                                    model.live == StepState.disabled) &&
+                                (model.ff2 ||
+                                    model.fish == StepState.disabled) &&
+                                model.at2 &&
+                                model.lw2 &&
+                                model.fs2),
+                            child: CustomElevatedButton(
+                              width: ResponsiveExtension(343).h,
+                              text: "lbl_save".tr,
+                              onTap: () {
+                                context
+                                    .read<FarmerRegistrationBloc>()
+                                    .add(CompleteEvent(
+                                      onSuccess: () => _successSaved(context),
+                                      onFailed: () => goBack(context),
+                                    ));
+                              },
+                              margin: EdgeInsets.only(bottom: 10.v),
+                              leftIcon: Container(
+                                margin: EdgeInsets.only(
+                                    right: ResponsiveExtension(10).h),
+                                child: CustomImageView(
+                                  svgPath: ImageConstant.imgSaveWhiteA700,
+                                ),
+                              ),
+                              alignment: Alignment.bottomCenter,
+                            ),
+                          );
+                        }),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  _successSaved(BuildContext context) {
+    NavigatorService.popAndPushNamed(AppRoutes.homeScreen);
+  }
+
+  goBack(BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
   CupertinoStepper _buildStepper(
