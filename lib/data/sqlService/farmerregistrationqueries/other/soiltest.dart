@@ -41,11 +41,10 @@ class FarmerSoilTestDB {
     final database = await DatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-        soiltest = ?, soil_test_year = ? 
+        soiltest = ?
       WHERE farmer_farm_id = ?
     ''', [
       soilTest.soilTest,
-      soilTest.soilTestYear,
       soilTest.farmerFarmId,
     ]);
   }

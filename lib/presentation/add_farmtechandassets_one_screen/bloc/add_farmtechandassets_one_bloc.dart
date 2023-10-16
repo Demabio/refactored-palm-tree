@@ -132,6 +132,7 @@ class AddFarmtechandassetsOneBloc
         int index = agemodels.indexWhere((obj) => obj.id == ent.farmAssetId);
 
         agemodels[index].isSelected = true;
+        agemodels[index].var1 = ent.farmerAssetId.toString();
         agemodels[index].var2 = ent.qty.toString();
         agemodels[index].var3 = ent.usableCondition == 1 ? "Yes" : "No";
       }

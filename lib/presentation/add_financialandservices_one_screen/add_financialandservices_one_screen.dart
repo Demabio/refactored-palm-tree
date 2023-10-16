@@ -472,6 +472,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                               margin: EdgeInsets.only(right: 1.h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
+                              isDisabled: true,
                               buttonTextStyle:
                                   CustomTextStyles.bodyLargePrimary_1,
                             ),

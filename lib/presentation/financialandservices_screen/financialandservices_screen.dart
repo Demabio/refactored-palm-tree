@@ -69,7 +69,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                       Padding(
                                           padding: EdgeInsets.only(left: 21.h),
                                           child: Text(
-                                              "msg_farmer_felix_faro".tr,
+                                              PrefUtils().getFarmerName(),
                                               style:
                                                   theme.textTheme.labelMedium))
                                     ])),

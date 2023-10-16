@@ -108,6 +108,7 @@ class LSdetailsItemWidget extends StatelessWidget {
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
               ),
+              Spacer(),
               Padding(
                 padding: EdgeInsets.only(
                   top: 8.v,

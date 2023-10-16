@@ -255,10 +255,10 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                         edit: () => addorEdit(
                                           context,
                                           1,
-                                          model.id!,
+                                          int.parse(model.var5!),
                                         ),
-                                        delete: () =>
-                                            delete(context, model.id!),
+                                        delete: () => delete(
+                                            context, int.parse(model.var5!)),
                                         model,
                                       );
                                     },
@@ -323,10 +323,10 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                         edit: () => addorEditF(
                                           context,
                                           1,
-                                          model.id!,
+                                          int.parse(model.var4!),
                                         ),
-                                        delete: () =>
-                                            deleteF(context, model.id!),
+                                        delete: () => deleteF(
+                                            context, int.parse(model.var4!)),
                                       );
                                     },
                                   ),
@@ -358,6 +358,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                 margin: EdgeInsets.only(right: 1.h),
                                 buttonStyle:
                                     CustomButtonStyles.outlinePrimaryTL10,
+                                isDisabled: true,
                                 buttonTextStyle:
                                     CustomTextStyles.bodyLargePrimary_1,
                               ),

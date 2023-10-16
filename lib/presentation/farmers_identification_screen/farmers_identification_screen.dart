@@ -362,7 +362,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
                                                     ?.respondentRlshpId ==
-                                                1,
+                                                0,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -394,7 +394,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
                                                     ?.respondentRlshpId ==
-                                                1,
+                                                0,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -427,7 +427,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
                                                     ?.respondentRlshpId ==
-                                                1,
+                                                0,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),
@@ -461,7 +461,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     .farmersIdentificationModelObj
                                                     ?.farmer
                                                     ?.respondentRlshpId ==
-                                                1,
+                                                0,
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   left: 1.h, top: 13.v),

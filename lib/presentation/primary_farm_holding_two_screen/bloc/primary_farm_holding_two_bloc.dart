@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
+import 'package:kiamis_app/data/mapservices/locations_repository.dart';
 import 'package:kiamis_app/data/models/dbModels/other/enterpirses.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
@@ -10,7 +13,10 @@ import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_hold
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/enterprise.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
+import 'package:latlng/latlng.dart';
 import '/core/app_export.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/primary_farm_holding_two_model.dart';
 part 'primary_farm_holding_two_event.dart';
 part 'primary_farm_holding_two_state.dart';
@@ -27,8 +33,71 @@ class PrimaryFarmHoldingTwoBloc
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
     on<NextTapEvent>(_nextTap);
+    on<GetLocation>(_getLocationEvent);
     on<SaveTapEvent>(_saveTap);
     on<ChangeEnterprisesCheckbox>(_changeEnterpriseCB);
+  }
+  // final LocationRepository locationRepository = LocationRepository();
+  Future<void> getLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      double latitude = position.latitude;
+      double longitude = position.longitude;
+      print("Latitude: $latitude, Longitude: $longitude");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  void _getLocationEvent(
+      GetLocation event, Emitter<PrimaryFarmHoldingTwoState> emit) async {
+    try {
+      bool isLocationServiceEnabled =
+          await Geolocator.isLocationServiceEnabled();
+      if (!isLocationServiceEnabled) {
+        print("Location services are not enabled. Please enable them.");
+        // You can prompt the user to enable location services here.
+        return;
+      }
+      var status = await Permission.location.request();
+      if (status.isDenied) {
+        print(
+            "Location permission is denied. Please grant the permission in your device settings.");
+        return;
+      }
+
+      if (status.isPermanentlyDenied) {
+        print(
+            "Location permission is permanently denied. Please grant the permission in your device settings.");
+        return;
+      }
+      ProgressDialogUtils.showProgressDialog();
+
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      ProgressDialogUtils.hideProgressDialog();
+
+      double y = position.latitude;
+      double x = position.longitude;
+      // LatLng? _currentLocation =
+      //     (await locationRepository.getCurrentLocation()) as LatLng?;
+      // double x = _currentLocation!.longitude;
+      // double y = _currentLocation!.latitude;
+      TextEditingController lat = TextEditingController(text: y.toString());
+      TextEditingController long = TextEditingController(text: x.toString());
+
+      emit(
+        state.copyWith(
+          titleoneController: long,
+          titlethreeController: lat,
+        ),
+      );
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 
   _changeDropDown(

@@ -414,7 +414,9 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                         buttonTextStyle: CustomTextStyles
                                             .bodySmallPoppinsWhiteA700,
                                         onTap: () {
-                                          onTapSetlocation(context);
+                                          context
+                                              .read<PrimaryFarmHoldingTwoBloc>()
+                                              .add(GetLocation());
                                         })
                                   ]),
                                   SizedBox(height: 37.v),
@@ -599,11 +601,12 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                 })),
                                         Expanded(
                                             child: CustomElevatedButton(
-                                                text: "lbl_next".tr,
-                                                margin:
-                                                    EdgeInsets.only(left: 1.h),
-                                                buttonStyle: CustomButtonStyles
-                                                    .fillPrimaryTL10))
+                                          text: "lbl_next".tr,
+                                          margin: EdgeInsets.only(left: 1.h),
+                                          isDisabled: true,
+                                          buttonStyle: CustomButtonStyles
+                                              .fillPrimaryTL10,
+                                        ))
                                       ]),
                                   SizedBox(height: 12.v),
                                   CustomElevatedButton(

@@ -449,14 +449,14 @@ class AddCropOneScreen extends StatelessWidget {
                                       children: [
                                         Expanded(
                                             child: CustomOutlinedButton(
-                                                text: "lbl_back".tr,
-                                                margin:
-                                                    EdgeInsets.only(right: 1.h),
-                                                buttonStyle: CustomButtonStyles
-                                                    .outlinePrimaryTL10,
-                                                buttonTextStyle:
-                                                    CustomTextStyles
-                                                        .bodyLargePrimary_1)),
+                                          text: "lbl_back".tr,
+                                          margin: EdgeInsets.only(right: 1.h),
+                                          buttonStyle: CustomButtonStyles
+                                              .outlinePrimaryTL10,
+                                          isDisabled: true,
+                                          buttonTextStyle: CustomTextStyles
+                                              .bodyLargePrimary_1,
+                                        )),
                                         Expanded(
                                             child: CustomElevatedButton(
                                                 text: "lbl_next".tr,

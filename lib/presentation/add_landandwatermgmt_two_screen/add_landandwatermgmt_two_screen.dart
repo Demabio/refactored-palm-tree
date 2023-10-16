@@ -494,6 +494,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: CustomElevatedButton(
+                              isDisabled: true,
+                              buttonStyle: CustomButtonStyles.fillPrimaryTL10,
                               text: "lbl_next".tr,
                               margin: EdgeInsets.only(left: 1.h),
                             ),

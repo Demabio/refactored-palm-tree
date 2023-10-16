@@ -476,17 +476,14 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           children: [
                                             Expanded(
                                                 child: CustomOutlinedButton(
-                                                    text: "lbl_back".tr,
-                                                    margin: EdgeInsets.only(
-                                                        right: 1.h),
-                                                    onTap: () =>
-                                                        goBack(context),
-                                                    buttonStyle:
-                                                        CustomButtonStyles
-                                                            .outlinePrimary,
-                                                    buttonTextStyle:
-                                                        CustomTextStyles
-                                                            .bodyLargePrimary_2)),
+                                              text: "lbl_back".tr,
+                                              margin:
+                                                  EdgeInsets.only(right: 1.h),
+                                              onTap: () => goBack(context),
+                                              isDisabled: true,
+                                              buttonStyle: CustomButtonStyles
+                                                  .fillPrimaryTL10,
+                                            )),
                                             Expanded(
                                                 child: CustomElevatedButton(
                                                     text: "lbl_next".tr,

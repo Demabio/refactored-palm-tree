@@ -63,10 +63,8 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                 Padding(
                                   padding: EdgeInsets.only(left: 21.h),
                                   child: Text(
-                                    state.livestockTwoModelObj!.livestockins
-                                            ?.createdBy
-                                            ?.toString() ??
-                                        "NONE", // "msg_farmer_felix_faro".tr,
+                                    PrefUtils()
+                                        .getFarmerName(), // "msg_farmer_felix_faro".tr,
                                     style: theme.textTheme.labelMedium,
                                   ),
                                 ),

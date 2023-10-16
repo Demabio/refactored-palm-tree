@@ -210,9 +210,10 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                                       edit: () => addorEdit(
                                         context,
                                         1,
-                                        model.id!,
+                                        int.parse(model.var1!),
                                       ),
-                                      delete: () => delete(context, model.id!),
+                                      delete: () => delete(
+                                          context, int.parse(model.var1!)),
                                     );
                                   },
                                 ),

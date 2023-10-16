@@ -1,4 +1,5 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/presentation/side_menu_draweritem/side_menu_draweritem.dart';
 import 'package:kiamis_app/routes/navigation_args.dart';
 
 import 'bloc/farmer_registration_bloc.dart';
@@ -13,8 +14,10 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/presentation/save_draft_modal_dialog/save_draft_modal_dialog.dart';
 import 'package:sizer/sizer.dart';
 
+// ignore: must_be_immutable
 class FarmerRegistrationScreen extends StatelessWidget {
-  const FarmerRegistrationScreen({Key? key}) : super(key: key);
+  FarmerRegistrationScreen({Key? key}) : super(key: key);
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   static Widget builder(BuildContext context) {
     return BlocProvider<FarmerRegistrationBloc>(
@@ -23,7 +26,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
           farmerRegistrationModelObj: FarmerRegistrationModel(),
         ),
       )..add(FarmerRegistrationInitialEvent()),
-      child: const FarmerRegistrationScreen(),
+      child: FarmerRegistrationScreen(),
     );
   }
 
@@ -33,10 +36,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: SideMenuDraweritem(),
         appBar: CustomAppBar(
           height: 47.v,
           leadingWidth: ResponsiveExtension(48).h,
           leading: AppbarImage(
+            onTap: () {
+              onTapMenuone(context);
+            },
             svgPath: ImageConstant.imgMenu,
             margin: EdgeInsets.only(
               left: ResponsiveExtension(24).h,
@@ -389,6 +397,10 @@ class FarmerRegistrationScreen extends StatelessWidget {
     NavigatorService.popAndPushNamed(
       AppRoutes.homeScreen,
     );
+  }
+
+  onTapMenuone(BuildContext context) {
+    _scaffoldKey.currentState?.openDrawer();
   }
 
   /// Displays an [AlertDialog] with a custom content widget using the

@@ -155,7 +155,7 @@ class LoginScreen extends StatelessWidget {
                               text: "lbl_log_in".tr,
                               margin: EdgeInsets.fromLTRB(3.h, 25.v, 2.h, 5.v),
                               onTap: () {
-                                loginAPI(context);
+                                _onLoginUserServicePostEventSuccess(context);
                               })
                         ])))));
   }

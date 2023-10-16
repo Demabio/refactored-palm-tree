@@ -299,6 +299,7 @@ class AddAquacultureOneBloc
         agemodels[index].var2 = fishProductionType.fishProductionType;
         agemodels[index].var1 = category.fishCategory;
         agemodels[index].var3 = ent.noOfFingerlings.toString();
+        agemodels[index].var4 = ent.farmerFishId.toString();
       }
     }
 
@@ -320,6 +321,7 @@ class AddAquacultureOneBloc
         feedmodels[index].var2 = ent.activeArea.toString();
         feedmodels[index].var3 = ent.noOfInactiveUnits.toString();
         feedmodels[index].var4 = ent.inactiveArea.toString();
+        feedmodels[index].var5 = ent.farmerFishprodId.toString();
       }
     }
 

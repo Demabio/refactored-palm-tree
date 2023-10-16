@@ -15,6 +15,11 @@ class PrimaryFarmHoldingTwoInitialEvent extends PrimaryFarmHoldingTwoEvent {
   List<Object?> get props => [];
 }
 
+class GetLocation extends PrimaryFarmHoldingTwoEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class NextTapEvent extends PrimaryFarmHoldingTwoEvent {
   NextTapEvent({
     this.value,

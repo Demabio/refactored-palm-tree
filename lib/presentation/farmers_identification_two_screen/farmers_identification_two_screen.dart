@@ -489,7 +489,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                               margin:
                                                   EdgeInsets.only(right: 1.h),
                                               buttonStyle: CustomButtonStyles
-                                                  .outlinePrimary,
+                                                  .outlinePrimaryTL10,
+                                              isDisabled: true,
                                               buttonTextStyle: CustomTextStyles
                                                   .bodyLargePrimary_2,
                                               onTap: () {
