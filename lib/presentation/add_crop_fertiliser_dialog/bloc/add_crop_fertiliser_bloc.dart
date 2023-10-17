@@ -4,11 +4,11 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
-import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertiliser.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser.dart';
 import '../models/add_crop_fertiliser_model.dart';
 import '/core/app_export.dart';
 part 'add_crop_fertiliser_event.dart';
@@ -43,15 +43,15 @@ class AddCropFertiliserBloc
     )));
   }
 
-  Future<List<CheckBoxList>> fetchLandP() async {
+  Future<List<CheckBoxList>> fecthType() async {
     List<CheckBoxList> list = [];
-    FarmlandPracticeDB farmStructureDB = FarmlandPracticeDB();
+    FertiliserTypeDB farmStructureDB = FertiliserTypeDB();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
-          title: value[i].landPracticeName,
-          id: value[i].landPracticeId,
+          title: value[i].fertiliserType,
+          id: value[i].fertiliserTypeId,
         ));
       }
     });
@@ -65,7 +65,7 @@ class AddCropFertiliserBloc
     emit(state.copyWith(
         addLandandwatermgmtThreeModelObj:
             state.addLandandwatermgmtThreeModelObj?.copyWith(
-      models: await fetchLandP(),
+      models: await fecthType(),
       count: 0,
     )));
   }
@@ -74,8 +74,8 @@ class AddCropFertiliserBloc
     AddCBs event,
     Emitter<AddCropFertiliserState> emit,
   ) {
-    FarmerLandPracticesDB farmerFishInputDB = FarmerLandPracticesDB();
-    List<FarmerLandPractice>? categs = [];
+    FarmerFertiliserDB farmerFishInputDB = FarmerFertiliserDB();
+    List<FarmerFertiliser>? categs = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
 
@@ -83,26 +83,26 @@ class AddCropFertiliserBloc
       for (CheckBoxList model in event.models) {
         if (model.isSelected) {
           categs.add(
-            FarmerLandPractice(
-                farmerPracticeId: 0,
+            FarmerFertiliser(
+                farmerFertId: 0,
+                farmerCropId: PrefUtils().getCropId(),
                 farmerId: PrefUtils().getFarmerId(),
                 farmerFarmId: PrefUtils().getFarmId(),
-                landPracticeId: model.id!,
+                fertiliserTypeId: model.id!,
                 createdBy: userId,
-                quantity: 0,
                 dateCreated: DateTime.now()),
           );
         }
       }
-      if (state.addLandandwatermgmtThreeModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertLandPractices(categs).then((value) {
+      if (state.addLandandwatermgmtThreeModelObj!.caProgressDB?.pageTwo == 0) {
+        farmerFishInputDB.insertFertilisers(categs).then((value) {
           print("inserted: $value");
         });
       } else {
         farmerFishInputDB
             .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertLandPractices(categs).then((value) {
+        farmerFishInputDB.insertFertilisers(categs).then((value) {
           print("inserted: $value");
         });
       }
@@ -113,13 +113,14 @@ class AddCropFertiliserBloc
     }
   }
 
-  List<CheckBoxList> _land(
-      List<CheckBoxList> feedmodelss, List<FarmerLandPractice> feedss) {
+  List<CheckBoxList> _types(
+      List<CheckBoxList> feedmodelss, List<FarmerFertiliser> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
-    List<FarmerLandPractice> feeds = feedss;
+    List<FarmerFertiliser> feeds = feedss;
 
     for (var ent in feeds) {
-      int index = feedmodels.indexWhere((obj) => obj.id == ent.landPracticeId);
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.fertiliserTypeId);
 
       feedmodels[index].isSelected = true;
     }
@@ -127,39 +128,39 @@ class AddCropFertiliserBloc
     return feedmodels;
   }
 
-  Future<List<FarmerLandPractice>?> getLandP() async {
-    int id = PrefUtils().getFarmId();
-    FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
+  Future<List<FarmerFertiliser>?> getTypes() async {
+    int id = PrefUtils().getCropId();
+    FarmerFertiliserDB farmerFishInputDB = FarmerFertiliserDB();
+    return await farmerFishInputDB.fetchByCropId(id);
   }
 
-  Future<LWProgress?> getProgress() async {
-    int id = PrefUtils().getFarmId();
-    LWProgressDB pfProgressDB = LWProgressDB();
-    return await pfProgressDB.fetchByFarm(id);
+  Future<CAProgress?> getProgress() async {
+    int cropid = PrefUtils().getCropId();
+    CAProgressDB caProgressDB = CAProgressDB();
+    return await caProgressDB.fetchByCropId(cropid);
   }
 
   _onInitialize(
     AddCropFertiliserInitialEvent event,
     Emitter<AddCropFertiliserState> emit,
   ) async {
-    LWProgress pfProgress = await getProgress() ??
-        LWProgress(
-          farmId: 0,
+    CAProgress caProgress = await getProgress() ??
+        CAProgress(
+          cropId: 0,
           pageOne: 0,
           pageTwo: 0,
         );
-    List<CheckBoxList>? landmodels = await fetchLandP();
+    List<CheckBoxList>? typemodels = await fecthType();
 
-    List<FarmerLandPractice>? land = await getLandP();
-    if (land != null) {
-      landmodels = _land(landmodels, land);
+    List<FarmerFertiliser>? type = await getTypes();
+    if (type != null) {
+      typemodels = _types(typemodels, type);
     }
     emit(state.copyWith(
         addLandandwatermgmtThreeModelObj:
             state.addLandandwatermgmtThreeModelObj?.copyWith(
-      models: landmodels,
-      lwProgress: pfProgress,
+      models: typemodels,
+      caProgressDB: caProgress,
     )));
   }
 }

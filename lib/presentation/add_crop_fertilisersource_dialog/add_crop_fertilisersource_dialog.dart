@@ -38,7 +38,7 @@ class AddCropFertiliserSourceDialog extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 3.h),
           child: Text(
-            "msg_add_land_practice".tr,
+            "Add Fertiliser Sources".tr,
             style: CustomTextStyles.titleMediumSemiBold,
           ),
         ),

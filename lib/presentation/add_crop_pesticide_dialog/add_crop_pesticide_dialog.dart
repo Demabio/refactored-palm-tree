@@ -38,7 +38,7 @@ class AddCropPesticideDialog extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 3.h),
           child: Text(
-            "msg_add_land_practice".tr,
+            "Add Pesticide Used".tr,
             style: CustomTextStyles.titleMediumSemiBold,
           ),
         ),

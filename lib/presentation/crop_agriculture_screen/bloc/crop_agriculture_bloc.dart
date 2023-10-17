@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/crop.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropmotive.dart';
@@ -7,13 +8,22 @@ import 'package:kiamis_app/data/models/dbModels/crops/cropsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropwatersource.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertiliser.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertilisersource.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/pesticide.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropmotive.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropwatersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisersource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser_source.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/pesticide.dart';
 import '/core/app_export.dart';
 import '../models/cropdetails_item_model.dart';
 import 'package:kiamis_app/presentation/crop_agriculture_screen/models/crop_agriculture_model.dart';
@@ -47,7 +57,22 @@ class CropAgricultureBloc
 
     Crop? cropp;
 
+    List<CheckBoxList>? typemodels = await fecthType();
+    List<CheckBoxList>? sourcemodels = await fetchSources();
+    List<CheckBoxList>? pestsmodels = await fetchPest();
     for (var crop in crops) {
+      List<FarmerFertiliser>? type = await getTypes();
+      if (type != null) {
+        typemodels = _types(typemodels!, type);
+      }
+      List<FarmerFertiliserSource>? source = await getSources();
+      if (source != null) {
+        sourcemodels = _sources(sourcemodels!, source);
+      }
+      List<FarmerPesticide>? pests = await getPest();
+      if (pests != null) {
+        pestsmodels = _pest(pestsmodels!, pests);
+      }
       waterSource = await getSource(crop.waterSourceId);
       cropAreaUnit = await getArea(crop.areaUnitId!);
       cropSystem = await getSystem(crop.cropSystemId);
@@ -65,6 +90,9 @@ class CropAgricultureBloc
         fertiliser: crop.fertilizerUse! == 1 ? "Yes" : "No",
         pesticide: crop.pesticideUse! == 1 ? "Yes" : "No",
         seeds: crop.usageOfCertifiedSeeds! ? "Yes" : "No",
+        a: typemodels!,
+        s: sourcemodels!,
+        p: pestsmodels!,
       ));
     }
     emit(
@@ -133,6 +161,112 @@ class CropAgricultureBloc
     int cropid = PrefUtils().getCropId();
     CAProgressDB caProgressDB = CAProgressDB();
     return await caProgressDB.fetchByCropId(cropid);
+  }
+
+  Future<List<CheckBoxList>> fecthType() async {
+    List<CheckBoxList> list = [];
+    FertiliserTypeDB farmStructureDB = FertiliserTypeDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].fertiliserType,
+          id: value[i].fertiliserTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fetchSources() async {
+    List<CheckBoxList> list = [];
+    FertiliserSourceDB farmStructureDB = FertiliserSourceDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value!.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].source,
+          id: value[i].fertSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fetchPest() async {
+    List<CheckBoxList> list = [];
+    PesticideTypeDB farmStructureDB = PesticideTypeDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].pesticideType,
+          id: value[i].pesticideTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  List<CheckBoxList> _sources(
+      List<CheckBoxList> feedmodelss, List<FarmerFertiliserSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFertiliserSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.fertSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerFertiliserSource>?> getSources() async {
+    int id = PrefUtils().getCropId();
+    FarmerFertiliserSourcesDB farmerFishInputDB = FarmerFertiliserSourcesDB();
+    return await farmerFishInputDB.fetchByCropId(id);
+  }
+
+  List<CheckBoxList> _pest(
+      List<CheckBoxList> feedmodelss, List<FarmerPesticide> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerPesticide> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.pesticideTypeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerPesticide>?> getPest() async {
+    int id = PrefUtils().getCropId();
+    FarmerPesticidesDB farmerFishInputDB = FarmerPesticidesDB();
+    return await farmerFishInputDB.fetchByCropId(id);
+  }
+
+  List<CheckBoxList> _types(
+      List<CheckBoxList> feedmodelss, List<FarmerFertiliser> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerFertiliser> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.fertiliserTypeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FarmerFertiliser>?> getTypes() async {
+    int id = PrefUtils().getCropId();
+    FarmerFertiliserDB farmerFishInputDB = FarmerFertiliserDB();
+    return await farmerFishInputDB.fetchByCropId(id);
   }
 
   _addEdit(

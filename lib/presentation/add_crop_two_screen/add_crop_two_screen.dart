@@ -4,8 +4,7 @@ import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_crop_fertiliser_dialog/add_crop_fertiliser_dialog.dart';
 import 'package:kiamis_app/presentation/add_crop_fertilisersource_dialog/add_crop_fertilisersource_dialog.dart';
-import 'package:kiamis_app/presentation/add_crop_pesticide_dialog%20copy/add_crop_pesticide_dialog.dart';
-import 'package:kiamis_app/presentation/crop_agriculture_screen/bloc/crop_agriculture_bloc.dart';
+import 'package:kiamis_app/presentation/add_crop_pesticide_dialog/add_crop_pesticide_dialog.dart';
 
 import 'bloc/add_crop_two_bloc.dart';
 import 'models/add_crop_two_model.dart';

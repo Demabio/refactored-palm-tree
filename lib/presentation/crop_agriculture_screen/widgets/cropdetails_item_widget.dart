@@ -1,3 +1,5 @@
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import '../models/cropdetails_item_model.dart';
@@ -196,6 +198,62 @@ class CropdetailsItemWidget extends StatelessWidget {
               ],
             ),
           ),
+          Visibility(
+            visible: cropdetailsItemModelObj.fertiliser == "Yes",
+            child: Padding(
+                padding: EdgeInsets.only(left: 4.h, top: 4.v),
+                child: Text("Fertilisers Used".tr,
+                    style: CustomTextStyles.labelMediumPrimary)),
+          ),
+          Visibility(
+            visible: cropdetailsItemModelObj.fertiliser == "Yes",
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 15.v,
+                right: 16.h,
+              ),
+              child: Column(
+                children: List<Widget>.generate(
+                  cropdetailsItemModelObj.a.length,
+                  (index) {
+                    CheckBoxList model = cropdetailsItemModelObj.a[index];
+
+                    return InputsWidget(
+                      model,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: cropdetailsItemModelObj.fertiliser == "Yes",
+            child: Padding(
+                padding: EdgeInsets.only(left: 4.h, top: 4.v),
+                child: Text("Fertiliser Sources".tr,
+                    style: CustomTextStyles.labelMediumPrimary)),
+          ),
+          Visibility(
+            visible: cropdetailsItemModelObj.fertiliser == "Yes",
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 15.v,
+                right: 16.h,
+              ),
+              child: Column(
+                children: List<Widget>.generate(
+                  cropdetailsItemModelObj.s.length,
+                  (index) {
+                    CheckBoxList model = cropdetailsItemModelObj.s[index];
+
+                    return InputsWidget(
+                      model,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(
               left: 1.h,
@@ -213,6 +271,34 @@ class CropdetailsItemWidget extends StatelessWidget {
                   style: theme.textTheme.labelMedium,
                 ),
               ],
+            ),
+          ),
+          Visibility(
+            visible: cropdetailsItemModelObj.pesticide == "Yes",
+            child: Padding(
+                padding: EdgeInsets.only(left: 4.h, top: 4.v),
+                child: Text("Pesticides Used".tr,
+                    style: CustomTextStyles.labelMediumPrimary)),
+          ),
+          Visibility(
+            visible: cropdetailsItemModelObj.pesticide == "Yes",
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 15.v,
+                right: 16.h,
+              ),
+              child: Column(
+                children: List<Widget>.generate(
+                  cropdetailsItemModelObj.p.length,
+                  (index) {
+                    CheckBoxList model = cropdetailsItemModelObj.p[index];
+
+                    return InputsWidget(
+                      model,
+                    );
+                  },
+                ),
+              ),
             ),
           ),
           SizedBox(height: 15.v),
