@@ -11,6 +11,12 @@ class AddCropTwoState extends Equatable {
     this.selectedDropDownValue3,
     this.selectedDropDownValue4,
     this.addCropTwoModelObj,
+    this.checkedP = false,
+    this.checkedA = false,
+    this.checkedS = false,
+    this.a = const [],
+    this.p = const [],
+    this.s = const [],
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -23,6 +29,12 @@ class AddCropTwoState extends Equatable {
 
   SelectionPopupModel? selectedDropDownValue4;
 
+  List<CheckBoxList> p;
+  List<CheckBoxList> a;
+  List<CheckBoxList> s;
+  bool checkedP;
+  bool checkedA;
+  bool checkedS;
   AddCropTwoModel? addCropTwoModelObj;
 
   @override
@@ -33,6 +45,12 @@ class AddCropTwoState extends Equatable {
         selectedDropDownValue3,
         selectedDropDownValue4,
         addCropTwoModelObj,
+        checkedP,
+        checkedA,
+        checkedS,
+        a,
+        p,
+        s,
       ];
   AddCropTwoState copyWith({
     SelectionPopupModel? selectedDropDownValue,
@@ -41,6 +59,12 @@ class AddCropTwoState extends Equatable {
     SelectionPopupModel? selectedDropDownValue3,
     SelectionPopupModel? selectedDropDownValue4,
     AddCropTwoModel? addCropTwoModelObj,
+    bool? checkedP,
+    bool? checkedA,
+    bool? checkedS,
+    List<CheckBoxList>? p,
+    List<CheckBoxList>? a,
+    List<CheckBoxList>? s,
   }) {
     return AddCropTwoState(
       selectedDropDownValue:
@@ -54,6 +78,12 @@ class AddCropTwoState extends Equatable {
       selectedDropDownValue4:
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
       addCropTwoModelObj: addCropTwoModelObj ?? this.addCropTwoModelObj,
+      checkedP: checkedP ?? this.checkedP,
+      checkedA: checkedA ?? this.checkedA,
+      checkedS: checkedS ?? this.checkedS,
+      p: p ?? this.p,
+      a: a ?? this.a,
+      s: s ?? this.s,
     );
   }
 }

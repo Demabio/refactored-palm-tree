@@ -34,6 +34,6 @@ class FarmerFertiliser {
         basalOthersName: map['basal_others_name'],
         others: map['others'],
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }

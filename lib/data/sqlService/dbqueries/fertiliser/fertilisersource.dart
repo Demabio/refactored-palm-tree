@@ -63,13 +63,15 @@ class FertiliserSourceDB {
     }
   }
 
-  Future<List<FertilizerSource>> fetchAll() async {
+  Future<List<FertilizerSource>?> fetchAll() async {
     final database = await DatabaseService().database;
     final sources = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
 
-    return sources.map((e) => FertilizerSource.fromSqfliteDatabase(e)).toList();
+    return sources.isNotEmpty
+        ? sources.map((e) => FertilizerSource.fromSqfliteDatabase(e)).toList()
+        : null;
   }
 
   Future<FertilizerSource> fetchByFertSourceId(int fertSourceId) async {

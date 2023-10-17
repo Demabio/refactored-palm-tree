@@ -15,6 +15,27 @@ class AddCropTwoInitialEvent extends AddCropTwoEvent {
   List<Object?> get props => [];
 }
 
+class CheckOneEvent extends AddCropTwoEvent {
+  CheckOneEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckTwoEvent extends AddCropTwoEvent {
+  CheckTwoEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckThreeEvent extends AddCropTwoEvent {
+  CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class NextTapEvent extends AddCropTwoEvent {
   NextTapEvent({
     this.value,

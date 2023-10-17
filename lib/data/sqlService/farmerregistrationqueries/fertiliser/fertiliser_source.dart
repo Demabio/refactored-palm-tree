@@ -105,5 +105,28 @@ class FarmerFertiliserSourcesDB {
     return FarmerFertiliserSource.fromSqfliteDatabase(fertiliserSource.first);
   }
 
+  Future<List<FarmerFertiliserSource>?> fetchByCropId(int id) async {
+    final database = await DatabaseService().database;
+    final fish = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_crop_id = ?
+    ''', [
+      id,
+    ]);
+
+    return fish.isNotEmpty
+        ? fish
+            .map((e) => FarmerFertiliserSource.fromSqfliteDatabase(e))
+            .toList()
+        : null;
+  }
+
+  Future<int> delete(int id) async {
+    final database = await DatabaseService().database;
+    return await database.rawDelete('''
+      DELETE FROM $tableName WHERE farmer_crop_id = ?
+    ''', [
+      id,
+    ]);
+  }
   // Add more database methods as needed
 }

@@ -229,19 +229,6 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                 visible: list?.selectedDropDownValue?.id == 1,
                                 child: Column(
                                   children: [
-                                    //                 Container(
-                                    //   width: 255.h,
-                                    //   margin: EdgeInsets.only(
-                                    //     top: 17.v,
-                                    //     right: 87.h,
-                                    //   ),
-                                    //   child: Text(
-                                    //     "msg_if_yes_what_type2".tr,
-                                    //     maxLines: 2,
-                                    //     overflow: TextOverflow.ellipsis,
-                                    //     style: theme.textTheme.titleSmall,
-                                    //   ),
-                                    // ),
                                     BlocSelector<AddLandandwatermgmtTwoBloc,
                                             AddLandandwatermgmtTwoState, bool?>(
                                         selector: (state) => state.checka,
@@ -291,7 +278,6 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                     ),
                                     SizedBox(height: 17.v),
-
                                     BlocSelector<AddLandandwatermgmtTwoBloc,
                                             AddLandandwatermgmtTwoState, bool?>(
                                         selector: (state) => state.checkb,
@@ -342,7 +328,6 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                     ),
                                     SizedBox(height: 17.v),
-
                                     Container(
                                       width: 244.h,
                                       margin: EdgeInsets.only(

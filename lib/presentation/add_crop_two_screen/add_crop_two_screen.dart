@@ -1,5 +1,10 @@
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_crop_fertiliser_dialog/add_crop_fertiliser_dialog.dart';
+import 'package:kiamis_app/presentation/add_crop_fertilisersource_dialog/add_crop_fertilisersource_dialog.dart';
+import 'package:kiamis_app/presentation/add_crop_pesticide_dialog%20copy/add_crop_pesticide_dialog.dart';
 import 'package:kiamis_app/presentation/crop_agriculture_screen/bloc/crop_agriculture_bloc.dart';
 
 import 'bloc/add_crop_two_bloc.dart';
@@ -311,6 +316,85 @@ class AddCropTwoScreen extends StatelessWidget {
                                             });
                                       }),
                                   SizedBox(height: 35.v),
+                                  BlocSelector<AddCropTwoBloc, AddCropTwoState,
+                                          AddCropTwoModel?>(
+                                      selector: (state) =>
+                                          state.addCropTwoModelObj,
+                                      builder: (context, list) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.v,
+                                            right: 16.h,
+                                          ),
+                                          child: Visibility(
+                                            visible: list
+                                                    ?.selectedDropDownValue3
+                                                    ?.id ==
+                                                1,
+                                            child: Column(
+                                              children: [
+                                                BlocSelector<AddCropTwoBloc,
+                                                        AddCropTwoState, bool?>(
+                                                    selector: (state) =>
+                                                        state.checkedP,
+                                                    builder:
+                                                        (context, checked) {
+                                                      return Text(
+                                                        "If yes, Which other chemical interventions do you use on the crops? (*)"
+                                                            .tr,
+                                                        style: checked!
+                                                            ? CustomTextStyles
+                                                                .labelMediumPrimary_1red
+                                                            : CustomTextStyles
+                                                                .labelMediumPrimary_1,
+                                                      );
+                                                    }),
+                                                BlocSelector<
+                                                        AddCropTwoBloc,
+                                                        AddCropTwoState,
+                                                        List<CheckBoxList>?>(
+                                                    selector: (state) =>
+                                                        state.p,
+                                                    builder: (context, list) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          top: 15.v,
+                                                          right: 16.h,
+                                                        ),
+                                                        child: Column(
+                                                          children: List<
+                                                              Widget>.generate(
+                                                            list?.length ?? 0,
+                                                            (index) {
+                                                              CheckBoxList
+                                                                  model =
+                                                                  list![index];
+
+                                                              return InputsWidget(
+                                                                model,
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }),
+                                                CustomElevatedButton(
+                                                  text: "Add Pesticide Used".tr,
+                                                  onTap: () =>
+                                                      addPesticide(context),
+                                                  margin: EdgeInsets.only(
+                                                    left: 82.h,
+                                                    top: 9.v,
+                                                  ),
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
                                   Text("msg_use_fertilizer".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -347,6 +431,145 @@ class AddCropTwoScreen extends StatelessWidget {
                                                   .add(ChangeDropDown4Event(
                                                       value: value));
                                             });
+                                      }),
+                                  BlocSelector<AddCropTwoBloc, AddCropTwoState,
+                                          AddCropTwoModel?>(
+                                      selector: (state) =>
+                                          state.addCropTwoModelObj,
+                                      builder: (context, list) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.v,
+                                            right: 16.h,
+                                          ),
+                                          child: Visibility(
+                                            visible: list
+                                                    ?.selectedDropDownValue4
+                                                    ?.id ==
+                                                1,
+                                            child: Column(
+                                              children: [
+                                                BlocSelector<AddCropTwoBloc,
+                                                        AddCropTwoState, bool?>(
+                                                    selector: (state) =>
+                                                        state.checkedA,
+                                                    builder:
+                                                        (context, checked) {
+                                                      return Text(
+                                                        "If yes, Which fertiliser types do you use? (*)",
+                                                        style: checked!
+                                                            ? CustomTextStyles
+                                                                .labelMediumPrimary_1red
+                                                            : CustomTextStyles
+                                                                .labelMediumPrimary_1,
+                                                      );
+                                                    }),
+                                                BlocSelector<
+                                                        AddCropTwoBloc,
+                                                        AddCropTwoState,
+                                                        List<CheckBoxList>?>(
+                                                    selector: (state) =>
+                                                        state.a,
+                                                    builder: (context, list) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          top: 15.v,
+                                                          right: 16.h,
+                                                        ),
+                                                        child: Column(
+                                                          children: List<
+                                                              Widget>.generate(
+                                                            list?.length ?? 0,
+                                                            (index) {
+                                                              CheckBoxList
+                                                                  model =
+                                                                  list![index];
+
+                                                              return InputsWidget(
+                                                                model,
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }),
+                                                CustomElevatedButton(
+                                                  text:
+                                                      "Add Fertiliser Used".tr,
+                                                  onTap: () =>
+                                                      addFertiliser(context),
+                                                  margin: EdgeInsets.only(
+                                                    left: 82.h,
+                                                    top: 9.v,
+                                                  ),
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                ),
+                                                SizedBox(height: 17.v),
+                                                BlocSelector<AddCropTwoBloc,
+                                                        AddCropTwoState, bool?>(
+                                                    selector: (state) =>
+                                                        state.checkedS,
+                                                    builder:
+                                                        (context, checked) {
+                                                      return Text(
+                                                        "If yes, Where did you source the fertiliser? (*)"
+                                                            .tr,
+                                                        style: checked!
+                                                            ? CustomTextStyles
+                                                                .labelMediumPrimary_1red
+                                                            : CustomTextStyles
+                                                                .labelMediumPrimary_1,
+                                                      );
+                                                    }),
+                                                BlocSelector<
+                                                        AddCropTwoBloc,
+                                                        AddCropTwoState,
+                                                        List<CheckBoxList>?>(
+                                                    selector: (state) =>
+                                                        state.s,
+                                                    builder: (context, list) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          top: 15.v,
+                                                          right: 16.h,
+                                                        ),
+                                                        child: Column(
+                                                          children: List<
+                                                              Widget>.generate(
+                                                            list?.length ?? 0,
+                                                            (index) {
+                                                              CheckBoxList
+                                                                  model =
+                                                                  list![index];
+
+                                                              return InputsWidget(
+                                                                model,
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }),
+                                                CustomElevatedButton(
+                                                  text: "Add Fertiliser Source"
+                                                      .tr,
+                                                  onTap: () =>
+                                                      addFertiliserSource(
+                                                          context),
+                                                  margin: EdgeInsets.only(
+                                                    left: 82.h,
+                                                    top: 7.v,
+                                                  ),
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
                                       }),
                                   SizedBox(height: 36.v),
                                   Row(
@@ -477,5 +700,53 @@ class AddCropTwoScreen extends StatelessWidget {
     NavigatorService.popAndPushNamed(
       AppRoutes.cropAgricultureScreen,
     );
+  }
+
+  addPesticide(BuildContext context) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddCropPesticideDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddCropTwoBloc>().add(
+          CheckOneEvent(),
+        );
+  }
+
+  addFertiliser(BuildContext context) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddCropFertiliserDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddCropTwoBloc>().add(
+          CheckTwoEvent(),
+        );
+  }
+
+  addFertiliserSource(BuildContext context) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddCropFertiliserSourceDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddCropTwoBloc>().add(
+          CheckThreeEvent(),
+        );
   }
 }

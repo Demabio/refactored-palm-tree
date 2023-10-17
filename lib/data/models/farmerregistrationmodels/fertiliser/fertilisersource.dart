@@ -32,6 +32,6 @@ class FarmerFertiliserSource {
         otherSource: map['other_source'],
         distanceSource: map['distance_source']?.toDouble(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
-        createdBy: int.parse(map['created_by'] ?? "0"),
+        createdBy: map['created_by'] ?? 0,
       );
 }
