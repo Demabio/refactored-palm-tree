@@ -61,20 +61,21 @@ class CropAgricultureBloc
     List<CheckBoxList>? sourcemodels = await fetchSources();
     List<CheckBoxList>? pestsmodels = await fetchPest();
     for (var crop in crops) {
-      List<FarmerFertiliser>? type = await getTypes();
+      List<FarmerFertiliser>? type = await getTypes(crop.farmerCropId);
       if (type != null) {
         typemodels = _types(typemodels!, type);
       }
-      List<FarmerFertiliserSource>? source = await getSources();
+      List<FarmerFertiliserSource>? source =
+          await getSources(crop.farmerCropId);
       if (source != null) {
         sourcemodels = _sources(sourcemodels!, source);
       }
-      List<FarmerPesticide>? pests = await getPest();
+      List<FarmerPesticide>? pests = await getPest(crop.farmerCropId);
       if (pests != null) {
         pestsmodels = _pest(pestsmodels!, pests);
       }
       waterSource = await getSource(crop.waterSourceId);
-      cropAreaUnit = await getArea(crop.areaUnitId!);
+      cropAreaUnit = await getArea(crop.areaUnitId);
       cropSystem = await getSystem(crop.cropSystemId);
       cropPlantingMotive = await getmotive(crop.cropMotiveId);
       cropp = await getCrop(crop.cropId!);
@@ -124,9 +125,9 @@ class CropAgricultureBloc
     return await farmerCropsDB.fetchByFarmerCropId(cropId);
   }
 
-  Future<CropAreaUnit?> getArea(int id) async {
+  Future<CropAreaUnit?> getArea(int? id) async {
     CropAreaUnitDB cropAreaUnitDB = CropAreaUnitDB();
-    return await cropAreaUnitDB.fetchByAreaUnitId(id);
+    return id != null ? await cropAreaUnitDB.fetchByAreaUnitId(id) : null;
   }
 
   Future<Crop?> getCrop(int id) async {
@@ -222,8 +223,7 @@ class CropAgricultureBloc
     return feedmodels;
   }
 
-  Future<List<FarmerFertiliserSource>?> getSources() async {
-    int id = PrefUtils().getCropId();
+  Future<List<FarmerFertiliserSource>?> getSources(int id) async {
     FarmerFertiliserSourcesDB farmerFishInputDB = FarmerFertiliserSourcesDB();
     return await farmerFishInputDB.fetchByCropId(id);
   }
@@ -242,8 +242,7 @@ class CropAgricultureBloc
     return feedmodels;
   }
 
-  Future<List<FarmerPesticide>?> getPest() async {
-    int id = PrefUtils().getCropId();
+  Future<List<FarmerPesticide>?> getPest(int id) async {
     FarmerPesticidesDB farmerFishInputDB = FarmerPesticidesDB();
     return await farmerFishInputDB.fetchByCropId(id);
   }
@@ -263,8 +262,7 @@ class CropAgricultureBloc
     return feedmodels;
   }
 
-  Future<List<FarmerFertiliser>?> getTypes() async {
-    int id = PrefUtils().getCropId();
+  Future<List<FarmerFertiliser>?> getTypes(int id) async {
     FarmerFertiliserDB farmerFishInputDB = FarmerFertiliserDB();
     return await farmerFishInputDB.fetchByCropId(id);
   }

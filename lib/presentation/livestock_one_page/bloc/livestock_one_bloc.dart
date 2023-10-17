@@ -142,11 +142,10 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     return list;
   }
 
-  Future<List<FarmerLivestockBeehiveType>?> getBees() async {
-    int livid = PrefUtils().getLivestockId();
+  Future<List<FarmerLivestockBeehiveType>?> getBees(int id) async {
     FarmerLivestockBeehiveTypeDB farmerLivestockFeedsDB =
         FarmerLivestockBeehiveTypeDB();
-    return await farmerLivestockFeedsDB.fetchAllByLivestock(livid);
+    return await farmerLivestockFeedsDB.fetchAllByLivestock(id);
   }
 
   Future<FarmerLivestock?> getLiv() async {
@@ -194,6 +193,9 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     List<AgeGroupModel>? ageGroupList = [];
     List<FeedsModel>? feedslist = [];
     List<FeedsModel>? beeslist = [];
+    ageGroupList = await fetchAgeGroups();
+    feedslist = await fetchFeeds();
+    beeslist = await fetchBees();
 
     for (var live in lives) {
       Livestock? livestock =
@@ -205,9 +207,12 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
           await getAges(live.farmerLivestockId);
 
       List<FarmerLivestockFeed>? feeds = await getFeeds(live.farmerLivestockId);
-
-      List<FarmerLivestockBeehiveType>? bees = await getBees();
+      ageGroupList = await fetchAgeGroups();
+      feedslist = await fetchFeeds();
       beeslist = await fetchBees();
+
+      List<FarmerLivestockBeehiveType>? bees =
+          await getBees(live.farmerLivestockId);
 
       bool beekeerper = false;
       if (bees != null) {
@@ -216,8 +221,6 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
       beekeerper =
           livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
 
-      ageGroupList = await fetchAgeGroups();
-      feedslist = await fetchFeeds();
       feedslist = _feeds(feedslist, feeds!);
       ageGroupList = _ages(ageGroupList, ages!);
       farmmodels.add(LSdetailsItemModel(
@@ -229,6 +232,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         prod: livestockFarmingSystem.livestockFarmsystem,
         beekeepr: beekeerper,
         bees: beeslist,
+        x: live.noOfBeehives.toString(),
       ));
     }
     emit(state.copyWith(
@@ -264,6 +268,9 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
       List<AgeGroupModel>? ageGroupList = [];
       List<FeedsModel>? feedslist = [];
       List<FeedsModel>? beeslist = [];
+      ageGroupList = await fetchAgeGroups();
+      feedslist = await fetchFeeds();
+      beeslist = await fetchBees();
 
       for (var live in lives) {
         Livestock? livestock =
@@ -276,30 +283,34 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
 
         List<FarmerLivestockFeed>? feeds =
             await getFeeds(live.farmerLivestockId);
+        List<AgeGroupModel>? ageGroupList2 = [];
+        List<FeedsModel>? feedslist2 = [];
+        List<FeedsModel>? beeslist2 = [];
 
-        List<FarmerLivestockBeehiveType>? bees = await getBees();
-        beeslist = await fetchBees();
+        ageGroupList2 = ageGroupList;
+        feedslist2 = feedslist;
+        beeslist2 = beeslist;
+        List<FarmerLivestockBeehiveType>? bees =
+            await getBees(live.farmerLivestockId);
 
         bool beekeerper = false;
         if (bees != null) {
-          beeslist = _bees(beeslist, bees);
+          beeslist = _bees(beeslist2!, bees);
         }
         beekeerper =
             livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
 
-        ageGroupList = await fetchAgeGroups();
-        feedslist = await fetchFeeds();
-        feedslist = _feeds(feedslist, feeds!);
-        ageGroupList = _ages(ageGroupList, ages!);
+        feedslist = _feeds(feedslist2!, feeds!);
+        ageGroupList = _ages(ageGroupList2!, ages!);
         farmmodels.add(LSdetailsItemModel(
           //   crop: crop,
           id: live.farmerLivestockId,
           name: livestock?.livestock,
-          ages: ageGroupList,
-          feeds: feedslist,
+          ages: ageGroupList2,
+          feeds: feedslist2,
           prod: livestockFarmingSystem.livestockFarmsystem,
           beekeepr: beekeerper,
-          bees: beeslist,
+          bees: beeslist2!,
           x: live.noOfBeehives.toString(),
         ));
       }

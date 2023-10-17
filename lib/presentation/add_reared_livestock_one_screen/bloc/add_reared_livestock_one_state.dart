@@ -145,7 +145,7 @@ class AddRearedLivestockOneState extends Equatable {
       ageGroupMapList: ageGroupMapList ?? this.ageGroupMapList,
       feedsdlist: feedsdlist ?? this.feedsdlist,
       bees: bees ?? this.bees,
-      hives: hives ?? hives,
+      hives: hives ?? this.hives,
     );
   }
 }

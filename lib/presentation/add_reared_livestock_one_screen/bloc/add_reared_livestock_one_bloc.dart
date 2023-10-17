@@ -50,8 +50,12 @@ class AddRearedLivestockOneBloc
     on<SaveTapEvent>(_saveTap);
     on<AddEditAgeEvent>(_addeditages);
     on<AddEditFeedEvent>(_addeditfeeds);
+    on<AddEditBeeEvent>(_addeditbees);
+
     on<CheckAgeEvent>(_checkages);
     on<CheckFeedEvent>(_checkfeeds);
+    on<CheckBeeEvent>(_checkbees);
+
     on<ChangeDropDown1Event>(_changeDropDownProd);
   }
 
@@ -337,6 +341,24 @@ class AddRearedLivestockOneBloc
     }
   }
 
+  _checkbees(
+    CheckBeeEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) async {
+    String feeds = PrefUtils().getBee();
+    if (feeds != "0") {
+      List<dynamic> decageGroupMapList = jsonDecode(feeds);
+
+      // Create a list of AgeGroupModel objects from the list of dynamic objects
+      List<FeedsModel> feedmodels =
+          decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
+
+      emit(state.copyWith(
+        bees: feedmodels,
+      ));
+    }
+  }
+
   _checkages(
     CheckAgeEvent event,
     Emitter<AddRearedLivestockOneState> emit,
@@ -369,6 +391,22 @@ class AddRearedLivestockOneBloc
       PrefUtils().setFeeds(jsonString);
     } else {
       PrefUtils().setFeeds("0");
+    }
+  }
+
+  _addeditbees(
+    AddEditBeeEvent event,
+    Emitter<AddRearedLivestockOneState> emit,
+  ) {
+    if (state.bees!.isNotEmpty) {
+      List<Map<String, dynamic>> ageGroupMapList =
+          state.bees!.map((ageGroup) => ageGroup.toJson()).toList();
+
+      // Convert the list of maps to a JSON string
+      String jsonString = jsonEncode(ageGroupMapList);
+      PrefUtils().setBee(jsonString);
+    } else {
+      PrefUtils().setBee("0");
     }
   }
 
@@ -469,6 +507,19 @@ class AddRearedLivestockOneBloc
         ))
             .then((value) async {
           if (value > 0) {
+            farmDB.update(FarmerLivestock(
+              farmerFarmId: PrefUtils().getFarmId(),
+              farmerId: PrefUtils().getFarmerId(),
+              dateCreated: DateTime.now(),
+              createdBy: userId,
+              farmerLivestockId: value,
+              noOfBeehives: int.parse(state.hives?.text ?? "0"),
+              livestockFarmsystemCatId: state
+                  .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+              livestockId:
+                  state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+            ));
+
             PrefUtils().setLivestockId(value);
 
             String agegroups = PrefUtils().getAgeGroups();
@@ -531,19 +582,6 @@ class AddRearedLivestockOneBloc
               await farmerLivestockFeedsDB
                   .insertFeeds(feedlist)
                   .then((value) => print("inserted $value"));
-
-              farmDB.update(FarmerLivestock(
-                farmerFarmId: PrefUtils().getFarmId(),
-                farmerId: PrefUtils().getFarmerId(),
-                dateCreated: DateTime.now(),
-                createdBy: userId,
-                farmerLivestockId: value,
-                noOfBeehives: int.parse(state.hives?.text ?? "0"),
-                livestockFarmsystemCatId: state
-                    .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
-                livestockId:
-                    state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
-              ));
             }
             String bees = PrefUtils().getBee();
 
@@ -572,19 +610,6 @@ class AddRearedLivestockOneBloc
               await farmerLivestockBeehiveTypeDB
                   .insertBeehiveTypes(nbeelist)
                   .then((value) => print("inserted $value"));
-
-              farmDB.update(FarmerLivestock(
-                farmerFarmId: PrefUtils().getFarmId(),
-                farmerId: PrefUtils().getFarmerId(),
-                dateCreated: DateTime.now(),
-                createdBy: userId,
-                farmerLivestockId: value,
-                noOfBeehives: int.parse(state.hives?.text ?? "0"),
-                livestockFarmsystemCatId: state
-                    .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
-                livestockId:
-                    state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
-              ));
             }
             LSProgressDB lsProgressDB = LSProgressDB();
             if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
@@ -616,6 +641,19 @@ class AddRearedLivestockOneBloc
       if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1 &&
           state.feedsdlist!.isNotEmpty) {
         if (farmerLivestockId != 0) {
+          farmDB.update(FarmerLivestock(
+            farmerFarmId: PrefUtils().getFarmId(),
+            farmerId: PrefUtils().getFarmerId(),
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+            farmerLivestockId: PrefUtils().getLivestockId(),
+            noOfBeehives: int.parse(state.hives?.text ?? "0"),
+            livestockFarmsystemCatId:
+                state.addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+            livestockId:
+                state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+          ));
+
           String agegroups = PrefUtils().getAgeGroups();
           if (agegroups != "0") {
             List<dynamic> decageGroupMapList = jsonDecode(agegroups);
@@ -681,18 +719,34 @@ class AddRearedLivestockOneBloc
                 .insertFeeds(feedlist)
                 .then((value) => print("inserted $value"));
           }
-          farmDB.update(FarmerLivestock(
-            farmerFarmId: PrefUtils().getFarmId(),
-            farmerId: PrefUtils().getFarmerId(),
-            dateCreated: DateTime.now(),
-            createdBy: userId,
-            farmerLivestockId: PrefUtils().getLivestockId(),
-            noOfBeehives: 0,
-            livestockFarmsystemCatId:
-                state.addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
-            livestockId:
-                state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
-          ));
+          String bees = PrefUtils().getBee();
+
+          if (bees != "0") {
+            List<dynamic> beelist = jsonDecode(bees);
+
+            List<FeedsModel> beeslist =
+                beelist.map((json) => FeedsModel.fromJson(json)).toList();
+
+            FarmerLivestockBeehiveTypeDB farmerLivestockBeehiveTypeDB =
+                FarmerLivestockBeehiveTypeDB();
+
+            List<FarmerLivestockBeehiveType> nbeelist = [];
+
+            for (var ent in beeslist) {
+              if (ent.isSelected) {
+                nbeelist.add(FarmerLivestockBeehiveType(
+                    farmerLivestockId: farmerLivestockId,
+                    createdBy: userId,
+                    dateCreated: DateTime.now(),
+                    beehivesTypeId: ent.id!,
+                    beehivesFarmerId: 0));
+              }
+            }
+
+            await farmerLivestockBeehiveTypeDB
+                .insertBeehiveTypes(nbeelist)
+                .then((value) => print("inserted $value"));
+          }
           event.createSuccessful!.call();
         }
       }
@@ -807,7 +861,7 @@ class AddRearedLivestockOneBloc
     List<AgeGroupModel>? ageGroupList = [];
     List<FeedsModel>? feedslist = [];
     List<FeedsModel>? beeslist = [];
-
+    TextEditingController at = TextEditingController();
     List<SelectionPopupModel> livestockmodels = [];
     SelectionPopupModel? selectedlivestock;
     List<SelectionPopupModel> categ = await fillCategories();
@@ -820,6 +874,7 @@ class AddRearedLivestockOneBloc
     if (pfProgress.pageOne == 1 && livestock.farmerLivestockId != 0) {
       Livestock? lives =
           await livestockDB.fetchByLivestockId(livestock.livestockId!);
+      at = TextEditingController(text: livestock.noOfBeehives.toString());
 
       subcateg = await fillSubCategory(lives!.livestockCatId!);
       livestockmodels = await fillLivestock(lives!.livestockSubCatId);
@@ -839,7 +894,6 @@ class AddRearedLivestockOneBloc
       selectedprod = prod.firstWhere(
         (model) => model.id == livestock.livestockFarmsystemCatId,
       );
-
       List<FarmerLivestockAgeGroup>? ages = await getAges();
 
       List<FarmerLivestockFeed>? feeds = await getFeeds();
@@ -855,11 +909,6 @@ class AddRearedLivestockOneBloc
         beeslist = _bees(beeslist, bees);
       }
     }
-    emit(state.copyWith(
-      searchController: TextEditingController(),
-      categoryvalueController: TextEditingController(),
-      subcategoryvaluController: TextEditingController(),
-    ));
     emit(
       state.copyWith(
         addRearedLivestockOneModelObj:
@@ -877,6 +926,10 @@ class AddRearedLivestockOneBloc
           livestockF: livestock,
           lsProgress: pfProgress,
         ),
+        searchController: TextEditingController(),
+        categoryvalueController: TextEditingController(),
+        subcategoryvaluController: TextEditingController(),
+        hives: at,
         feedsdlist: feedslist,
         ageGroupMapList: ageGroupList,
         bees: beeslist,

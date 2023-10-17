@@ -162,7 +162,7 @@ class LSdetailsItemWidget extends StatelessWidget {
             visible: farmdetailsItemModel.beekeepr,
             child: Column(
               children: List<Widget>.generate(
-                farmdetailsItemModel.feeds.length ?? 0,
+                farmdetailsItemModel.bees.length ?? 0,
                 (index) {
                   FeedsModel model = farmdetailsItemModel.bees[index];
 

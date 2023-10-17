@@ -10,7 +10,7 @@ class LivestockBeehiveType {
   factory LivestockBeehiveType.fromSqfliteDatabase(Map<String, dynamic> map) =>
       LivestockBeehiveType(
         beehiveTypeId: map['beehives_type_id']?.toInt() ?? 0,
-        beehiveType: map['beehive_type'] ?? '',
+        beehiveType: map['bee_hive_type'] ?? '',
       );
 
   static List<LivestockBeehiveType> parseBeeHiveTypes(

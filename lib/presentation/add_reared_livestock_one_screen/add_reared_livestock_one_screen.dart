@@ -392,44 +392,73 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                       state.addRearedLivestockOneModelObj
                                               ?.selectedLivestock?.title ==
                                           "Bee",
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Number of Bee Hives".tr,
-                                        style: theme.textTheme.titleSmall,
-                                      ),
-                                      CustomTextFormField(
-                                          autofocus: false,
-                                          focusNode: _secondTextFieldFocus,
-                                          validator: (value) {
-                                            if (!isNumeric(value,
-                                                isRequired: true)) {
-                                              return "Invalid Input";
-                                            }
-                                          },
-                                          textInputType: TextInputType.number,
-                                          controller: state.hives,
-                                          hintText: "lbl_area".tr,
-                                          textInputAction:
-                                              TextInputAction.done),
-                                      Text(
-                                        "Add Beehive types".tr,
-                                        style: theme.textTheme.titleSmall,
-                                      ),
-                                      CustomElevatedButton(
-                                        height: 47.v,
-                                        text: "msg_add_livestock_age".tr,
-                                        margin: EdgeInsets.only(
-                                          left: 15.h,
-                                          top: 15.v,
-                                          right: 15.h,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 35.v),
+                                        Text(
+                                          "Number of Bee Hives".tr,
+                                          style: theme.textTheme.titleSmall,
                                         ),
-                                        alignment: Alignment.center,
-                                        onTap: () {
-                                          addAgeGroup(context);
-                                        },
-                                      ),
-                                    ],
+                                        SizedBox(height: 10.v),
+                                        CustomTextFormField(
+                                            autofocus: false,
+                                            focusNode: _secondTextFieldFocus,
+                                            validator: (value) {
+                                              if (!isNumeric(
+                                                value,
+                                              )) {
+                                                return "Invalid Input";
+                                              }
+                                            },
+                                            textInputType: TextInputType.number,
+                                            controller: state.hives,
+                                            hintText: "Number".tr,
+                                            textInputAction:
+                                                TextInputAction.done),
+                                        SizedBox(height: 17.v),
+                                        Text(
+                                          "Beehive types".tr,
+                                          style: theme.textTheme.titleSmall,
+                                        ),
+                                        SizedBox(height: 17.v),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 15.v,
+                                            right: 16.h,
+                                          ),
+                                          child: Column(
+                                            children: List<Widget>.generate(
+                                              state.bees?.length ?? 0,
+                                              (index) {
+                                                FeedsModel model =
+                                                    state.bees![index];
+
+                                                return FeedItemWidget(
+                                                  model,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 17.v),
+                                        CustomElevatedButton(
+                                          width: 152.h,
+                                          alignment: Alignment.centerRight,
+                                          height: 47.v,
+                                          text: "Add Type".tr,
+                                          margin: EdgeInsets.only(
+                                            left: 15.h,
+                                            top: 15.v,
+                                            right: 15.h,
+                                          ),
+                                          onTap: () {
+                                            addBee(context);
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
