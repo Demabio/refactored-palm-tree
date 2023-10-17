@@ -463,6 +463,7 @@ class AddCropTwoScreen extends StatelessWidget {
                                                                 .labelMediumPrimary_1,
                                                       );
                                                     }),
+                                                SizedBox(height: 17.v),
                                                 BlocSelector<
                                                         AddCropTwoBloc,
                                                         AddCropTwoState,
@@ -493,6 +494,7 @@ class AddCropTwoScreen extends StatelessWidget {
                                                         ),
                                                       );
                                                     }),
+                                                SizedBox(height: 17.v),
                                                 CustomElevatedButton(
                                                   text:
                                                       "Add Fertiliser Used".tr,
@@ -522,6 +524,7 @@ class AddCropTwoScreen extends StatelessWidget {
                                                                 .labelMediumPrimary_1,
                                                       );
                                                     }),
+                                                SizedBox(height: 17.v),
                                                 BlocSelector<
                                                         AddCropTwoBloc,
                                                         AddCropTwoState,
@@ -552,6 +555,7 @@ class AddCropTwoScreen extends StatelessWidget {
                                                         ),
                                                       );
                                                     }),
+                                                SizedBox(height: 17.v),
                                                 CustomElevatedButton(
                                                   text: "Add Fertiliser Source"
                                                       .tr,
@@ -570,7 +574,7 @@ class AddCropTwoScreen extends StatelessWidget {
                                           ),
                                         );
                                       }),
-                                  SizedBox(height: 36.v),
+                                  SizedBox(height: 17.v),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

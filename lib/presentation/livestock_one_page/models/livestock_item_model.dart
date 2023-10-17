@@ -23,6 +23,8 @@ class LSdetailsItemModel {
     this.owner,
     this.feeds = const [],
     this.ages = const [],
+    this.bees = const [],
+    this.beekeepr = false,
   }) {}
 
   String? prod;
@@ -37,6 +39,8 @@ class LSdetailsItemModel {
   FarmerLivestock? farm;
   List<AgeGroupModel> ages;
   List<FeedsModel> feeds;
+  List<FeedsModel> bees;
+  bool beekeepr;
 
   String? idle;
   String? livestock;

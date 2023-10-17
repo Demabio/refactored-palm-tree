@@ -1,4 +1,4 @@
-import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/Beehivetype.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -79,5 +79,15 @@ class FarmerLivestockBeehiveTypeDB {
     ''', [id]);
   }
 
+  Future<List<FarmerLivestockBeehiveType>> fetchAllByLivestock(int id) async {
+    final database = await DatabaseService().database;
+    final feeds = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
+
+    return feeds
+        .map((e) => FarmerLivestockBeehiveType.fromSqfliteDatabase(e))
+        .toList();
+  }
   // Add more database methods as needed
 }

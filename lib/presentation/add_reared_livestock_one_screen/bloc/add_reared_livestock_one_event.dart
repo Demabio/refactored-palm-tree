@@ -87,6 +87,13 @@ class AddEditFeedEvent extends AddRearedLivestockOneEvent {
   List<Object?> get props => [];
 }
 
+class AddEditBeeEvent extends AddRearedLivestockOneEvent {
+  AddEditBeeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class CheckAgeEvent extends AddRearedLivestockOneEvent {
   CheckAgeEvent();
 
@@ -96,6 +103,13 @@ class CheckAgeEvent extends AddRearedLivestockOneEvent {
 
 class CheckFeedEvent extends AddRearedLivestockOneEvent {
   CheckFeedEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckBeeEvent extends AddRearedLivestockOneEvent {
+  CheckBeeEvent();
 
   @override
   List<Object?> get props => [];

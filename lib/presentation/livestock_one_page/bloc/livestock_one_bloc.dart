@@ -4,14 +4,17 @@ import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockfarmingsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/agegroup.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/feed.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfeedtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/agegroup.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfeed.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
@@ -74,6 +77,35 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     return feedmodels;
   }
 
+  List<FeedsModel> _bees(
+      List<FeedsModel> feedmodelss, List<FarmerLivestockBeehiveType> feedss) {
+    List<FeedsModel> feedmodels = feedmodelss;
+    List<FarmerLivestockBeehiveType> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.beehivesTypeId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  Future<List<FeedsModel>> fetchBees() async {
+    List<FeedsModel> list = [];
+    LivestockBeehiveTypeDB livestockAgeGroupDB = LivestockBeehiveTypeDB();
+
+    await livestockAgeGroupDB?.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(FeedsModel(
+          title: value[i].beehiveType,
+          id: value[i].beehiveTypeId,
+        ));
+      }
+    });
+    return list;
+  }
+
   Future<List<FeedsModel>> fetchFeeds() async {
     List<FeedsModel> list = [];
     LivestockFeedTypeDB livestockFeedTypeDB = LivestockFeedTypeDB();
@@ -108,6 +140,13 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
       }
     });
     return list;
+  }
+
+  Future<List<FarmerLivestockBeehiveType>?> getBees() async {
+    int livid = PrefUtils().getLivestockId();
+    FarmerLivestockBeehiveTypeDB farmerLivestockFeedsDB =
+        FarmerLivestockBeehiveTypeDB();
+    return await farmerLivestockFeedsDB.fetchAllByLivestock(livid);
   }
 
   Future<FarmerLivestock?> getLiv() async {
@@ -154,6 +193,8 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
 
     List<AgeGroupModel>? ageGroupList = [];
     List<FeedsModel>? feedslist = [];
+    List<FeedsModel>? beeslist = [];
+
     for (var live in lives) {
       Livestock? livestock =
           await livestockDB.fetchByLivestockId(live.livestockId!);
@@ -164,6 +205,16 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
           await getAges(live.farmerLivestockId);
 
       List<FarmerLivestockFeed>? feeds = await getFeeds(live.farmerLivestockId);
+
+      List<FarmerLivestockBeehiveType>? bees = await getBees();
+      beeslist = await fetchBees();
+
+      bool beekeerper = false;
+      if (bees != null) {
+        beeslist = _bees(beeslist, bees);
+      }
+      beekeerper =
+          livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
 
       ageGroupList = await fetchAgeGroups();
       feedslist = await fetchFeeds();
@@ -176,6 +227,8 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         ages: ageGroupList,
         feeds: feedslist,
         prod: livestockFarmingSystem.livestockFarmsystem,
+        beekeepr: beekeerper,
+        bees: beeslist,
       ));
     }
     emit(state.copyWith(
@@ -210,6 +263,8 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
 
       List<AgeGroupModel>? ageGroupList = [];
       List<FeedsModel>? feedslist = [];
+      List<FeedsModel>? beeslist = [];
+
       for (var live in lives) {
         Livestock? livestock =
             await livestockDB.fetchByLivestockId(live.livestockId!);
@@ -222,6 +277,16 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         List<FarmerLivestockFeed>? feeds =
             await getFeeds(live.farmerLivestockId);
 
+        List<FarmerLivestockBeehiveType>? bees = await getBees();
+        beeslist = await fetchBees();
+
+        bool beekeerper = false;
+        if (bees != null) {
+          beeslist = _bees(beeslist, bees);
+        }
+        beekeerper =
+            livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
+
         ageGroupList = await fetchAgeGroups();
         feedslist = await fetchFeeds();
         feedslist = _feeds(feedslist, feeds!);
@@ -233,6 +298,9 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
           ages: ageGroupList,
           feeds: feedslist,
           prod: livestockFarmingSystem.livestockFarmsystem,
+          beekeepr: beekeerper,
+          bees: beeslist,
+          x: live.noOfBeehives.toString(),
         ));
       }
       emit(state.copyWith(

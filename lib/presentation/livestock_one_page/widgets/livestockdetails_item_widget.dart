@@ -88,7 +88,7 @@ class LSdetailsItemWidget extends StatelessWidget {
             children: List<Widget>.generate(
               farmdetailsItemModel.feeds.length ?? 0,
               (index) {
-                FeedsModel model = farmdetailsItemModel!.feeds[index];
+                FeedsModel model = farmdetailsItemModel.feeds[index];
 
                 return FeedItemWidget(
                   model,
@@ -122,6 +122,58 @@ class LSdetailsItemWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15.v),
+          Visibility(
+            visible: farmdetailsItemModel.beekeepr,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 112.h,
+                  child: Text(
+                    "Number of BeeHives".tr,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: CustomTextStyles.labelMediumPrimary,
+                  ),
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 8.v,
+                    bottom: 9.v,
+                  ),
+                  child: Text(
+                    farmdetailsItemModel.x ?? "0",
+                    style: theme.textTheme.labelMedium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 15.v),
+          Visibility(
+            visible: farmdetailsItemModel.beekeepr,
+            child: Text(
+              "BeeHive Types".tr,
+              style: CustomTextStyles.labelMediumPrimary,
+            ),
+          ),
+          SizedBox(height: 14.v),
+          Visibility(
+            visible: farmdetailsItemModel.beekeepr,
+            child: Column(
+              children: List<Widget>.generate(
+                farmdetailsItemModel.feeds.length ?? 0,
+                (index) {
+                  FeedsModel model = farmdetailsItemModel.bees[index];
+
+                  return FeedItemWidget(
+                    model,
+                  );
+                },
+              ),
+            ),
+          ),
+          SizedBox(height: 13.v),
           Row(
             children: [
               AppbarImage1(

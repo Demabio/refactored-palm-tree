@@ -26,6 +26,8 @@ class AddRearedLivestockOneState extends Equatable {
     this.filledF = false,
     this.ageGroupMapList,
     this.feedsdlist,
+    this.bees,
+    this.hives,
   });
 
   TextEditingController? searchController;
@@ -57,13 +59,14 @@ class AddRearedLivestockOneState extends Equatable {
   LivestockSubcategoryDB? subcategoryDB;
   List<AgeGroupModel>? ageGroupMapList;
   List<FeedsModel>? feedsdlist;
+  List<FeedsModel>? bees;
 
   AddRearedLivestockOneModel? addRearedLivestockOneModelObj;
   bool checkedA;
   bool filledA;
   bool checkedF;
   bool filledF;
-
+  TextEditingController? hives;
   @override
   List<Object?> get props => [
         searchController,
@@ -87,6 +90,7 @@ class AddRearedLivestockOneState extends Equatable {
         filledF,
         feedsdlist,
         ageGroupMapList,
+        bees,
       ];
   AddRearedLivestockOneState copyWith({
     TextEditingController? searchController,
@@ -110,6 +114,8 @@ class AddRearedLivestockOneState extends Equatable {
     bool? filledF,
     List<AgeGroupModel>? ageGroupMapList,
     List<FeedsModel>? feedsdlist,
+    List<FeedsModel>? bees,
+    TextEditingController? hives,
   }) {
     return AddRearedLivestockOneState(
       searchController: searchController ?? this.searchController,
@@ -138,6 +144,8 @@ class AddRearedLivestockOneState extends Equatable {
       filledF: filledF ?? this.filledF,
       ageGroupMapList: ageGroupMapList ?? this.ageGroupMapList,
       feedsdlist: feedsdlist ?? this.feedsdlist,
+      bees: bees ?? this.bees,
+      hives: hives ?? hives,
     );
   }
 }

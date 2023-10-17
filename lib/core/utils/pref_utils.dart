@@ -71,6 +71,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setBee(String value) {
+    return _sharedPreferences!.setString('bees', value);
+  }
+
+  String getBee() {
+    try {
+      return _sharedPreferences!.getString('bees') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setFeeds(String value) {
     return _sharedPreferences!.setString('feeds', value);
   }

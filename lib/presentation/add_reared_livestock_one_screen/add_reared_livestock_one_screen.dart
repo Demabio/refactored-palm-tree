@@ -1,8 +1,11 @@
+import 'package:kiamis_app/core/utils/validation_functions.dart';
+import 'package:kiamis_app/presentation/add_reared_livestock_dialog_bee_dialog/add_reared_livestock_dialog_bee_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/add_reared_livestock_dialog_one_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_three_dialog/add_reared_livestock_dialog_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/add_reared_livestock_dialog_two_dialog.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
+import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
 import '../add_reared_livestock_one_screen/widgets/chipviewayrshi_item_widget.dart';
 import 'bloc/add_reared_livestock_one_bloc.dart';
@@ -376,6 +379,62 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
+                            BlocSelector<
+                                AddRearedLivestockOneBloc,
+                                AddRearedLivestockOneState,
+                                AddRearedLivestockOneState>(
+                              selector: (state) => state,
+                              builder: (context, state) {
+                                return Visibility(
+                                  visible: state.addRearedLivestockOneModelObj
+                                              ?.selectedLivestock?.title ==
+                                          "Bees" ||
+                                      state.addRearedLivestockOneModelObj
+                                              ?.selectedLivestock?.title ==
+                                          "Bee",
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Number of Bee Hives".tr,
+                                        style: theme.textTheme.titleSmall,
+                                      ),
+                                      CustomTextFormField(
+                                          autofocus: false,
+                                          focusNode: _secondTextFieldFocus,
+                                          validator: (value) {
+                                            if (!isNumeric(value,
+                                                isRequired: true)) {
+                                              return "Invalid Input";
+                                            }
+                                          },
+                                          textInputType: TextInputType.number,
+                                          controller: state.hives,
+                                          hintText: "lbl_area".tr,
+                                          textInputAction:
+                                              TextInputAction.done),
+                                      Text(
+                                        "Add Beehive types".tr,
+                                        style: theme.textTheme.titleSmall,
+                                      ),
+                                      CustomElevatedButton(
+                                        height: 47.v,
+                                        text: "msg_add_livestock_age".tr,
+                                        margin: EdgeInsets.only(
+                                          left: 15.h,
+                                          top: 15.v,
+                                          right: 15.h,
+                                        ),
+                                        alignment: Alignment.center,
+                                        onTap: () {
+                                          addAgeGroup(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(height: 35.v),
                             CustomElevatedButton(
                               height: 47.v,
                               text: "msg_add_livestock_age".tr,
@@ -629,6 +688,26 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
             ));
     context.read<AddRearedLivestockOneBloc>().add(
           CheckFeedEvent(),
+        );
+    // addAgeGroup(context);
+  }
+
+  addBee(BuildContext context) async {
+    context.read<AddRearedLivestockOneBloc>().add(
+          AddEditBeeEvent(),
+        );
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddRearedLivestockDialogBeeDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddRearedLivestockOneBloc>().add(
+          CheckBeeEvent(),
         );
     // addAgeGroup(context);
   }
