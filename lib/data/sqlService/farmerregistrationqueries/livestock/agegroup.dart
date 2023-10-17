@@ -70,7 +70,7 @@ class FarmerLivestockAgeGroupsDB {
 
   Future<int> delete(int id) async {
     final database = await DatabaseService().database;
-    return await database.rawInsert('''
+    return await database.rawDelete('''
     DELETE FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);
   }

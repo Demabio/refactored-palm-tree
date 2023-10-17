@@ -285,12 +285,21 @@ class CropAgricultureBloc
     Emitter<CropAgricultureState> emit,
   ) async {
     FarmerCropsDB farmerCropsDB = FarmerCropsDB();
-    int deleted = await farmerCropsDB.delete(event.value!);
     CAProgressDB caProgressDB = CAProgressDB();
+    FarmerFertiliserDB farmerFertiliserDB = FarmerFertiliserDB();
+    FarmerFertiliserSourcesDB farmerFertiliserSourcesDB =
+        FarmerFertiliserSourcesDB();
+    FarmerPesticidesDB farmerPesticidesDB = FarmerPesticidesDB();
 
-    if (deleted > 0) {
-      List<FarmerCrop> crops = await fetchFCrops() ?? [];
+    int deleted = await farmerCropsDB.delete(event.value!);
+    int deletedfs = await farmerFertiliserSourcesDB.delete(event.value!);
+    int deletedf = await farmerFertiliserDB.delete(event.value!);
+    int deletedp = await farmerPesticidesDB.delete(event.value!);
+
+    if (deleted > 0 || deletedp > 0 || deletedf > 0 || deletedfs > 0) {
       await caProgressDB.delete(event.value!);
+      List<FarmerCrop> crops = await fetchFCrops() ?? [];
+
       List<CropdetailsItemModel> cropmodels = [];
 
       CropWaterSource? waterSource;
@@ -303,9 +312,25 @@ class CropAgricultureBloc
 
       Crop? cropp;
 
+      List<CheckBoxList>? typemodels = await fecthType();
+      List<CheckBoxList>? sourcemodels = await fetchSources();
+      List<CheckBoxList>? pestsmodels = await fetchPest();
       for (var crop in crops) {
+        List<FarmerFertiliser>? type = await getTypes(crop.farmerCropId);
+        if (type != null) {
+          typemodels = _types(typemodels!, type);
+        }
+        List<FarmerFertiliserSource>? source =
+            await getSources(crop.farmerCropId);
+        if (source != null) {
+          sourcemodels = _sources(sourcemodels!, source);
+        }
+        List<FarmerPesticide>? pests = await getPest(crop.farmerCropId);
+        if (pests != null) {
+          pestsmodels = _pest(pestsmodels!, pests);
+        }
         waterSource = await getSource(crop.waterSourceId);
-        cropAreaUnit = await getArea(crop.areaUnitId!);
+        cropAreaUnit = await getArea(crop.areaUnitId);
         cropSystem = await getSystem(crop.cropSystemId);
         cropPlantingMotive = await getmotive(crop.cropMotiveId);
         cropp = await getCrop(crop.cropId!);
@@ -321,6 +346,9 @@ class CropAgricultureBloc
           fertiliser: crop.fertilizerUse! == 1 ? "Yes" : "No",
           pesticide: crop.pesticideUse! == 1 ? "Yes" : "No",
           seeds: crop.usageOfCertifiedSeeds! ? "Yes" : "No",
+          a: typemodels!,
+          s: sourcemodels!,
+          p: pestsmodels!,
         ));
       }
       emit(

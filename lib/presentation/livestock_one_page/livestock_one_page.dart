@@ -40,26 +40,26 @@ class LivestockOnePageState extends State<LivestockOnePage>
           child: Scaffold(
             body: SizedBox(
               width: mediaQueryData.size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "lbl_farmer_info".tr,
-                          style: CustomTextStyles.labelMediumPrimary,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "lbl_farmer_info".tr,
+                        style: CustomTextStyles.labelMediumPrimary,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 21.h),
+                        child: Text(
+                          "msg_farmer_felix_faro".tr,
+                          style: theme.textTheme.labelMedium,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 21.h),
-                          child: Text(
-                            "msg_farmer_felix_faro".tr,
-                            style: theme.textTheme.labelMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 13.v),
-                    Padding(
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 13.v),
+                  SingleChildScrollView(
+                    child: Padding(
                       padding: EdgeInsets.only(left: 9.h, top: 5.v),
                       child: BlocSelector<LivestockOneBloc, LivestockOneState,
                           LivestockOneModel?>(
@@ -96,8 +96,8 @@ class LivestockOnePageState extends State<LivestockOnePage>
                         },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

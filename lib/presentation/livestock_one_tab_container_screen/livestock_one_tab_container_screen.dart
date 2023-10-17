@@ -109,7 +109,7 @@ class LivestockOneTabContainerScreenState
                                     Tab(child: Text("lbl_livestock_input".tr))
                                   ])),
                           SizedBox(
-                              height: 959.v,
+                              height: double.maxFinite,
                               child: TabBarView(
                                   controller: tabviewController,
                                   children: [
