@@ -85,6 +85,48 @@ bool isNumeric(
   return isInputStringValid;
 }
 
+bool isID(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^\d{1,8}$';
+
+    final regExp = RegExp(pattern);
+
+    isInputStringValid = regExp.hasMatch(inputString);
+  }
+
+  return isInputStringValid;
+}
+
+bool isPhone(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^(254|0)\d{9}$';
+
+    final regExp = RegExp(pattern);
+
+    isInputStringValid = regExp.hasMatch(inputString);
+  }
+
+  return isInputStringValid;
+}
+
 /// Checks if string is phone number
 bool isValidPhone(
   String? inputString, {

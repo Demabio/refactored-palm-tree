@@ -60,8 +60,7 @@ class FarmersIdentificationTwoBloc
     int currentYear = DateTime.now().year;
     List<SelectionPopupModel> itemList = [];
 
-// Area for business logic
-    for (int year = currentYear; year >= currentYear - 120; year--) {
+    for (int year = currentYear; year >= currentYear - 18; year--) {
       itemList.add(SelectionPopupModel(id: year, title: "$year"));
     }
 
@@ -170,90 +169,92 @@ class FarmersIdentificationTwoBloc
     SaveTapEvent event,
     Emitter<FarmersIdentificationTwoState> emit,
   ) {
-    final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
-    FarmerDB farmerDB = FarmerDB();
-    try {
-      if (state.farmersIdentificationTwoModelObj?.fiProgress?.pageOne == 0) {
-        farmerDB
-            .insertNonNullable(Farmer(
-          farmerId: 0,
-          farmerName: state.name!.text,
-          idNo: state.idnumberoneController!.text,
-          dateCreated: DateTime.now(),
-          createdBy: userId,
-        ))
-            .then((value) {
-          PrefUtils().setFarmerId(value);
-          PrefUtils().setFarmerName(state.name!.text);
+    if (PrefUtils().getYesNo()) {
+      final claims = JWT.decode(PrefUtils().getToken());
+      int userId = int.parse(claims.payload['nameidentifier']);
+      FarmerDB farmerDB = FarmerDB();
+      try {
+        if (state.farmersIdentificationTwoModelObj?.fiProgress?.pageOne == 0) {
+          farmerDB
+              .insertNonNullable(Farmer(
+            farmerId: 0,
+            farmerName: state.name!.text,
+            idNo: state.idnumberoneController!.text,
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+          ))
+              .then((value) {
+            PrefUtils().setFarmerId(value);
+            PrefUtils().setFarmerName(state.name!.text);
 
-          if (value > 0) {
-            farmerDB
-                .updatePageTwo(Farmer(
-                  farmerId: value,
-                  farmerName: state.name!.text,
-                  idNo: state.idnumberoneController!.text,
-                  dob: state.farmersIdentificationTwoModelObj!
-                      .selectedDropDownValue?.id,
-                  gender: state.farmersIdentificationTwoModelObj!
-                      .selectedDropDownValue1?.id,
-                  mobile: state.mobileNumberController!.text,
-                  email: state.emailController?.text ?? "NA",
-                  postalAddress: state.addressController?.text ?? "NA",
-                ))
-                .then((value) => print("UPdated !!! $value"));
+            if (value > 0) {
+              farmerDB
+                  .updatePageTwo(Farmer(
+                    farmerId: value,
+                    farmerName: state.name!.text,
+                    idNo: state.idnumberoneController!.text,
+                    dob: state.farmersIdentificationTwoModelObj!
+                        .selectedDropDownValue?.id,
+                    gender: state.farmersIdentificationTwoModelObj!
+                        .selectedDropDownValue1?.id,
+                    mobile: state.mobileNumberController!.text,
+                    email: state.emailController?.text ?? "NA",
+                    postalAddress: state.addressController?.text ?? "NA",
+                  ))
+                  .then((value) => print("UPdated !!! $value"));
 
-            FIProgressDB fiProgressDB = FIProgressDB();
-            fiProgressDB
-                .insert(FIProgress(
-                  farmerId: value,
-                  pageOne: 1,
-                  pageTwo: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
-                  pageThree: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
-                  pageFour: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
-                ))
-                .then((value) => print("Scope FI" + value.toString()));
-            event.createSuccessful!.call();
-          } else {
-            event.createFailed!.call();
-          }
-        });
-      } else {
-        farmerDB
-            .updatePageTwo(Farmer(
-              farmerId: PrefUtils().getFarmerId(),
-              farmerName: state.name!.text,
-              idNo: state.idnumberoneController!.text,
-              dob: state
-                  .farmersIdentificationTwoModelObj!.selectedDropDownValue?.id,
-              gender: state
-                  .farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
-              mobile: state.mobileNumberController!.text,
-              email: state.emailController?.text ?? "NA",
-              postalAddress: state.addressController?.text ?? "NA",
-            ))
-            .then((value) => print("UPdated !!! $value"));
+              FIProgressDB fiProgressDB = FIProgressDB();
+              fiProgressDB
+                  .insert(FIProgress(
+                    farmerId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
+                    pageThree: state.farmersIdentificationTwoModelObj!
+                        .fiProgress!.pageThree,
+                    pageFour: state
+                        .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+              event.createSuccessful!.call();
+            } else {
+              event.createFailed!.call();
+            }
+          });
+        } else {
+          farmerDB
+              .updatePageTwo(Farmer(
+                farmerId: PrefUtils().getFarmerId(),
+                farmerName: state.name!.text,
+                idNo: state.idnumberoneController!.text,
+                dob: state.farmersIdentificationTwoModelObj!
+                    .selectedDropDownValue?.id,
+                gender: state.farmersIdentificationTwoModelObj!
+                    .selectedDropDownValue1?.id,
+                mobile: state.mobileNumberController!.text,
+                email: state.emailController?.text ?? "NA",
+                postalAddress: state.addressController?.text ?? "NA",
+              ))
+              .then((value) => print("UPdated !!! $value"));
 
-        FIProgressDB fiProgressDB = FIProgressDB();
-        fiProgressDB
-            .update(FIProgress(
-              farmerId: PrefUtils().getFarmerId(),
-              pageOne: 1,
-              pageTwo:
-                  state.farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
-              pageThree:
-                  state.farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
-              pageFour:
-                  state.farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
+          FIProgressDB fiProgressDB = FIProgressDB();
+          fiProgressDB
+              .update(FIProgress(
+                farmerId: PrefUtils().getFarmerId(),
+                pageOne: 1,
+                pageTwo:
+                    state.farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
+                pageThree: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
+                pageFour: state
+                    .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        }
+      } catch (e) {
+        event.createFailed!.call();
       }
-    } catch (e) {
-      event.createFailed!.call();
     }
   }
 

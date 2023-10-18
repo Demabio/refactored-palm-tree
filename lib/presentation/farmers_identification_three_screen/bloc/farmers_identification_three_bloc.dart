@@ -178,44 +178,46 @@ class FarmersIdentificationThreeBloc extends Bloc<
     SaveTapEvent event,
     Emitter<FarmersIdentificationThreeState> emit,
   ) {
-    FarmerDB farmerDB = FarmerDB();
+    if (PrefUtils().getYesNo()) {
+      FarmerDB farmerDB = FarmerDB();
 
-    try {
-      farmerDB
-          .updatePageThree(Farmer(
-        farmerId: state.farmersIdentificationThreeModelObj!.farmer!.farmerId,
-        farmerName:
-            state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
-        idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
-        postalCode: state.codevalueoneController?.text ?? "NA",
-        maritalStatusId:
-            state.farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
-        agriSkillsId: state
-            .farmersIdentificationThreeModelObj!.selectedDropDownValue1!.id,
-        educationLevelId: state
-            .farmersIdentificationThreeModelObj!.selectedDropDownValue2!.id,
-        hhSize: int.parse(state.hhsizevalueoneController!.text),
-      ))
-          .then((value) {
-        if (value > 0) {
-          FIProgressDB fiProgressDB = FIProgressDB();
-          fiProgressDB
-              .update(FIProgress(
-                farmerId: PrefUtils().getFarmerId(),
-                pageOne: 1,
-                pageTwo: 1,
-                pageThree: 0,
-                pageFour: state
-                    .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
-        }
-      });
-    } catch (e) {
-      event.createFailed!.call();
+      try {
+        farmerDB
+            .updatePageThree(Farmer(
+          farmerId: state.farmersIdentificationThreeModelObj!.farmer!.farmerId,
+          farmerName:
+              state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
+          idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
+          postalCode: state.codevalueoneController?.text ?? "NA",
+          maritalStatusId: state
+              .farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
+          agriSkillsId: state
+              .farmersIdentificationThreeModelObj!.selectedDropDownValue1!.id,
+          educationLevelId: state
+              .farmersIdentificationThreeModelObj!.selectedDropDownValue2!.id,
+          hhSize: int.parse(state.hhsizevalueoneController!.text),
+        ))
+            .then((value) {
+          if (value > 0) {
+            FIProgressDB fiProgressDB = FIProgressDB();
+            fiProgressDB
+                .update(FIProgress(
+                  farmerId: PrefUtils().getFarmerId(),
+                  pageOne: 1,
+                  pageTwo: 1,
+                  pageThree: 0,
+                  pageFour: state
+                      .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      } catch (e) {
+        event.createFailed!.call();
+      }
     }
   }
 

@@ -65,86 +65,89 @@ class AddFinancialandservicesOneBloc extends Bloc<
     SaveTapEvent event,
     Emitter<AddFinancialandservicesOneState> emit,
   ) async {
-    int farmerid = PrefUtils().getFarmerId();
-    int farmid = PrefUtils().getFarmId();
-    int selectedCount =
-        state.c.where((enterprise) => enterprise.isSelected).length;
+    if (PrefUtils().getYesNo()) {
+      int farmerid = PrefUtils().getFarmerId();
+      int farmid = PrefUtils().getFarmId();
+      int selectedCount =
+          state.c.where((enterprise) => enterprise.isSelected).length;
 
-    int selectedCount2 =
-        state.s.where((enterprise) => enterprise.isSelected).length;
-    FarmerDB farmerDB = FarmerDB();
-    try {
-      FSProgressDB atProgressDB = FSProgressDB();
-      if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne == 0 &&
-          selectedCount != 0 &&
-          (selectedCount2 != 0 ||
-              state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
-                      .id ==
-                  0)) {
-        int id = await farmerDB.updateFromFinancial(Farmer(
-          farmerId: farmerid,
-          farmerName: "NA",
-          cooperativeGroup: state.addFinancialandservicesOneModelObj!
-                  .selectedDropDownValue?.id ==
-              1,
-          farmingIncomePercent:
-              double.parse(state.selectvalueoneController!.text),
-        ));
-        //REMEMBER!!!!!!!!
-        if (id > 0) {
-          atProgressDB
-              .insert(FSProgress(
-                farmId: farmid,
-                pageTwo: state
-                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-                pageOne: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
-          event.createSuccessful!.call();
+      int selectedCount2 =
+          state.s.where((enterprise) => enterprise.isSelected).length;
+      FarmerDB farmerDB = FarmerDB();
+      try {
+        FSProgressDB atProgressDB = FSProgressDB();
+        if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne ==
+                0 &&
+            selectedCount != 0 &&
+            (selectedCount2 != 0 ||
+                state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
+                        .id ==
+                    0)) {
+          int id = await farmerDB.updateFromFinancial(Farmer(
+            farmerId: farmerid,
+            farmerName: "NA",
+            cooperativeGroup: state.addFinancialandservicesOneModelObj!
+                    .selectedDropDownValue?.id ==
+                1,
+            farmingIncomePercent:
+                double.parse(state.selectvalueoneController!.text),
+          ));
+          //REMEMBER!!!!!!!!
+          if (id > 0) {
+            atProgressDB
+                .insert(FSProgress(
+                  farmId: farmid,
+                  pageTwo: state
+                      .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                  pageOne: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+            event.createSuccessful!.call();
+          }
+        } else if (selectedCount != 0 &&
+            (selectedCount2 != 0 ||
+                state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
+                        .id ==
+                    0)) {
+          int updatedid = await farmerDB.updateFromFinancial(Farmer(
+            farmerId: farmerid,
+            farmerName: "NA",
+            cooperativeGroup: state.addFinancialandservicesOneModelObj!
+                    .selectedDropDownValue?.id ==
+                1,
+            farmingIncomePercent:
+                double.parse(state.selectvalueoneController!.text),
+          ));
+          if (updatedid > 0) {
+            atProgressDB
+                .update(FSProgress(
+                  farmId: farmid,
+                  pageTwo: state
+                      .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
+                  pageOne: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+            event.createSuccessful!.call();
+          }
+        } else {
+          //   event.createFailed!.call();
+          int selectedCount =
+              state.c.where((enterprise) => enterprise.isSelected).length;
+
+          int selectedCount2 =
+              state.s.where((enterprise) => enterprise.isSelected).length;
+
+          emit(state.copyWith(
+            checka: selectedCount == 0,
+            checkb: (selectedCount2 == 0 &&
+                state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
+                        .id !=
+                    0),
+          ));
         }
-      } else if (selectedCount != 0 &&
-          (selectedCount2 != 0 ||
-              state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
-                      .id ==
-                  0)) {
-        int updatedid = await farmerDB.updateFromFinancial(Farmer(
-          farmerId: farmerid,
-          farmerName: "NA",
-          cooperativeGroup: state.addFinancialandservicesOneModelObj!
-                  .selectedDropDownValue?.id ==
-              1,
-          farmingIncomePercent:
-              double.parse(state.selectvalueoneController!.text),
-        ));
-        if (updatedid > 0) {
-          atProgressDB
-              .update(FSProgress(
-                farmId: farmid,
-                pageTwo: state
-                    .addFinancialandservicesOneModelObj!.fsProgress!.pageTwo,
-                pageOne: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
-          event.createSuccessful!.call();
-        }
-      } else {
-        //   event.createFailed!.call();
-        int selectedCount =
-            state.c.where((enterprise) => enterprise.isSelected).length;
-
-        int selectedCount2 =
-            state.s.where((enterprise) => enterprise.isSelected).length;
-
-        emit(state.copyWith(
-          checka: selectedCount == 0,
-          checkb: (selectedCount2 == 0 &&
-              state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
-                      .id !=
-                  0),
-        ));
+      } catch (e) {
+        event.createFailed!.call();
       }
-    } catch (e) {
-      event.createFailed!.call();
     }
   }
 

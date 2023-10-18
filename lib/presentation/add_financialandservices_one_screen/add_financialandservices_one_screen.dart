@@ -1,16 +1,14 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
-import 'package:kiamis_app/presentation/add_financialandservices_eight_dialog/add_financialandservices_eight_dialog.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_five_screen/add_financialandservices_five_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/add_financialandservices_four_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/widgets/coop_widget.dart';
-import 'package:kiamis_app/presentation/add_financialandservices_seven_dialog/add_financialandservices_seven_dialog.dart';
-import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/add_financialandservices_six_dialog.dart';
+
 import 'package:kiamis_app/presentation/add_financialandservices_three_dialog/add_financialandservices_three_dialog.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/add_financialandservices_one_bloc.dart';
 import 'models/add_financialandservices_one_model.dart';
@@ -21,7 +19,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
@@ -533,7 +530,19 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
+    String label = "Save to Draft";
+    String body = "Do you want to stop and save details to draft?";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     if (_formKey.currentState!.validate()) {
       context.read<AddFinancialandservicesOneBloc>().add(
             SaveTapEvent(

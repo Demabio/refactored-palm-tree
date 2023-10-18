@@ -2,6 +2,7 @@ import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/farmers_identification_three_bloc.dart';
 import 'models/farmers_identification_three_model.dart';
@@ -449,7 +450,19 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
+    String label = "Save to Draft";
+    String body = "Do you want to stop and save details to draft?";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     if (_formKey.currentState!.validate()) {
       context.read<FarmersIdentificationThreeBloc>().add(
             SaveTapEvent(

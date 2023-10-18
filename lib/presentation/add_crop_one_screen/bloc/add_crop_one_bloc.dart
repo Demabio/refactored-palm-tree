@@ -320,28 +320,74 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     SaveTapEvent event,
     Emitter<AddCropOneState> emit,
   ) {
-    final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
-    FarmerCropsDB cropsDB = FarmerCropsDB();
-    int farmerid = PrefUtils().getFarmId();
-    try {
-      if (state.addCropOneModelObj!.caProgressDB!.pageOne == 0) {
-        cropsDB
-            .insertNonNullables(FarmerCrop(
-          farmerCropId: 0,
-          farmerId: farmerid,
-          cropCode: 0,
-          cropId: state.addCropOneModelObj!.selectedCrop?.id,
-          farmerFarmId: PrefUtils().getFarmId(),
-          dateCreated: DateTime.now(),
-          createdBy: userId,
-        ))
-            .then((value) {
-          if (value > 0) {
-            PrefUtils().setCropId(value);
+    if (PrefUtils().getYesNo()) {
+      final claims = JWT.decode(PrefUtils().getToken());
+      int userId = int.parse(claims.payload['nameidentifier']);
+      FarmerCropsDB cropsDB = FarmerCropsDB();
+      int farmerid = PrefUtils().getFarmId();
+      try {
+        if (state.addCropOneModelObj!.caProgressDB!.pageOne == 0) {
+          cropsDB
+              .insertNonNullables(FarmerCrop(
+            farmerCropId: 0,
+            farmerId: farmerid,
+            cropCode: 0,
+            cropId: state.addCropOneModelObj!.selectedCrop?.id,
+            farmerFarmId: PrefUtils().getFarmId(),
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+          ))
+              .then((value) {
+            if (value > 0) {
+              PrefUtils().setCropId(value);
+              cropsDB
+                  .updatePageOne(FarmerCrop(
+                    farmerCropId: value,
+                    cropCode: 0,
+                    cropArea: double.parse(state.areavalueoneController!.text),
+                    areaUnitId:
+                        state.addCropOneModelObj!.selectedDropDownValue1?.id,
+                    usageOfCertifiedSeeds:
+                        state.addCropOneModelObj!.selectedDropDownValue2?.id ==
+                            1,
+                    cropId: state.addCropOneModelObj!.selectedCrop?.id,
+                    farmerId: farmerid,
+                    farmerFarmId: PrefUtils().getFarmId(),
+                  ))
+                  .then((value) => print(
+                        "Updated scop: " + value.toString(),
+                      ));
+
+              CAProgressDB caProgressDB = CAProgressDB();
+              if (state.addCropOneModelObj!.caProgressDB!.pageOne == 0) {
+                caProgressDB
+                    .insert(CAProgress(
+                      cropId: value,
+                      pageOne: 1,
+                      pageTwo: 0,
+                    ))
+                    .then((value) => print("Scope FI" + value.toString()));
+              } else {
+                caProgressDB
+                    .update(CAProgress(
+                      cropId: value,
+                      pageOne: 1,
+                      pageTwo: state.addCropOneModelObj!.caProgressDB!.pageTwo,
+                    ))
+                    .then((value) => print("Scope FI" + value.toString()));
+              }
+            } else {
+              event.createFailed!.call();
+            }
+          });
+        }
+        if (state.addCropOneModelObj!.caProgressDB!.pageOne == 1) {
+          if (farmerid != 0) {
+            CAProgressDB caProgressDB = CAProgressDB();
+
             cropsDB
                 .updatePageOne(FarmerCrop(
-                  farmerCropId: value,
+                  farmerCropId: PrefUtils().getCropId(),
                   cropCode: 0,
                   cropArea: double.parse(state.areavalueoneController!.text),
                   areaUnitId:
@@ -356,64 +402,20 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                       "Updated scop: " + value.toString(),
                     ));
 
-            CAProgressDB caProgressDB = CAProgressDB();
-            if (state.addCropOneModelObj!.caProgressDB!.pageOne == 0) {
-              caProgressDB
-                  .insert(CAProgress(
-                    cropId: value,
-                    pageOne: 1,
-                    pageTwo: 0,
-                  ))
-                  .then((value) => print("Scope FI" + value.toString()));
-            } else {
-              caProgressDB
-                  .update(CAProgress(
-                    cropId: value,
-                    pageOne: 1,
-                    pageTwo: state.addCropOneModelObj!.caProgressDB!.pageTwo,
-                  ))
-                  .then((value) => print("Scope FI" + value.toString()));
-            }
-          } else {
-            event.createFailed!.call();
+            caProgressDB
+                .update(CAProgress(
+                  cropId: PrefUtils().getCropId(),
+                  pageOne: 1,
+                  pageTwo: state.addCropOneModelObj!.caProgressDB!.pageTwo,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
           }
-        });
-      }
-      if (state.addCropOneModelObj!.caProgressDB!.pageOne == 1) {
-        if (farmerid != 0) {
-          CAProgressDB caProgressDB = CAProgressDB();
-
-          cropsDB
-              .updatePageOne(FarmerCrop(
-                farmerCropId: PrefUtils().getCropId(),
-                cropCode: 0,
-                cropArea: double.parse(state.areavalueoneController!.text),
-                areaUnitId:
-                    state.addCropOneModelObj!.selectedDropDownValue1?.id,
-                usageOfCertifiedSeeds:
-                    state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
-                cropId: state.addCropOneModelObj!.selectedCrop?.id,
-                farmerId: farmerid,
-                farmerFarmId: PrefUtils().getFarmId(),
-              ))
-              .then((value) => print(
-                    "Updated scop: " + value.toString(),
-                  ));
-
-          caProgressDB
-              .update(CAProgress(
-                cropId: PrefUtils().getCropId(),
-                pageOne: 1,
-                pageTwo: state.addCropOneModelObj!.caProgressDB!.pageTwo,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
         }
+        event.createSuccessful!.call();
+      } catch (e) {
+        event.createFailed!.call();
       }
-    } catch (e) {
-      event.createFailed!.call();
     }
-
-    event.createSuccessful!.call();
   }
 
   Future<FarmerCrop?> getCrop() async {

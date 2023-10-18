@@ -3,6 +3,7 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/add_aquaculture_six_dialog.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import '../add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'bloc/add_aquaculture_two_bloc.dart';
@@ -396,7 +397,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
             "Something went wrong, Kindly confirm all fields are filled.")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       context.read<AddAquacultureTwoBloc>().add(
             SaveTapEvent(

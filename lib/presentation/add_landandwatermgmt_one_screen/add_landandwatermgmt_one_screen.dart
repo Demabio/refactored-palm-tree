@@ -5,6 +5,7 @@ import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.da
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_four_dialog/add_landandwatermgmt_four_dialog.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_three_dialog/add_landandwatermgmt_three_dialog.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/add_landandwatermgmt_one_bloc.dart';
 import 'models/add_landandwatermgmt_one_model.dart';
@@ -469,7 +470,19 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
+    String label = "Save to Draft";
+    String body = "Do you want to stop and save details to draft?";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     if (_formKey.currentState!.validate()) {
       context.read<AddLandandwatermgmtOneBloc>().add(
             SaveTapEvent(

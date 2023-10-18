@@ -43,9 +43,6 @@ class AddAquacultureOneBloc
     NextTapEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) {
-    final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
-    int farmerid = PrefUtils().getFarmerId();
     int farmid = PrefUtils().getFarmId();
 
     int selectedCount =
@@ -96,52 +93,54 @@ class AddAquacultureOneBloc
     SaveTapEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) {
-    final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
-    int farmerid = PrefUtils().getFarmerId();
-    int farmid = PrefUtils().getFarmId();
+    if (PrefUtils().getYesNo()) {
+      final claims = JWT.decode(PrefUtils().getToken());
+      int userId = int.parse(claims.payload['nameidentifier']);
+      int farmerid = PrefUtils().getFarmerId();
+      int farmid = PrefUtils().getFarmId();
 
-    int selectedCount =
-        state.aquatypes.where((enterprise) => enterprise.isSelected).length;
-    int selectedCount2 =
-        state.fish.where((enterprise) => enterprise.isSelected).length;
-    int selectedCount3 =
-        state.prodsyss.where((enterprise) => enterprise.isSelected).length;
-    try {
-      AQProgressDB aqProgressDB = AQProgressDB();
-      if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
-          selectedCount != 0 &&
-          selectedCount2 != 0 &&
-          selectedCount3 != 0) {
-        aqProgressDB
-            .insert(AQProgress(
-              farmId: farmid,
-              pageOne: 1,
-              pageTwo: 0,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-      } else if (selectedCount != 0 &&
-          selectedCount2 != 0 &&
-          selectedCount3 != 0) {
-        aqProgressDB
-            .update(AQProgress(
-              farmId: farmid,
-              pageOne: 1,
-              pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
-            ))
-            .then((value) => print("Scope FI" + value.toString()));
-        event.createSuccessful!.call();
-      } else {
-        emit(state.copyWith(
-          checkedA: selectedCount == 0,
-          checkedF: selectedCount2 == 0,
-          checkedP: selectedCount3 == 0,
-        ));
+      int selectedCount =
+          state.aquatypes.where((enterprise) => enterprise.isSelected).length;
+      int selectedCount2 =
+          state.fish.where((enterprise) => enterprise.isSelected).length;
+      int selectedCount3 =
+          state.prodsyss.where((enterprise) => enterprise.isSelected).length;
+      try {
+        AQProgressDB aqProgressDB = AQProgressDB();
+        if (state.addAquacultureOneModelObj!.aqProgress!.pageOne == 0 &&
+            selectedCount != 0 &&
+            selectedCount2 != 0 &&
+            selectedCount3 != 0) {
+          aqProgressDB
+              .insert(AQProgress(
+                farmId: farmid,
+                pageOne: 1,
+                pageTwo: 0,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        } else if (selectedCount != 0 &&
+            selectedCount2 != 0 &&
+            selectedCount3 != 0) {
+          aqProgressDB
+              .update(AQProgress(
+                farmId: farmid,
+                pageOne: 1,
+                pageTwo: state.addAquacultureOneModelObj!.aqProgress!.pageTwo,
+              ))
+              .then((value) => print("Scope FI" + value.toString()));
+          event.createSuccessful!.call();
+        } else {
+          emit(state.copyWith(
+            checkedA: selectedCount == 0,
+            checkedF: selectedCount2 == 0,
+            checkedP: selectedCount3 == 0,
+          ));
+          event.createFailed!.call();
+        }
+      } catch (e) {
         event.createFailed!.call();
       }
-    } catch (e) {
-      event.createFailed!.call();
     }
   }
 

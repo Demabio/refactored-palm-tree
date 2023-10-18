@@ -490,7 +490,19 @@ class AddAquacultureOneScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
+    String label = "Save to Draft";
+    String body = "Do you want to stop and save details to draft?";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<AddAquacultureOneBloc>().add(
           SaveTapEvent(
             createSuccessful: () {

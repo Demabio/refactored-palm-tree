@@ -403,7 +403,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               textInputAction:
                                                   TextInputAction.done,
                                               validator: (value) {
-                                                if (!isNumeric(value,
+                                                if (!isID(value,
                                                     isRequired: true)) {
                                                   return "Please enter valid number";
                                                 } else if (isNotEmpty(value)) {
@@ -453,7 +453,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               hintStyle: CustomTextStyles
                                                   .titleMediumBluegray40003,
                                               validator: (value) {
-                                                if (!isNumeric(value,
+                                                if (!isPhone(value,
                                                     isRequired: true)) {
                                                   return "Please enter valid text";
                                                 } else if (isNotEmpty(value)) {

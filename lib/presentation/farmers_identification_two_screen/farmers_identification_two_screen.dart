@@ -1,6 +1,7 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/farmers_identification_two_bloc.dart';
 import 'models/farmers_identification_two_model.dart';
@@ -247,7 +248,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                           textInputType: TextInputType.number,
                                           textInputAction: TextInputAction.done,
                                           validator: (value) {
-                                            if (!isNumeric(value)) {
+                                            if (!isID(value)) {
                                               return "Please enter valid number";
                                             } else if (isNotEmpty(value)) {
                                               return "Field is required.";
@@ -425,7 +426,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                           hintText: "lbl_mobile_number2".tr,
                                           textInputType: TextInputType.phone,
                                           validator: (value) {
-                                            if (!isValidPhone(
+                                            if (!isPhone(
                                               value,
                                               isRequired: true,
                                             )) {
@@ -545,7 +546,19 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
-  saveDraft(BuildContext context) {
+  saveDraft(BuildContext context) async {
+    String label = "Save to Draft";
+    String body = "Do you want to stop and save details to draft?";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     if (_formKey.currentState!.validate()) {
       context.read<FarmersIdentificationTwoBloc>().add(
             SaveTapEvent(

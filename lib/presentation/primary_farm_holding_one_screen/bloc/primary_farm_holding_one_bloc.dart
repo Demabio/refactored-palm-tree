@@ -156,78 +156,39 @@ class PrimaryFarmHoldingOneBloc
     SaveTapEvent event,
     Emitter<PrimaryFarmHoldingOneState> emit,
   ) {
-    final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
-    String enumeratorname = claims.payload['fullName'];
-    String enumeratorarea = claims.payload['roleID'];
+    if (PrefUtils().getYesNo()) {
+      final claims = JWT.decode(PrefUtils().getToken());
+      int userId = int.parse(claims.payload['nameidentifier']);
+      String enumeratorname = claims.payload['fullName'];
+      String enumeratorarea = claims.payload['roleID'];
 
-    String enumeratormobile = claims.payload['mobilephone'];
+      String enumeratormobile = claims.payload['mobilephone'];
 
-    FarmerFarmDB farmDB = FarmerFarmDB();
-    int farmerid = PrefUtils().getFarmId();
-    try {
-      if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
-        farmDB
-            .create(FarmerFarm(
-          farmerFarmId: 0,
-          farmerId: PrefUtils().getFarmerId(),
-          dateCreated: DateTime.now(),
-          createdBy: userId,
-        ))
-            .then((value) {
-          if (value > 0) {
-            PrefUtils().setFarmId(value);
-
-            farmDB.updatePageOne(FarmerFarm(
-              farmerFarmId: value,
-              farmerId: farmerid,
-              villageName: state.vil?.text,
-              shoppingCenter: state.shop?.text,
-              farmName: state.nameController!.text,
-              enumeratorId: userId.toString(),
-              enumerationAreaNumber: enumeratorarea,
-              enumeratorName: enumeratorname,
-              enumeratorMobile: enumeratormobile,
-              farmSize: double.parse(state.sizeController!.text),
-              areaUnitId: state
-                  .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-              cropFarmSize: double.parse(state.sizeController!.text),
-              livestockFarmSize: double.parse(state.sizeController!.text),
-              leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-              idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
-            ));
-
-            PFProgressDB pfProgressDB = PFProgressDB();
-            if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
-              pfProgressDB
-                  .insert(PFProgress(
-                    farmId: value,
-                    pageOne: 1,
-                    pageTwo: 0,
-                  ))
-                  .then((value) => print("Scope FI" + value.toString()));
-            } else {
-              pfProgressDB
-                  .update(PFProgress(
-                    farmId: value,
-                    pageOne: 1,
-                    pageTwo: state
-                        .primaryFarmHoldingOneModelObj!.pfProgress!.pageTwo,
-                  ))
-                  .then((value) => print("Scope FI" + value.toString()));
-            }
-          } else {
-            event.createFailed!.call();
-          }
-        });
-      }
-      if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
-        if (farmerid != 0) {
+      FarmerFarmDB farmDB = FarmerFarmDB();
+      int farmerid = PrefUtils().getFarmId();
+      try {
+        if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
           farmDB
-              .updatePageOne(FarmerFarm(
-                farmerFarmId: PrefUtils().getFarmId(),
+              .create(FarmerFarm(
+            farmerFarmId: 0,
+            farmerId: PrefUtils().getFarmerId(),
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+          ))
+              .then((value) {
+            if (value > 0) {
+              PrefUtils().setFarmId(value);
+
+              farmDB.updatePageOne(FarmerFarm(
+                farmerFarmId: value,
                 farmerId: farmerid,
+                villageName: state.vil?.text,
+                shoppingCenter: state.shop?.text,
                 farmName: state.nameController!.text,
+                enumeratorId: userId.toString(),
+                enumerationAreaNumber: enumeratorarea,
+                enumeratorName: enumeratorname,
+                enumeratorMobile: enumeratormobile,
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId: state
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
@@ -235,15 +196,58 @@ class PrimaryFarmHoldingOneBloc
                 livestockFarmSize: double.parse(state.sizeController!.text),
                 leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
                 idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
-              ))
-              .then((value) => print(
-                    "Updated scop: " + value.toString(),
-                  ));
+              ));
+
+              PFProgressDB pfProgressDB = PFProgressDB();
+              if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne ==
+                  0) {
+                pfProgressDB
+                    .insert(PFProgress(
+                      farmId: value,
+                      pageOne: 1,
+                      pageTwo: 0,
+                    ))
+                    .then((value) => print("Scope FI" + value.toString()));
+              } else {
+                pfProgressDB
+                    .update(PFProgress(
+                      farmId: value,
+                      pageOne: 1,
+                      pageTwo: state
+                          .primaryFarmHoldingOneModelObj!.pfProgress!.pageTwo,
+                    ))
+                    .then((value) => print("Scope FI" + value.toString()));
+              }
+            } else {
+              event.createFailed!.call();
+            }
+          });
         }
+        if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
+          if (farmerid != 0) {
+            farmDB
+                .updatePageOne(FarmerFarm(
+                  farmerFarmId: PrefUtils().getFarmId(),
+                  farmerId: farmerid,
+                  farmName: state.nameController!.text,
+                  farmSize: double.parse(state.sizeController!.text),
+                  areaUnitId: state
+                      .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+                  cropFarmSize: double.parse(state.sizeController!.text),
+                  livestockFarmSize: double.parse(state.sizeController!.text),
+                  leasedFarmSize:
+                      double.parse(state.sizeController?.text ?? "0"),
+                  idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                ))
+                .then((value) => print(
+                      "Updated scop: " + value.toString(),
+                    ));
+          }
+        }
+        event.createSuccessful!.call();
+      } catch (e) {
+        event.createFailed!.call();
       }
-      event.createSuccessful!.call();
-    } catch (e) {
-      event.createFailed!.call();
     }
   }
 
