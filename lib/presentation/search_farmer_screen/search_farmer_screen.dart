@@ -154,6 +154,7 @@ class SearchFarmerScreen extends StatelessWidget {
                               CustomTextStyles.titleMediumWhiteA700,
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
+                              _firstTextFieldFocus.unfocus();
                               context
                                   .read<SearchFarmerBloc>()
                                   .add(FarmerSearchEvent(
@@ -165,35 +166,38 @@ class SearchFarmerScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    BlocSelector<SearchFarmerBloc, SearchFarmerState,
-                        List<FdetailsItemModel>?>(
-                      selector: (state) => state.fmodel,
-                      builder: (context, models) {
-                        return Column(
-                          children: [
-                            ListView.separated(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height: 18.v);
-                                },
-                                itemCount: models?.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  FdetailsItemModel model =
-                                      models?[index] ?? FdetailsItemModel();
-                                  return FdetailsItemWidget(
-                                    model,
-                                    edit: () => addorEdit(
-                                      context,
-                                      1,
-                                      model.id!,
-                                    ),
-                                    delete: () => delete(context, model.id!),
-                                  );
-                                }),
-                          ],
-                        );
-                      },
+                    Padding(
+                      padding: EdgeInsets.only(left: 9.h, top: 5.v, right: 9.h),
+                      child: BlocSelector<SearchFarmerBloc, SearchFarmerState,
+                          List<FdetailsItemModel>?>(
+                        selector: (state) => state.fmodel,
+                        builder: (context, models) {
+                          return Column(
+                            children: [
+                              ListView.separated(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: 18.v);
+                                  },
+                                  itemCount: models?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    FdetailsItemModel model =
+                                        models?[index] ?? FdetailsItemModel();
+                                    return FdetailsItemWidget(
+                                      model,
+                                      edit: () => addorEdit(
+                                        context,
+                                        1,
+                                        model.id!,
+                                      ),
+                                      delete: () => delete(context, model.id!),
+                                    );
+                                  }),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -221,7 +225,7 @@ class SearchFarmerScreen extends StatelessWidget {
           );
     } else {
       closedialog(context, "Search Farmer First",
-          "Lindly search a farmer to add a new farm");
+          "Kindly search a farmer to add a new farm");
     }
   }
 

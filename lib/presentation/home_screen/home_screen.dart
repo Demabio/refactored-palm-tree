@@ -458,6 +458,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             onTap: () {
                                               if (_formKey.currentState!
                                                   .validate()) {
+                                                _secondTextFieldFocus.unfocus();
                                                 context.read<HomeBloc>().add(
                                                     FarmerSearchEvent(
                                                         onError: () =>

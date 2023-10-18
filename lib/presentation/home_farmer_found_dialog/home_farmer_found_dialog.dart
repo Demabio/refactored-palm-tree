@@ -26,54 +26,59 @@ class HomeFarmerFoundDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return Container(
-      width: 330.h,
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.h,
-        vertical: 6.v,
-      ),
-      decoration: AppDecoration.fillWhiteA.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(height: 30.v),
-          Text(
-            "Farmer Id Number: ${PrefUtils().getFarmerIdNo()}".tr,
-            style: CustomTextStyles.bodyLargePrimary_2,
-          ),
-          SizedBox(height: 10.v),
-          Text(
-            PrefUtils().getFound()
-                ? "msg_farmer_already_exists".tr
-                : "Farmer Does Not Exist, Add Farmer?",
-            style: CustomTextStyles.bodyMediumPoppinsBlack900,
-          ),
-          SizedBox(height: 51.v),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: CustomOutlinedButton(
-                  text: "lbl_no".tr,
-                  onTap: () => Navigator.pop(context),
-                  margin: EdgeInsets.only(right: 4.h),
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Container(
+        width: 330.h,
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.h,
+          vertical: 6.v,
+        ),
+        decoration: AppDecoration.fillWhiteA.copyWith(
+          borderRadius: BorderRadiusStyle.roundedBorder10,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(height: 30.v),
+            Text(
+              "Farmer Id Number: ${PrefUtils().getFarmerIdNo()}".tr,
+              style: CustomTextStyles.bodyLargePrimary_2,
+            ),
+            SizedBox(height: 10.v),
+            Text(
+              PrefUtils().getFound()
+                  ? "msg_farmer_already_exists".tr
+                  : "Farmer Does Not Exist, Add Farmer?",
+              style: CustomTextStyles.bodyMediumPoppinsBlack900,
+            ),
+            SizedBox(height: 51.v),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: CustomOutlinedButton(
+                    text: "lbl_no".tr,
+                    onTap: () => Navigator.pop(context),
+                    margin: EdgeInsets.only(right: 4.h),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: CustomElevatedButton(
-                  text: "lbl_yes".tr,
-                  onTap: () => navToRespectivePage(context),
-                  margin: EdgeInsets.only(left: 4.h),
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
+                Expanded(
+                  child: CustomElevatedButton(
+                    text: "lbl_yes".tr,
+                    onTap: () => navToRespectivePage(context),
+                    margin: EdgeInsets.only(left: 4.h),
+                    buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                    buttonTextStyle: CustomTextStyles.bodyLarge16,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
