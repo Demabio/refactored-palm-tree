@@ -1,6 +1,7 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 
@@ -468,6 +469,10 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
               createFailed: () {
                 _failed(context);
               },
+              validation: () {
+                closedialog(context, "Farm Size Exceeded",
+                    "Land sizes entered exceed the stated farm size.");
+              },
             ),
           );
     }
@@ -504,9 +509,26 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
               createFailed: () {
                 _failed(context);
               },
+              validation: () {
+                closedialog(context, "Farm Size Exceeded",
+                    "Land sizes entered exceed the stated farm size.");
+              },
             ),
           );
     }
+  }
+
+  closedialog(BuildContext context, String label, String body) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 
   _navToStep(int val, BuildContext context, PFProgress pfProgress) {

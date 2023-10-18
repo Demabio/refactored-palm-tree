@@ -20,10 +20,12 @@ class NextTapEvent extends PrimaryFarmHoldingOneEvent {
     this.value,
     this.createFailed,
     this.createSuccessful,
+    this.validation,
   });
 
   int? value;
   Function? createSuccessful;
+  Function? validation;
 
   Function? createFailed;
   @override
@@ -31,6 +33,7 @@ class NextTapEvent extends PrimaryFarmHoldingOneEvent {
         value,
         createFailed,
         createSuccessful,
+        validation,
       ];
 }
 
@@ -39,10 +42,12 @@ class SaveTapEvent extends PrimaryFarmHoldingOneEvent {
     this.value,
     this.createFailed,
     this.createSuccessful,
+    this.validation,
   });
 
   int? value;
   Function? createSuccessful;
+  Function? validation;
 
   Function? createFailed;
   @override
@@ -50,6 +55,7 @@ class SaveTapEvent extends PrimaryFarmHoldingOneEvent {
         value,
         createFailed,
         createSuccessful,
+        validation,
       ];
 }
 

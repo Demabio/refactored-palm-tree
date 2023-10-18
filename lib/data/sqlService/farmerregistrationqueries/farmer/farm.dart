@@ -66,13 +66,14 @@ class FarmerFarmDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id,  date_created, created_by, completed
-      ) VALUES (?, ?, ?, ?)
+        farmer_id,  date_created, created_by, completed, startOfRegistration
+      ) VALUES (?, ?, ?, ?, ?)
     ''', [
       farm.farmerId,
       farm.dateCreated?.toLocal().toIso8601String(),
       farm.createdBy,
       0,
+      DateTime.now().toLocal().toIso8601String(),
     ]);
   }
 
@@ -195,10 +196,11 @@ class FarmerFarmDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET completed  = ? 
+    UPDATE $tableName SET completed  = ?, endOfRegistration = ?
     WHERE farmer_farm_id = ? 
   ''', [
         1,
+        DateTime.now().toLocal().toIso8601String(),
         id,
       ]);
     } catch (e) {

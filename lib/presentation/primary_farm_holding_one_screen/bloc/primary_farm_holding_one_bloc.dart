@@ -61,6 +61,18 @@ class PrimaryFarmHoldingOneBloc
     NextTapEvent event,
     Emitter<PrimaryFarmHoldingOneState> emit,
   ) {
+    double farmsize = double.parse(state.sizeController!.text);
+    double cropsize = double.parse(state.sizeoneController!.text);
+    double livesize = double.parse(state.areaController!.text);
+    double leasedsize = double.parse(state.sizeLandLeasedController!.text);
+    double idlesize = double.parse(state.sizeLandIdleController!.text);
+
+    double combined = cropsize + livesize + leasedsize + idlesize;
+
+    if (combined > farmsize) {
+      event.validation?.call();
+      return;
+    }
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     String enumeratorname = claims.payload['fullName'];
@@ -96,10 +108,12 @@ class PrimaryFarmHoldingOneBloc
               farmSize: double.parse(state.sizeController!.text),
               areaUnitId: state
                   .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-              cropFarmSize: double.parse(state.sizeController!.text),
-              livestockFarmSize: double.parse(state.sizeController!.text),
-              leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-              idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+              cropFarmSize: double.parse(state.sizeoneController!.text),
+              livestockFarmSize: double.parse(state.areaController!.text),
+              leasedFarmSize:
+                  double.parse(state.sizeLandLeasedController?.text ?? "0"),
+              idleFarmSize:
+                  double.parse(state.sizeLandIdleController?.text ?? "0"),
             ));
 
             PFProgressDB pfProgressDB = PFProgressDB();
@@ -136,10 +150,12 @@ class PrimaryFarmHoldingOneBloc
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId: state
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                cropFarmSize: double.parse(state.sizeController!.text),
-                livestockFarmSize: double.parse(state.sizeController!.text),
-                leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-                idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                cropFarmSize: double.parse(state.sizeoneController!.text),
+                livestockFarmSize: double.parse(state.areaController!.text),
+                leasedFarmSize:
+                    double.parse(state.sizeLandLeasedController?.text ?? "0"),
+                idleFarmSize:
+                    double.parse(state.sizeLandIdleController?.text ?? "0"),
               ))
               .then((value) => print(
                     "Updated scop: " + value.toString(),
@@ -156,6 +172,19 @@ class PrimaryFarmHoldingOneBloc
     SaveTapEvent event,
     Emitter<PrimaryFarmHoldingOneState> emit,
   ) {
+    double farmsize = double.parse(state.sizeController!.text);
+    double cropsize = double.parse(state.sizeoneController!.text);
+    double livesize = double.parse(state.areaController!.text);
+    double leasedsize = double.parse(state.sizeLandLeasedController!.text);
+    double idlesize = double.parse(state.sizeLandIdleController!.text);
+
+    double combined = cropsize + livesize + leasedsize + idlesize;
+
+    if (combined > farmsize) {
+      event.validation?.call();
+      return;
+    }
+
     if (PrefUtils().getYesNo()) {
       final claims = JWT.decode(PrefUtils().getToken());
       int userId = int.parse(claims.payload['nameidentifier']);
@@ -192,10 +221,12 @@ class PrimaryFarmHoldingOneBloc
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId: state
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                cropFarmSize: double.parse(state.sizeController!.text),
-                livestockFarmSize: double.parse(state.sizeController!.text),
-                leasedFarmSize: double.parse(state.sizeController?.text ?? "0"),
-                idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                cropFarmSize: double.parse(state.sizeoneController!.text),
+                livestockFarmSize: double.parse(state.areaController!.text),
+                leasedFarmSize:
+                    double.parse(state.sizeLandLeasedController?.text ?? "0"),
+                idleFarmSize:
+                    double.parse(state.sizeLandIdleController?.text ?? "0"),
               ));
 
               PFProgressDB pfProgressDB = PFProgressDB();
@@ -233,11 +264,12 @@ class PrimaryFarmHoldingOneBloc
                   farmSize: double.parse(state.sizeController!.text),
                   areaUnitId: state
                       .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                  cropFarmSize: double.parse(state.sizeController!.text),
-                  livestockFarmSize: double.parse(state.sizeController!.text),
+                  cropFarmSize: double.parse(state.sizeoneController!.text),
+                  livestockFarmSize: double.parse(state.areaController!.text),
                   leasedFarmSize:
-                      double.parse(state.sizeController?.text ?? "0"),
-                  idleFarmSize: double.parse(state.sizeController?.text ?? "0"),
+                      double.parse(state.sizeLandLeasedController?.text ?? "0"),
+                  idleFarmSize:
+                      double.parse(state.sizeLandIdleController?.text ?? "0"),
                 ))
                 .then((value) => print(
                       "Updated scop: " + value.toString(),

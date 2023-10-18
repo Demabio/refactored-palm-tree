@@ -25,6 +25,16 @@ class DBCheckEvent extends HomeEvent {
   List<Object?> get props => [onSuccess, onError];
 }
 
+class LoadGraphs extends HomeEvent {
+  LoadGraphs({this.onError, this.onSuccess});
+  Function? onSuccess;
+
+  Function? onError;
+
+  @override
+  List<Object?> get props => [onSuccess, onError];
+}
+
 class FarmerSearchEvent extends HomeEvent {
   FarmerSearchEvent({
     this.onError,

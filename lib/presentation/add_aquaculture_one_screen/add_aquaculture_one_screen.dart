@@ -1,5 +1,6 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/add_aquaculture_five_dialog.dart';
@@ -469,6 +470,8 @@ class AddAquacultureOneScreen extends StatelessWidget {
   }
 
   nextPage(BuildContext context) {
+    ProgressDialogUtils.showProgressDialog();
+
     context.read<AddAquacultureOneBloc>().add(
           NextTapEvent(
             createSuccessful: () {
@@ -482,15 +485,21 @@ class AddAquacultureOneScreen extends StatelessWidget {
   }
 
   _success(BuildContext context) {
+    ProgressDialogUtils.hideProgressDialog();
+
     NavigatorService.popAndPushNamed(AppRoutes.addAquacultureTwoScreen);
   }
 
   void _failed(BuildContext context) {
+    ProgressDialogUtils.hideProgressDialog();
+
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Something went wrong")));
   }
 
   saveDraft(BuildContext context) async {
+    ProgressDialogUtils.showProgressDialog();
+
     String label = "Save to Draft";
     String body = "Do you want to stop and save details to draft?";
     await showDialog(
@@ -522,6 +531,8 @@ class AddAquacultureOneScreen extends StatelessWidget {
   }
 
   _successSaved(BuildContext context) {
+    ProgressDialogUtils.hideProgressDialog();
+
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
     Navigator.popAndPushNamed(context, AppRoutes.aquacultureScreen);
   }

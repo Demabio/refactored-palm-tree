@@ -1,6 +1,7 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishinput.dart';
@@ -58,6 +59,8 @@ class AddAquacultureTwoBloc
             );
     if (pfProgress.pageTwo == 1 &&
         farmerFishProductionLevel.productionLevelId != 0) {
+      ProgressDialogUtils.showProgressDialog();
+
       List<FarmerFishInput>? fishes = await getFishes();
 
       fish = await fetchFish();
@@ -75,6 +78,7 @@ class AddAquacultureTwoBloc
       cc = a.firstWhere(
         (model) => model.id == farmerFishProductionLevel.espBenefit,
       );
+      ProgressDialogUtils.hideProgressDialog();
     }
     int stepper = 0;
     if (pfProgress.pageTwo == 1) {
@@ -177,6 +181,8 @@ class AddAquacultureTwoBloc
     SaveTapEvent event,
     Emitter<AddAquacultureTwoState> emit,
   ) async {
+    ProgressDialogUtils.showProgressDialog();
+
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
@@ -252,8 +258,10 @@ class AddAquacultureTwoBloc
           checked: selectedCount == 0,
         ));
       }
+      ProgressDialogUtils.hideProgressDialog();
     } catch (e) {
       event.createFailed!.call();
+      ProgressDialogUtils.hideProgressDialog();
     }
   }
 

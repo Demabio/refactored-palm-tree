@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -79,15 +80,17 @@ class FarmerDB {
     final database = await DatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-      "idNo", "farmerName", "dateCreated", "createdBy", completed
+     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed
     ) 
-    VALUES (?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?)
   ''', [
+      1,
       farmer.idNo,
       farmer.farmerName,
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
       0,
+      DateTime.now().toLocal().toIso8601String(),
     ]);
   }
 
@@ -242,7 +245,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET cropsInsurance = ?, livestockInsurance = ?, fishInsurance = ?, farmRecords = ?, assetsInsurance = ?, extensionsericeAccess = ? 
+    UPDATE $tableName SET cropsInsurance = ?, livestockInsurance = ?, fishInsurance = ?, farmRecords = ?, assetsInsurance = ?, extensionsericeAccess = ?, completed = ?
     WHERE farmerId = ? 
   ''', [
         farmer.cropsInsurance! ? 1 : 0,
@@ -251,6 +254,7 @@ class FarmerDB {
         farmer.assetsInsurance! ? 1 : 0,
         farmer.farmRecords! ? 1 : 0,
         farmer.extensionsericeAccess,
+        1,
         farmer.farmerId,
       ]);
     } catch (e) {
@@ -279,6 +283,102 @@ class FarmerDB {
         .rawQuery('SELECT * FROM $tableName WHERE idNo = ?', [id]);
     print(farmer);
     return farmer.isNotEmpty ? Farmer.fromSqfliteDatabase(farmer.first) : null;
+  }
+
+  Future<int?> getFarmersCount() async {
+    final database = await DatabaseService().database;
+
+    final result = await database.rawQuery('SELECT COUNT(*) FROM farmer');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<int?> getSaved() async {
+    final database = await DatabaseService().database;
+
+    final result = await database
+        .rawQuery('SELECT COUNT(*) FROM farmer WHERE completed = 0');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<int?> getApproved() async {
+    final database = await DatabaseService().database;
+
+    final result = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (3,5,8)');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<int?> getUnapproved() async {
+    final database = await DatabaseService().database;
+
+    final result = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (4,6,9)');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<int?> getUnverified() async {
+    final database = await DatabaseService().database;
+
+    final result = await database
+        .rawQuery('SELECT COUNT(*) FROM farmer WHERE registrationStatusId = 1');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<Map<String, Object?>> getApprovedAndRejectedFarmersCountByMonth(
+      int year, int month) async {
+    final database = await DatabaseService().database;
+
+    final startDate = DateTime(year, month);
+    final endDate = DateTime(year, month + 1);
+
+    final approvedResult = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (3, 5, 8)',
+        [
+          startDate.toUtc().toIso8601String(),
+          endDate.toUtc().toIso8601String()
+        ]);
+    final rejectedResult = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4, 6, 9)',
+        [
+          startDate.toUtc().toIso8601String(),
+          endDate.toUtc().toIso8601String()
+        ]);
+
+    final approvedCount = Sqflite.firstIntValue(approvedResult);
+    final rejectedCount = Sqflite.firstIntValue(rejectedResult);
+
+    final monthName = DateFormat('MMMM').format(startDate);
+
+    final result = {
+      'month': month,
+      'approved': approvedCount,
+      'rejected': rejectedCount,
+    };
+
+    return result;
+  }
+
+  Future<List<Map<String, Object?>>?>
+      getApprovedAndRejectedCountsForLast6Months() async {
+    final now = DateTime.now();
+    final results = <Map<String, Object?>>[];
+
+    for (int i = 0; i < 6; i++) {
+      var month = now.month - i;
+      final year = now.year - (month <= 0 ? 1 : 0);
+      month = (month <= 0 ? month + 12 : month);
+
+      final counts =
+          await getApprovedAndRejectedFarmersCountByMonth(year, month);
+      results.add(counts);
+    }
+
+    return results;
   }
 
   // Add more database methods as needed

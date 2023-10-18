@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
@@ -19,6 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeInitialEvent>(_onInitialize);
     on<DBCheckEvent>(_TcheckDBExists);
     on<FarmerSearchEvent>(_searchFarmer);
+    on<LoadGraphs>(_loadgraphs);
   }
 
   DBUtils _dbutils = DBUtils();
@@ -37,8 +39,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     emit(state.copyWith(
         searchController: TextEditingController(),
-        searchController1: TextEditingController()));
-    emit(state.copyWith(
+        searchController1: TextEditingController(),
         homeModelObj: state.homeModelObj
             ?.copyWith(userprofileItemList: fillUserprofileItemList())));
     add(
@@ -76,6 +77,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       PrefUtils().setLivestockId(0);
       event.onSuccess!.call();
     }
+  }
+
+  _loadgraphs(
+    LoadGraphs event,
+    Emitter<HomeState> emit,
+  ) async {
+    FarmerDB farmerDB = FarmerDB();
+
+    List<Map<String, Object?>>? bdata =
+        await farmerDB.getApprovedAndRejectedCountsForLast6Months();
+
+    emit(state.copyWith(bardata: bdata));
   }
 
   Future<void> _TcheckDBExists(

@@ -1,4 +1,5 @@
 import 'package:kiamis_app/core/utils/validation_functions.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/graphs/bargraph/bar_chart_sample2.dart';
@@ -39,7 +40,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  FarmerDB farmerDB = FarmerDB();
   FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
   int count = 0;
@@ -48,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    context.read<HomeBloc>().add(LoadGraphs());
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
           dbNotFound(context);
         }, onSuccess: () {
@@ -578,13 +580,36 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 15.v, right: 1.h),
-                            child: Container(
-                              height: 500,
-                              width: 500,
-                              child: BarChartSample2(),
-                            ),
+                          FutureBuilder<List<Map<String, Object?>>?>(
+                            future: farmerDB
+                                .getApprovedAndRejectedCountsForLast6Months(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // Return a loading indicator while waiting for data.
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                // Handle errors, e.g., display an error message.
+                                return Text('Error: ${snapshot.error}');
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                // Handle cases where there's no data to display.
+                                return Text('No data available.');
+                              } else {
+                                // Data is available, build the widget with the data.
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.only(top: 15.v, right: 1.h),
+                                  child: Container(
+                                    height: 500,
+                                    width: 500,
+                                    child: BarChartSample2(
+                                      bardata: snapshot.data,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),

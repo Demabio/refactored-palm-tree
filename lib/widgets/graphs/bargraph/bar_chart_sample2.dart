@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/barcolors.dart';
 
+// ignore: must_be_immutable
 class BarChartSample2 extends StatefulWidget {
-  BarChartSample2({super.key});
+  List<Map<String, Object?>>? bardata;
+
+  BarChartSample2({
+    Key? key,
+    required this.bardata,
+  }) : super(key: key);
   final Color leftBarColor = Colors.green;
   final Color rightBarColor = AppColors.contentColorGreen;
   final Color avgColor = AppColors.contentColorOrange;
@@ -23,27 +29,21 @@ class BarChartSample2State extends State<BarChartSample2> {
   @override
   void initState() {
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
+    if (widget.bardata != null) {
+      rawBarGroups = widget.bardata!.map((monthData) {
+        final month = int.parse(monthData['month'].toString());
 
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
+        final approvedCount = double.parse(monthData['approved'].toString());
+        final rejectedCount = double.parse(monthData['rejected'].toString());
+        return makeGroupData(
+          month - 1, // Use index as x value
+          approvedCount,
+          rejectedCount,
+        );
+      }).toList();
 
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
+      showingBarGroups = rawBarGroups;
+    }
   }
 
   @override
@@ -171,7 +171,20 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final titles = <String>[
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
 
     final Widget text = Text(
       titles[value.toInt()],
