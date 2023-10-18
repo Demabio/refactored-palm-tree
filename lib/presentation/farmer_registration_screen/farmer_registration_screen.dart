@@ -227,7 +227,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
         _buildStep(
           title: Text('Financial and Services'),
-          state: model.fs2 ? StepState.complete : StepState.indexed,
+          state: model.fsv,
           addcallback: () {
             onFinance(context);
           },

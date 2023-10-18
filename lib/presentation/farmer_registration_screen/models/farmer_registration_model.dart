@@ -33,6 +33,7 @@ class FarmerRegistrationModel extends Equatable {
     this.live = StepState.indexed,
     this.fish = StepState.indexed,
     this.fid = StepState.indexed,
+    this.fsv = StepState.indexed,
   }) {}
 
   ProcessStatus? processStatus;
@@ -58,6 +59,7 @@ class FarmerRegistrationModel extends Equatable {
   StepState live;
   StepState fish;
   StepState fid;
+  StepState fsv;
 
   int currentStep;
   FarmerRegistrationModel copyWith({
@@ -84,6 +86,7 @@ class FarmerRegistrationModel extends Equatable {
     StepState? live,
     StepState? fish,
     StepState? fid,
+    StepState? fsv,
   }) {
     return FarmerRegistrationModel(
       processStatus: processStatus ?? this.processStatus,
@@ -109,6 +112,7 @@ class FarmerRegistrationModel extends Equatable {
       lw2: lw2 ?? this.lw2,
       fs2: fs2 ?? this.fs2,
       fid: fid ?? this.fid,
+      fsv: fsv ?? this.fsv,
     );
   }
 
@@ -137,5 +141,6 @@ class FarmerRegistrationModel extends Equatable {
         crop,
         live,
         fid,
+        fsv,
       ];
 }

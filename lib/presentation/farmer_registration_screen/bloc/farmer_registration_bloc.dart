@@ -305,6 +305,8 @@ class FarmerRegistrationBloc
     StepState b = StepState.indexed;
     StepState c = StepState.indexed;
     StepState d = StepState.indexed;
+    StepState e = StepState.indexed;
+
     if (farm.cropProd!) {
       if (caProgress.pageOne == 1 && caProgress.pageTwo == 1) {
         a = StepState.complete;
@@ -332,8 +334,12 @@ class FarmerRegistrationBloc
           fiProgress.pageThree == 1) {
         d = StepState.complete;
       }
+      if (fsProgress.pageOne == 1 && fsProgress.pageTwo == 1) {
+        e = StepState.complete;
+      }
     } else {
       d = StepState.disabled;
+      e = StepState.complete;
     }
     emit(state.copyWith(
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(
@@ -352,7 +358,7 @@ class FarmerRegistrationBloc
       fs: (fsProgress.pageOne == 1 || fsProgress.pageTwo == 1),
       crop: a,
       fish: c,
-      live: b, fid: d,
+      live: b, fid: d, fsv: e,
       fi2: (fiProgress.pageOne == 1 &&
           fiProgress.pageTwo == 1 &&
           fiProgress.pageOne == 1),
