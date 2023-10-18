@@ -172,7 +172,7 @@ class FarmerRegistrationBloc
 
   _completeRegistration(
       CompleteEvent event, Emitter<FarmerRegistrationState> emit) async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
     int complete = await farmerFishProductionLevelsDB.completed(id);
     if (complete > 0) {
@@ -183,7 +183,7 @@ class FarmerRegistrationBloc
   }
 
   Future<List<FarmerCrop>?> getCrops() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerCropsDB farmerFishProductionLevelsDB = FarmerCropsDB();
     return await farmerFishProductionLevelsDB.fetchAllByFarm(id);
   }
@@ -339,7 +339,7 @@ class FarmerRegistrationBloc
       }
     } else {
       d = StepState.disabled;
-      e = StepState.complete;
+      e = StepState.disabled;
     }
     emit(state.copyWith(
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(

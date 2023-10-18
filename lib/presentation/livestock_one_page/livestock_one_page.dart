@@ -1,3 +1,5 @@
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
+
 import 'bloc/livestock_one_bloc.dart';
 import 'models/livestock_item_model.dart';
 import 'models/livestock_one_model.dart';
@@ -121,7 +123,20 @@ class LivestockOnePageState extends State<LivestockOnePage>
         );
   }
 
-  delete(BuildContext context, int id) {
+  delete(BuildContext context, int id) async {
+    String label = "Delete Livestock Entry";
+    String body = "Are you sure you want to perform this action?";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<LivestockOneBloc>().add(
           DeleteEvent(
             value: id,

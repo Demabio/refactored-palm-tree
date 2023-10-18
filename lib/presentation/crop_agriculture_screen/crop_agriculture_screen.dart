@@ -1,3 +1,6 @@
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
+
 import '../crop_agriculture_screen/widgets/cropdetails_item_widget.dart';
 import 'bloc/crop_agriculture_bloc.dart';
 import 'models/crop_agriculture_model.dart';
@@ -122,12 +125,38 @@ class CropAgricultureScreen extends StatelessWidget {
         );
   }
 
-  delete(BuildContext context, int id) {
+  delete(BuildContext context, int id) async {
+    String label = "Delete Crop Entry";
+    String body = "Are you sure you want to perform this action?";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<CropAgricultureBloc>().add(
           DeleteEvent(
             value: id,
           ),
         );
+  }
+
+  closedialog(BuildContext context, String label, String body) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 
   /// Navigates to the farmerRegistrationScreen when the action is triggered.

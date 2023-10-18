@@ -188,7 +188,7 @@ class SideMenuDraweritem extends StatelessWidget {
     Navigator.pop(context);
 
     NavigatorService.popAndPushNamed(
-      AppRoutes.farmerRegistrationScreen,
+      AppRoutes.searchFarmerScreen,
     );
   }
 

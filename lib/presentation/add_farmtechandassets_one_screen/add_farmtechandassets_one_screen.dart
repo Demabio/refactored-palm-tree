@@ -5,6 +5,7 @@ import 'package:kiamis_app/presentation/add_farmtechandassets_four_dialog/add_fa
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/add_farmtechandassets_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/widgets/techassets_widget.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_two_dialog/add_farmtechandassets_two_dialog.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/add_farmtechandassets_one_bloc.dart';
 import 'models/add_farmtechandassets_one_model.dart';
@@ -388,7 +389,20 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
         );
   }
 
-  delete(BuildContext context, int id) {
+  delete(BuildContext context, int id) async {
+    String label = "Delete Asset Entry";
+    String body = "Are you sure you want to perform this action?";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<AddFarmtechandassetsOneBloc>().add(
           DeleteEvent(
             value: id,

@@ -8,7 +8,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
-import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/draft_entries_clear_drafts_modal_dialog.dart';
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 
 class DraftEntriesScreen extends StatelessWidget {
   const DraftEntriesScreen({Key? key}) : super(key: key);
@@ -93,7 +93,7 @@ class DraftEntriesScreen extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              content: DraftEntriesClearDraftsModalDialog.builder(context),
+              content: DynamicDialogTwo.builder(context, "", ""),
               backgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),

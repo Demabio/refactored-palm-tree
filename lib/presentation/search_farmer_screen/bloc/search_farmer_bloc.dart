@@ -42,8 +42,6 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
-
-      event.onError!.call();
     } else {
       PrefUtils().setFarmerId(farmer.farmerId);
       PrefUtils().setFarmerName(farmer.farmerName);
@@ -52,7 +50,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
-
+      event.onError?.call();
       List<FarmerFarm>? farms = await getFarms(farmer.farmerId);
       List<FdetailsItemModel>? models = [];
 
@@ -62,6 +60,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
               "${farm.cropProd! ? "Crop" : ""}, ${farm.livestockProd! ? "Livestock" : ""}, ${farm.fishFarming! ? "Fish" : ""}";
 
           models.add(FdetailsItemModel(
+            id: farm.farmerFarmId,
             prod: production,
             name: farm.farmName,
             landsize: farm.farmSize.toString(),
@@ -74,8 +73,6 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
           name: farmer.farmerName,
         ));
       }
-
-      event.onSuccess!.call();
     }
   }
 
@@ -83,6 +80,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     SearchFarmerInitialEvent event,
     Emitter<SearchFarmerState> emit,
   ) async {
+    PrefUtils().setFound(false);
     emit(state.copyWith(
       searchController: TextEditingController(),
     ));
@@ -92,12 +90,14 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     AddEditEvent event,
     Emitter<SearchFarmerState> emit,
   ) {
-    if (event.value! == 1) {
-      PrefUtils().setFarmId(event.crop!);
-      event.createSuccessful!.call();
-    } else {
-      PrefUtils().setLivestockId(0);
-      event.createSuccessful!.call();
+    if (PrefUtils().getFound()) {
+      if (event.value! == 1) {
+        PrefUtils().setFarmId(event.crop!);
+        event.createSuccessful!.call();
+      } else {
+        PrefUtils().setFarmId(0);
+        event.createSuccessful!.call();
+      }
     }
   }
 
@@ -105,30 +105,32 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     DeleteEvent event,
     Emitter<SearchFarmerState> emit,
   ) async {
-    FarmerFarmDB farmerLivestockFeedsDB = FarmerFarmDB();
-    int del = await farmerLivestockFeedsDB.delete(event.value!);
-    if (del > 0) {
-      List<FarmerFarm>? farms = await getFarms(PrefUtils().getFarmId());
-      List<FdetailsItemModel>? models = [];
+    if (PrefUtils().getYesNo()) {
+      FarmerFarmDB farmerLivestockFeedsDB = FarmerFarmDB();
+      int del = await farmerLivestockFeedsDB.delete(event.value!);
+      if (del > 0) {
+        List<FarmerFarm>? farms = await getFarms(PrefUtils().getFarmId());
+        List<FdetailsItemModel>? models = [];
 
-      if (farms != null) {
-        for (var farm in farms) {
-          String production =
-              "${farm.cropProd! ? "Crop" : ""}, ${farm.livestockProd! ? "Livestock" : ""}, ${farm.fishFarming! ? "Fish" : ""}";
+        if (farms != null) {
+          for (var farm in farms) {
+            String production =
+                "${farm.cropProd! ? "Crop" : ""}, ${farm.livestockProd! ? "Livestock" : ""}, ${farm.fishFarming! ? "Fish" : ""}";
 
-          models.add(FdetailsItemModel(
-            prod: production,
-            name: farm.farmName,
-            landsize: farm.farmSize.toString(),
-            x: farm.x.toString(),
-            y: farm.y.toString(),
-          ));
+            models.add(FdetailsItemModel(
+              prod: production,
+              name: farm.farmName,
+              landsize: farm.farmSize.toString(),
+              x: farm.x.toString(),
+              y: farm.y.toString(),
+            ));
+          }
         }
-      }
 
-      emit(state.copyWith(
-        fmodel: models,
-      ));
+        emit(state.copyWith(
+          fmodel: models,
+        ));
+      }
     }
   }
 }

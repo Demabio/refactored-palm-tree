@@ -33,6 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeInitialEvent event,
     Emitter<HomeState> emit,
   ) async {
+    PrefUtils().setFound(false);
+
     emit(state.copyWith(
         searchController: TextEditingController(),
         searchController1: TextEditingController()));

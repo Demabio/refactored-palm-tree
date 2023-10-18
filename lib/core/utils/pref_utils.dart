@@ -238,4 +238,16 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setYesNo(bool value) {
+    return _sharedPreferences!.setBool('yesno', value);
+  }
+
+  bool getYesNo() {
+    try {
+      return _sharedPreferences!.getBool('yesno') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

@@ -2,7 +2,6 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
@@ -11,7 +10,6 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpracti
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/soiltest.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationwatersources.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';

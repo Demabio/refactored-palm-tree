@@ -8,6 +8,7 @@ import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/add_aquacult
 import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/widgets/ProdSys_widget.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/add_aquaculture_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/widgets/aqua_types_widget.dart';
+import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/add_aquaculture_one_bloc.dart';
 import 'models/add_aquaculture_one_model.dart';
@@ -410,7 +411,20 @@ class AddAquacultureOneScreen extends StatelessWidget {
         );
   }
 
-  delete(BuildContext context, int id) {
+  delete(BuildContext context, int id) async {
+    String label = "Delete Production System Entry";
+    String body = "Are you sure you want to perform this action?";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<AddAquacultureOneBloc>().add(
           DeleteEvent(
             value: id,
@@ -433,7 +447,20 @@ class AddAquacultureOneScreen extends StatelessWidget {
         );
   }
 
-  deleteF(BuildContext context, int id) {
+  deleteF(BuildContext context, int id) async {
+    String label = "Delete Fish Entry";
+    String body = "Are you sure you want to perform this action?";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialog.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
     context.read<AddAquacultureOneBloc>().add(
           FDeleteEvent(
             value: id,

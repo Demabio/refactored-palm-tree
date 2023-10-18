@@ -32,14 +32,21 @@ class AddFinancialandservicesThreeBloc extends Bloc<
   ) {
     List<CheckBoxList> newModels =
         state.addFinancialandservicesThreeModelObj!.models;
+    int count = state.addFinancialandservicesThreeModelObj!.count;
+    if (event.selected!) {
+      count += 1;
+    } else {
+      count -= 1;
+    }
 
     newModels[event.value].isSelected = event.selected!;
+    newModels[event.value].var1 = count.toString();
 
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
       models: newModels,
-      count: state.addFinancialandservicesThreeModelObj!.count + 1,
+      count: count,
     )));
   }
 
@@ -100,7 +107,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
             FarmerIncomeSource(
               farmerIncomeId: 0,
               farmerId: PrefUtils().getFarmerId(),
-              priorityLevel: 0,
+              priorityLevel: int.parse(model.var1!),
               incomeSourceId: model.id!,
             ),
           );
