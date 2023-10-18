@@ -32,6 +32,7 @@ dependencies:
   latlng: ^1.0.0
   geolocator: ^10.0.1
   permission_handler: ^11.0.1
+  tuple: ^2.0.2
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

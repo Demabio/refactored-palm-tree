@@ -1,5 +1,6 @@
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/graphs/bargraph/bar_chart_sample2.dart';
@@ -49,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<HomeBloc>().add(LoadGraphs());
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
           dbNotFound(context);
         }, onSuccess: () {
@@ -486,9 +486,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 46.v),
                     Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                            height: 350, width: 300, child: PieChartSample2())),
+                      alignment: Alignment.center,
+                      child: FutureBuilder<Tuple2<int?, int?>?>(
+                        future: farmerDB.regAccuracy(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Return a loading indicator while waiting for data.
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            // Handle errors, e.g., display an error message.
+                            return Text('Error: ${snapshot.error}');
+                          } else if (!snapshot.hasData) {
+                            // Handle cases where there's no data to display.
+                            return Center(child: Text('No data available.'));
+                          } else {
+                            // Data is available, build the widget with the data.
+                            return Padding(
+                                padding: EdgeInsets.only(top: 15.v, right: 1.h),
+                                child: SizedBox(
+                                    height: 350,
+                                    width: 300,
+                                    child: PieChartSample2(
+                                      tdata: snapshot.data,
+                                    )));
+                          }
+                        },
+                      ),
+                    ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -496,9 +521,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text("msg_verification_statistics".tr,
                                 style: CustomTextStyles.titleMediumSemiBold))),
                     Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                            height: 350, width: 300, child: PieChartSample3())),
+                      alignment: Alignment.center,
+                      child: FutureBuilder<Tuple2<int?, int?>?>(
+                        future: farmerDB.regPie(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Return a loading indicator while waiting for data.
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            // Handle errors, e.g., display an error message.
+                            return Text('Error: ${snapshot.error}');
+                          } else if (!snapshot.hasData) {
+                            // Handle cases where there's no data to display.
+                            return Center(child: Text('No data available.'));
+                          } else {
+                            // Data is available, build the widget with the data.
+                            return Padding(
+                              padding: EdgeInsets.only(top: 15.v, right: 1.h),
+                              child: Container(
+                                  height: 350,
+                                  width: 300,
+                                  child: PieChartSample3(
+                                    data: snapshot.data,
+                                  )),
+                            );
+                          }
+                        },
+                      ),
+                    ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -506,29 +557,64 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text("lbl_weekly_activity".tr,
                                 style: CustomTextStyles.titleMediumSemiBold))),
                     Container(
-                        margin: EdgeInsets.only(left: 1.h, top: 9.v),
-                        child:
-                            Column(mainAxisSize: MainAxisSize.min, children: [
+                      margin: EdgeInsets.only(left: 1.h, top: 9.v),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                           SizedBox(height: 29.v),
                           Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 22.h, vertical: 16.v),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 5.h, top: 12.v),
-                                        child: Container(
-                                            height: 250,
-                                            width: 250,
-                                            child: LineChartWidget()),
-                                      ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 22.h, vertical: 16.v),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 5.h, top: 12.v),
+                                    child:
+                                        FutureBuilder<List<Tuple2<int, int>>?>(
+                                      future:
+                                          farmerDB.getFarmersCountLast7Days(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          // Return a loading indicator while waiting for data.
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        } else if (snapshot.hasError) {
+                                          // Handle errors, e.g., display an error message.
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else if (!snapshot.hasData ||
+                                            snapshot.data!.isEmpty) {
+                                          // Handle cases where there's no data to display.
+                                          return Text('No data available.');
+                                        } else {
+                                          // Data is available, build the widget with the data.
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 15.v, right: 1.h),
+                                            child: Container(
+                                                height: 500,
+                                                width: 500,
+                                                child: LineChartWidget(
+                                                  listdata: snapshot.data,
+                                                )),
+                                          );
+                                        }
+                                      },
                                     ),
-                                  ]))
-                        ])),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -562,7 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             BorderRadius.circular(4.h))),
                                 Padding(
                                     padding: EdgeInsets.only(left: 10.h),
-                                    child: Text("lbl_rejected".tr,
+                                    child: Text("lbl_approved".tr,
                                         style: theme.textTheme.bodySmall)),
                                 Container(
                                     height: 12.adaptSize,
@@ -575,7 +661,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             BorderRadius.circular(4.h))),
                                 Padding(
                                     padding: EdgeInsets.only(left: 10.h),
-                                    child: Text("lbl_approved".tr,
+                                    child: Text("lbl_rejected".tr,
                                         style: theme.textTheme.bodySmall))
                               ],
                             ),
@@ -587,7 +673,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 // Return a loading indicator while waiting for data.
-                                return CircularProgressIndicator();
+                                return Center(
+                                    child: CircularProgressIndicator());
                               } else if (snapshot.hasError) {
                                 // Handle errors, e.g., display an error message.
                                 return Text('Error: ${snapshot.error}');

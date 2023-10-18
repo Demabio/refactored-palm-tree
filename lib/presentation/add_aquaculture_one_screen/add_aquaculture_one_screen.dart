@@ -279,7 +279,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                           },
                           margin: EdgeInsets.only(
                             left: 82.h,
-                            top: 106.v,
+                            top: 30.v,
                           ),
                           alignment: Alignment.centerRight,
                         ),

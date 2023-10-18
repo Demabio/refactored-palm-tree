@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -320,11 +320,25 @@ class FarmerDB {
     return count;
   }
 
+  Future<Tuple2<int?, int?>?> regAccuracy() async {
+    int? approved = await getApproved();
+    int? rejected = await getUnapproved();
+
+    return Tuple2<int?, int?>(approved, rejected);
+  }
+
+  Future<Tuple2<int?, int?>?> regPie() async {
+    int? ver = await getApproved();
+    int? unver = await getUnverified();
+
+    return Tuple2<int?, int?>(ver, unver);
+  }
+
   Future<int?> getUnverified() async {
     final database = await DatabaseService().database;
 
-    final result = await database
-        .rawQuery('SELECT COUNT(*) FROM farmer WHERE registrationStatusId = 1');
+    final result = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2)');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -337,13 +351,13 @@ class FarmerDB {
     final endDate = DateTime(year, month + 1);
 
     final approvedResult = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (3, 5, 8)',
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (3,5,8) ',
         [
           startDate.toUtc().toIso8601String(),
           endDate.toUtc().toIso8601String()
         ]);
     final rejectedResult = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4, 6, 9)',
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4,6,9)',
         [
           startDate.toUtc().toIso8601String(),
           endDate.toUtc().toIso8601String()
@@ -352,7 +366,7 @@ class FarmerDB {
     final approvedCount = Sqflite.firstIntValue(approvedResult);
     final rejectedCount = Sqflite.firstIntValue(rejectedResult);
 
-    final monthName = DateFormat('MMMM').format(startDate);
+    //final monthName = DateFormat('MMMM').format(startDate);
 
     final result = {
       'month': month,
@@ -379,6 +393,30 @@ class FarmerDB {
     }
 
     return results;
+  }
+
+  Future<List<Tuple2<int, int>>?> getFarmersCountLast7Days() async {
+    final database = await DatabaseService().database;
+
+    // Calculate the start date (7 days ago)
+    final now = DateTime.now();
+    final startDate =
+        now.subtract(Duration(days: 6)); // 6 days ago, as today is also counted
+
+    final results = await database.rawQuery('''
+    SELECT strftime('%w', dateCreated) as day, COUNT(*) as count
+    FROM farmer
+    WHERE dateCreated >= ?
+    GROUP BY day
+  ''', [startDate.toIso8601String()]);
+
+    final counts = results.map((row) {
+      final day = int.parse(row['day'].toString());
+      final count = int.parse(row['count'].toString());
+      return Tuple2<int, int>(day, count);
+    }).toList();
+
+    return counts;
   }
 
   // Add more database methods as needed

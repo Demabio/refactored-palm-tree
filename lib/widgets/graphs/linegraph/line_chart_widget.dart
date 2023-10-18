@@ -1,21 +1,42 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
 import 'line_titles.dart';
 
+// ignore: must_be_immutable
 class LineChartWidget extends StatelessWidget {
+  List<Tuple2<int, int>>? listdata;
+  LineChartWidget({
+    Key? key,
+    required this.listdata,
+  }) : super(key: key);
+
   final List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
+  List<FlSpot> mapDataToFlSpots(List<Tuple2<int, int>>? dataList) {
+    final List<FlSpot> flSpots = [];
+
+    for (final dataTuple in dataList!) {
+      final x = dataTuple.item1.toDouble();
+      final y = dataTuple.item2.toDouble();
+
+      if (x != null && y != null) {
+        flSpots.add(FlSpot(x, y));
+      }
+    }
+
+    return flSpots;
+  }
 
   @override
   Widget build(BuildContext context) => LineChart(
         LineChartData(
           minX: 0,
-          maxX: 11,
+          maxX: 6,
           minY: 0,
-          maxY: 6,
           titlesData: LineTitles.getTitleData(),
           gridData: FlGridData(
             show: true,
@@ -40,15 +61,7 @@ class LineChartWidget extends StatelessWidget {
           ),
           lineBarsData: [
             LineChartBarData(
-              spots: [
-                FlSpot(0, 3),
-                FlSpot(2.6, 2),
-                FlSpot(4.9, 5),
-                FlSpot(6.8, 2.5),
-                FlSpot(8, 4),
-                FlSpot(9.5, 3),
-                FlSpot(11, 4),
-              ],
+              spots: mapDataToFlSpots(listdata ?? []),
               isCurved: true,
               color: Colors.green, //gradientColors,
               barWidth: 5,

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/theme/theme_helper.dart';
 
 import '../../../theme/barcolors.dart';
 
@@ -11,9 +12,10 @@ class BarChartSample2 extends StatefulWidget {
     Key? key,
     required this.bardata,
   }) : super(key: key);
-  final Color leftBarColor = Colors.green;
-  final Color rightBarColor = AppColors.contentColorGreen;
-  final Color avgColor = AppColors.contentColorOrange;
+  final Color leftBarColor = theme.colorScheme.primary;
+
+  final Color rightBarColor = appTheme.green200;
+  final Color avgColor = Colors.green;
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
 }
@@ -30,11 +32,14 @@ class BarChartSample2State extends State<BarChartSample2> {
   void initState() {
     super.initState();
     if (widget.bardata != null) {
-      rawBarGroups = widget.bardata!.map((monthData) {
-        final month = int.parse(monthData['month'].toString());
+      List<Map<String, Object?>>? reversedBardata =
+          widget.bardata?.reversed.toList();
 
-        final approvedCount = double.parse(monthData['approved'].toString());
-        final rejectedCount = double.parse(monthData['rejected'].toString());
+      rawBarGroups = reversedBardata!.map((monthData) {
+        int month = int.parse(monthData['month'].toString());
+
+        double approvedCount = double.parse(monthData['approved'].toString());
+        double rejectedCount = double.parse(monthData['rejected'].toString());
         return makeGroupData(
           month - 1, // Use index as x value
           approvedCount,
@@ -58,7 +63,6 @@ class BarChartSample2State extends State<BarChartSample2> {
             Expanded(
               child: BarChart(
                 BarChartData(
-                  maxY: 20,
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipBgColor: Colors.grey,
@@ -153,16 +157,12 @@ class BarChartSample2State extends State<BarChartSample2> {
       fontWeight: FontWeight.bold,
       fontSize: 12,
     );
-    String text;
-    if (value == 0) {
-      text = '1K';
-    } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
-    } else {
-      return Container();
-    }
+    String text = value.toString();
+    // if (value % 10 == 0) {
+    //   text = value.toString();
+    // } else {
+    //   return Container();
+    // }
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,

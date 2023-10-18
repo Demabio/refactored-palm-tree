@@ -1,18 +1,49 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/theme/theme_helper.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../theme/barcolors.dart';
 
+// ignore: must_be_immutable
 class PieChartSample2 extends StatefulWidget {
-  const PieChartSample2({super.key});
+  Tuple2<int?, int?>? tdata;
+
+  PieChartSample2({
+    Key? key,
+    required this.tdata,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PieChart2State();
 }
 
-class PieChart2State extends State {
-  int touchedIndex = -1;
+class PieChart2State extends State<PieChartSample2> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    verified = widget.tdata?.item1?.toDouble() ?? 0;
+    unverified = widget.tdata?.item2?.toDouble() ?? 0;
+    if (unverified + verified > 0) {
+      percentage = (verified / (verified + unverified)) * 100;
+    } else {
+      percentage = 0;
+    }
+    if (percentage >= 70) {
+      pcolor = theme.colorScheme.primary;
+    } else if (percentage >= 40 && percentage < 70) {
+      pcolor = Colors.yellow[800];
+    } else {
+      pcolor = Color.fromARGB(255, 255, 17, 0);
+    }
+  }
 
+  late double percentage;
+  late Color? pcolor;
+  late double verified;
+  late double unverified;
+  int touchedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -29,11 +60,11 @@ class PieChart2State extends State {
                 children: [
                   Center(
                     child: Text(
-                      "60%",
+                      "${percentage}%",
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: Colors.yellow[800],
+                        color: pcolor,
                       ),
                     ),
                   ),
@@ -83,7 +114,7 @@ class PieChart2State extends State {
         case 0:
           return PieChartSectionData(
             color: Color.fromARGB(255, 214, 214, 214),
-            value: 40,
+            value: percentage,
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -93,14 +124,13 @@ class PieChart2State extends State {
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.yellow[800],
-            value: 60,
-            title: '30%',
+            color: pcolor,
+            value: 100 - percentage,
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.yellow[800],
+              color: pcolor,
             ),
           );
 

@@ -11,12 +11,20 @@ class LineTitles {
           showTitles: true,
           getTitlesWidget: (value, meta) {
             switch (value.toInt()) {
+              case 0:
+                return Text("Mon");
+              case 1:
+                return Text("Tue");
               case 2:
-                return Text("FEB");
+                return Text("Wed");
+              case 3:
+                return Text("Thu");
+              case 4:
+                return Text("Fri");
               case 5:
-                return Text("MAY");
-              case 8:
-                return Text("SEPT");
+                return Text("Sat");
+              case 6:
+                return Text("Sun");
             }
             return Text(" ");
           },
@@ -27,16 +35,8 @@ class LineTitles {
         sideTitles: SideTitles(
           showTitles: true,
           getTitlesWidget: (value, meta) {
-            if (value == 1) {
-              return Text("10k");
-            } else if (value == 2) {
-              return Text("20k");
-            } else if (value == 3) {
-              return Text("30k");
-            } else if (value == 4) {
-              return Text("40k");
-            } else if (value == 5) {
-              return Text("50k");
+            if (value % 1 == 0) {
+              return Text(value.toInt().toString());
             }
 
             return Text(" ");

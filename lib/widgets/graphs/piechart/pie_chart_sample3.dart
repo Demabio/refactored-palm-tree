@@ -1,19 +1,39 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tuple/tuple.dart';
 
-import '../../../theme/barcolors.dart';
-
+// ignore: must_be_immutable
 class PieChartSample3 extends StatefulWidget {
-  const PieChartSample3({super.key});
+  Tuple2<int?, int?>? data;
+
+  PieChartSample3({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PieChartSample3State();
 }
 
-class PieChartSample3State extends State {
+class PieChartSample3State extends State<PieChartSample3> {
   int touchedIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    verified = widget.data?.item1?.toDouble() ?? 0;
+    unverified = widget.data?.item2?.toDouble() ?? 0;
+    if (unverified + verified > 0) {
+      percentage = (verified / (verified + unverified)) * 100;
+    } else {
+      percentage = 0;
+    }
+  }
 
+  late double percentage;
+  late double verified;
+  late double unverified;
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -60,8 +80,9 @@ class PieChartSample3State extends State {
         case 0:
           return PieChartSectionData(
             color: Colors.green[200],
-            value: 30,
-            title: '30% - Verified',
+            value: percentage,
+            title: "${percentage.toInt()}% - Verified",
+
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -79,8 +100,8 @@ class PieChartSample3State extends State {
         case 1:
           return PieChartSectionData(
             color: Colors.green[900],
-            value: 70,
-            title: '70%-Unverified',
+            value: 100 - percentage,
+            title: "${100 - percentage.toInt()}% - Unverified",
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

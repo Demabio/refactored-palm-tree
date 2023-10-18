@@ -138,34 +138,6 @@ class SearchFarmerScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    BlocSelector<SearchFarmerBloc, SearchFarmerState,
-                        TextEditingController?>(
-                      selector: (state) => state.searchController,
-                      builder: (context, searchController) {
-                        return CustomElevatedButton(
-                          text: "lbl_search_farmer".tr,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 25.h, vertical: 69.v),
-                          leftIcon: Container(
-                              margin: EdgeInsets.only(right: 9.h),
-                              child: CustomImageView(
-                                  svgPath: ImageConstant.imgVolume)),
-                          buttonTextStyle:
-                              CustomTextStyles.titleMediumWhiteA700,
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              _firstTextFieldFocus.unfocus();
-                              context
-                                  .read<SearchFarmerBloc>()
-                                  .add(FarmerSearchEvent(
-                                    idNo: searchController?.text,
-                                    onError: () => farmerNotFound(context),
-                                  ));
-                            }
-                          },
-                        );
-                      },
-                    ),
                     Padding(
                       padding: EdgeInsets.only(left: 9.h, top: 5.v, right: 9.h),
                       child: BlocSelector<SearchFarmerBloc, SearchFarmerState,
@@ -198,6 +170,34 @@ class SearchFarmerScreen extends StatelessWidget {
                           );
                         },
                       ),
+                    ),
+                    BlocSelector<SearchFarmerBloc, SearchFarmerState,
+                        TextEditingController?>(
+                      selector: (state) => state.searchController,
+                      builder: (context, searchController) {
+                        return CustomElevatedButton(
+                          text: "lbl_search_farmer".tr,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 25.h, vertical: 69.v),
+                          leftIcon: Container(
+                              margin: EdgeInsets.only(right: 9.h),
+                              child: CustomImageView(
+                                  svgPath: ImageConstant.imgVolume)),
+                          buttonTextStyle:
+                              CustomTextStyles.titleMediumWhiteA700,
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              _firstTextFieldFocus.unfocus();
+                              context
+                                  .read<SearchFarmerBloc>()
+                                  .add(FarmerSearchEvent(
+                                    idNo: searchController?.text,
+                                    onError: () => farmerNotFound(context),
+                                  ));
+                            }
+                          },
+                        );
+                      },
                     ),
                   ],
                 ),

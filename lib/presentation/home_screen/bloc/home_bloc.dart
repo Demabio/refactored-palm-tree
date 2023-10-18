@@ -42,9 +42,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         searchController1: TextEditingController(),
         homeModelObj: state.homeModelObj
             ?.copyWith(userprofileItemList: fillUserprofileItemList())));
-    add(
-      DBCheckEvent(),
-    );
   }
 
   Future<Farmer?> getFarmer(String id) async {
