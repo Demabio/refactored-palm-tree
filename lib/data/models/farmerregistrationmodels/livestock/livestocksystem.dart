@@ -12,6 +12,15 @@ class FarmerLivestockFarmSystem {
     required this.dateCreated,
     this.createdBy,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerLivestockFarmSystemId': farmerLivestockFarmSystemId,
+      'farmerId': farmerId,
+      'livestockFarmSystemCatId': livestockFarmSystemCatId,
+      'dateCreated': dateCreated?.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory FarmerLivestockFarmSystem.fromSqfliteDatabase(
           Map<String, dynamic> map) =>

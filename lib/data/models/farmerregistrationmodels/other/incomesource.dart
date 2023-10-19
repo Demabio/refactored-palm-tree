@@ -12,6 +12,15 @@ class FarmerIncomeSource {
     required this.farmerId,
     this.other,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerIncomeId': farmerIncomeId,
+      'incomeSourceId': incomeSourceId,
+      'priorityLevel': priorityLevel,
+      'farmerId': farmerId,
+      'other': other,
+    };
+  }
 
   factory FarmerIncomeSource.fromSqfliteDatabase(Map<String, dynamic> map) =>
       FarmerIncomeSource(

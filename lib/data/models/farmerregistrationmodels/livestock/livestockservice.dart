@@ -32,6 +32,25 @@ class FarmerLivestockService {
     this.dateCreated,
     this.createdBy,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerLivestockServicesId': farmerLivestockServicesId,
+      'farmerId': farmerId,
+      'farmerFarmId': farmerFarmId,
+      'livestockArea': livestockArea,
+      'areaUnitId': areaUnitId,
+      'fertilizerForFodder': fertilizerForFodder,
+      'fodderSeeds': fodderSeeds,
+      'fertilizerSeeds': fertilizerSeeds,
+      'aiUse': aiUse,
+      'hormoneUse': hormoneUse,
+      'embryoTransfer': embryoTransfer,
+      'routineVaccination': routineVaccination,
+      'curativeMeasures': curativeMeasures,
+      'dateCreated': dateCreated?.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory FarmerLivestockService.fromSqfliteDatabase(
           Map<String, dynamic> map) =>

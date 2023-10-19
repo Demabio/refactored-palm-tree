@@ -19,6 +19,19 @@ class FarmerIrrigationCrop {
     this.createdBy,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'irrigationCropId': irrigationCropId,
+      'farmerId': farmerId,
+      'cropId': cropId,
+      'areaOfCrop': areaOfCrop,
+      'areaUnitId': areaUnitId,
+      'noOfCropPerYear': noOfCropPerYear,
+      'dateCreated': dateCreated?.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
+
   factory FarmerIrrigationCrop.fromSqfliteDatabase(Map<String, dynamic> map) =>
       FarmerIrrigationCrop(
         irrigationCropId: map['irrigation_crop_id']?.toInt() ?? 0,

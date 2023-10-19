@@ -14,6 +14,16 @@ class LivestockFarmSystemCategory {
     required this.dateCreated,
     this.createdBy,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'livestockFarmsystemCatId': livestockFarmsystemCatId,
+      'livestockCatId': livestockCatId,
+      'livestockFarmsystemId': livestockFarmsystemId,
+      'livestockFarmsysCatCode': livestockFarmsysCatCode,
+      'dateCreated': dateCreated.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory LivestockFarmSystemCategory.fromSqfliteDatabase(
       Map<String, dynamic> map) {

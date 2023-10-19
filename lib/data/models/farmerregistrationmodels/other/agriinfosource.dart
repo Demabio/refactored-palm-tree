@@ -8,6 +8,13 @@ class FarmerAgriInfoSource {
     required this.agriInfoSourceId,
     required this.farmerId,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerAgriInfoSourceId': farmerAgriInfoSourceId,
+      'agriInfoSourceId': agriInfoSourceId,
+      'farmerId': farmerId,
+    };
+  }
 
   factory FarmerAgriInfoSource.fromSqfliteDatabase(Map<String, dynamic> map) =>
       FarmerAgriInfoSource(

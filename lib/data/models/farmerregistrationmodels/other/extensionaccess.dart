@@ -14,6 +14,16 @@ class FarmerExtensionAccess {
     this.dateCreated,
     this.createdBy,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerExtensionAccessId': farmerExtensionAccessId,
+      'farmerId': farmerId,
+      'farmerFarmId': farmerFarmId,
+      'extensionSourceId': extensionSourceId,
+      'dateCreated': dateCreated?.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory FarmerExtensionAccess.fromSqfliteDatabase(Map<String, dynamic> map) =>
       FarmerExtensionAccess(

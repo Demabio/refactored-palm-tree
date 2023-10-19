@@ -262,10 +262,34 @@ class FarmerDB {
     }
   }
 
+  Future<int> updateToPosted(Farmer farmer) async {
+    final database = await DatabaseService().database;
+    try {
+      return await database.rawUpdate(
+        '''
+    UPDATE $tableName SET registrationStatusId = 2
+    WHERE completed = 1
+  ''',
+      );
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
   Future<List<Farmer>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmerList = await database.rawQuery('SELECT * FROM $tableName');
     return farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<Farmer>?> fetchCompleted() async {
+    final database = await DatabaseService().database;
+    final farmerList =
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
+    return farmerList.isNotEmpty
+        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
+        : null;
   }
 
   Future<Farmer?> fetchByFarmerId(int farmerId) async {

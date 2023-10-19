@@ -18,6 +18,18 @@ class FarmerCooperativeGroup {
     this.createdBy,
     this.dateCreated,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'farmerCooperativeGroupId': farmerCooperativeGroupId,
+      'farmerId': farmerId,
+      'farmerFarmId': farmerFarmId,
+      'cooperateiveGroupId': cooperateiveGroupId,
+      'cooperateiveGroupName': cooperateiveGroupName,
+      'other': other,
+      'createdBy': createdBy,
+      'dateCreated': dateCreated?.toIso8601String(),
+    };
+  }
 
   factory FarmerCooperativeGroup.fromSqfliteDatabase(
           Map<String, dynamic> map) =>
