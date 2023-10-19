@@ -90,7 +90,6 @@ class FarmerDB {
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
       0,
-      DateTime.now().toLocal().toIso8601String(),
     ]);
   }
 

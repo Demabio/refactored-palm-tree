@@ -57,7 +57,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (farmer == null) {
       PrefUtils().setFarmerId(0);
       PrefUtils().setFarmerName("N/A");
-      PrefUtils().setFarmerIdNo("");
+      PrefUtils().setFarmerIdNo(event.idNo!);
       PrefUtils().setFound(false);
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);

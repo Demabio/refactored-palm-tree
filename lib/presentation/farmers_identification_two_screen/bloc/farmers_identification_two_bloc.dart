@@ -60,7 +60,7 @@ class FarmersIdentificationTwoBloc
     int currentYear = DateTime.now().year;
     List<SelectionPopupModel> itemList = [];
 
-    for (int year = currentYear; year >= currentYear - 18; year--) {
+    for (int year = currentYear - 18; year >= currentYear - 120; year--) {
       itemList.add(SelectionPopupModel(id: year, title: "$year"));
     }
 
