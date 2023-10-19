@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       style: theme.textTheme
                                                           .labelLarge),
                                                   SizedBox(height: 1.v),
-                                                  Text("lbl_10".tr,
+                                                  Text(state.a.toString(),
                                                       style: CustomTextStyles
                                                           .titleMediumPrimary)
                                                 ]))
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       style: theme.textTheme
                                                           .labelLarge),
                                                   SizedBox(height: 1.v),
-                                                  Text("lbl_48".tr,
+                                                  Text(state.b.toString(),
                                                       style: CustomTextStyles
                                                           .titleMediumPrimary)
                                                 ]))
@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       style: theme.textTheme
                                                           .labelMedium),
                                                   SizedBox(height: 2.v),
-                                                  Text("lbl_100".tr,
+                                                  Text(state.c.toString(),
                                                       style: CustomTextStyles
                                                           .titleMediumPrimary)
                                                 ]))
@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Text("lbl_rejected".tr,
                                                           style: theme.textTheme
                                                               .labelLarge),
-                                                      Text("lbl_30".tr,
+                                                      Text(state.d.toString(),
                                                           style: CustomTextStyles
                                                               .titleMediumInterPrimary)
                                                     ]))
@@ -282,44 +282,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Expanded(
                                   child: Container(
-                                      margin: EdgeInsets.only(right: 8.h),
+                                      margin:
+                                          EdgeInsets.only(top: 1.v, right: 8.h),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.h, vertical: 19.v),
                                       decoration: AppDecoration.fillGray
                                           .copyWith(
                                               borderRadius: BorderRadiusStyle
                                                   .roundedBorder15),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CustomIconButton(
-                                                height: 45.adaptSize,
-                                                width: 45.adaptSize,
-                                                padding: EdgeInsets.all(12.h),
-                                                decoration:
-                                                    IconButtonStyleHelper
-                                                        .fillPrimaryContainer,
-                                                child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgWarning)),
-                                            Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 10.h, bottom: 2.v),
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text("lbl_iprs_failed".tr,
-                                                          style: theme.textTheme
-                                                              .labelLarge),
-                                                      SizedBox(height: 1.v),
-                                                      Text("lbl_3".tr,
-                                                          style: CustomTextStyles
-                                                              .titleMediumPrimary)
-                                                    ]))
-                                          ]))),
+                                      child: Row(children: [
+                                        CustomIconButton(
+                                            height: 45.adaptSize,
+                                            width: 45.adaptSize,
+                                            padding: EdgeInsets.all(12.h),
+                                            decoration: IconButtonStyleHelper
+                                                .fillPrimaryContainer,
+                                            child: CustomImageView(
+                                                svgPath:
+                                                    ImageConstant.imgWarning)),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 10.h, bottom: 2.v),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("lbl_iprs_failed".tr,
+                                                      style: theme.textTheme
+                                                          .labelMedium),
+                                                  SizedBox(height: 2.v),
+                                                  Text(state.c.toString(),
+                                                      style: CustomTextStyles
+                                                          .titleMediumPrimary)
+                                                ]))
+                                      ]))),
                               Expanded(
                                   child: Container(
                                       margin: EdgeInsets.only(left: 8.h),
@@ -352,7 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Align(
                                                       alignment:
                                                           Alignment.center,
-                                                      child: Text("lbl_200".tr,
+                                                      child: Text(
+                                                          state.f.toString(),
                                                           style: CustomTextStyles
                                                               .titleMediumPrimary))
                                                 ]))
@@ -394,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     textInputType:
                                                         TextInputType.number,
                                                     validator: (value) {
-                                                      if (!isNumeric(value,
+                                                      if (!isID(value,
                                                           isRequired: true)) {
                                                         return "Please provide a valid ID Number";
                                                       } else {

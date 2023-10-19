@@ -46,20 +46,38 @@ class LivestockOnePageState extends State<LivestockOnePage>
                 children: [
                   Row(
                     children: [
-                      Text(
-                        "lbl_farmer_info".tr,
-                        style: CustomTextStyles.labelMediumPrimary,
+                      Padding(
+                        padding: EdgeInsets.only(left: 21.h),
+                        child: Text(
+                          "lbl_farmer_info".tr,
+                          style: CustomTextStyles.labelMediumPrimary,
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 21.h),
                         child: Text(
-                          "msg_farmer_felix_faro".tr,
+                          PrefUtils().getFarmerName(),
                           style: theme.textTheme.labelMedium,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 13.v),
+                  Center(
+                    child: BlocSelector<LivestockOneBloc, LivestockOneState,
+                        List<LSdetailsItemModel>?>(
+                      selector: (state) => state.livestockOneModelObj?.lsmodels,
+                      builder: (context, models) {
+                        return Visibility(
+                          visible: models!.isEmpty,
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 24.h, top: 60.v),
+                              child: Text("No Livestock Found".tr,
+                                  style: CustomTextStyles.titleMediumSemiBold)),
+                        );
+                      },
+                    ),
+                  ),
                   SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.only(left: 9.h, top: 5.v),

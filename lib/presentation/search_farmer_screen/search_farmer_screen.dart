@@ -67,7 +67,7 @@ class SearchFarmerScreen extends StatelessWidget {
               styleType: Style.bgFill),
           drawer: SideMenuDraweritem(),
           key: _scaffoldKey,
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: Form(
             key: _formKey,
             child: SizedBox(
@@ -129,11 +129,27 @@ class SearchFarmerScreen extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(left: 21.h),
                                 child: Text(
-                                  name ?? "Search Farmer",
+                                  PrefUtils().getFarmerName(),
                                   style: theme.textTheme.labelMedium,
                                 ),
                               ),
                             ],
+                          );
+                        },
+                      ),
+                    ),
+                    Center(
+                      child: BlocSelector<SearchFarmerBloc, SearchFarmerState,
+                          List<FdetailsItemModel>?>(
+                        selector: (state) => state.fmodel,
+                        builder: (context, models) {
+                          return Visibility(
+                            visible: models!.isEmpty,
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 24.h, top: 60.v),
+                                child: Text("No Farms Found".tr,
+                                    style:
+                                        CustomTextStyles.titleMediumSemiBold)),
                           );
                         },
                       ),
@@ -210,19 +226,21 @@ class SearchFarmerScreen extends StatelessWidget {
   }
 
   addorEdit(BuildContext context, int id, int crop) {
-    if (crop > 0) {
-      context.read<SearchFarmerBloc>().add(
-            AddEditEvent(
-              value: id,
-              crop: crop,
-              createSuccessful: () {
-                onTapSearchfarmer(context);
-              },
-              createFailed: () {
-                onTapSearchfarmer(context);
-              },
-            ),
-          );
+    if (PrefUtils().getFound()) {
+      if (crop > 0) {
+        context.read<SearchFarmerBloc>().add(
+              AddEditEvent(
+                value: id,
+                crop: crop,
+                createSuccessful: () {
+                  onTapSearchfarmer(context);
+                },
+                createFailed: () {
+                  onTapSearchfarmer(context);
+                },
+              ),
+            );
+      }
     } else {
       closedialog(context, "Search Farmer First",
           "Kindly search a farmer to add a new farm");

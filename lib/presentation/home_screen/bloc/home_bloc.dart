@@ -35,9 +35,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeInitialEvent event,
     Emitter<HomeState> emit,
   ) async {
+    FarmerDB farmerDB = FarmerDB();
+
+    int? allfarmers = await farmerDB.getFarmersCount();
+    int? savedfarmers = await farmerDB.getSaved();
+    int? verfarmers = await farmerDB.getApproved();
+    int? rejfarmers = await farmerDB.getUnapproved();
+    int? unverfarmers = await farmerDB.getUnverified();
+    int? iprs = 0;
+    // await farmerDB.getFarmersCount();
+
     PrefUtils().setFound(false);
 
     emit(state.copyWith(
+        a: savedfarmers,
+        b: verfarmers,
+        c: unverfarmers,
+        d: rejfarmers,
+        e: iprs,
+        f: allfarmers,
         searchController: TextEditingController(),
         searchController1: TextEditingController(),
         homeModelObj: state.homeModelObj

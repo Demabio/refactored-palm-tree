@@ -67,6 +67,22 @@ class CropAgricultureScreen extends StatelessWidget {
                           child: Text(PrefUtils().getFarmerName(),
                               style: theme.textTheme.labelMedium))
                     ])),
+                Center(
+                  child: BlocSelector<CropAgricultureBloc, CropAgricultureState,
+                      List<CropdetailsItemModel>?>(
+                    selector: (state) =>
+                        state.cropAgricultureModelObj?.cropdetailsItemList,
+                    builder: (context, models) {
+                      return Visibility(
+                        visible: models!.isEmpty,
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 24.h, top: 60.v),
+                            child: Text("No Crops Found".tr,
+                                style: CustomTextStyles.titleMediumSemiBold)),
+                      );
+                    },
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 9.h, top: 5.v),

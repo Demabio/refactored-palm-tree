@@ -648,9 +648,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
   }
 
   void _failed(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            "Something went wrong, Kindly confirm all fields are filled.")));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Something went wrong.")));
   }
 
   saveDraft(BuildContext context) {

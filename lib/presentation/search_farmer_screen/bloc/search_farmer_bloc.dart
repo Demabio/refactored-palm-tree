@@ -37,11 +37,15 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     if (farmer == null) {
       PrefUtils().setFarmerId(0);
       PrefUtils().setFarmerName("N/A");
-      PrefUtils().setFarmerIdNo("");
+      PrefUtils().setFarmerIdNo(event.idNo!);
       PrefUtils().setFound(false);
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
+      List<FdetailsItemModel>? models = [];
+      emit(state.copyWith(
+        fmodel: models,
+      ));
       event.onError?.call();
     } else {
       PrefUtils().setFarmerId(farmer.farmerId);
@@ -68,11 +72,11 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
             y: farm.y.toString(),
           ));
         }
-        emit(state.copyWith(
-          fmodel: models,
-          name: farmer.farmerName,
-        ));
       }
+      emit(state.copyWith(
+        fmodel: models,
+        name: farmer.farmerName,
+      ));
     }
   }
 
@@ -109,7 +113,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
       FarmerFarmDB farmerLivestockFeedsDB = FarmerFarmDB();
       int del = await farmerLivestockFeedsDB.delete(event.value!);
       if (del > 0) {
-        List<FarmerFarm>? farms = await getFarms(PrefUtils().getFarmId());
+        List<FarmerFarm>? farms = await getFarms(PrefUtils().getFarmerId());
         List<FdetailsItemModel>? models = [];
 
         if (farms != null) {
@@ -118,6 +122,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
                 "${farm.cropProd! ? "Crop" : ""}, ${farm.livestockProd! ? "Livestock" : ""}, ${farm.fishFarming! ? "Fish" : ""}";
 
             models.add(FdetailsItemModel(
+              id: farm.farmerFarmId,
               prod: production,
               name: farm.farmName,
               landsize: farm.farmSize.toString(),

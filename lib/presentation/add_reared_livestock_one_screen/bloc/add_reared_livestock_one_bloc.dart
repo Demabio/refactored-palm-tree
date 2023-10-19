@@ -500,7 +500,8 @@ class AddRearedLivestockOneBloc
             farmerFarmId: PrefUtils().getFarmId(),
             farmerId: PrefUtils().getFarmerId(),
             dateCreated: DateTime.now(),
-            noOfBeehives: int.parse(state.hives?.text ?? "0"),
+            noOfBeehives:
+                int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
             createdBy: userId,
             farmerLivestockId: 0,
           ))
@@ -512,7 +513,8 @@ class AddRearedLivestockOneBloc
                 dateCreated: DateTime.now(),
                 createdBy: userId,
                 farmerLivestockId: value,
-                noOfBeehives: int.parse(state.hives?.text ?? "0"),
+                noOfBeehives: int.parse(
+                    state.hives?.text == "" ? "0" : state.hives!.text),
                 livestockFarmsystemCatId: state
                     .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
                 livestockId:
@@ -648,7 +650,8 @@ class AddRearedLivestockOneBloc
               dateCreated: DateTime.now(),
               createdBy: userId,
               farmerLivestockId: PrefUtils().getLivestockId(),
-              noOfBeehives: int.parse(state.hives?.text ?? "0"),
+              noOfBeehives:
+                  int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
               livestockFarmsystemCatId: state
                   .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
               livestockId:

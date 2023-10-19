@@ -64,8 +64,12 @@ class PrimaryFarmHoldingOneBloc
     double farmsize = double.parse(state.sizeController!.text);
     double cropsize = double.parse(state.sizeoneController!.text);
     double livesize = double.parse(state.areaController!.text);
-    double leasedsize = double.parse(state.sizeLandLeasedController!.text);
-    double idlesize = double.parse(state.sizeLandIdleController!.text);
+    double leasedsize = double.parse(state.sizeLandLeasedController?.text == ""
+        ? "0"
+        : state.sizeLandLeasedController!.text);
+    double idlesize = double.parse(state.sizeLandIdleController?.text == ""
+        ? "0"
+        : state.sizeLandIdleController!.text);
 
     double combined = cropsize + livesize + leasedsize + idlesize;
 
@@ -110,10 +114,14 @@ class PrimaryFarmHoldingOneBloc
                   .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
               cropFarmSize: double.parse(state.sizeoneController!.text),
               livestockFarmSize: double.parse(state.areaController!.text),
-              leasedFarmSize:
-                  double.parse(state.sizeLandLeasedController?.text ?? "0"),
-              idleFarmSize:
-                  double.parse(state.sizeLandIdleController?.text ?? "0"),
+              leasedFarmSize: double.parse(
+                  state.sizeLandLeasedController?.text == ""
+                      ? "0"
+                      : state.sizeLandLeasedController!.text),
+              idleFarmSize: double.parse(
+                  state.sizeLandIdleController?.text == ""
+                      ? "0"
+                      : state.sizeLandIdleController!.text),
             ));
 
             PFProgressDB pfProgressDB = PFProgressDB();
@@ -135,6 +143,7 @@ class PrimaryFarmHoldingOneBloc
                   ))
                   .then((value) => print("Scope FI" + value.toString()));
             }
+            event.createSuccessful!.call();
           } else {
             event.createFailed!.call();
           }
@@ -160,9 +169,9 @@ class PrimaryFarmHoldingOneBloc
               .then((value) => print(
                     "Updated scop: " + value.toString(),
                   ));
+          event.createSuccessful!.call();
         }
       }
-      event.createSuccessful!.call();
     } catch (e) {
       event.createFailed!.call();
     }
@@ -175,8 +184,12 @@ class PrimaryFarmHoldingOneBloc
     double farmsize = double.parse(state.sizeController!.text);
     double cropsize = double.parse(state.sizeoneController!.text);
     double livesize = double.parse(state.areaController!.text);
-    double leasedsize = double.parse(state.sizeLandLeasedController!.text);
-    double idlesize = double.parse(state.sizeLandIdleController!.text);
+    double leasedsize = double.parse(state.sizeLandLeasedController?.text == ""
+        ? "0"
+        : state.sizeLandLeasedController!.text);
+    double idlesize = double.parse(state.sizeLandIdleController?.text == ""
+        ? "0"
+        : state.sizeLandIdleController!.text);
 
     double combined = cropsize + livesize + leasedsize + idlesize;
 
@@ -184,40 +197,85 @@ class PrimaryFarmHoldingOneBloc
       event.validation?.call();
       return;
     }
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    String enumeratorname = claims.payload['fullName'];
+    String enumeratorarea = claims.payload['roleID'];
 
-    if (PrefUtils().getYesNo()) {
-      final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
-      String enumeratorname = claims.payload['fullName'];
-      String enumeratorarea = claims.payload['roleID'];
+    String enumeratormobile = claims.payload['mobilephone'];
 
-      String enumeratormobile = claims.payload['mobilephone'];
+    FarmerFarmDB farmDB = FarmerFarmDB();
+    int farmerid = PrefUtils().getFarmId();
+    try {
+      if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
+        farmDB
+            .create(FarmerFarm(
+          farmerFarmId: 0,
+          farmerId: PrefUtils().getFarmerId(),
+          dateCreated: DateTime.now(),
+          createdBy: userId,
+        ))
+            .then((value) {
+          if (value > 0) {
+            PrefUtils().setFarmId(value);
 
-      FarmerFarmDB farmDB = FarmerFarmDB();
-      int farmerid = PrefUtils().getFarmId();
-      try {
-        if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
+            farmDB.updatePageOne(FarmerFarm(
+              farmerFarmId: value,
+              farmerId: farmerid,
+              villageName: state.vil?.text,
+              shoppingCenter: state.shop?.text,
+              farmName: state.nameController!.text,
+              enumeratorId: userId.toString(),
+              enumerationAreaNumber: enumeratorarea,
+              enumeratorName: enumeratorname,
+              enumeratorMobile: enumeratormobile,
+              farmSize: double.parse(state.sizeController!.text),
+              areaUnitId: state
+                  .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+              cropFarmSize: double.parse(state.sizeoneController!.text),
+              livestockFarmSize: double.parse(state.areaController!.text),
+              leasedFarmSize: double.parse(
+                  state.sizeLandLeasedController?.text == ""
+                      ? "0"
+                      : state.sizeLandLeasedController!.text),
+              idleFarmSize: double.parse(
+                  state.sizeLandIdleController?.text == ""
+                      ? "0"
+                      : state.sizeLandIdleController!.text),
+            ));
+
+            PFProgressDB pfProgressDB = PFProgressDB();
+            if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 0) {
+              pfProgressDB
+                  .insert(PFProgress(
+                    farmId: value,
+                    pageOne: 1,
+                    pageTwo: 0,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            } else {
+              pfProgressDB
+                  .update(PFProgress(
+                    farmId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .primaryFarmHoldingOneModelObj!.pfProgress!.pageTwo,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            }
+            event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
+          }
+        });
+      }
+      if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
+        if (farmerid != 0) {
           farmDB
-              .create(FarmerFarm(
-            farmerFarmId: 0,
-            farmerId: PrefUtils().getFarmerId(),
-            dateCreated: DateTime.now(),
-            createdBy: userId,
-          ))
-              .then((value) {
-            if (value > 0) {
-              PrefUtils().setFarmId(value);
-
-              farmDB.updatePageOne(FarmerFarm(
-                farmerFarmId: value,
+              .updatePageOne(FarmerFarm(
+                farmerFarmId: PrefUtils().getFarmId(),
                 farmerId: farmerid,
-                villageName: state.vil?.text,
-                shoppingCenter: state.shop?.text,
                 farmName: state.nameController!.text,
-                enumeratorId: userId.toString(),
-                enumerationAreaNumber: enumeratorarea,
-                enumeratorName: enumeratorname,
-                enumeratorMobile: enumeratormobile,
                 farmSize: double.parse(state.sizeController!.text),
                 areaUnitId: state
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
@@ -227,59 +285,15 @@ class PrimaryFarmHoldingOneBloc
                     double.parse(state.sizeLandLeasedController?.text ?? "0"),
                 idleFarmSize:
                     double.parse(state.sizeLandIdleController?.text ?? "0"),
-              ));
-
-              PFProgressDB pfProgressDB = PFProgressDB();
-              if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne ==
-                  0) {
-                pfProgressDB
-                    .insert(PFProgress(
-                      farmId: value,
-                      pageOne: 1,
-                      pageTwo: 0,
-                    ))
-                    .then((value) => print("Scope FI" + value.toString()));
-              } else {
-                pfProgressDB
-                    .update(PFProgress(
-                      farmId: value,
-                      pageOne: 1,
-                      pageTwo: state
-                          .primaryFarmHoldingOneModelObj!.pfProgress!.pageTwo,
-                    ))
-                    .then((value) => print("Scope FI" + value.toString()));
-              }
-            } else {
-              event.createFailed!.call();
-            }
-          });
+              ))
+              .then((value) => print(
+                    "Updated scop: " + value.toString(),
+                  ));
+          event.createSuccessful!.call();
         }
-        if (state.primaryFarmHoldingOneModelObj!.pfProgress!.pageOne == 1) {
-          if (farmerid != 0) {
-            farmDB
-                .updatePageOne(FarmerFarm(
-                  farmerFarmId: PrefUtils().getFarmId(),
-                  farmerId: farmerid,
-                  farmName: state.nameController!.text,
-                  farmSize: double.parse(state.sizeController!.text),
-                  areaUnitId: state
-                      .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
-                  cropFarmSize: double.parse(state.sizeoneController!.text),
-                  livestockFarmSize: double.parse(state.areaController!.text),
-                  leasedFarmSize:
-                      double.parse(state.sizeLandLeasedController?.text ?? "0"),
-                  idleFarmSize:
-                      double.parse(state.sizeLandIdleController?.text ?? "0"),
-                ))
-                .then((value) => print(
-                      "Updated scop: " + value.toString(),
-                    ));
-          }
-        }
-        event.createSuccessful!.call();
-      } catch (e) {
-        event.createFailed!.call();
       }
+    } catch (e) {
+      event.createFailed!.call();
     }
   }
 
