@@ -286,7 +286,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchCompleted() async {
     final database = await DatabaseService().database;
     final farmerList =
-        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;

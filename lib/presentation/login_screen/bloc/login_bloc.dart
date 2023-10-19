@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/sqlService/dataexporter.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import '../../../data/models/dbModels/crops/crop.dart';
 import '../../../data/sqlService/dbutils.dart';
@@ -25,6 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   final _repository = Repository();
   final _dbutils = DBUtils();
+  final _export = DataExporter();
 
   var postLoginUserServicePostResp = PostLoginUserServicePostResp();
 
@@ -46,6 +48,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginInitialEvent event,
     Emitter<LoginState> emit,
   ) async {
+    _export.test();
     //   PrefUtils().setFarmerId(0);
     emit(state.copyWith(
         userNameController: TextEditingController(),

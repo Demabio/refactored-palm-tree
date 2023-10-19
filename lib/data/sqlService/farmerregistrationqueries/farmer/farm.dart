@@ -223,7 +223,7 @@ class FarmerFarmDB {
   Future<List<FarmerFarm>?> fetchByFarmer(int id) async {
     final database = await DatabaseService().database;
     final farmerFarms = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_id = ?
+      SELECT * FROM $tableName  WHERE farmer_id = ? ORDER BY farmer_farm_id
     ''', [id]);
 
     return farmerFarms.isNotEmpty
