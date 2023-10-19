@@ -48,7 +48,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginInitialEvent event,
     Emitter<LoginState> emit,
   ) async {
-    _export.test();
+    // String json = await _export.test();
+    // print(json);
     //   PrefUtils().setFarmerId(0);
     emit(state.copyWith(
         userNameController: TextEditingController(),

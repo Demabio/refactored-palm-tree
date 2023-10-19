@@ -4,8 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:io';
 
 import 'network_interceptor.dart';
+import 'package:path/path.dart';
 
 class ApiClient {
   factory ApiClient() {
@@ -39,6 +42,37 @@ class ApiClient {
       return response.statusCode! >= 200 && response.statusCode! <= 299;
     }
     return false;
+  }
+
+  Future<String> uploadSQLiteDB() async {
+    // Create a Dio client
+    const name = 'localdevice.db';
+    final path = await getDatabasesPath();
+    PrefUtils().setDBPath(path);
+    String dbpath = join(path, name);
+    // Read the SQLite DB file contents into a buffer
+    final fileBytes = await File(dbpath).readAsBytes();
+
+    // Create a FormData object to contain the file bytes
+    final formData = FormData.fromMap({
+      'file':
+          await MultipartFile.fromBytes(fileBytes, filename: 'localdevice.db'),
+    });
+
+    // Send a POST request to the server to upload the file
+    final response = await _dio.post(
+      'url/uploadservice',
+      data: formData,
+    );
+
+    // Check the response status code
+    if (response.statusCode != 200) {
+      throw Exception(
+          'Failed to upload SQLite DB file: ${response.statusCode}');
+    }
+
+    // Return the URL of the uploaded file on the server
+    return response.data;
   }
 
   Future<Response> setupServicePost({
