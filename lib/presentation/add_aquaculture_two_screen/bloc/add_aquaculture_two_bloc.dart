@@ -59,8 +59,6 @@ class AddAquacultureTwoBloc
             );
     if (pfProgress.pageTwo == 1 &&
         farmerFishProductionLevel.productionLevelId != 0) {
-      ProgressDialogUtils.showProgressDialog();
-
       List<FarmerFishInput>? fishes = await getFishes();
 
       fish = await fetchFish();
@@ -69,7 +67,7 @@ class AddAquacultureTwoBloc
 
       aa = a.firstWhere(
         (model) =>
-            model.id == {farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0},
+            model.id == (farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0),
       );
 
       bb = b.firstWhere(
@@ -89,7 +87,7 @@ class AddAquacultureTwoBloc
     emit(state.copyWith(
         addAquacultureTwoModelObj: state.addAquacultureTwoModelObj?.copyWith(
       dropdownItemList: a,
-      dropdownItemList1: await fetchAProductionLevels(),
+      dropdownItemList1: b,
       dropdownItemList2: a,
       stepped2: stepper,
       selectedDropDownValue: aa,
@@ -181,8 +179,6 @@ class AddAquacultureTwoBloc
     SaveTapEvent event,
     Emitter<AddAquacultureTwoState> emit,
   ) async {
-    ProgressDialogUtils.showProgressDialog();
-
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload['nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
@@ -258,10 +254,8 @@ class AddAquacultureTwoBloc
           checked: selectedCount == 0,
         ));
       }
-      ProgressDialogUtils.hideProgressDialog();
     } catch (e) {
       event.createFailed!.call();
-      ProgressDialogUtils.hideProgressDialog();
     }
   }
 

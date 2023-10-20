@@ -37,6 +37,10 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     if (farmer == null) {
       PrefUtils().setFarmerId(0);
       PrefUtils().setFarmerName("N/A");
+      PrefUtils().setBee("0");
+      PrefUtils().setAgeGroups("0");
+      PrefUtils().setFeeds("0");
+
       PrefUtils().setFarmerIdNo(event.idNo!);
       PrefUtils().setFound(false);
       PrefUtils().setCropId(0);
@@ -55,6 +59,9 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
+      PrefUtils().setBee("0");
+      PrefUtils().setAgeGroups("0");
+      PrefUtils().setFeeds("0");
       List<FarmerFarm>? farms = await getFarms(farmer.farmerId);
       List<FdetailsItemModel>? models = [];
 

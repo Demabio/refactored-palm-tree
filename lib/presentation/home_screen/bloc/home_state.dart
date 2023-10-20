@@ -9,23 +9,23 @@ class HomeState extends Equatable {
     this.searchController1,
     this.homeModelObj,
     this.bardata,
-    this.a,
-    this.b,
-    this.c,
-    this.d,
-    this.e,
-    this.f,
+    this.a = 0,
+    this.b = 0,
+    this.c = 0,
+    this.d = 0,
+    this.e = 0,
+    this.f = 0,
   });
 
   TextEditingController? searchController;
 
   TextEditingController? searchController1;
-  int? a;
-  int? b;
-  int? c;
-  int? d;
-  int? e;
-  int? f;
+  int a;
+  int b;
+  int c;
+  int d;
+  int e;
+  int f;
   HomeModel? homeModelObj;
   List<Map<String, Object?>>? bardata;
   @override

@@ -78,6 +78,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
+      PrefUtils().setBee("0");
+      PrefUtils().setAgeGroups("0");
+      PrefUtils().setFeeds("0");
 
       event.onError!.call();
     } else {
@@ -88,6 +91,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       PrefUtils().setCropId(0);
       PrefUtils().setFarmId(0);
       PrefUtils().setLivestockId(0);
+      PrefUtils().setBee("0");
+      PrefUtils().setAgeGroups("0");
+      PrefUtils().setFeeds("0");
       event.onSuccess!.call();
     }
   }

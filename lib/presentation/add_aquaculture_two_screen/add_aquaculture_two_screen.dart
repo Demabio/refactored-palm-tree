@@ -49,6 +49,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
           appBar: CustomAppBar(
             leadingWidth: 60.h,
             leading: AppbarImage(
+              onTap: () => goBack(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
                 left: 16.h,
@@ -288,7 +289,8 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                           right: 21.h,
                         ),
                         child: Text(
-                          "msg_does_the_household2".tr,
+                          "Have you benefited from Economic Stimulus Programme(ESP)? (*)"
+                              .tr,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: CustomTextStyles.labelMediumPrimary_1,
