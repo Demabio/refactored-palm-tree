@@ -488,168 +488,30 @@ class AddRearedLivestockOneBloc
     SaveTapEvent event,
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
-    if (PrefUtils().getYesNo()) {
-      final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
-      FarmerLivestockDB farmDB = FarmerLivestockDB();
-      try {
-        if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0 &&
-            state.feedsdlist!.isNotEmpty) {
-          farmDB
-              .insertNonNulls(FarmerLivestock(
-            farmerFarmId: PrefUtils().getFarmId(),
-            farmerId: PrefUtils().getFarmerId(),
-            dateCreated: DateTime.now(),
-            noOfBeehives:
-                int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
-            createdBy: userId,
-            farmerLivestockId: 0,
-          ))
-              .then((value) async {
-            if (value > 0) {
-              farmDB.update(FarmerLivestock(
-                farmerFarmId: PrefUtils().getFarmId(),
-                farmerId: PrefUtils().getFarmerId(),
-                dateCreated: DateTime.now(),
-                createdBy: userId,
-                farmerLivestockId: value,
-                noOfBeehives: int.parse(
-                    state.hives?.text == "" ? "0" : state.hives!.text),
-                livestockFarmsystemCatId: state
-                    .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
-                livestockId:
-                    state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
-              ));
-
-              PrefUtils().setLivestockId(value);
-
-              String agegroups = PrefUtils().getAgeGroups();
-              if (agegroups != "0") {
-                List<dynamic> decageGroupMapList = jsonDecode(agegroups);
-
-                // Create a list of AgeGroupModel objects from the list of dynamic objects
-                List<AgeGroupModel> ageGroupList = decageGroupMapList
-                    .map((json) => AgeGroupModel.fromJson(json))
-                    .toList();
-
-                FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
-                    FarmerLivestockAgeGroupsDB();
-                List<FarmerLivestockAgeGroup> ents = [];
-
-                for (var ent in ageGroupList) {
-                  if (ent.isSelected) {
-                    ents.add(FarmerLivestockAgeGroup(
-                      farmerLivestockAgegroupId: 0,
-                      farmerLivestockId: value,
-                      ageGroupId: ent.ageGroupId!,
-                      noOfLivestockMale: int.parse(ent.males!),
-                      noOfLivestockFemale: int.parse(ent.females!),
-                      createdBy: userId,
-                      dateCreated: DateTime.now(),
-                    ));
-                  }
-                }
-
-                await farmerLivestockAgeGroupsDB
-                    .insertAgeGroups(ents)
-                    .then((value) => print("inserted $value"));
-              }
-
-              String feeds = PrefUtils().getFeeds();
-              if (feeds != "0") {
-                List<dynamic> feedsdlist = jsonDecode(feeds);
-
-                List<FeedsModel> feedslist = feedsdlist
-                    .map((json) => FeedsModel.fromJson(json))
-                    .toList();
-
-                FarmerLivestockFeedsDB farmerLivestockFeedsDB =
-                    FarmerLivestockFeedsDB();
-
-                List<FarmerLivestockFeed> feedlist = [];
-
-                for (var ent in feedslist) {
-                  if (ent.isSelected) {
-                    feedlist.add(FarmerLivestockFeed(
-                      farmerLivestockId: value,
-                      createdBy: userId,
-                      dateCreated: DateTime.now(),
-                      farmerLivestockFeedId: 0,
-                      feedQuantity: 0,
-                      feedTypeId: ent.id!,
-                    ));
-                  }
-                }
-
-                await farmerLivestockFeedsDB
-                    .insertFeeds(feedlist)
-                    .then((value) => print("inserted $value"));
-              }
-              String bees = PrefUtils().getBee();
-
-              if (bees != "0") {
-                List<dynamic> beelist = jsonDecode(bees);
-
-                List<FeedsModel> beeslist =
-                    beelist.map((json) => FeedsModel.fromJson(json)).toList();
-
-                FarmerLivestockBeehiveTypeDB farmerLivestockBeehiveTypeDB =
-                    FarmerLivestockBeehiveTypeDB();
-
-                List<FarmerLivestockBeehiveType> nbeelist = [];
-
-                for (var ent in beeslist) {
-                  if (ent.isSelected) {
-                    nbeelist.add(FarmerLivestockBeehiveType(
-                        farmerLivestockId: value,
-                        createdBy: userId,
-                        dateCreated: DateTime.now(),
-                        beehivesTypeId: ent.id!,
-                        beehivesFarmerId: 0));
-                  }
-                }
-
-                await farmerLivestockBeehiveTypeDB
-                    .insertBeehiveTypes(nbeelist)
-                    .then((value) => print("inserted $value"));
-              }
-              LSProgressDB lsProgressDB = LSProgressDB();
-              if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne ==
-                  0) {
-                lsProgressDB
-                    .insert(LSProgress(
-                      livestockId: value,
-                      pageOne: 1,
-                      pageTwo: 0,
-                    ))
-                    .then((value) => print("Scope FI" + value.toString()));
-              } else {
-                lsProgressDB
-                    .update(LSProgress(
-                      livestockId: value,
-                      pageOne: 1,
-                      pageTwo: state
-                          .addRearedLivestockOneModelObj!.lsProgress!.pageTwo,
-                    ))
-                    .then((value) => print("Scope FI" + value.toString()));
-              }
-              event.createSuccessful!.call();
-            } else {
-              event.createFailed!.call();
-            }
-          });
-        }
-        int farmerLivestockId = PrefUtils().getLivestockId();
-
-        if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1 &&
-            state.feedsdlist!.isNotEmpty) {
-          if (farmerLivestockId != 0) {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
+    FarmerLivestockDB farmDB = FarmerLivestockDB();
+    try {
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0 &&
+          state.feedsdlist!.isNotEmpty) {
+        farmDB
+            .insertNonNulls(FarmerLivestock(
+          farmerFarmId: PrefUtils().getFarmId(),
+          farmerId: PrefUtils().getFarmerId(),
+          dateCreated: DateTime.now(),
+          noOfBeehives:
+              int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
+          createdBy: userId,
+          farmerLivestockId: 0,
+        ))
+            .then((value) async {
+          if (value > 0) {
             farmDB.update(FarmerLivestock(
               farmerFarmId: PrefUtils().getFarmId(),
               farmerId: PrefUtils().getFarmerId(),
               dateCreated: DateTime.now(),
               createdBy: userId,
-              farmerLivestockId: PrefUtils().getLivestockId(),
+              farmerLivestockId: value,
               noOfBeehives:
                   int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
               livestockFarmsystemCatId: state
@@ -657,6 +519,8 @@ class AddRearedLivestockOneBloc
               livestockId:
                   state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
             ));
+
+            PrefUtils().setLivestockId(value);
 
             String agegroups = PrefUtils().getAgeGroups();
             if (agegroups != "0") {
@@ -675,7 +539,7 @@ class AddRearedLivestockOneBloc
                 if (ent.isSelected) {
                   ents.add(FarmerLivestockAgeGroup(
                     farmerLivestockAgegroupId: 0,
-                    farmerLivestockId: PrefUtils().getLivestockId(),
+                    farmerLivestockId: value,
                     ageGroupId: ent.ageGroupId!,
                     noOfLivestockMale: int.parse(ent.males!),
                     noOfLivestockFemale: int.parse(ent.females!),
@@ -684,9 +548,7 @@ class AddRearedLivestockOneBloc
                   ));
                 }
               }
-              await farmerLivestockAgeGroupsDB
-                  .delete(farmerLivestockId)
-                  .then((value) => print("deleted $value"));
+
               await farmerLivestockAgeGroupsDB
                   .insertAgeGroups(ents)
                   .then((value) => print("inserted $value"));
@@ -707,7 +569,7 @@ class AddRearedLivestockOneBloc
               for (var ent in feedslist) {
                 if (ent.isSelected) {
                   feedlist.add(FarmerLivestockFeed(
-                    farmerLivestockId: PrefUtils().getLivestockId(),
+                    farmerLivestockId: value,
                     createdBy: userId,
                     dateCreated: DateTime.now(),
                     farmerLivestockFeedId: 0,
@@ -716,9 +578,7 @@ class AddRearedLivestockOneBloc
                   ));
                 }
               }
-              await farmerLivestockFeedsDB
-                  .delete(farmerLivestockId)
-                  .then((value) => print("deleted $value"));
+
               await farmerLivestockFeedsDB
                   .insertFeeds(feedlist)
                   .then((value) => print("inserted $value"));
@@ -739,7 +599,7 @@ class AddRearedLivestockOneBloc
               for (var ent in beeslist) {
                 if (ent.isSelected) {
                   nbeelist.add(FarmerLivestockBeehiveType(
-                      farmerLivestockId: farmerLivestockId,
+                      farmerLivestockId: value,
                       createdBy: userId,
                       dateCreated: DateTime.now(),
                       beehivesTypeId: ent.id!,
@@ -751,12 +611,148 @@ class AddRearedLivestockOneBloc
                   .insertBeehiveTypes(nbeelist)
                   .then((value) => print("inserted $value"));
             }
+            LSProgressDB lsProgressDB = LSProgressDB();
+            if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
+              lsProgressDB
+                  .insert(LSProgress(
+                    livestockId: value,
+                    pageOne: 1,
+                    pageTwo: 0,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            } else {
+              lsProgressDB
+                  .update(LSProgress(
+                    livestockId: value,
+                    pageOne: 1,
+                    pageTwo: state
+                        .addRearedLivestockOneModelObj!.lsProgress!.pageTwo,
+                  ))
+                  .then((value) => print("Scope FI" + value.toString()));
+            }
             event.createSuccessful!.call();
+          } else {
+            event.createFailed!.call();
           }
-        }
-      } catch (e) {
-        event.createFailed!.call();
+        });
       }
+      int farmerLivestockId = PrefUtils().getLivestockId();
+
+      if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1 &&
+          state.feedsdlist!.isNotEmpty) {
+        if (farmerLivestockId != 0) {
+          farmDB.update(FarmerLivestock(
+            farmerFarmId: PrefUtils().getFarmId(),
+            farmerId: PrefUtils().getFarmerId(),
+            dateCreated: DateTime.now(),
+            createdBy: userId,
+            farmerLivestockId: PrefUtils().getLivestockId(),
+            noOfBeehives:
+                int.parse(state.hives?.text == "" ? "0" : state.hives!.text),
+            livestockFarmsystemCatId:
+                state.addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
+            livestockId:
+                state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+          ));
+
+          String agegroups = PrefUtils().getAgeGroups();
+          if (agegroups != "0") {
+            List<dynamic> decageGroupMapList = jsonDecode(agegroups);
+
+            // Create a list of AgeGroupModel objects from the list of dynamic objects
+            List<AgeGroupModel> ageGroupList = decageGroupMapList
+                .map((json) => AgeGroupModel.fromJson(json))
+                .toList();
+
+            FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+                FarmerLivestockAgeGroupsDB();
+            List<FarmerLivestockAgeGroup> ents = [];
+
+            for (var ent in ageGroupList) {
+              if (ent.isSelected) {
+                ents.add(FarmerLivestockAgeGroup(
+                  farmerLivestockAgegroupId: 0,
+                  farmerLivestockId: PrefUtils().getLivestockId(),
+                  ageGroupId: ent.ageGroupId!,
+                  noOfLivestockMale: int.parse(ent.males!),
+                  noOfLivestockFemale: int.parse(ent.females!),
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                ));
+              }
+            }
+            await farmerLivestockAgeGroupsDB
+                .delete(farmerLivestockId)
+                .then((value) => print("deleted $value"));
+            await farmerLivestockAgeGroupsDB
+                .insertAgeGroups(ents)
+                .then((value) => print("inserted $value"));
+          }
+
+          String feeds = PrefUtils().getFeeds();
+          if (feeds != "0") {
+            List<dynamic> feedsdlist = jsonDecode(feeds);
+
+            List<FeedsModel> feedslist =
+                feedsdlist.map((json) => FeedsModel.fromJson(json)).toList();
+
+            FarmerLivestockFeedsDB farmerLivestockFeedsDB =
+                FarmerLivestockFeedsDB();
+
+            List<FarmerLivestockFeed> feedlist = [];
+
+            for (var ent in feedslist) {
+              if (ent.isSelected) {
+                feedlist.add(FarmerLivestockFeed(
+                  farmerLivestockId: PrefUtils().getLivestockId(),
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                  farmerLivestockFeedId: 0,
+                  feedQuantity: 0,
+                  feedTypeId: ent.id!,
+                ));
+              }
+            }
+            await farmerLivestockFeedsDB
+                .delete(farmerLivestockId)
+                .then((value) => print("deleted $value"));
+            await farmerLivestockFeedsDB
+                .insertFeeds(feedlist)
+                .then((value) => print("inserted $value"));
+          }
+          String bees = PrefUtils().getBee();
+
+          if (bees != "0") {
+            List<dynamic> beelist = jsonDecode(bees);
+
+            List<FeedsModel> beeslist =
+                beelist.map((json) => FeedsModel.fromJson(json)).toList();
+
+            FarmerLivestockBeehiveTypeDB farmerLivestockBeehiveTypeDB =
+                FarmerLivestockBeehiveTypeDB();
+
+            List<FarmerLivestockBeehiveType> nbeelist = [];
+
+            for (var ent in beeslist) {
+              if (ent.isSelected) {
+                nbeelist.add(FarmerLivestockBeehiveType(
+                    farmerLivestockId: farmerLivestockId,
+                    createdBy: userId,
+                    dateCreated: DateTime.now(),
+                    beehivesTypeId: ent.id!,
+                    beehivesFarmerId: 0));
+              }
+            }
+
+            await farmerLivestockBeehiveTypeDB
+                .insertBeehiveTypes(nbeelist)
+                .then((value) => print("inserted $value"));
+          }
+          event.createSuccessful!.call();
+        }
+      }
+    } catch (e) {
+      event.createFailed!.call();
     }
   }
 

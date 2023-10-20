@@ -21,6 +21,14 @@ class FishTypeDB {
     """);
   }
 
+  Future<int?> getCount() async {
+    final database = await DatabaseService().database;
+
+    final result = await database.rawQuery('SELECT COUNT(*) FROM $tableName');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
   Future<int> create({
     required int fishCategoryId,
     required String fishType,

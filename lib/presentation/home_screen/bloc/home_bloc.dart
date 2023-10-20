@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
@@ -48,14 +54,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     PrefUtils().setFound(false);
 
     emit(state.copyWith(
+        searchController: TextEditingController(),
+        searchController1: TextEditingController(),
         a: savedfarmers,
         b: verfarmers,
         c: unverfarmers,
         d: rejfarmers,
         e: iprs,
         f: allfarmers,
-        searchController: TextEditingController(),
-        searchController1: TextEditingController(),
         homeModelObj: state.homeModelObj
             ?.copyWith(userprofileItemList: fillUserprofileItemList())));
   }
@@ -118,8 +124,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await getDatabasesPath().then((value) async {
       exists = _dbutils.doesFileExist(join(value, 'localdevice.db'));
       if (exists) {
-        // ProgressDialogUtils.hideProgressDialog();
+        CropDB cropDB = CropDB();
+        LivestockDB livestockDB = LivestockDB();
+        FishTypeDB fishTypeDB = FishTypeDB();
+        FarmAssetDB farmAssetDB = FarmAssetDB();
 
+        int crops = await cropDB.getCount() ?? 0;
+        int assets = await farmAssetDB.getCount() ?? 0;
+        int lives = await livestockDB.getCount() ?? 0;
+        int fishes = await fishTypeDB.getCount() ?? 0;
+
+        if (crops == 0 && assets == 0 && lives == 0 && fishes == 0) {
+          event.onError!.call();
+          return;
+        }
+
+        main();
         event.onSuccess?.call();
       } else {
         // ProgressDialogUtils.hideProgressDialog();
@@ -129,5 +149,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }).onError((error, stackTrace) {
       event.onError?.call();
     });
+  }
+
+  Future<void> main() async {
+    final databasesPath = await getDatabasesPath();
+    print("Databases path: $databasesPath");
+
+    final files = Directory(databasesPath).listSync();
+    for (var file in files) {
+      print("File: ${file.path}");
+    }
   }
 }

@@ -45,6 +45,7 @@ class FarmerFarm {
   final DateTime? startOfRegistration;
   final DateTime? endOfRegistration;
   final DateTime? dateDeleted;
+  final bool? completed;
 
   FarmerFarm({
     required this.farmerFarmId,
@@ -92,6 +93,7 @@ class FarmerFarm {
     this.endOfRegistration,
     this.dateDeleted,
     this.dateOfRegistration,
+    this.completed,
   });
 
   factory FarmerFarm.fromSqfliteDatabase(Map<String, dynamic> map) =>
@@ -137,6 +139,7 @@ class FarmerFarm {
         enumeratorName: map['enumeratorName'],
         enumeratorId: map['enumeratorId'],
         enumeratorMobile: map['enumeratorMobile'],
+        completed: map['completed'] == 1,
       );
   Map<String, dynamic> toJson() {
     return {

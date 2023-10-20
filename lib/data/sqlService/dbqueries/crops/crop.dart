@@ -76,6 +76,14 @@ class CropDB {
     return crops.map((e) => Crop.fromSqfliteDatabase(e)).toList();
   }
 
+  Future<int?> getCount() async {
+    final database = await DatabaseService().database;
+
+    final result = await database.rawQuery('SELECT COUNT(*) FROM $tableName');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
   Future<List<Crop>> fetchCommonCrops() async {
     final database = await DatabaseService().database;
     final crops = await database.rawQuery(''' 

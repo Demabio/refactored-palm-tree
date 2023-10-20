@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeBloc>().add(DBCheckEvent(onError: () {
           dbNotFound(context);
         }, onSuccess: () {
-          //  dbNotFound(context);
+          //dbNotFound(context);
         }));
   }
 
@@ -133,6 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .roundedBorder15),
                                       child: Row(children: [
                                         CustomIconButton(
+                                            onTap: () {
+                                              PrefUtils().setAction("Saved");
+                                              NavigatorService.popAndPushNamed(
+                                                  AppRoutes.draftEntriesScreen);
+                                            },
                                             height: 45.adaptSize,
                                             width: 45.adaptSize,
                                             padding: EdgeInsets.all(12.h),
@@ -168,6 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .roundedBorder15),
                                       child: Row(children: [
                                         CustomIconButton(
+                                            onTap: () {
+                                              PrefUtils().setAction("Approved");
+                                              NavigatorService.popAndPushNamed(
+                                                  AppRoutes.draftEntriesScreen);
+                                            },
                                             height: 45.adaptSize,
                                             width: 45.adaptSize,
                                             padding: EdgeInsets.all(12.h),
@@ -210,6 +220,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .roundedBorder15),
                                       child: Row(children: [
                                         CustomIconButton(
+                                            onTap: () {
+                                              PrefUtils()
+                                                  .setAction("Unverified");
+                                              NavigatorService.popAndPushNamed(
+                                                  AppRoutes.draftEntriesScreen);
+                                            },
                                             height: 45.adaptSize,
                                             width: 45.adaptSize,
                                             padding: EdgeInsets.all(12.h),
@@ -248,6 +264,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             CustomIconButton(
+                                                onTap: () {
+                                                  PrefUtils()
+                                                      .setAction("Rejected");
+                                                  NavigatorService
+                                                      .popAndPushNamed(AppRoutes
+                                                          .draftEntriesScreen);
+                                                },
                                                 height: 45.adaptSize,
                                                 width: 45.adaptSize,
                                                 padding: EdgeInsets.all(12.h),
@@ -327,6 +350,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .roundedBorder15),
                                       child: Row(children: [
                                         CustomIconButton(
+                                            onTap: () {
+                                              PrefUtils().setAction("All");
+                                              NavigatorService.popAndPushNamed(
+                                                  AppRoutes.draftEntriesScreen);
+                                            },
                                             height: 45.adaptSize,
                                             width: 45.adaptSize,
                                             padding: EdgeInsets.all(12.h),

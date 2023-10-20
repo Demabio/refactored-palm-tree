@@ -51,13 +51,13 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
     if (action == "All") {
       farmers = await getAll();
     } else if (action == "Saved") {
-      farmers = await getAll();
-    } else if (action == "App") {
-      farmers = await getAll();
-    } else if (action == "Unapp") {
-      farmers = await getAll();
-    } else if (action == "Unver") {
-      farmers = await getAll();
+      farmers = await getSaved();
+    } else if (action == "Approved") {
+      farmers = await getApproved();
+    } else if (action == "Rejected") {
+      farmers = await getUnapproved();
+    } else if (action == "Unverified") {
+      farmers = await getUnverified();
     } else {
       farmers = await getAll();
     }

@@ -490,6 +490,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               text: "lbl_next".tr,
                                               margin:
                                                   EdgeInsets.only(left: 1.h),
+                                              isDisabled: true,
                                               buttonStyle: CustomButtonStyles
                                                   .fillPrimaryTL10,
                                             ))

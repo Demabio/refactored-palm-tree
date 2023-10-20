@@ -35,6 +35,16 @@ class LoadGraphs extends HomeEvent {
   List<Object?> get props => [onSuccess, onError];
 }
 
+class LoadDash extends HomeEvent {
+  LoadDash({this.onError, this.onSuccess});
+  Function? onSuccess;
+
+  Function? onError;
+
+  @override
+  List<Object?> get props => [onSuccess, onError];
+}
+
 class FarmerSearchEvent extends HomeEvent {
   FarmerSearchEvent({
     this.onError,

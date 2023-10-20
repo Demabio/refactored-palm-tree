@@ -129,6 +129,31 @@ class FdetailsItemWidget extends StatelessWidget {
           SizedBox(height: 13.v),
           Row(
             children: [
+              SizedBox(
+                width: 112.h,
+                child: Text(
+                  "Is Completely Filled:".tr,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: CustomTextStyles.labelMediumPrimary,
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 8.v,
+                  bottom: 9.v,
+                ),
+                child: Text(
+                  "${farmdetailsItemModel.completed}",
+                  style: theme.textTheme.labelMedium,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 13.v),
+          Row(
+            children: [
               AppbarImage1(
                   svgPath: ImageConstant.imgFrame33,
                   margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),

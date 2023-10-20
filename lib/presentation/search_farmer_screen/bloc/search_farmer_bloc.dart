@@ -77,6 +77,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
             landsize: farm.farmSize.toString(),
             x: farm.x.toString(),
             y: farm.y.toString(),
+            completed: farm.completed!,
           ));
         }
       }

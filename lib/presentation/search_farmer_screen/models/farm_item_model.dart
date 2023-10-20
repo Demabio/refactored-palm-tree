@@ -14,6 +14,7 @@ class FdetailsItemModel {
     this.x,
     this.y,
     this.owner,
+    this.completed =false,
   }) {}
 
   String? prod;
@@ -35,4 +36,5 @@ class FdetailsItemModel {
   String? x;
 
   String? y;
+  bool completed;
 }

@@ -46,7 +46,8 @@ class DraftEntriesScreen extends StatelessWidget {
                       margin:
                           EdgeInsets.only(left: 24.h, top: 12.v, bottom: 18.v)),
                   centerTitle: true,
-                  title: AppbarSubtitle1(text: "lbl_draft_entries".tr),
+                  title: AppbarSubtitle1(
+                      text: "${PrefUtils().getAction()} Farmers".tr),
                   actions: [
                     AppbarImage1(
                         svgPath: ImageConstant.imgFrame34,
