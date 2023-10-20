@@ -98,16 +98,18 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
   ) async {
     if (event.value! == 1) {
       PrefUtils().setFarmerId(event.crop!);
-
+      PrefUtils().setFarmerName(event.name!);
       List<FarmerFarm>? farms = await getFarms(event.crop);
       if (farms != null) {
         FarmerFarm farm = farms.last;
         PrefUtils().setFarmId(farm.farmerFarmId);
+        PrefUtils().setFound(false);
       }
       event.createSuccessful!.call();
     } else {
       PrefUtils().setFarmId(0);
       event.createSuccessful!.call();
+      PrefUtils().setFound(false);
     }
   }
 

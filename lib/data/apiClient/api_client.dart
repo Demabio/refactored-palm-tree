@@ -44,7 +44,7 @@ class ApiClient {
     return false;
   }
 
-  Future<String> uploadSQLiteDB() async {
+  Future<Response> uploadSQLiteDB() async {
     // Create a Dio client
     const name = 'localdevice.db';
     final path = await getDatabasesPath();
@@ -55,14 +55,19 @@ class ApiClient {
 
     // Create a FormData object to contain the file bytes
     final formData = FormData.fromMap({
-      'file':
-          await MultipartFile.fromBytes(fileBytes, filename: 'localdevice.db'),
+      'File': MultipartFile.fromBytes(fileBytes, filename: 'localdevice.db'),
     });
-
+    String token = PrefUtils().getToken();
     // Send a POST request to the server to upload the file
     final response = await _dio.post(
-      'url/uploadservice',
+      '$url/gateway/Farmerregistration/Upload',
       data: formData,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+          // Add other headers if needed
+        },
+      ),
     );
 
     // Check the response status code
@@ -72,7 +77,7 @@ class ApiClient {
     }
 
     // Return the URL of the uploaded file on the server
-    return response.data;
+    return response;
   }
 
   Future<Response> setupServicePost({

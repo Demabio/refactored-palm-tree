@@ -747,12 +747,20 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
   }
 
   goBack(BuildContext context) {
-    context.read<AddFinancialandservicesTwoBloc>().add(
-          ClearEvent(),
-        );
-    //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
-    Navigator.popAndPushNamed(
-        context, AppRoutes.addFinancialandservicesOneScreen);
+    if (PrefUtils().getFound()) {
+      context.read<AddFinancialandservicesTwoBloc>().add(
+            ClearEvent(),
+          );
+      //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+      Navigator.popAndPushNamed(context, AppRoutes.financialandservicesScreen);
+    } else {
+      context.read<AddFinancialandservicesTwoBloc>().add(
+            ClearEvent(),
+          );
+      //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
+      Navigator.popAndPushNamed(
+          context, AppRoutes.addFinancialandservicesOneScreen);
+    }
   }
 
   addSource(BuildContext context) async {

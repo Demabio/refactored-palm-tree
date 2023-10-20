@@ -311,8 +311,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           atProgressDB
               .update(FSProgress(
                 farmId: farmid,
-                pageOne: state
-                    .addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
+                pageOne: 1,
                 pageTwo: 1,
               ))
               .then((value) => print("Scope FI" + value.toString()));
@@ -348,8 +347,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           atProgressDB
               .update(FSProgress(
                 farmId: farmid,
-                pageOne: state
-                    .addFinancialandservicesTwoModelObj!.fsProgress!.pageOne,
+                pageOne: 1,
                 pageTwo: 1,
               ))
               .then((value) => print("Scope FI" + value.toString()));

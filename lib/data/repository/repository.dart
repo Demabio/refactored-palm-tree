@@ -21,6 +21,10 @@ class Repository {
     );
   }
 
+  Future<Response> postPost() async {
+    return await _apiClient.uploadSQLiteDB();
+  }
+
   Future<Response> setupServicePost({
     Map<String, String> headers = const {},
     String requestData = "",

@@ -564,8 +564,14 @@ class FinancialandservicesScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the primaryFarmHoldingOneScreen.
   onTapImage(BuildContext context) {
-    NavigatorService.popAndPushNamed(
-      AppRoutes.addFinancialandservicesOneScreen,
-    );
+    if (PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addFinancialandservicesTwoScreen,
+      );
+    } else {
+      NavigatorService.popAndPushNamed(
+        AppRoutes.addFinancialandservicesOneScreen,
+      );
+    }
   }
 }

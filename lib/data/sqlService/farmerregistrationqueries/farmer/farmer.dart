@@ -262,7 +262,7 @@ class FarmerDB {
     }
   }
 
-  Future<int> updateToPosted(Farmer farmer) async {
+  Future<int> updateToPosted() async {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate(

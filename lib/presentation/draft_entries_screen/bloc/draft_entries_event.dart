@@ -21,10 +21,12 @@ class AddEditEvent extends DraftEntriesEvent {
     this.createSuccessful,
     this.value,
     this.crop,
+    this.name,
   });
 
   int? value;
   int? crop;
+  String? name;
   Function? createSuccessful;
 
   Function? createFailed;
@@ -34,6 +36,7 @@ class AddEditEvent extends DraftEntriesEvent {
         createFailed,
         createSuccessful,
         crop,
+        name,
       ];
 }
 

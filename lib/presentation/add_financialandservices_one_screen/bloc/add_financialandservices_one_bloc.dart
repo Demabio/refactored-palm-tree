@@ -76,8 +76,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
       FarmerDB farmerDB = FarmerDB();
       try {
         FSProgressDB atProgressDB = FSProgressDB();
-        if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne ==
-                0 &&
+        if ((!state.credit && !state.income && !state.group) &&
             selectedCount != 0 &&
             (selectedCount2 != 0 ||
                 state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
@@ -165,7 +164,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     FarmerDB farmerDB = FarmerDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
-      if (state.addFinancialandservicesOneModelObj!.fsProgress!.pageOne == 0 &&
+      if ((!state.credit && !state.income && !state.group) &&
           selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
@@ -297,7 +296,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     ClearEvent event,
     Emitter<AddFinancialandservicesOneState> emit,
   ) async {
-    if (state.addFinancialandservicesOneModelObj?.fsProgress!.pageOne == 0) {
+    if (!state.credit && !state.income && !state.group) {
       int farmerid = PrefUtils().getFarmerId();
       FarmerCreditServiceDB farmerCreditServiceDB = FarmerCreditServiceDB();
       FarmerIncomeSourceDB farmerIncomeSourceDB = FarmerIncomeSourceDB();
@@ -465,42 +464,57 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? coopmodels = await fetchCoops();
     List<CheckBoxList>? incomemodels = await fetchIncomes();
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
-
+    bool group = false;
+    bool income = false;
+    bool credit = false;
     TextEditingController at = TextEditingController();
     List<SelectionPopupModel>? a = fillDropdownItemList();
     SelectionPopupModel? aa;
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerCooperativeGroup>? groups = await getCoops();
-      if (groups != null) {
-        coopmodels = _coops(coopmodels, groups!);
-      }
-      List<FarmerIncomeSource>? incomes = await getIncomes();
-      if (incomes != null) {
-        incomemodels = _incomes(incomemodels, incomes!);
-      }
-      List<FarmerCreditService>? categs = await getCredits();
-      if (categs != null) {
-        creditmodels = _credits(creditmodels, categs!);
-      }
-
+    List<FarmerCooperativeGroup>? groups = await getCoops();
+    if (groups != null) {
+      coopmodels = _coops(coopmodels, groups!);
+      group = true;
+    }
+    List<FarmerIncomeSource>? incomes = await getIncomes();
+    if (incomes != null) {
+      incomemodels = _incomes(incomemodels, incomes!);
+      income = true;
+    }
+    List<FarmerCreditService>? categs = await getCredits();
+    if (categs != null) {
+      creditmodels = _credits(creditmodels, categs!);
+      group = true;
+    }
+    if (farmer.cooperativeGroup != null) {
       aa = a.firstWhere(
         (model) => model.id == (farmer.cooperativeGroup! ? 1 : 0),
       );
-
-      if (farmer.farmingIncomePercent != null) {
-        at =
-            TextEditingController(text: farmer.farmingIncomePercent.toString());
-      }
+    }
+    if (farmer.farmingIncomePercent != null) {
+      at = TextEditingController(text: farmer.farmingIncomePercent.toString());
     }
 
     int stepped = 0;
     if (pfProgress.pageTwo == 1) {
       stepped = 2;
-    } else if (pfProgress.pageOne == 1) {
+      pfProgress = FSProgress(
+        farmId: PrefUtils().getFarmId(),
+        pageOne: 1,
+        pageTwo: 1,
+      );
+    } else if (credit || income || group) {
       stepped = 1;
+      pfProgress = FSProgress(
+        farmId: PrefUtils().getFarmId(),
+        pageOne: 1,
+        pageTwo: 0,
+      );
     }
     emit(state.copyWith(
+        credit: credit,
+        income: income,
+        group: group,
         selectvalueoneController: at,
         i: incomemodels,
         c: coopmodels,

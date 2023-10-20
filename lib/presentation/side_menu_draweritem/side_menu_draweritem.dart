@@ -1,3 +1,5 @@
+import 'package:kiamis_app/presentation/post_dialog/post_dialog.dart';
+
 import 'bloc/side_menu_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
@@ -69,32 +71,33 @@ class SideMenuDraweritem extends StatelessWidget {
                   onTap: () {
                     onTapRegisterfarmer(context);
                   }),
-              Padding(
-                  padding: EdgeInsets.only(left: 7.h, top: 23.v),
-                  child: Row(children: [
-                    CustomImageView(
-                        svgPath: ImageConstant.imgSavePrimary,
-                        height: 25.adaptSize,
-                        width: 25.adaptSize,
-                        margin: EdgeInsets.only(top: 1.v)),
-                    Padding(
-                        padding: EdgeInsets.only(left: 19.h),
-                        child: Text("msg_view_saved_farmers".tr,
-                            style: CustomTextStyles.titleMedium18))
-                  ])),
-              Padding(
-                  padding: EdgeInsets.only(left: 7.h, top: 28.v),
-                  child: Row(children: [
-                    CustomImageView(
-                        svgPath: ImageConstant.imgUpload,
-                        height: 25.adaptSize,
-                        width: 25.adaptSize,
-                        margin: EdgeInsets.only(bottom: 4.v)),
-                    Padding(
-                        padding: EdgeInsets.only(left: 20.h, top: 2.v),
-                        child: Text("msg_post_farmers_to".tr,
-                            style: CustomTextStyles.titleMedium18))
-                  ])),
+              CustomElevatedButton(
+                  height: 30.v,
+                  width: 222.h,
+                  text: "msg_view_saved_farmers".tr,
+                  margin: EdgeInsets.only(left: 7.h, top: 27.v),
+                  leftIcon: Container(
+                      margin: EdgeInsets.only(right: 20.h),
+                      child: CustomImageView(
+                          svgPath: ImageConstant.imgSavePrimary)),
+                  buttonStyle: CustomButtonStyles.none,
+                  buttonTextStyle: CustomTextStyles.titleMedium18,
+                  onTap: () {
+                    onTapSaved(context);
+                  }),
+              CustomElevatedButton(
+                  height: 30.v,
+                  width: 222.h,
+                  text: "msg_post_farmers_to".tr,
+                  margin: EdgeInsets.only(left: 7.h, top: 27.v),
+                  leftIcon: Container(
+                      margin: EdgeInsets.only(right: 20.h),
+                      child: CustomImageView(svgPath: ImageConstant.imgUpload)),
+                  buttonStyle: CustomButtonStyles.none,
+                  buttonTextStyle: CustomTextStyles.titleMedium18,
+                  onTap: () {
+                    postDialog(context);
+                  }),
               Padding(
                   padding: EdgeInsets.only(left: 7.h, top: 26.v),
                   child: Row(children: [
@@ -154,6 +157,23 @@ class SideMenuDraweritem extends StatelessWidget {
             ])));
   }
 
+  postDialog(BuildContext context) async {
+    Navigator.pop(context);
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: PostDialog.builder(
+                context,
+              ),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
   /// Navigates to the homeScreen when the action is triggered.
   ///
   /// The [BuildContext] parameter is used to build the navigation stack.
@@ -174,6 +194,14 @@ class SideMenuDraweritem extends StatelessWidget {
   onTapDraftentries(BuildContext context) {
     Navigator.pop(context);
     PrefUtils().setAction("All");
+    NavigatorService.popAndPushNamed(
+      AppRoutes.draftEntriesScreen,
+    );
+  }
+
+  onTapSaved(BuildContext context) {
+    Navigator.pop(context);
+    PrefUtils().setAction("Saved");
     NavigatorService.popAndPushNamed(
       AppRoutes.draftEntriesScreen,
     );

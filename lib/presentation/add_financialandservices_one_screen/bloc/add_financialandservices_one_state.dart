@@ -10,6 +10,9 @@ class AddFinancialandservicesOneState extends Equatable {
     this.addFinancialandservicesOneModelObj,
     this.checka = false,
     this.checkb = false,
+    this.group = false,
+    this.credit = false,
+    this.income = false,
     this.i = const [],
     this.c = const [],
     this.s = const [],
@@ -22,6 +25,9 @@ class AddFinancialandservicesOneState extends Equatable {
   AddFinancialandservicesOneModel? addFinancialandservicesOneModelObj;
   bool checka;
   bool checkb;
+  bool credit;
+  bool group;
+  bool income;
   List<CheckBoxList> i;
   List<CheckBoxList> c;
   List<CheckBoxList> s;
@@ -35,6 +41,9 @@ class AddFinancialandservicesOneState extends Equatable {
         s,
         checka,
         checkb,
+        credit,
+        group,
+        income,
       ];
   AddFinancialandservicesOneState copyWith({
     TextEditingController? selectvalueoneController,
@@ -45,6 +54,9 @@ class AddFinancialandservicesOneState extends Equatable {
     List<CheckBoxList>? i,
     List<CheckBoxList>? c,
     List<CheckBoxList>? s,
+    bool? credit,
+    bool? group,
+    bool? income,
   }) {
     return AddFinancialandservicesOneState(
       selectvalueoneController:
@@ -55,6 +67,9 @@ class AddFinancialandservicesOneState extends Equatable {
           this.addFinancialandservicesOneModelObj,
       checka: checka ?? this.checka,
       checkb: checkb ?? this.checkb,
+      credit: credit ?? this.credit,
+      group: group ?? this.group,
+      income: income ?? this.income,
       i: i ?? this.i,
       c: c ?? this.c,
       s: s ?? this.s,

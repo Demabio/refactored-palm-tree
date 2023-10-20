@@ -151,16 +151,9 @@ class FarmerRegistrationScreen extends StatelessWidget {
       onStepTapped: (step) {
         context.read<FarmerRegistrationBloc>().add(OnSteppedEvent(value: step));
       },
-      onStepCancel: canCancel
-          ? () {
-              context.read<FarmerRegistrationBloc>().add(StepDownEvent());
-            }
-          : null,
-      onStepContinue: canContinue
-          ? () {
-              context.read<FarmerRegistrationBloc>().add(StepUpEvent());
-            }
-          : null,
+      onStepCancel: () =>
+          NavigatorService.popAndPushNamed(AppRoutes.homeScreen),
+      onStepContinue: () => _continueButton(model.currentStep, context),
       steps: [
         _buildStep(
           title: Text('Farmers Identification'),
@@ -227,7 +220,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
         _buildStep(
           title: Text('Financial and Services'),
-          state: model.fsv,
+          state: model.fs2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             onFinance(context);
           },
@@ -236,6 +229,26 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _continueButton(int value, BuildContext context) {
+    if (value == 0) {
+      editfarmersIdentification(context);
+    } else if (value == 1) {
+      editprimaryFarmHolding(context);
+    } else if (value == 2) {
+      editcropAgriculture(context);
+    } else if (value == 3) {
+      editTapAdddetails(context);
+    } else if (value == 4) {
+      editTapAqua(context);
+    } else if (value == 5) {
+      editFarmasset(context);
+    } else if (value == 6) {
+      editLandWater(context);
+    } else if (value == 7) {
+      editFinance(context);
+    }
   }
 
   Step _buildStep({
@@ -339,10 +352,19 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   onFinance(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.addFinancialandservicesOneScreen,
-        arguments: {
-          NavigationArgs.farmerEdit: false,
-        });
+    if (!PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(
+          AppRoutes.addFinancialandservicesOneScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: false,
+          });
+    } else {
+      NavigatorService.popAndPushNamed(
+          AppRoutes.addFinancialandservicesTwoScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: false,
+          });
+    }
   }
 
 //EDIT
@@ -402,10 +424,18 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   editFinance(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.financialandservicesScreen,
-        arguments: {
-          NavigationArgs.farmerEdit: true,
-        });
+    if (!PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(AppRoutes.financialandservicesScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: false,
+          });
+    } else {
+      NavigatorService.popAndPushNamed(
+          AppRoutes.addFinancialandservicesTwoScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: false,
+          });
+    }
   }
   // onTapAdddetails(BuildContext context) {
   //   NavigatorService.popAndPushNamed(

@@ -118,6 +118,7 @@ class DraftEntriesScreen extends StatelessWidget {
                                         context,
                                         1,
                                         model.id!,
+                                        model.name!,
                                       ),
                                       delete: () => delete(context, model.id!),
                                     );
@@ -143,11 +144,12 @@ class DraftEntriesScreen extends StatelessWidget {
             ));
   }
 
-  addorEdit(BuildContext context, int id, int crop) {
+  addorEdit(BuildContext context, int id, int crop, String name) {
     context.read<DraftEntriesBloc>().add(
           AddEditEvent(
             value: id,
             crop: crop,
+            name: name,
             createSuccessful: () {
               onTapSearchfarmer(context);
             },

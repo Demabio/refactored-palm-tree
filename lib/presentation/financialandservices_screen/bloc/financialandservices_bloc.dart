@@ -78,17 +78,19 @@ class FinancialandservicesBloc
     List<CheckBoxList>? infomodels = await fetchInfo();
     List<CheckBoxList>? accessmodels = await fetchEAccess();
     List<CheckBoxList>? modemodels = await fetchEService();
-    if (pfProgress.pageOne == 1) {
-      List<FarmerCooperativeGroup>? groups = await getCoops();
+    List<FarmerCooperativeGroup>? groups = await getCoops();
+    if (groups != null) {
       coopmodels = _coops(coopmodels, groups!);
-      List<FarmerIncomeSource>? incomes = await getIncomes();
-      if (incomes != null) {
-        incomemodels = _incomes(incomemodels, incomes);
-      }
-
-      List<FarmerCreditService>? categs = await getCredits();
+    }
+    List<FarmerIncomeSource>? incomes = await getIncomes();
+    if (incomes != null) {
+      incomemodels = _incomes(incomemodels, incomes!);
+    }
+    List<FarmerCreditService>? categs = await getCredits();
+    if (categs != null) {
       creditmodels = _credits(creditmodels, categs!);
     }
+
     if (pfProgress.pageTwo == 1) {
       List<FarmerAgriInfoSource>? info = await getInfo();
       infomodels = _infos(infomodels, info!);
