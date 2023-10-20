@@ -36,9 +36,9 @@ final Map<String, String> enUs = {
 
   // Side Menu Screen
   "lbl_exit": "Exit",
-  "lbl_register_farmer": "Register Farmer",
+  "lbl_register_farmer": "Register Farmer/Farm",
   "lbl_view_stats": "View Stats",
-  "msg_download_farmers": "Download Farmers",
+  "msg_download_farmers": "Update Database",
   "msg_post_farmers_to": "Post Farmers to KIAMIS",
   "msg_view_saved_farmers": "View Saved Farmers",
 
@@ -852,7 +852,7 @@ final Map<String, String> enUs = {
   "lbl_continue": "Continue",
   "lbl_dashboard": "Dashboard",
   "lbl_discard": "Discard",
-  "lbl_draft_entries": "Draft Entries",
+  "lbl_draft_entries": "Farmer Entries",
   "lbl_e_extension": "E-Extension",
   "lbl_edit_details": "Edit Details",
   "lbl_email": "Email:",

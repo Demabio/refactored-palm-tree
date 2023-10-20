@@ -1,6 +1,7 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/widgets/enterprises_widget.dart';
 
@@ -427,9 +428,9 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               .read<PrimaryFarmHoldingTwoBloc>()
                                               .add(GetLocation(
                                                 createFailed: () =>
-                                                    nolocation(context),
+                                                    closedialog(context),
                                                 createSuccessful: () =>
-                                                    nolocation(context),
+                                                    closedialog(context),
                                               ));
                                         })
                                   ]),
@@ -736,6 +737,22 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
     NavigatorService.popAndPushNamed(
       AppRoutes.primaryFarmHoldingScreen,
     );
+  }
+
+  closedialog(BuildContext context) async {
+    String label = "Location Services";
+    String body = "Kindly Enable Location Services";
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 
   nolocation(BuildContext context) {

@@ -103,10 +103,11 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       ee = a.firstWhere(
         (model) => model.id == (farmer.fishInsurance! ? 1 : 0),
       );
-
-      ff = a.firstWhere(
-        (model) => model.id == (farmer.extensionsericeAccess),
-      );
+      if (farmer.extensionsericeAccess != null) {
+        ff = a.firstWhere(
+          (model) => model.id == (farmer.extensionsericeAccess),
+        );
+      }
     }
     int stepped = 0;
     if (pfProgress.pageTwo == 1) {
@@ -258,7 +259,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
   }
 
   Future<FarmerFarm?> getFarm() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
@@ -275,7 +276,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
 
     int selectedCount2 =
         state.e.where((enterprise) => enterprise.isSelected).length;
-    FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if (state.addFinancialandservicesTwoModelObj!.fsProgress!.pageTwo == 0 &&
@@ -284,9 +285,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
                       .id ==
                   0)) {
-        int id = await farmerDB.updateFromFinancialTwo(Farmer(
+        int id = await farmerDB.updateFromFinancialTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "FM",
+          farmerFarmId: farmid,
           cropsInsurance: state.addFinancialandservicesTwoModelObj!
                   .selectedDropDownValue!.id ==
               1,
@@ -303,7 +304,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
                   .selectedDropDownValue4!.id ==
               1,
           extensionsericeAccess: state
-              .addFinancialandservicesTwoModelObj!.selectedDropDownValue!.id,
+              .addFinancialandservicesTwoModelObj!.selectedDropDownValue5!.id,
         ));
         //REMEMBER!!!!!!!!
         if (id > 0) {
@@ -322,9 +323,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
                       .id ==
                   0)) {
-        int id = await farmerDB.updateFromFinancialTwo(Farmer(
+        int id = await farmerDB.updateFromFinancialTwo(FarmerFarm(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerFarmId: farmid,
           cropsInsurance: state.addFinancialandservicesTwoModelObj!
                   .selectedDropDownValue!.id ==
               1,
@@ -341,7 +342,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
                   .selectedDropDownValue4!.id ==
               1,
           extensionsericeAccess: state
-              .addFinancialandservicesTwoModelObj!.selectedDropDownValue!.id,
+              .addFinancialandservicesTwoModelObj!.selectedDropDownValue5!.id,
         ));
         if (id > 0) {
           atProgressDB

@@ -181,8 +181,8 @@ class FarmerFarmDB {
         farm.cropsInsurance! ? 1 : 0,
         farm.livestockInsurance! ? 1 : 0,
         farm.fishInsurance! ? 1 : 0,
-        farm.assetsInsurance! ? 1 : 0,
         farm.farmRecords! ? 1 : 0,
+        farm.assetsInsurance! ? 1 : 0,
         farm.extensionsericeAccess,
         farm.farmerFarmId,
       ]);

@@ -100,7 +100,8 @@ bool isID(
 
     final regExp = RegExp(pattern);
 
-    isInputStringValid = regExp.hasMatch(inputString);
+    isInputStringValid =
+        regExp.hasMatch(inputString) && inputString.length == 8;
   }
 
   return isInputStringValid;

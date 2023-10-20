@@ -284,80 +284,82 @@ class CropAgricultureBloc
     DeleteEvent event,
     Emitter<CropAgricultureState> emit,
   ) async {
-    FarmerCropsDB farmerCropsDB = FarmerCropsDB();
-    CAProgressDB caProgressDB = CAProgressDB();
-    FarmerFertiliserDB farmerFertiliserDB = FarmerFertiliserDB();
-    FarmerFertiliserSourcesDB farmerFertiliserSourcesDB =
-        FarmerFertiliserSourcesDB();
-    FarmerPesticidesDB farmerPesticidesDB = FarmerPesticidesDB();
+    if (PrefUtils().getYesNo()) {
+      FarmerCropsDB farmerCropsDB = FarmerCropsDB();
+      CAProgressDB caProgressDB = CAProgressDB();
+      FarmerFertiliserDB farmerFertiliserDB = FarmerFertiliserDB();
+      FarmerFertiliserSourcesDB farmerFertiliserSourcesDB =
+          FarmerFertiliserSourcesDB();
+      FarmerPesticidesDB farmerPesticidesDB = FarmerPesticidesDB();
 
-    int deleted = await farmerCropsDB.delete(event.value!);
-    int deletedfs = await farmerFertiliserSourcesDB.delete(event.value!);
-    int deletedf = await farmerFertiliserDB.delete(event.value!);
-    int deletedp = await farmerPesticidesDB.delete(event.value!);
+      int deleted = await farmerCropsDB.delete(event.value!);
+      int deletedfs = await farmerFertiliserSourcesDB.delete(event.value!);
+      int deletedf = await farmerFertiliserDB.delete(event.value!);
+      int deletedp = await farmerPesticidesDB.delete(event.value!);
 
-    if (deleted > 0 || deletedp > 0 || deletedf > 0 || deletedfs > 0) {
-      await caProgressDB.delete(event.value!);
-      List<FarmerCrop> crops = await fetchFCrops() ?? [];
+      if (deleted > 0 || deletedp > 0 || deletedf > 0 || deletedfs > 0) {
+        await caProgressDB.delete(event.value!);
+        List<FarmerCrop> crops = await fetchFCrops() ?? [];
 
-      List<CropdetailsItemModel> cropmodels = [];
+        List<CropdetailsItemModel> cropmodels = [];
 
-      CropWaterSource? waterSource;
+        CropWaterSource? waterSource;
 
-      CropAreaUnit? cropAreaUnit;
+        CropAreaUnit? cropAreaUnit;
 
-      CropSystem? cropSystem;
+        CropSystem? cropSystem;
 
-      CropPlantingMotive? cropPlantingMotive;
+        CropPlantingMotive? cropPlantingMotive;
 
-      Crop? cropp;
+        Crop? cropp;
 
-      List<CheckBoxList>? typemodels = await fecthType();
-      List<CheckBoxList>? sourcemodels = await fetchSources();
-      List<CheckBoxList>? pestsmodels = await fetchPest();
-      for (var crop in crops) {
-        List<FarmerFertiliser>? type = await getTypes(crop.farmerCropId);
-        if (type != null) {
-          typemodels = _types(typemodels!, type);
+        List<CheckBoxList>? typemodels = await fecthType();
+        List<CheckBoxList>? sourcemodels = await fetchSources();
+        List<CheckBoxList>? pestsmodels = await fetchPest();
+        for (var crop in crops) {
+          List<FarmerFertiliser>? type = await getTypes(crop.farmerCropId);
+          if (type != null) {
+            typemodels = _types(typemodels!, type);
+          }
+          List<FarmerFertiliserSource>? source =
+              await getSources(crop.farmerCropId);
+          if (source != null) {
+            sourcemodels = _sources(sourcemodels!, source);
+          }
+          List<FarmerPesticide>? pests = await getPest(crop.farmerCropId);
+          if (pests != null) {
+            pestsmodels = _pest(pestsmodels!, pests);
+          }
+          waterSource = await getSource(crop.waterSourceId);
+          cropAreaUnit = await getArea(crop.areaUnitId);
+          cropSystem = await getSystem(crop.cropSystemId);
+          cropPlantingMotive = await getmotive(crop.cropMotiveId);
+          cropp = await getCrop(crop.cropId!);
+          cropmodels.add(CropdetailsItemModel(
+            //   crop: crop,
+            id: crop.farmerCropId,
+            totalAcreage: crop.cropArea.toString(),
+            name: cropp!.crop,
+            unitOfArea: cropAreaUnit!.areaUnit,
+            water: waterSource?.waterSource,
+            purpose: cropPlantingMotive?.cropMotive,
+            system: cropSystem?.croppingSystem,
+            fertiliser: crop.fertilizerUse! == 1 ? "Yes" : "No",
+            pesticide: crop.pesticideUse! == 1 ? "Yes" : "No",
+            seeds: crop.usageOfCertifiedSeeds! ? "Yes" : "No",
+            a: typemodels!,
+            s: sourcemodels!,
+            p: pestsmodels!,
+          ));
         }
-        List<FarmerFertiliserSource>? source =
-            await getSources(crop.farmerCropId);
-        if (source != null) {
-          sourcemodels = _sources(sourcemodels!, source);
-        }
-        List<FarmerPesticide>? pests = await getPest(crop.farmerCropId);
-        if (pests != null) {
-          pestsmodels = _pest(pestsmodels!, pests);
-        }
-        waterSource = await getSource(crop.waterSourceId);
-        cropAreaUnit = await getArea(crop.areaUnitId);
-        cropSystem = await getSystem(crop.cropSystemId);
-        cropPlantingMotive = await getmotive(crop.cropMotiveId);
-        cropp = await getCrop(crop.cropId!);
-        cropmodels.add(CropdetailsItemModel(
-          //   crop: crop,
-          id: crop.farmerCropId,
-          totalAcreage: crop.cropArea.toString(),
-          name: cropp!.crop,
-          unitOfArea: cropAreaUnit!.areaUnit,
-          water: waterSource?.waterSource,
-          purpose: cropPlantingMotive?.cropMotive,
-          system: cropSystem?.croppingSystem,
-          fertiliser: crop.fertilizerUse! == 1 ? "Yes" : "No",
-          pesticide: crop.pesticideUse! == 1 ? "Yes" : "No",
-          seeds: crop.usageOfCertifiedSeeds! ? "Yes" : "No",
-          a: typemodels!,
-          s: sourcemodels!,
-          p: pestsmodels!,
-        ));
-      }
-      emit(
-        state.copyWith(
-          cropAgricultureModelObj: state.cropAgricultureModelObj?.copyWith(
-            cropdetailsItemList: cropmodels,
+        emit(
+          state.copyWith(
+            cropAgricultureModelObj: state.cropAgricultureModelObj?.copyWith(
+              cropdetailsItemList: cropmodels,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 }

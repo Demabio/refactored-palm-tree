@@ -245,84 +245,87 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     DeleteEvent event,
     Emitter<LivestockOneState> emit,
   ) async {
-    FarmerLivestockFeedsDB farmerLivestockFeedsDB = FarmerLivestockFeedsDB();
-    FarmerLivestockDB farmDB = FarmerLivestockDB();
-    FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
-        FarmerLivestockAgeGroupsDB();
-    FarmerLivestockBeehiveTypeDB farmerLivestockBeehiveTypeDB =
-        FarmerLivestockBeehiveTypeDB();
-    int deletefeeds = await farmerLivestockFeedsDB.delete(event.value!);
-    int deleteagegroup = await farmerLivestockAgeGroupsDB.delete(event.value!);
-    int deletebee = await farmerLivestockBeehiveTypeDB.delete(event.value!);
+    if (PrefUtils().getYesNo()) {
+      FarmerLivestockFeedsDB farmerLivestockFeedsDB = FarmerLivestockFeedsDB();
+      FarmerLivestockDB farmDB = FarmerLivestockDB();
+      FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
+          FarmerLivestockAgeGroupsDB();
+      FarmerLivestockBeehiveTypeDB farmerLivestockBeehiveTypeDB =
+          FarmerLivestockBeehiveTypeDB();
+      int deletefeeds = await farmerLivestockFeedsDB.delete(event.value!);
+      int deleteagegroup =
+          await farmerLivestockAgeGroupsDB.delete(event.value!);
+      int deletebee = await farmerLivestockBeehiveTypeDB.delete(event.value!);
 
-    int deletelive = await farmDB.delete(event.value!);
-    LSProgressDB lsProgressDB = LSProgressDB();
+      int deletelive = await farmDB.delete(event.value!);
+      LSProgressDB lsProgressDB = LSProgressDB();
 
-    if (deleteagegroup > 0 ||
-        deletelive > 0 ||
-        deletefeeds > 0 ||
-        deletebee > 0) {
-      await lsProgressDB.delete(event.value!);
+      if (deleteagegroup > 0 ||
+          deletelive > 0 ||
+          deletefeeds > 0 ||
+          deletebee > 0) {
+        await lsProgressDB.delete(event.value!);
 
-      List<FarmerLivestock> lives = await getLivestocks() ?? [];
+        List<FarmerLivestock> lives = await getLivestocks() ?? [];
 
-      List<LSdetailsItemModel> farmmodels = [];
+        List<LSdetailsItemModel> farmmodels = [];
 
-      LivestockFarmingSystemDB livestockFarmingSystemDB =
-          LivestockFarmingSystemDB();
+        LivestockFarmingSystemDB livestockFarmingSystemDB =
+            LivestockFarmingSystemDB();
 
-      LivestockDB livestockDB = LivestockDB();
+        LivestockDB livestockDB = LivestockDB();
 
-      List<AgeGroupModel>? ageGroupList = [];
-      List<FeedsModel>? feedslist = [];
-      List<FeedsModel>? beeslist = [];
-      ageGroupList = await fetchAgeGroups();
-      feedslist = await fetchFeeds();
-      beeslist = await fetchBees();
-
-      for (var live in lives) {
-        Livestock? livestock =
-            await livestockDB.fetchByLivestockId(live.livestockId!);
-        LivestockFarmingSystem livestockFarmingSystem =
-            await livestockFarmingSystemDB.fetchByLivestockFarmingSystemId(
-                live.livestockFarmsystemCatId!);
-        List<FarmerLivestockAgeGroup>? ages =
-            await getAges(live.farmerLivestockId);
-
-        List<FarmerLivestockFeed>? feeds =
-            await getFeeds(live.farmerLivestockId);
+        List<AgeGroupModel>? ageGroupList = [];
+        List<FeedsModel>? feedslist = [];
+        List<FeedsModel>? beeslist = [];
         ageGroupList = await fetchAgeGroups();
         feedslist = await fetchFeeds();
         beeslist = await fetchBees();
 
-        List<FarmerLivestockBeehiveType>? bees =
-            await getBees(live.farmerLivestockId);
+        for (var live in lives) {
+          Livestock? livestock =
+              await livestockDB.fetchByLivestockId(live.livestockId!);
+          LivestockFarmingSystem livestockFarmingSystem =
+              await livestockFarmingSystemDB.fetchByLivestockFarmingSystemId(
+                  live.livestockFarmsystemCatId!);
+          List<FarmerLivestockAgeGroup>? ages =
+              await getAges(live.farmerLivestockId);
 
-        bool beekeerper = false;
-        if (bees != null) {
-          beeslist = _bees(beeslist, bees);
+          List<FarmerLivestockFeed>? feeds =
+              await getFeeds(live.farmerLivestockId);
+          ageGroupList = await fetchAgeGroups();
+          feedslist = await fetchFeeds();
+          beeslist = await fetchBees();
+
+          List<FarmerLivestockBeehiveType>? bees =
+              await getBees(live.farmerLivestockId);
+
+          bool beekeerper = false;
+          if (bees != null) {
+            beeslist = _bees(beeslist, bees);
+          }
+          beekeerper =
+              livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
+
+          feedslist = _feeds(feedslist, feeds!);
+          ageGroupList = _ages(ageGroupList, ages!);
+          farmmodels.add(LSdetailsItemModel(
+            //   crop: crop,
+            id: live.farmerLivestockId,
+            name: livestock?.livestock,
+            ages: ageGroupList,
+            feeds: feedslist,
+            prod: livestockFarmingSystem.livestockFarmsystem,
+            beekeepr: beekeerper,
+            bees: beeslist,
+            x: live.noOfBeehives.toString(),
+          ));
         }
-        beekeerper =
-            livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
-
-        feedslist = _feeds(feedslist, feeds!);
-        ageGroupList = _ages(ageGroupList, ages!);
-        farmmodels.add(LSdetailsItemModel(
-          //   crop: crop,
-          id: live.farmerLivestockId,
-          name: livestock?.livestock,
-          ages: ageGroupList,
-          feeds: feedslist,
-          prod: livestockFarmingSystem.livestockFarmsystem,
-          beekeepr: beekeerper,
-          bees: beeslist,
-          x: live.noOfBeehives.toString(),
-        ));
+        emit(state.copyWith(
+            lslist: farmmodels,
+            livestockOneModelObj:
+                state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
       }
-      emit(state.copyWith(
-          lslist: farmmodels,
-          livestockOneModelObj:
-              state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
     }
   }
 }

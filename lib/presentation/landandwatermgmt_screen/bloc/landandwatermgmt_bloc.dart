@@ -305,7 +305,7 @@ class LandandwatermgmtBloc
   }
 
   Future<FarmerFarm?> getFarm() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }

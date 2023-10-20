@@ -435,18 +435,20 @@ class AddAquacultureOneBloc
     FDeleteEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) async {
-    FarmerFishDB farmerFishDB = FarmerFishDB();
-    int deleted = await farmerFishDB.delete(event.value!);
-    if (deleted > 0) {
-      List<CheckBoxList>? assets = await fetchFish();
+    if (PrefUtils().getYesNo()) {
+      FarmerFishDB farmerFishDB = FarmerFishDB();
+      int deleted = await farmerFishDB.delete(event.value!);
+      if (deleted > 0) {
+        List<CheckBoxList>? assets = await fetchFish();
 
-      if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
-        List<FarmerFish>? assetss = await getFishes();
-        assets = await _fish(assets, assetss!);
+        if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
+          List<FarmerFish>? assetss = await getFishes();
+          assets = await _fish(assets, assetss!);
+        }
+        emit(state.copyWith(
+          fish: assets,
+        ));
       }
-      emit(state.copyWith(
-        fish: assets,
-      ));
     }
   }
 
@@ -467,19 +469,21 @@ class AddAquacultureOneBloc
     DeleteEvent event,
     Emitter<AddAquacultureOneState> emit,
   ) async {
-    FarmerFishProductionSystemDB farmerAssetsDB =
-        FarmerFishProductionSystemDB();
-    int deleted = await farmerAssetsDB.delete(event.value!);
-    if (deleted > 0) {
-      List<CheckBoxList>? assets = await fillProdsystems();
+    if (PrefUtils().getYesNo()) {
+      FarmerFishProductionSystemDB farmerAssetsDB =
+          FarmerFishProductionSystemDB();
+      int deleted = await farmerAssetsDB.delete(event.value!);
+      if (deleted > 0) {
+        List<CheckBoxList>? assets = await fillProdsystems();
 
-      if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
-        List<FarmerFishProductionSystem>? assetss = await getProdSyss();
-        assets = _systems(assets, assetss!);
+        if (state.addAquacultureOneModelObj?.aqProgress?.pageOne == 1) {
+          List<FarmerFishProductionSystem>? assetss = await getProdSyss();
+          assets = _systems(assets, assetss!);
+        }
+        emit(state.copyWith(
+          prodsyss: assets,
+        ));
       }
-      emit(state.copyWith(
-        prodsyss: assets,
-      ));
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 import 'package:kiamis_app/presentation/home_farmer_found_dialog/home_farmer_found_dialog.dart';
@@ -89,7 +90,15 @@ class SearchFarmerScreen extends StatelessWidget {
                                     },
                                     enabled: true,
                                     autofocus: false,
+                                    validator: (value) {
+                                      if (!isID(value, isRequired: true)) {
+                                        return "Provide a valid ID Number";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                     focusNode: _firstTextFieldFocus,
+                                    textInputType: TextInputType.number,
                                     margin: EdgeInsets.fromLTRB(
                                         24.h, 24.v, 24.h, 12.v),
                                     controller: searchController,
@@ -227,20 +236,18 @@ class SearchFarmerScreen extends StatelessWidget {
 
   addorEdit(BuildContext context, int id, int crop) {
     if (PrefUtils().getFound()) {
-      if (crop > 0) {
-        context.read<SearchFarmerBloc>().add(
-              AddEditEvent(
-                value: id,
-                crop: crop,
-                createSuccessful: () {
-                  onTapSearchfarmer(context);
-                },
-                createFailed: () {
-                  onTapSearchfarmer(context);
-                },
-              ),
-            );
-      }
+      context.read<SearchFarmerBloc>().add(
+            AddEditEvent(
+              value: id,
+              crop: crop,
+              createSuccessful: () {
+                onTapSearchfarmer(context);
+              },
+              createFailed: () {
+                onTapSearchfarmer(context);
+              },
+            ),
+          );
     } else {
       closedialog(context, "Search Farmer First",
           "Kindly search a farmer to add a new farm");

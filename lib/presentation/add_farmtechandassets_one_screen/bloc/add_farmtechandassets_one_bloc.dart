@@ -111,7 +111,7 @@ class AddFarmtechandassetsOneBloc
   }
 
   Future<FarmerFarm?> getFarm() async {
-    int id = PrefUtils().getFarmerId();
+    int id = PrefUtils().getFarmId();
     FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
     return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
   }
@@ -556,18 +556,20 @@ class AddFarmtechandassetsOneBloc
     DeleteEvent event,
     Emitter<AddFarmtechandassetsOneState> emit,
   ) async {
-    FarmerAssetsDB farmerAssetsDB = FarmerAssetsDB();
-    int deleted = await farmerAssetsDB.delete(event.value!);
-    if (deleted > 0) {
-      List<CheckBoxList>? assets = await fillAssets();
+    if (PrefUtils().getYesNo()) {
+      FarmerAssetsDB farmerAssetsDB = FarmerAssetsDB();
+      int deleted = await farmerAssetsDB.delete(event.value!);
+      if (deleted > 0) {
+        List<CheckBoxList>? assets = await fillAssets();
 
-      if (state.addFarmtechandassetsOneModelObj?.atProgress?.pageOne == 1) {
-        List<FarmerAsset>? assetss = await getFAssets();
-        assets = _assets(assets, assetss!);
+        if (state.addFarmtechandassetsOneModelObj?.atProgress?.pageOne == 1) {
+          List<FarmerAsset>? assetss = await getFAssets();
+          assets = _assets(assets, assetss!);
+        }
+        emit(state.copyWith(
+          a: assets,
+        ));
       }
-      emit(state.copyWith(
-        a: assets,
-      ));
     }
   }
 }

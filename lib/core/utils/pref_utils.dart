@@ -250,4 +250,16 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setAction(String value) {
+    return _sharedPreferences!.setString('action', value);
+  }
+
+  String getAction() {
+    try {
+      return _sharedPreferences!.getString('action') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

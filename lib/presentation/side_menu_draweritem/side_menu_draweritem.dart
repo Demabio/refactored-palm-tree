@@ -58,7 +58,7 @@ class SideMenuDraweritem extends StatelessWidget {
                   }),
               CustomElevatedButton(
                   height: 30.v,
-                  width: 189.h,
+                  width: 222.h,
                   text: "lbl_register_farmer".tr,
                   margin: EdgeInsets.only(left: 7.h, top: 27.v),
                   leftIcon: Container(
@@ -173,7 +173,7 @@ class SideMenuDraweritem extends StatelessWidget {
   /// to push the named route for the draftEntriesScreen.
   onTapDraftentries(BuildContext context) {
     Navigator.pop(context);
-
+    PrefUtils().setAction("All");
     NavigatorService.popAndPushNamed(
       AppRoutes.draftEntriesScreen,
     );

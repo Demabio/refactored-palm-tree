@@ -3,7 +3,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.d
 import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
-class FarmerDB {
+class DFarmerDB {
   final tableName = 'farmer';
 
   Future<void> createTable(Database database) async {
@@ -277,13 +277,6 @@ class FarmerDB {
     }
   }
 
-  Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmerId = ?
-    ''', [id]);
-  }
-
   Future<List<Farmer>> fetchAll() async {
     final database = await DatabaseService().database;
     final farmerList = await database.rawQuery('SELECT * FROM $tableName');
@@ -293,7 +286,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchCompleted() async {
     final database = await DatabaseService().database;
     final farmerList =
-        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -332,15 +325,6 @@ class FarmerDB {
     return count;
   }
 
-  Future<List<Farmer>?> fetchSaved() async {
-    final database = await DatabaseService().database;
-    final farmerList =
-        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
-    return farmerList.isNotEmpty
-        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
-        : null;
-  }
-
   Future<int?> getApproved() async {
     final database = await DatabaseService().database;
 
@@ -350,15 +334,6 @@ class FarmerDB {
     return count;
   }
 
-  Future<List<Farmer>?> fetchApproved() async {
-    final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (3,5,8)');
-    return farmerList.isNotEmpty
-        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
-        : null;
-  }
-
   Future<int?> getUnapproved() async {
     final database = await DatabaseService().database;
 
@@ -366,15 +341,6 @@ class FarmerDB {
         'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (4,6,9)');
     final count = Sqflite.firstIntValue(result);
     return count;
-  }
-
-  Future<List<Farmer>?> fetchUnapproved() async {
-    final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (4,6,9)');
-    return farmerList.isNotEmpty
-        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
-        : null;
   }
 
   Future<Tuple2<int?, int?>?> regAccuracy() async {
@@ -398,15 +364,6 @@ class FarmerDB {
         'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2)');
     final count = Sqflite.firstIntValue(result);
     return count;
-  }
-
-  Future<List<Farmer>?> fetchUnverified() async {
-    final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (1,2)');
-    return farmerList.isNotEmpty
-        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
-        : null;
   }
 
   Future<Map<String, Object?>> getApprovedAndRejectedFarmersCountByMonth(

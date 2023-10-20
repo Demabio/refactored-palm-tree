@@ -14,3 +14,47 @@ class DraftEntriesInitialEvent extends DraftEntriesEvent {
   @override
   List<Object?> get props => [];
 }
+
+class AddEditEvent extends DraftEntriesEvent {
+  AddEditEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}
+
+class DeleteEvent extends DraftEntriesEvent {
+  DeleteEvent({
+    this.createFailed,
+    this.createSuccessful,
+    this.value,
+    this.crop,
+  });
+
+  int? value;
+  int? crop;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+        crop,
+      ];
+}

@@ -472,11 +472,17 @@ class AddFinancialandservicesOneBloc extends Bloc<
 
     if (pfProgress.pageOne == 1) {
       List<FarmerCooperativeGroup>? groups = await getCoops();
-      coopmodels = _coops(coopmodels, groups!);
+      if (groups != null) {
+        coopmodels = _coops(coopmodels, groups!);
+      }
       List<FarmerIncomeSource>? incomes = await getIncomes();
-      incomemodels = _incomes(incomemodels, incomes!);
+      if (incomes != null) {
+        incomemodels = _incomes(incomemodels, incomes!);
+      }
       List<FarmerCreditService>? categs = await getCredits();
-      creditmodels = _credits(creditmodels, categs!);
+      if (categs != null) {
+        creditmodels = _credits(creditmodels, categs!);
+      }
 
       aa = a.firstWhere(
         (model) => model.id == (farmer.cooperativeGroup! ? 1 : 0),
