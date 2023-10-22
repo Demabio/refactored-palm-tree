@@ -164,7 +164,7 @@ class AddFarmtechandassetsFourBloc
 
     if (pfProgress.pageOne == 1) {
       List<FarmerStructure>? categs = await getStructs();
-      atypes = _structs(atypes, categs!);
+      atypes = categs != null ? _structs(atypes, categs) : atypes;
     }
     emit(state.copyWith(
         addFarmtechandassetsFourModelObj:

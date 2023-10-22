@@ -37,6 +37,19 @@ class AddLandandwatermgmtOneBloc
     on<CheckTwoEvent>(_checkIncomes);
 
     on<ClearEvent>(_clear);
+    on<GoBackEvent>(_goback);
+  }
+
+  _goback(
+    GoBackEvent event,
+    Emitter<AddLandandwatermgmtOneState> emit,
+  ) async {
+    if (state.checka &&
+        state.addLandandwatermgmtOneModelObj?.lwProgress!.pageOne == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _onInitialize(
@@ -422,7 +435,10 @@ class AddLandandwatermgmtOneBloc
     feedmodels = fishes != null ? _land(feedmodels, fishes) : feedmodels;
     fishes != null
         ? emit(state.copyWith(p: feedmodels, checka: false))
-        : emit(state.copyWith(checka: true));
+        : emit(state.copyWith(
+            checka: true,
+            p: feedmodels,
+          ));
 
     // if (fishes.isNotEmpty) {
     // } else {

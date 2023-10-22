@@ -224,7 +224,7 @@ class AddFarmtechandassetsTwoBloc
 
     if (pfProgress.pageOne == 1) {
       List<FarmerPowerSource>? categs = await getSources();
-      atypes = _sources(atypes, categs!);
+      atypes = categs != null ? _sources(atypes, categs!) : atypes;
     }
     emit(state.copyWith(
         addFarmtechandassetsTwoModelObj:

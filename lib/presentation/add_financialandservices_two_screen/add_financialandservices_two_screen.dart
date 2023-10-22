@@ -52,7 +52,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,
@@ -389,70 +389,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 18.v),
-                      Text(
-                        "msg_agricultural_info".tr,
-                        style: theme.textTheme.titleSmall,
-                      ),
-                      // Container(
-                      //   width: 255.h,
-                      //   margin: EdgeInsets.only(
-                      //     top: 16.v,
-                      //     right: 87.h,
-                      //   ),
-                      //   child: Text(
-                      //     "What are your main source of information on good agricultural practices (GAP) ?"
-                      //         .tr,
-                      //     maxLines: 2,
-                      //     overflow: TextOverflow.ellipsis,
-                      //     style: theme.textTheme.titleSmall,
-                      //   ),
-                      // ),
-                      BlocSelector<AddFinancialandservicesTwoBloc,
-                              AddFinancialandservicesTwoState, bool?>(
-                          selector: (state) => state.checka,
-                          builder: (context, checked) {
-                            return Text(
-                              "What are your main source of information on good agricultural practices (GAP)?(*)",
-                              style: checked!
-                                  ? CustomTextStyles.labelMediumPrimary_1red
-                                  : CustomTextStyles.labelMediumPrimary_1,
-                            );
-                          }),
-                      BlocSelector<
-                              AddFinancialandservicesTwoBloc,
-                              AddFinancialandservicesTwoState,
-                              List<CheckBoxList>?>(
-                          selector: (state) => state.p,
-                          builder: (context, list) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
-                              ),
-                              child: Column(
-                                children: List<Widget>.generate(
-                                  list?.length ?? 0,
-                                  (index) {
-                                    CheckBoxList model = list![index];
 
-                                    return InputsWidget(
-                                      model,
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          }),
-                      CustomElevatedButton(
-                        text: "Add Source".tr,
-                        onTap: () => addSource(context),
-                        margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 9.v,
-                        ),
-                        alignment: Alignment.centerRight,
-                      ),
                       SizedBox(height: 17.v),
                       Text(
                         "msg_soil_seeds_and".tr,
@@ -655,7 +592,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
-                              onTap: () => goBack(context),
+                              onTap: () => goB(context),
                               margin: EdgeInsets.only(right: 1.h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
@@ -737,13 +674,22 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
   _navToStep(int val, BuildContext context, FSProgress pfProgress) {
     if (val == 0) {
       Navigator.popAndPushNamed(
-          context, AppRoutes.addFarmtechandassetsOneScreen);
+          context, AppRoutes.addFinancialandservicesOneScreen);
     }
   }
 
   _successSaved(BuildContext context) {
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen);
     Navigator.popAndPushNamed(context, AppRoutes.financialandservicesScreen);
+  }
+
+  goB(BuildContext context) {
+    context.read<AddFinancialandservicesTwoBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
   }
 
   goBack(BuildContext context) {
@@ -761,22 +707,6 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
       Navigator.popAndPushNamed(
           context, AppRoutes.addFinancialandservicesOneScreen);
     }
-  }
-
-  addSource(BuildContext context) async {
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
-        builder: (_) => AlertDialog(
-              content: AddFinancialandservicesSixDialog.builder(context),
-              backgroundColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              insetPadding: const EdgeInsets.only(left: 0),
-            ));
-    context.read<AddFinancialandservicesTwoBloc>().add(
-          CheckOneEvent(),
-        );
   }
 
   addAccess(BuildContext context) async {

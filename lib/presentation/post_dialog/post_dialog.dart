@@ -75,16 +75,18 @@ class PostDialog extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the draftEntriesScreen.
   onTapYes(BuildContext context) {
+    String successlbl = "Success";
+    String successbody = "Posting Successful.";
+    String label = "Failed";
+    String body = "Posting failed, kindly try again";
     context.read<PostModalBloc>().add(PostEvent(
-          createSuccessful: () => onTapNo(context),
-          createFailed: () => closedialog(context),
+          createSuccessful: () => closedialog(context, successlbl, successbody),
+          createFailed: () => closedialog(context, label, body),
         ));
   }
 
-  closedialog(BuildContext context) async {
+  closedialog(BuildContext context, String label, String body) async {
     Navigator.pop(context);
-    String label = "Failed";
-    String body = "Posting failed, kindly try again";
 
     await showDialog(
         context: context,

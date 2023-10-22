@@ -38,9 +38,20 @@ class AddFinancialandservicesTwoBloc extends Bloc<
 
     on<CheckThreeEvent>(_checkModes);
     on<CheckTwoEvent>(_checkAssets);
-    on<CheckOneEvent>(_checkpowers);
 
     on<ClearEvent>(_clear);
+    on<GoBackEvent>(_goback);
+  }
+  _goback(
+    GoBackEvent event,
+    Emitter<AddFinancialandservicesTwoState> emit,
+  ) async {
+    if ((state.checka || state.checkb) &&
+        state.addFinancialandservicesTwoModelObj?.fsProgress!.pageTwo == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _onInitialize(
@@ -64,7 +75,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           livestockInsurance: false,
           farmRecords: false,
         );
-    List<CheckBoxList>? infomodels = await fetchInfo();
     List<CheckBoxList>? accessmodels = await fetchEAccess();
     List<CheckBoxList>? modemodels = await fetchEService();
     List<SelectionPopupModel>? a = await fillDropdownItemList();
@@ -76,10 +86,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     SelectionPopupModel? ff;
 
     if (pfProgress.pageTwo == 1) {
-      List<FarmerAgriInfoSource>? info = await getInfo();
-      infomodels = _infos(infomodels, info!);
       List<FarmerExtensionAccess>? access = await getEAccess();
-      accessmodels = _access(accessmodels, access!);
+      accessmodels =
+          access != null ? _access(accessmodels, access) : accessmodels;
       List<FarmerExtensionMode>? mode = await getModes();
       if (mode != null) {
         modemodels = _modes(modemodels, mode);
@@ -116,7 +125,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       stepped = 1;
     }
     emit(state.copyWith(
-        p: infomodels,
         e: accessmodels,
         m: modemodels,
         addFinancialandservicesTwoModelObj:
@@ -150,13 +158,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     return await farmerFishProductionLevelsDB.fetchByFarmerId(farmerid);
   }
 
-  Future<List<FarmerAgriInfoSource>?> getInfo() async {
-    int id = PrefUtils().getFarmerId();
-    FarmerAgriInfoSourceDB farmerLivestockAgeGroupsDB =
-        FarmerAgriInfoSourceDB();
-    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
-  }
-
   Future<List<FarmerExtensionAccess>?> getEAccess() async {
     int id = PrefUtils().getFarmId();
     FarmerExtensionAccessDB farmerLivestockAgeGroupsDB =
@@ -168,21 +169,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     int id = PrefUtils().getFarmId();
     FarmerExtensionModeDB farmerLivestockAgeGroupsDB = FarmerExtensionModeDB();
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
-  }
-
-  List<CheckBoxList> _infos(
-      List<CheckBoxList> feedmodelss, List<FarmerAgriInfoSource> feedss) {
-    List<CheckBoxList> feedmodels = feedmodelss;
-    List<FarmerAgriInfoSource> feeds = feedss;
-
-    for (var ent in feeds) {
-      int index =
-          feedmodels.indexWhere((obj) => obj.id == ent.agriInfoSourceId);
-
-      feedmodels[index].isSelected = true;
-    }
-
-    return feedmodels;
   }
 
   List<CheckBoxList> _access(
@@ -211,21 +197,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       feedmodels[index].isSelected = true;
     }
     return feedmodels;
-  }
-
-  Future<List<CheckBoxList>> fetchInfo() async {
-    List<CheckBoxList> list = [];
-    AgriInfoSourceDB farmStructureDB = AgriInfoSourceDB();
-
-    await farmStructureDB.fetchAll().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        list.add(CheckBoxList(
-          title: value[i].agriInfoSource,
-          id: value[i].agriInfoSourceId,
-        ));
-      }
-    });
-    return list;
   }
 
   Future<List<CheckBoxList>> fetchEService() async {
@@ -271,16 +242,12 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     int farmerid = PrefUtils().getFarmerId();
     int farmid = PrefUtils().getFarmId();
 
-    int selectedCount =
-        state.p.where((enterprise) => enterprise.isSelected).length;
-
     int selectedCount2 =
         state.e.where((enterprise) => enterprise.isSelected).length;
     FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if (state.addFinancialandservicesTwoModelObj!.fsProgress!.pageTwo == 0 &&
-          selectedCount != 0 &&
           (selectedCount2 != 0 ||
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
                       .id ==
@@ -317,11 +284,10 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         }
-      } else if (selectedCount != 0 &&
-          (selectedCount2 != 0 ||
-              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
-                      .id ==
-                  0)) {
+      } else if ((selectedCount2 != 0 ||
+          state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5!
+                  .id ==
+              0)) {
         int id = await farmerDB.updateFromFinancialTwo(FarmerFarm(
           farmerId: farmerid,
           farmerFarmId: farmid,
@@ -376,23 +342,6 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     }
   }
 
-  _checkpowers(
-    CheckOneEvent event,
-    Emitter<AddFinancialandservicesTwoState> emit,
-  ) async {
-    List<FarmerAgriInfoSource>? fishes = await getInfo();
-
-    List<CheckBoxList>? feedmodels = [];
-    feedmodels = await fetchInfo();
-
-    feedmodels =
-        fishes != null ? feedmodels = _infos(feedmodels, fishes) : feedmodels;
-
-    fishes != null
-        ? emit(state.copyWith(p: feedmodels, checka: false))
-        : emit(state.copyWith(checkb: true));
-  }
-
   _checkAssets(
     CheckTwoEvent event,
     Emitter<AddFinancialandservicesTwoState> emit,
@@ -407,7 +356,10 @@ class AddFinancialandservicesTwoBloc extends Bloc<
 
     fishes != null
         ? emit(state.copyWith(e: feedmodels, checka: false))
-        : emit(state.copyWith(checkb: true));
+        : emit(state.copyWith(
+            checkb: true,
+            e: feedmodels,
+          ));
   }
 
   _checkModes(

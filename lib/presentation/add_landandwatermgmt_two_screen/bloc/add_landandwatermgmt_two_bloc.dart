@@ -38,8 +38,20 @@ class AddLandandwatermgmtTwoBloc
     on<CheckThreeEvent>(_checkModes);
     on<CheckTwoEvent>(_checkAssets);
     on<CheckOneEvent>(_checkpowers);
+    on<GoBackEvent>(_goback);
 
     on<ClearEvent>(_clear);
+  }
+  _goback(
+    GoBackEvent event,
+    Emitter<AddLandandwatermgmtTwoState> emit,
+  ) async {
+    if ((state.checka || state.checkb) &&
+        state.addLandandwatermgmtTwoModelObj?.lwProgress!.pageTwo == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _changeDropDown(
@@ -141,7 +153,10 @@ class AddLandandwatermgmtTwoBloc
 
     fishes != null
         ? emit(state.copyWith(u: feedmodels, checka: false))
-        : emit(state.copyWith(checkb: true));
+        : emit(state.copyWith(
+            checkb: true,
+            u: feedmodels,
+          ));
   }
 
   _checkAssets(
@@ -158,7 +173,10 @@ class AddLandandwatermgmtTwoBloc
 
     fishes != null
         ? emit(state.copyWith(p: feedmodels, checka: false))
-        : emit(state.copyWith(checkb: true));
+        : emit(state.copyWith(
+            checkb: true,
+            p: feedmodels,
+          ));
   }
 
   _checkModes(

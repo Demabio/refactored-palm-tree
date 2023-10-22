@@ -90,10 +90,12 @@ class FinancialandservicesBloc
     if (categs != null) {
       creditmodels = _credits(creditmodels, categs!);
     }
+    List<FarmerAgriInfoSource>? info = await getInfo();
+    if (info != null) {
+      infomodels = _infos(infomodels, info!);
+    }
 
     if (pfProgress.pageTwo == 1) {
-      List<FarmerAgriInfoSource>? info = await getInfo();
-      infomodels = _infos(infomodels, info!);
       List<FarmerExtensionAccess>? access = await getEAccess();
       accessmodels = _access(accessmodels, access!);
       List<FarmerExtensionMode>? mode = await getModes();

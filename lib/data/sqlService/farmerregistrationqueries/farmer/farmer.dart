@@ -227,12 +227,13 @@ class FarmerDB {
     final database = await DatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ?  
+    UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ? ,completed = ? 
     WHERE farmerId = ? 
   ''', [
         farmer.cooperativeGroup! ? 1 : 0,
         farmer.farmingIncomePercent,
         farmer.farmerId,
+        1,
       ]);
     } catch (e) {
       print(e.toString());
@@ -327,7 +328,7 @@ class FarmerDB {
     final database = await DatabaseService().database;
 
     final result = await database
-        .rawQuery('SELECT COUNT(*) FROM farmer WHERE completed = 0');
+        .rawQuery('SELECT COUNT(*) FROM farmer WHERE completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -335,7 +336,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchSaved() async {
     final database = await DatabaseService().database;
     final farmerList =
-        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -345,15 +346,15 @@ class FarmerDB {
     final database = await DatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (3,5,8)');
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (3,5,8) AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
 
   Future<List<Farmer>?> fetchApproved() async {
     final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (3,5,8)');
+    final farmerList = await database.rawQuery(
+        'SELECT * FROM farmer WHERE registrationStatusId IN (3,5,8) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -363,15 +364,15 @@ class FarmerDB {
     final database = await DatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (4,6,9)');
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (4,6,9) AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
 
   Future<List<Farmer>?> fetchUnapproved() async {
     final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (4,6,9)');
+    final farmerList = await database.rawQuery(
+        'SELECT * FROM farmer WHERE registrationStatusId IN (4,6,9) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -395,15 +396,15 @@ class FarmerDB {
     final database = await DatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2)');
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
 
   Future<List<Farmer>?> fetchUnverified() async {
     final database = await DatabaseService().database;
-    final farmerList = await database
-        .rawQuery('SELECT * FROM farmer WHERE registrationStatusId IN (1,2)');
+    final farmerList = await database.rawQuery(
+        'SELECT * FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -417,13 +418,13 @@ class FarmerDB {
     final endDate = DateTime(year, month + 1);
 
     final approvedResult = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (3,5,8) ',
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (3,5,8)  AND completed = 1',
         [
           startDate.toUtc().toIso8601String(),
           endDate.toUtc().toIso8601String()
         ]);
     final rejectedResult = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4,6,9)',
+        'SELECT COUNT(*) FROM farmer WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4,6,9) AND completed = 1',
         [
           startDate.toUtc().toIso8601String(),
           endDate.toUtc().toIso8601String()

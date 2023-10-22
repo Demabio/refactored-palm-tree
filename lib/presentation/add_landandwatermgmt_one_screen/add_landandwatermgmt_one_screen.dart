@@ -51,7 +51,7 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,
@@ -511,10 +511,20 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
     Navigator.popAndPushNamed(context, AppRoutes.landandwatermgmtScreen);
   }
 
+  goB(BuildContext context) {
+    context.read<AddLandandwatermgmtOneBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
+  }
+
   goBack(BuildContext context) {
     context.read<AddLandandwatermgmtOneBloc>().add(
           ClearEvent(),
         );
+
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.landandwatermgmtScreen);
   }

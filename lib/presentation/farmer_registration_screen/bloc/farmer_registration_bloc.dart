@@ -108,7 +108,7 @@ class FarmerRegistrationBloc
     emit(
       state.copyWith(
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(
-          currentStep: --state.farmerRegistrationModelObj?.currentStep,
+          currentStep: state.farmerRegistrationModelObj!.currentStep - 1,
         ),
       ),
     );
@@ -342,34 +342,37 @@ class FarmerRegistrationBloc
       e = StepState.disabled;
     }
     emit(state.copyWith(
+        complete: farm.completed,
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(
-      processStatus: getRegProgress(),
-      fi: (fiProgress.pageOne == 1 ||
-          fiProgress.pageTwo == 1 ||
-          fiProgress.pageThree == 1),
-      fh: (fhProgress.pageOne == 1 || fhProgress.pageTwo == 1),
-      ca: (caProgress.pageOne == 1 || caProgress.pageTwo == 1 || crops != null),
-      ls: (lsProgress.pageOne == 1 ||
-          lsiProgress.pageOne == 1 ||
-          livestock != null),
-      ff: (aqProgress.pageOne == 1 || aqProgress.pageTwo == 1),
-      at: (atProgress.pageOne == 1 || atProgress.pageTwo == 1),
-      lw: (lwProgress.pageOne == 1 || lwProgress.pageTwo == 1),
-      fs: (fsProgress.pageOne == 1 || fsProgress.pageTwo == 1),
-      crop: a,
-      fish: c,
-      live: b, fid: d, fsv: e,
-      fi2: (fiProgress.pageOne == 1 &&
-          fiProgress.pageTwo == 1 &&
-          fiProgress.pageOne == 1),
-      fh2: (fhProgress.pageOne == 1 && fhProgress.pageTwo == 1),
-      ca2: (caProgress.pageOne == 1 && caProgress.pageTwo == 1),
-      ls2: (lsProgress.pageOne == 1 && lsiProgress.pageOne == 1),
-      ff2: (aqProgress.pageOne == 1 && aqProgress.pageTwo == 1),
-      at2: (atProgress.pageOne == 1 && atProgress.pageTwo == 1),
-      lw2: (lwProgress.pageOne == 1 && lwProgress.pageTwo == 1),
-      fs2: (fsProgress.pageOne == 1 && fsProgress.pageTwo == 1),
-      //farmer: getFarmer(),
-    )));
+          processStatus: getRegProgress(),
+          fi: (fiProgress.pageOne == 1 ||
+              fiProgress.pageTwo == 1 ||
+              fiProgress.pageThree == 1),
+          fh: (fhProgress.pageOne == 1 || fhProgress.pageTwo == 1),
+          ca: (caProgress.pageOne == 1 ||
+              caProgress.pageTwo == 1 ||
+              crops != null),
+          ls: (lsProgress.pageOne == 1 ||
+              lsiProgress.pageOne == 1 ||
+              livestock != null),
+          ff: (aqProgress.pageOne == 1 || aqProgress.pageTwo == 1),
+          at: (atProgress.pageOne == 1 || atProgress.pageTwo == 1),
+          lw: (lwProgress.pageOne == 1 || lwProgress.pageTwo == 1),
+          fs: (fsProgress.pageOne == 1 || fsProgress.pageTwo == 1),
+          crop: a,
+          fish: c,
+          live: b, fid: d, fsv: e,
+          fi2: (fiProgress.pageOne == 1 &&
+              fiProgress.pageTwo == 1 &&
+              fiProgress.pageOne == 1),
+          fh2: (fhProgress.pageOne == 1 && fhProgress.pageTwo == 1),
+          ca2: (caProgress.pageOne == 1 && caProgress.pageTwo == 1),
+          ls2: (lsProgress.pageOne == 1 && lsiProgress.pageOne == 1),
+          ff2: (aqProgress.pageOne == 1 && aqProgress.pageTwo == 1),
+          at2: (atProgress.pageOne == 1 && atProgress.pageTwo == 1),
+          lw2: (lwProgress.pageOne == 1 && lwProgress.pageTwo == 1),
+          fs2: (fsProgress.pageOne == 1 && fsProgress.pageTwo == 1),
+          //farmer: getFarmer(),
+        )));
   }
 }

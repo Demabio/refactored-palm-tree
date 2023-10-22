@@ -37,6 +37,18 @@ class AddAquacultureOneBloc
     on<DeleteEvent>(_delete);
     on<FAddEditEvent>(_addEditF);
     on<FDeleteEvent>(_deleteF);
+    on<GoBackEvent>(_goback);
+  }
+  _goback(
+    GoBackEvent event,
+    Emitter<AddAquacultureOneState> emit,
+  ) async {
+    if ((state.checkedA || state.checkedF || state.checkedP) &&
+        state.addAquacultureOneModelObj?.aqProgress!.pageOne == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _nextTap(
@@ -158,7 +170,10 @@ class AddAquacultureOneBloc
     if (fishes != null) {
       emit(state.copyWith(fish: feedmodels, checkedF: false));
     } else {
-      emit(state.copyWith(checkedF: true));
+      emit(state.copyWith(
+        checkedF: true,
+        fish: feedmodels,
+      ));
     }
   }
 
@@ -176,7 +191,10 @@ class AddAquacultureOneBloc
     if (prods.isNotEmpty) {
       emit(state.copyWith(prodsyss: feedmodels, checkedP: false));
     } else {
-      emit(state.copyWith(checkedP: true));
+      emit(state.copyWith(
+        checkedP: true,
+        prodsyss: feedmodels,
+      ));
     }
   }
 
@@ -194,7 +212,10 @@ class AddAquacultureOneBloc
     if (fishes.isNotEmpty) {
       emit(state.copyWith(aquatypes: feedmodels, checkedA: false));
     } else {
-      emit(state.copyWith(checkedA: true));
+      emit(state.copyWith(
+        checkedA: true,
+        aquatypes: feedmodels,
+      ));
     }
   }
 

@@ -10,12 +10,14 @@ class AddFinancialandservicesOneState extends Equatable {
     this.addFinancialandservicesOneModelObj,
     this.checka = false,
     this.checkb = false,
+    this.checkp = false,
     this.group = false,
     this.credit = false,
     this.income = false,
     this.i = const [],
     this.c = const [],
     this.s = const [],
+    this.p = const [],
   });
 
   TextEditingController? selectvalueoneController;
@@ -25,12 +27,15 @@ class AddFinancialandservicesOneState extends Equatable {
   AddFinancialandservicesOneModel? addFinancialandservicesOneModelObj;
   bool checka;
   bool checkb;
+  bool checkp;
   bool credit;
   bool group;
   bool income;
   List<CheckBoxList> i;
   List<CheckBoxList> c;
   List<CheckBoxList> s;
+  List<CheckBoxList> p;
+
   @override
   List<Object?> get props => [
         selectvalueoneController,
@@ -39,8 +44,10 @@ class AddFinancialandservicesOneState extends Equatable {
         i,
         c,
         s,
+        p,
         checka,
         checkb,
+        checkp,
         credit,
         group,
         income,
@@ -51,9 +58,11 @@ class AddFinancialandservicesOneState extends Equatable {
     AddFinancialandservicesOneModel? addFinancialandservicesOneModelObj,
     bool? checka,
     bool? checkb,
+    bool? checkp,
     List<CheckBoxList>? i,
     List<CheckBoxList>? c,
     List<CheckBoxList>? s,
+    List<CheckBoxList>? p,
     bool? credit,
     bool? group,
     bool? income,
@@ -67,12 +76,14 @@ class AddFinancialandservicesOneState extends Equatable {
           this.addFinancialandservicesOneModelObj,
       checka: checka ?? this.checka,
       checkb: checkb ?? this.checkb,
+      checkp: checkp ?? this.checkp,
       credit: credit ?? this.credit,
       group: group ?? this.group,
       income: income ?? this.income,
       i: i ?? this.i,
       c: c ?? this.c,
       s: s ?? this.s,
+      p: p ?? this.p,
     );
   }
 }

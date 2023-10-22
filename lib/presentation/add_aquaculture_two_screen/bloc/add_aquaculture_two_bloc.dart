@@ -28,6 +28,18 @@ class AddAquacultureTwoBloc
     on<SaveTapEvent>(_saveTap);
     on<CheckThreeEvent>(_checkfishes);
     on<ClearEvent>(_clear);
+    on<GoBackEvent>(_goback);
+  }
+  _goback(
+    GoBackEvent event,
+    Emitter<AddAquacultureTwoState> emit,
+  ) async {
+    if (state.checked &&
+        state.addAquacultureTwoModelObj?.aqProgress!.pageTwo == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _onInitialize(
@@ -63,7 +75,7 @@ class AddAquacultureTwoBloc
 
       fish = await fetchFish();
 
-      fish = _inputs(fish, fishes!);
+      fish = fishes != null ? _inputs(fish, fishes) : fish;
 
       aa = a.firstWhere(
         (model) =>
@@ -85,16 +97,17 @@ class AddAquacultureTwoBloc
       stepper = 1;
     }
     emit(state.copyWith(
+        inputs: fish,
         addAquacultureTwoModelObj: state.addAquacultureTwoModelObj?.copyWith(
-      dropdownItemList: a,
-      dropdownItemList1: b,
-      dropdownItemList2: a,
-      stepped2: stepper,
-      selectedDropDownValue: aa,
-      selectedDropDownValue1: bb,
-      selectedDropDownValue2: cc,
-      aqProgress: pfProgress,
-    )));
+          dropdownItemList: a,
+          dropdownItemList1: b,
+          dropdownItemList2: a,
+          stepped2: stepper,
+          selectedDropDownValue: aa,
+          selectedDropDownValue1: bb,
+          selectedDropDownValue2: cc,
+          aqProgress: pfProgress,
+        )));
   }
 
   Future<AQProgress?> getProgress() async {
@@ -124,7 +137,10 @@ class AddAquacultureTwoBloc
     if (fishes.isNotEmpty) {
       emit(state.copyWith(inputs: feedmodels, checked: false));
     } else {
-      emit(state.copyWith(checked: true));
+      emit(state.copyWith(
+        checked: true,
+        inputs: feedmodels,
+      ));
     }
   }
 

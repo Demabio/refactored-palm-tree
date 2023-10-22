@@ -51,7 +51,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
           appBar: CustomAppBar(
             leadingWidth: 60.h,
             leading: AppbarImage(
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
                 left: 16.h,
@@ -421,6 +421,15 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
         );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.farmtechandassetsScreen);
+  }
+
+  goB(BuildContext context) {
+    context.read<AddFarmtechandassetsOneBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
   }
 
   addPowerSource(BuildContext context) async {

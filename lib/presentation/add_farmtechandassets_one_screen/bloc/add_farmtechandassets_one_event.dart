@@ -15,6 +15,25 @@ class AddFarmtechandassetsOneInitialEvent extends AddFarmtechandassetsOneEvent {
   List<Object?> get props => [];
 }
 
+class GoBackEvent extends AddFarmtechandassetsOneEvent {
+  GoBackEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddFarmtechandassetsOneEvent {
   ChangeDropDownEvent({required this.value});

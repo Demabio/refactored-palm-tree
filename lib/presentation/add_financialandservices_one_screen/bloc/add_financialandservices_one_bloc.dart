@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/agriinfosource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/cooperativegroup.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/creditservice.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/incomesource.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/other/agriculturalinfosource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/cooperativegroups.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/creditsource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/incomesource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/cooperativegroups.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/creditservice.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/incomesource.dart';
@@ -32,8 +35,21 @@ class AddFinancialandservicesOneBloc extends Bloc<
     on<CheckThreeEvent>(_checkpowers);
     on<CheckTwoEvent>(_checkAssets);
     on<CheckOneEvent>(_checkIncomes);
+    on<CheckFourEvent>(_checkinfopowers);
+    on<GoBackEvent>(_goback);
 
     on<ClearEvent>(_clear);
+  }
+  _goback(
+    GoBackEvent event,
+    Emitter<AddFinancialandservicesOneState> emit,
+  ) async {
+    if ((state.checka || state.checkb || state.checkp) &&
+        state.addFinancialandservicesOneModelObj?.fsProgress!.pageOne == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _changeDropDown(
@@ -73,12 +89,15 @@ class AddFinancialandservicesOneBloc extends Bloc<
 
       int selectedCount2 =
           state.s.where((enterprise) => enterprise.isSelected).length;
+      int selectedCount3 =
+          state.p.where((enterprise) => enterprise.isSelected).length;
       FarmerDB farmerDB = FarmerDB();
       try {
         FSProgressDB atProgressDB = FSProgressDB();
         if ((!state.credit && !state.income && !state.group) &&
-            selectedCount != 0 &&
-            (selectedCount2 != 0 ||
+            selectedCount2 != 0 &&
+            selectedCount3 != 0 &&
+            (selectedCount != 0 ||
                 state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                         .id ==
                     0)) {
@@ -88,8 +107,10 @@ class AddFinancialandservicesOneBloc extends Bloc<
             cooperativeGroup: state.addFinancialandservicesOneModelObj!
                     .selectedDropDownValue?.id ==
                 1,
-            farmingIncomePercent:
-                double.parse(state.selectvalueoneController!.text),
+            farmingIncomePercent: double.parse(
+                state.selectvalueoneController!.text == ""
+                    ? "0"
+                    : state.selectvalueoneController!.text),
           ));
           //REMEMBER!!!!!!!!
           if (id > 0) {
@@ -103,8 +124,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
                 .then((value) => print("Scope FI" + value.toString()));
             event.createSuccessful!.call();
           }
-        } else if (selectedCount != 0 &&
-            (selectedCount2 != 0 ||
+        } else if (selectedCount2 != 0 &&
+            selectedCount3 != 0 &&
+            (selectedCount != 0 ||
                 state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                         .id ==
                     0)) {
@@ -114,8 +136,10 @@ class AddFinancialandservicesOneBloc extends Bloc<
             cooperativeGroup: state.addFinancialandservicesOneModelObj!
                     .selectedDropDownValue?.id ==
                 1,
-            farmingIncomePercent:
-                double.parse(state.selectvalueoneController!.text),
+            farmingIncomePercent: double.parse(
+                state.selectvalueoneController!.text == ""
+                    ? "0"
+                    : state.selectvalueoneController!.text),
           ));
           if (updatedid > 0) {
             atProgressDB
@@ -135,9 +159,11 @@ class AddFinancialandservicesOneBloc extends Bloc<
 
           int selectedCount2 =
               state.s.where((enterprise) => enterprise.isSelected).length;
-
+          int selectedCount3 =
+              state.p.where((enterprise) => enterprise.isSelected).length;
           emit(state.copyWith(
             checka: selectedCount == 0,
+            checkp: selectedCount3 == 0,
             checkb: (selectedCount2 == 0 &&
                 state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                         .id !=
@@ -161,12 +187,15 @@ class AddFinancialandservicesOneBloc extends Bloc<
 
     int selectedCount2 =
         state.s.where((enterprise) => enterprise.isSelected).length;
+    int selectedCount3 =
+        state.p.where((enterprise) => enterprise.isSelected).length;
     FarmerDB farmerDB = FarmerDB();
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if ((!state.credit && !state.income && !state.group) &&
-          selectedCount != 0 &&
-          (selectedCount2 != 0 ||
+          selectedCount2 != 0 &&
+          selectedCount3 != 0 &&
+          (selectedCount != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -176,8 +205,10 @@ class AddFinancialandservicesOneBloc extends Bloc<
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
-          farmingIncomePercent:
-              double.parse(state.selectvalueoneController!.text),
+          farmingIncomePercent: double.parse(
+              state.selectvalueoneController!.text == ""
+                  ? "0"
+                  : state.selectvalueoneController!.text),
         ));
         //REMEMBER!!!!!!!!
         if (id > 0) {
@@ -191,8 +222,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
         }
-      } else if (selectedCount != 0 &&
-          (selectedCount2 != 0 ||
+      } else if (selectedCount2 != 0 &&
+          selectedCount3 != 0 &&
+          (selectedCount != 0 ||
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id ==
                   0)) {
@@ -202,8 +234,10 @@ class AddFinancialandservicesOneBloc extends Bloc<
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
-          farmingIncomePercent:
-              double.parse(state.selectvalueoneController!.text),
+          farmingIncomePercent: double.parse(
+              state.selectvalueoneController!.text == ""
+                  ? "0"
+                  : state.selectvalueoneController!.text),
         ));
         if (updatedid > 0) {
           atProgressDB
@@ -223,9 +257,11 @@ class AddFinancialandservicesOneBloc extends Bloc<
 
         int selectedCount2 =
             state.s.where((enterprise) => enterprise.isSelected).length;
-
+        int selectedCount3 =
+            state.p.where((enterprise) => enterprise.isSelected).length;
         emit(state.copyWith(
           checka: selectedCount == 0,
+          checkp: selectedCount3 == 0,
           checkb: (selectedCount2 == 0 &&
               state.addFinancialandservicesOneModelObj?.selectedDropDownValue!
                       .id !=
@@ -268,7 +304,10 @@ class AddFinancialandservicesOneBloc extends Bloc<
     feedmodels = fishes != null ? _coops(feedmodels, fishes) : feedmodels;
     fishes != null
         ? emit(state.copyWith(c: feedmodels, checka: false))
-        : emit(state.copyWith(checka: true));
+        : emit(state.copyWith(
+            checka: true,
+            c: feedmodels,
+          ));
 
     // if (fishes.isNotEmpty) {
     // } else {
@@ -290,6 +329,23 @@ class AddFinancialandservicesOneBloc extends Bloc<
     fishes != null
         ? emit(state.copyWith(i: feedmodels))
         : emit(state.copyWith(i: feedmodels));
+  }
+
+  _checkinfopowers(
+    CheckFourEvent event,
+    Emitter<AddFinancialandservicesOneState> emit,
+  ) async {
+    List<FarmerAgriInfoSource>? fishes = await getInfo();
+
+    List<CheckBoxList>? feedmodels = [];
+    feedmodels = await fetchInfo();
+
+    feedmodels =
+        fishes != null ? feedmodels = _infos(feedmodels, fishes) : feedmodels;
+
+    fishes != null
+        ? emit(state.copyWith(p: feedmodels, checkp: false))
+        : emit(state.copyWith(checkp: true, p: feedmodels));
   }
 
   _clear(
@@ -323,6 +379,21 @@ class AddFinancialandservicesOneBloc extends Bloc<
         list.add(CheckBoxList(
           title: value[i].incomeSource,
           id: value[i].incomeSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fetchInfo() async {
+    List<CheckBoxList> list = [];
+    AgriInfoSourceDB farmStructureDB = AgriInfoSourceDB();
+
+    await farmStructureDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].agriInfoSource,
+          id: value[i].agriInfoSourceId,
         ));
       }
     });
@@ -369,6 +440,21 @@ class AddFinancialandservicesOneBloc extends Bloc<
     return list;
   }
 
+  List<CheckBoxList> _infos(
+      List<CheckBoxList> feedmodelss, List<FarmerAgriInfoSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerAgriInfoSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index =
+          feedmodels.indexWhere((obj) => obj.id == ent.agriInfoSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
   List<CheckBoxList> _credits(
       List<CheckBoxList> feedmodelss, List<FarmerCreditService> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
@@ -411,6 +497,13 @@ class AddFinancialandservicesOneBloc extends Bloc<
     }
 
     return feedmodels;
+  }
+
+  Future<List<FarmerAgriInfoSource>?> getInfo() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerAgriInfoSourceDB farmerLivestockAgeGroupsDB =
+        FarmerAgriInfoSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
   Future<List<FarmerCooperativeGroup>?> getCoops() async {
@@ -464,6 +557,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
     List<CheckBoxList>? coopmodels = await fetchCoops();
     List<CheckBoxList>? incomemodels = await fetchIncomes();
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
+    List<CheckBoxList>? infomodels = await fetchInfo();
+
     bool group = false;
     bool income = false;
     bool credit = false;
@@ -475,6 +570,11 @@ class AddFinancialandservicesOneBloc extends Bloc<
     if (groups != null) {
       coopmodels = _coops(coopmodels, groups!);
       group = true;
+    }
+
+    List<FarmerAgriInfoSource>? info = await getInfo();
+    if (info != null) {
+      infomodels = _infos(infomodels, info!);
     }
     List<FarmerIncomeSource>? incomes = await getIncomes();
     if (incomes != null) {
@@ -519,6 +619,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         i: incomemodels,
         c: coopmodels,
         s: creditmodels,
+        p: infomodels,
         addFinancialandservicesOneModelObj:
             state.addFinancialandservicesOneModelObj?.copyWith(
           dropdownItemList: a,

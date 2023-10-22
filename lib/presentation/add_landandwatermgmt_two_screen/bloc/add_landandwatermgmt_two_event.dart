@@ -15,6 +15,25 @@ class AddLandandwatermgmtTwoInitialEvent extends AddLandandwatermgmtTwoEvent {
   List<Object?> get props => [];
 }
 
+class GoBackEvent extends AddLandandwatermgmtTwoEvent {
+  GoBackEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends AddLandandwatermgmtTwoEvent {
   ChangeDropDownEvent({required this.value});
@@ -26,6 +45,7 @@ class ChangeDropDownEvent extends AddLandandwatermgmtTwoEvent {
         value,
       ];
 }
+
 class ClearEvent extends AddLandandwatermgmtTwoEvent {
   ClearEvent({
     this.value,
@@ -103,6 +123,7 @@ class CheckThreeEvent extends AddLandandwatermgmtTwoEvent {
   @override
   List<Object?> get props => [];
 }
+
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddLandandwatermgmtTwoEvent {
   ChangeDropDown1Event({required this.value});

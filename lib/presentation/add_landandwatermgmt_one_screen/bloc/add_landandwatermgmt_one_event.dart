@@ -34,6 +34,25 @@ class ClearEvent extends AddLandandwatermgmtOneEvent {
       ];
 }
 
+class GoBackEvent extends AddLandandwatermgmtOneEvent {
+  GoBackEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 class NextTapEvent extends AddLandandwatermgmtOneEvent {
   NextTapEvent({
     this.value,

@@ -17,6 +17,7 @@ class FarmerRegistrationState extends Equatable {
     this.crop = false,
     this.live = false,
     this.fish = false,
+    this.complete = false,
   });
 
   FarmerRegistrationModel? farmerRegistrationModelObj;
@@ -31,6 +32,7 @@ class FarmerRegistrationState extends Equatable {
   bool crop;
   bool live;
   bool fish;
+  bool complete;
 
   @override
   List<Object?> get props => [
@@ -46,6 +48,7 @@ class FarmerRegistrationState extends Equatable {
         fish,
         crop,
         live,
+        complete,
       ];
   FarmerRegistrationState copyWith({
     FarmerRegistrationModel? farmerRegistrationModelObj,
@@ -60,6 +63,7 @@ class FarmerRegistrationState extends Equatable {
     bool? crop,
     bool? live,
     bool? fish,
+    bool? complete,
   }) {
     return FarmerRegistrationState(
       farmerRegistrationModelObj:
@@ -75,6 +79,7 @@ class FarmerRegistrationState extends Equatable {
       crop: crop ?? this.crop,
       live: live ?? this.live,
       fish: fish ?? this.fish,
+      complete: complete ?? this.complete,
     );
   }
 }

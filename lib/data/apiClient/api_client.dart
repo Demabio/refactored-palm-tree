@@ -59,6 +59,8 @@ class ApiClient {
     });
     String token = PrefUtils().getToken();
     // Send a POST request to the server to upload the file
+    ProgressDialogUtils.showProgressDialog();
+
     final response = await _dio.post(
       '$url/gateway/Farmerregistration/Upload',
       data: formData,
@@ -69,6 +71,7 @@ class ApiClient {
         },
       ),
     );
+    ProgressDialogUtils.hideProgressDialog();
 
     // Check the response status code
     if (response.statusCode != 200) {

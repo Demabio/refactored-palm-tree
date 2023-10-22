@@ -35,6 +35,25 @@ class ClearEvent extends AddFinancialandservicesOneEvent {
       ];
 }
 
+class GoBackEvent extends AddFinancialandservicesOneEvent {
+  GoBackEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 class NextTapEvent extends AddFinancialandservicesOneEvent {
   NextTapEvent({
     this.value,
@@ -89,6 +108,13 @@ class CheckTwoEvent extends AddFinancialandservicesOneEvent {
 
 class CheckThreeEvent extends AddFinancialandservicesOneEvent {
   CheckThreeEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckFourEvent extends AddFinancialandservicesOneEvent {
+  CheckFourEvent();
 
   @override
   List<Object?> get props => [];

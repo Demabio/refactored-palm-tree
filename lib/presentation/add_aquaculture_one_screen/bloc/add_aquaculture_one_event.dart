@@ -15,6 +15,25 @@ class AddAquacultureOneInitialEvent extends AddAquacultureOneEvent {
   List<Object?> get props => [];
 }
 
+class GoBackEvent extends AddAquacultureOneEvent {
+  GoBackEvent({
+    this.value,
+    this.createFailed,
+    this.createSuccessful,
+  });
+
+  int? value;
+  Function? createSuccessful;
+
+  Function? createFailed;
+  @override
+  List<Object?> get props => [
+        value,
+        createFailed,
+        createSuccessful,
+      ];
+}
+
 class NextTapEvent extends AddAquacultureOneEvent {
   NextTapEvent({
     this.value,

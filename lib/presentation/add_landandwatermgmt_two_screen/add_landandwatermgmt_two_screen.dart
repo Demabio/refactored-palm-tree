@@ -56,7 +56,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,
@@ -469,7 +469,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
-                              onTap: () => goBack(context),
+                              onTap: () => goB(context),
                               margin: EdgeInsets.only(right: 1.h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
@@ -560,7 +560,19 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
     Navigator.popAndPushNamed(context, AppRoutes.landandwatermgmtScreen);
   }
 
+  goB(BuildContext context) {
+    context.read<AddLandandwatermgmtTwoBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
+  }
+
   goBack(BuildContext context) {
+    context.read<AddLandandwatermgmtTwoBloc>().add(
+          ClearEvent(),
+        );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.addLandandwatermgmtOneScreen);
   }

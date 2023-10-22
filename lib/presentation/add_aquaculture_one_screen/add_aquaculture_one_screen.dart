@@ -54,7 +54,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                 leadingWidth: 60.h,
                 leading: AppbarImage(
                   svgPath: ImageConstant.imgSort,
-                  onTap: () => goBack(context),
+                  onTap: () => goB(context),
                   margin: EdgeInsets.only(
                     left: 16.h,
                     top: 3.v,
@@ -182,11 +182,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                               );
                             }),
                         SizedBox(height: 18.v),
-                        Text(
-                          "msg_what_types_of_aquaculture2".tr,
-                          style: theme.textTheme.titleSmall,
-                        ),
-                        SizedBox(height: 18.v),
+
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, List<CheckBoxList>?>(
                             selector: (state) => state.aquatypes,
@@ -543,6 +539,15 @@ class AddAquacultureOneScreen extends StatelessWidget {
           ClearEvent(),
         );
     Navigator.popAndPushNamed(context, AppRoutes.aquacultureScreen);
+  }
+
+  goB(BuildContext context) {
+    context.read<AddAquacultureOneBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
   }
 
   addAquaculturespecies(BuildContext context) async {

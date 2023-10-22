@@ -72,6 +72,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     BlocSelector<FarmerRegistrationBloc,
+                            FarmerRegistrationState, bool?>(
+                        selector: (state) => state.complete,
+                        builder: (context, checked) {
+                          return Text(
+                            "Complete: ${checked! ? "Yes" : "No"}",
+                            style: CustomTextStyles.labelMediumPrimary_1,
+                          );
+                        }),
+                    BlocSelector<FarmerRegistrationBloc,
                         FarmerRegistrationState, FarmerRegistrationModel?>(
                       selector: (state) => state.farmerRegistrationModelObj,
                       builder: (context, farmerRegistrationModelObj) {
@@ -151,9 +160,12 @@ class FarmerRegistrationScreen extends StatelessWidget {
       onStepTapped: (step) {
         context.read<FarmerRegistrationBloc>().add(OnSteppedEvent(value: step));
       },
-      onStepCancel: () =>
-          NavigatorService.popAndPushNamed(AppRoutes.homeScreen),
-      onStepContinue: () => _continueButton(model.currentStep, context),
+      onStepCancel: () {
+        canCancel
+            ? context.read<FarmerRegistrationBloc>().add(StepDownEvent())
+            : null;
+      },
+      onStepContinue: () => _continueButton(model, context),
       steps: [
         _buildStep(
           title: Text('Farmers Identification'),
@@ -231,23 +243,25 @@ class FarmerRegistrationScreen extends StatelessWidget {
     );
   }
 
-  _continueButton(int value, BuildContext context) {
-    if (value == 0) {
-      editfarmersIdentification(context);
-    } else if (value == 1) {
-      editprimaryFarmHolding(context);
-    } else if (value == 2) {
-      editcropAgriculture(context);
-    } else if (value == 3) {
-      editTapAdddetails(context);
-    } else if (value == 4) {
-      editTapAqua(context);
-    } else if (value == 5) {
-      editFarmasset(context);
-    } else if (value == 6) {
-      editLandWater(context);
-    } else if (value == 7) {
-      editFinance(context);
+  _continueButton(FarmerRegistrationModel model, BuildContext context) {
+    if (model.currentStep == 0) {
+      model.fi
+          ? editfarmersIdentification(context)
+          : farmersIdentification(context);
+    } else if (model.currentStep == 1) {
+      model.fh ? editprimaryFarmHolding(context) : primaryFarmHolding(context);
+    } else if (model.currentStep == 2) {
+      model.ca ? editcropAgriculture(context) : onTapAdddetails(context);
+    } else if (model.currentStep == 3) {
+      model.ls ? editTapAdddetails(context) : onTapAdddetails(context);
+    } else if (model.currentStep == 4) {
+      model.ff ? editTapAqua(context) : onTapAqua(context);
+    } else if (model.currentStep == 5) {
+      model.at ? editFarmasset(context) : onFarmasset(context);
+    } else if (model.currentStep == 6) {
+      model.lw ? editLandWater(context) : onLandWater(context);
+    } else if (model.currentStep == 7) {
+      model.fs ? editFinance(context) : onFinance(context);
     }
   }
 

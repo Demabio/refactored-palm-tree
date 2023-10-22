@@ -49,7 +49,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
           appBar: CustomAppBar(
             leadingWidth: 60.h,
             leading: AppbarImage(
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
                 left: 16.h,
@@ -198,7 +198,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                         onTap: () => addMainInputs(context),
                         margin: EdgeInsets.only(
                           left: 82.h,
-                          top: 106.v,
+                          top: 25.v,
                         ),
                         alignment: Alignment.centerRight,
                       ),
@@ -334,7 +334,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
-                              onTap: () => goBack(context),
+                              onTap: () => goB(context),
                               margin: EdgeInsets.only(right: 1.h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
@@ -431,6 +431,15 @@ class AddAquacultureTwoScreen extends StatelessWidget {
         );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.addAquacultureOneScreen);
+  }
+
+  goB(BuildContext context) {
+    context.read<AddAquacultureTwoBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
   }
 
   addMainInputs(BuildContext context) async {

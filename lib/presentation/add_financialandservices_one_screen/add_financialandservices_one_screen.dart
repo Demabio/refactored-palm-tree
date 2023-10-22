@@ -6,6 +6,7 @@ import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/input
 import 'package:kiamis_app/presentation/add_financialandservices_five_screen/add_financialandservices_five_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/add_financialandservices_four_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/widgets/coop_widget.dart';
+import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/add_financialandservices_six_dialog.dart';
 
 import 'package:kiamis_app/presentation/add_financialandservices_three_dialog/add_financialandservices_three_dialog.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
@@ -56,7 +57,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
             leadingWidth: 60.h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
-              onTap: () => goBack(context),
+              onTap: () => goB(context),
               margin: EdgeInsets.only(
                 left: 16.h,
                 top: 3.v,
@@ -233,7 +234,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
-                      SizedBox(height: 4.v),
+                      SizedBox(height: 18.v),
                       BlocSelector<
                           AddFinancialandservicesOneBloc,
                           AddFinancialandservicesOneState,
@@ -258,6 +259,58 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 18.v),
+                      Text(
+                        "msg_agricultural_info".tr,
+                        style: theme.textTheme.titleSmall,
+                      ),
+
+                      BlocSelector<AddFinancialandservicesOneBloc,
+                              AddFinancialandservicesOneState, bool?>(
+                          selector: (state) => state.checkp,
+                          builder: (context, checked) {
+                            return Text(
+                              "What are your main sources of information on good agricultural practices (GAP)?(*)",
+                              style: checked!
+                                  ? CustomTextStyles.labelMediumPrimary_1red
+                                  : CustomTextStyles.labelMediumPrimary_1,
+                            );
+                          }),
+                      BlocSelector<
+                              AddFinancialandservicesOneBloc,
+                              AddFinancialandservicesOneState,
+                              List<CheckBoxList>?>(
+                          selector: (state) => state.p,
+                          builder: (context, list) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                top: 15.v,
+                                right: 16.h,
+                              ),
+                              child: Column(
+                                children: List<Widget>.generate(
+                                  list?.length ?? 0,
+                                  (index) {
+                                    CheckBoxList model = list![index];
+
+                                    return InputsWidget(
+                                      model,
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
+                      CustomElevatedButton(
+                        text: "Add Information Source".tr,
+                        onTap: () => addInfoSource(context),
+                        margin: EdgeInsets.only(
+                          left: 82.h,
+                          top: 9.v,
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                      SizedBox(height: 18.v),
+
                       Text(
                         "msg_cooperative_groups".tr,
                         style: theme.textTheme.titleSmall,
@@ -571,6 +624,15 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
     Navigator.popAndPushNamed(context, AppRoutes.financialandservicesScreen);
   }
 
+  goB(BuildContext context) {
+    context.read<AddFinancialandservicesOneBloc>().add(
+          GoBackEvent(
+            createFailed: () => null,
+            createSuccessful: () => goBack(context),
+          ),
+        );
+  }
+
   goBack(BuildContext context) {
     context.read<AddFinancialandservicesOneBloc>().add(
           ClearEvent(),
@@ -608,6 +670,22 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
             ));
     context.read<AddFinancialandservicesOneBloc>().add(
           CheckTwoEvent(),
+        );
+  }
+
+  addInfoSource(BuildContext context) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFinancialandservicesSixDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddFinancialandservicesOneBloc>().add(
+          CheckFourEvent(),
         );
   }
 

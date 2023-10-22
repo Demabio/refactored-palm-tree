@@ -43,6 +43,19 @@ class AddFarmtechandassetsOneBloc
     on<AddEditEvent>(_addEdit);
     on<DeleteEvent>(_delete);
     on<ClearEvent>(_clear);
+    on<GoBackEvent>(_goback);
+  }
+
+  _goback(
+    GoBackEvent event,
+    Emitter<AddFarmtechandassetsOneState> emit,
+  ) async {
+    if ((state.checkedA || state.checkedS || state.checkedP) &&
+        state.addFarmtechandassetsOneModelObj?.atProgress!.pageOne == 1) {
+      event.createFailed?.call();
+    } else {
+      event.createSuccessful?.call();
+    }
   }
 
   _onInitialize(
@@ -403,7 +416,10 @@ class AddFarmtechandassetsOneBloc
     if (fishes != null) {
       emit(state.copyWith(p: feedmodels, checkedP: false));
     } else {
-      emit(state.copyWith(checkedP: true));
+      emit(state.copyWith(
+        checkedP: true,
+        p: feedmodels,
+      ));
     }
   }
 
@@ -421,7 +437,10 @@ class AddFarmtechandassetsOneBloc
     if (fishes != null) {
       emit(state.copyWith(a: feedmodels, checkedA: false));
     } else {
-      emit(state.copyWith(checkedA: true));
+      emit(state.copyWith(
+        checkedA: true,
+        a: feedmodels,
+      ));
     }
   }
 
@@ -439,7 +458,10 @@ class AddFarmtechandassetsOneBloc
     if (fishes != null) {
       emit(state.copyWith(s: feedmodels, checkedS: false));
     } else {
-      emit(state.copyWith(checkedS: true));
+      emit(state.copyWith(
+        checkedS: true,
+        s: feedmodels,
+      ));
     }
   }
 
