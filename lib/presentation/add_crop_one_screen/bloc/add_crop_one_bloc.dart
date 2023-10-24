@@ -180,6 +180,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
         list.add(SelectionPopupModel(
           title: value[i].crop,
           id: value[i].cropId,
+          code: int.parse(value[i].cropCode),
         ));
       }
     });
@@ -230,7 +231,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
             .insertNonNullables(FarmerCrop(
           farmerCropId: 0,
           farmerId: farmerid,
-          cropCode: 0,
+          cropCode: state.addCropOneModelObj!.selectedCrop?.code,
           cropId: state.addCropOneModelObj!.selectedCrop?.id,
           farmerFarmId: PrefUtils().getFarmId(),
           dateCreated: DateTime.now(),
@@ -242,7 +243,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
             cropsDB
                 .updatePageOne(FarmerCrop(
                   farmerCropId: value,
-                  cropCode: 0,
+                  cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                   cropArea: double.parse(state.areavalueoneController!.text),
                   areaUnitId:
                       state.addCropOneModelObj!.selectedDropDownValue1?.id,
@@ -286,7 +287,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           cropsDB
               .updatePageOne(FarmerCrop(
                 farmerCropId: PrefUtils().getCropId(),
-                cropCode: 0,
+                cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                 cropArea: double.parse(state.areavalueoneController!.text),
                 areaUnitId:
                     state.addCropOneModelObj!.selectedDropDownValue1?.id,
@@ -343,7 +344,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
               cropsDB
                   .updatePageOne(FarmerCrop(
                     farmerCropId: value,
-                    cropCode: 0,
+                    cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                     cropArea: double.parse(state.areavalueoneController!.text),
                     areaUnitId:
                         state.addCropOneModelObj!.selectedDropDownValue1?.id,
@@ -388,7 +389,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
             cropsDB
                 .updatePageOne(FarmerCrop(
                   farmerCropId: PrefUtils().getCropId(),
-                  cropCode: 0,
+                  cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                   cropArea: double.parse(state.areavalueoneController!.text),
                   areaUnitId:
                       state.addCropOneModelObj!.selectedDropDownValue1?.id,
@@ -467,7 +468,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
       );
 
       selectedcrop = crops.firstWhere(
-        (model) => model.id == crop.areaUnitId,
+        (model) => model.id == crop.cropId,
       );
 
       selecteduse = useof.firstWhere(

@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -282,6 +283,8 @@ class PrimaryFarmHoldingTwoBloc
     NextTapEvent event,
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
     FarmerFarmDB farmDB = FarmerFarmDB();
     if (state.filled) {
       try {
@@ -331,6 +334,7 @@ class PrimaryFarmHoldingTwoBloc
                       state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
                   enterpriseId: ent.enterpriseId!,
                   insured: 0,
+                  createdBy: userId,
                   dateCreated: DateTime.now(),
                 ));
               }
@@ -356,6 +360,8 @@ class PrimaryFarmHoldingTwoBloc
     SaveTapEvent event,
     Emitter<PrimaryFarmHoldingTwoState> emit,
   ) {
+    final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload['nameidentifier']);
     FarmerFarmDB farmDB = FarmerFarmDB();
     int selectedCount = state.primaryFarmHoldingTwoModelObj!.enterprises
         .where((enterprise) => enterprise.isSelected)
@@ -410,6 +416,7 @@ class PrimaryFarmHoldingTwoBloc
                   enterpriseId: ent.enterpriseId!,
                   insured: 0,
                   dateCreated: DateTime.now(),
+                  createdBy: userId,
                 ));
               }
             }

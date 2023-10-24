@@ -5,11 +5,13 @@ class SelectionPopupModel {
   String title;
   dynamic value;
   bool isSelected;
+  int? code;
 
   SelectionPopupModel({
     this.id,
     required this.title,
     this.value,
     this.isSelected = false,
+    this.code,
   });
 }

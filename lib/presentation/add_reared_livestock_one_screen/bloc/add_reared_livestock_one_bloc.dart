@@ -743,6 +743,9 @@ class AddRearedLivestockOneBloc
                     beehivesFarmerId: 0));
               }
             }
+            await farmerLivestockBeehiveTypeDB
+                .delete(farmerLivestockId)
+                .then((value) => print("deleted $value"));
 
             await farmerLivestockBeehiveTypeDB
                 .insertBeehiveTypes(nbeelist)

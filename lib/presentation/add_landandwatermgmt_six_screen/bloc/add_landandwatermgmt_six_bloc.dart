@@ -9,6 +9,7 @@ import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
@@ -145,14 +146,14 @@ class AddLandandwatermgmtSixBloc
     //     SelectionPopupModel(title: "Full Member", id: 1),
     //     SelectionPopupModel(title: "Out Grower Member", id: 0),
     //   ];
-    IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
+    IrrigationCategoryDB livestockAgeGroupDB = IrrigationCategoryDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
     await livestockAgeGroupDB?.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
-          title: value[i].agencyName,
-          id: value[i].irrigationAgencyId,
+          title: value[i].irrigationCategory,
+          id: value[i].irrigationCategoryId,
           female: TextEditingController(),
           male: TextEditingController(),
           focusNode: FocusNode(),

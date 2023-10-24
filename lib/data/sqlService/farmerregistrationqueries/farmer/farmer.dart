@@ -327,16 +327,16 @@ class FarmerDB {
   Future<int?> getSaved() async {
     final database = await DatabaseService().database;
 
-    final result = await database
-        .rawQuery('SELECT COUNT(*) FROM farmer WHERE completed = 1');
+    final result = await database.rawQuery(
+        'SELECT COUNT(*) FROM farmer WHERE completed = 1 AND registrationStatusId IN (1,0)');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
 
   Future<List<Farmer>?> fetchSaved() async {
     final database = await DatabaseService().database;
-    final farmerList =
-        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
+    final farmerList = await database.rawQuery(
+        'SELECT * FROM $tableName WHERE completed = 1 AND registrationStatusId IN (1,0)');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
