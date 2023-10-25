@@ -262,4 +262,64 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setURL(String value) {
+    return _sharedPreferences!.setString('url', value);
+  }
+
+  String getURL() {
+    try {
+      return _sharedPreferences!.getString('url') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setPassword(String value) {
+    return _sharedPreferences!.setString('password', value);
+  }
+
+  String getPassword() {
+    try {
+      return _sharedPreferences!.getString('password') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setUsername(String value) {
+    return _sharedPreferences!.setString('username', value);
+  }
+
+  String getUsername() {
+    try {
+      return _sharedPreferences!.getString('username') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setSaveCreds(bool value) {
+    return _sharedPreferences!.setBool('SaveCreds', value);
+  }
+
+  bool getSaveCreds() {
+    try {
+      return _sharedPreferences!.getBool('SaveCreds') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> setVcheck(bool value) {
+    return _sharedPreferences!.setBool('vcheck', value);
+  }
+
+  bool getVcheck() {
+    try {
+      return _sharedPreferences!.getBool('vcheck') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

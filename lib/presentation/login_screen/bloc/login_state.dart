@@ -10,6 +10,9 @@ class LoginState extends Equatable {
     this.isShowPassword = true,
     this.englishName = false,
     this.loginModelObj,
+    this.linebarvalue = 0,
+    this.percentagedone = 0,
+    this.success = false,
   });
 
   TextEditingController? userNameController;
@@ -21,7 +24,11 @@ class LoginState extends Equatable {
   bool isShowPassword;
 
   bool englishName;
+  double linebarvalue;
 
+  bool success;
+
+  int percentagedone;
   @override
   List<Object?> get props => [
         userNameController,
@@ -29,6 +36,9 @@ class LoginState extends Equatable {
         isShowPassword,
         englishName,
         loginModelObj,
+        percentagedone,
+        linebarvalue,
+        success,
       ];
   LoginState copyWith({
     TextEditingController? userNameController,
@@ -36,6 +46,9 @@ class LoginState extends Equatable {
     bool? isShowPassword,
     bool? englishName,
     LoginModel? loginModelObj,
+    double? linebarvalue,
+    int? percentagedone,
+    bool? success,
   }) {
     return LoginState(
       userNameController: userNameController ?? this.userNameController,
@@ -43,6 +56,9 @@ class LoginState extends Equatable {
       isShowPassword: isShowPassword ?? this.isShowPassword,
       englishName: englishName ?? this.englishName,
       loginModelObj: loginModelObj ?? this.loginModelObj,
+      linebarvalue: linebarvalue ?? this.linebarvalue,
+      percentagedone: percentagedone ?? this.percentagedone,
+      success: success ?? this.success,
     );
   }
 }

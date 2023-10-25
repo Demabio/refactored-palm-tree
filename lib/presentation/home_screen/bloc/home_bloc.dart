@@ -9,6 +9,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
@@ -42,7 +43,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     FarmerDB farmerDB = FarmerDB();
+    FarmerFarmDB farmerFarmDB = FarmerFarmDB();
 
+    bool column = await farmerFarmDB.checkPosted();
     int? allfarmers = await farmerDB.getFarmersCount();
     int? savedfarmers = await farmerDB.getSaved();
     int? verfarmers = await farmerDB.getApproved();

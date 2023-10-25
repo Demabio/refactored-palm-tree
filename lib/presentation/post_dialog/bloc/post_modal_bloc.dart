@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/repository/repository.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/presentation/post_dialog/models/post_modal_model.dart';
 import '/core/app_export.dart';
@@ -22,8 +23,12 @@ class PostModalBloc extends Bloc<PostModalEvent, PostModalState> {
     await _repository.postPost().then((value) async {
       if (value.statusCode == 200) {
         FarmerDB farmerDB = FarmerDB();
+        FarmerFarmDB farmfarmerDB = FarmerFarmDB();
+
         int posted = await farmerDB.updateToPosted();
-        print(posted);
+        int farms = await farmfarmerDB.updateToPosted();
+
+        print("$posted,$farms");
         event.createSuccessful!.call();
       } else {
         event.createFailed!.call();

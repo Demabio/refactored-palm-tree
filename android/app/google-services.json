@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "588485419990",
+    "project_id": "kiamis-7112e",
+    "storage_bucket": "kiamis-7112e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588485419990:android:3d58f3a8fde664e9b5fa77",
+        "android_client_info": {
+          "package_name": "com.kiamis.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD8YDy2yTmf1Fb1nQo4R1IfS0utE_0ef0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

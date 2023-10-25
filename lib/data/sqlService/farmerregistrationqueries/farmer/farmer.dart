@@ -269,7 +269,7 @@ class FarmerDB {
       return await database.rawUpdate(
         '''
     UPDATE $tableName SET registrationStatusId = 2
-    WHERE completed = 1
+    WHERE completed = 1 AND registrationStatusId IN (0,1)
   ''',
       );
     } catch (e) {

@@ -57,6 +57,7 @@ class FarmerFarmDB {
         "endOfRegistration" DATETIME,
         "dateDeleted" DATETIME,        
         "completed" BOOLEAN,
+        "posted" INTEGER DEFAULT 0,
         PRIMARY KEY("farmer_farm_id")
       );
     """);
@@ -203,6 +204,41 @@ class FarmerFarmDB {
         DateTime.now().toLocal().toIso8601String(),
         id,
       ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<bool> checkPosted() async {
+    final database = await DatabaseService().database;
+    try {
+      // Check if the "posted" column exists in the table
+      final columns = await database.rawQuery('PRAGMA table_info($tableName)');
+      final columnExists = columns.any((column) => column['name'] == 'posted');
+
+      if (!columnExists) {
+        // The "posted" column doesn't exist, so add it to the table
+        await database.execute(
+            'ALTER TABLE $tableName ADD COLUMN posted INTEGER DEFAULT 0');
+      }
+      return columnExists;
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateToPosted() async {
+    final database = await DatabaseService().database;
+    try {
+      // 1 - completed 2 - posted to KIAMIS
+      return await database.rawUpdate(
+        '''
+    UPDATE $tableName SET posted = 1
+    WHERE completed = 1 AND posted = 0
+  ''',
+      );
     } catch (e) {
       print(e.toString());
       throw (e);

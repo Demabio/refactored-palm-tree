@@ -11,8 +11,24 @@ abstract class LoginEvent extends Equatable {}
 
 /// Event that is dispatched when the Login widget is first created.
 class LoginInitialEvent extends LoginEvent {
+  LoginInitialEvent({
+    this.onTrue,
+    this.onFalse,
+    this.onError,
+  });
+
+  Function? onTrue;
+
+  Function? onFalse;
+
+  Function? onError;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        onTrue,
+        onFalse,
+        onError,
+      ];
 }
 
 ///Event that is dispatched when the user calls the https://prudmatvisionaries.com/gateway/UserService/login API.
@@ -20,9 +36,13 @@ class CreateLoginEvent extends LoginEvent {
   CreateLoginEvent({
     this.onCreateLoginEventSuccess,
     this.onCreateLoginEventError,
+    this.onFalse,
+    this.persmissions,
   });
 
   Function? onCreateLoginEventSuccess;
+  Function? onFalse;
+  Function? persmissions;
 
   Function? onCreateLoginEventError;
 
@@ -30,6 +50,29 @@ class CreateLoginEvent extends LoginEvent {
   List<Object?> get props => [
         onCreateLoginEventSuccess,
         onCreateLoginEventError,
+        onFalse,
+        persmissions,
+      ];
+}
+
+class VersionCheckEvent extends LoginEvent {
+  VersionCheckEvent({
+    this.onTrue,
+    this.onFalse,
+    this.onError,
+  });
+
+  Function? onTrue;
+
+  Function? onFalse;
+
+  Function? onError;
+
+  @override
+  List<Object?> get props => [
+        onTrue,
+        onFalse,
+        onError,
       ];
 }
 
