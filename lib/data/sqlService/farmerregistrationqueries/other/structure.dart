@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/farmstructure.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerStructureDB {
@@ -20,7 +20,7 @@ class FarmerStructureDB {
   }
 
   Future<int> create(FarmerStructure farmerStructure) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, farm_structure_id, 
@@ -36,7 +36,7 @@ class FarmerStructureDB {
   }
 
   Future<int> update(FarmerStructure farmerStructure) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       UPDATE  $tableName SET
         farm_structure_id = ? 
@@ -48,7 +48,7 @@ class FarmerStructureDB {
   }
 
   Future<int> insertStructures(List<FarmerStructure> structures) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var structure in structures) {
@@ -74,7 +74,7 @@ class FarmerStructureDB {
   }
 
   Future<List<FarmerStructure>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final structures = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -85,7 +85,7 @@ class FarmerStructureDB {
   }
 
   Future<List<FarmerStructure>?> fetchByFarm(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [
@@ -100,7 +100,7 @@ class FarmerStructureDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [

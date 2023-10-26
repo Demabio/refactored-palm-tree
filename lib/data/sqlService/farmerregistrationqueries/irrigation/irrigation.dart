@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/irrigation.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerIrrigationDB {
@@ -22,7 +22,7 @@ class FarmerIrrigationDB {
   }
 
   Future<int> create(FarmerIrrigation irrigation) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id,farmer_farm_id ,use_irrigation, total_area_irrigation, area_unit_id, date_created, created_by
@@ -39,7 +39,7 @@ class FarmerIrrigationDB {
   }
 
   Future<int> update(FarmerIrrigation irrigation) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         use_irrigation = ?, total_area_irrigation = ?, area_unit_id = ?
@@ -53,7 +53,7 @@ class FarmerIrrigationDB {
   }
 
   Future<int> insertIrrigation(List<FarmerIrrigation> irrigations) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var irrigation in irrigations) {
@@ -80,7 +80,7 @@ class FarmerIrrigationDB {
   }
 
   Future<List<FarmerIrrigation>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final irrigations = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

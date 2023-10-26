@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/campchange.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerCampChangeDB {
@@ -28,7 +28,7 @@ class FarmerCampChangeDB {
     required String approvedBy,
     required DateTime dateApproved,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, old_agri_camp_id, season_id, new_agri_camp_id, approved_by, date_approved
@@ -44,7 +44,7 @@ class FarmerCampChangeDB {
   }
 
   Future<int> insertCampChanges(List<FarmerCampChange> campChanges) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var campChange in campChanges) {
@@ -70,7 +70,7 @@ class FarmerCampChangeDB {
   }
 
   Future<List<FarmerCampChange>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final campChanges = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

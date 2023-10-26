@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/cooperativegroup.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerCooperativeGroupDB {
@@ -22,7 +22,7 @@ class FarmerCooperativeGroupDB {
   }
 
   Future<int> create(FarmerCooperativeGroup cooperativeGroup) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, cooperative_group_id, cooperative_group_name, other, created_by, date_created
@@ -39,7 +39,7 @@ class FarmerCooperativeGroupDB {
   }
 
   Future<int> update(FarmerCooperativeGroup cooperativeGroup) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         cooperative_group_id = ?, cooperative_group_name = ?, other = ?
@@ -54,7 +54,7 @@ class FarmerCooperativeGroupDB {
 
   Future<int> insertCooperativeGroups(
       List<FarmerCooperativeGroup> cooperativeGroups) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var cooperativeGroup in cooperativeGroups) {
@@ -81,7 +81,7 @@ class FarmerCooperativeGroupDB {
   }
 
   Future<List<FarmerCooperativeGroup>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final cooperativeGroups = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -92,7 +92,7 @@ class FarmerCooperativeGroupDB {
   }
 
   Future<List<FarmerCooperativeGroup>?> fetchByFarmerId(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_id = ?
     ''', [
@@ -107,7 +107,7 @@ class FarmerCooperativeGroupDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE farmer_id = ?
     ''', [

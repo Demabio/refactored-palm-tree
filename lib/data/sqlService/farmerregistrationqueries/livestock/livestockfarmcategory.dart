@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockfarmcategory.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LivestockFarmSystemCategoryDB {
@@ -20,7 +20,7 @@ class LivestockFarmSystemCategoryDB {
   }
 
   Future<int> create(LivestockFarmSystemCategory farmSystemCategory) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         livestock_cat_id, livestock_farmsystem_id, livestock_farmsys_cat_code,
@@ -37,7 +37,7 @@ class LivestockFarmSystemCategoryDB {
 
   Future<int> insertCategories(
       List<LivestockFarmSystemCategory> categories) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var category in categories) {
@@ -63,7 +63,7 @@ class LivestockFarmSystemCategoryDB {
   }
 
   Future<List<LivestockFarmSystemCategory>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final categories = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

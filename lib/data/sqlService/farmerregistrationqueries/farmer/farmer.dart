@@ -1,6 +1,6 @@
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:tuple/tuple.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerDB {
@@ -77,7 +77,7 @@ class FarmerDB {
   }
 
   Future<int> insertNonNullable(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
      "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed
@@ -94,7 +94,7 @@ class FarmerDB {
   }
 
   Future<int> updatePageOne(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET  farmerName = ?, idNo = ?, dob = ?, gender = ?, idNo = ?, mobile = ?, email = ?, postalAddress = ?  
@@ -113,7 +113,7 @@ class FarmerDB {
   }
 
   Future<int> updatePageTwo(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET  farmerName = ?, dob = ?, gender = ?, idNo = ?, mobile = ?, email = ?, postalAddress = ? WHERE farmerId = ? 
@@ -134,7 +134,7 @@ class FarmerDB {
   }
 
   Future<int> updatePageThree(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
@@ -153,10 +153,10 @@ class FarmerDB {
   }
 
   Future<int> updatePageFour(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, completed = ?
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?
     WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
@@ -164,7 +164,6 @@ class FarmerDB {
         farmer.respondentName,
         farmer.respNationalId,
         farmer.respondentMobile,
-        1,
         farmer.farmerId,
       ]);
     } catch (e) {
@@ -174,7 +173,7 @@ class FarmerDB {
   }
 
   Future<int> updateFromFarmAsset(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET labourSourceId = ?  
@@ -190,7 +189,7 @@ class FarmerDB {
   }
 
   Future<int> updateFromLandWater(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET gokFertiliser = ?, limeUsage = ? 
@@ -207,7 +206,7 @@ class FarmerDB {
   }
 
   Future<int> updateFromLandWaterTwo(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET irrigationUse = ?, irrigationArea = ?  
@@ -224,7 +223,7 @@ class FarmerDB {
   }
 
   Future<int> updateFromFinancial(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ? ,completed = ? 
@@ -242,7 +241,7 @@ class FarmerDB {
   }
 
   Future<int> updateFromFinancialTwo(Farmer farmer) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
     UPDATE $tableName SET cropsInsurance = ?, livestockInsurance = ?, fishInsurance = ?, farmRecords = ?, assetsInsurance = ?, extensionsericeAccess = ?, completed = ?
@@ -264,7 +263,7 @@ class FarmerDB {
   }
 
   Future<int> updateToPosted() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate(
         '''
@@ -279,20 +278,20 @@ class FarmerDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
     DELETE FROM $tableName WHERE farmerId = ?
     ''', [id]);
   }
 
   Future<List<Farmer>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery('SELECT * FROM $tableName');
     return farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList();
   }
 
   Future<List<Farmer>?> fetchCompleted() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList =
         await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
     return farmerList.isNotEmpty
@@ -301,7 +300,7 @@ class FarmerDB {
   }
 
   Future<Farmer?> fetchByFarmerId(int farmerId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmer = await database
         .rawQuery('SELECT * FROM $tableName WHERE farmerId = ?', [farmerId]);
     print(farmer);
@@ -309,7 +308,7 @@ class FarmerDB {
   }
 
   Future<Farmer?> fetchByIDNo(String id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmer = await database
         .rawQuery('SELECT * FROM $tableName WHERE idNo = ?', [id]);
     print(farmer);
@@ -317,7 +316,7 @@ class FarmerDB {
   }
 
   Future<int?> getFarmersCount() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery('SELECT COUNT(*) FROM farmer');
     final count = Sqflite.firstIntValue(result);
@@ -325,7 +324,7 @@ class FarmerDB {
   }
 
   Future<int?> getSaved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
         'SELECT COUNT(*) FROM farmer WHERE completed = 1 AND registrationStatusId IN (1,0)');
@@ -334,7 +333,7 @@ class FarmerDB {
   }
 
   Future<List<Farmer>?> fetchSaved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
         'SELECT * FROM $tableName WHERE completed = 1 AND registrationStatusId IN (1,0)');
     return farmerList.isNotEmpty
@@ -343,7 +342,7 @@ class FarmerDB {
   }
 
   Future<int?> getApproved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
         'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (3,5,8) AND completed = 1');
@@ -352,7 +351,7 @@ class FarmerDB {
   }
 
   Future<List<Farmer>?> fetchApproved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
         'SELECT * FROM farmer WHERE registrationStatusId IN (3,5,8) AND completed = 1');
     return farmerList.isNotEmpty
@@ -361,7 +360,7 @@ class FarmerDB {
   }
 
   Future<int?> getUnapproved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
         'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (4,6,9) AND completed = 1');
@@ -370,7 +369,7 @@ class FarmerDB {
   }
 
   Future<List<Farmer>?> fetchUnapproved() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
         'SELECT * FROM farmer WHERE registrationStatusId IN (4,6,9) AND completed = 1');
     return farmerList.isNotEmpty
@@ -393,7 +392,7 @@ class FarmerDB {
   }
 
   Future<int?> getUnverified() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
         'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
@@ -402,7 +401,7 @@ class FarmerDB {
   }
 
   Future<List<Farmer>?> fetchUnverified() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
         'SELECT * FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
     return farmerList.isNotEmpty
@@ -412,7 +411,7 @@ class FarmerDB {
 
   Future<Map<String, Object?>> getApprovedAndRejectedFarmersCountByMonth(
       int year, int month) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     final startDate = DateTime(year, month);
     final endDate = DateTime(year, month + 1);
@@ -463,7 +462,7 @@ class FarmerDB {
   }
 
   Future<List<Tuple2<int, int>>?> getFarmersCountLast7Days() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
 
     // Calculate the start date (7 days ago)
     final now = DateTime.now();

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:kiamis_app/data/models/dbModels/crops/crop.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
 
 import '../apiClient/api_client.dart';

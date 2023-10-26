@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AQProgressDB {
@@ -17,7 +17,7 @@ class AQProgressDB {
   }
 
   Future<int> insert(AQProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName ("farmId", "pageOne", "pageTwo")
       VALUES (?, ?, ?)
@@ -29,7 +29,7 @@ class AQProgressDB {
   }
 
   Future<int> update(AQProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
@@ -42,7 +42,7 @@ class AQProgressDB {
   }
 
   Future<AQProgress?> fetchByFarmId(int farmId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final progress = await database
         .rawQuery('SELECT * FROM $tableName WHERE "farmId" = ?', [farmId]);
 

@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/feed.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerLivestockFeedsDB {
@@ -26,7 +26,7 @@ class FarmerLivestockFeedsDB {
     required DateTime dateCreated,
     required String createdBy,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_livestock_id, feed_type_id, feed_quantity, date_created, created_by
@@ -41,7 +41,7 @@ class FarmerLivestockFeedsDB {
   }
 
   Future<int> insertFeeds(List<FarmerLivestockFeed> feeds) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var feed in feeds) {
@@ -66,7 +66,7 @@ class FarmerLivestockFeedsDB {
   }
 
   Future<List<FarmerLivestockFeed>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -77,7 +77,7 @@ class FarmerLivestockFeedsDB {
   }
 
   Future<List<FarmerLivestockFeed>> fetchAllByLivestock(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);
@@ -88,7 +88,7 @@ class FarmerLivestockFeedsDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
     DELETE FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);

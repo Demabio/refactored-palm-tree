@@ -112,7 +112,7 @@ import '../../../data/sqlService/dbqueries/farm/farmstructures.dart';
 import '/core/app_export.dart';
 import 'package:path/path.dart';
 
-import 'package:kiamis_app/presentation/home_farmer_not_found_dialog/models/home_farmer_not_found_model.dart';
+import 'package:kiamis_app/presentation/download_setups/models/home_farmer_not_found_model.dart';
 part 'home_farmer_not_found_event.dart';
 part 'home_farmer_not_found_state.dart';
 

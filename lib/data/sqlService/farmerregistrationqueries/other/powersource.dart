@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/powersource.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerPowerSourceDB {
@@ -21,7 +21,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<int> create(FarmerPowerSource farmerPowerSource) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, power_source_id, others_name, date_created, created_by
@@ -37,7 +37,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<int> insertPowerSources(List<FarmerPowerSource> powerSources) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var powerSource in powerSources) {
@@ -63,7 +63,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<int> update(FarmerPowerSource farmerPowerSource) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       UPDATE  $tableName SET
         power_source_id = ?
@@ -75,7 +75,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<List<FarmerPowerSource>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final powerSources = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -86,7 +86,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<List<FarmerPowerSource>?> fetchByFarm(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [
@@ -101,7 +101,7 @@ class FarmerPowerSourceDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [

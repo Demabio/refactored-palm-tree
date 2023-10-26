@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/irrigationcrop.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerIrrigationCropDB {
@@ -22,7 +22,7 @@ class FarmerIrrigationCropDB {
   }
 
   Future<int> create(FarmerIrrigationCrop irrigationCrop) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, crop_id, area_of_crop, area_unit_id, no_of_crop_per_year, date_created, created_by
@@ -39,7 +39,7 @@ class FarmerIrrigationCropDB {
   }
 
   Future<int> update(FarmerIrrigationCrop irrigationCrop) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         crop_id = ?, area_of_crop = ?, area_unit_id = ? , no_of_crop_per_year = ?
@@ -55,7 +55,7 @@ class FarmerIrrigationCropDB {
 
   Future<int> insertIrrigationCrops(
       List<FarmerIrrigationCrop> irrigationCrops) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var irrigationCrop in irrigationCrops) {
@@ -82,7 +82,7 @@ class FarmerIrrigationCropDB {
   }
 
   Future<List<FarmerIrrigationCrop>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final irrigationCrops = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

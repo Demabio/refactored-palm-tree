@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/beehivetype.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerLivestockBeehiveTypeDB {
@@ -23,7 +23,7 @@ class FarmerLivestockBeehiveTypeDB {
     required int beehivesTypeId,
     String? createdBy,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_livestock_id, beehives_type_id, date_created, created_by
@@ -38,7 +38,7 @@ class FarmerLivestockBeehiveTypeDB {
 
   Future<int> insertBeehiveTypes(
       List<FarmerLivestockBeehiveType> beehiveTypes) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var beehiveType in beehiveTypes) {
@@ -62,7 +62,7 @@ class FarmerLivestockBeehiveTypeDB {
   }
 
   Future<List<FarmerLivestockBeehiveType>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final beehiveTypes = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -73,14 +73,14 @@ class FarmerLivestockBeehiveTypeDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
     DELETE FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);
   }
 
   Future<List<FarmerLivestockBeehiveType>> fetchAllByLivestock(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);

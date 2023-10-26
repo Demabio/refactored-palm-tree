@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FIProgressDB {
@@ -19,7 +19,7 @@ class FIProgressDB {
   }
 
   Future<int> insert(FIProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName ("farmerId", "pageOne", "pageTwo", "pageThree", "pageFour")
       VALUES (?, ?, ?, ?, ?)
@@ -33,7 +33,7 @@ class FIProgressDB {
   }
 
   Future<int> update(FIProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?, "pageThree" = ?, "pageFour" = ?
@@ -48,7 +48,7 @@ class FIProgressDB {
   }
 
   Future<FIProgress?> fetchByFarmerId(int farmerId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final progress = await database
         .rawQuery('SELECT * FROM $tableName WHERE "farmerId" = ?', [farmerId]);
 

@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerLivestockDB {
@@ -30,7 +30,7 @@ class FarmerLivestockDB {
     required DateTime dateCreated,
     required String createdBy,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, livestock_farmsystem_cat_id, livestock_id,
@@ -48,7 +48,7 @@ class FarmerLivestockDB {
   }
 
   Future<int> insertNonNulls(FarmerLivestock farmerLivestock) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by
@@ -65,7 +65,7 @@ class FarmerLivestockDB {
   }
 
   Future<int> update(FarmerLivestock farmerLivestock) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         livestock_id = ?, livestock_farmsystem_cat_id = ?, no_of_beehives = ?
@@ -79,7 +79,7 @@ class FarmerLivestockDB {
   }
 
   Future<int> insertLivestock(List<FarmerLivestock> livestockList) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var livestock in livestockList) {
@@ -107,7 +107,7 @@ class FarmerLivestockDB {
   }
 
   Future<List<FarmerLivestock>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final livestockList = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -118,7 +118,7 @@ class FarmerLivestockDB {
   }
 
   Future<List<FarmerLivestock>?> fetchByFarm(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final livestockList = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ? 
     ''', [id]);
@@ -131,7 +131,7 @@ class FarmerLivestockDB {
   }
 
   Future<FarmerLivestock?> fetchById(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final livestockList = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);
@@ -142,7 +142,7 @@ class FarmerLivestockDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
     DELETE FROM $tableName WHERE farmer_livestock_id = ?
     ''', [id]);

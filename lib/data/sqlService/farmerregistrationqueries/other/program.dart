@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/program.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerProgramDB {
@@ -20,7 +20,7 @@ class FarmerProgramDB {
     required int programId,
     required int farmerId,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         program_id, farmer_id
@@ -32,7 +32,7 @@ class FarmerProgramDB {
   }
 
   Future<int> insertPrograms(List<FarmerProgram> programs) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var program in programs) {
@@ -54,7 +54,7 @@ class FarmerProgramDB {
   }
 
   Future<List<FarmerProgram>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final programs = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

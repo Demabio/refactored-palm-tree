@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/process_status.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProcessStatusDB {
@@ -23,7 +23,7 @@ class ProcessStatusDB {
   }
 
   Future<int> create(ProcessStatus processStatus) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (farmerId, farmeridentification, primaryfarmholding, cropAgriculture, livestock, aquaculture, farmAssets, landWater, financialServices) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -41,7 +41,7 @@ class ProcessStatusDB {
   }
 
   Future<int> update(ProcessStatus processStatus) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       UPDATE $tableName SET farmeridentification = ?, primaryfarmholding = ?, cropAgriculture = ?, livestock = ?, aquaculture = ?, farmAssets = ?, landWater = ?, financialServices = ?
       WHERE farmerId = ?
@@ -59,7 +59,7 @@ class ProcessStatusDB {
   }
 
   Future<List<ProcessStatus>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final processStatusList =
         await database.rawQuery('SELECT * FROM $tableName');
     return processStatusList
@@ -68,7 +68,7 @@ class ProcessStatusDB {
   }
 
   Future<ProcessStatus> fetchByFarmerId(int farmerId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final processStatus = await database
         .rawQuery('SELECT * FROM $tableName WHERE farmerId = ?', [farmerId]);
     return ProcessStatus.fromSqfliteDatabase(processStatus.first);

@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/enterprise.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerEnterprisesDB {
@@ -27,7 +27,7 @@ class FarmerEnterprisesDB {
     String? insuranceName,
     String? createdBy,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_farm_id, enterprise_id, insured, insurance_name, date_created, created_by
@@ -43,7 +43,7 @@ class FarmerEnterprisesDB {
   }
 
   Future<int> insertEnterprises(List<FarmerEnterprise> enterprises) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var enterprise in enterprises) {
@@ -68,7 +68,7 @@ class FarmerEnterprisesDB {
   }
 
   Future<int> delete(int farmerEnterprise) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
      DELETE FROM $tableName WHERE farmer_farm_id = ?
     ''', [
@@ -77,7 +77,7 @@ class FarmerEnterprisesDB {
   }
 
   Future<List<FarmerEnterprise>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final enterprises = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -88,7 +88,7 @@ class FarmerEnterprisesDB {
   }
 
   Future<List<FarmerEnterprise>> fetchAllByFarmId(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final enterprises = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_farm_id = ?
     ''', [id]);

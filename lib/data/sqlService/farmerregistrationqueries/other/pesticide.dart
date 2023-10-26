@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/pesticide.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerPesticidesDB {
@@ -22,7 +22,7 @@ class FarmerPesticidesDB {
   }
 
   Future<int> create(FarmerPesticide pesticide) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, farmer_crop_id, pesticide_type_id, others, date_created, created_by
@@ -39,7 +39,7 @@ class FarmerPesticidesDB {
   }
 
   Future<int> update(FarmerPesticide pesticide) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
         pesticide_type_id = ?, others = ? 
@@ -51,7 +51,7 @@ class FarmerPesticidesDB {
   }
 
   Future<int> insertPesticides(List<FarmerPesticide> pesticides) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var pesticide in pesticides) {
@@ -78,7 +78,7 @@ class FarmerPesticidesDB {
   }
 
   Future<List<FarmerPesticide>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final pesticides = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
@@ -90,7 +90,7 @@ class FarmerPesticidesDB {
 
   Future<FarmerPesticide> fetchByFarmerPesticideId(
       int farmerPesticideId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final pesticide = await database.rawQuery('''
       SELECT * FROM $tableName WHERE farmer_pesticide_id = ?
     ''', [farmerPesticideId]);
@@ -99,7 +99,7 @@ class FarmerPesticidesDB {
   }
 
   Future<List<FarmerPesticide>?> fetchByCropId(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
       SELECT * FROM $tableName WHERE farmer_crop_id = ?
     ''', [
@@ -112,7 +112,7 @@ class FarmerPesticidesDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE farmer_crop_id = ?
     ''', [

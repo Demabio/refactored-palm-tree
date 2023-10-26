@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LSProgressDB {
@@ -17,7 +17,7 @@ class LSProgressDB {
   }
 
   Future<int> insert(LSProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName ("livestockId", "pageOne", "pageTwo")
       VALUES (?, ?, ?)
@@ -29,7 +29,7 @@ class LSProgressDB {
   }
 
   Future<int> update(LSProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
@@ -42,7 +42,7 @@ class LSProgressDB {
   }
 
   Future<LSProgress?> fetchByLivestock(int livestockId) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final progress = await database.rawQuery(
         'SELECT * FROM $tableName WHERE "livestockId" = ?', [livestockId]);
 
@@ -52,7 +52,7 @@ class LSProgressDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE livestockId = ?
     ''', [

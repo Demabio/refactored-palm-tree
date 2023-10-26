@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CAProgressDB {
@@ -17,7 +17,7 @@ class CAProgressDB {
   }
 
   Future<int> insert(CAProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName ("cropId", "pageOne", "pageTwo")
       VALUES (?, ?, ?)
@@ -29,7 +29,7 @@ class CAProgressDB {
   }
 
   Future<int> update(CAProgress fiProgress) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE $tableName
       SET "pageOne" = ?, "pageTwo" = ?
@@ -42,7 +42,7 @@ class CAProgressDB {
   }
 
   Future<CAProgress?> fetchByCropId(int cropid) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final progress = await database
         .rawQuery('SELECT * FROM $tableName WHERE "cropId" = ?', [cropid]);
 
@@ -52,7 +52,7 @@ class CAProgressDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
       DELETE FROM $tableName WHERE cropId = ?
     ''', [

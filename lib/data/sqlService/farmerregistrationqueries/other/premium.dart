@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/premium.dart';
-import 'package:kiamis_app/data/sqlService/database_service.dart';
+import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FarmerPremiumDB {
@@ -33,7 +33,7 @@ class FarmerPremiumDB {
     required double amountPaid,
     String? uploadedBy,
   }) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, insurance_id, excel_prem_id, authorised_payments_id, season_id, date_premium_paid, amount_paid, date_created, uploaded_by
@@ -52,7 +52,7 @@ class FarmerPremiumDB {
   }
 
   Future<int> insertPremiums(List<FarmerPremium> premiums) async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final batch = database.batch();
     try {
       for (var premium in premiums) {
@@ -81,7 +81,7 @@ class FarmerPremiumDB {
   }
 
   Future<List<FarmerPremium>> fetchAll() async {
-    final database = await DatabaseService().database;
+    final database = await FarmerDatabaseService().database;
     final premiums = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');
