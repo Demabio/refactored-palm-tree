@@ -1,23 +1,23 @@
-import 'bloc/home_farmer_not_found_bloc.dart';
-import 'models/home_farmer_not_found_model.dart';
+import 'bloc/updatedb_bloc.dart';
+import 'models/updatedb_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 // ignore_for_file: must_be_immutable
-class HomeFarmerNotFoundDialog extends StatelessWidget {
-  const HomeFarmerNotFoundDialog({Key? key})
+class UpdateDBDialog extends StatelessWidget {
+  const UpdateDBDialog({Key? key})
       : super(
           key: key,
         );
 
   static Widget builder(BuildContext context) {
-    return BlocProvider<HomeFarmerNotFoundBloc>(
-      create: (context) => HomeFarmerNotFoundBloc(HomeFarmerNotFoundState(
-        homeFarmerNotFoundModelObj: HomeFarmerNotFoundModel(),
+    return BlocProvider<UpdateDBBloc>(
+      create: (context) => UpdateDBBloc(UpdateDBState(
+        homeFarmerNotFoundModelObj: UpdateDBModel(),
       ))
-        ..add(HomeFarmerNotFoundInitialEvent()),
-      child: HomeFarmerNotFoundDialog(),
+        ..add(UpdateDBInitialEvent()),
+      child: UpdateDBDialog(),
     );
   }
 
@@ -30,8 +30,8 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
       onWillPop: () {
         return Future.value(false);
       },
-      child: BlocBuilder<HomeFarmerNotFoundBloc, HomeFarmerNotFoundState>(
-          builder: (context, state) {
+      child:
+          BlocBuilder<UpdateDBBloc, UpdateDBState>(builder: (context, state) {
         return Container(
           width: 330.h,
           padding: EdgeInsets.all(16.h),
@@ -46,16 +46,14 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
               Visibility(
                 visible: !state.failed && !state.success,
                 child: Text(
-                  !state.visibility
-                      ? "No Local Database found"
-                      : "Downloading...",
+                  !state.visibility ? "Update Database" : "Updating...",
                   style: CustomTextStyles.bodyLargePrimary_2,
                 ),
               ),
               Visibility(
                 visible: !state.failed && state.success,
                 child: Text(
-                  "Downloaded",
+                  "Updated",
                   style: CustomTextStyles.bodyLargePrimary_2,
                 ),
               ),
@@ -65,7 +63,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 child: SizedBox(
                   width: 161.h,
                   child: Text(
-                    "Download Data?",
+                    "Update Database?",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -80,7 +78,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                 child: SizedBox(
                   width: 161.h,
                   child: Text(
-                    "Download Failed, Retry?",
+                    "Update Failed, Retry?",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -158,7 +156,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
               SizedBox(
                 height: 50.v,
                 child: CustomElevatedButton(
-                  text: "Download",
+                  text: "Update",
                   margin: EdgeInsets.only(left: 4.h),
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                   buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -212,13 +210,13 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
     );
   }
 
-  onTapadd(BuildContext context, HomeFarmerNotFoundState state) {
-    context.read<HomeFarmerNotFoundBloc>().add(FetchGetOrdersEvent());
+  onTapadd(BuildContext context, UpdateDBState state) {
+    context.read<UpdateDBBloc>().add(FetchGetOrdersEvent());
     print(state.count);
   }
 
-  onTapDonwload(BuildContext context, HomeFarmerNotFoundState state) {
-    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataEvent(
+  onTapDonwload(BuildContext context, UpdateDBState state) {
+    context.read<UpdateDBBloc>().add(InnitDBwithDataEvent(
           onSuccess: () {
             downloadComplete(context);
           },
@@ -229,11 +227,11 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
   }
 
   downloadComplete(BuildContext context) {
-    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataSuccessEvent());
+    context.read<UpdateDBBloc>().add(InnitDBwithDataSuccessEvent());
   }
 
   downloadFailed(BuildContext context) {
-    context.read<HomeFarmerNotFoundBloc>().add(InnitDBwithDataFailedEvent());
+    context.read<UpdateDBBloc>().add(InnitDBwithDataFailedEvent());
   }
 
   closeDialog(BuildContext context) {

@@ -46,7 +46,7 @@ class ApiClient {
 
   Future<Response> uploadSQLiteDB() async {
     // Create a Dio client
-    const name = 'localdevice.db';
+    const name = 'flocaldevice.db';
     final path = await getDatabasesPath();
     PrefUtils().setDBPath(path);
     String dbpath = join(path, name);
@@ -110,6 +110,32 @@ class ApiClient {
     }
   }
 
+  Future<Response> downloadRequest({
+    Map<String, String> headers = const {},
+    String requestData = "",
+  }) async {
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/gateway/FarmerRegistration/downloadrequest',
+        options: Options(headers: headers),
+      );
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null
+            ? PostLoginUserServicePostResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
   /// Performs API call for https://prudmatvisionaries.com/gateway/UserService/login
   ///
   /// Sends a POST request to the server's 'https://prudmatvisionaries.com/gateway/UserService/login' endpoint
@@ -124,7 +150,7 @@ class ApiClient {
     try {
       await isNetworkConnected();
       var response = await _dio.post(
-        '$url/gateway/UserService/login',
+        '$url/gateway/UserService/MobileLogin',
         data: requestData,
         options: Options(headers: headers),
       );

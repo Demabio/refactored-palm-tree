@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                               EdgeInsets.only(left: 3.h, top: 26.v, right: 2.h),
                           hintText: "lbl_username".tr,
                           validator: (value) {
-                            if (!isText(value)) {
+                            if (isNotEmpty(value)) {
                               return "Please enter valid text";
                             }
                             return null;

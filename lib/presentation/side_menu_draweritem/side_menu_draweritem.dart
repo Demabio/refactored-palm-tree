@@ -1,4 +1,5 @@
 import 'package:kiamis_app/presentation/post_dialog/post_dialog.dart';
+import 'package:kiamis_app/presentation/update_db/updatedb_dialog.dart';
 
 import 'bloc/side_menu_bloc.dart';
 import 'package:flutter/material.dart';
@@ -98,19 +99,19 @@ class SideMenuDraweritem extends StatelessWidget {
                   onTap: () {
                     postDialog(context);
                   }),
-              Padding(
-                  padding: EdgeInsets.only(left: 7.h, top: 26.v),
-                  child: Row(children: [
-                    CustomImageView(
-                        svgPath: ImageConstant.imgArrowdown,
-                        height: 25.adaptSize,
-                        width: 25.adaptSize,
-                        margin: EdgeInsets.only(bottom: 2.v)),
-                    Padding(
-                        padding: EdgeInsets.only(left: 20.h),
-                        child: Text("msg_download_farmers".tr,
-                            style: CustomTextStyles.titleMedium18))
-                  ])),
+              CustomElevatedButton(
+                  height: 30.v,
+                  width: 222.h,
+                  text: "msg_download_farmers".tr,
+                  margin: EdgeInsets.only(top: 27.v),
+                  leftIcon: Container(
+                      margin: EdgeInsets.only(right: 20.h),
+                      child: CustomImageView(svgPath: ImageConstant.imgUpload)),
+                  buttonStyle: CustomButtonStyles.none,
+                  buttonTextStyle: CustomTextStyles.titleMedium18,
+                  onTap: () {
+                    updateDialog(context);
+                  }),
               Padding(
                   padding: EdgeInsets.only(left: 7.h, top: 25.v),
                   child: Row(children: [
@@ -166,6 +167,23 @@ class SideMenuDraweritem extends StatelessWidget {
         //barrierColor: const Color.fromARGB(255, 50, 50, 50),
         builder: (_) => AlertDialog(
               content: PostDialog.builder(
+                context,
+              ),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  updateDialog(BuildContext context) async {
+    Navigator.pop(context);
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: UpdateDBDialog.builder(
                 context,
               ),
               backgroundColor: Colors.transparent,

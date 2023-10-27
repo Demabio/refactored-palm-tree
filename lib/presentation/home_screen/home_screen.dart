@@ -7,7 +7,7 @@ import '../../widgets/graphs/bargraph/bar_chart_sample2.dart';
 import '../../widgets/graphs/donutchart/pie_chart_sample2.dart';
 import '../../widgets/graphs/linegraph/line_chart_widget.dart';
 import '../../widgets/graphs/piechart/pie_chart_sample3.dart';
-import '../home_farmer_not_found_dialog/home_farmer_not_found_dialog.dart';
+import '../download_setups/home_farmer_not_found_dialog.dart';
 import '../home_screen/widgets/userprofile_item_widget.dart';
 import '../side_menu_draweritem/side_menu_draweritem.dart';
 import 'bloc/home_bloc.dart';

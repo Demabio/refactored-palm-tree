@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
 import '/core/app_export.dart';

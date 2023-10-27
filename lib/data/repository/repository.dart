@@ -33,4 +33,14 @@ class Repository {
       requestData: requestData,
     );
   }
+
+  Future<Response> downloadRequest({
+    Map<String, String> headers = const {},
+    String requestData = "",
+  }) async {
+    return await _apiClient.downloadRequest(
+      headers: headers,
+      requestData: requestData,
+    );
+  }
 }

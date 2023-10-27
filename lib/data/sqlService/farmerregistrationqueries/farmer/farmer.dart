@@ -80,7 +80,7 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed
+     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed, wardid, locationid
     ) 
     VALUES (?, ?, ?, ?, ?, ?)
   ''', [
@@ -90,6 +90,8 @@ class FarmerDB {
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
       0,
+      1,
+      1
     ]);
   }
 
@@ -255,6 +257,23 @@ class FarmerDB {
         farmer.extensionsericeAccess,
         1,
         farmer.farmerId,
+      ]);
+    } catch (e) {
+      print(e.toString());
+      throw (e);
+    }
+  }
+
+  Future<int> updateRegstatus(Farmer farmer) async {
+    final database = await FarmerDatabaseService().database;
+    try {
+      return await database.rawUpdate('''
+    UPDATE $tableName SET registrationStatusId = ?, farmerStatusId = ? 
+    WHERE idNo = ? 
+  ''', [
+        farmer.cooperativeGroup! ? 1 : 0,
+        farmer.farmingIncomePercent,
+        farmer.idNo,
       ]);
     } catch (e) {
       print(e.toString());
