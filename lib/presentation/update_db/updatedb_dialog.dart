@@ -236,5 +236,6 @@ class UpdateDBDialog extends StatelessWidget {
 
   closeDialog(BuildContext context) {
     Navigator.pop(context);
+    NavigatorService.popAndPushNamed(AppRoutes.homeScreen);
   }
 }

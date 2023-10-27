@@ -271,8 +271,8 @@ class FarmerDB {
     UPDATE $tableName SET registrationStatusId = ?, farmerStatusId = ? 
     WHERE idNo = ? 
   ''', [
-        farmer.cooperativeGroup! ? 1 : 0,
-        farmer.farmingIncomePercent,
+        farmer.registrationStatusId!,
+        farmer.farmerStatusId,
         farmer.idNo,
       ]);
     } catch (e) {
