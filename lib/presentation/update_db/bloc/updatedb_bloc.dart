@@ -101,6 +101,7 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
             ));
             emit(state.copyWith(
                 linebarvalue: currentval, percentagedone: percent));
+            print("received: $received,total:$total");
             print((received / total * 100).toStringAsFixed(0) + '%');
           }
 
@@ -124,20 +125,50 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
     try {
       FarmerDB farmerDB = FarmerDB();
       DFarmerDB dFarmerDB = DFarmerDB();
+
       List<Farmer> farmers = await farmerDB.fetchAll() ?? [];
       if (farmers.isNotEmpty) {
-        for (Farmer farmer in farmers) {
-          Farmer? farmerWard = await dFarmerDB.fetchByIDNo(farmer.idNo!);
-          if (farmerWard != null) {
-            farmerDB.updateRegstatus(farmerWard);
-          }
+        int totalFarmers =
+            farmers.length; // Assuming 'farmers' is your list of farmers
+        int maxChunkSize = 1;
+        int numberOfChunks = (totalFarmers / maxChunkSize).ceil();
+        numberOfChunks = numberOfChunks > 100 ? 100 : numberOfChunks;
+
+        List<List<Farmer>> chunks = chunkList(farmers, numberOfChunks);
+        List<Future<void>> updateChunkFutures = [];
+
+        for (var chunk in chunks) {
+          updateChunkFutures
+              .add(updateFarmersChunk(chunk, dFarmerDB, farmerDB));
         }
+
+        // Wait for all updates to complete concurrently
+        await Future.wait(updateChunkFutures);
       }
 
       return true;
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  List<List<T>> chunkList<T>(List<T> list, int chunkSize) {
+    List<List<T>> chunks = [];
+    for (var i = 0; i < list.length; i += chunkSize) {
+      chunks.add(list.sublist(
+          i, i + chunkSize < list.length ? i + chunkSize : list.length));
+    }
+    return chunks;
+  }
+
+  Future<void> updateFarmersChunk(
+      List<Farmer> chunk, DFarmerDB dFarmerDB, FarmerDB farmerDB) async {
+    for (var farmer in chunk) {
+      Farmer? farmerWard = await dFarmerDB.fetchByIDNo(farmer.idNo!);
+      if (farmerWard != null) {
+        await farmerDB.updateRegstatus(farmerWard);
+      }
     }
   }
 
