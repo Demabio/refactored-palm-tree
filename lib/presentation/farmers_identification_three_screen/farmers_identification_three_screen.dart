@@ -372,9 +372,9 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                                 hhsizevalueoneController,
                                             hintText: "lbl_hh_size3".tr,
                                             validator: (value) {
-                                              if (!isNumeric(value,
+                                              if (!hhsize(value,
                                                   isRequired: true)) {
-                                                return "Field is required";
+                                                return "Field is require: Max size is 30";
                                               } else {
                                                 return null;
                                               }

@@ -107,7 +107,8 @@ class AddAquacultureOneBloc
   ) {
     if (PrefUtils().getYesNo()) {
       final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
+      int userId = int.parse(claims.payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
       int farmerid = PrefUtils().getFarmerId();
       int farmid = PrefUtils().getFarmId();
 

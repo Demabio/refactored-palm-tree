@@ -413,8 +413,9 @@ class AddRearedLivestockOneBloc
     Emitter<AddRearedLivestockOneState> emit,
   ) {
     if (state.ageGroupMapList!.isNotEmpty) {
-      List<Map<String, dynamic>> ageGroupMapList =
-          state.ageGroupMapList!.map((ageGroup) => ageGroup.toJson()).toList();
+      List<Map<String, dynamic>> ageGroupMapList = state.ageGroupMapList!
+          .map((ageGroup) => ageGroup.toJsonEdited())
+          .toList();
 
       // Convert the list of maps to a JSON string
       String jsonString = jsonEncode(ageGroupMapList);
@@ -489,7 +490,8 @@ class AddRearedLivestockOneBloc
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerLivestockDB farmDB = FarmerLivestockDB();
     try {
       if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0 &&

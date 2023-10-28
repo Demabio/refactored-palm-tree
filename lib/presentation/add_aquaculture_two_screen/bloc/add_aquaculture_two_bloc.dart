@@ -196,7 +196,8 @@ class AddAquacultureTwoBloc
     Emitter<AddAquacultureTwoState> emit,
   ) async {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     int farmerid = PrefUtils().getFarmerId();
     int farmid = PrefUtils().getFarmId();
     int selectedCount =

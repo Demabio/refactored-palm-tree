@@ -167,6 +167,9 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
     for (var farmer in chunk) {
       Farmer? farmerWard = await dFarmerDB.fetchByIDNo(farmer.idNo!);
       if (farmerWard != null) {
+        print(farmerWard);
+        print(farmer);
+
         await farmerDB.updateRegstatus(farmerWard);
       }
     }

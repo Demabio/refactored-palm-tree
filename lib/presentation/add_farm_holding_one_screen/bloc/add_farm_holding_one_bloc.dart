@@ -62,7 +62,8 @@ class AddFarmHoldingOneBloc
     Emitter<AddFarmHoldingOneState> emit,
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
     int farmerid = PrefUtils().getotherFarmId();
     try {
@@ -149,7 +150,8 @@ class AddFarmHoldingOneBloc
     Emitter<AddFarmHoldingOneState> emit,
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
     int farmerid = PrefUtils().getotherFarmId();
     try {

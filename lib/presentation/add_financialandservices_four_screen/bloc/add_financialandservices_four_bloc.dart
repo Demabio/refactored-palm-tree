@@ -95,7 +95,8 @@ class AddFinancialandservicesFourBloc extends Bloc<
     FarmerCooperativeGroupDB farmerFishInputDB = FarmerCooperativeGroupDB();
     List<FarmerCooperativeGroup>? categs = [];
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {

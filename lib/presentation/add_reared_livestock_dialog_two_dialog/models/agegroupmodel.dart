@@ -107,6 +107,19 @@ class AgeGroupModel extends Equatable {
     };
   }
 
+  Map<String, dynamic> toJsonEdited() {
+    return {
+      'title': title,
+      'isSelected': isSelected,
+      'male': male?.text == "" ? "0" : male?.text,
+      'female': female?.text == "" ? "0" : female?.text,
+      'ageGroupId': ageGroupId,
+      'males': males,
+      'females': females,
+      // Add other properties as needed...
+    };
+  }
+
   factory AgeGroupModel.fromJson(Map<String, dynamic> json) {
     return AgeGroupModel(
       title: json['title'],
@@ -124,6 +137,27 @@ class AgeGroupModel extends Equatable {
       livestockSubCat: json['livestockSubCat'],
       females: json['female'],
       males: json['male'],
+      // Add other properties as needed...
+    );
+  }
+
+  factory AgeGroupModel.fromJsontwo(Map<String, dynamic> json) {
+    return AgeGroupModel(
+      title: json['title'],
+      isSelected: json['isSelected'],
+      male: json['male'] != null
+          ? TextEditingController(text: json['males'])
+          : null,
+      female: json['female'] != null
+          ? TextEditingController(text: json['females'])
+          : null,
+      ageGroupId: json['ageGroupId'],
+      categoryid: json['categoryid'],
+      subcategoryid: json['subcategoryid'],
+      livestockCat: json['livestockCat'],
+      livestockSubCat: json['livestockSubCat'],
+      females: json['females'],
+      males: json['males'],
       // Add other properties as needed...
     );
   }

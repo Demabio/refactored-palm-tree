@@ -42,6 +42,10 @@ class FarmerFarm {
   final String? enumeratorName;
   final String? enumeratorId;
   final String? enumeratorMobile;
+  final int? constituencyId;
+  final int? divisionId;
+  final int? sublocationId;
+  final int? wardId;
   final DateTime? startOfRegistration;
   final DateTime? endOfRegistration;
   final DateTime? dateDeleted;
@@ -89,6 +93,10 @@ class FarmerFarm {
     this.enumeratorName,
     this.enumeratorId,
     this.enumeratorMobile,
+    this.constituencyId,
+    this.divisionId,
+    this.sublocationId,
+    this.wardId,
     this.startOfRegistration,
     this.endOfRegistration,
     this.dateDeleted,
@@ -139,6 +147,10 @@ class FarmerFarm {
         enumeratorName: map['enumeratorName'],
         enumeratorId: map['enumeratorId'],
         enumeratorMobile: map['enumeratorMobile'],
+        constituencyId: map['constituencyId']?.toInt(),
+        divisionId: map['divisionId']?.toInt(),
+        sublocationId: map['sublocationId']?.toInt(),
+        wardId: map['wardId']?.toInt(),
         completed: map['completed'] == 1,
       );
   Map<String, dynamic> toJson() {

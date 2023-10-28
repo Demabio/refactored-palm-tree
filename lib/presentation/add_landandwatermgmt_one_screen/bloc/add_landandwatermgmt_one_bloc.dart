@@ -237,7 +237,8 @@ class AddLandandwatermgmtOneBloc
     FarmerFarmDB farmerDB = FarmerFarmDB();
     FarmerSoilTestDB farmerSoilTestDB = FarmerSoilTestDB();
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     try {
       LWProgressDB atProgressDB = LWProgressDB();
       if (state.addLandandwatermgmtOneModelObj!.lwProgress!.pageOne == 0 &&
@@ -336,7 +337,8 @@ class AddLandandwatermgmtOneBloc
       FarmerFarmDB farmerDB = FarmerFarmDB();
       FarmerSoilTestDB farmerSoilTestDB = FarmerSoilTestDB();
       final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
+      int userId = int.parse(claims.payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
       try {
         LWProgressDB atProgressDB = LWProgressDB();
         if (state.addLandandwatermgmtOneModelObj!.lwProgress!.pageOne == 0 &&

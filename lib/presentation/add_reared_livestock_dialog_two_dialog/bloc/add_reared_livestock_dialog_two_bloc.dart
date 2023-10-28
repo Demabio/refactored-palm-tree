@@ -123,7 +123,7 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
 
       // Create a list of AgeGroupModel objects from the list of dynamic objects
       agemodels = decageGroupMapList
-          .map((json) => AgeGroupModel.fromJson(json))
+          .map((json) => AgeGroupModel.fromJsontwo(json))
           .toList();
     }
     emit(

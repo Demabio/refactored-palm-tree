@@ -85,6 +85,28 @@ bool isNumeric(
   return isInputStringValid;
 }
 
+bool hhsize(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^\d{1,2}$';
+
+    final regExp = RegExp(pattern);
+
+    isInputStringValid =
+        regExp.hasMatch(inputString) && int.parse(inputString) <= 30;
+  }
+
+  return isInputStringValid;
+}
+
 bool isID(
   String? inputString, {
   bool isRequired = false,

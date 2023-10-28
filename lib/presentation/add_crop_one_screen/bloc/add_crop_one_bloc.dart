@@ -222,7 +222,8 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     Emitter<AddCropOneState> emit,
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerCropsDB cropsDB = FarmerCropsDB();
     int farmerid = PrefUtils().getFarmId();
     try {
@@ -323,7 +324,8 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
   ) {
     if (PrefUtils().getYesNo()) {
       final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
+      int userId = int.parse(claims.payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
       FarmerCropsDB cropsDB = FarmerCropsDB();
       int farmerid = PrefUtils().getFarmId();
       try {

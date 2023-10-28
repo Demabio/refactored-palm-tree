@@ -80,9 +80,9 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed, wardid, locationid
+     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed, wardid, sublocationId, divisionId, constituencyId
     ) 
-    VALUES (?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   ''', [
       1,
       farmer.idNo,
@@ -90,8 +90,10 @@ class FarmerDB {
       farmer.dateCreated!.toLocal().toIso8601String(),
       farmer.createdBy,
       0,
-      1,
-      1
+      farmer.wardId,
+      farmer.sublocationId,
+      farmer.divisionId,
+      farmer.constituencyId
     ]);
   }
 

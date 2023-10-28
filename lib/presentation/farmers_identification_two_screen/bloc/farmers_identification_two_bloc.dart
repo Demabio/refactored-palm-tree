@@ -79,7 +79,27 @@ class FarmersIdentificationTwoBloc
     Emitter<FarmersIdentificationTwoState> emit,
   ) {
     final claims = JWT.decode(PrefUtils().getToken());
-    int userId = int.parse(claims.payload['nameidentifier']);
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+
+    String ward = claims.payload['WardId'] ?? "1";
+    String sublocation = claims.payload['SublocationId'] ?? "1";
+    String location = claims.payload['LocationId'] ?? "1";
+    String constituency = claims.payload['ConstituencyId'] ?? "1";
+    String county = claims.payload['CountyId'] ?? "1";
+    String subcounty = claims.payload['SubcountyId'] ?? "1";
+    String division = claims.payload['DivisionId'] ?? "1";
+
+    int wardId = int.parse(ward.isEmpty ? "1" : ward);
+    int sublocationId = int.parse(sublocation.isEmpty ? "1" : sublocation);
+
+    int locationId = int.parse(location.isEmpty ? "1" : location);
+
+    int constituencyId = int.parse(constituency.isEmpty ? "1" : constituency);
+    int countyId = int.parse(county.isEmpty ? "1" : county);
+    int subcountyId = int.parse(subcounty.isEmpty ? "1" : subcounty);
+    int divisionId = int.parse(division.isEmpty ? "1" : division);
+
     FarmerDB farmerDB = FarmerDB();
     try {
       if (state.farmersIdentificationTwoModelObj?.fiProgress?.pageOne == 0) {
@@ -90,6 +110,10 @@ class FarmersIdentificationTwoBloc
           idNo: state.idnumberoneController!.text,
           dateCreated: DateTime.now(),
           createdBy: userId,
+          wardId: wardId,
+          sublocationId: sublocationId,
+          divisionId: divisionId,
+          constituencyId: constituencyId,
         ))
             .then((value) {
           PrefUtils().setFarmerId(value);
@@ -171,7 +195,8 @@ class FarmersIdentificationTwoBloc
   ) {
     if (PrefUtils().getYesNo()) {
       final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload['nameidentifier']);
+      int userId = int.parse(claims.payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
       FarmerDB farmerDB = FarmerDB();
       try {
         if (state.farmersIdentificationTwoModelObj?.fiProgress?.pageOne == 0) {
