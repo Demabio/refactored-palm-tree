@@ -73,7 +73,7 @@ class FarmerCooperativeGroupDB {
           cooperativeGroup.createdBy,
           DateTime.now().toLocal().toIso8601String(),
           1,
-          cooperativeGroup.enumeratorId,
+          cooperativeGroup.createdBy,
         ]);
       }
 

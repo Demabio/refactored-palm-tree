@@ -110,6 +110,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
               farmerId: PrefUtils().getFarmerId(),
               priorityLevel: int.parse(model.var1!),
               incomeSourceId: model.id!,
+              enumeratorId: userId,
             ),
           );
         }

@@ -64,7 +64,7 @@ class FarmerFishInputDB {
           DateTime.now().toLocal().toIso8601String(),
           fishInput.createdBy,
           1,
-          fishInput.enumeratorId,
+          fishInput.createdBy,
         ]);
       }
 

@@ -64,7 +64,7 @@ class FarmerAssetSourceDB {
           DateTime.now().toLocal().toIso8601String(),
           assetSource.createdBy,
           1,
-          assetSource.enumeratorId,
+          assetSource.createdBy,
         ]);
       }
 

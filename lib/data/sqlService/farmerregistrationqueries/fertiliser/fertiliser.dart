@@ -80,8 +80,8 @@ class FarmerFertiliserDB {
           fertiliser.others,
           DateTime.now().toLocal().toIso8601String(),
           fertiliser.createdBy,
-          1,
-          fertiliser.enumeratorId,
+          0,
+          fertiliser.createdBy,
         ]);
       }
 
@@ -90,6 +90,16 @@ class FarmerFertiliserDB {
     } catch (e) {
       return 500;
     }
+  }
+
+  Future<int> updateall(int farmerCropId, int childid) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 1 WHERE farmer_crop_id = ? AND fertiliser_type_id = ?
+    ''', [
+      farmerCropId,
+      childid,
+    ]);
   }
 
   Future<List<FarmerFertiliser>> fetchAll() async {

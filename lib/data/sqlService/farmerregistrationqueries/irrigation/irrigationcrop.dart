@@ -74,7 +74,7 @@ class FarmerIrrigationCropDB {
           DateTime.now().toLocal().toIso8601String(),
           irrigationCrop.createdBy,
           1,
-          irrigationCrop.enumeratorId,
+          irrigationCrop.createdBy,
         ]);
       }
 

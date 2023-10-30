@@ -28,7 +28,7 @@ class FarmerFishDB {
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by , active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFish.farmerId,
       farmerFish.farmerFarmId,
@@ -83,6 +83,16 @@ class FarmerFishDB {
     } catch (e) {
       return 500;
     }
+  }
+
+  Future<int> updateall(int farmerCropId, int childid) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 1 WHERE farmer_crop_id = ? AND fertiliser_type_id = ?
+    ''', [
+      farmerCropId,
+      childid,
+    ]);
   }
 
   Future<List<FarmerFish>> fetchAll() async {

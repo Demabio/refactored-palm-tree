@@ -75,7 +75,7 @@ class FarmerFishProductionLevelsDB {
           productionLevel.dateCreated?.toLocal().toIso8601String(),
           productionLevel.createdBy,
           1,
-          productionLevel.enumeratorId,
+          productionLevel.createdBy,
         ]);
       }
 

@@ -72,7 +72,7 @@ class FarmerAssetsDB {
           DateTime.now().toLocal().toIso8601String(),
           asset.createdBy,
           1,
-          asset.enumeratorId,
+          asset.createdBy,
         ]);
       }
 

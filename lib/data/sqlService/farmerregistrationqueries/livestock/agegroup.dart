@@ -61,7 +61,7 @@ class FarmerLivestockAgeGroupsDB {
           DateTime.now().toLocal().toIso8601String(),
           ageGroup.createdBy,
           1,
-          ageGroup.enumeratorId,
+          ageGroup.createdBy,
         ]);
       }
 

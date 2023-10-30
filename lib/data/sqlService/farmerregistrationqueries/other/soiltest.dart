@@ -69,7 +69,7 @@ class FarmerSoilTestDB {
           soilTest.dateCreated?.toLocal().toIso8601String(),
           soilTest.createdBy,
           1,
-          soilTest.enumeratorId,
+          soilTest.createdBy,
         ]);
       }
 

@@ -64,7 +64,7 @@ class FarmerLivestockDB {
       DateTime.now().toLocal().toIso8601String(),
       farmerLivestock.createdBy,
       1,
-      farmerLivestock.enumeratorId,
+      farmerLivestock.createdBy,
     ]);
   }
 

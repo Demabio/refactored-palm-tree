@@ -69,7 +69,7 @@ class FarmerLandPracticesDB {
           landPractice.dateCreated?.toLocal().toIso8601String(),
           landPractice.createdBy,
           1,
-          landPractice.enumeratorId,
+          landPractice.createdBy,
         ]);
       }
 

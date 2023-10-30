@@ -58,7 +58,7 @@ class FarmerLivestockFeedsDB {
           DateTime.now().toLocal().toIso8601String(),
           feed.createdBy,
           1,
-          feed.enumeratorId,
+          feed.createdBy,
         ]);
       }
 

@@ -89,7 +89,7 @@ class FarmerFishProductionSystemDB {
           productionSystem.dateCreated.toLocal().toIso8601String(),
           productionSystem.createdBy,
           1,
-          productionSystem.enumeratorId,
+          productionSystem.createdBy,
         ]);
       }
 

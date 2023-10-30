@@ -54,7 +54,7 @@ class FarmerLivestockBeehiveTypeDB {
           beehiveType.dateCreated.toLocal().toIso8601String(),
           beehiveType.createdBy,
           1,
-          beehiveType.enumeratorId,
+          beehiveType.createdBy,
         ]);
       }
 

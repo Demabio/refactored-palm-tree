@@ -69,7 +69,7 @@ class FarmerIrrigationWaterSourceDB {
           DateTime.now().toLocal().toIso8601String(),
           irrigationWaterSource.createdBy,
           1,
-          irrigationWaterSource.enumeratorId,
+          irrigationWaterSource.createdBy,
         ]);
       }
 

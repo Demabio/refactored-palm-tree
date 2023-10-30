@@ -55,7 +55,7 @@ class FarmerPowerSourceDB {
           DateTime.now().toLocal().toIso8601String(),
           powerSource.createdBy,
           1,
-          powerSource.enumeratorId,
+          powerSource.createdBy,
         ]);
       }
 

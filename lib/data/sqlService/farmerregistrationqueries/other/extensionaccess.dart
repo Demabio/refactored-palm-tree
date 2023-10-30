@@ -65,7 +65,7 @@ class FarmerExtensionAccessDB {
           DateTime.now().toLocal().toIso8601String(),
           extensionAccess.createdBy,
           1,
-          extensionAccess.enumeratorId,
+          extensionAccess.createdBy,
         ]);
       }
 

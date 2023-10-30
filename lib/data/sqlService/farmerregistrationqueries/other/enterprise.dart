@@ -59,7 +59,7 @@ class FarmerEnterprisesDB {
           enterprise.insured,
           enterprise.dateCreated?.toLocal().toIso8601String(),
           enterprise.createdBy,
-          1,
+          0,
           enterprise.enumeratorId,
         ]);
       }
@@ -76,6 +76,16 @@ class FarmerEnterprisesDB {
     return await database.rawUpdate('''
     UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
     ''', [farmerEnterprise]);
+  }
+
+  Future<int> updateall(int farmerEnterprise, int childid) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 1 WHERE farmer_farm_id = ? AND enterprise_id = ?
+    ''', [
+      farmerEnterprise,
+      childid,
+    ]);
   }
 
   Future<List<FarmerEnterprise>> fetchAll() async {

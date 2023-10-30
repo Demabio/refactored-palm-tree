@@ -74,7 +74,7 @@ class FarmerCreditServiceDB {
           DateTime.now().toLocal().toIso8601String(),
           creditService.createdBy,
           1,
-          creditService.enumeratorId,
+          creditService.createdBy,
         ]);
       }
 

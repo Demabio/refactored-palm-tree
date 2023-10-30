@@ -55,7 +55,7 @@ class LivestockFarmSystemCategoryDB {
           category.dateCreated.toLocal().toIso8601String(),
           category.createdBy,
           1,
-          category.enumeratorId,
+          category.createdBy,
         ]);
       }
 

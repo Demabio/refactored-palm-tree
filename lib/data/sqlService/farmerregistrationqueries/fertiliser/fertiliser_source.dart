@@ -67,8 +67,8 @@ class FarmerFertiliserSourcesDB {
         batch.rawInsert('''
           INSERT INTO $tableName (
             farmer_id, farmer_farm_id, farmer_crop_id, fert_source_id, other_source, distance_source,
-            date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           fertiliserSource.farmerId,
           fertiliserSource.farmerFarmId,
@@ -78,6 +78,8 @@ class FarmerFertiliserSourcesDB {
           fertiliserSource.distanceSource,
           DateTime.now().toLocal().toIso8601String(),
           fertiliserSource.createdBy,
+          0,
+          fertiliserSource.createdBy,
         ]);
       }
 
@@ -86,6 +88,16 @@ class FarmerFertiliserSourcesDB {
     } catch (e) {
       return 500;
     }
+  }
+
+  Future<int> updateall(int farmerCropId, int childid) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 1 WHERE farmer_crop_id = ? AND fert_source_id = ?
+    ''', [
+      farmerCropId,
+      childid,
+    ]);
   }
 
   Future<List<FarmerFertiliserSource>> fetchAll() async {

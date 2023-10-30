@@ -67,6 +67,16 @@ class FarmerAgriInfoSourceDB {
     }
   }
 
+  Future<int> updateall(int farmerid, int childid) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 1 WHERE farmer_id = ? AND agri_info_source_id = ?
+    ''', [
+      farmerid,
+      childid,
+    ]);
+  }
+
   Future<List<FarmerAgriInfoSource>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final agriInfoSources = await database.rawQuery(''' 

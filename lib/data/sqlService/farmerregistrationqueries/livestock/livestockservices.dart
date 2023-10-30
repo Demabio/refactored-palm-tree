@@ -147,7 +147,7 @@ class FarmerLivestockServicesDB {
           DateTime.now().toLocal().toIso8601String(),
           service.createdBy,
           1,
-          service.enumeratorId,
+          service.createdBy,
         ]);
       }
 

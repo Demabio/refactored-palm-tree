@@ -66,7 +66,7 @@ class FarmerStructureDB {
           structure.dateCreated?.toLocal().toIso8601String(),
           structure.createdBy,
           1,
-          structure.enumeratorId,
+          structure.createdBy,
         ]);
       }
 
