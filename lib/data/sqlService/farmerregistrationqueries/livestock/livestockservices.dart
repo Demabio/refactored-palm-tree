@@ -23,6 +23,8 @@ class FarmerLivestockServicesDB {
         "curative_measures" BOOLEAN NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_livestock_services_id")
       );
     """);
@@ -78,8 +80,8 @@ class FarmerLivestockServicesDB {
         farmer_id, farmer_farm_id, livestock_area, area_unit_id, 
         fertilizer_for_fodder, fodder_seeds, fertilizer_seeds, ai_use, 
         hormone_use, embryo_transfer, routine_vaccination, curative_measures, 
-        date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        date_created, created_by, active, enumerator_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,, ?, ?)
     ''', [
       farmerLivestockService.farmerId,
       farmerLivestockService.farmerFarmId,
@@ -127,8 +129,8 @@ class FarmerLivestockServicesDB {
             farmer_id, farmer_farm_id, livestock_area, area_unit_id, 
             fertilizer_for_fodder, fodder_seeds, fertilizer_seeds, ai_use, 
             hormone_use, embryo_transfer, routine_vaccination, curative_measures, 
-            date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           service.farmerId,
           service.farmerFarmId,
@@ -144,6 +146,8 @@ class FarmerLivestockServicesDB {
           service.curativeMeasures! ? 1 : 0,
           DateTime.now().toLocal().toIso8601String(),
           service.createdBy,
+          1,
+          service.enumeratorId,
         ]);
       }
 

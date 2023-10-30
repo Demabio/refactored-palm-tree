@@ -16,6 +16,8 @@ class FarmerAssetsDB {
         "usable_condition" BOOLEAN ,
         "date_created" DATETIME ,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_asset_id")
       );
     """);
@@ -59,8 +61,8 @@ class FarmerAssetsDB {
       for (var asset in assets) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           asset.farmerId,
           asset.farmerFarmId,
@@ -69,6 +71,8 @@ class FarmerAssetsDB {
           asset.usableCondition,
           DateTime.now().toLocal().toIso8601String(),
           asset.createdBy,
+          1,
+          asset.enumeratorId,
         ]);
       }
 
@@ -103,11 +107,9 @@ class FarmerAssetsDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_asset_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_asset_id = ?
+    ''', [id]);
   }
 
   Future<FarmerAsset?> fetchById(int id) async {

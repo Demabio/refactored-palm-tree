@@ -18,6 +18,8 @@ class FarmerPremiumDB {
         "amount_paid" REAL NOT NULL,
         "date_created" DATETIME NOT NULL,
         "uploaded_by" VARCHAR(255),
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("insurance_prem_id")
       );
     """);
@@ -58,8 +60,8 @@ class FarmerPremiumDB {
       for (var premium in premiums) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, insurance_id, excel_prem_id, authorised_payments_id, season_id, date_premium_paid, amount_paid, date_created, uploaded_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            farmer_id, insurance_id, excel_prem_id, authorised_payments_id, season_id, date_premium_paid, amount_paid, date_created, uploaded_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           premium.farmerId,
           premium.insuranceId,
@@ -70,6 +72,8 @@ class FarmerPremiumDB {
           premium.amountPaid,
           premium.dateCreated.toLocal().toIso8601String(),
           premium.uploadedBy,
+          1,
+          premium.enumeratorId,
         ]);
       }
 

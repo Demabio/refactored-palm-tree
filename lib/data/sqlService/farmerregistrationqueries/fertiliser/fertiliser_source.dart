@@ -17,6 +17,8 @@ class FarmerFertiliserSourcesDB {
         "distance_source" REAL,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_fert_source_id")
       );
     """);
@@ -26,8 +28,8 @@ class FarmerFertiliserSourcesDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, farmer_crop_id, fert_source_id, other_source, distance_source, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, farmer_crop_id, fert_source_id, other_source, distance_source, date_created, created_by, active, enumerator_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       fertiliserSource.farmerId,
       fertiliserSource.farmerFarmId,
@@ -37,6 +39,8 @@ class FarmerFertiliserSourcesDB {
       fertiliserSource.distanceSource,
       DateTime.now().toLocal().toIso8601String(),
       fertiliserSource.createdBy,
+      1,
+      fertiliserSource.enumeratorId,
     ]);
   }
 
@@ -122,8 +126,8 @@ class FarmerFertiliserSourcesDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_crop_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_crop_id = ?
     ''', [
       id,
     ]);

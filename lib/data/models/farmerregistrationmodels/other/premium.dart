@@ -9,6 +9,7 @@ class FarmerPremium {
   final double amountPaid;
   final DateTime dateCreated;
   final int? uploadedBy;
+  final int? enumeratorId;
 
   FarmerPremium({
     required this.insurancePremId,
@@ -21,6 +22,7 @@ class FarmerPremium {
     required this.amountPaid,
     required this.dateCreated,
     this.uploadedBy,
+    this.enumeratorId,
   });
 
   factory FarmerPremium.fromSqfliteDatabase(Map<String, dynamic> map) =>

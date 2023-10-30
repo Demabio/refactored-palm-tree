@@ -7,6 +7,7 @@ class FarmerCreditService {
   final String? othersName;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerCreditService({
     required this.farmerCreditServiceId,
@@ -17,6 +18,7 @@ class FarmerCreditService {
     this.othersName,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

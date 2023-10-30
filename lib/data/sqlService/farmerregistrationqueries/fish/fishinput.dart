@@ -14,6 +14,8 @@ class FarmerFishInputDB {
         "fish_input_id" INTEGER NOT NULL,
         "date_created" DATETIME,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_fish_input_id")
       );
     """);
@@ -23,7 +25,7 @@ class FarmerFishInputDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, fish_input_id, date_created, created_by
+        farmer_id, farmer_farm_id, fish_input_id, date_created, created_by , active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?)
     ''', [
       fishInput.farmerId,
@@ -53,14 +55,16 @@ class FarmerFishInputDB {
       for (var fishInput in fishInputs) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, fish_input_id, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, fish_input_id, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           fishInput.farmerId,
           fishInput.farmerFarmId,
           fishInput.fishInputId,
           DateTime.now().toLocal().toIso8601String(),
           fishInput.createdBy,
+          1,
+          fishInput.enumeratorId,
         ]);
       }
 
@@ -107,11 +111,9 @@ class FarmerFishInputDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

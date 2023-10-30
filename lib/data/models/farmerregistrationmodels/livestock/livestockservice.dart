@@ -14,6 +14,7 @@ class FarmerLivestockService {
   final bool? curativeMeasures;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerLivestockService({
     required this.farmerLivestockServicesId,
@@ -31,6 +32,7 @@ class FarmerLivestockService {
     this.curativeMeasures,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

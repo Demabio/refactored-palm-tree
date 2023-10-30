@@ -15,6 +15,8 @@ class FarmerSoilTestDB {
         "soil_test_year" INTEGER NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_soilseed_id")
       );
     """);
@@ -57,8 +59,8 @@ class FarmerSoilTestDB {
         batch.rawInsert('''
           INSERT INTO $tableName (
             farmer_id, farmer_farm_id, soiltest, soil_test_year, 
-            date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           soilTest.farmerId,
           soilTest.farmerFarmId,
@@ -66,6 +68,8 @@ class FarmerSoilTestDB {
           soilTest.soilTestYear,
           soilTest.dateCreated?.toLocal().toIso8601String(),
           soilTest.createdBy,
+          1,
+          soilTest.enumeratorId,
         ]);
       }
 

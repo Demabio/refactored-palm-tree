@@ -8,6 +8,7 @@ class FarmerIrrigation {
   final int? areaUnitId;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerIrrigation({
     required this.farmerIrrigationId,
@@ -18,6 +19,7 @@ class FarmerIrrigation {
     this.areaUnitId,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

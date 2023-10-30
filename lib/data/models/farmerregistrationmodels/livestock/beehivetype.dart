@@ -4,6 +4,7 @@ class FarmerLivestockBeehiveType {
   final int beehivesTypeId;
   final DateTime dateCreated;
   final int createdBy;
+  final int? enumeratorId;
 
   FarmerLivestockBeehiveType({
     required this.beehivesFarmerId,
@@ -11,16 +12,17 @@ class FarmerLivestockBeehiveType {
     required this.beehivesTypeId,
     required this.dateCreated,
     required this.createdBy,
+    this.enumeratorId,
   });
-Map<String, dynamic> toJson() {
-  return {
-    'beehivesFarmerId': beehivesFarmerId,
-    'farmerLivestockId': farmerLivestockId,
-    'beehivesTypeId': beehivesTypeId,
-    'dateCreated': dateCreated.toIso8601String(),
-    'createdBy': createdBy,
-  };
-}
+  Map<String, dynamic> toJson() {
+    return {
+      'beehivesFarmerId': beehivesFarmerId,
+      'farmerLivestockId': farmerLivestockId,
+      'beehivesTypeId': beehivesTypeId,
+      'dateCreated': dateCreated.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory FarmerLivestockBeehiveType.fromSqfliteDatabase(
           Map<String, dynamic> map) =>

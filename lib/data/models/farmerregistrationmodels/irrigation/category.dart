@@ -8,6 +8,7 @@ class FarmerIrrigationCategory {
   final int? membershipTypeId;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerIrrigationCategory({
     required this.irrigationCropId,
@@ -18,19 +19,20 @@ class FarmerIrrigationCategory {
     this.membershipTypeId,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
-Map<String, dynamic> toJson() {
-  return {
-    'irrigationCropId': irrigationCropId,
-    'farmerId': farmerId,
-    'farmerFarmId': farmerFarmId,
-    'irrigationCategoryId': irrigationCategoryId,
-    'irrigationProjectName': irrigationProjectName,
-    'membershipTypeId': membershipTypeId,
-    'dateCreated': dateCreated?.toIso8601String(),
-    'createdBy': createdBy,
-  };
-}
+  Map<String, dynamic> toJson() {
+    return {
+      'irrigationCropId': irrigationCropId,
+      'farmerId': farmerId,
+      'farmerFarmId': farmerFarmId,
+      'irrigationCategoryId': irrigationCategoryId,
+      'irrigationProjectName': irrigationProjectName,
+      'membershipTypeId': membershipTypeId,
+      'dateCreated': dateCreated?.toIso8601String(),
+      'createdBy': createdBy,
+    };
+  }
 
   factory FarmerIrrigationCategory.fromSqfliteDatabase(
           Map<String, dynamic> map) =>

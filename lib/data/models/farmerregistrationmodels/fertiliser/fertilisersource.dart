@@ -8,6 +8,7 @@ class FarmerFertiliserSource {
   final double? distanceSource;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerFertiliserSource({
     required this.farmerFertSourceId,
@@ -18,6 +19,7 @@ class FarmerFertiliserSource {
     this.otherSource,
     this.distanceSource,
     this.dateCreated,
+    this.enumeratorId,
     this.createdBy,
   });
   Map<String, dynamic> toJson() {

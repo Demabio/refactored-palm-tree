@@ -16,6 +16,8 @@ class FarmerCooperativeGroupDB {
         "other" TEXT,
         "created_by" INT,
         "date_created" DATETIME NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_cooperative_group_id")
       );
     """);
@@ -60,8 +62,8 @@ class FarmerCooperativeGroupDB {
       for (var cooperativeGroup in cooperativeGroups) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, cooperative_group_id, cooperative_group_name, other, created_by, date_created
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, cooperative_group_id, cooperative_group_name, other, created_by, date_created, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           cooperativeGroup.farmerId,
           cooperativeGroup.farmerFarmId,
@@ -70,6 +72,8 @@ class FarmerCooperativeGroupDB {
           cooperativeGroup.other,
           cooperativeGroup.createdBy,
           DateTime.now().toLocal().toIso8601String(),
+          1,
+          cooperativeGroup.enumeratorId,
         ]);
       }
 
@@ -108,11 +112,9 @@ class FarmerCooperativeGroupDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

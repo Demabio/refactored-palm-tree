@@ -15,6 +15,8 @@ class FarmerIrrigationWaterSourceDB {
         "source_name" VARCHAR(255) NOT NULL,
         "date_created" DATETIME ,
         "created_by" VARCHAR(255) ,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("irrigation_crop_id")
       );
     """);
@@ -24,7 +26,7 @@ class FarmerIrrigationWaterSourceDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by
+        farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       irrigationWaterSource.farmerId,
@@ -57,8 +59,8 @@ class FarmerIrrigationWaterSourceDB {
       for (var irrigationWaterSource in irrigationWaterSources) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, irrigation_water_source_id, source_name, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           irrigationWaterSource.farmerId,
           irrigationWaterSource.farmerFarmId,
@@ -66,6 +68,8 @@ class FarmerIrrigationWaterSourceDB {
           irrigationWaterSource.sourceName,
           DateTime.now().toLocal().toIso8601String(),
           irrigationWaterSource.createdBy,
+          1,
+          irrigationWaterSource.enumeratorId,
         ]);
       }
 
@@ -104,11 +108,9 @@ class FarmerIrrigationWaterSourceDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

@@ -16,6 +16,8 @@ class FarmerCreditServiceDB {
         "others_name" VARCHAR(255),
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_creditservice_id")
       );
     """);
@@ -61,8 +63,8 @@ class FarmerCreditServiceDB {
       for (var creditService in creditServices) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, credit_source_id, sacco_name, mfintitution_name, others_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, credit_source_id, sacco_name, mfintitution_name, others_name, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           creditService.farmerId,
           creditService.creditSourceId,
@@ -71,6 +73,8 @@ class FarmerCreditServiceDB {
           creditService.othersName,
           DateTime.now().toLocal().toIso8601String(),
           creditService.createdBy,
+          1,
+          creditService.enumeratorId,
         ]);
       }
 
@@ -107,11 +111,9 @@ class FarmerCreditServiceDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

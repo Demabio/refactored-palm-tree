@@ -6,6 +6,7 @@ class FarmerEnterprise {
   String? insuranceName;
   DateTime? dateCreated;
   int? createdBy;
+  final int? enumeratorId;
 
   FarmerEnterprise({
     required this.farmerEnterpriseId,
@@ -15,6 +16,7 @@ class FarmerEnterprise {
     this.insuranceName,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

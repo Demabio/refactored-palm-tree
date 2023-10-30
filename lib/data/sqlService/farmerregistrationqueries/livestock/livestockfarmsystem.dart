@@ -13,6 +13,8 @@ class FarmerLivestockFarmSystemDB {
         "livestock_farmsystem_cat_id" INTEGER ,
         "date_created" DATETIME,
         "created_by" VARCHAR(255) ,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_livestock_farmsystem_id")
       );
     """);
@@ -45,13 +47,15 @@ class FarmerLivestockFarmSystemDB {
       for (var farmSystem in farmSystems) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, livestock_farmsystem_cat_id, date_created, created_by
-          ) VALUES (?, ?, ?, ?)
+            farmer_id, livestock_farmsystem_cat_id, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?)
         ''', [
           farmSystem.farmerId,
           farmSystem.livestockFarmSystemCatId,
           DateTime.now().toLocal().toIso8601String(),
           farmSystem.createdBy,
+          1,
+          farmSystem.enumeratorId,
         ]);
       }
 

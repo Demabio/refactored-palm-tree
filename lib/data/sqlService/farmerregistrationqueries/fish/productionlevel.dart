@@ -16,6 +16,8 @@ class FarmerFishProductionLevelsDB {
         "esp_benefit" TEXT,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_productionlevel_id")
       );
     """);
@@ -26,7 +28,7 @@ class FarmerFishProductionLevelsDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by
+        farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFishProductionLevel.farmerId,
@@ -62,8 +64,8 @@ class FarmerFishProductionLevelsDB {
       for (var productionLevel in productionLevels) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           productionLevel.farmerId,
           productionLevel.farmerFarmId,
@@ -72,6 +74,8 @@ class FarmerFishProductionLevelsDB {
           productionLevel.espBenefit,
           productionLevel.dateCreated?.toLocal().toIso8601String(),
           productionLevel.createdBy,
+          1,
+          productionLevel.enumeratorId,
         ]);
       }
 

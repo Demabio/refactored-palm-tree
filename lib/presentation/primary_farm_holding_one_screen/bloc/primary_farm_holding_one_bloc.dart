@@ -130,7 +130,7 @@ class PrimaryFarmHoldingOneBloc
               villageName: state.vil?.text,
               shoppingCenter: state.shop?.text,
               farmName: state.nameController!.text,
-              enumeratorId: userId.toString(),
+              enumeratorId: userId,
               enumerationAreaNumber:
                   enumeratorarea.isEmpty ? "N/A" : enumeratorarea,
               enumeratorName: enumeratorname,
@@ -252,7 +252,7 @@ class PrimaryFarmHoldingOneBloc
               villageName: state.vil?.text,
               shoppingCenter: state.shop?.text,
               farmName: state.nameController!.text,
-              enumeratorId: userId.toString(),
+              enumeratorId: userId,
               enumerationAreaNumber: enumeratorarea,
               enumeratorName: enumeratorname,
               enumeratorMobile: enumeratormobile,

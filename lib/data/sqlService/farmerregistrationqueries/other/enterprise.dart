@@ -15,6 +15,8 @@ class FarmerEnterprisesDB {
         "insurance_name" VARCHAR(255),
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_enterprise_id")
       );
     """);
@@ -49,14 +51,16 @@ class FarmerEnterprisesDB {
       for (var enterprise in enterprises) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_farm_id, enterprise_id, insured,  date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            farmer_farm_id, enterprise_id, insured,  date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           enterprise.farmerFarmId,
           enterprise.enterpriseId,
           enterprise.insured,
           enterprise.dateCreated?.toLocal().toIso8601String(),
           enterprise.createdBy,
+          1,
+          enterprise.enumeratorId,
         ]);
       }
 
@@ -69,11 +73,9 @@ class FarmerEnterprisesDB {
 
   Future<int> delete(int farmerEnterprise) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-     DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      farmerEnterprise,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [farmerEnterprise]);
   }
 
   Future<List<FarmerEnterprise>> fetchAll() async {

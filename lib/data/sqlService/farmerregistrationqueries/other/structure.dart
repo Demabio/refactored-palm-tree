@@ -14,6 +14,8 @@ class FarmerStructureDB {
         "farm_structure_id" INTEGER NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_asset_id")
       );
     """);
@@ -55,14 +57,16 @@ class FarmerStructureDB {
         batch.rawInsert('''
           INSERT INTO $tableName (
             farmer_id, farmer_farm_id, farm_structure_id, 
-            date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           structure.farmerId,
           structure.farmerFarmId,
           structure.farmStructureId,
           structure.dateCreated?.toLocal().toIso8601String(),
           structure.createdBy,
+          1,
+          structure.enumeratorId,
         ]);
       }
 
@@ -101,11 +105,9 @@ class FarmerStructureDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
 
   // Add more database methods as needed

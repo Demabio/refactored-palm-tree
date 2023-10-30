@@ -16,6 +16,8 @@ class FarmerFishDB {
         "no_of_fingerlings" INTEGER NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_fish_id")
       );
     """);
@@ -25,7 +27,7 @@ class FarmerFishDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by
+        farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by , active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFish.farmerId,
@@ -35,6 +37,8 @@ class FarmerFishDB {
       farmerFish.noOfFingerlings,
       DateTime.now().toLocal().toIso8601String(),
       farmerFish.createdBy,
+      1,
+      farmerFish.enumeratorId,
     ]);
   }
 
@@ -59,8 +63,8 @@ class FarmerFishDB {
       for (var farmerFish in fish) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           farmerFish.farmerId,
           farmerFish.farmerFarmId,
@@ -69,6 +73,8 @@ class FarmerFishDB {
           farmerFish.noOfFingerlings,
           farmerFish.dateCreated?.toLocal().toIso8601String(),
           farmerFish.createdBy,
+          1,
+          farmerFish.enumeratorId,
         ]);
       }
 
@@ -112,11 +118,9 @@ class FarmerFishDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_fish_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_fish_id = ?
+    ''', [id]);
   }
 
   Future<FarmerFish?> fetchById(int id) async {

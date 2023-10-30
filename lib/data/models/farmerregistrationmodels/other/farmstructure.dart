@@ -5,6 +5,7 @@ class FarmerStructure {
   final int farmStructureId;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerStructure({
     required this.farmerAssetId,
@@ -13,6 +14,7 @@ class FarmerStructure {
     required this.farmStructureId,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

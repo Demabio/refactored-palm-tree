@@ -13,6 +13,8 @@ class FarmerLivestockBeehiveTypeDB {
         "beehives_type_id" INTEGER NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("beehives_farmer_id")
       );
     """);
@@ -26,7 +28,7 @@ class FarmerLivestockBeehiveTypeDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_livestock_id, beehives_type_id, date_created, created_by
+        farmer_livestock_id, beehives_type_id, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?)
     ''', [
       farmerLivestockId,
@@ -44,13 +46,15 @@ class FarmerLivestockBeehiveTypeDB {
       for (var beehiveType in beehiveTypes) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_livestock_id, beehives_type_id, date_created, created_by
-          ) VALUES (?, ?, ?, ?)
+            farmer_livestock_id, beehives_type_id, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?)
         ''', [
           beehiveType.farmerLivestockId,
           beehiveType.beehivesTypeId,
           beehiveType.dateCreated.toLocal().toIso8601String(),
           beehiveType.createdBy,
+          1,
+          beehiveType.enumeratorId,
         ]);
       }
 
@@ -74,8 +78,8 @@ class FarmerLivestockBeehiveTypeDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
     ''', [id]);
   }
 

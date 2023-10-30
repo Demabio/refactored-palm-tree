@@ -16,6 +16,8 @@ class FarmerLivestockDB {
         "no_of_beehives" INTEGER ,
         "date_created" DATETIME ,
         "created_by" VARCHAR(255) ,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_livestock_id")
       );
     """);
@@ -51,8 +53,8 @@ class FarmerLivestockDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by, active, enumerator_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerLivestock.farmerId,
       farmerLivestock.farmerFarmId,
@@ -61,6 +63,8 @@ class FarmerLivestockDB {
       farmerLivestock.noOfBeehives,
       DateTime.now().toLocal().toIso8601String(),
       farmerLivestock.createdBy,
+      1,
+      farmerLivestock.enumeratorId,
     ]);
   }
 
@@ -143,8 +147,8 @@ class FarmerLivestockDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
     ''', [id]);
   }
 

@@ -6,6 +6,7 @@ class FarmerExtensionMode {
   final String? other;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerExtensionMode({
     required this.farmerExtensionModeId,
@@ -15,6 +16,7 @@ class FarmerExtensionMode {
     this.other,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

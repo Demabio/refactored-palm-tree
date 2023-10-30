@@ -15,6 +15,8 @@ class FarmerIrrigationTypeDB {
         "others_name" VARCHAR(255),
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("irrigation_crop_id")
       );
     """);
@@ -24,7 +26,7 @@ class FarmerIrrigationTypeDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, irrigation_type_id, others_name, date_created, created_by
+        farmer_id, farmer_farm_id, irrigation_type_id, others_name, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       irrigationType.farmerId,
@@ -57,8 +59,8 @@ class FarmerIrrigationTypeDB {
       for (var irrigationType in irrigationTypes) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, irrigation_type_id, others_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, irrigation_type_id, others_name, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           irrigationType.farmerId,
           irrigationType.farmerFarmId,
@@ -66,6 +68,8 @@ class FarmerIrrigationTypeDB {
           irrigationType.othersName,
           DateTime.now().toLocal().toIso8601String(),
           irrigationType.createdBy,
+          1,
+          irrigationType.enumeratorId,
         ]);
       }
 

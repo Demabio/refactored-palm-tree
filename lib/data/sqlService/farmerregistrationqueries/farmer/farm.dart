@@ -50,13 +50,14 @@ class FarmerFarmDB {
         "irrigationArea" REAL,
         "extensionsericeAccess" INTEGER,
         "enumeratorName" VARCHAR(255),
-        "enumeratorId" VARCHAR(255),
+        "enumeratorId" INT,
         "enumeratorMobile" VARCHAR(255),
         "startOfRegistration" DATETIME,
         "endOfRegistration" DATETIME,
         "dateDeleted" DATETIME,        
         "completed" BOOLEAN,
         "posted" INTEGER DEFAULT 0,
+        "active" INT,
         PRIMARY KEY("farmer_farm_id")
       );
     """);
@@ -66,7 +67,7 @@ class FarmerFarmDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id,  date_created, created_by, completed, startOfRegistration, wardid, sublocationId, divisionId, constituencyId
+        farmer_id,  date_created, created_by, completed, startOfRegistration, wardid, sublocationId, divisionId, constituencyId,active
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farm.farmerId,
@@ -77,7 +78,8 @@ class FarmerFarmDB {
       farm.wardId,
       farm.sublocationId,
       farm.divisionId,
-      farm.constituencyId
+      farm.constituencyId,
+      1,
     ]);
   }
 
@@ -283,8 +285,8 @@ class FarmerFarmDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmer_farm_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
     ''', [id]);
   }
   // Add more database methods as needed

@@ -6,6 +6,7 @@ class FarmerLivestockAgeGroup {
   final int? noOfLivestockFemale;
   final DateTime dateCreated;
   final int createdBy;
+  final int? enumeratorId;
 
   FarmerLivestockAgeGroup({
     required this.farmerLivestockAgegroupId,
@@ -15,6 +16,7 @@ class FarmerLivestockAgeGroup {
     this.noOfLivestockFemale,
     required this.dateCreated,
     required this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

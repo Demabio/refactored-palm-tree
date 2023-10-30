@@ -13,6 +13,8 @@ class FarmerIncomeSourceDB {
         "priority_level" INTEGER,
         "farmer_id" INTEGER,
         "other" TEXT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_income_id")
       );
     """);
@@ -51,13 +53,15 @@ class FarmerIncomeSourceDB {
     try {
       for (var incomeSource in incomeSources) {
         batch.rawInsert('''
-            INSERT INTO $tableName (income_source_id, priority_level, farmer_id, other) 
-          VALUES (?, ?, ?, ?)
+            INSERT INTO $tableName (income_source_id, priority_level, farmer_id, other, active, enumerator_id) 
+          VALUES (?, ?, ?, ?, ?, ?)
         ''', [
           incomeSource.incomeSourceId,
           incomeSource.priorityLevel,
           incomeSource.farmerId,
           incomeSource.other,
+          1,
+          incomeSource.enumeratorId,
         ]);
       }
 
@@ -103,10 +107,8 @@ class FarmerIncomeSourceDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
+    ''', [id]);
   } // Add more database methods as needed
 }

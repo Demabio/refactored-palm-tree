@@ -7,6 +7,7 @@ class FarmerAsset {
   final int? usableCondition;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerAsset({
     required this.farmerAssetId,
@@ -17,6 +18,7 @@ class FarmerAsset {
     this.usableCondition,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

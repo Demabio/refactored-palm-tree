@@ -27,6 +27,8 @@ class FarmerOtherFarmDB {
         "other_farm_elsewhere" INTEGER,
         "date_created" DATETIME,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_farm_id")
       );
     """);

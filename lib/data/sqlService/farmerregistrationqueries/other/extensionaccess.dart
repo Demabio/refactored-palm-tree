@@ -14,6 +14,8 @@ class FarmerExtensionAccessDB {
         "extension_source_id" INTEGER NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_extension_access_id")
       );
     """);
@@ -54,14 +56,16 @@ class FarmerExtensionAccessDB {
       for (var extensionAccess in extensionAccesses) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, extension_source_id, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, extension_source_id, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           extensionAccess.farmerId,
           extensionAccess.farmerFarmId,
           extensionAccess.extensionSourceId,
           DateTime.now().toLocal().toIso8601String(),
           extensionAccess.createdBy,
+          1,
+          extensionAccess.enumeratorId,
         ]);
       }
 
@@ -98,11 +102,9 @@ class FarmerExtensionAccessDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

@@ -53,7 +53,7 @@ class Farmer {
   final int? extensionsericeAccess;
   final int? organizationId;
   final String? enumeratorName;
-  final String? enumeratorId;
+  final int? enumeratorId;
   final String? enumeratorMobile;
   final DateTime? dateCreated;
   final int? createdBy;

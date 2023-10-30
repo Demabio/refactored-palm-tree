@@ -4,6 +4,7 @@ class FarmerLivestockFarmSystem {
   int? livestockFarmSystemCatId;
   DateTime? dateCreated;
   int? createdBy;
+  final int? enumeratorId;
 
   FarmerLivestockFarmSystem({
     required this.farmerLivestockFarmSystemId,
@@ -11,6 +12,7 @@ class FarmerLivestockFarmSystem {
     required this.livestockFarmSystemCatId,
     required this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

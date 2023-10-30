@@ -11,6 +11,8 @@ class FarmerAgriInfoSourceDB {
         "farmer_agri_info_source_id" INTEGER NOT NULL,
         "agri_info_source_id" INTEGER NOT NULL,
         "farmer_id" INTEGER NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_agri_info_source_id")
       );
     """);
@@ -48,11 +50,13 @@ class FarmerAgriInfoSourceDB {
       for (var agriInfoSource in agriInfoSources) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            agri_info_source_id, farmer_id
-          ) VALUES (?, ?)
+            agri_info_source_id, farmer_id, active, enumerator_id
+          ) VALUES (?, ?, ?, ?)
         ''', [
           agriInfoSource.agriInfoSourceId,
           agriInfoSource.farmerId,
+          1,
+          agriInfoSource.enumeratorId,
         ]);
       }
 
@@ -89,11 +93,9 @@ class FarmerAgriInfoSourceDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
+    ''', [id]);
   }
 
   // Add more database methods as needed

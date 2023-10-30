@@ -11,6 +11,8 @@ class FarmerProgramDB {
         "farm_prog_id" INTEGER NOT NULL,
         "program_id" INTEGER NOT NULL,
         "farmer_id" INTEGER NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farm_prog_id")
       );
     """);
@@ -38,8 +40,8 @@ class FarmerProgramDB {
       for (var program in programs) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            program_id, farmer_id
-          ) VALUES (?, ?)
+            program_id, farmer_id, active, enumerator_id
+          ) VALUES (?, ?, ?, ?)
         ''', [
           program.programId,
           program.farmerId,

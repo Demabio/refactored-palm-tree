@@ -4,6 +4,7 @@ class FarmerIncomeSource {
   final int? priorityLevel;
   final int farmerId;
   final String? other;
+  final int? enumeratorId;
 
   FarmerIncomeSource({
     required this.farmerIncomeId,
@@ -11,6 +12,7 @@ class FarmerIncomeSource {
     this.priorityLevel,
     required this.farmerId,
     this.other,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

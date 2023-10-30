@@ -10,6 +10,7 @@ class FarmerFishProductionSystem {
   final int? noOfInactiveUnits;
   final DateTime dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerFishProductionSystem({
     required this.farmerFishprodId,
@@ -23,6 +24,7 @@ class FarmerFishProductionSystem {
     this.noOfInactiveUnits,
     required this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

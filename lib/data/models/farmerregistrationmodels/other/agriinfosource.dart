@@ -2,11 +2,13 @@ class FarmerAgriInfoSource {
   final int farmerAgriInfoSourceId;
   final int agriInfoSourceId;
   final int farmerId;
+  final int? enumeratorId;
 
   FarmerAgriInfoSource({
     required this.farmerAgriInfoSourceId,
     required this.agriInfoSourceId,
     required this.farmerId,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

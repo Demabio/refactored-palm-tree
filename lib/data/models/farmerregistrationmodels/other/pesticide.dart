@@ -7,6 +7,7 @@ class FarmerPesticide {
   final String? others;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerPesticide({
     required this.farmerPesticideId,
@@ -17,6 +18,7 @@ class FarmerPesticide {
     this.others,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

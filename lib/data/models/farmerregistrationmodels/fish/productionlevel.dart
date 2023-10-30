@@ -7,6 +7,7 @@ class FarmerFishProductionLevel {
   int? espBenefit;
   DateTime? dateCreated;
   int? createdBy;
+  final int? enumeratorId;
 
   FarmerFishProductionLevel({
     required this.farmerProductionLevelId,
@@ -17,6 +18,7 @@ class FarmerFishProductionLevel {
     this.espBenefit,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

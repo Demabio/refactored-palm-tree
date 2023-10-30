@@ -68,11 +68,16 @@ class FarmerDB {
         "dateOfConflict" DATETIME,
         "dateRequestedForDelete" DATETIME,
         "dateDeleted" DATETIME,
+        "enumeratorName" VARCHAR(255),  
+        "enumeratorId" INT,
+        "enumeratorMobile" VARCHAR(255),
+        "enumerationAreaNumber" VARCHAR(255),
         "startOfRegistration" DATETIME,
         "endOfRegistration" DATETIME,
         "campChangeRequestStatus" INTEGER,
         "comments" VARCHAR(255),     
         "completed" BOOLEAN, 
+        "active" INT,
         PRIMARY KEY("farmerId")
       );
     """);
@@ -82,9 +87,9 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
     INSERT INTO $tableName (
-     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed, wardid, sublocationId, divisionId, constituencyId
+     "registrationStatusId","idNo", "farmerName", "dateCreated", "createdBy", completed, wardid, sublocationId, divisionId, constituencyId, active, enumeratorId, enumeratorMobile, enumeratorName, enumerationAreaNumber, startOfRegistration
     ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   ''', [
       1,
       farmer.idNo,
@@ -95,7 +100,13 @@ class FarmerDB {
       farmer.wardId,
       farmer.sublocationId,
       farmer.divisionId,
-      farmer.constituencyId
+      farmer.constituencyId,
+      0,
+      farmer.enumeratorId,
+      farmer.enumeratorMobile,
+      farmer.enumeratorName,
+      farmer.enumerationAreaNumber,
+      farmer.dateCreated!.toLocal().toIso8601String(),
     ]);
   }
 
@@ -232,12 +243,13 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     try {
       int done = await database.rawUpdate('''
-    UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ? ,completed = ? 
+    UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ? ,completed = ?, endOfRegistration = ?
     WHERE farmerId = ? 
   ''', [
         farmer.cooperativeGroup! ? 1 : 0,
         farmer.farmingIncomePercent,
         1,
+        DateTime.now().toLocal().toIso8601String(),
         farmer.farmerId,
       ]);
       return done;
@@ -304,7 +316,7 @@ class FarmerDB {
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmerId = ?
+    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
     ''', [id]);
   }
 

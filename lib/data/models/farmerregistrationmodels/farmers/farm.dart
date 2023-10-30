@@ -40,7 +40,7 @@ class FarmerFarm {
   final double? irrigationArea;
   final int? extensionsericeAccess;
   final String? enumeratorName;
-  final String? enumeratorId;
+  final int? enumeratorId;
   final String? enumeratorMobile;
   final int? constituencyId;
   final int? divisionId;

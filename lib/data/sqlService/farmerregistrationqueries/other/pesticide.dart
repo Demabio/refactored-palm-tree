@@ -16,6 +16,8 @@ class FarmerPesticidesDB {
         "others" VARCHAR(255),
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_pesticide_id")
       );
     """);
@@ -57,8 +59,8 @@ class FarmerPesticidesDB {
       for (var pesticide in pesticides) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, farmer_crop_id, pesticide_type_id, others, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, farmer_crop_id, pesticide_type_id, others, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           pesticide.farmerId,
           pesticide.farmerFarmId,
@@ -67,6 +69,8 @@ class FarmerPesticidesDB {
           pesticide.others,
           DateTime.now().toLocal().toIso8601String(),
           pesticide.createdBy,
+          1,
+          pesticide.enumeratorId,
         ]);
       }
 
@@ -113,11 +117,9 @@ class FarmerPesticidesDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_crop_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_crop_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

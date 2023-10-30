@@ -15,6 +15,8 @@ class FarmerLivestockAgeGroupsDB {
         "no_of_livestock_female" INTEGER,
         "date_created" DATETIME,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_livestockagegroup_id")
       );
     """);
@@ -30,7 +32,7 @@ class FarmerLivestockAgeGroupsDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_livestock_id, age_group_id, no_of_livestock_male, no_of_livestock_female, date_created, created_by
+        farmer_livestock_id, age_group_id, no_of_livestock_male, no_of_livestock_female, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       farmerLivestockId,
@@ -49,8 +51,8 @@ class FarmerLivestockAgeGroupsDB {
       for (var ageGroup in ageGroups) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_livestock_id, age_group_id, no_of_livestock_male, no_of_livestock_female, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_livestock_id, age_group_id, no_of_livestock_male, no_of_livestock_female, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           ageGroup.farmerLivestockId,
           ageGroup.ageGroupId,
@@ -58,6 +60,8 @@ class FarmerLivestockAgeGroupsDB {
           ageGroup.noOfLivestockFemale,
           DateTime.now().toLocal().toIso8601String(),
           ageGroup.createdBy,
+          1,
+          ageGroup.enumeratorId,
         ]);
       }
 
@@ -70,8 +74,8 @@ class FarmerLivestockAgeGroupsDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
     ''', [id]);
   }
 

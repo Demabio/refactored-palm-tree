@@ -19,6 +19,8 @@ class FarmerFishProductionSystemDB {
         "no_of_inactive_units" INTEGER,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_fishprod_id")
       );
     """);
@@ -30,7 +32,7 @@ class FarmerFishProductionSystemDB {
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, production_type_id, production_status, active_area,
-        no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by
+        no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFishProductionSystem.farmerId,
@@ -73,8 +75,8 @@ class FarmerFishProductionSystemDB {
         batch.rawInsert('''
           INSERT INTO $tableName (
             farmer_id, farmer_farm_id, production_type_id, production_status, active_area,
-            no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           productionSystem.farmerId,
           productionSystem.farmerFarmId,
@@ -86,6 +88,8 @@ class FarmerFishProductionSystemDB {
           productionSystem.noOfInactiveUnits,
           productionSystem.dateCreated.toLocal().toIso8601String(),
           productionSystem.createdBy,
+          1,
+          productionSystem.enumeratorId,
         ]);
       }
 
@@ -136,11 +140,9 @@ class FarmerFishProductionSystemDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_fishprod_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_fishprod_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

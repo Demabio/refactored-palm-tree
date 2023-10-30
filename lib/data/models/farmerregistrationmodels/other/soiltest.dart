@@ -6,6 +6,7 @@ class FarmerSoilTest {
   final int? soilTestYear;
   final DateTime? dateCreated;
   final int? createdBy;
+  final int? enumeratorId;
 
   FarmerSoilTest({
     required this.farmerSoilseedId,
@@ -15,6 +16,7 @@ class FarmerSoilTest {
     this.soilTestYear,
     this.dateCreated,
     this.createdBy,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

@@ -15,6 +15,8 @@ class FarmerPowerSourceDB {
         "others_name" VARCHAR(255),
         "date_created" DATETIME,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farm_power_source_id")
       );
     """);
@@ -43,8 +45,8 @@ class FarmerPowerSourceDB {
       for (var powerSource in powerSources) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, power_source_id, others_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, power_source_id, others_name, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           powerSource.farmerId,
           powerSource.farmerFarmId,
@@ -52,6 +54,8 @@ class FarmerPowerSourceDB {
           powerSource.othersName,
           DateTime.now().toLocal().toIso8601String(),
           powerSource.createdBy,
+          1,
+          powerSource.enumeratorId,
         ]);
       }
 
@@ -102,11 +106,9 @@ class FarmerPowerSourceDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
 
   // Add more database methods as needed

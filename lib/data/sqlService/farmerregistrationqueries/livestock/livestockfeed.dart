@@ -14,6 +14,8 @@ class FarmerLivestockFeedsDB {
         "feed_quantity" REAL,
         "date_created" DATETIME,
         "created_by" VARCHAR(255),
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_livestockfeed_id")
       );
     """);
@@ -47,14 +49,16 @@ class FarmerLivestockFeedsDB {
       for (var feed in feeds) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_livestock_id, feed_type_id, feed_quantity, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?)
+            farmer_livestock_id, feed_type_id, feed_quantity, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', [
           feed.farmerLivestockId,
           feed.feedTypeId,
           feed.feedQuantity,
           DateTime.now().toLocal().toIso8601String(),
           feed.createdBy,
+          1,
+          feed.enumeratorId,
         ]);
       }
 
@@ -89,8 +93,8 @@ class FarmerLivestockFeedsDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-    DELETE FROM $tableName WHERE farmer_livestock_id = ?
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
     ''', [id]);
   }
 

@@ -6,6 +6,7 @@ class FarmerCampChange {
   final int newAgriCampId;
   final int? approvedBy;
   final DateTime? dateApproved;
+  final int? enumeratorId;
 
   FarmerCampChange({
     required this.id,
@@ -15,6 +16,7 @@ class FarmerCampChange {
     required this.newAgriCampId,
     this.approvedBy,
     this.dateApproved,
+    this.enumeratorId,
   });
 
   factory FarmerCampChange.fromSqfliteDatabase(Map<String, dynamic> map) =>

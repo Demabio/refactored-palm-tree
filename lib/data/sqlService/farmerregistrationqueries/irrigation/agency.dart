@@ -15,6 +15,8 @@ class FarmerIrrigationAgencyDB {
         "agency_name" VARCHAR(255) NOT NULL,
         "date_created" DATETIME NOT NULL,
         "created_by" VARCHAR(255) NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("irrigation_crop_id")
       );
     """);
@@ -24,7 +26,7 @@ class FarmerIrrigationAgencyDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, irrigation_agency_id, agency_name, date_created, created_by
+        farmer_id, farmer_farm_id, irrigation_agency_id, agency_name, date_created, created_by, active, enumerator_id
       ) VALUES (?, ?, ?, ?, ?, ?)
     ''', [
       irrigationAgency.farmerId,
@@ -57,8 +59,8 @@ class FarmerIrrigationAgencyDB {
       for (var irrigationAgency in irrigationAgencies) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, irrigation_agency_id, agency_name, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, irrigation_agency_id, agency_name, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           irrigationAgency.farmerId,
           irrigationAgency.farmerFarmId,
@@ -104,11 +106,9 @@ class FarmerIrrigationAgencyDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }

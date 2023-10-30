@@ -5,6 +5,7 @@ class FarmerFishCategory {
   int fishCategoryId;
   int? createdBy;
   DateTime? dateCreated;
+  final int? enumeratorId;
 
   FarmerFishCategory({
     required this.farmerFishCategoryId,
@@ -13,6 +14,7 @@ class FarmerFishCategory {
     required this.fishCategoryId,
     this.createdBy,
     this.dateCreated,
+    this.enumeratorId,
   });
   Map<String, dynamic> toJson() {
     return {

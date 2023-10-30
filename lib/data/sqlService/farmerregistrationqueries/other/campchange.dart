@@ -15,6 +15,8 @@ class FarmerCampChangeDB {
         "new_agri_camp_id" INTEGER NOT NULL,
         "approved_by" VARCHAR(255) NOT NULL,
         "date_approved" DATETIME NOT NULL,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("id")
       );
     """);
@@ -50,8 +52,8 @@ class FarmerCampChangeDB {
       for (var campChange in campChanges) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, old_agri_camp_id, season_id, new_agri_camp_id, approved_by, date_approved
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, old_agri_camp_id, season_id, new_agri_camp_id, approved_by, date_approved, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           campChange.farmerId,
           campChange.oldAgriCampId,
@@ -59,6 +61,8 @@ class FarmerCampChangeDB {
           campChange.newAgriCampId,
           campChange.approvedBy,
           campChange.dateApproved?.toLocal().toIso8601String(),
+          1,
+          campChange.enumeratorId,
         ]);
       }
 

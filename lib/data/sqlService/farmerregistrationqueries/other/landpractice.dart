@@ -15,6 +15,8 @@ class FarmerLandPracticesDB {
         "quantity" REAL,
         "date_created" DATETIME NOT NULL,
         "created_by" INT,
+        "active" INT,
+        "enumerator_id" INT,
         PRIMARY KEY("farmer_practice_id")
       );
     """);
@@ -57,8 +59,8 @@ class FarmerLandPracticesDB {
       for (var landPractice in landPractices) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, land_practice_id, quantity, date_created, created_by
-          ) VALUES (?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, land_practice_id, quantity, date_created, created_by, active, enumerator_id
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           landPractice.farmerId,
           landPractice.farmerFarmId,
@@ -66,6 +68,8 @@ class FarmerLandPracticesDB {
           landPractice.quantity,
           landPractice.dateCreated?.toLocal().toIso8601String(),
           landPractice.createdBy,
+          1,
+          landPractice.enumeratorId,
         ]);
       }
 
@@ -102,11 +106,9 @@ class FarmerLandPracticesDB {
 
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
-    return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
-    ''', [
-      id,
-    ]);
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
+    ''', [id]);
   }
   // Add more database methods as needed
 }
