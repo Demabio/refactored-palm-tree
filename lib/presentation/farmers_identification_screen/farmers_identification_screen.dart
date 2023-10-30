@@ -156,14 +156,14 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
+                                                  Text("Date of birth",
+                                                      style: CustomTextStyles
+                                                          .labelMediumPrimary),
                                                   Text(
                                                       state.farmersIdentificationModelObj
                                                               ?.farmer?.dob
                                                               .toString() ??
                                                           "0",
-                                                      style: CustomTextStyles
-                                                          .labelMediumPrimary),
-                                                  Text("lbl_1990".tr,
                                                       style: theme.textTheme
                                                           .labelMedium)
                                                 ]),

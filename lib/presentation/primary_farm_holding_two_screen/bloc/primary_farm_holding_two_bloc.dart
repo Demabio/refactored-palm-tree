@@ -544,6 +544,7 @@ class PrimaryFarmHoldingTwoBloc
     ));
     emit(
       state.copyWith(
+        accuracy: farm.accuracyLevel.toString(),
         primaryFarmHoldingTwoModelObj:
             state.primaryFarmHoldingTwoModelObj?.copyWith(
           enterprises: ents,

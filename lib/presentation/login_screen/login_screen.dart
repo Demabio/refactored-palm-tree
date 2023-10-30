@@ -242,7 +242,7 @@ class LoginScreen extends StatelessWidget {
   /// to push the named route for the otpOneScreen.
   void _onLoginUserServicePostEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.homeScreen,
+      AppRoutes.otpOneScreen,
     );
   }
 
@@ -288,7 +288,7 @@ class LoginScreen extends StatelessWidget {
         context: context,
         builder: (_) => AlertDialog(
               title: const Text('Failed Login'),
-              content: const Text('Invalid Credentials'),
+              content: Text(PrefUtils().getResponse()),
               actions: [
                 TextButton(
                     onPressed: () {

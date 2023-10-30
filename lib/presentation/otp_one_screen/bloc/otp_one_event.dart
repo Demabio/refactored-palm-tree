@@ -32,3 +32,26 @@ class ChangeOTPEvent extends OtpOneEvent {
         code,
       ];
 }
+
+class CreateLoginEvent extends OtpOneEvent {
+  CreateLoginEvent({
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+    this.onFalse,
+    this.persmissions,
+  });
+
+  Function? onCreateLoginEventSuccess;
+  Function? onFalse;
+  Function? persmissions;
+
+  Function? onCreateLoginEventError;
+
+  @override
+  List<Object?> get props => [
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+        onFalse,
+        persmissions,
+      ];
+}

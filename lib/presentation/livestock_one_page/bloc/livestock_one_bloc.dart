@@ -221,8 +221,8 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
       beekeerper =
           livestock?.livestock == "Bee" || livestock?.livestock == "Bees";
 
-      feedslist = _feeds(feedslist, feeds!);
-      ageGroupList = _ages(ageGroupList, ages!);
+      feedslist = feeds != null ? _feeds(feedslist, feeds) : feedslist;
+      ageGroupList = ages != null ? _ages(ageGroupList, ages) : ageGroupList;
       farmmodels.add(LSdetailsItemModel(
         //   crop: crop,
         id: live.farmerLivestockId,

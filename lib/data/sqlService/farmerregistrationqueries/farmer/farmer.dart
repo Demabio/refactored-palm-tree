@@ -68,6 +68,8 @@ class FarmerDB {
         "dateOfConflict" DATETIME,
         "dateRequestedForDelete" DATETIME,
         "dateDeleted" DATETIME,
+        "startOfRegistration" DATETIME,
+        "endOfRegistration" DATETIME,
         "campChangeRequestStatus" INTEGER,
         "comments" VARCHAR(255),     
         "completed" BOOLEAN, 
@@ -229,15 +231,16 @@ class FarmerDB {
   Future<int> updateFromFinancial(Farmer farmer) async {
     final database = await FarmerDatabaseService().database;
     try {
-      return await database.rawUpdate('''
+      int done = await database.rawUpdate('''
     UPDATE $tableName SET cooperativeGroup = ?, farmingIncomePercent = ? ,completed = ? 
     WHERE farmerId = ? 
   ''', [
         farmer.cooperativeGroup! ? 1 : 0,
         farmer.farmingIncomePercent,
-        farmer.farmerId,
         1,
+        farmer.farmerId,
       ]);
+      return done;
     } catch (e) {
       print(e.toString());
       throw (e);

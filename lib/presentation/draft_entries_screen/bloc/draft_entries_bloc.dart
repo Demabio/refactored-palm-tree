@@ -24,17 +24,17 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
 
   Future<List<Farmer>?> getApproved() async {
     FarmerDB farmerDB = FarmerDB();
-    return await farmerDB.fetchSaved();
+    return await farmerDB.fetchApproved();
   }
 
   Future<List<Farmer>?> getUnapproved() async {
     FarmerDB farmerDB = FarmerDB();
-    return await farmerDB.fetchSaved();
+    return await farmerDB.fetchUnapproved();
   }
 
   Future<List<Farmer>?> getUnverified() async {
     FarmerDB farmerDB = FarmerDB();
-    return await farmerDB.fetchSaved();
+    return await farmerDB.fetchUnverified();
   }
 
   Future<List<Farmer>?> getAll() async {

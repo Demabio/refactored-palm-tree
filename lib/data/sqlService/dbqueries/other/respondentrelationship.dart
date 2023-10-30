@@ -45,13 +45,13 @@ class RespondentRelationshipDB {
     try {
       for (var relationship in respondentRelationships) {
         batch.rawInsert('''
-        INSERT INTO $tableName (respondend_rlshp_id, rlshp_to_farmer, description, date_created, created_by) 
+        INSERT INTO $tableName (respondend_rlshp_id, rlshp_to_farmer, description, created_by) 
         VALUES (?, ?, ?, ?, ?)
       ''', [
           relationship.respondendRlshpId,
           relationship.rlshpToFarmer,
           relationship.description,
-          relationship.dateCreated.toLocal().toIso8601String(),
+          //relationship.dateCreated.toLocal().toIso8601String(),
           relationship.createdBy,
         ]);
       }

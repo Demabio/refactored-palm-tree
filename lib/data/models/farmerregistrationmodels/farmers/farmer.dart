@@ -81,6 +81,7 @@ class Farmer {
   final String? comments;
   final DateTime? startOfRegistration;
   final DateTime? endOfRegistration;
+  final bool? completed;
 
   Farmer({
     required this.farmerId,
@@ -165,6 +166,7 @@ class Farmer {
     this.comments,
     this.startOfRegistration,
     this.endOfRegistration,
+    this.completed,
   });
 
   factory Farmer.fromSqfliteDatabase(Map<String, dynamic> map) => Farmer(
@@ -238,6 +240,7 @@ class Farmer {
         approvedList: map['approvedList']?.toInt() ?? 0,
         campChangeRequestStatus: map['campChangeRequestStatus']?.toInt(),
         comments: map['comments'],
+        completed: map['completed'] == 1,
       );
 
   Map<String, dynamic> toJson() {

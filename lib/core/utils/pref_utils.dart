@@ -299,6 +299,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setResponse(String value) {
+    return _sharedPreferences!.setString('response', value);
+  }
+
+  String getResponse() {
+    try {
+      return _sharedPreferences!.getString('response') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setSaveCreds(bool value) {
     return _sharedPreferences!.setBool('SaveCreds', value);
   }

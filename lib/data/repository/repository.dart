@@ -20,6 +20,33 @@ class Repository {
     );
   }
 
+  Future<Response> sendotp(
+      {Map<String, String> headers = const {},
+      Map<String, String> requestData = const {}}) async {
+    return await _apiClient.sendotp(headers: headers, requestData: requestData);
+  }
+
+  Future<Response> resetPassword(
+      {Map<String, String> headers = const {},
+      Map<String, String> requestData = const {}}) async {
+    return await _apiClient.resetPassword(
+        headers: headers, requestData: requestData);
+  }
+
+  Future<Response> confirmOTP(
+      {Map<String, String> headers = const {},
+      Map<String, String> requestData = const {}}) async {
+    return await _apiClient.confirmOTP(
+        headers: headers, requestData: requestData);
+  }
+
+  Future<Response> changePassword(
+      {Map<String, String> headers = const {},
+      Map<String, String> requestData = const {}}) async {
+    return await _apiClient.changePassword(
+        headers: headers, requestData: requestData);
+  }
+
   Future<Response> postPost() async {
     return await _apiClient.uploadSQLiteDB();
   }

@@ -171,4 +171,130 @@ class ApiClient {
       rethrow;
     }
   }
+
+  Future<Response> sendotp({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> requestData =
+        const {}, // Use dynamic type for request data
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+
+      Response response = await _dio.post(
+        // Change _dio.get to _dio.post
+        '$url/gateway/UserService/SendOTP',
+        options: Options(headers: headers), data: json.encode(requestData),
+      );
+
+      ProgressDialogUtils.hideProgressDialog();
+
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null ? response : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<Response> confirmOTP({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> requestData =
+        const {}, // Use dynamic type for request data
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+
+      Response response = await _dio.post(
+        // Change _dio.get to _dio.post
+        '$url/gateway/UserService/ConfirmOTP',
+        options: Options(headers: headers), data: json.encode(requestData),
+      );
+
+      ProgressDialogUtils.hideProgressDialog();
+
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null ? response : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<Response> resetPassword({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> requestData =
+        const {}, // Use dynamic type for request data
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+
+      Response response = await _dio.post(
+        // Change _dio.get to _dio.post
+        '$url/gateway/UserService/ResetPassword',
+        options: Options(headers: headers), data: json.encode(requestData),
+      );
+
+      ProgressDialogUtils.hideProgressDialog();
+
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null ? response : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }Future<Response> changePassword({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> requestData =
+        const {}, // Use dynamic type for request data
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+
+      Response response = await _dio.post(
+        // Change _dio.get to _dio.post
+        '$url/gateway/UserService/ChangePassword',
+        options: Options(headers: headers), data: json.encode(requestData),
+      );
+
+      ProgressDialogUtils.hideProgressDialog();
+
+      if (_isSuccessCall(response)) {
+        return response;
+      } else {
+        throw response.data != null ? response : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
 }
