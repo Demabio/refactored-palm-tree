@@ -105,7 +105,7 @@ class FarmerFishProductionSystemDB {
   Future<List<FarmerFishProductionSystem>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = ?
     ''');
 
     return productionSystems
@@ -116,7 +116,7 @@ class FarmerFishProductionSystemDB {
   Future<List<FarmerFishProductionSystem>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName  WHERE farmer_farm_id = ?  AND active = 1
     ''', [
       id,
     ]);
@@ -129,7 +129,7 @@ class FarmerFishProductionSystemDB {
   Future<FarmerFishProductionSystem?> fetchById(int id) async {
     final database = await FarmerDatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_fishprod_id = ?
+      SELECT * FROM $tableName  WHERE farmer_fishprod_id = ?  AND active = 1
     ''', [
       id,
     ]);

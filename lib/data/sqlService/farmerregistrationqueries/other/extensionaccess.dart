@@ -76,10 +76,32 @@ class FarmerExtensionAccessDB {
     }
   }
 
+  Future<int> reinsertExtensionAccess(
+      List<FarmerExtensionAccess> extensionAccesses) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var extensionAccess in extensionAccesses) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND extension_source_id = ?
+        ''', [
+          extensionAccess.dateCreated?.toLocal().toIso8601String(),
+          extensionAccess.farmerFarmId,
+          extensionAccess.extensionSourceId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerExtensionAccess>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final extensionAccesses = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active =  1
     ''');
 
     return extensionAccesses
@@ -90,7 +112,7 @@ class FarmerExtensionAccessDB {
   Future<List<FarmerExtensionAccess>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);

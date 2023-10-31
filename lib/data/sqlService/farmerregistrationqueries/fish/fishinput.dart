@@ -75,10 +75,31 @@ class FarmerFishInputDB {
     }
   }
 
+  Future<int> reinsertFishInputs(List<FarmerFishInput> fishInputs) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var fishInput in fishInputs) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND fish_input_id = ?
+        ''', [
+          fishInput.dateCreated?.toLocal().toIso8601String(),
+          fishInput.farmerFarmId,
+          fishInput.fishInputId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerFishInput>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final fishInputs = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return fishInputs
@@ -89,7 +110,7 @@ class FarmerFishInputDB {
   Future<List<FarmerFishInput>> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fishInputs = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);
@@ -103,7 +124,7 @@ class FarmerFishInputDB {
       int farmerFishInputId) async {
     final database = await FarmerDatabaseService().database;
     final fishInput = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_fish_input_id = ?
+      SELECT * FROM $tableName WHERE farmer_fish_input_id = ? AND active = 1
     ''', [farmerFishInputId]);
 
     return FarmerFishInput.fromSqfliteDatabase(fishInput.first);

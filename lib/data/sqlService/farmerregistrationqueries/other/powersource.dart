@@ -66,6 +66,28 @@ class FarmerPowerSourceDB {
     }
   }
 
+  Future<int> reinsertPowerSources(List<FarmerPowerSource> powerSources) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var powerSource in powerSources) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, others_name = ?, date_created = ? WHERE farmer_farm_id = ? AND power_source_id = ?
+        ''', [
+          powerSource.othersName,
+          powerSource.dateCreated?.toLocal().toIso8601String(),
+          powerSource.farmerFarmId,
+          powerSource.powerSourceId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> update(FarmerPowerSource farmerPowerSource) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
@@ -81,7 +103,7 @@ class FarmerPowerSourceDB {
   Future<List<FarmerPowerSource>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final powerSources = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return powerSources
@@ -92,7 +114,7 @@ class FarmerPowerSourceDB {
   Future<List<FarmerPowerSource>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);

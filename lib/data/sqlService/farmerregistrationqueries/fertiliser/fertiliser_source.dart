@@ -90,6 +90,30 @@ class FarmerFertiliserSourcesDB {
     }
   }
 
+  Future<int> reinsertFertiliserSources(
+      List<FarmerFertiliserSource> fertiliserSources) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var fertiliserSource in fertiliserSources) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, other_source = ?, distance_source = ?,  date_created = ? WHERE farmer_crop_id = ? AND fert_source_id = ?
+        ''', [
+          fertiliserSource.otherSource,
+          fertiliserSource.distanceSource,
+          fertiliserSource.dateCreated?.toLocal().toIso8601String(),
+          fertiliserSource.farmerFarmId,
+          fertiliserSource.fertSourceId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> updateall(int farmerCropId, int childid) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
@@ -103,7 +127,7 @@ class FarmerFertiliserSourcesDB {
   Future<List<FarmerFertiliserSource>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final fertiliserSources = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return fertiliserSources
@@ -115,7 +139,7 @@ class FarmerFertiliserSourcesDB {
       int farmerFertiliserSourceId) async {
     final database = await FarmerDatabaseService().database;
     final fertiliserSource = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_fert_source_id = ?
+      SELECT * FROM $tableName WHERE farmer_fert_source_id = ? AND active = 1
     ''', [farmerFertiliserSourceId]);
 
     return FarmerFertiliserSource.fromSqfliteDatabase(fertiliserSource.first);
@@ -124,7 +148,7 @@ class FarmerFertiliserSourcesDB {
   Future<List<FarmerFertiliserSource>?> fetchByCropId(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_crop_id = ?
+      SELECT * FROM $tableName WHERE farmer_crop_id = ? AND active = 1
     ''', [
       id,
     ]);

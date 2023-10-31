@@ -92,6 +92,30 @@ class FarmerFertiliserDB {
     }
   }
 
+  Future<int> reinsertFertilisers(List<FarmerFertiliser> fertilisers) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var fertiliser in fertilisers) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, compound_name = ?, basal_others_name = ?, others = ?, date_created = ? WHERE farmer_crop_id = ? AND fertiliser_type_id = ?
+        ''', [
+          fertiliser.compoundName,
+          fertiliser.basalOthersName,
+          fertiliser.others,
+          fertiliser.dateCreated?.toLocal().toIso8601String(),
+          fertiliser.farmerCropId,
+          fertiliser.fertiliserTypeId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> updateall(int farmerCropId, int childid) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
@@ -105,7 +129,7 @@ class FarmerFertiliserDB {
   Future<List<FarmerFertiliser>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final fertilisers = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return fertilisers
@@ -117,7 +141,7 @@ class FarmerFertiliserDB {
       int farmerFertiliserId) async {
     final database = await FarmerDatabaseService().database;
     final fertiliser = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_fert_id = ?
+      SELECT * FROM $tableName WHERE farmer_fert_id = ? AND active = 1
     ''', [farmerFertiliserId]);
 
     return FarmerFertiliser.fromSqfliteDatabase(fertiliser.first);
@@ -126,7 +150,7 @@ class FarmerFertiliserDB {
   Future<List<FarmerFertiliser>?> fetchByCropId(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_crop_id = ?
+      SELECT * FROM $tableName WHERE farmer_crop_id = ? AND active = 1
     ''', [
       id,
     ]);

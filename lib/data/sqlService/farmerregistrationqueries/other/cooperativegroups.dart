@@ -84,10 +84,34 @@ class FarmerCooperativeGroupDB {
     }
   }
 
+  Future<int> reinsertCooperativeGroups(
+      List<FarmerCooperativeGroup> cooperativeGroups) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var cooperativeGroup in cooperativeGroups) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1,  cooperative_group_name = ?, other = ?, date_created = ? WHERE farmer_id = ? AND cooperative_group_id = ?
+        ''', [
+          cooperativeGroup.cooperateiveGroupName,
+          cooperativeGroup.other,
+          cooperativeGroup.dateCreated?.toLocal().toIso8601String(),
+          cooperativeGroup.farmerFarmId,
+          cooperativeGroup.cooperateiveGroupId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerCooperativeGroup>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final cooperativeGroups = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return cooperativeGroups
@@ -98,7 +122,7 @@ class FarmerCooperativeGroupDB {
   Future<List<FarmerCooperativeGroup>?> fetchByFarmerId(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_id = ?  AND active = 1
     ''', [
       id,
     ]);

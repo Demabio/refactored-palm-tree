@@ -80,10 +80,33 @@ class FarmerIrrigationAgencyDB {
     }
   }
 
+  Future<int> reinsertIrrigationAgencies(
+      List<FarmerIrrigationAgency> irrigationAgencies) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var irrigationAgency in irrigationAgencies) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, agency_name = ?, date_created = ? WHERE farmer_farm_id = ? AND irrigation_agency_id = ?
+        ''', [
+          irrigationAgency.agencyName,
+          irrigationAgency.dateCreated?.toLocal().toIso8601String(),
+          irrigationAgency.farmerFarmId,
+          irrigationAgency.irrigationAgencyId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerIrrigationAgency>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final irrigationAgencies = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return irrigationAgencies
@@ -94,7 +117,7 @@ class FarmerIrrigationAgencyDB {
   Future<List<FarmerIrrigationAgency>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);

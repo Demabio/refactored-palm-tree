@@ -91,7 +91,7 @@ class FarmerFishProductionLevelsDB {
   Future<List<FarmerFishProductionLevel>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final productionLevels = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return productionLevels
@@ -102,7 +102,7 @@ class FarmerFishProductionLevelsDB {
   Future<FarmerFishProductionLevel?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final productionLevels = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);
@@ -115,7 +115,7 @@ class FarmerFishProductionLevelsDB {
   Future<FarmerFishProductionLevel?> fetchById(int id) async {
     final database = await FarmerDatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_productionlevel_id = ?
+      SELECT * FROM $tableName  WHERE farmer_productionlevel_id = ? AND active = 1
     ''', [
       id,
     ]);

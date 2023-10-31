@@ -65,10 +65,32 @@ class FarmerLivestockBeehiveTypeDB {
     }
   }
 
+  Future<int> reinsertBeehiveTypes(
+      List<FarmerLivestockBeehiveType> beehiveTypes) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var beehiveType in beehiveTypes) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1,  date_created = ? WHERE farmer_livestock_id = ? AND beehives_type_id = ?
+        ''', [
+          beehiveType.dateCreated.toLocal().toIso8601String(),
+          beehiveType.farmerLivestockId,
+          beehiveType.beehivesTypeId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerLivestockBeehiveType>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final beehiveTypes = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return beehiveTypes
@@ -79,14 +101,14 @@ class FarmerLivestockBeehiveTypeDB {
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
-    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ? 
     ''', [id]);
   }
 
   Future<List<FarmerLivestockBeehiveType>> fetchAllByLivestock(int id) async {
     final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?  AND active = 1
     ''', [id]);
 
     return feeds

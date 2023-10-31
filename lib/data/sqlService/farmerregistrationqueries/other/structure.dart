@@ -77,10 +77,31 @@ class FarmerStructureDB {
     }
   }
 
+  Future<int> reinsertStructures(List<FarmerStructure> structures) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var structure in structures) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND farm_structure_id = ?
+        ''', [
+          structure.dateCreated?.toLocal().toIso8601String(),
+          structure.farmerFarmId,
+          structure.farmStructureId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerStructure>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final structures = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return structures
@@ -91,7 +112,7 @@ class FarmerStructureDB {
   Future<List<FarmerStructure>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);

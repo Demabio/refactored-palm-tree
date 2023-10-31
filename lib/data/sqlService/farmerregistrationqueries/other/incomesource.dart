@@ -72,10 +72,31 @@ class FarmerIncomeSourceDB {
     }
   }
 
+  Future<int> reinsertIncome(List<FarmerIncomeSource> incomeSources) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var incomeSource in incomeSources) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, priority_level = ? WHERE farmer_id = ? AND income_source_id = ?
+        ''', [
+          incomeSource.priorityLevel,
+          incomeSource.farmerId,
+          incomeSource.incomeSourceId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerIncomeSource>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final farmerIncomeSources = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return farmerIncomeSources
@@ -86,7 +107,7 @@ class FarmerIncomeSourceDB {
   Future<FarmerIncomeSource> fetchByFarmerIncomeId(int farmerIncomeId) async {
     final database = await FarmerDatabaseService().database;
     final farmerIncomeSource = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_income_id = ?
+      SELECT * FROM $tableName WHERE farmer_income_id = ? AND active = 1
     ''', [farmerIncomeId]);
 
     return FarmerIncomeSource.fromSqfliteDatabase(farmerIncomeSource.first);
@@ -95,7 +116,7 @@ class FarmerIncomeSourceDB {
   Future<List<FarmerIncomeSource>?> fetchByFarmerId(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_id = ?  AND active = 1
     ''', [
       id,
     ]);

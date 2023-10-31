@@ -75,10 +75,31 @@ class FarmerAssetSourceDB {
     }
   }
 
+  Future<int> reinsertAssetSources(List<FarmerAssetSource> assetSources) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var assetSource in assetSources) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND asset_source_id = ?
+        ''', [
+          assetSource.dateCreated?.toLocal().toIso8601String(),
+          assetSource.farmerFarmId,
+          assetSource.assetSourceId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerAssetSource>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final assetSources = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return assetSources
@@ -89,7 +110,7 @@ class FarmerAssetSourceDB {
   Future<FarmerAssetSource?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?  AND active = 1
     ''', [
       id,
     ]);

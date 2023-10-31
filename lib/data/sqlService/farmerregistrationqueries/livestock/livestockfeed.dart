@@ -93,7 +93,7 @@ class FarmerLivestockFeedsDB {
   Future<List<FarmerLivestockFeed>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return feeds
@@ -104,7 +104,7 @@ class FarmerLivestockFeedsDB {
   Future<List<FarmerLivestockFeed>> fetchAllByLivestock(int id) async {
     final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?  AND active = 1
     ''', [id]);
 
     return feeds
@@ -113,13 +113,6 @@ class FarmerLivestockFeedsDB {
   }
 
   Future<int> delete(int id) async {
-    final database = await FarmerDatabaseService().database;
-    return await database.rawUpdate('''
-    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
-    ''', [id]);
-  }
-
-  Future<int> delete2(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
     UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?

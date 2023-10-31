@@ -160,7 +160,7 @@ class FarmerCropsDB {
   Future<List<FarmerCrop>?> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final farmerCrops = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return farmerCrops.isNotEmpty
@@ -171,7 +171,7 @@ class FarmerCropsDB {
   Future<List<FarmerCrop>?> fetchAllByFarmer(int id) async {
     final database = await FarmerDatabaseService().database;
     final farmerCrops = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_id = ?
+      SELECT * FROM $tableName WHERE farmer_id = ? AND active = 1
     ''', [id]);
 
     return farmerCrops.isNotEmpty
@@ -182,7 +182,7 @@ class FarmerCropsDB {
   Future<List<FarmerCrop>?> fetchAllByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final farmerCrops = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [id]);
 
     return farmerCrops.isNotEmpty
@@ -193,7 +193,7 @@ class FarmerCropsDB {
   Future<FarmerCrop?> fetchByFarmerCropId(int farmerCropId) async {
     final database = await FarmerDatabaseService().database;
     final farmerCrop = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_crop_id = ?
+      SELECT * FROM $tableName WHERE farmer_crop_id = ? AND active = 1
     ''', [farmerCropId]);
 
     return farmerCrop.isNotEmpty

@@ -76,6 +76,28 @@ class FarmerFishCategoryDB {
     }
   }
 
+  Future<int> reinsertFishCategories(
+      List<FarmerFishCategory> fishCategories) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var fishCategory in fishCategories) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND fish_category_id = ?
+        ''', [
+          fishCategory.dateCreated?.toLocal().toIso8601String(),
+          fishCategory.farmerFarmId,
+          fishCategory.farmerFishCategoryId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> updateall(int farmerCropId, int childid) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
@@ -89,7 +111,7 @@ class FarmerFishCategoryDB {
   Future<List<FarmerFishCategory>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return fishCategories
@@ -100,7 +122,7 @@ class FarmerFishCategoryDB {
   Future<List<FarmerFishCategory>> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fishCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);
@@ -114,7 +136,7 @@ class FarmerFishCategoryDB {
       int farmerFishCategoryId) async {
     final database = await FarmerDatabaseService().database;
     final fishCategory = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_fishcategory_id = ?
+      SELECT * FROM $tableName WHERE farmer_fishcategory_id = ? AND active = 1
     ''', [farmerFishCategoryId]);
 
     return FarmerFishCategory.fromSqfliteDatabase(fishCategory.first);

@@ -98,7 +98,7 @@ class FarmerFishDB {
   Future<List<FarmerFish>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return fish.map((e) => FarmerFish.fromSqfliteDatabase(e)).toList();
@@ -107,7 +107,7 @@ class FarmerFishDB {
   Future<FarmerFish> fetchByFarmerFishId(int farmerFishId) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_fish_id = ?
+      SELECT * FROM $tableName WHERE farmer_fish_id = ? AND active = 1
     ''', [farmerFishId]);
 
     return FarmerFish.fromSqfliteDatabase(fish.first);
@@ -116,7 +116,7 @@ class FarmerFishDB {
   Future<List<FarmerFish>?> fetchByFarm(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [
       id,
     ]);
@@ -136,7 +136,7 @@ class FarmerFishDB {
   Future<FarmerFish?> fetchById(int id) async {
     final database = await FarmerDatabaseService().database;
     final productionSystems = await database.rawQuery(''' 
-      SELECT * FROM $tableName  WHERE farmer_fish_id = ?
+      SELECT * FROM $tableName  WHERE farmer_fish_id = ? AND active = 1
     ''', [
       id,
     ]);

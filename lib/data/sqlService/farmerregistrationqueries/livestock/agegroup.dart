@@ -112,7 +112,7 @@ class FarmerLivestockAgeGroupsDB {
   Future<List<FarmerLivestockAgeGroup>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final ageGroups = await database.rawQuery(''' 
-      SELECT * FROM $tableName AND active = 1
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return ageGroups

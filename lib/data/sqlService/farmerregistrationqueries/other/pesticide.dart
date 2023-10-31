@@ -81,10 +81,32 @@ class FarmerPesticidesDB {
     }
   }
 
+  Future<int> reinsertPesticides(List<FarmerPesticide> pesticides) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var pesticide in pesticides) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, others = ?,  date_created = ? WHERE farmer_crop_id = ? AND pesticide_type_id = ?
+        ''', [
+          pesticide.others,
+          pesticide.dateCreated?.toLocal().toIso8601String(),
+          pesticide.farmerFarmId,
+          pesticide.pesticideTypeId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerPesticide>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final pesticides = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return pesticides
@@ -96,7 +118,7 @@ class FarmerPesticidesDB {
       int farmerPesticideId) async {
     final database = await FarmerDatabaseService().database;
     final pesticide = await database.rawQuery('''
-      SELECT * FROM $tableName WHERE farmer_pesticide_id = ?
+      SELECT * FROM $tableName WHERE farmer_pesticide_id = ? AND active = 1
     ''', [farmerPesticideId]);
 
     return FarmerPesticide.fromSqfliteDatabase(pesticide.first);
@@ -105,7 +127,7 @@ class FarmerPesticidesDB {
   Future<List<FarmerPesticide>?> fetchByCropId(int id) async {
     final database = await FarmerDatabaseService().database;
     final fish = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_crop_id = ?
+      SELECT * FROM $tableName WHERE farmer_crop_id = ? AND active = 1
     ''', [
       id,
     ]);
