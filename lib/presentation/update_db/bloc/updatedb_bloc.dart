@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -9,7 +7,6 @@ import 'package:kiamis_app/data/repository/repository.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/downloadedfarmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/presentation/update_db/models/updatedb_model.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import '/core/app_export.dart';
 import 'package:path/path.dart';
@@ -81,7 +78,6 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       String dbpath = join(path, name);
       String token = PrefUtils().getToken();
 
-      var status = await Permission.storage.request();
       Response response = await dio.download(
         'https://prudmatvisionaries.com/Gateway/FarmerRegistration/download', // Replace with the actual URL
         '$dbpath',
@@ -126,7 +122,7 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       FarmerDB farmerDB = FarmerDB();
       DFarmerDB dFarmerDB = DFarmerDB();
 
-      List<Farmer> farmers = await farmerDB.fetchAll() ?? [];
+      List<Farmer> farmers = await farmerDB.fetchAll();
       if (farmers.isNotEmpty) {
         int totalFarmers =
             farmers.length; // Assuming 'farmers' is your list of farmers

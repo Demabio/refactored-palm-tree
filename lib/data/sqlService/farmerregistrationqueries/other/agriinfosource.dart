@@ -55,7 +55,7 @@ class FarmerAgriInfoSourceDB {
         ''', [
           agriInfoSource.agriInfoSourceId,
           agriInfoSource.farmerId,
-          1,
+          0,
           agriInfoSource.enumeratorId,
         ]);
       }

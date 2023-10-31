@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
@@ -234,6 +233,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val:
@@ -279,6 +280,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val:
@@ -325,6 +328,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val:

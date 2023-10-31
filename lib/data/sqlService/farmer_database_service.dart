@@ -65,7 +65,7 @@ class FarmerDatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = 'flocaldevice.db';
+    const name = 'flocaldevice2.db';
     final path = await getDatabasesPath();
     PrefUtils().setDBPath(path);
     return join(path, name);

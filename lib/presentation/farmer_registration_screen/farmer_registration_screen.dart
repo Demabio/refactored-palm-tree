@@ -152,7 +152,6 @@ class FarmerRegistrationScreen extends StatelessWidget {
   CupertinoStepper _buildStepper(
       StepperType type, BuildContext context, FarmerRegistrationModel model) {
     final canCancel = model.currentStep > 0;
-    final canContinue = model.currentStep < 7;
     return CupertinoStepper(
       type: type,
       physics: ClampingScrollPhysics(),

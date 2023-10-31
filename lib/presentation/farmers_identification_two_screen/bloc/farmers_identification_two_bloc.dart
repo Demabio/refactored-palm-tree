@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -84,20 +82,20 @@ class FarmersIdentificationTwoBloc
 
     String ward = claims.payload['WardId'] ?? "1";
     String sublocation = claims.payload['SublocationId'] ?? "1";
-    String location = claims.payload['LocationId'] ?? "1";
+    // String location = claims.payload['LocationId'] ?? "1";
     String constituency = claims.payload['ConstituencyId'] ?? "1";
-    String county = claims.payload['CountyId'] ?? "1";
-    String subcounty = claims.payload['SubcountyId'] ?? "1";
+    // String county = claims.payload['CountyId'] ?? "1";
+    // String subcounty = claims.payload['SubcountyId'] ?? "1";
     String division = claims.payload['DivisionId'] ?? "1";
 
     int wardId = int.parse(ward.isEmpty ? "1" : ward);
     int sublocationId = int.parse(sublocation.isEmpty ? "1" : sublocation);
 
-    int locationId = int.parse(location.isEmpty ? "1" : location);
+    // int locationId = int.parse(location.isEmpty ? "1" : location);
 
     int constituencyId = int.parse(constituency.isEmpty ? "1" : constituency);
-    int countyId = int.parse(county.isEmpty ? "1" : county);
-    int subcountyId = int.parse(subcounty.isEmpty ? "1" : subcounty);
+    // int countyId = int.parse(county.isEmpty ? "1" : county);
+    // int subcountyId = int.parse(subcounty.isEmpty ? "1" : subcounty);
     int divisionId = int.parse(division.isEmpty ? "1" : division);
     String enumeratorname = claims
         .payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];

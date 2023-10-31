@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
@@ -215,6 +214,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val:
@@ -283,6 +284,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                             .id ==
                                                         1) {
                                                   return "Field is required";
+                                                } else {
+                                                  return null;
                                                 }
                                               },
                                               val:
@@ -301,8 +304,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               hintText: "lbl_select".tr,
                                               items:
                                                   farmersIdentificationFourModelObj
-                                                          ?.dropdownItemList1 ??
-                                                      [],
+                                                      .dropdownItemList1,
                                               onChanged: (value) {
                                                 context
                                                     .read<

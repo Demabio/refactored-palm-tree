@@ -104,7 +104,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
     List<SelectionPopupModel> list = [];
     EducationLevelDB educationLevelDB = EducationLevelDB();
 
-    await educationLevelDB?.fetchAll().then((value) {
+    await educationLevelDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].educationLevel,
@@ -119,7 +119,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
     List<SelectionPopupModel> list = [];
     MaritalStatusDB maritalStatusDB = MaritalStatusDB();
 
-    await maritalStatusDB?.fetchAll().then((value) {
+    await maritalStatusDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].maritalStatus,

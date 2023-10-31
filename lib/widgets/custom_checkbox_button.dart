@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 
+// ignore: must_be_immutable
 class CustomCheckboxButton extends StatelessWidget {
   CustomCheckboxButton({
     Key? key,

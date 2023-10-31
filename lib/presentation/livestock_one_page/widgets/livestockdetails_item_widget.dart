@@ -67,9 +67,9 @@ class LSdetailsItemWidget extends StatelessWidget {
             ),
             child: Column(
               children: List<Widget>.generate(
-                farmdetailsItemModel.ages.length ?? 0,
+                farmdetailsItemModel.ages.length,
                 (index) {
-                  AgeGroupModel model = farmdetailsItemModel!.ages[index];
+                  AgeGroupModel model = farmdetailsItemModel.ages[index];
 
                   return AgeItemWidget(
                     model,
@@ -86,7 +86,7 @@ class LSdetailsItemWidget extends StatelessWidget {
           SizedBox(height: 14.v),
           Column(
             children: List<Widget>.generate(
-              farmdetailsItemModel.feeds.length ?? 0,
+              farmdetailsItemModel.feeds.length,
               (index) {
                 FeedsModel model = farmdetailsItemModel.feeds[index];
 
@@ -162,7 +162,7 @@ class LSdetailsItemWidget extends StatelessWidget {
             visible: farmdetailsItemModel.beekeepr,
             child: Column(
               children: List<Widget>.generate(
-                farmdetailsItemModel.bees.length ?? 0,
+                farmdetailsItemModel.bees.length,
                 (index) {
                   FeedsModel model = farmdetailsItemModel.bees[index];
 

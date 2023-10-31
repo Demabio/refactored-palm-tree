@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
@@ -13,7 +12,6 @@ import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
@@ -355,7 +353,7 @@ class AddLandandwatermgmtTwoBloc
     IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].agencyName,

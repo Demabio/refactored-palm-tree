@@ -68,7 +68,7 @@ class FarmerExtensionModeDB {
           extensionMode.other,
           DateTime.now().toLocal().toIso8601String(),
           extensionMode.createdBy,
-          1,
+          0,
           extensionMode.createdBy,
         ]);
       }

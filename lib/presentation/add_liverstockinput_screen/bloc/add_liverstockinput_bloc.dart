@@ -1,11 +1,9 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_liverstockinput_screen/models/add_liverstockinput_model.dart';
@@ -109,7 +107,6 @@ class AddLiverstockinputBloc
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerLivestockServicesDB farmDB = FarmerLivestockServicesDB();
-    int farmerid = PrefUtils().getFarmId();
     try {
       if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 0) {
         farmDB

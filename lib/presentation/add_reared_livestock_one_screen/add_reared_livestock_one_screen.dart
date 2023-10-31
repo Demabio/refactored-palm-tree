@@ -176,15 +176,12 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                           spacing: 10.h,
                                           children: List<Widget>.generate(
                                             addRearedLivestockOneModelObj
-                                                    ?.chipviewayrshiItemList
-                                                    .length ??
-                                                0,
+                                                .chipviewayrshiItemList.length,
                                             (index) {
                                               ChipviewayrshiItemModel model =
                                                   addRearedLivestockOneModelObj
-                                                              ?.chipviewayrshiItemList[
-                                                          index] ??
-                                                      ChipviewayrshiItemModel();
+                                                          .chipviewayrshiItemList[
+                                                      index];
 
                                               return ChipviewayrshiItemWidget(
                                                 model,
@@ -265,6 +262,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   validator: (value) {
                                     if (value == null) {
                                       return "Field is required";
+                                    } else {
+                                      return null;
                                     }
                                   },
                                   val: addRearedLivestockOneModelObj
@@ -313,6 +312,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   validator: (value) {
                                     if (value == null) {
                                       return "Field is required";
+                                    } else {
+                                      return null;
                                     }
                                   },
                                   val: addRearedLivestockOneModelObj
@@ -361,6 +362,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   validator: (value) {
                                     if (value == null) {
                                       return "Field is required";
+                                    } else {
+                                      return null;
                                     }
                                   },
                                   val: addRearedLivestockOneModelObj
@@ -409,6 +412,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                                 value,
                                               )) {
                                                 return "Invalid Input";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             textInputType: TextInputType.number,
@@ -583,6 +588,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   validator: (value) {
                                     if (value == null) {
                                       return "Field is required";
+                                    } else {
+                                      return null;
                                     }
                                   },
                                   val: addRearedLivestockOneModelObj

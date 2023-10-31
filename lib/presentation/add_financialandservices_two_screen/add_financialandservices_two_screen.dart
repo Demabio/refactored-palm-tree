@@ -1,11 +1,9 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_eight_dialog/add_financialandservices_eight_dialog.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_seven_dialog/add_financialandservices_seven_dialog.dart';
-import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/add_financialandservices_six_dialog.dart';
 
 import 'bloc/add_financialandservices_two_bloc.dart';
 import 'models/add_financialandservices_two_model.dart';
@@ -16,7 +14,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 // ignore: must_be_immutable

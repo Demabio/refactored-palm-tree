@@ -1,4 +1,3 @@
-import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 

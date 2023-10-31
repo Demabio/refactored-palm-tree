@@ -48,16 +48,11 @@ import 'package:kiamis_app/presentation/add_financialandservices_two_screen/add_
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/add_financialandservices_four_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_five_screen/add_financialandservices_five_screen.dart';
 import 'package:kiamis_app/presentation/product_page_screen/product_page_screen.dart';
-import 'package:kiamis_app/presentation/register_screen/register_screen.dart';
 import 'package:kiamis_app/presentation/splash1_screen/splash1_screen.dart';
 import 'package:kiamis_app/presentation/login_one_screen/login_one_screen.dart';
-import 'package:kiamis_app/presentation/main_landing_screen/main_landing_screen.dart';
-import 'package:kiamis_app/presentation/cart_screen/cart_screen.dart';
-import 'package:kiamis_app/presentation/profile_profile_info_tab_container_screen/profile_profile_info_tab_container_screen.dart';
 import 'package:kiamis_app/presentation/product_search_screen/product_search_screen.dart';
 import 'package:kiamis_app/presentation/product_discover_screen/product_discover_screen.dart';
 import 'package:kiamis_app/presentation/farmer_registration_one_screen/farmer_registration_one_screen.dart';
-import 'package:kiamis_app/presentation/enable_linked_accounts_screen/enable_linked_accounts_screen.dart';
 import 'package:kiamis_app/presentation/login1_screen/login1_screen.dart';
 import 'package:kiamis_app/presentation/history_screen/history_screen.dart';
 import 'package:kiamis_app/presentation/transfer_request_screen/transfer_request_screen.dart';
@@ -65,7 +60,6 @@ import 'package:kiamis_app/presentation/confirmation_screen/confirmation_screen.
 import 'package:kiamis_app/presentation/transfer_amount_screen/transfer_amount_screen.dart';
 import 'package:kiamis_app/presentation/settings_one_screen/settings_one_screen.dart';
 import 'package:kiamis_app/presentation/accounts_screen/accounts_screen.dart';
-import 'package:kiamis_app/presentation/expense_tracking_tab_container_screen/expense_tracking_tab_container_screen.dart';
 import 'package:kiamis_app/presentation/app_navigation_screen/app_navigation_screen.dart';
 
 class AppRoutes {
@@ -302,17 +296,11 @@ class AppRoutes {
         addFinancialandservicesFiveScreen:
             AddFinancialandservicesFiveScreen.builder,
         productPageScreen: ProductPageScreen.builder,
-        registerScreen: RegisterScreen.builder,
         splash1Screen: Splash1Screen.builder,
         loginOneScreen: LoginOneScreen.builder,
-        mainLandingScreen: MainLandingScreen.builder,
-        cartScreen: CartScreen.builder,
-        profileProfileInfoTabContainerScreen:
-            ProfileProfileInfoTabContainerScreen.builder,
         productSearchScreen: ProductSearchScreen.builder,
         productDiscoverScreen: ProductDiscoverScreen.builder,
         farmerRegistrationOneScreen: FarmerRegistrationOneScreen.builder,
-        enableLinkedAccountsScreen: EnableLinkedAccountsScreen.builder,
         login1Screen: Login1Screen.builder,
         historyScreen: HistoryScreen.builder,
         transferRequestScreen: TransferRequestScreen.builder,
@@ -320,8 +308,6 @@ class AppRoutes {
         transferAmountScreen: TransferAmountScreen.builder,
         settingsOneScreen: SettingsOneScreen.builder,
         accountsScreen: AccountsScreen.builder,
-        expenseTrackingTabContainerScreen:
-            ExpenseTrackingTabContainerScreen.builder,
         appNavigationScreen: AppNavigationScreen.builder,
         initialRoute: SplashScreen.builder,
         farmerRegistrationbaseScreen: FarmersIdentificationScreenBase.builder,

@@ -69,7 +69,7 @@ class FarmerPesticidesDB {
           pesticide.others,
           DateTime.now().toLocal().toIso8601String(),
           pesticide.createdBy,
-          1,
+          0,
           pesticide.createdBy,
         ]);
       }

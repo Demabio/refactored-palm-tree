@@ -27,7 +27,6 @@ class AddFarmHoldingBloc
   }
 
   Future<List<FarmerFarm>?> getFarm() async {
-    int farmerid = PrefUtils().getFarmerId();
     FarmerOtherFarmDB farmDB = FarmerOtherFarmDB();
     return await farmDB.fetchAllByFarmer(0);
   }
@@ -110,7 +109,7 @@ class AddFarmHoldingBloc
         //   crop: crop,
         id: farm.farmerFarmId,
         totalAcreage: farm.farmSize.toString(),
-        name: farm!.farmName,
+        name: farm.farmName,
         unitOfArea: level!.areaUnit,
         livestock: farm.livestockFarmSize.toString(),
         crop: farm.cropFarmSize.toString(),

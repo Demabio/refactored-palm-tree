@@ -68,7 +68,7 @@ class FarmerIrrigationAgencyDB {
           irrigationAgency.agencyName,
           DateTime.now().toLocal().toIso8601String(),
           irrigationAgency.createdBy,
-          1,
+          0,
           irrigationAgency.createdBy,
         ]);
       }

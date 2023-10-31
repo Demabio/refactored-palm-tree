@@ -3,7 +3,6 @@ import 'models/draft_entries_clear_drafts_modal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 class DynamicDialogTwo extends StatelessWidget {
   final String label;

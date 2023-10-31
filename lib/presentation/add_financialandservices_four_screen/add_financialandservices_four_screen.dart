@@ -8,7 +8,6 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:sizer/sizer.dart';
 
-import 'models/irrigationprojetmodel.dart';
 import 'widgets/irrigation_widget.dart';
 
 class AddFinancialandservicesFourScreen extends StatelessWidget {

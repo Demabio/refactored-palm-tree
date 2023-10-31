@@ -91,6 +91,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addAquacultureFourModelObj?.selectedDropDownValue,
@@ -135,6 +137,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     items: addAquacultureFourModelObj?.dropdownItemList1 ?? [],

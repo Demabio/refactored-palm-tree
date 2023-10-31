@@ -60,7 +60,7 @@ class FarmerLivestockAgeGroupsDB {
           ageGroup.noOfLivestockFemale,
           DateTime.now().toLocal().toIso8601String(),
           ageGroup.createdBy,
-          1,
+          0,
           ageGroup.createdBy,
         ]);
       }

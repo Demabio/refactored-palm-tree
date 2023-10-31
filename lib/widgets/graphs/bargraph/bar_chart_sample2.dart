@@ -2,8 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/theme/theme_helper.dart';
 
-import '../../../theme/barcolors.dart';
-
 // ignore: must_be_immutable
 class BarChartSample2 extends StatefulWidget {
   List<Map<String, Object?>>? bardata;

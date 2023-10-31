@@ -73,7 +73,7 @@ class FarmerCreditServiceDB {
           creditService.othersName,
           DateTime.now().toLocal().toIso8601String(),
           creditService.createdBy,
-          1,
+          0,
           creditService.createdBy,
         ]);
       }

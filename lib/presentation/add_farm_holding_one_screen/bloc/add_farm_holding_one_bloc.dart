@@ -5,7 +5,6 @@ import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_p
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_holding_progress.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/otherfarms.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_farm_holding_one_screen/models/add_farm_holding_one_model.dart';

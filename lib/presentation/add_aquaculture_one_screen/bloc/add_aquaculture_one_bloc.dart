@@ -1,4 +1,3 @@
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
@@ -106,10 +105,6 @@ class AddAquacultureOneBloc
     Emitter<AddAquacultureOneState> emit,
   ) {
     if (PrefUtils().getYesNo()) {
-      final claims = JWT.decode(PrefUtils().getToken());
-      int userId = int.parse(claims.payload[
-          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-      int farmerid = PrefUtils().getFarmerId();
       int farmid = PrefUtils().getFarmId();
 
       int selectedCount =

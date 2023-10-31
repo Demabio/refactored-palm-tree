@@ -2,7 +2,6 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 

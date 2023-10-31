@@ -1,5 +1,4 @@
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_four_dialog/add_farmtechandassets_four_dialog.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/add_farmtechandassets_three_dialog.dart';
@@ -158,6 +157,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addFarmtechandassetsOneModelObj
@@ -262,6 +263,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addFarmtechandassetsOneModelObj

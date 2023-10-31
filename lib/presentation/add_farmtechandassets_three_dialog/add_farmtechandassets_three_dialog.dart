@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
@@ -130,8 +129,7 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                         runSpacing: 10.v,
                         spacing: 10.h,
                         children: List<Widget>.generate(
-                          addRearedLivestockOneModelObj.searchResults.length ??
-                              0,
+                          addRearedLivestockOneModelObj.searchResults.length,
                           (index) {
                             ChipviewayItemModel model =
                                 addRearedLivestockOneModelObj
@@ -187,6 +185,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addFarmtechandassetsThreeModelObj?.selectedCategory,
@@ -234,6 +234,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addFarmtechandassetsThreeModelObj?.selected,
@@ -279,6 +281,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                         isRequired: true,
                       )) {
                         return "Field is Required";
+                      } else {
+                        return null;
                       }
                     },
                     hintStyle: CustomTextStyles.titleMediumBluegray40003,

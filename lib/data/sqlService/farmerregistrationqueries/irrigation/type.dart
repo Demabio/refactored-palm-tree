@@ -68,7 +68,7 @@ class FarmerIrrigationTypeDB {
           irrigationType.othersName,
           DateTime.now().toLocal().toIso8601String(),
           irrigationType.createdBy,
-          1,
+          0,
           irrigationType.createdBy,
         ]);
       }

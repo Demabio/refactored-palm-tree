@@ -1,5 +1,4 @@
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/irrigationprojetmodel.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/widgets/irrigation_widget.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';

@@ -240,16 +240,14 @@ class AddCropOneScreen extends StatelessWidget {
                                                     children:
                                                         List<Widget>.generate(
                                                       addCropOneModelObj
-                                                              ?.chipviewalbertItemList
-                                                              .length ??
-                                                          0,
+                                                          .chipviewalbertItemList
+                                                          .length,
                                                       (index) {
                                                         ChipviewalbertItemModel
                                                             model =
                                                             addCropOneModelObj
-                                                                        ?.chipviewalbertItemList[
-                                                                    index] ??
-                                                                ChipviewalbertItemModel();
+                                                                    .chipviewalbertItemList[
+                                                                index];
                                                         return ChipviewalbertItemWidget(
                                                             model,
                                                             onSelectedChipView:
@@ -280,7 +278,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                       (index) {
                                                         ChipviewalbertItemModel
                                                             model =
-                                                            addCropOneModelObj!
+                                                            addCropOneModelObj
                                                                         .searchValues?[
                                                                     index] ??
                                                                 ChipviewalbertItemModel();
@@ -329,6 +327,8 @@ class AddCropOneScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             items: addCropOneModelObj
@@ -358,6 +358,8 @@ class AddCropOneScreen extends StatelessWidget {
                                               if (!isNumeric(value,
                                                   isRequired: true)) {
                                                 return "Invalid Input";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             textInputType: TextInputType.number,
@@ -390,6 +392,8 @@ class AddCropOneScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: addCropOneModelObj
@@ -429,6 +433,8 @@ class AddCropOneScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: addCropOneModelObj

@@ -1,17 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:package_info/package_info.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:kiamis_app/data/sqlService/dataexporter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../data/sqlService/dbutils.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/login_screen/models/login_model.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
@@ -33,8 +28,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   final _repository = Repository();
-  final _dbutils = DBUtils();
-  final _export = DataExporter();
 
   var postLoginUserServicePostResp = PostLoginUserServicePostResp();
 

@@ -64,7 +64,7 @@ class FarmerFishCategoryDB {
           fishCategory.fishCategoryId,
           fishCategory.createdBy,
           DateTime.now().toLocal().toIso8601String(),
-          1,
+          0,
           fishCategory.enumeratorId,
         ]);
       }

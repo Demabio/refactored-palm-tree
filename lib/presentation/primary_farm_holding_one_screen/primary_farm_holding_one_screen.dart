@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
@@ -15,8 +14,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
+
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 // ignore_for_file: must_be_immutable
@@ -308,6 +306,8 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                           validator: (value) {
                                             if (value == null) {
                                               return "Field is required";
+                                            } else {
+                                              return null;
                                             }
                                           },
                                           val: primaryFarmHoldingOneModelObj

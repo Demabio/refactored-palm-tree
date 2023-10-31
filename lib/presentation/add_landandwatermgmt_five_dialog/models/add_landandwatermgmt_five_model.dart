@@ -2,7 +2,6 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 
 /// This class defines the variables used in the [add_landandwatermgmt_five_dialog],

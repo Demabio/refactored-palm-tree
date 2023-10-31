@@ -235,7 +235,7 @@ class FarmerRegistrationBloc
     int? livestockid =
         livestock != null ? livestock.last.farmerLivestockId : null;
 
-    int? cropid = crops != null ? crops?.last.farmerCropId : null;
+    int? cropid = crops != null ? crops.last.farmerCropId : null;
 
     LWProgress lwProgress = await getLWProgress() ??
         LWProgress(

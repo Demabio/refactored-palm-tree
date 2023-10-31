@@ -1,5 +1,3 @@
-import 'package:kiamis_app/presentation/otp_screen/bloc/otp_bloc.dart';
-
 import 'bloc/otp_one_bloc.dart';
 import 'models/otp_one_model.dart';
 import 'package:flutter/material.dart';

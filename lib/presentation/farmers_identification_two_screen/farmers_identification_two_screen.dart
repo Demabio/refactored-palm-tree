@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
@@ -307,7 +306,9 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                           validator: (value) {
                                                             if (value == null) {
                                                               return "Field is required";
-                                                            }
+                                                            } else {
+                                                return null;
+                                              }
                                                           },
                                                           contentPadding:
                                                               EdgeInsets.only(
@@ -364,7 +365,9 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                           validator: (value) {
                                                             if (value == null) {
                                                               return "Field is required";
-                                                            }
+                                                            } else {
+                                                return null;
+                                              }
                                                           },
                                                           items: farmersIdentificationTwoModelObj
                                                                   ?.dropdownItemList1 ??

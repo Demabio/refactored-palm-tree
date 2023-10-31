@@ -123,6 +123,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -163,6 +165,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -216,6 +220,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -256,6 +262,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -296,6 +304,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -341,6 +351,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj
@@ -381,6 +393,8 @@ class AddLiverstockinputScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addLiverstockinputModelObj

@@ -68,7 +68,7 @@ class FarmerLandPracticesDB {
           landPractice.quantity,
           landPractice.dateCreated?.toLocal().toIso8601String(),
           landPractice.createdBy,
-          1,
+          0,
           landPractice.createdBy,
         ]);
       }

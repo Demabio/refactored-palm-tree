@@ -1,9 +1,7 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/add_aquaculture_six_dialog.dart';
-import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import '../add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'bloc/add_aquaculture_two_bloc.dart';
@@ -15,7 +13,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 // ignore: must_be_immutable
@@ -227,6 +224,8 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addAquacultureTwoModelObj
@@ -267,6 +266,8 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                             validator: (value) {
                               if (value == null) {
                                 return "Field is required";
+                              } else {
+                                return null;
                               }
                             },
                             val: addAquacultureTwoModelObj

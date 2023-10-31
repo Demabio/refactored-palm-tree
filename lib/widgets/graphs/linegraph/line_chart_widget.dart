@@ -23,9 +23,7 @@ class LineChartWidget extends StatelessWidget {
       final x = dataTuple.item1.toDouble();
       final y = dataTuple.item2.toDouble();
 
-      if (x != null && y != null) {
-        flSpots.add(FlSpot(x, y));
-      }
+      flSpots.add(FlSpot(x, y));
     }
 
     return flSpots;

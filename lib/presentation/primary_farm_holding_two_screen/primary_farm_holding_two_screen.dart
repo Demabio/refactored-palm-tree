@@ -186,6 +186,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: primaryFarmHoldingTwoModelObj
@@ -229,6 +231,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: primaryFarmHoldingTwoModelObj
@@ -272,6 +276,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: primaryFarmHoldingTwoModelObj
@@ -461,6 +467,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: primaryFarmHoldingTwoModelObj
@@ -522,6 +530,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (value == null) {
                                                 return "Field is required";
+                                              } else {
+                                                return null;
                                               }
                                             },
                                             val: primaryFarmHoldingTwoModelObj

@@ -95,7 +95,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     List<FeedsModel> list = [];
     LivestockBeehiveTypeDB livestockAgeGroupDB = LivestockBeehiveTypeDB();
 
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(FeedsModel(
           title: value[i].beehiveType,
@@ -111,7 +111,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     LivestockFeedTypeDB livestockFeedTypeDB = LivestockFeedTypeDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockFeedTypeDB?.fetchAll().then((value) {
+    await livestockFeedTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(FeedsModel(
           title: value[i].feedType,
@@ -127,7 +127,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(AgeGroupModel(
           title: value[i].ageGroup,

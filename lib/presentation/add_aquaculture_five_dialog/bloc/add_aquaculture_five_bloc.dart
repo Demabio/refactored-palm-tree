@@ -154,7 +154,7 @@ class AddAquacultureFiveBloc
   Future<List<ChipviewayItemModel>> searchFish(String value) async {
     List<ChipviewayItemModel> list = [];
     FishTypeDB fishTypeDB = FishTypeDB();
-    await fishTypeDB?.searchFish(value).then((value) {
+    await fishTypeDB.searchFish(value).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(ChipviewayItemModel(
           fishid: value[i].fishTypeId,
@@ -170,7 +170,7 @@ class AddAquacultureFiveBloc
   Future<List<ChipviewayItemModel>> commonFish() async {
     List<ChipviewayItemModel> list = [];
     FishTypeDB fishTypeDB = FishTypeDB();
-    await fishTypeDB?.fetchCommonFish().then((value) {
+    await fishTypeDB.fetchCommonFish().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(ChipviewayItemModel(
           fishid: value[i].fishTypeId,
@@ -186,9 +186,8 @@ class AddAquacultureFiveBloc
   Future<List<SelectionPopupModel>> fetchFishCategories() async {
     List<SelectionPopupModel> list = [];
     FishCategoryDB fishCategoryDB = FishCategoryDB();
-    TextEditingController stored = TextEditingController();
 
-    await fishCategoryDB?.fetchAll().then((value) {
+    await fishCategoryDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].fishCategory,
@@ -202,9 +201,8 @@ class AddAquacultureFiveBloc
   Future<List<SelectionPopupModel>> fetchFish(int id) async {
     List<SelectionPopupModel> list = [];
     FishTypeDB fishCategoryDB = FishTypeDB();
-    TextEditingController stored = TextEditingController();
 
-    await fishCategoryDB?.fetchByCategoryId(id).then((value) {
+    await fishCategoryDB.fetchByCategoryId(id).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].fishType,
@@ -279,8 +277,6 @@ class AddAquacultureFiveBloc
   }
 
   Future<CheckBoxList?> _fish(FarmerFish agess) async {
-    CheckBoxList? agemodels;
-
     FishProductionTypeDB fishProductionTypeDB = FishProductionTypeDB();
     FishProductionType? fishProductionType;
 
@@ -323,7 +319,6 @@ class AddAquacultureFiveBloc
     TextEditingController a = TextEditingController();
     SelectionPopupModel? b;
     SelectionPopupModel? c;
-    SelectionPopupModel? d;
 
     if (edit != 0) {
       FarmerFish? asset = await getFishes(edit);

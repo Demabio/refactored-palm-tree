@@ -73,7 +73,7 @@ class PieChartSample3State extends State<PieChartSample3> {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;
       final radius = isTouched ? 110.0 * 1.5 : 100.0 * 1.5;
-      final widgetSize = isTouched ? 55.0 * 1.5 : 40.0 * 1.5;
+      // final widgetSize = isTouched ? 55.0 * 1.5 : 40.0 * 1.5;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
 
       switch (i) {

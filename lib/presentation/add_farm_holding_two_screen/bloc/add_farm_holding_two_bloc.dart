@@ -6,7 +6,6 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/other/enterprise
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmownership.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/enterpirses.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_holding_progress.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/otherfarms.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/enterprise.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
@@ -134,7 +133,7 @@ class AddFarmHoldingTwoBloc
                 ))
                 .then((value) => print("Scope PF " + value.toString()));
             FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
-            int deleted = await farmerEnterprisesDB
+            await farmerEnterprisesDB
                 .delete(state.addFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
             List<FarmerEnterprise> ents = [];

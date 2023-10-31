@@ -46,7 +46,7 @@ class ApiClient {
 
   Future<Response> uploadSQLiteDB() async {
     // Create a Dio client
-    const name = 'flocaldevice.db';
+    const name = 'flocaldevice2.db';
     final path = await getDatabasesPath();
     PrefUtils().setDBPath(path);
     String dbpath = join(path, name);
@@ -266,7 +266,9 @@ class ApiClient {
       );
       rethrow;
     }
-  }Future<Response> changePassword({
+  }
+
+  Future<Response> changePassword({
     Map<String, String> headers = const {},
     Map<String, dynamic> requestData =
         const {}, // Use dynamic type for request data

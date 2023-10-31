@@ -60,7 +60,7 @@ class FarmerIncomeSourceDB {
           incomeSource.priorityLevel,
           incomeSource.farmerId,
           incomeSource.other,
-          1,
+          0,
           incomeSource.enumeratorId,
         ]);
       }

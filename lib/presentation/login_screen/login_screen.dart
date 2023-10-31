@@ -288,7 +288,7 @@ class LoginScreen extends StatelessWidget {
         context: context,
         builder: (_) => AlertDialog(
               title: const Text('Failed Login'),
-              content: Text(PrefUtils().getResponse()),
+              content: Text("Invalid Credentials"),
               actions: [
                 TextButton(
                     onPressed: () {

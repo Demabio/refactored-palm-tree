@@ -71,7 +71,7 @@ class FarmerIrrigationCategoryDB {
           irrigationCategory.membershipTypeId,
           DateTime.now().toLocal().toIso8601String(),
           irrigationCategory.createdBy,
-          1,
+          0,
           irrigationCategory.createdBy,
         ]);
       }

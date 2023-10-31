@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
@@ -62,7 +60,7 @@ class TechtemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.title ?? "N/A",
+                  enterpriseModel.title,
                   style: theme.textTheme.labelMedium,
                   textAlign: TextAlign.left,
                 ),

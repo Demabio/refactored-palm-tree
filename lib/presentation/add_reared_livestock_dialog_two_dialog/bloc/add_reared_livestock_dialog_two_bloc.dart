@@ -46,7 +46,7 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(AgeGroupModel(
           title: value[i].ageGroup,
@@ -100,12 +100,6 @@ class AddRearedLivestockDialogTwoBloc extends Bloc<
     // Convert the list of maps to a JSON string
     String jsonString = jsonEncode(ageGroupMapList);
     PrefUtils().setAgeGroups(jsonString);
-
-    List<dynamic> decageGroupMapList = jsonDecode(jsonString);
-
-    // Create a list of AgeGroupModel objects from the list of dynamic objects
-    List<AgeGroupModel> ageGroupList =
-        decageGroupMapList.map((json) => AgeGroupModel.fromJson(json)).toList();
 
     emit(state.copyWith(
         addRearedLivestockDialogTwoModelObj:

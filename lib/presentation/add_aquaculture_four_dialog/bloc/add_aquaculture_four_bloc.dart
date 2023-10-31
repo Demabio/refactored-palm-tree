@@ -84,15 +84,6 @@ class AddAquacultureFourBloc
   }
 
   Future<CheckBoxList?> _assets(FarmerFishProductionSystem agess) async {
-    CheckBoxList? agemodels;
-    // agemodels?.isSelected = true;
-    // agemodels?.var1 = agess.noOfActiveUnits.toString();
-    // agemodels?.var2 = agess.activeArea.toString();
-    // agemodels?.var3 = agess.noOfInactiveUnits.toString();
-    // agemodels?.var4 = agess.inactiveArea.toString();
-
-    // agemodels?.id = ages.productionTypeId;
-
     return CheckBoxList(
       id: agess.productionTypeId,
       var1: agess.noOfActiveUnits.toString(),
@@ -109,7 +100,6 @@ class AddAquacultureFourBloc
   ) async {
     FarmerFishProductionSystemDB farmerFishProductionSystemDB =
         FarmerFishProductionSystemDB();
-    List<FarmerFishProductionSystem>? categs = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);

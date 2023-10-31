@@ -176,7 +176,7 @@ class LandandwatermgmtBloc
     IrrigationAgencyDB livestockAgeGroupDB = IrrigationAgencyDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].agencyName,

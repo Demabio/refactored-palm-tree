@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/theme/theme_helper.dart';
 import 'package:tuple/tuple.dart';
 
-import '../../../theme/barcolors.dart';
-
 // ignore: must_be_immutable
 class PieChartSample2 extends StatefulWidget {
   Tuple2<int?, int?>? tdata;
@@ -109,7 +107,7 @@ class PieChart2State extends State<PieChartSample2> {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+      // const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
       switch (i) {
         case 0:
           return PieChartSectionData(

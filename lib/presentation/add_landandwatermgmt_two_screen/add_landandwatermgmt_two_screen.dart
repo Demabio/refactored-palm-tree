@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';

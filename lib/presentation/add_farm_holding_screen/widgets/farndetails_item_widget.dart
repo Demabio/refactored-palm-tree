@@ -142,11 +142,9 @@ class FarmdetailsItemWidget extends StatelessWidget {
           SizedBox(height: 15.v),
           Column(
             children: List<Widget>.generate(
-              farmdetailsItemModel.enterprises.length ?? 0,
+              farmdetailsItemModel.enterprises.length,
               (index) {
-                EnterpriseModel model =
-                    farmdetailsItemModel?.enterprises[index] ??
-                        EnterpriseModel();
+                EnterpriseModel model = farmdetailsItemModel.enterprises[index];
 
                 return EnterprisesItemWidget(
                   model,

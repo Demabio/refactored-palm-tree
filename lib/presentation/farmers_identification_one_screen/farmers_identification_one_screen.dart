@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
@@ -12,7 +11,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_floating_text_field.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 // ignore_for_file: must_be_immutable

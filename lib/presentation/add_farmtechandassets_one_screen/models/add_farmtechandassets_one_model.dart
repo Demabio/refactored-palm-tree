@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
-import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 

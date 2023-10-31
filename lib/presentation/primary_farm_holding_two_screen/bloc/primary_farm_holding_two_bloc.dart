@@ -3,8 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
-import 'package:kiamis_app/data/mapservices/locations_repository.dart';
-import 'package:kiamis_app/data/models/dbModels/other/enterpirses.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/enterprise.dart';
@@ -14,7 +12,6 @@ import 'package:kiamis_app/data/sqlService/dbqueries/processes/primary_farm_hold
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/enterprise.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
-import 'package:latlng/latlng.dart';
 import '/core/app_export.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -322,7 +319,7 @@ class PrimaryFarmHoldingTwoBloc
                 ))
                 .then((value) => print("Scope PF " + value.toString()));
             FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
-            int deleted = await farmerEnterprisesDB.delete(
+            await farmerEnterprisesDB.delete(
                 state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
             List<FarmerEnterprise> ents = [];
@@ -414,7 +411,7 @@ class PrimaryFarmHoldingTwoBloc
                 ))
                 .then((value) => print("Scope PF " + value.toString()));
             FarmerEnterprisesDB farmerEnterprisesDB = FarmerEnterprisesDB();
-            int deleted = await farmerEnterprisesDB.delete(
+            await farmerEnterprisesDB.delete(
                 state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
             List<FarmerEnterprise> ents = [];

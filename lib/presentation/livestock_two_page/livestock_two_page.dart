@@ -1,3 +1,5 @@
+// ignore_for_file: must_call_super
+
 import 'bloc/livestock_two_bloc.dart';
 import 'models/livestock_two_model.dart';
 import 'package:flutter/material.dart';
@@ -169,9 +171,8 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                       ),
                                       Text(
                                         (state.livestockTwoModelObj!
-                                                        .livestockins?.aiUse ==
-                                                    1 ??
-                                                false)
+                                                    .livestockins?.aiUse ==
+                                                1)
                                             ? "Yes"
                                             : "No",
                                         style: theme.textTheme.labelMedium,

@@ -1,4 +1,3 @@
-import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
@@ -19,7 +18,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_icon_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 
 class AddAquacultureOneScreen extends StatelessWidget {

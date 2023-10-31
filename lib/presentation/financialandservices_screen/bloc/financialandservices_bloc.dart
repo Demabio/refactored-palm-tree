@@ -80,19 +80,19 @@ class FinancialandservicesBloc
     List<CheckBoxList>? modemodels = await fetchEService();
     List<FarmerCooperativeGroup>? groups = await getCoops();
     if (groups != null) {
-      coopmodels = _coops(coopmodels, groups!);
+      coopmodels = _coops(coopmodels, groups);
     }
     List<FarmerIncomeSource>? incomes = await getIncomes();
     if (incomes != null) {
-      incomemodels = _incomes(incomemodels, incomes!);
+      incomemodels = _incomes(incomemodels, incomes);
     }
     List<FarmerCreditService>? categs = await getCredits();
     if (categs != null) {
-      creditmodels = _credits(creditmodels, categs!);
+      creditmodels = _credits(creditmodels, categs);
     }
     List<FarmerAgriInfoSource>? info = await getInfo();
     if (info != null) {
-      infomodels = _infos(infomodels, info!);
+      infomodels = _infos(infomodels, info);
     }
 
     if (pfProgress.pageTwo == 1) {
@@ -155,7 +155,7 @@ class FinancialandservicesBloc
     ];
 
     CooperativeGroupDB livestockAgeGroupDB = CooperativeGroupDB();
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].group,

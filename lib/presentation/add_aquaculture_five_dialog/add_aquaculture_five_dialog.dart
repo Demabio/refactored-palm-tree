@@ -129,13 +129,11 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                             runSpacing: 10.v,
                             spacing: 10.h,
                             children: List<Widget>.generate(
-                              addRearedLivestockOneModelObj?.commons.length ??
-                                  0,
+                              addRearedLivestockOneModelObj.commons.length,
                               (index) {
                                 ChipviewayItemModel model =
                                     addRearedLivestockOneModelObj
-                                            ?.commons[index] ??
-                                        ChipviewayItemModel();
+                                        .commons[index];
 
                                 return ChipviewayItemWidget(
                                   model,
@@ -155,13 +153,11 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                             spacing: 10.h,
                             children: List<Widget>.generate(
                               addRearedLivestockOneModelObj
-                                      .searchResults?.length ??
-                                  0,
+                                  .searchResults.length,
                               (index) {
                                 ChipviewayItemModel model =
                                     addRearedLivestockOneModelObj
-                                            .searchResults?[index] ??
-                                        ChipviewayItemModel();
+                                        .searchResults[index];
 
                                 return ChipviewayItemWidget(
                                   model,
@@ -210,6 +206,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addAquacultureFiveModelObj?.selectedCategory,
@@ -255,6 +253,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addAquacultureFiveModelObj?.selectedFish,
@@ -300,6 +300,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
+                      } else {
+                        return null;
                       }
                     },
                     val: addAquacultureFiveModelObj?.selectedDropDownValue2,

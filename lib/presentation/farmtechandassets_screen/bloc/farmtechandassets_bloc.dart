@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/farm/farmassetsource.dart';
 import 'package:kiamis_app/data/models/dbModels/farm/farmassettypes.dart';
-import 'package:kiamis_app/data/models/dbModels/farm/farmstructures.dart';
 import 'package:kiamis_app/data/models/dbModels/other/laboursource.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
@@ -65,8 +64,6 @@ class FarmtechandassetsBloc
     FarmAssetSource? assetSource;
     LabourSource? labour;
 
-    SelectionPopupModel? aa;
-    SelectionPopupModel? bb;
     List<CheckBoxList>? atypes = await fetchPowerSources();
     List<CheckBoxList>? assets = await fillAssets();
     List<CheckBoxList>? strucs = await fetchFarmStructure();
