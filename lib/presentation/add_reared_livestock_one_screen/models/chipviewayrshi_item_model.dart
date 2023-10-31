@@ -12,7 +12,7 @@ class ChipviewayrshiItemModel extends Equatable {
     this.subcategoryid,
     this.livestockCat,
     this.livestockSubCat,
-  }) {}
+  });
 
   String ayrshi;
 

@@ -24,7 +24,7 @@ class FarmersIdentificationThreeModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

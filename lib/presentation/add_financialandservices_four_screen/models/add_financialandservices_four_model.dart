@@ -13,7 +13,7 @@ class AddFinancialandservicesFourModel extends Equatable {
     this.ageGroupmModels = const [],
     this.count = 0,
     this.fsProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
   FSProgress? fsProgress;

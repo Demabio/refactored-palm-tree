@@ -9,7 +9,7 @@ class AddRearedLivestockDialogOneModel extends Equatable {
   AddRearedLivestockDialogOneModel({
     this.models = const [],
     this.count = 0,
-  }) {}
+  });
 
   List<FeedsModel> models;
 

@@ -8,7 +8,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livest
 class LivestockTwoModel extends Equatable {
   LivestockTwoModel({
     this.livestockins,
-  }) {}
+  });
   FarmerLivestockService? livestockins;
 
   LivestockTwoModel copyWith({

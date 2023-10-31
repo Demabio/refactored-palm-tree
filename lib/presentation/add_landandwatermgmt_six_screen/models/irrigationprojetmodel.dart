@@ -19,7 +19,7 @@ class IrrigationProjectModel extends Equatable {
     this.focusNode,
     this.femalefocusNode,
     this.model = const [],
-  }) {}
+  });
 
   String title;
 

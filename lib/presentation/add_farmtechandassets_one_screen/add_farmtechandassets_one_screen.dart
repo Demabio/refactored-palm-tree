@@ -352,9 +352,9 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
     );
   }
 
-  _success(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmtechandassetsScreen);
-  }
+  // _success(BuildContext context) {
+  //   NavigatorService.popAndPushNamed(AppRoutes.farmtechandassetsScreen);
+  // }
 
   void _failed(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -9,7 +9,7 @@ import 'farm_item_model.dart';
 class AddFarmHoldingModel extends Equatable {
   AddFarmHoldingModel({
     this.farms = const [],
-  }) {}
+  });
   List<FarmdetailsItemModel> farms;
 
   AddFarmHoldingModel copyWith({

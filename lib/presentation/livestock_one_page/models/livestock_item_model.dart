@@ -25,7 +25,7 @@ class LSdetailsItemModel {
     this.ages = const [],
     this.bees = const [],
     this.beekeepr = false,
-  }) {}
+  });
 
   String? prod;
 

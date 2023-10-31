@@ -27,7 +27,7 @@ class AddLiverstockinputModel extends Equatable {
     this.selectedDropDownValue5,
     this.selectedDropDownValue6,
     this.selectedDropDownValue7,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

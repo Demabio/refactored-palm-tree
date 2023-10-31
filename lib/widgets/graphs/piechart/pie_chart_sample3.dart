@@ -20,7 +20,6 @@ class PieChartSample3State extends State<PieChartSample3> {
   int touchedIndex = 0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     verified = widget.data?.item1?.toDouble() ?? 0;
     unverified = widget.data?.item2?.toDouble() ?? 0;
@@ -124,6 +123,7 @@ class PieChartSample3State extends State<PieChartSample3> {
   }
 }
 
+// ignore: unused_element
 class _Badge extends StatelessWidget {
   const _Badge(
     this.svgAsset, {

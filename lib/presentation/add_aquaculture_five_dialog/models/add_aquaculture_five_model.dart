@@ -19,7 +19,7 @@ class AddAquacultureFiveModel extends Equatable {
     this.search = false,
     this.aqProgress,
     this.selectedDropDownValue2,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

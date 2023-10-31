@@ -18,7 +18,7 @@ class AddFinancialandservicesOneModel extends Equatable {
     this.page4 = StepState.indexed,
     this.fsProgress,
     this.selectedDropDownValue,
-  }) {}
+  });
   int stepped;
   int stepped2;
 

@@ -143,8 +143,8 @@ class FarmerCropsDB {
           farmerCrop.waterSourceId,
           farmerCrop.usageOfCertifiedSeeds == true ? 1 : 0,
           farmerCrop.cropSystemId,
-          farmerCrop.fertilizerUse == true ? 1 : 0,
-          farmerCrop.pesticideUse == true ? 1 : 0,
+          farmerCrop.fertilizerUse == 1 ? 1 : 0,
+          farmerCrop.pesticideUse == 1 ? 1 : 0,
           farmerCrop.dateCreated?.toLocal().toIso8601String(),
           farmerCrop.createdBy,
         ]);

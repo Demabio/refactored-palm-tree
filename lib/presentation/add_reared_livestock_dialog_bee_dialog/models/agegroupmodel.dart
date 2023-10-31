@@ -19,7 +19,7 @@ class AgeGroupModel extends Equatable {
     this.males,
     this.focusNode,
     this.femalefocusNode,
-  }) {}
+  });
 
   String title;
 

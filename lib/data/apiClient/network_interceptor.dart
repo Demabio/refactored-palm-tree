@@ -22,6 +22,7 @@ class NetworkInterceptor extends Interceptor {
 
   @override
   void onError(
+    // ignore: deprecated_member_use
     DioError err,
     ErrorInterceptorHandler handler,
   ) {

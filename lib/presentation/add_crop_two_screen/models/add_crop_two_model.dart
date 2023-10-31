@@ -28,7 +28,7 @@ class AddCropTwoModel extends Equatable {
     this.selectedDropDownValue3,
     this.selectedDropDownValue4,
     this.stepped2 = 0,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

@@ -26,7 +26,7 @@ class CheckBoxList extends Equatable {
     this.var6,
     this.model = const [],
     this.drop,
-  }) {}
+  });
 
   String title;
 

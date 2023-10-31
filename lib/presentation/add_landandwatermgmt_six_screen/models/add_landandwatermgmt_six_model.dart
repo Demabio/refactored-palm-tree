@@ -14,7 +14,7 @@ class AddLandandwatermgmtSixModel extends Equatable {
     this.ageGroupmModels = const [],
     this.count = 0,
     this.lwProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

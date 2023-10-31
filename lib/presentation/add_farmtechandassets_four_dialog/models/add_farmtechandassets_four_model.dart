@@ -11,7 +11,7 @@ class AddFarmtechandassetsFourModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.atProgress,
-  }) {}
+  });
   List<CheckBoxList> models;
 
   ATProgress? atProgress;

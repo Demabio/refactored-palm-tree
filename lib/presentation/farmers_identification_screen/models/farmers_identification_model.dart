@@ -11,7 +11,7 @@ class FarmersIdentificationModel extends Equatable {
     this.ed,
     this.marital,
     this.rship,
-  }) {}
+  });
   Farmer? farmer;
   String? marital;
   String? rship;

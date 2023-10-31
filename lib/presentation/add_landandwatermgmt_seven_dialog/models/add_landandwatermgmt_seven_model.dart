@@ -11,7 +11,7 @@ class AddLandandwatermgmtSevenModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.lwProgress,
-  }) {}
+  });
   List<CheckBoxList> models;
 
   int count;

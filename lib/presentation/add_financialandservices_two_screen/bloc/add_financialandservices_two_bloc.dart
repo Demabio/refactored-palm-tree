@@ -75,7 +75,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         );
     List<CheckBoxList>? accessmodels = await fetchEAccess();
     List<CheckBoxList>? modemodels = await fetchEService();
-    List<SelectionPopupModel>? a = await fillDropdownItemList();
+    List<SelectionPopupModel>? a = fillDropdownItemList();
     SelectionPopupModel? aa;
     SelectionPopupModel? bb;
     SelectionPopupModel? cc;

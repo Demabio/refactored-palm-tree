@@ -28,7 +28,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
     this.selectedDropDownValue4,
     this.selectedDropDownValue5,
     this.fsProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

@@ -9,7 +9,7 @@ class AddRearedLivestockDialogBeeModel extends Equatable {
   AddRearedLivestockDialogBeeModel({
     this.ageGroupmModels = const [],
     this.count = 0,
-  }) {}
+  });
 
   List<FeedsModel> ageGroupmModels;
 

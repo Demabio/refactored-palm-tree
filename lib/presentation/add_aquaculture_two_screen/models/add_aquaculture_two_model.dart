@@ -22,7 +22,7 @@ class AddAquacultureTwoModel extends Equatable {
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
     this.aqProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

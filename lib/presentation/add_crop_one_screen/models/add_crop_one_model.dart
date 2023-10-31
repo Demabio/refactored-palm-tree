@@ -29,7 +29,7 @@ class AddCropOneModel extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.stepped2 = 0,
-  }) {}
+  });
 
   List<ChipviewalbertItemModel> chipviewalbertItemList;
 

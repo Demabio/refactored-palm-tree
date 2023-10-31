@@ -26,7 +26,7 @@ class AddFarmHoldingTwoModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.enterprisesF = false,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

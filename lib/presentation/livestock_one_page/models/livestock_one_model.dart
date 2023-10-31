@@ -9,7 +9,7 @@ import 'livestock_item_model.dart';
 class LivestockOneModel extends Equatable {
   LivestockOneModel({
     this.lsmodels = const [],
-  }) {}
+  });
   List<LSdetailsItemModel> lsmodels;
   LivestockOneModel copyWith({
     List<LSdetailsItemModel>? lsmodels,

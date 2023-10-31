@@ -12,7 +12,7 @@ class ChipviewayItemModel extends Equatable {
     this.subcategoryid,
     this.fishCat,
     this.livestockSubCat,
-  }) {}
+  });
 
   String fish;
 

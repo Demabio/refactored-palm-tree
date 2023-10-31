@@ -17,7 +17,7 @@ class AddAquacultureFourModel extends Equatable {
     this.dropdownItemList4 = const [],
     this.dropdownItemList5 = const [],
     this.aqProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

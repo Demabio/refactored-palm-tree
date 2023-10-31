@@ -106,6 +106,7 @@ class CustomImageView extends StatelessWidget {
           height: height,
           width: width,
           fit: fit ?? BoxFit.contain,
+          // ignore: deprecated_member_use
           color: color,
         ),
       );

@@ -22,7 +22,7 @@ class AddLandandwatermgmtOneModel extends Equatable {
     this.page3 = StepState.indexed,
     this.page4 = StepState.indexed,
     this.lwProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

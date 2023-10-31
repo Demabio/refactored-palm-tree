@@ -17,7 +17,7 @@ class FarmersIdentificationOneModel extends Equatable {
     this.page4 = StepState.indexed,
     this.fiProgress,
     this.farmer,
-  }) {}
+  });
 
   int stepped;
   int stepped2;

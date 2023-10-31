@@ -17,7 +17,7 @@ class EnterpriseModel extends Equatable {
     this.male,
     this.focusNode,
     this.femalefocusNode,
-  }) {}
+  });
 
   String title;
 

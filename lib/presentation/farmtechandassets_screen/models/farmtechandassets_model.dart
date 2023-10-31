@@ -8,7 +8,7 @@ import 'package:kiamis_app/data/models/dbModels/processes/assets_tech_progress.d
 class FarmtechandassetsModel extends Equatable {
   FarmtechandassetsModel({
     this.atProgress,
-  }) {}
+  });
   ATProgress? atProgress;
 
   FarmtechandassetsModel copyWith({

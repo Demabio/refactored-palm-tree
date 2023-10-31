@@ -20,7 +20,7 @@ class AddLandandwatermgmtTwoModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.lwProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

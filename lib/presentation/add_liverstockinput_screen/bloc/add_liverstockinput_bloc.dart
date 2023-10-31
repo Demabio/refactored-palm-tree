@@ -46,12 +46,12 @@ class AddLiverstockinputBloc
     List<SelectionPopupModel>? dropdownItemList = fillDropdownItemList1();
     SelectionPopupModel? selectedDropDownValue1;
 
-    SelectionPopupModel? selectedDropDownValue2 = null;
-    SelectionPopupModel? selectedDropDownValue3 = null;
-    SelectionPopupModel? selectedDropDownValue4 = null;
-    SelectionPopupModel? selectedDropDownValue5 = null;
-    SelectionPopupModel? selectedDropDownValue6 = null;
-    SelectionPopupModel? selectedDropDownValue7 = null;
+    SelectionPopupModel? selectedDropDownValue2;
+    SelectionPopupModel? selectedDropDownValue3;
+    SelectionPopupModel? selectedDropDownValue4;
+    SelectionPopupModel? selectedDropDownValue5;
+    SelectionPopupModel? selectedDropDownValue6;
+    SelectionPopupModel? selectedDropDownValue7;
 
     if (pfProgress.pageTwo == 1 && livestock.farmerLivestockServicesId != 0) {
       selectedDropDownValue1 = dropdownItemList.firstWhere(

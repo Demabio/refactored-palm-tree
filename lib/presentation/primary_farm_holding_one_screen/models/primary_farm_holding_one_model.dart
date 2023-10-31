@@ -20,7 +20,7 @@ class PrimaryFarmHoldingOneModel extends Equatable {
     this.pfProgress,
     this.stepped2 = 0,
     this.selectedDropDownValue,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

@@ -162,6 +162,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
       onStepCancel: () {
         canCancel
             ? context.read<FarmerRegistrationBloc>().add(StepDownEvent())
+            // ignore: unnecessary_statements
             : null;
       },
       onStepContinue: () => _continueButton(model, context),

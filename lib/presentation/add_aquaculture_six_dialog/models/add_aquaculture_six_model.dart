@@ -11,7 +11,7 @@ class AddAquacultureSixModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.aqProgress,
-  }) {}
+  });
   List<CheckBoxList> models;
 
   int count;

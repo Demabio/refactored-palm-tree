@@ -22,7 +22,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(HomeState initialState) : super(initialState) {
     on<HomeInitialEvent>(_onInitialize);
-    on<DBCheckEvent>(_TcheckDBExists);
+    on<DBCheckEvent>(_tcheckDBExists);
     on<FarmerSearchEvent>(_searchFarmer);
     on<LoadGraphs>(_loadgraphs);
   }
@@ -116,7 +116,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(bardata: bdata));
   }
 
-  Future<void> _TcheckDBExists(
+  Future<void> _tcheckDBExists(
     DBCheckEvent event,
     Emitter<HomeState> emit,
   ) async {

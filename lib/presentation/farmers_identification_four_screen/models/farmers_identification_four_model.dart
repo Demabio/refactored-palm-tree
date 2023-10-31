@@ -29,7 +29,7 @@ class FarmersIdentificationFourModel extends Equatable {
     this.selectedDropDownValue2,
     this.selectedDropDownValue3,
     this.selectedDropDownValue4,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

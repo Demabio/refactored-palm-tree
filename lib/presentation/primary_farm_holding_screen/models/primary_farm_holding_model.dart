@@ -14,7 +14,7 @@ class PrimaryFarmHoldingModel extends Equatable {
     this.enterprises = const [],
     this.area,
     this.owner,
-  }) {}
+  });
   FarmerFarm? farm;
 
   PFProgress? pfProgress;

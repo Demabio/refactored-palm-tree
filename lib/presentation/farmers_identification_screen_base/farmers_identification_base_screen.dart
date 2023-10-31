@@ -130,7 +130,6 @@ class _FarmersIdentificationScreenBaseState
     StepState state = StepState.indexed,
     bool isActive = false,
     VoidCallback? addcallback,
-    VoidCallback? editcallback,
     required Widget screen,
   }) {
     return Step(

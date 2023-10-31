@@ -13,7 +13,7 @@ class AddFarmtechandassetsOneModel extends Equatable {
     this.atProgress,
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
 

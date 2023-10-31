@@ -33,7 +33,7 @@ class FarmerRegistrationModel extends Equatable {
     this.fish = StepState.indexed,
     this.fid = StepState.indexed,
     this.fsv = StepState.indexed,
-  }) {}
+  });
 
   ProcessStatus? processStatus;
 

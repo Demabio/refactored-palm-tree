@@ -13,7 +13,7 @@ class AddFinancialandservicesFiveModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.fsProgress,
-  }) {}
+  });
 
   List<SelectionPopupModel> dropdownItemList;
   List<CheckBoxList> models;

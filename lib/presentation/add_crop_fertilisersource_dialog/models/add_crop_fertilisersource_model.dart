@@ -11,7 +11,7 @@ class AddCropFertiliserSourceModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.caProgressDB,
-  }) {}
+  });
   List<CheckBoxList> models;
 
   int count;

@@ -5,7 +5,6 @@ import 'package:kiamis_app/presentation/login_screen/login_screen.dart';
 import 'package:kiamis_app/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:kiamis_app/presentation/new_password_screen/new_password_screen.dart';
 import 'package:kiamis_app/presentation/otp_one_screen/otp_one_screen.dart';
-import 'package:kiamis_app/presentation/recover_account_screen/recover_account_screen.dart';
 import 'package:kiamis_app/presentation/home_screen/home_screen.dart';
 import 'package:kiamis_app/presentation/settings_screen/settings_screen.dart';
 import 'package:kiamis_app/presentation/search_farmer_found_screen/search_farmer_found_screen.dart';
@@ -47,17 +46,11 @@ import 'package:kiamis_app/presentation/add_financialandservices_one_screen/add_
 import 'package:kiamis_app/presentation/add_financialandservices_two_screen/add_financialandservices_two_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/add_financialandservices_four_screen.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_five_screen/add_financialandservices_five_screen.dart';
-import 'package:kiamis_app/presentation/product_page_screen/product_page_screen.dart';
 import 'package:kiamis_app/presentation/splash1_screen/splash1_screen.dart';
 import 'package:kiamis_app/presentation/login_one_screen/login_one_screen.dart';
-import 'package:kiamis_app/presentation/product_search_screen/product_search_screen.dart';
-import 'package:kiamis_app/presentation/product_discover_screen/product_discover_screen.dart';
 import 'package:kiamis_app/presentation/farmer_registration_one_screen/farmer_registration_one_screen.dart';
 import 'package:kiamis_app/presentation/login1_screen/login1_screen.dart';
-import 'package:kiamis_app/presentation/history_screen/history_screen.dart';
-import 'package:kiamis_app/presentation/transfer_request_screen/transfer_request_screen.dart';
 import 'package:kiamis_app/presentation/confirmation_screen/confirmation_screen.dart';
-import 'package:kiamis_app/presentation/transfer_amount_screen/transfer_amount_screen.dart';
 import 'package:kiamis_app/presentation/settings_one_screen/settings_one_screen.dart';
 import 'package:kiamis_app/presentation/accounts_screen/accounts_screen.dart';
 import 'package:kiamis_app/presentation/app_navigation_screen/app_navigation_screen.dart';
@@ -247,7 +240,6 @@ class AppRoutes {
         forgotPasswordScreen: ForgotPasswordScreen.builder,
         newPasswordScreen: NewPasswordScreen.builder,
         otpOneScreen: OtpOneScreen.builder,
-        recoverAccountScreen: RecoverAccountScreen.builder,
         homeScreen: HomeScreen.builder,
         settingsScreen: SettingsScreen.builder,
         searchFarmerFoundScreen: SearchFarmerFoundScreen.builder,
@@ -295,17 +287,11 @@ class AppRoutes {
             AddFinancialandservicesFourScreen.builder,
         addFinancialandservicesFiveScreen:
             AddFinancialandservicesFiveScreen.builder,
-        productPageScreen: ProductPageScreen.builder,
         splash1Screen: Splash1Screen.builder,
         loginOneScreen: LoginOneScreen.builder,
-        productSearchScreen: ProductSearchScreen.builder,
-        productDiscoverScreen: ProductDiscoverScreen.builder,
         farmerRegistrationOneScreen: FarmerRegistrationOneScreen.builder,
         login1Screen: Login1Screen.builder,
-        historyScreen: HistoryScreen.builder,
-        transferRequestScreen: TransferRequestScreen.builder,
         confirmationScreen: ConfirmationScreen.builder,
-        transferAmountScreen: TransferAmountScreen.builder,
         settingsOneScreen: SettingsOneScreen.builder,
         accountsScreen: AccountsScreen.builder,
         appNavigationScreen: AppNavigationScreen.builder,

@@ -9,7 +9,7 @@ class ChipviewalbertItemModel extends Equatable {
     this.isSelected = false,
     this.cropId,
     this.search = false,
-  }) {}
+  });
 
   String albertcrop;
 

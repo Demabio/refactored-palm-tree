@@ -11,7 +11,7 @@ class AddFinancialandservicesThreeModel extends Equatable {
     this.models = const [],
     this.count = 0,
     this.fsProgress,
-  }) {}
+  });
   List<CheckBoxList> models;
   FSProgress? fsProgress;
 

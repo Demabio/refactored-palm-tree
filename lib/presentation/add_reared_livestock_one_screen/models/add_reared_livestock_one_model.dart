@@ -34,7 +34,7 @@ class AddRearedLivestockOneModel extends Equatable {
     this.lsProgress,
     this.system,
     this.selectedDropDownValue1,
-  }) {}
+  });
 
   TextEditingController? searchController;
 

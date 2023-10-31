@@ -14,8 +14,8 @@ class FdetailsItemModel {
     this.x,
     this.y,
     this.owner,
-    this.completed =false,
-  }) {}
+    this.completed = false,
+  });
 
   String? prod;
 

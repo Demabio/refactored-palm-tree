@@ -19,7 +19,6 @@ class PieChartSample2 extends StatefulWidget {
 class PieChart2State extends State<PieChartSample2> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     verified = widget.tdata?.item1?.toDouble() ?? 0;
     unverified = widget.tdata?.item2?.toDouble() ?? 0;
@@ -58,7 +57,7 @@ class PieChart2State extends State<PieChartSample2> {
                 children: [
                   Center(
                     child: Text(
-                      "${percentage}%",
+                      "$percentage%",
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,

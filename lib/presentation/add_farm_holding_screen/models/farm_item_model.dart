@@ -20,7 +20,7 @@ class FarmdetailsItemModel {
     this.y,
     this.owner,
     this.enterprises = const [],
-  }) {}
+  });
 
   String? totalAcreage;
 
