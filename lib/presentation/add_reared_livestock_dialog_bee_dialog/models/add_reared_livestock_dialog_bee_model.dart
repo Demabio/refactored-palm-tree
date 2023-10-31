@@ -2,7 +2,6 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
-import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 
 /// This class defines the variables used in the [add_reared_livestock_dialog_two_dialog],
 /// and is typically used to hold data that is passed between different parts of the application.

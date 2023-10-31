@@ -42,7 +42,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
 
   FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
-  FocusNode _thirdTextFieldFocus = FocusNode();
+  // FocusNode _thirdTextFieldFocus = FocusNode();
   FocusNode fouthTextFieldFocus = FocusNode();
   FocusNode fifthTextFieldFocus = FocusNode();
   FocusNode sixthTextFieldFocus = FocusNode();

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishcategory.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
 import '/core/app_export.dart';
@@ -60,9 +57,7 @@ class AddAquacultureThreeBloc
   Future<List<CheckBoxList>> fetchFeeds() async {
     List<CheckBoxList> list = [];
     FishCategoryDB fishCategoryDB = FishCategoryDB();
-    TextEditingController stored = TextEditingController();
-
-    await fishCategoryDB?.fetchAll().then((value) {
+    await fishCategoryDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].fishCategory,
@@ -127,12 +122,22 @@ class AddAquacultureThreeBloc
   ) {
     FarmerFishCategoryDB farmerFishCategoryDB = FarmerFishCategoryDB();
     List<FarmerFishCategory>? categs = [];
+    List<FarmerFishCategory>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerFishCategory(
+              farmerFishCategoryId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              fishCategoryId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerFishCategory(
@@ -146,17 +151,18 @@ class AddAquacultureThreeBloc
         }
       }
       if (state.addAquacultureThreeModelObj!.aqProgress?.pageOne == 0) {
-        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishCategoryDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishCategoryDB.insertFishCategories(categs).then((value) {
+        farmerFishCategoryDB.insertFishCategories(notit).then((value) {
           print("inserted: $value");
         });
       }
+
+      farmerFishCategoryDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishCategoryDB.reinsertFishCategories(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

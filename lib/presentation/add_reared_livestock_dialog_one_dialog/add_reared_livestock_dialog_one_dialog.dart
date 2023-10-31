@@ -5,7 +5,6 @@ import 'bloc/add_reared_livestock_dialog_one_bloc.dart';
 import 'models/add_reared_livestock_dialog_one_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 

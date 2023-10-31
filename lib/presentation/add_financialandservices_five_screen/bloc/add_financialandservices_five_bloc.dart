@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -107,12 +105,22 @@ class AddFinancialandservicesFiveBloc extends Bloc<
   ) {
     FarmerCreditServiceDB farmerFishInputDB = FarmerCreditServiceDB();
     List<FarmerCreditService>? categs = [];
+    List<FarmerCreditService>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerCreditService(
+              farmerCreditServiceId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              saccoName: model.male?.text,
+              creditSourceId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerCreditService(
@@ -126,17 +134,17 @@ class AddFinancialandservicesFiveBloc extends Bloc<
         }
       }
       if (state.addFinancialandservicesFiveModelObj!.fsProgress?.pageOne == 0) {
-        farmerFishInputDB.insertCreditServices(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertCreditServices(categs).then((value) {
+        farmerFishInputDB.insertCreditServices(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmerId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertCreditServices(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -179,6 +187,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
         addFinancialandservicesFiveModelObj:
             state.addFinancialandservicesFiveModelObj?.copyWith(
       models: creditmodels,
+      fsProgress: pfProgress,
     )));
   }
 }

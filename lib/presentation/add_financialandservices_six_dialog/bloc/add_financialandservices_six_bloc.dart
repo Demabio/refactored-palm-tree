@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -91,34 +89,44 @@ class AddFinancialandservicesSixBloc extends Bloc<
   ) {
     FarmerAgriInfoSourceDB farmerFishInputDB = FarmerAgriInfoSourceDB();
     List<FarmerAgriInfoSource>? categs = [];
+    List<FarmerAgriInfoSource>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerAgriInfoSource(
+            farmerAgriInfoSourceId: 0,
+            farmerId: PrefUtils().getFarmerId(),
+            agriInfoSourceId: model.id!,
+            enumeratorId: userId,
+          ),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerAgriInfoSource(
               farmerAgriInfoSourceId: 0,
               farmerId: PrefUtils().getFarmerId(),
               agriInfoSourceId: model.id!,
+              enumeratorId: userId,
             ),
           );
         }
       }
       if (state.addFinancialandservicesSixModelObj!.fsProgress?.pageTwo == 0) {
-        farmerFishInputDB.insertAgriInfoSources(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertAgriInfoSources(categs).then((value) {
+        farmerFishInputDB.insertAgriInfoSources(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmerId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertAgriInfoSources(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -162,6 +170,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
         addFinancialandservicesSixModelObj:
             state.addFinancialandservicesSixModelObj?.copyWith(
       models: infomodels,
+      fsProgress: pfProgress,
     )));
   }
 }

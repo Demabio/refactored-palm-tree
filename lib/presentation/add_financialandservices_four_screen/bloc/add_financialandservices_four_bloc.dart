@@ -94,12 +94,23 @@ class AddFinancialandservicesFourBloc extends Bloc<
   ) {
     FarmerCooperativeGroupDB farmerFishInputDB = FarmerCooperativeGroupDB();
     List<FarmerCooperativeGroup>? categs = [];
+    List<FarmerCooperativeGroup>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerCooperativeGroup(
+              farmerCooperativeGroupId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              cooperateiveGroupName: model.male?.text,
+              cooperateiveGroupId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerCooperativeGroup(
@@ -114,17 +125,17 @@ class AddFinancialandservicesFourBloc extends Bloc<
         }
       }
       if (state.addFinancialandservicesFourModelObj!.fsProgress?.pageOne == 0) {
-        farmerFishInputDB.insertCooperativeGroups(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertCooperativeGroups(categs).then((value) {
+        farmerFishInputDB.insertCooperativeGroups(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmerId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertCooperativeGroups(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -141,7 +152,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
     ];
 
     CooperativeGroupDB livestockAgeGroupDB = CooperativeGroupDB();
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].group,
@@ -192,6 +203,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
         addFinancialandservicesFourModelObj:
             state.addFinancialandservicesFourModelObj?.copyWith(
       ageGroupmModels: coopmodels,
+      fsProgress: pfProgress,
     )));
   }
 }

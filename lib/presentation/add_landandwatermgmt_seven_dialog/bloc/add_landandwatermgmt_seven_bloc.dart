@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/agency.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
@@ -77,12 +74,23 @@ class AddLandandwatermgmtSevenBloc
   ) {
     FarmerIrrigationAgencyDB farmerFishInputDB = FarmerIrrigationAgencyDB();
     List<FarmerIrrigationAgency>? categs = [];
+    List<FarmerIrrigationAgency>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerIrrigationAgency(
+              irrigationCropId: 0,
+              farmerFarmId: PrefUtils().getFarmId(),
+              farmerId: PrefUtils().getFarmerId(),
+              irrigationAgencyId: model.id!,
+              createdBy: userId,
+              agencyName: model.title,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerIrrigationAgency(
@@ -97,14 +105,14 @@ class AddLandandwatermgmtSevenBloc
         }
       }
       if (state.addLandandwatermgmtSevenModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertIrrigationAgencies(categs).then((value) {
+        farmerFishInputDB.insertIrrigationAgencies(notit).then((value) {
           print("inserted: $value");
         });
       } else {
         farmerFishInputDB
             .delete(PrefUtils().getFarmId())
             .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertIrrigationAgencies(categs).then((value) {
+        farmerFishInputDB.reinsertIrrigationAgencies(categs).then((value) {
           print("inserted: $value");
         });
       }

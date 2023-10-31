@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -97,12 +95,22 @@ class AddFinancialandservicesThreeBloc extends Bloc<
   ) {
     FarmerIncomeSourceDB farmerFishInputDB = FarmerIncomeSourceDB();
     List<FarmerIncomeSource>? categs = [];
+    List<FarmerIncomeSource>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerIncomeSource(
+            farmerIncomeId: 0,
+            farmerId: PrefUtils().getFarmerId(),
+            priorityLevel: int.parse(model.var1!),
+            incomeSourceId: model.id!,
+            enumeratorId: userId,
+          ),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerIncomeSource(
@@ -117,17 +125,16 @@ class AddFinancialandservicesThreeBloc extends Bloc<
       }
       if (state.addFinancialandservicesThreeModelObj!.fsProgress?.pageOne ==
           0) {
-        farmerFishInputDB.insertIncome(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmerId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertIncome(categs).then((value) {
+        farmerFishInputDB.insertIncome(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmerId())
+          .then((value) => print("deleted: $value"));
+      farmerFishInputDB.reinsertIncome(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -170,6 +177,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
       models: incomemodels,
+      fsProgress: pfProgress,
     )));
   }
 }

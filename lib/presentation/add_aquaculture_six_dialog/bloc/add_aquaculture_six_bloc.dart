@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishinput.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishinput.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishinput.dart';
 import '/core/app_export.dart';
@@ -61,7 +58,7 @@ class AddAquacultureSixBloc
     List<CheckBoxList> list = [];
     FishInputDB fishProductionTypeDB = FishInputDB();
 
-    await fishProductionTypeDB?.fetchAll().then((value) {
+    await fishProductionTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].fishInput,
@@ -124,12 +121,22 @@ class AddAquacultureSixBloc
   ) {
     FarmerFishInputDB farmerFishInputDB = FarmerFishInputDB();
     List<FarmerFishInput>? categs = [];
+    List<FarmerFishInput>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerFishInput(
+              farmerFishInputId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              fishInputId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerFishInput(
@@ -143,17 +150,16 @@ class AddAquacultureSixBloc
         }
       }
       if (state.addAquacultureSixModelObj!.aqProgress?.pageOne == 0) {
-        farmerFishInputDB.insertFishInputs(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertFishInputs(categs).then((value) {
+        farmerFishInputDB.insertFishInputs(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+      farmerFishInputDB.reinsertFishInputs(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
 import '/core/app_export.dart';
@@ -78,12 +74,23 @@ class AddLandandwatermgmtThreeBloc
   ) {
     FarmerLandPracticesDB farmerFishInputDB = FarmerLandPracticesDB();
     List<FarmerLandPractice>? categs = [];
+    List<FarmerLandPractice>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerLandPractice(
+              farmerPracticeId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              landPracticeId: model.id!,
+              createdBy: userId,
+              quantity: 0,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerLandPractice(
@@ -98,17 +105,17 @@ class AddLandandwatermgmtThreeBloc
         }
       }
       if (state.addLandandwatermgmtThreeModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertLandPractices(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertLandPractices(categs).then((value) {
+        farmerFishInputDB.insertLandPractices(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertLandPractices(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

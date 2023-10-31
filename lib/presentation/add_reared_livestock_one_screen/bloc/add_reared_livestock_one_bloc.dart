@@ -325,7 +325,6 @@ class AddRearedLivestockOneBloc
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
     String feeds = PrefUtils().getFeeds();
-    List<FeedsModel>? feedmodels = [];
     if (feeds != "0") {
       List<dynamic> decageGroupMapList = jsonDecode(feeds);
 
@@ -548,6 +547,7 @@ class AddRearedLivestockOneBloc
                   createdBy: userId,
                   dateCreated: DateTime.now(),
                 ));
+
                 if (ent.isSelected) {
                   ents.add(FarmerLivestockAgeGroup(
                     farmerLivestockAgegroupId: 0,
@@ -592,6 +592,7 @@ class AddRearedLivestockOneBloc
                   feedQuantity: 0,
                   feedTypeId: ent.id!,
                 ));
+
                 if (ent.isSelected) {
                   feedlist.add(FarmerLivestockFeed(
                     farmerLivestockId: value,
@@ -606,6 +607,7 @@ class AddRearedLivestockOneBloc
               await farmerLivestockFeedsDB
                   .insertFeeds(unselected)
                   .then((value) => print("inserted $value"));
+
               await farmerLivestockFeedsDB
                   .reinsertFeeds(feedlist)
                   .then((value) => print("inserted $value"));
@@ -622,8 +624,16 @@ class AddRearedLivestockOneBloc
                   FarmerLivestockBeehiveTypeDB();
 
               List<FarmerLivestockBeehiveType> nbeelist = [];
+              List<FarmerLivestockBeehiveType> unselected = [];
 
               for (var ent in beeslist) {
+                unselected.add(FarmerLivestockBeehiveType(
+                    farmerLivestockId: value,
+                    createdBy: userId,
+                    dateCreated: DateTime.now(),
+                    beehivesTypeId: ent.id!,
+                    beehivesFarmerId: 0));
+
                 if (ent.isSelected) {
                   nbeelist.add(FarmerLivestockBeehiveType(
                       farmerLivestockId: value,
@@ -635,9 +645,14 @@ class AddRearedLivestockOneBloc
               }
 
               await farmerLivestockBeehiveTypeDB
-                  .insertBeehiveTypes(nbeelist)
+                  .insertBeehiveTypes(unselected)
+                  .then((value) => print("inserted $value"));
+
+              await farmerLivestockBeehiveTypeDB
+                  .reinsertBeehiveTypes(nbeelist)
                   .then((value) => print("inserted $value"));
             }
+
             LSProgressDB lsProgressDB = LSProgressDB();
             if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0) {
               lsProgressDB
@@ -711,8 +726,9 @@ class AddRearedLivestockOneBloc
             await farmerLivestockAgeGroupsDB
                 .delete(farmerLivestockId)
                 .then((value) => print("deleted $value"));
+
             await farmerLivestockAgeGroupsDB
-                .insertAgeGroups(ents)
+                .reinsertAgeGroups(ents)
                 .then((value) => print("inserted $value"));
           }
 
@@ -743,8 +759,9 @@ class AddRearedLivestockOneBloc
             await farmerLivestockFeedsDB
                 .delete(farmerLivestockId)
                 .then((value) => print("deleted $value"));
+
             await farmerLivestockFeedsDB
-                .insertFeeds(feedlist)
+                .reinsertFeeds(feedlist)
                 .then((value) => print("inserted $value"));
           }
           String bees = PrefUtils().getBee();
@@ -775,7 +792,7 @@ class AddRearedLivestockOneBloc
                 .then((value) => print("deleted $value"));
 
             await farmerLivestockBeehiveTypeDB
-                .insertBeehiveTypes(nbeelist)
+                .reinsertBeehiveTypes(nbeelist)
                 .then((value) => print("inserted $value"));
           }
           event.createSuccessful!.call();
@@ -791,7 +808,7 @@ class AddRearedLivestockOneBloc
     LivestockFeedTypeDB livestockFeedTypeDB = LivestockFeedTypeDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockFeedTypeDB?.fetchAll().then((value) {
+    await livestockFeedTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(FeedsModel(
           title: value[i].feedType,
@@ -806,7 +823,7 @@ class AddRearedLivestockOneBloc
     List<FeedsModel> list = [];
     LivestockBeehiveTypeDB livestockFeedTypeDB = LivestockBeehiveTypeDB();
 
-    await livestockFeedTypeDB?.fetchAll().then((value) {
+    await livestockFeedTypeDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(FeedsModel(
           title: value[i].beehiveType,
@@ -822,7 +839,7 @@ class AddRearedLivestockOneBloc
     LivestockAgeGroupDB livestockAgeGroupDB = LivestockAgeGroupDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(AgeGroupModel(
           title: value[i].ageGroup,
@@ -908,7 +925,7 @@ class AddRearedLivestockOneBloc
       at = TextEditingController(text: livestock.noOfBeehives.toString());
 
       subcateg = await fillSubCategory(lives!.livestockCatId!);
-      livestockmodels = await fillLivestock(lives!.livestockSubCatId);
+      livestockmodels = await fillLivestock(lives.livestockSubCatId);
 
       selectedcateg = categ.firstWhere(
         (model) => model.id == lives.livestockCatId,

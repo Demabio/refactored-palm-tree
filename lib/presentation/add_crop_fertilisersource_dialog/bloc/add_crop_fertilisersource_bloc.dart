@@ -1,19 +1,12 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertilisersource.dart';
-import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser_source.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
 import '../models/add_crop_fertilisersource_model.dart';
 import '/core/app_export.dart';
 part 'add_crop_fertilisersource_event.dart';
@@ -81,12 +74,24 @@ class AddCropFertiliserSourceBloc
   ) {
     FarmerFertiliserSourcesDB farmerFishInputDB = FarmerFertiliserSourcesDB();
     List<FarmerFertiliserSource>? categs = [];
+    List<FarmerFertiliserSource>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerFertiliserSource(
+              farmerFertSourceId: 0,
+              farmerCropId: PrefUtils().getCropId(),
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              fertSourceId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
+
         if (model.isSelected) {
           categs.add(
             FarmerFertiliserSource(
@@ -100,18 +105,20 @@ class AddCropFertiliserSourceBloc
           );
         }
       }
+
       if (state.addLandandwatermgmtThreeModelObj!.caProgressDB?.pageTwo == 0) {
-        farmerFishInputDB.insertFertiliserSources(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertFertiliserSources(categs).then((value) {
+        farmerFishInputDB.insertFertiliserSources(notit).then((value) {
           print("inserted: $value");
         });
       }
+
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertFertiliserSources(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

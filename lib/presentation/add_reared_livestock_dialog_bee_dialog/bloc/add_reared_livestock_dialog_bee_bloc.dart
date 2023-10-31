@@ -45,7 +45,7 @@ class AddRearedLivestockDialogBeeBloc extends Bloc<
     List<FeedsModel> list = [];
     LivestockBeehiveTypeDB livestockAgeGroupDB = LivestockBeehiveTypeDB();
 
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(FeedsModel(
           title: value[i].beehiveType,

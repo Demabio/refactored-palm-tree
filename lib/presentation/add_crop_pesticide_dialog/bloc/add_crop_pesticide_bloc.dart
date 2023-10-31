@@ -1,19 +1,11 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/other/pesticidetype.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
-import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
-import 'package:kiamis_app/data/models/farmerregistrationmodels/other/landpractice.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/pesticide.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmlandpractices.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/landpractice.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/pesticide.dart';
 import '../models/add_cro_pesticide_model.dart';
 import '/core/app_export.dart';
@@ -82,12 +74,23 @@ class AddCropPesticideBloc
   ) {
     FarmerPesticidesDB farmerFishInputDB = FarmerPesticidesDB();
     List<FarmerPesticide>? categs = [];
+    List<FarmerPesticide>? notits = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notits.add(
+          FarmerPesticide(
+              farmerPesticideId: 0,
+              farmerCropId: PrefUtils().getCropId(),
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              pesticideTypeId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerPesticide(
@@ -102,17 +105,17 @@ class AddCropPesticideBloc
         }
       }
       if (state.addLandandwatermgmtThreeModelObj!.caProgressDB?.pageTwo == 0) {
-        farmerFishInputDB.insertPesticides(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertPesticides(categs).then((value) {
+        farmerFishInputDB.insertPesticides(notits).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertPesticides(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

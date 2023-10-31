@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/financial_services.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/extensionmode.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionmodes.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionmode.dart';
 import '/core/app_export.dart';
@@ -91,12 +88,22 @@ class AddFinancialandservicesEightBloc extends Bloc<
   ) {
     FarmerExtensionModeDB farmerFishInputDB = FarmerExtensionModeDB();
     List<FarmerExtensionMode>? categs = [];
+    List<FarmerExtensionMode>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerExtensionMode(
+              farmerExtensionModeId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              extensionModeId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerExtensionMode(
@@ -111,17 +118,17 @@ class AddFinancialandservicesEightBloc extends Bloc<
       }
       if (state.addFinancialandservicesEightModelObj!.fsProgress?.pageTwo ==
           0) {
-        farmerFishInputDB.insertExtensionModes(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertExtensionModes(categs).then((value) {
+        farmerFishInputDB.insertExtensionModes(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertExtensionModes(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -164,6 +171,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
         addFinancialandservicesEightModelObj:
             state.addFinancialandservicesEightModelObj?.copyWith(
       models: modemodels,
+      fsProgress: pfProgress,
     )));
   }
 }

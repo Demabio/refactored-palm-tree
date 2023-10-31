@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +75,23 @@ class AddLandandwatermgmtFourBloc
     FarmerIrrigationWaterSourceDB farmerFishInputDB =
         FarmerIrrigationWaterSourceDB();
     List<FarmerIrrigationWaterSource>? categs = [];
+    List<FarmerIrrigationWaterSource>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerIrrigationWaterSource(
+              irrigationCropId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              irrigationWaterSourceId: model.id!,
+              createdBy: userId,
+              sourceName: model.title,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerIrrigationWaterSource(
@@ -97,17 +106,16 @@ class AddLandandwatermgmtFourBloc
         }
       }
       if (state.addLandandwatermgmtFourModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertIrrigationWaterSources(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertIrrigationWaterSources(categs).then((value) {
+        farmerFishInputDB.insertIrrigationWaterSources(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+      farmerFishInputDB.reinsertIrrigationWaterSources(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +75,22 @@ class AddLandandwatermgmtFiveBloc
   ) {
     FarmerIrrigationTypeDB farmerFishInputDB = FarmerIrrigationTypeDB();
     List<FarmerIrrigationType>? categs = [];
+    List<FarmerIrrigationType>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerIrrigationType(
+              irrigationCropId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              irrigationTypeId: model.id!,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerIrrigationType(
@@ -96,17 +104,17 @@ class AddLandandwatermgmtFiveBloc
         }
       }
       if (state.addLandandwatermgmtFiveModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertIrrigationTypes(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertIrrigationTypes(categs).then((value) {
+        farmerFishInputDB.insertIrrigationTypes(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertIrrigationTypes(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {

@@ -1,19 +1,14 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
-import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/models/dbModels/irrigation/irrigationmemberships.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
-import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationagencies.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/irrigationcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/irrigation/membershiptypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/land_water_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/category.dart';
-import '../models/irrigationprojetmodel.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/models/add_landandwatermgmt_six_model.dart';
 part 'add_landandwatermgmt_six_event.dart';
@@ -84,12 +79,24 @@ class AddLandandwatermgmtSixBloc
   ) {
     FarmerIrrigationCategoryDB farmerFishInputDB = FarmerIrrigationCategoryDB();
     List<FarmerIrrigationCategory>? categs = [];
+    List<FarmerIrrigationCategory>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerIrrigationCategory(
+              irrigationCropId: 0,
+              farmerFarmId: PrefUtils().getFarmId(),
+              farmerId: PrefUtils().getFarmerId(),
+              irrigationCategoryId: model.id!,
+              membershipTypeId: model.drop?.id,
+              createdBy: userId,
+              irrigationProjectName: model.male?.text,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerIrrigationCategory(
@@ -105,17 +112,16 @@ class AddLandandwatermgmtSixBloc
         }
       }
       if (state.addLandandwatermgmtSixModelObj!.lwProgress?.pageOne == 0) {
-        farmerFishInputDB.insertIrrigationCategories(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertIrrigationCategories(categs).then((value) {
+        farmerFishInputDB.insertIrrigationCategories(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+      farmerFishInputDB.reinsertIrrigationCategories(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -150,7 +156,7 @@ class AddLandandwatermgmtSixBloc
     IrrigationCategoryDB livestockAgeGroupDB = IrrigationCategoryDB();
     TextEditingController stored = TextEditingController();
     stored.value = TextEditingValue(text: "999");
-    await livestockAgeGroupDB?.fetchAll().then((value) {
+    await livestockAgeGroupDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].irrigationCategory,

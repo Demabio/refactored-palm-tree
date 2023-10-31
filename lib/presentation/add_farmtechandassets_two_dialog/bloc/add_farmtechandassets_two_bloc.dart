@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -145,12 +143,24 @@ class AddFarmtechandassetsTwoBloc
   ) {
     FarmerPowerSourceDB farmerFishInputDB = FarmerPowerSourceDB();
     List<FarmerPowerSource>? categs = [];
+
+    List<FarmerPowerSource>? notit = [];
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     try {
       for (CheckBoxList model in event.models) {
+        notit.add(
+          FarmerPowerSource(
+              farmPowerSourceId: 0,
+              farmerId: PrefUtils().getFarmerId(),
+              farmerFarmId: PrefUtils().getFarmId(),
+              powerSourceId: model.id!,
+              othersName: model.title,
+              createdBy: userId,
+              dateCreated: DateTime.now()),
+        );
         if (model.isSelected) {
           categs.add(
             FarmerPowerSource(
@@ -165,17 +175,17 @@ class AddFarmtechandassetsTwoBloc
         }
       }
       if (state.addFarmtechandassetsTwoModelObj!.atProgress?.pageOne == 0) {
-        farmerFishInputDB.insertPowerSources(categs).then((value) {
-          print("inserted: $value");
-        });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.insertPowerSources(categs).then((value) {
+        farmerFishInputDB.insertPowerSources(notit).then((value) {
           print("inserted: $value");
         });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+
+      farmerFishInputDB.reinsertPowerSources(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -225,7 +235,7 @@ class AddFarmtechandassetsTwoBloc
 
     if (pfProgress.pageOne == 1) {
       List<FarmerPowerSource>? categs = await getSources();
-      atypes = categs != null ? _sources(atypes, categs!) : atypes;
+      atypes = categs != null ? _sources(atypes, categs) : atypes;
     }
     emit(state.copyWith(
         addFarmtechandassetsTwoModelObj:

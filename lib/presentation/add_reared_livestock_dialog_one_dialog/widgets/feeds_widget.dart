@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
-import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 
 // ignore: must_be_immutable
