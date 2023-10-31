@@ -81,8 +81,9 @@ class FarmtechandassetsBloc
         labour = await fetchLabourSources(farmer.labourSourceId!);
       }
 
-      assetSource =
-          await fetchAssetSources(farmerFishProductionLevel.assetSourceId);
+      assetSource = farmerFishProductionLevel.assetSourceId != 0
+          ? await fetchAssetSources(farmerFishProductionLevel.assetSourceId)
+          : null;
     }
 
     emit(state.copyWith(

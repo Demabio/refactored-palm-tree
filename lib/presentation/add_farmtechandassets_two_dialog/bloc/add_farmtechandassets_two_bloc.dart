@@ -174,7 +174,7 @@ class AddFarmtechandassetsTwoBloc
           );
         }
       }
-      if (state.addFarmtechandassetsTwoModelObj!.atProgress?.pageOne == 0) {
+      if (state.addFarmtechandassetsTwoModelObj!.categs!.isEmpty) {
         farmerFishInputDB.insertPowerSources(notit).then((value) {
           print("inserted: $value");
         });
@@ -233,14 +233,15 @@ class AddFarmtechandassetsTwoBloc
 
     List<CheckBoxList>? atypes = await fetchPowerSources();
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerPowerSource>? categs = await getSources();
-      atypes = categs != null ? _sources(atypes, categs) : atypes;
-    }
+    List<FarmerPowerSource>? categs = await getSources() ?? [];
+    atypes = categs.isNotEmpty ? _sources(atypes, categs) : atypes;
+
     emit(state.copyWith(
         addFarmtechandassetsTwoModelObj:
             state.addFarmtechandassetsTwoModelObj?.copyWith(
       models: atypes,
+      categs: categs,
+      atProgress: pfProgress,
     )));
   }
 }

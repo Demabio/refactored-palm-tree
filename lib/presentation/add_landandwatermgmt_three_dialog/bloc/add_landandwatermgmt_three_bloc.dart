@@ -104,7 +104,7 @@ class AddLandandwatermgmtThreeBloc
           );
         }
       }
-      if (state.addLandandwatermgmtThreeModelObj!.lwProgress?.pageOne == 0) {
+      if (state.addLandandwatermgmtThreeModelObj!.land!.isEmpty) {
         farmerFishInputDB.insertLandPractices(notit).then((value) {
           print("inserted: $value");
         });
@@ -161,8 +161,8 @@ class AddLandandwatermgmtThreeBloc
         );
     List<CheckBoxList>? landmodels = await fetchLandP();
 
-    List<FarmerLandPractice>? land = await getLandP();
-    if (land != null) {
+    List<FarmerLandPractice>? land = await getLandP() ?? [];
+    if (land.isNotEmpty) {
       landmodels = _land(landmodels, land);
     }
     emit(state.copyWith(
@@ -170,6 +170,7 @@ class AddLandandwatermgmtThreeBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: landmodels,
       lwProgress: pfProgress,
+      land: land,
     )));
   }
 }

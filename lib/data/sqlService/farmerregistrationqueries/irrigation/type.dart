@@ -130,10 +130,10 @@ class FarmerIrrigationTypeDB {
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
-      DELETE FROM $tableName WHERE farmer_farm_id = ?
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
     ''', [
       id,
     ]);
   }
-  // Add more database methods as needed
+  // Add more database methods as needed       DELETE FROM $tableName WHERE farmer_farm_id = ?
 }

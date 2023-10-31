@@ -87,7 +87,7 @@ class FarmerFishCategoryDB {
         ''', [
           fishCategory.dateCreated?.toLocal().toIso8601String(),
           fishCategory.farmerFarmId,
-          fishCategory.farmerFishCategoryId,
+          fishCategory.fishCategoryId,
         ]);
       }
 

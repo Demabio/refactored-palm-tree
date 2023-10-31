@@ -133,7 +133,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
           );
         }
       }
-      if (state.addFinancialandservicesFiveModelObj!.fsProgress?.pageOne == 0) {
+      if (state.addFinancialandservicesFiveModelObj!.categs!.isEmpty) {
         farmerFishInputDB.insertCreditServices(notit).then((value) {
           print("inserted: $value");
         });
@@ -178,8 +178,8 @@ class AddFinancialandservicesFiveBloc extends Bloc<
     List<CheckBoxList>? creditmodels = await fetchFinancialServ();
 
     //  if (pfProgress.pageOne == 1) {
-    List<FarmerCreditService>? categs = await getCredits();
-    creditmodels = categs != null
+    List<FarmerCreditService>? categs = await getCredits() ?? [];
+    creditmodels = categs.isNotEmpty
         ? creditmodels = _credits(creditmodels, categs)
         : creditmodels;
     //  }
@@ -188,6 +188,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
             state.addFinancialandservicesFiveModelObj?.copyWith(
       models: creditmodels,
       fsProgress: pfProgress,
+      categs: categs,
     )));
   }
 }

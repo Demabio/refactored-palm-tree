@@ -27,8 +27,8 @@ class FarmerAssetsDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by, active, enumerator_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerAsset.farmerId,
       farmerAsset.farmerFarmId,
@@ -36,6 +36,8 @@ class FarmerAssetsDB {
       farmerAsset.qty,
       farmerAsset.usableCondition,
       DateTime.now().toLocal().toIso8601String(),
+      farmerAsset.createdBy,
+      1,
       farmerAsset.createdBy,
     ]);
   }

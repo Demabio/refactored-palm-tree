@@ -106,7 +106,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
           FarmerIncomeSource(
             farmerIncomeId: 0,
             farmerId: PrefUtils().getFarmerId(),
-            priorityLevel: int.parse(model.var1!),
+            priorityLevel: int.parse(model.var1 ?? "0"),
             incomeSourceId: model.id!,
             enumeratorId: userId,
           ),
@@ -116,15 +116,14 @@ class AddFinancialandservicesThreeBloc extends Bloc<
             FarmerIncomeSource(
               farmerIncomeId: 0,
               farmerId: PrefUtils().getFarmerId(),
-              priorityLevel: int.parse(model.var1!),
+              priorityLevel: int.parse(model.var1 ?? "0"),
               incomeSourceId: model.id!,
               enumeratorId: userId,
             ),
           );
         }
       }
-      if (state.addFinancialandservicesThreeModelObj!.fsProgress?.pageOne ==
-          0) {
+      if (state.addFinancialandservicesThreeModelObj!.incomes!.isEmpty) {
         farmerFishInputDB.insertIncome(notit).then((value) {
           print("inserted: $value");
         });
@@ -168,8 +167,8 @@ class AddFinancialandservicesThreeBloc extends Bloc<
     List<CheckBoxList>? incomemodels = await fetchIncomes();
 
     //  if (pfProgress.pageOne == 1) {
-    List<FarmerIncomeSource>? incomes = await getIncomes();
-    incomemodels = incomes != null
+    List<FarmerIncomeSource>? incomes = await getIncomes() ?? [];
+    incomemodels = incomes.isNotEmpty
         ? incomemodels = _incomes(incomemodels, incomes)
         : incomemodels;
     //  }
@@ -178,6 +177,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
             state.addFinancialandservicesThreeModelObj?.copyWith(
       models: incomemodels,
       fsProgress: pfProgress,
+      incomes: incomes,
     )));
   }
 }

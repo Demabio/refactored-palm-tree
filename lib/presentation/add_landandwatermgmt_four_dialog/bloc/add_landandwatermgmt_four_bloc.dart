@@ -105,7 +105,7 @@ class AddLandandwatermgmtFourBloc
           );
         }
       }
-      if (state.addLandandwatermgmtFourModelObj!.lwProgress?.pageOne == 0) {
+      if (state.addLandandwatermgmtFourModelObj!.water!.isEmpty) {
         farmerFishInputDB.insertIrrigationWaterSources(notit).then((value) {
           print("inserted: $value");
         });
@@ -163,8 +163,8 @@ class AddLandandwatermgmtFourBloc
         );
     List<CheckBoxList>? watermodels = await fetchWater();
 
-    List<FarmerIrrigationWaterSource>? water = await getWater();
-    if (water != null) {
+    List<FarmerIrrigationWaterSource>? water = await getWater() ?? [];
+    if (water.isNotEmpty) {
       watermodels = _water(watermodels, water);
     }
     emit(state.copyWith(
@@ -172,6 +172,7 @@ class AddLandandwatermgmtFourBloc
             state.addLandandwatermgmtFourModelObj?.copyWith(
       models: watermodels,
       lwProgress: pfProgress,
+      water: water,
     )));
   }
 }

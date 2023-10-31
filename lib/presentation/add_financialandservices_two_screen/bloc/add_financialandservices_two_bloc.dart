@@ -273,13 +273,25 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         ));
         //REMEMBER!!!!!!!!
         if (id > 0) {
-          atProgressDB
-              .update(FSProgress(
-                farmId: farmid,
-                pageOne: 1,
-                pageTwo: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
+          if (state.addFinancialandservicesTwoModelObj!.fsProgress?.pageOne ==
+              0) {
+            atProgressDB
+                .insert(FSProgress(
+                  farmId: farmid,
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          } else {
+            atProgressDB
+                .update(FSProgress(
+                  farmId: farmid,
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          }
+
           event.createSuccessful!.call();
         }
       } else if ((selectedCount2 != 0 ||
@@ -308,13 +320,24 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               .addFinancialandservicesTwoModelObj!.selectedDropDownValue5!.id,
         ));
         if (id > 0) {
-          atProgressDB
-              .update(FSProgress(
-                farmId: farmid,
-                pageOne: 1,
-                pageTwo: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
+          if (state.addFinancialandservicesTwoModelObj!.fsProgress?.pageOne ==
+              0) {
+            atProgressDB
+                .insert(FSProgress(
+                  farmId: farmid,
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          } else {
+            atProgressDB
+                .update(FSProgress(
+                  farmId: farmid,
+                  pageOne: 1,
+                  pageTwo: 1,
+                ))
+                .then((value) => print("Scope FI" + value.toString()));
+          }
           event.createSuccessful!.call();
         } else {
           event.createFailed!.call();

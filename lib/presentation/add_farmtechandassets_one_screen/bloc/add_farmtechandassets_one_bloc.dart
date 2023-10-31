@@ -105,9 +105,11 @@ class AddFarmtechandassetsOneBloc
         );
       }
 
-      bb = b.firstWhere(
-        (model) => model.id == farmerFishProductionLevel.assetSourceId,
-      );
+      bb = farmerFishProductionLevel.assetSourceId != 0
+          ? b.firstWhere(
+              (model) => model.id == farmerFishProductionLevel.assetSourceId,
+            )
+          : null;
     }
     emit(state.copyWith(
         a: assets,
@@ -352,9 +354,7 @@ class AddFarmtechandassetsOneBloc
       } else if (selectedCount != 0 &&
           selectedCount2 != 0 &&
           selectedCount3 != 0) {
-        farmerFishProductionLevelsDB.delete(farmerid);
-
-        int id = await farmerFishProductionLevelsDB.create(
+        int id = await farmerFishProductionLevelsDB.update(
           FarmerAssetSource(
             farmerAssetSource: 0,
             farmerId: farmerid,

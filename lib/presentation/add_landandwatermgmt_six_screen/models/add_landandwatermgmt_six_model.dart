@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/land_water_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/irrigation/category.dart';
 import 'package:kiamis_app/data/models/selectionPopupModel/selection_popup_model.dart';
 
 /// This class defines the variables used in the [add_landandwatermgmt_six_screen],
@@ -14,6 +15,7 @@ class AddLandandwatermgmtSixModel extends Equatable {
     this.ageGroupmModels = const [],
     this.count = 0,
     this.lwProgress,
+    this.scheme,
   });
 
   List<SelectionPopupModel> dropdownItemList;
@@ -21,7 +23,7 @@ class AddLandandwatermgmtSixModel extends Equatable {
   List<SelectionPopupModel> dropdownItemList1;
 
   List<CheckBoxList> ageGroupmModels;
-
+  List<FarmerIrrigationCategory>? scheme;
   int count;
   LWProgress? lwProgress;
 
@@ -31,6 +33,7 @@ class AddLandandwatermgmtSixModel extends Equatable {
     List<CheckBoxList>? ageGroupmModels,
     int? count,
     LWProgress? lwProgress,
+    List<FarmerIrrigationCategory>? scheme,
   }) {
     return AddLandandwatermgmtSixModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -38,6 +41,7 @@ class AddLandandwatermgmtSixModel extends Equatable {
       ageGroupmModels: ageGroupmModels ?? this.ageGroupmModels,
       count: count ?? this.count,
       lwProgress: lwProgress ?? this.lwProgress,
+      scheme: scheme ?? this.scheme,
     );
   }
 
@@ -48,5 +52,6 @@ class AddLandandwatermgmtSixModel extends Equatable {
         ageGroupmModels,
         count,
         lwProgress,
+        scheme,
       ];
 }

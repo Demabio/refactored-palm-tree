@@ -152,7 +152,7 @@ class AddLandandwatermgmtTwoBloc
     fishes != null
         ? emit(state.copyWith(u: feedmodels, checka: false))
         : emit(state.copyWith(
-            checkb: true,
+            checka: true,
             u: feedmodels,
           ));
   }
@@ -170,7 +170,7 @@ class AddLandandwatermgmtTwoBloc
         fishes != null ? feedmodels = _categ(feedmodels, fishes) : feedmodels;
 
     fishes != null
-        ? emit(state.copyWith(p: feedmodels, checka: false))
+        ? emit(state.copyWith(p: feedmodels, checkb: false))
         : emit(state.copyWith(
             checkb: true,
             p: feedmodels,
@@ -408,19 +408,21 @@ class AddLandandwatermgmtTwoBloc
       SelectionPopupModel? drop;
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
-      if (ent.membershipTypeId != 0) {
-        int index2 = feedmodels[index]
-            .model
-            .indexWhere((obj) => obj.id == ent.membershipTypeId);
+      if (index >= 0) {
+        if (ent.membershipTypeId != 0 && ent.membershipTypeId != null) {
+          int index2 = feedmodels[index]
+              .model
+              .indexWhere((obj) => obj.id == ent.membershipTypeId);
 
-        drop = index2 >= 0 ? feedmodels[index].model[index2] : drop;
+          drop = index2 >= 0 ? feedmodels[index].model[index2] : drop;
+        }
+
+        feedmodels[index].isSelected = true;
+        feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
+        feedmodels[index].male =
+            TextEditingController(text: ent.irrigationProjectName);
+        feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
       }
-
-      feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
-      feedmodels[index].male =
-          TextEditingController(text: ent.irrigationProjectName);
-      feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
     }
 
     return feedmodels;
@@ -520,9 +522,9 @@ class AddLandandwatermgmtTwoBloc
         agmodels = _agency(agmodels, ag);
       }
 
-      aa = a.firstWhere(
-        (model) => model.id == (farmer.irrigationUse! ? 1 : 0),
-      );
+      aa = farmer.irrigationUse != null
+          ? a.firstWhere((model) => model.id == (farmer.irrigationUse! ? 1 : 0))
+          : null;
 
       if (farmer.irrigationArea != null) {
         at = TextEditingController(text: farmer.irrigationArea.toString());

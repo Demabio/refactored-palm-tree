@@ -127,7 +127,7 @@ class AddFarmtechandassetsFourBloc
           );
         }
       }
-      if (state.addFarmtechandassetsFourModelObj!.atProgress?.pageOne == 0) {
+      if (state.addFarmtechandassetsFourModelObj!.categs!.isEmpty) {
         farmerFishInputDB.insertStructures(notit).then((value) {
           print("inserted: $value");
         });
@@ -171,14 +171,15 @@ class AddFarmtechandassetsFourBloc
 
     List<CheckBoxList>? atypes = await fetchFarmStructure();
 
-    if (pfProgress.pageOne == 1) {
-      List<FarmerStructure>? categs = await getStructs();
-      atypes = categs != null ? _structs(atypes, categs) : atypes;
-    }
+    List<FarmerStructure>? categs = await getStructs() ?? [];
+    atypes = categs.isNotEmpty ? _structs(atypes, categs) : atypes;
+
     emit(state.copyWith(
         addFarmtechandassetsFourModelObj:
             state.addFarmtechandassetsFourModelObj?.copyWith(
       models: atypes,
+      atProgress: pfProgress,
+      categs: categs,
     )));
   }
 }

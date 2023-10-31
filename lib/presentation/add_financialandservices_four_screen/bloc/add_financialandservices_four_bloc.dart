@@ -124,7 +124,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
           );
         }
       }
-      if (state.addFinancialandservicesFourModelObj!.fsProgress?.pageOne == 0) {
+      if (state.addFinancialandservicesFourModelObj!.groups!.isEmpty) {
         farmerFishInputDB.insertCooperativeGroups(notit).then((value) {
           print("inserted: $value");
         });
@@ -195,8 +195,8 @@ class AddFinancialandservicesFourBloc extends Bloc<
     List<CheckBoxList>? coopmodels = await fetchCoops();
 
     //if (pfProgress.pageOne == 1) {
-    List<FarmerCooperativeGroup>? groups = await getCoops();
-    if (groups != null) {
+    List<FarmerCooperativeGroup>? groups = await getCoops() ?? [];
+    if (groups.isNotEmpty) {
       coopmodels = _coops(coopmodels, groups);
     } // }
     emit(state.copyWith(
@@ -204,6 +204,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
             state.addFinancialandservicesFourModelObj?.copyWith(
       ageGroupmModels: coopmodels,
       fsProgress: pfProgress,
+      groups: groups,
     )));
   }
 }

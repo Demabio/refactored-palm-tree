@@ -111,7 +111,7 @@ class AddLandandwatermgmtSixBloc
           );
         }
       }
-      if (state.addLandandwatermgmtSixModelObj!.lwProgress?.pageOne == 0) {
+      if (state.addLandandwatermgmtSixModelObj!.scheme!.isEmpty) {
         farmerFishInputDB.insertIrrigationCategories(notit).then((value) {
           print("inserted: $value");
         });
@@ -224,8 +224,8 @@ class AddLandandwatermgmtSixBloc
         );
     List<CheckBoxList>? schememodels = await fetchSchemes();
 
-    List<FarmerIrrigationCategory>? scheme = await getCategs();
-    if (scheme != null) {
+    List<FarmerIrrigationCategory>? scheme = await getCategs() ?? [];
+    if (scheme.isNotEmpty) {
       schememodels = _land(schememodels, scheme);
     }
     emit(state.copyWith(
@@ -233,6 +233,7 @@ class AddLandandwatermgmtSixBloc
             state.addLandandwatermgmtSixModelObj?.copyWith(
       ageGroupmModels: schememodels,
       lwProgress: pfProgress,
+      scheme: scheme,
     )));
   }
 }

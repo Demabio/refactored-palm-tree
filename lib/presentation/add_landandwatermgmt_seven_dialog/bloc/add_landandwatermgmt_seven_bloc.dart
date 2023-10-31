@@ -104,18 +104,17 @@ class AddLandandwatermgmtSevenBloc
           );
         }
       }
-      if (state.addLandandwatermgmtSevenModelObj!.lwProgress?.pageOne == 0) {
+      if (state.addLandandwatermgmtSevenModelObj!.ag!.isEmpty) {
         farmerFishInputDB.insertIrrigationAgencies(notit).then((value) {
           print("inserted: $value");
         });
-      } else {
-        farmerFishInputDB
-            .delete(PrefUtils().getFarmId())
-            .then((value) => print("deleted: $value"));
-        farmerFishInputDB.reinsertIrrigationAgencies(categs).then((value) {
-          print("inserted: $value");
-        });
       }
+      farmerFishInputDB
+          .delete(PrefUtils().getFarmId())
+          .then((value) => print("deleted: $value"));
+      farmerFishInputDB.reinsertIrrigationAgencies(categs).then((value) {
+        print("inserted: $value");
+      });
 
       event.createSuccessful?.call();
     } catch (e) {
@@ -163,8 +162,8 @@ class AddLandandwatermgmtSevenBloc
         );
     List<CheckBoxList>? agmodels = await fetchAgency();
 
-    List<FarmerIrrigationAgency>? ag = await getAgency();
-    if (ag != null) {
+    List<FarmerIrrigationAgency>? ag = await getAgency() ?? [];
+    if (ag.isNotEmpty) {
       agmodels = _agency(agmodels, ag);
     }
     emit(state.copyWith(
@@ -172,6 +171,7 @@ class AddLandandwatermgmtSevenBloc
             state.addLandandwatermgmtSevenModelObj?.copyWith(
       models: agmodels,
       lwProgress: pfProgress,
+      ag: ag,
     )));
   }
 }

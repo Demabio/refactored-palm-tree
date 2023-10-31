@@ -92,7 +92,7 @@ class FarmerCreditServiceDB {
     try {
       for (var creditService in creditServices) {
         batch.rawUpdate('''
-        UPDATE $tableName SET active = 1,  sacco_name = ?, mfintitution_name = ?, others_name = ?, date_created = ? WHERE farmer_id = ? AND cooperative_group_id = ?
+        UPDATE $tableName SET active = 1,  sacco_name = ?, mfintitution_name = ?, others_name = ?, date_created = ? WHERE farmer_id = ? AND credit_source_id = ?
         ''', [
           creditService.saccoName,
           creditService.mfInstitutionName,

@@ -106,7 +106,7 @@ class AddCropFertiliserSourceBloc
         }
       }
 
-      if (state.addLandandwatermgmtThreeModelObj!.caProgressDB?.pageTwo == 0) {
+      if (state.addLandandwatermgmtThreeModelObj!.source!.isEmpty) {
         farmerFishInputDB.insertFertiliserSources(notit).then((value) {
           print("inserted: $value");
         });
@@ -164,8 +164,8 @@ class AddCropFertiliserSourceBloc
         );
     List<CheckBoxList>? sourcemodels = await fetchSources();
 
-    List<FarmerFertiliserSource>? source = await getSources();
-    if (source != null) {
+    List<FarmerFertiliserSource>? source = await getSources() ?? [];
+    if (source.isNotEmpty) {
       sourcemodels = _sources(sourcemodels, source);
     }
     emit(state.copyWith(
@@ -173,6 +173,7 @@ class AddCropFertiliserSourceBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: sourcemodels,
       caProgressDB: caProgress,
+      source: source,
     )));
   }
 }

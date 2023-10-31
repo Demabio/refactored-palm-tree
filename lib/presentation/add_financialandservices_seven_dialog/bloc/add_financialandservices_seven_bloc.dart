@@ -120,8 +120,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
           );
         }
       }
-      if (state.addFinancialandservicesSevenModelObj!.fsProgress?.pageTwo ==
-          0) {
+      if (state.addFinancialandservicesSevenModelObj!.access!.isEmpty) {
         farmerFishInputDB.insertExtensionAccess(notit).then((value) {
           print("inserted: $value");
         });
@@ -167,8 +166,8 @@ class AddFinancialandservicesSevenBloc extends Bloc<
     List<CheckBoxList>? accessmodels = await fetchEService();
 
     //if (pfProgress.pageTwo == 1) {
-    List<FarmerExtensionAccess>? access = await getEAccess();
-    accessmodels = access != null
+    List<FarmerExtensionAccess>? access = await getEAccess() ?? [];
+    accessmodels = access.isNotEmpty
         ? accessmodels = _access(accessmodels, access)
         : accessmodels;
     //   }
@@ -177,6 +176,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
             state.addFinancialandservicesSevenModelObj?.copyWith(
       models: accessmodels,
       fsProgress: pfProgress,
+      access: access,
     )));
   }
 }

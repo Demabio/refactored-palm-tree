@@ -110,7 +110,7 @@ class FarmerIrrigationCategoryDB {
   Future<List<FarmerIrrigationCategory>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final irrigationCategories = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE active = ?
+      SELECT * FROM $tableName WHERE active = 1
     ''');
 
     return irrigationCategories

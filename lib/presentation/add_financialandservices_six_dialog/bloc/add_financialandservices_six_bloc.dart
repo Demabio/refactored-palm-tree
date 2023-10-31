@@ -115,7 +115,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
           );
         }
       }
-      if (state.addFinancialandservicesSixModelObj!.fsProgress?.pageTwo == 0) {
+      if (state.addFinancialandservicesSixModelObj!.info!.isEmpty) {
         farmerFishInputDB.insertAgriInfoSources(notit).then((value) {
           print("inserted: $value");
         });
@@ -161,9 +161,9 @@ class AddFinancialandservicesSixBloc extends Bloc<
     List<CheckBoxList>? infomodels = await fetchInfo();
 
     //  if (pfProgress.pageTwo == 1) {
-    List<FarmerAgriInfoSource>? info = await getInfo();
+    List<FarmerAgriInfoSource>? info = await getInfo() ?? [];
     infomodels =
-        info != null ? infomodels = _infos(infomodels, info) : infomodels;
+        info.isNotEmpty ? infomodels = _infos(infomodels, info) : infomodels;
 
     ///   }
     emit(state.copyWith(
@@ -171,6 +171,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
             state.addFinancialandservicesSixModelObj?.copyWith(
       models: infomodels,
       fsProgress: pfProgress,
+      info: info,
     )));
   }
 }

@@ -104,7 +104,7 @@ class AddCropPesticideBloc
           );
         }
       }
-      if (state.addLandandwatermgmtThreeModelObj!.caProgressDB?.pageTwo == 0) {
+      if (state.addLandandwatermgmtThreeModelObj!.pest!.isEmpty) {
         farmerFishInputDB.insertPesticides(notits).then((value) {
           print("inserted: $value");
         });
@@ -161,8 +161,8 @@ class AddCropPesticideBloc
         );
     List<CheckBoxList>? pestsmodels = await fetchPest();
 
-    List<FarmerPesticide>? pest = await getPest();
-    if (pest != null) {
+    List<FarmerPesticide>? pest = await getPest() ?? [];
+    if (pest.isNotEmpty) {
       pestsmodels = _pest(pestsmodels, pest);
     }
     emit(state.copyWith(
@@ -170,6 +170,7 @@ class AddCropPesticideBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: pestsmodels,
       caProgressDB: caProgress,
+      pest: pest,
     )));
   }
 }

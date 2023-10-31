@@ -150,7 +150,7 @@ class AddAquacultureThreeBloc
           );
         }
       }
-      if (state.addAquacultureThreeModelObj!.aqProgress?.pageOne == 0) {
+      if (state.addAquacultureThreeModelObj!.categs!.isEmpty) {
         farmerFishCategoryDB.insertFishCategories(notit).then((value) {
           print("inserted: $value");
         });
@@ -188,15 +188,16 @@ class AddAquacultureThreeBloc
           pageOne: 0,
           pageTwo: 0,
         );
-    if (pfProgress.pageOne == 1) {
-      List<FarmerFishCategory>? categs = await getCategs();
-      atypes = _types(atypes, categs!);
-    }
+    List<FarmerFishCategory>? categs = await getCategs() ?? [];
+
+    atypes = categs.isNotEmpty ? _types(atypes, categs) : atypes;
+
     emit(state.copyWith(
         addAquacultureThreeModelObj:
             state.addAquacultureThreeModelObj?.copyWith(
       models: atypes,
       aqProgress: pfProgress,
+      categs: categs,
     )));
   }
 }
