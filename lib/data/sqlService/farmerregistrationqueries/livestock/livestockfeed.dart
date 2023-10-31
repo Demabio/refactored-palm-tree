@@ -69,6 +69,27 @@ class FarmerLivestockFeedsDB {
     }
   }
 
+  Future<int> reinsertFeeds(List<FarmerLivestockFeed> feeds) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var feed in feeds) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1,  date_created = ? WHERE farmer_livestock_id = ? AND feed_type_id = ?
+        ''', [
+          feed.dateCreated.toLocal().toIso8601String(),
+          feed.farmerLivestockId,
+          feed.feedTypeId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<List<FarmerLivestockFeed>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final feeds = await database.rawQuery(''' 
@@ -98,5 +119,11 @@ class FarmerLivestockFeedsDB {
     ''', [id]);
   }
 
+  Future<int> delete2(int id) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
+    ''', [id]);
+  }
   // Add more database methods as needed
 }

@@ -33,7 +33,10 @@ class AddAquacultureFourBloc
     int edit = PrefUtils().getEditId();
     CheckBoxList? data;
     List<SelectionPopupModel> d1 = await fillProdsystems();
+    List<SelectionPopupModel> d2 = await fillUOMs();
+
     SelectionPopupModel? aa;
+    SelectionPopupModel? bb;
     TextEditingController a = TextEditingController();
     TextEditingController b = TextEditingController();
     TextEditingController c = TextEditingController();
@@ -51,6 +54,13 @@ class AddAquacultureFourBloc
           aa = d1.firstWhere(
             (model) => model.id == data!.id,
           );
+          if (data.var5 != null) {
+            bb = data.var5 != "0"
+                ? d2.firstWhere(
+                    (model) => model.id == int.parse(data!.var5!),
+                  )
+                : null;
+          }
         }
       }
     }
@@ -61,8 +71,9 @@ class AddAquacultureFourBloc
         inp4: d,
         addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
           dropdownItemList: d1,
-          dropdownItemList1: await fillUOMs(),
+          dropdownItemList1: d2,
           selectedDropDownValue: aa,
+          selectedDropDownValue1: bb,
         )));
   }
 
@@ -88,6 +99,7 @@ class AddAquacultureFourBloc
       var2: agess.activeArea.toString(),
       var3: agess.noOfInactiveUnits.toString(),
       var4: agess.inactiveArea.toString(),
+      var5: agess.productionStatus.toString(),
     );
   }
 
@@ -112,7 +124,8 @@ class AddAquacultureFourBloc
           farmerFarmId: farmid,
           productionTypeId:
               state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
-          productionStatus: 0,
+          productionStatus:
+              state.addAquacultureFourModelObj!.selectedDropDownValue1!.id!,
           noOfActiveUnits: int.parse(state.inp1!.text),
           activeArea: double.parse(state.inp2!.text),
           noOfInactiveUnits: int.parse(state.inp3!.text),
@@ -128,7 +141,8 @@ class AddAquacultureFourBloc
           farmerFarmId: farmid,
           productionTypeId:
               state.addAquacultureFourModelObj!.selectedDropDownValue!.id!,
-          productionStatus: 0,
+          productionStatus:
+              state.addAquacultureFourModelObj!.selectedDropDownValue1!.id!,
           noOfActiveUnits: int.parse(state.inp1!.text),
           activeArea: double.parse(state.inp2!.text),
           noOfInactiveUnits: int.parse(state.inp3!.text),

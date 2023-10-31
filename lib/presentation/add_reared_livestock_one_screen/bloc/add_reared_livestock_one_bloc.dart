@@ -536,8 +536,18 @@ class AddRearedLivestockOneBloc
               FarmerLivestockAgeGroupsDB farmerLivestockAgeGroupsDB =
                   FarmerLivestockAgeGroupsDB();
               List<FarmerLivestockAgeGroup> ents = [];
+              List<FarmerLivestockAgeGroup> unselected = [];
 
               for (var ent in ageGroupList) {
+                unselected.add(FarmerLivestockAgeGroup(
+                  farmerLivestockAgegroupId: 0,
+                  farmerLivestockId: value,
+                  ageGroupId: ent.ageGroupId!,
+                  noOfLivestockMale: int.parse(ent.males!),
+                  noOfLivestockFemale: int.parse(ent.females!),
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                ));
                 if (ent.isSelected) {
                   ents.add(FarmerLivestockAgeGroup(
                     farmerLivestockAgegroupId: 0,
@@ -552,7 +562,11 @@ class AddRearedLivestockOneBloc
               }
 
               await farmerLivestockAgeGroupsDB
-                  .insertAgeGroups(ents)
+                  .insertAgeGroups(unselected)
+                  .then((value) => print("inserted $value"));
+
+              await farmerLivestockAgeGroupsDB
+                  .reinsertAgeGroups(ents)
                   .then((value) => print("inserted $value"));
             }
 
@@ -567,8 +581,17 @@ class AddRearedLivestockOneBloc
                   FarmerLivestockFeedsDB();
 
               List<FarmerLivestockFeed> feedlist = [];
+              List<FarmerLivestockFeed> unselected = [];
 
               for (var ent in feedslist) {
+                unselected.add(FarmerLivestockFeed(
+                  farmerLivestockId: value,
+                  createdBy: userId,
+                  dateCreated: DateTime.now(),
+                  farmerLivestockFeedId: 0,
+                  feedQuantity: 0,
+                  feedTypeId: ent.id!,
+                ));
                 if (ent.isSelected) {
                   feedlist.add(FarmerLivestockFeed(
                     farmerLivestockId: value,
@@ -580,9 +603,11 @@ class AddRearedLivestockOneBloc
                   ));
                 }
               }
-
               await farmerLivestockFeedsDB
-                  .insertFeeds(feedlist)
+                  .insertFeeds(unselected)
+                  .then((value) => print("inserted $value"));
+              await farmerLivestockFeedsDB
+                  .reinsertFeeds(feedlist)
                   .then((value) => print("inserted $value"));
             }
             String bees = PrefUtils().getBee();

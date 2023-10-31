@@ -242,7 +242,7 @@ class LoginScreen extends StatelessWidget {
   /// to push the named route for the otpOneScreen.
   void _onLoginUserServicePostEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.otpOneScreen,
+      AppRoutes.homeScreen,
     );
   }
 

@@ -97,7 +97,8 @@ class FinancialandservicesBloc
 
     if (pfProgress.pageTwo == 1) {
       List<FarmerExtensionAccess>? access = await getEAccess();
-      accessmodels = _access(accessmodels, access!);
+      accessmodels =
+          access != null ? _access(accessmodels, access) : accessmodels;
       List<FarmerExtensionMode>? mode = await getModes();
       if (mode != null) {
         modemodels = _modes(modemodels, mode);

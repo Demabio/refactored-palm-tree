@@ -33,7 +33,7 @@ class FarmerFishProductionSystemDB {
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, production_type_id, production_status, active_area,
         no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFishProductionSystem.farmerId,
       farmerFishProductionSystem.farmerFarmId,
@@ -44,6 +44,8 @@ class FarmerFishProductionSystemDB {
       farmerFishProductionSystem.inactiveArea,
       farmerFishProductionSystem.noOfInactiveUnits,
       DateTime.now().toLocal().toIso8601String(),
+      farmerFishProductionSystem.createdBy,
+      1,
       farmerFishProductionSystem.createdBy,
     ]);
   }

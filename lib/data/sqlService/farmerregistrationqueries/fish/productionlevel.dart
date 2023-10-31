@@ -29,7 +29,7 @@ class FarmerFishProductionLevelsDB {
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, production_level_id, fertilizer_in_ponds, esp_benefit, date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFishProductionLevel.farmerId,
       farmerFishProductionLevel.farmerFarmId,
@@ -37,6 +37,8 @@ class FarmerFishProductionLevelsDB {
       farmerFishProductionLevel.fertilizerInPonds! ? 1 : 0,
       farmerFishProductionLevel.espBenefit,
       DateTime.now().toLocal().toIso8601String(),
+      farmerFishProductionLevel.createdBy,
+      1,
       farmerFishProductionLevel.createdBy,
     ]);
   }

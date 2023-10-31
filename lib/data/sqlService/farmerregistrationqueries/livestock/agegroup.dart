@@ -72,7 +72,37 @@ class FarmerLivestockAgeGroupsDB {
     }
   }
 
+  Future<int> reinsertAgeGroups(List<FarmerLivestockAgeGroup> ageGroups) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var ageGroup in ageGroups) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, no_of_livestock_male = ?, no_of_livestock_female = ?, date_created = ? WHERE farmer_livestock_id = ? AND age_group_id = ?
+        ''', [
+          ageGroup.noOfLivestockMale,
+          ageGroup.noOfLivestockFemale,
+          ageGroup.dateCreated.toLocal().toIso8601String(),
+          ageGroup.farmerLivestockId,
+          ageGroup.ageGroupId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> delete(int id) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
+    ''', [id]);
+  }
+
+  Future<int> delete2(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
     UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
@@ -82,7 +112,7 @@ class FarmerLivestockAgeGroupsDB {
   Future<List<FarmerLivestockAgeGroup>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final ageGroups = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName AND active = 1
     ''');
 
     return ageGroups
@@ -93,7 +123,7 @@ class FarmerLivestockAgeGroupsDB {
   Future<List<FarmerLivestockAgeGroup>> fetchByLive(int id) async {
     final database = await FarmerDatabaseService().database;
     final ageGroups = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ? AND active = 1
     ''', [id]);
 
     return ageGroups
@@ -104,7 +134,7 @@ class FarmerLivestockAgeGroupsDB {
   Future<FarmerLivestockAgeGroup?> fetchById(int id) async {
     final database = await FarmerDatabaseService().database;
     final ageGroups = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_livestockagegroup_id = ?
+      SELECT * FROM $tableName WHERE farmer_livestockagegroup_id = ? AND active = 1
     ''', [id]);
 
     return ageGroups.isNotEmpty

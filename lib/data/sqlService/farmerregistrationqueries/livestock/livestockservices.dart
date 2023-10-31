@@ -81,7 +81,7 @@ class FarmerLivestockServicesDB {
         fertilizer_for_fodder, fodder_seeds, fertilizer_seeds, ai_use, 
         hormone_use, embryo_transfer, routine_vaccination, curative_measures, 
         date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerLivestockService.farmerId,
       farmerLivestockService.farmerFarmId,
@@ -96,6 +96,8 @@ class FarmerLivestockServicesDB {
       farmerLivestockService.routineVaccination,
       farmerLivestockService.curativeMeasures,
       DateTime.now().toLocal().toIso8601String(),
+      farmerLivestockService.createdBy,
+      1,
       farmerLivestockService.createdBy,
     ]);
   }

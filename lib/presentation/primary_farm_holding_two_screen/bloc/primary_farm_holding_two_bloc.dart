@@ -326,8 +326,18 @@ class PrimaryFarmHoldingTwoBloc
                 state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
             List<FarmerEnterprise> ents = [];
+            List<FarmerEnterprise> notselected = [];
 
             for (var ent in state.primaryFarmHoldingTwoModelObj!.enterprises) {
+              notselected.add(FarmerEnterprise(
+                farmerEnterpriseId: 0,
+                farmerFarmId:
+                    state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                enterpriseId: ent.enterpriseId!,
+                insured: 0,
+                createdBy: userId,
+                dateCreated: DateTime.now(),
+              ));
               if (ent.isSelected) {
                 ents.add(FarmerEnterprise(
                   farmerEnterpriseId: 0,
@@ -341,7 +351,7 @@ class PrimaryFarmHoldingTwoBloc
               }
             }
             await farmerEnterprisesDB
-                .insertEnterprises(ents)
+                .insertEnterprises(notselected)
                 .then((value) => print("inserted $value"));
             event.createSuccessful!.call();
           } else {
@@ -408,8 +418,18 @@ class PrimaryFarmHoldingTwoBloc
                 state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId);
 
             List<FarmerEnterprise> ents = [];
+            List<FarmerEnterprise> notselected = [];
 
             for (var ent in state.primaryFarmHoldingTwoModelObj!.enterprises) {
+              notselected.add(FarmerEnterprise(
+                farmerEnterpriseId: 0,
+                farmerFarmId:
+                    state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
+                enterpriseId: ent.enterpriseId!,
+                insured: 0,
+                createdBy: userId,
+                dateCreated: DateTime.now(),
+              ));
               if (ent.isSelected) {
                 ents.add(FarmerEnterprise(
                   farmerEnterpriseId: 0,
@@ -417,13 +437,18 @@ class PrimaryFarmHoldingTwoBloc
                       state.primaryFarmHoldingTwoModelObj!.farm!.farmerFarmId,
                   enterpriseId: ent.enterpriseId!,
                   insured: 0,
-                  dateCreated: DateTime.now(),
                   createdBy: userId,
+                  dateCreated: DateTime.now(),
                 ));
               }
             }
+            if (state.primaryFarmHoldingTwoModelObj!.pfProgress?.pageTwo == 0) {
+              await farmerEnterprisesDB
+                  .insertEnterprises(notselected)
+                  .then((value) => print("inserted $value"));
+            }
             await farmerEnterprisesDB
-                .insertEnterprises(ents)
+                .reinsertEnterprises(ents)
                 .then((value) => print("inserted $value"));
             event.createSuccessful!.call();
           } else {

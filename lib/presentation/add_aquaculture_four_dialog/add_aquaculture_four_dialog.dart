@@ -93,6 +93,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                         return "Field is required";
                       }
                     },
+                    val: addAquacultureFourModelObj?.selectedDropDownValue,
                     items: addAquacultureFourModelObj?.dropdownItemList ?? [],
                     onChanged: (value) {
                       context

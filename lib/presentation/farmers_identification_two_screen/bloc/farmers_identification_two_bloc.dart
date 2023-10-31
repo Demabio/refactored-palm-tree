@@ -99,7 +99,12 @@ class FarmersIdentificationTwoBloc
     int countyId = int.parse(county.isEmpty ? "1" : county);
     int subcountyId = int.parse(subcounty.isEmpty ? "1" : subcounty);
     int divisionId = int.parse(division.isEmpty ? "1" : division);
+    String enumeratorname = claims
+        .payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    String enumeratorarea = claims.payload['EnumerationAreaNumber'];
 
+    String enumeratormobile = claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone'];
     FarmerDB farmerDB = FarmerDB();
     try {
       if (state.farmersIdentificationTwoModelObj?.fiProgress?.pageOne == 0) {
@@ -114,6 +119,11 @@ class FarmersIdentificationTwoBloc
           sublocationId: sublocationId,
           divisionId: divisionId,
           constituencyId: constituencyId,
+          enumeratorId: userId,
+          enumerationAreaNumber:
+              enumeratorarea.isEmpty ? "N/A" : enumeratorarea,
+          enumeratorName: enumeratorname,
+          enumeratorMobile: enumeratormobile,
         ))
             .then((value) {
           PrefUtils().setFarmerId(value);

@@ -71,11 +71,39 @@ class FarmerEnterprisesDB {
     }
   }
 
+  Future<int> reinsertEnterprises(List<FarmerEnterprise> enterprises) async {
+    final database = await FarmerDatabaseService().database;
+    final batch = database.batch();
+    try {
+      for (var enterprise in enterprises) {
+        batch.rawUpdate('''
+        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND enterprise_id = ?
+        ''', [
+          enterprise.dateCreated?.toLocal().toIso8601String(),
+          enterprise.farmerFarmId,
+          enterprise.enterpriseId,
+        ]);
+      }
+
+      await batch.commit(noResult: true);
+      return 200;
+    } catch (e) {
+      return 500;
+    }
+  }
+
   Future<int> delete(int farmerEnterprise) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
     UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
     ''', [farmerEnterprise]);
+  }
+
+  Future<int> delete2(int id) async {
+    final database = await FarmerDatabaseService().database;
+    return await database.rawUpdate('''
+    UPDATE $tableName SET active = 0 WHERE farmer_livestock_id = ?
+    ''', [id]);
   }
 
   Future<int> updateall(int farmerEnterprise, int childid) async {
@@ -91,7 +119,7 @@ class FarmerEnterprisesDB {
   Future<List<FarmerEnterprise>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
     final enterprises = await database.rawQuery(''' 
-      SELECT * FROM $tableName 
+      SELECT * FROM $tableName AND active = 1
     ''');
 
     return enterprises
@@ -102,7 +130,7 @@ class FarmerEnterprisesDB {
   Future<List<FarmerEnterprise>> fetchAllByFarmId(int id) async {
     final database = await FarmerDatabaseService().database;
     final enterprises = await database.rawQuery(''' 
-      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+      SELECT * FROM $tableName WHERE farmer_farm_id = ? AND active = 1
     ''', [id]);
 
     return enterprises
