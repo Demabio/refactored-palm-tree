@@ -1,5 +1,6 @@
 import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import '../crop_agriculture_screen/widgets/cropdetails_item_widget.dart';
 import 'bloc/crop_agriculture_bloc.dart';
@@ -117,7 +118,53 @@ class CropAgricultureScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 20.v),
+                BlocSelector<CropAgricultureBloc, CropAgricultureState,
+                    CropAgricultureState>(
+                  selector: (state) => state,
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Visibility(
+                          visible: state.done,
+                          child: CustomElevatedButton(
+                            width: ResponsiveExtension(343).h,
+                            text: "Next Section".tr,
+                            onTap: () {
+                              if (state.next) {
+                                NavigatorService.popAndPushNamed(
+                                  AppRoutes.addRearedLivestockOneScreen,
+                                );
+                              } else if (state.prev) {
+                                NavigatorService.popAndPushNamed(
+                                  AppRoutes.addAquacultureOneScreen,
+                                );
+                              } else {
+                                NavigatorService.popAndPushNamed(
+                                  AppRoutes.addFarmtechandassetsOneScreen,
+                                );
+                              }
+                            },
+                            alignment: Alignment.bottomCenter,
+                          ),
+                        ),
+                        SizedBox(height: 20.v),
+                        CustomElevatedButton(
+                          width: ResponsiveExtension(343).h,
+                          text: "Previous Section".tr,
+                          onTap: () {
+                            NavigatorService.popAndPushNamed(
+                              AppRoutes.primaryFarmHoldingScreen,
+                            );
+                          },
+                          margin: EdgeInsets.only(bottom: 10.v),
+                          alignment: Alignment.bottomCenter,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),

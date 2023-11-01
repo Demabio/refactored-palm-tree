@@ -307,6 +307,10 @@ class FarmerRegistrationBloc
     StepState d = StepState.indexed;
     StepState e = StepState.indexed;
 
+    StepState f = StepState.indexed;
+    StepState g = StepState.indexed;
+    StepState h = StepState.indexed;
+
     if (farm.cropProd!) {
       if (caProgress.pageOne == 1 && caProgress.pageTwo == 1) {
         a = StepState.complete;
@@ -314,6 +318,7 @@ class FarmerRegistrationBloc
     } else {
       a = StepState.disabled;
     }
+
     if (farm.livestockProd!) {
       if (lsProgress.pageOne == 1 && lsiProgress.pageOne == 1) {
         b = StepState.complete;
@@ -321,6 +326,7 @@ class FarmerRegistrationBloc
     } else {
       b = StepState.disabled;
     }
+
     if (farm.fishFarming!) {
       if (aqProgress.pageOne == 1 && aqProgress.pageTwo == 1) {
         c = StepState.complete;
@@ -328,6 +334,31 @@ class FarmerRegistrationBloc
     } else {
       c = StepState.disabled;
     }
+
+    if (fhProgress.pageOne == 1 && fhProgress.pageTwo == 1) {
+      if (atProgress.pageOne == 1) {
+        f = StepState.complete;
+      }
+    } else {
+      f = StepState.disabled;
+    }
+
+    if (fhProgress.pageOne == 1 && fhProgress.pageTwo == 1) {
+      if (lwProgress.pageOne == 1 && lwProgress.pageOne == 1) {
+        g = StepState.complete;
+      }
+    } else {
+      g = StepState.disabled;
+    }
+
+    if (fhProgress.pageOne == 1 && fhProgress.pageTwo == 1) {
+      if (fsProgress.pageOne == 1 && fsProgress.pageTwo == 1) {
+        h = StepState.complete;
+      }
+    } else {
+      h = StepState.disabled;
+    }
+
     if (!PrefUtils().getFound()) {
       if (fiProgress.pageOne == 1 ||
           fiProgress.pageTwo == 1 ||
@@ -341,6 +372,7 @@ class FarmerRegistrationBloc
       d = StepState.disabled;
       e = StepState.disabled;
     }
+
     emit(state.copyWith(
         complete: farm.completed,
         farmerRegistrationModelObj: state.farmerRegistrationModelObj?.copyWith(
@@ -362,6 +394,8 @@ class FarmerRegistrationBloc
           crop: a,
           fish: c,
           live: b, fid: d, fsv: e,
+          tech: f,
+          land: g, finance: h,
           fi2: (fiProgress.pageOne == 1 &&
               fiProgress.pageTwo == 1 &&
               fiProgress.pageOne == 1),

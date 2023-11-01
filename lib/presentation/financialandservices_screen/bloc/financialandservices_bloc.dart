@@ -105,6 +105,7 @@ class FinancialandservicesBloc
       }
     }
     emit(state.copyWith(
+      done: pfProgress.pageOne == 1 || pfProgress.pageTwo == 1,
       p: infomodels,
       e: accessmodels,
       m: modemodels,

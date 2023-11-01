@@ -1,5 +1,7 @@
 // ignore_for_file: must_call_super
 
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+
 import 'bloc/livestock_two_bloc.dart';
 import 'models/livestock_two_model.dart';
 import 'package:flutter/material.dart';
@@ -305,6 +307,40 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                           ),
                         ],
                       ),
+                    ),
+                    SizedBox(height: 20.v),
+                    Visibility(
+                      visible: state.done,
+                      child: CustomElevatedButton(
+                        width: ResponsiveExtension(343).h,
+                        text: "Next Section".tr,
+                        onTap: () {
+                          if (state.next) {
+                            NavigatorService.popAndPushNamed(
+                                AppRoutes.addAquacultureOneScreen);
+                          } else {
+                            NavigatorService.popAndPushNamed(
+                                AppRoutes.addFarmtechandassetsOneScreen);
+                          }
+                        },
+                        alignment: Alignment.bottomCenter,
+                      ),
+                    ),
+                    SizedBox(height: 20.v),
+                    CustomElevatedButton(
+                      width: ResponsiveExtension(343).h,
+                      text: "Previous Section".tr,
+                      onTap: () {
+                        if (state.prev) {
+                          NavigatorService.popAndPushNamed(
+                              AppRoutes.cropAgricultureScreen);
+                        } else {
+                          NavigatorService.popAndPushNamed(
+                              AppRoutes.farmerRegistrationScreen);
+                        }
+                      },
+                      margin: EdgeInsets.only(bottom: 10.v),
+                      alignment: Alignment.bottomCenter,
                     ),
                   ],
                 ),

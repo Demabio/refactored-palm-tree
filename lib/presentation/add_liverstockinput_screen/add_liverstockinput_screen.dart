@@ -48,7 +48,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
             ),
             centerTitle: true,
             title: AppbarSubtitle1(
-              text: "msg_add_livestock_input".tr,
+              text: "Livestock Input".tr,
             ),
             styleType: Style.bgFill,
           ),

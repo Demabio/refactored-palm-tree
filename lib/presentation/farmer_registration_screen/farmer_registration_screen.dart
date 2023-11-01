@@ -214,7 +214,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
         _buildStep(
           title: Text('Farm Technology and Assets'),
-          state: model.at2 ? StepState.complete : StepState.indexed,
+          state: model.tech,
           addcallback: () {
             onFarmasset(context);
           },
@@ -223,7 +223,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
         _buildStep(
           title: Text('Land and Water Management'),
-          state: model.lw2 ? StepState.complete : StepState.indexed,
+          state: model.land,
           addcallback: () {
             onLandWater(context);
           },
@@ -232,7 +232,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
         ),
         _buildStep(
           title: Text('Financial and Services'),
-          state: model.fs2 ? StepState.complete : StepState.indexed,
+          state: model.finance,
           addcallback: () {
             onFinance(context);
           },
@@ -311,10 +311,12 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   farmersIdentification(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen,
-        arguments: {
-          NavigationArgs.farmerEdit: false,
-        });
+    if (!PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationTwoScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: false,
+          });
+    }
   }
 
   primaryFarmHolding(BuildContext context) {

@@ -59,6 +59,9 @@ class FarmtechandassetsBloc
           farmerId: 0,
           farmerFarmId: 0,
           labourSourceId: 0,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
         );
 
     FarmAssetSource? assetSource;
@@ -91,6 +94,10 @@ class FarmtechandassetsBloc
       p: atypes,
       s: strucs,
       farm: labour,
+      done: pfProgress.pageOne == 1 || pfProgress.pageTwo == 1,
+      next: farmer.livestockProd,
+      next2: farmer.cropProd,
+      prev: farmer.fishFarming,
       farmStructure: assetSource,
     ));
   }

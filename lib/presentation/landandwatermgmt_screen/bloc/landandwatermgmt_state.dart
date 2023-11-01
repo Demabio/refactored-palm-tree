@@ -14,6 +14,7 @@ class LandandwatermgmtState extends Equatable {
     this.farmer,
     this.soil,
     this.farm,
+    this.done = false,
   });
 
   LandandwatermgmtModel? landandwatermgmtModelObj;
@@ -22,6 +23,7 @@ class LandandwatermgmtState extends Equatable {
   List<CheckBoxList> b;
   List<CheckBoxList> pp;
   List<CheckBoxList> s;
+  bool done;
 
   Farmer? farmer;
   FarmerSoilTest? soil;
@@ -37,6 +39,7 @@ class LandandwatermgmtState extends Equatable {
         soil,
         farm,
         farmer,
+        done,
       ];
   LandandwatermgmtState copyWith({
     LandandwatermgmtModel? landandwatermgmtModelObj,
@@ -47,6 +50,7 @@ class LandandwatermgmtState extends Equatable {
     List<CheckBoxList>? s,
     Farmer? farmer,
     FarmerFarm? farm,
+    bool? done,
     FarmerSoilTest? soil,
   }) {
     return LandandwatermgmtState(
@@ -60,6 +64,7 @@ class LandandwatermgmtState extends Equatable {
       farmer: farmer ?? this.farmer,
       farm: farm ?? this.farm,
       soil: soil ?? this.soil,
+      done: done ?? this.done,
     );
   }
 }

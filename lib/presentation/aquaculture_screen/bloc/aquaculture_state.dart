@@ -12,6 +12,9 @@ class AquacultureState extends Equatable {
     this.fish = const [],
     this.farmerFishProductionLevel,
     this.level,
+    this.done = false,
+    this.next = false,
+    this.prev = false,
   });
 
   AquacultureModel? aquacultureModelObj;
@@ -21,6 +24,9 @@ class AquacultureState extends Equatable {
   List<CheckBoxList> fish;
   FarmerFishProductionLevel? farmerFishProductionLevel;
   String? level;
+  bool done;
+  bool next;
+  bool prev;
   @override
   List<Object?> get props => [
         aquacultureModelObj,
@@ -29,6 +35,9 @@ class AquacultureState extends Equatable {
         prodsyss,
         fish,
         level,
+        done,
+        next,
+        prev,
         farmerFishProductionLevel,
       ];
   AquacultureState copyWith({
@@ -39,6 +48,9 @@ class AquacultureState extends Equatable {
     List<CheckBoxList>? fish,
     FarmerFishProductionLevel? farmerFishProductionLevel,
     String? level,
+    bool? done,
+    bool? next,
+    bool? prev,
   }) {
     return AquacultureState(
       aquacultureModelObj: aquacultureModelObj ?? this.aquacultureModelObj,
@@ -46,6 +58,9 @@ class AquacultureState extends Equatable {
       aquatypes: aquatypes ?? this.aquatypes,
       prodsyss: prodsyss ?? this.prodsyss,
       fish: fish ?? this.fish,
+      done: done ?? this.done,
+      next: next ?? this.next,
+      prev: prev ?? this.prev,
       level: level ?? this.level,
       farmerFishProductionLevel:
           farmerFishProductionLevel ?? this.farmerFishProductionLevel,

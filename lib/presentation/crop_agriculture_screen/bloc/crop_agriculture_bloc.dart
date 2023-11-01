@@ -8,6 +8,7 @@ import 'package:kiamis_app/data/models/dbModels/crops/cropsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/crops/cropwatersource.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertiliser.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fertiliser/fertilisersource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/pesticide.dart';
@@ -21,6 +22,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/fertiliser/fertilisertype.d
 import 'package:kiamis_app/data/sqlService/dbqueries/other/pesticidetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fertiliser/fertiliser_source.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/pesticide.dart';
@@ -38,13 +40,40 @@ class CropAgricultureBloc
     on<AddEditEvent>(_addEdit);
     on<DeleteEvent>(_delete);
   }
+  Future<CAProgress?> getCAProgress(int? id) async {
+    // int cropid = PrefUtils().getCropId();
+    CAProgressDB caProgressDB = CAProgressDB();
+    return id != null ? await caProgressDB.fetchByCropId(id) : null;
+  }
+
+  Future<FarmerFarm?> getFarmsCrops() async {
+    int id = PrefUtils().getFarmId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
+  }
 
   _onInitialize(
     CropAgricultureInitialEvent event,
     Emitter<CropAgricultureState> emit,
   ) async {
     List<FarmerCrop> crops = await fetchFCrops() ?? [];
+    int? cropid = crops.isNotEmpty ? crops.last.farmerCropId : null;
 
+    CAProgress caProgress = await getCAProgress(cropid) ??
+        CAProgress(
+          cropId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    FarmerFarm farm = await getFarmsCrops() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
+        );
     List<CropdetailsItemModel> cropmodels = [];
 
     CropWaterSource? waterSource;
@@ -84,7 +113,7 @@ class CropAgricultureBloc
         id: crop.farmerCropId,
         totalAcreage: crop.cropArea.toString(),
         name: cropp!.crop,
-        unitOfArea: cropAreaUnit!.areaUnit,
+        unitOfArea: cropAreaUnit?.areaUnit ?? "N/A",
         water: waterSource?.waterSource,
         purpose: cropPlantingMotive?.cropMotive,
         system: cropSystem?.croppingSystem,
@@ -98,6 +127,9 @@ class CropAgricultureBloc
     }
     emit(
       state.copyWith(
+        next: farm.livestockProd,
+        prev: farm.fishFarming,
+        done: caProgress.pageOne == 1 && caProgress.pageTwo == 1,
         cropAgricultureModelObj: state.cropAgricultureModelObj?.copyWith(
           cropdetailsItemList: cropmodels,
         ),

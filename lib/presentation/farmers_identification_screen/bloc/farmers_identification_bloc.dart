@@ -55,6 +55,12 @@ class FarmersIdentificationBloc
         : null;
   }
 
+  Future<FIProgress?> getFIProgress() async {
+    int farmerid = PrefUtils().getFarmerId();
+    FIProgressDB fiProgressDB = FIProgressDB();
+    return await fiProgressDB.fetchByFarmerId(farmerid);
+  }
+
   _onInitialize(
     FarmersIdentificationInitialEvent event,
     Emitter<FarmersIdentificationState> emit,
@@ -63,6 +69,14 @@ class FarmersIdentificationBloc
         Farmer(
           farmerId: 0,
           farmerName: "NA",
+        );
+    FIProgress fiProgress = await getFIProgress() ??
+        FIProgress(
+          farmerId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+          pageThree: 0,
+          pageFour: 0,
         );
     EducationLevel? level = farmer.educationLevelId != null
         ? await getEducation(farmer.educationLevelId ?? 0)
@@ -76,6 +90,9 @@ class FarmersIdentificationBloc
         : null;
 
     emit(state.copyWith(
+      done: fiProgress.pageOne == 1 &&
+          fiProgress.pageTwo == 1 &&
+          fiProgress.pageOne == 1,
       farmersIdentificationModelObj:
           state.farmersIdentificationModelObj?.copyWith(
         farmer: farmer,

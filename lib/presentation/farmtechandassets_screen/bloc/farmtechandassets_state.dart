@@ -11,6 +11,10 @@ class FarmtechandassetsState extends Equatable {
     this.s = const [],
     this.farm,
     this.farmStructure,
+    this.next = false,
+    this.next2 = false,
+    this.prev = false,
+    this.done = false,
   });
 
   FarmtechandassetsModel? farmtechandassetsModelObj;
@@ -19,6 +23,10 @@ class FarmtechandassetsState extends Equatable {
   List<CheckBoxList> s;
   LabourSource? farm;
   FarmAssetSource? farmStructure;
+  bool next;
+  bool next2;
+  bool prev;
+  bool done;
   @override
   List<Object?> get props => [
         farmtechandassetsModelObj,
@@ -27,6 +35,10 @@ class FarmtechandassetsState extends Equatable {
         s,
         farm,
         farmStructure,
+        next,
+        next2,
+        prev,
+        done,
       ];
   FarmtechandassetsState copyWith({
     FarmtechandassetsModel? farmtechandassetsModelObj,
@@ -35,6 +47,10 @@ class FarmtechandassetsState extends Equatable {
     List<CheckBoxList>? s,
     LabourSource? farm,
     FarmAssetSource? farmStructure,
+    bool? next,
+    bool? next2,
+    bool? prev,
+    bool? done,
   }) {
     return FarmtechandassetsState(
       farmtechandassetsModelObj:
@@ -44,6 +60,10 @@ class FarmtechandassetsState extends Equatable {
       s: s ?? this.s,
       farmStructure: farmStructure ?? this.farmStructure,
       farm: farm ?? this.farm,
+      next: next ?? this.next,
+      next2: next2 ?? this.next2,
+      prev: prev ?? this.prev,
+      done: done ?? this.done,
     );
   }
 }

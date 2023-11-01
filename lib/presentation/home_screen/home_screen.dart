@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Drafts".tr,
+                                                  Text("To Submit".tr,
                                                       style: theme.textTheme
                                                           .labelLarge),
                                                   SizedBox(height: 1.v),
@@ -330,7 +330,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       style: theme.textTheme
                                                           .labelMedium),
                                                   SizedBox(height: 2.v),
-                                                  Text(state.c.toString(),
+                                                  Text(
+                                                      "0", //state.c.toString(),
                                                       style: CustomTextStyles
                                                           .titleMediumPrimary)
                                                 ]))
@@ -365,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("lbl_total".tr,
+                                                  Text("All Farmers".tr,
                                                       style: theme.textTheme
                                                           .labelLarge),
                                                   SizedBox(height: 1.v),

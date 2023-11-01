@@ -33,6 +33,9 @@ class FarmerRegistrationModel extends Equatable {
     this.fish = StepState.indexed,
     this.fid = StepState.indexed,
     this.fsv = StepState.indexed,
+    this.land = StepState.indexed,
+    this.finance = StepState.indexed,
+    this.tech = StepState.indexed,
   });
 
   ProcessStatus? processStatus;
@@ -57,6 +60,9 @@ class FarmerRegistrationModel extends Equatable {
   StepState crop;
   StepState live;
   StepState fish;
+  StepState tech;
+  StepState land;
+  StepState finance;
   StepState fid;
   StepState fsv;
 
@@ -84,6 +90,9 @@ class FarmerRegistrationModel extends Equatable {
     StepState? crop,
     StepState? live,
     StepState? fish,
+    StepState? tech,
+    StepState? land,
+    StepState? finance,
     StepState? fid,
     StepState? fsv,
   }) {
@@ -102,6 +111,9 @@ class FarmerRegistrationModel extends Equatable {
       crop: crop ?? this.crop,
       live: live ?? this.live,
       fish: fish ?? this.fish,
+      tech: tech ?? this.tech,
+      land: land ?? this.land,
+      finance: finance ?? this.finance,
       fi2: fi2 ?? this.fi2,
       fh2: fh2 ?? this.fh2,
       ca2: ca2 ?? this.ca2,
@@ -117,6 +129,9 @@ class FarmerRegistrationModel extends Equatable {
 
   @override
   List<Object?> get props => [
+        finance,
+        land,
+        tech,
         processStatus,
         farm,
         currentStep,

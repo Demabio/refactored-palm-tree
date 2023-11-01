@@ -1,6 +1,7 @@
 // ignore_for_file: must_call_super
 
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'bloc/livestock_one_bloc.dart';
 import 'models/livestock_item_model.dart';
@@ -113,6 +114,51 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                       delete: () => delete(context, model.id!),
                                     );
                                   }),
+                              SizedBox(height: 20.v),
+                              CustomElevatedButton(
+                                width: ResponsiveExtension(343).h,
+                                text: "Livestock Input".tr,
+                                onTap: () {
+                                  NavigatorService.popAndPushNamed(
+                                    AppRoutes.addLiverstockinputScreen,
+                                  );
+                                },
+                                alignment: Alignment.bottomCenter,
+                              ),
+                              SizedBox(height: 20.v),
+                              Visibility(
+                                visible: state.done,
+                                child: CustomElevatedButton(
+                                  width: ResponsiveExtension(343).h,
+                                  text: "Next Section".tr,
+                                  onTap: () {
+                                    if (state.next) {
+                                      NavigatorService.popAndPushNamed(
+                                          AppRoutes.addAquacultureOneScreen);
+                                    } else {
+                                      NavigatorService.popAndPushNamed(AppRoutes
+                                          .addFarmtechandassetsOneScreen);
+                                    }
+                                  },
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                              ),
+                              SizedBox(height: 20.v),
+                              CustomElevatedButton(
+                                width: ResponsiveExtension(343).h,
+                                text: "Previous Section".tr,
+                                onTap: () {
+                                  if (state.prev) {
+                                    NavigatorService.popAndPushNamed(
+                                        AppRoutes.cropAgricultureScreen);
+                                  } else {
+                                    NavigatorService.popAndPushNamed(
+                                        AppRoutes.farmerRegistrationScreen);
+                                  }
+                                },
+                                margin: EdgeInsets.only(bottom: 10.v),
+                                alignment: Alignment.bottomCenter,
+                              ),
                             ],
                           );
                         },

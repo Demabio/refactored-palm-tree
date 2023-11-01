@@ -1,4 +1,5 @@
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'bloc/primary_farm_holding_bloc.dart';
 import 'models/primary_farm_holding_model.dart';
@@ -508,6 +509,45 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(height: 20.v),
+                      Visibility(
+                        visible: state.done,
+                        child: CustomElevatedButton(
+                          width: ResponsiveExtension(343).h,
+                          text: "Next Section".tr,
+                          onTap: () {
+                            if (state.next) {
+                              NavigatorService.popAndPushNamed(
+                                AppRoutes.addCropOneScreen,
+                              );
+                            } else if (state.next2) {
+                              NavigatorService.popAndPushNamed(
+                                AppRoutes.addRearedLivestockOneScreen,
+                              );
+                            } else if (state.prev) {
+                              NavigatorService.popAndPushNamed(
+                                AppRoutes.addAquacultureOneScreen,
+                              );
+                            } else {
+                              NavigatorService.popAndPushNamed(
+                                AppRoutes.addFarmtechandassetsOneScreen,
+                              );
+                            }
+                          },
+                          margin: EdgeInsets.only(bottom: 10.v),
+                          alignment: Alignment.bottomCenter,
+                        ),
+                      ),
+                      SizedBox(height: 20.v),
+                      CustomElevatedButton(
+                        width: ResponsiveExtension(343).h,
+                        text: "Previous Section".tr,
+                        onTap: () => NavigatorService.popAndPushNamed(
+                          AppRoutes.farmersIdentificationScreen,
+                        ),
+                        margin: EdgeInsets.only(bottom: 10.v),
+                        alignment: Alignment.bottomCenter,
                       ),
                     ],
                   ),

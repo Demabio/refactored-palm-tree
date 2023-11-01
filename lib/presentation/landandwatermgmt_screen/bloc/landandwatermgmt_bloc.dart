@@ -108,6 +108,7 @@ class LandandwatermgmtBloc
       }
     }
     emit(state.copyWith(
+      done: pfProgress.pageOne == 1 || pfProgress.pageTwo == 1,
       u: typemodels,
       p: schememodels,
       b: agmodels,

@@ -5,6 +5,7 @@ import 'package:kiamis_app/data/models/dbModels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishproductionlevels.dart';
 import 'package:kiamis_app/data/models/dbModels/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fish.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishcategory.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/fish/fishinput.dart';
@@ -17,6 +18,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionlevels.d
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductiontype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fishproductionuom.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishcategory.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/fish/fishinput.dart';
@@ -32,6 +34,11 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
   AquacultureBloc(AquacultureState initialState) : super(initialState) {
     on<AquacultureInitialEvent>(_onInitialize);
   }
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
+  }
 
   _onInitialize(
     AquacultureInitialEvent event,
@@ -42,6 +49,15 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
           farmId: 0,
           pageOne: 0,
           pageTwo: 0,
+        );
+
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
         );
 
     List<CheckBoxList>? fishinputs = [];
@@ -84,12 +100,16 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
       fish = await _fish(fish, fishes!);
       prods = _systems(prods, prodsyss!);
     }
+
     emit(state.copyWith(
       farmerFishProductionLevel: farmerFishProductionLevel,
       aquatypes: atypes,
       fish: fish,
       prodsyss: prods,
       level: fishProductionLevel?.productionLevel,
+      done: pfProgress.pageOne == 1 && pfProgress.pageTwo == 1,
+      next: farm.livestockProd,
+      prev: farm.cropProd,
     ));
   }
 

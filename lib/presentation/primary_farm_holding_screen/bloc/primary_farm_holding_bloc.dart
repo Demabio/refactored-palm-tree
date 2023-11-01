@@ -70,6 +70,12 @@ class PrimaryFarmHoldingBloc
     return list;
   }
 
+  Future<PFProgress?> getFHProgress() async {
+    int id = PrefUtils().getFarmId();
+    PFProgressDB pfProgressDB = PFProgressDB();
+    return await pfProgressDB.fetchByFarmId(id);
+  }
+
   _onInitialize(
     PrimaryFarmHoldingInitialEvent event,
     Emitter<PrimaryFarmHoldingState> emit,
@@ -79,6 +85,15 @@ class PrimaryFarmHoldingBloc
           farmerId: 0,
           farmerFarmId: 0,
           ownershipId: 1,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
+        );
+    PFProgress fhProgress = await getFHProgress() ??
+        PFProgress(
+          farmId: 0,
+          pageOne: 0,
+          pageTwo: 0,
         );
     CropAreaUnit? level = await getArea(farm.areaUnitId ?? 1);
     FarmerFarmOwnership? relationship = await getOwner(farm.ownershipId ?? 1);
@@ -94,6 +109,10 @@ class PrimaryFarmHoldingBloc
 
     emit(
       state.copyWith(
+        next2: farm.livestockProd,
+        next: farm.cropProd,
+        prev: farm.fishFarming,
+        done: fhProgress.pageOne == 1 || fhProgress.pageTwo == 1,
         primaryFarmHoldingModelObj: state.primaryFarmHoldingModelObj?.copyWith(
           farm: farm,
           area: level?.areaUnit ?? "N/A",

@@ -432,7 +432,7 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
+        'SELECT COUNT(*) FROM farmer WHERE registrationStatusId = 2 AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -440,7 +440,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchUnverified() async {
     final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
-        'SELECT * FROM farmer WHERE registrationStatusId IN (1,2) AND completed = 1');
+        'SELECT * FROM farmer WHERE registrationStatusId = 2 AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;

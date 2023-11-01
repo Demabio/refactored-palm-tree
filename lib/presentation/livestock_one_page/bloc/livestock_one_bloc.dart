@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/dbModels/livestock/livestockfarmingsystem.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/agegroup.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/feed.dart';
@@ -12,7 +14,9 @@ import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart'
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfeedtypes.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
@@ -177,12 +181,56 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     return await farmDB.fetchByFarm(id);
   }
 
+  Future<FarmerFarm?> getFarm() async {
+    int id = PrefUtils().getFarmId();
+    FarmerFarmDB farmerFishProductionLevelsDB = FarmerFarmDB();
+    return await farmerFishProductionLevelsDB.fetchByFarmerFarmId(id);
+  }
+
+  Future<List<FarmerLivestock>?> getLuvestocks() async {
+    int id = PrefUtils().getFarmId();
+    FarmerLivestockDB farmerFishProductionLevelsDB = FarmerLivestockDB();
+    return await farmerFishProductionLevelsDB.fetchByFarm(id);
+  }
+
+  Future<PFProgress?> getLSIProgress() async {
+    int id = PrefUtils().getFarmId();
+    LSIProgressDB pfProgressDB = LSIProgressDB();
+    return await pfProgressDB.fetchByFarmId(id);
+  }
+
   _onInitialize(
     LivestockOneInitialEvent event,
     Emitter<LivestockOneState> emit,
   ) async {
+    FarmerFarm farm = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
+        );
+
+    List<FarmerLivestock>? livestock = await getLuvestocks();
+
+    int? livestockid =
+        livestock != null ? livestock.last.farmerLivestockId : null;
     List<FarmerLivestock> lives = await getLivestocks() ?? [];
 
+    LSProgress lsProgress = await getLSProgress(livestockid) ??
+        LSProgress(
+          livestockId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
+
+    PFProgress lsiProgress = await getLSIProgress() ??
+        PFProgress(
+          farmId: 0,
+          pageOne: 0,
+          pageTwo: 0,
+        );
     List<LSdetailsItemModel> farmmodels = [];
 
     LivestockFarmingSystemDB livestockFarmingSystemDB =
@@ -237,8 +285,17 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
     }
     emit(state.copyWith(
         lslist: farmmodels,
+        next: farm.fishFarming,
+        prev: farm.cropProd,
+        done: lsProgress.pageOne == 1 && lsiProgress.pageOne == 1,
         livestockOneModelObj:
             state.livestockOneModelObj?.copyWith(lsmodels: farmmodels)));
+  }
+
+  Future<LSProgress?> getLSProgress(int? id) async {
+    //int id = PrefUtils().getFarmId();
+    LSProgressDB pfProgressDB = LSProgressDB();
+    return id != null ? await pfProgressDB.fetchByLivestock(id) : null;
   }
 
   _delete(

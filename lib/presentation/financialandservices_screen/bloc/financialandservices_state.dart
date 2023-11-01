@@ -14,6 +14,7 @@ class FinancialandservicesState extends Equatable {
     this.s = const [],
     this.farm,
     this.f,
+    this.done = false,
   });
 
   FinancialandservicesModel? financialandservicesModelObj;
@@ -23,6 +24,8 @@ class FinancialandservicesState extends Equatable {
   List<CheckBoxList> i;
   List<CheckBoxList> c;
   List<CheckBoxList> s;
+  bool done;
+
   Farmer? farm;
   FarmerFarm? f;
   @override
@@ -33,6 +36,7 @@ class FinancialandservicesState extends Equatable {
         m,
         i,
         c,
+        done,
         s,
         farm,
         f,
@@ -46,6 +50,7 @@ class FinancialandservicesState extends Equatable {
     List<CheckBoxList>? c,
     List<CheckBoxList>? s,
     Farmer? farm,
+    bool? done,
     FarmerFarm? f,
   }) {
     return FinancialandservicesState(
@@ -58,6 +63,7 @@ class FinancialandservicesState extends Equatable {
       c: c ?? this.c,
       s: s ?? this.s,
       farm: farm ?? this.farm,
+      done: done ?? this.done,
       f: f ?? this.f,
     );
   }
