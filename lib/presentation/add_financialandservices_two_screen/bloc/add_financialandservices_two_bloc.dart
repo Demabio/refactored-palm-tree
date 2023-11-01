@@ -11,7 +11,6 @@ import 'package:kiamis_app/data/sqlService/dbqueries/other/extensionsources.dart
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/financial_services.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/agriinfosource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionaccess.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/extensionmode.dart';
 import '/core/app_export.dart';
@@ -405,20 +404,15 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     Emitter<AddFinancialandservicesTwoState> emit,
   ) async {
     if (state.addFinancialandservicesTwoModelObj?.fsProgress!.pageTwo == 0) {
-      int farmerid = PrefUtils().getFarmerId();
       int id = PrefUtils().getFarmId();
       FarmerExtensionModeDB farmerExtensionModeDB = FarmerExtensionModeDB();
       FarmerExtensionAccessDB farmerExtensionAccessDB =
           FarmerExtensionAccessDB();
-      FarmerAgriInfoSourceDB farmerAgriInfoSourceDB = FarmerAgriInfoSourceDB();
       farmerExtensionModeDB
           .delete(id)
           .then((value) => print("Deleted: $value"));
       farmerExtensionAccessDB
           .delete(id)
-          .then((value) => print("Deleted: $value"));
-      farmerAgriInfoSourceDB
-          .delete(farmerid)
           .then((value) => print("Deleted: $value"));
     }
   }

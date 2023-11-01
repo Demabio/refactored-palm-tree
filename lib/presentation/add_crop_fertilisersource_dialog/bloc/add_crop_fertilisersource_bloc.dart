@@ -146,6 +146,12 @@ class AddCropFertiliserSourceBloc
     return await farmerFishInputDB.fetchByCropId(id);
   }
 
+  Future<List<FarmerFertiliserSource>?> getallSources() async {
+    int id = PrefUtils().getCropId();
+    FarmerFertiliserSourcesDB farmerFishInputDB = FarmerFertiliserSourcesDB();
+    return await farmerFishInputDB.fetchByCropIdAll(id);
+  }
+
   Future<CAProgress?> getProgress() async {
     int cropid = PrefUtils().getCropId();
     CAProgressDB caProgressDB = CAProgressDB();
@@ -165,6 +171,7 @@ class AddCropFertiliserSourceBloc
     List<CheckBoxList>? sourcemodels = await fetchSources();
 
     List<FarmerFertiliserSource>? source = await getSources() ?? [];
+    List<FarmerFertiliserSource>? allsource = await getallSources() ?? [];
     if (source.isNotEmpty) {
       sourcemodels = _sources(sourcemodels, source);
     }
@@ -173,7 +180,7 @@ class AddCropFertiliserSourceBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: sourcemodels,
       caProgressDB: caProgress,
-      source: source,
+      source: allsource,
     )));
   }
 }

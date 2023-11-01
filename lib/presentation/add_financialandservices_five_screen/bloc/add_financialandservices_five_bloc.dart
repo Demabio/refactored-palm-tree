@@ -158,6 +158,12 @@ class AddFinancialandservicesFiveBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<List<FarmerCreditService>?> getallCredits() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerCreditServiceDB farmerLivestockAgeGroupsDB = FarmerCreditServiceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerIdAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -179,6 +185,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
 
     //  if (pfProgress.pageOne == 1) {
     List<FarmerCreditService>? categs = await getCredits() ?? [];
+    List<FarmerCreditService>? allcategs = await getallCredits() ?? [];
     creditmodels = categs.isNotEmpty
         ? creditmodels = _credits(creditmodels, categs)
         : creditmodels;
@@ -188,7 +195,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
             state.addFinancialandservicesFiveModelObj?.copyWith(
       models: creditmodels,
       fsProgress: pfProgress,
-      categs: categs,
+      categs: allcategs,
     )));
   }
 }

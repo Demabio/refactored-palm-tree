@@ -285,11 +285,12 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET registrationStatusId = ?, farmerStatusId = ? 
+    UPDATE $tableName SET registrationStatusId = ?, farmerStatusId = ?, comments = ? 
     WHERE idNo = ? 
   ''', [
         farmer.registrationStatusId!,
         farmer.farmerStatusId,
+        farmer.comments,
         farmer.idNo,
       ]);
     } catch (e) {
@@ -316,7 +317,7 @@ class FarmerDB {
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawDelete('''
-    UPDATE $tableName SET active = 0 WHERE farmer_id = ?
+    DELETE FROM $tableName WHERE farmer_id = ?
     ''', [id]);
   }
 

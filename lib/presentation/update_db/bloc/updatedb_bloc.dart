@@ -20,8 +20,11 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
     on<UpdateDBInitialEvent>(_onInitialize);
     on<FetchGetOrdersEvent>(_addCount);
     on<InnitDBwithDataEvent>(_downloadData);
+    on<InnitDBwithDataEvent2>(_downloadData2);
     on<InnitDBwithDataFailedEvent>(_dbDownloadFailed);
     on<InnitDBwithDataSuccessEvent>(_dbDownloadSuccess);
+    on<InnitDBwithDataFailedEvent2>(_dbDownloadFailed2);
+    on<InnitDBwithDataSuccessEvent2>(_dbDownloadSuccess2);
   }
   _onInitialize(
     UpdateDBInitialEvent event,
@@ -65,6 +68,66 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
     });
   }
 
+  Future<void> _downloadData2(
+    InnitDBwithDataEvent2 event,
+    Emitter<UpdateDBState> emit,
+  ) async {
+    final updatedState = state.copyWith(
+      visibility2: true,
+      failed2: false,
+    );
+    emit(updatedState);
+    bool update = await downloadSetups(emit);
+    update ? event.onSuccess2!.call() : event.onFailed2!.call();
+    return;
+  }
+
+  Future<bool> downloadSetups(
+    Emitter<UpdateDBState> emit,
+  ) async {
+    try {
+      Dio dio = Dio();
+      const name = 'localdevice.db';
+      final path = await getDatabasesPath();
+      String dbpath = join(path, name);
+      String token = PrefUtils().getToken();
+
+      Response response = await dio.download(
+        'https://prudmatvisionaries.com/Gateway/FarmerRegistration/setupdownload', // Replace with the actual URL
+        '$dbpath',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            // Add other headers if needed
+          },
+        ), // Get the local file URI to save the APK
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            double currentval = received / total;
+            int percent = (currentval * 100).toInt();
+
+            emit(state.copyWith(
+                linebarvalue2: currentval, percentagedone2: percent));
+            print("received: $received,total:$total");
+            print((received / total * 100).toStringAsFixed(0) + '%');
+          }
+
+          // print('Received: $received out of $total');
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('File downloaded successfully');
+        return true;
+      } else {
+        print('Failed to download the file');
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> downloadFarmers(
     Emitter<UpdateDBState> emit,
   ) async {
@@ -91,10 +154,7 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
           if (total != -1) {
             double currentval = received / total;
             int percent = (currentval * 100).toInt();
-            emit(state.copyWith(
-              percentagedone: percent,
-              linebarvalue: currentval,
-            ));
+
             emit(state.copyWith(
                 linebarvalue: currentval, percentagedone: percent));
             print("received: $received,total:$total");
@@ -191,6 +251,22 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       InnitDBwithDataSuccessEvent event, Emitter<UpdateDBState> emit) async {
     try {
       final updatedState = state.copyWith(failed: false, success: true);
+      emit(updatedState);
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<void> _dbDownloadFailed2(
+      InnitDBwithDataFailedEvent2 event, Emitter<UpdateDBState> emit) async {
+    final updatedState = state.copyWith(failed2: true, success2: false);
+    emit(updatedState);
+  }
+
+  Future<void> _dbDownloadSuccess2(
+      InnitDBwithDataSuccessEvent2 event, Emitter<UpdateDBState> emit) async {
+    try {
+      final updatedState = state.copyWith(failed2: false, success2: true);
       emit(updatedState);
     } catch (e) {
       throw (e);

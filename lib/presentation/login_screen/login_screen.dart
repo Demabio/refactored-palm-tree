@@ -1,4 +1,5 @@
 import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
+import 'package:kiamis_app/presentation/update_db/updatedb_dialog.dart';
 
 import 'bloc/login_bloc.dart';
 import 'models/login_model.dart';
@@ -244,6 +245,19 @@ class LoginScreen extends StatelessWidget {
     NavigatorService.pushNamed(
       AppRoutes.homeScreen,
     );
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: UpdateDBDialog.builder(
+                context,
+              ),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 
   static downloadDialog(BuildContext context, String label, String body) async {

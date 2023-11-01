@@ -355,6 +355,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
     if (!state.credit && !state.income && !state.group) {
       int farmerid = PrefUtils().getFarmerId();
       FarmerCreditServiceDB farmerCreditServiceDB = FarmerCreditServiceDB();
+      FarmerAgriInfoSourceDB farmerAgriInfoSourceDB = FarmerAgriInfoSourceDB();
       FarmerIncomeSourceDB farmerIncomeSourceDB = FarmerIncomeSourceDB();
       FarmerCooperativeGroupDB farmerCooperativeGroupDB =
           FarmerCooperativeGroupDB();
@@ -365,6 +366,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
           .delete(farmerid)
           .then((value) => print("Deleted: $value"));
       farmerCooperativeGroupDB
+          .delete(farmerid)
+          .then((value) => print("Deleted: $value"));
+      farmerAgriInfoSourceDB
           .delete(farmerid)
           .then((value) => print("Deleted: $value"));
     }

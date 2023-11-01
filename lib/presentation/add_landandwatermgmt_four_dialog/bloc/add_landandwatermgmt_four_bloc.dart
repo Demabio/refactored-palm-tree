@@ -145,6 +145,13 @@ class AddLandandwatermgmtFourBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerIrrigationWaterSource>?> getallWater() async {
+    int id = PrefUtils().getFarmId();
+    FarmerIrrigationWaterSourceDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationWaterSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
@@ -164,6 +171,7 @@ class AddLandandwatermgmtFourBloc
     List<CheckBoxList>? watermodels = await fetchWater();
 
     List<FarmerIrrigationWaterSource>? water = await getWater() ?? [];
+    List<FarmerIrrigationWaterSource>? allwater = await getallWater() ?? [];
     if (water.isNotEmpty) {
       watermodels = _water(watermodels, water);
     }
@@ -172,7 +180,7 @@ class AddLandandwatermgmtFourBloc
             state.addLandandwatermgmtFourModelObj?.copyWith(
       models: watermodels,
       lwProgress: pfProgress,
-      water: water,
+      water: allwater,
     )));
   }
 }

@@ -115,5 +115,17 @@ class FarmerLivestockBeehiveTypeDB {
         .map((e) => FarmerLivestockBeehiveType.fromSqfliteDatabase(e))
         .toList();
   }
+
+  Future<List<FarmerLivestockBeehiveType>> fetchAllByLivestockAll(
+      int id) async {
+    final database = await FarmerDatabaseService().database;
+    final feeds = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?  
+    ''', [id]);
+
+    return feeds
+        .map((e) => FarmerLivestockBeehiveType.fromSqfliteDatabase(e))
+        .toList();
+  }
   // Add more database methods as needed
 }

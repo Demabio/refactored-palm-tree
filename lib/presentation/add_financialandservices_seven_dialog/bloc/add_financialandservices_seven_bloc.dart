@@ -146,6 +146,13 @@ class AddFinancialandservicesSevenBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerExtensionAccess>?> getallEAccess() async {
+    int id = PrefUtils().getFarmId();
+    FarmerExtensionAccessDB farmerLivestockAgeGroupsDB =
+        FarmerExtensionAccessDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -167,6 +174,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
 
     //if (pfProgress.pageTwo == 1) {
     List<FarmerExtensionAccess>? access = await getEAccess() ?? [];
+    List<FarmerExtensionAccess>? allaccess = await getallEAccess() ?? [];
     accessmodels = access.isNotEmpty
         ? accessmodels = _access(accessmodels, access)
         : accessmodels;
@@ -176,7 +184,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
             state.addFinancialandservicesSevenModelObj?.copyWith(
       models: accessmodels,
       fsProgress: pfProgress,
-      access: access,
+      access: allaccess,
     )));
   }
 }

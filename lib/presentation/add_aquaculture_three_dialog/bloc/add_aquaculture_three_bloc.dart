@@ -102,6 +102,12 @@ class AddAquacultureThreeBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerFishCategory>?> getallCategs() async {
+    int id = PrefUtils().getFarmId();
+    FarmerFishCategoryDB farmerLivestockAgeGroupsDB = FarmerFishCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   List<CheckBoxList> _types(
       List<CheckBoxList> feedmodelss, List<FarmerFishCategory> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
@@ -189,6 +195,7 @@ class AddAquacultureThreeBloc
           pageTwo: 0,
         );
     List<FarmerFishCategory>? categs = await getCategs() ?? [];
+    List<FarmerFishCategory>? allcategs = await getallCategs() ?? [];
 
     atypes = categs.isNotEmpty ? _types(atypes, categs) : atypes;
 
@@ -197,7 +204,7 @@ class AddAquacultureThreeBloc
             state.addAquacultureThreeModelObj?.copyWith(
       models: atypes,
       aqProgress: pfProgress,
-      categs: categs,
+      categs: allcategs,
     )));
   }
 }

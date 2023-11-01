@@ -46,11 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(DBCheckEvent(onError: () {
-          dbNotFound(context);
-        }, onSuccess: () {
-          //dbNotFound(context);
-        }));
+    // context.read<HomeBloc>().add(DBCheckEvent(onError: () {
+    //       dbNotFound(context);
+    //     }, onSuccess: () {
+    //       //dbNotFound(context);
+    //     }));
   }
 
   @override
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("lbl_saved".tr,
+                                                  Text("Drafts".tr,
                                                       style: theme.textTheme
                                                           .labelLarge),
                                                   SizedBox(height: 1.v),
@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("lbl_unverified".tr,
+                                                  Text("Submitted".tr,
                                                       style: theme.textTheme
                                                           .labelMedium),
                                                   SizedBox(height: 2.v),

@@ -129,7 +129,7 @@ class FarmerFishDB {
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
-    UPDATE $tableName SET active = 0 WHERE farmer_fish_id = ?
+    UPDATE $tableName SET active = 0 WHERE farmer_farm_id = ?
     ''', [id]);
   }
 

@@ -134,6 +134,21 @@ class FarmerCooperativeGroupDB {
         : null;
   }
 
+  Future<List<FarmerCooperativeGroup>?> fetchByFarmerIdAll(int id) async {
+    final database = await FarmerDatabaseService().database;
+    final fish = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_id = ?
+    ''', [
+      id,
+    ]);
+
+    return fish.isNotEmpty
+        ? fish
+            .map((e) => FarmerCooperativeGroup.fromSqfliteDatabase(e))
+            .toList()
+        : null;
+  }
+
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''

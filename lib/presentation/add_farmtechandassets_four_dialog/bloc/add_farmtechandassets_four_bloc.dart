@@ -152,6 +152,12 @@ class AddFarmtechandassetsFourBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerStructure>?> getallStructs() async {
+    int id = PrefUtils().getFarmId();
+    FarmerStructureDB farmerLivestockAgeGroupsDB = FarmerStructureDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<ATProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     ATProgressDB pfProgressDB = ATProgressDB();
@@ -172,6 +178,7 @@ class AddFarmtechandassetsFourBloc
     List<CheckBoxList>? atypes = await fetchFarmStructure();
 
     List<FarmerStructure>? categs = await getStructs() ?? [];
+    List<FarmerStructure>? allcategs = await getallStructs() ?? [];
     atypes = categs.isNotEmpty ? _structs(atypes, categs) : atypes;
 
     emit(state.copyWith(
@@ -179,7 +186,7 @@ class AddFarmtechandassetsFourBloc
             state.addFarmtechandassetsFourModelObj?.copyWith(
       models: atypes,
       atProgress: pfProgress,
-      categs: categs,
+      categs: allcategs,
     )));
   }
 }

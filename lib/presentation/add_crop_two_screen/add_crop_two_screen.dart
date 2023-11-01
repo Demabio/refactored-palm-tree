@@ -52,7 +52,7 @@ class AddCropTwoScreen extends StatelessWidget {
                       margin:
                           EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
                       onTap: () {
-                        onTapSortone(context);
+                        goBack(context);
                       }),
                   centerTitle: true,
                   title: AppbarSubtitle1(text: "lbl_add_new_crop".tr),
@@ -678,6 +678,9 @@ class AddCropTwoScreen extends StatelessWidget {
   }
 
   goBack(BuildContext context) {
+    context.read<AddCropTwoBloc>().add(
+          ClearEvent(),
+        );
     //  NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationOneScreen);
     Navigator.popAndPushNamed(context, AppRoutes.addCropOneScreen);
   }

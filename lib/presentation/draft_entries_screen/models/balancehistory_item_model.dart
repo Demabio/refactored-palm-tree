@@ -4,6 +4,7 @@ class BalancehistoryItemModel {
     this.id,
     this.idNo,
     this.name,
+    this.comments,
   }) {
     id = id;
   }
@@ -12,4 +13,6 @@ class BalancehistoryItemModel {
   String? idNo;
 
   String? name;
+
+  String? comments;
 }

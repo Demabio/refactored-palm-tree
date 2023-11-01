@@ -70,7 +70,6 @@ class PrimaryFarmHoldingTwoBloc
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      ProgressDialogUtils.hideProgressDialog();
 
       double y = position.latitude;
       double x = position.longitude;
@@ -91,6 +90,8 @@ class PrimaryFarmHoldingTwoBloc
       );
     } catch (e) {
       print("Error: $e");
+    } finally {
+      ProgressDialogUtils.hideProgressDialog();
     }
   }
 

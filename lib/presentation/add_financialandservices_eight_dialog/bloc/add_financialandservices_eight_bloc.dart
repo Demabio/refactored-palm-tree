@@ -141,6 +141,12 @@ class AddFinancialandservicesEightBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerExtensionMode>?> getallModes() async {
+    int id = PrefUtils().getFarmId();
+    FarmerExtensionModeDB farmerLivestockAgeGroupsDB = FarmerExtensionModeDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -162,6 +168,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
 
     //  if (pfProgress.pageTwo == 1) {
     List<FarmerExtensionMode>? mode = await getModes() ?? [];
+    List<FarmerExtensionMode>? allmode = await getallModes() ?? [];
     modemodels =
         mode.isNotEmpty ? modemodels = _modes(modemodels, mode) : modemodels;
 
@@ -171,7 +178,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
             state.addFinancialandservicesEightModelObj?.copyWith(
       models: modemodels,
       fsProgress: pfProgress,
-      mode: mode,
+      mode: allmode,
     )));
   }
 }

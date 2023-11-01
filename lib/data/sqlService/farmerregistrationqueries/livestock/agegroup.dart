@@ -131,6 +131,17 @@ class FarmerLivestockAgeGroupsDB {
         .toList();
   }
 
+  Future<List<FarmerLivestockAgeGroup>> fetchByLiveAll(int id) async {
+    final database = await FarmerDatabaseService().database;
+    final ageGroups = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_livestock_id = ?
+    ''', [id]);
+
+    return ageGroups
+        .map((e) => FarmerLivestockAgeGroup.fromSqfliteDatabase(e))
+        .toList();
+  }
+
   Future<FarmerLivestockAgeGroup?> fetchById(int id) async {
     final database = await FarmerDatabaseService().database;
     final ageGroups = await database.rawQuery(''' 

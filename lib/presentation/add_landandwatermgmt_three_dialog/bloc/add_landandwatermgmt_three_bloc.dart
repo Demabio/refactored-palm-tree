@@ -143,6 +143,12 @@ class AddLandandwatermgmtThreeBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerLandPractice>?> getallLandP() async {
+    int id = PrefUtils().getFarmId();
+    FarmerLandPracticesDB farmerLivestockAgeGroupsDB = FarmerLandPracticesDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<LWProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
@@ -162,6 +168,7 @@ class AddLandandwatermgmtThreeBloc
     List<CheckBoxList>? landmodels = await fetchLandP();
 
     List<FarmerLandPractice>? land = await getLandP() ?? [];
+    List<FarmerLandPractice>? allland = await getallLandP() ?? [];
     if (land.isNotEmpty) {
       landmodels = _land(landmodels, land);
     }
@@ -170,7 +177,7 @@ class AddLandandwatermgmtThreeBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: landmodels,
       lwProgress: pfProgress,
-      land: land,
+      land: allland,
     )));
   }
 }

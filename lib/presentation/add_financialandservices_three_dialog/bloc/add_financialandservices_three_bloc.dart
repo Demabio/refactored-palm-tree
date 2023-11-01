@@ -147,6 +147,12 @@ class AddFinancialandservicesThreeBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<List<FarmerIncomeSource>?> getallIncomes() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerIncomeSourceDB farmerLivestockAgeGroupsDB = FarmerIncomeSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerIdAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -168,6 +174,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
 
     //  if (pfProgress.pageOne == 1) {
     List<FarmerIncomeSource>? incomes = await getIncomes() ?? [];
+    List<FarmerIncomeSource>? allincomes = await getallIncomes() ?? [];
     incomemodels = incomes.isNotEmpty
         ? incomemodels = _incomes(incomemodels, incomes)
         : incomemodels;
@@ -177,7 +184,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
             state.addFinancialandservicesThreeModelObj?.copyWith(
       models: incomemodels,
       fsProgress: pfProgress,
-      incomes: incomes,
+      incomes: allincomes,
     )));
   }
 }

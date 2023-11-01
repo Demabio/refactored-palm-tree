@@ -144,6 +144,13 @@ class AddLandandwatermgmtSevenBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerIrrigationAgency>?> getallAgency() async {
+    int id = PrefUtils().getFarmId();
+    FarmerIrrigationAgencyDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationAgencyDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<LWProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
@@ -163,6 +170,7 @@ class AddLandandwatermgmtSevenBloc
     List<CheckBoxList>? agmodels = await fetchAgency();
 
     List<FarmerIrrigationAgency>? ag = await getAgency() ?? [];
+    List<FarmerIrrigationAgency>? allag = await getallAgency() ?? [];
     if (ag.isNotEmpty) {
       agmodels = _agency(agmodels, ag);
     }
@@ -171,7 +179,7 @@ class AddLandandwatermgmtSevenBloc
             state.addLandandwatermgmtSevenModelObj?.copyWith(
       models: agmodels,
       lwProgress: pfProgress,
-      ag: ag,
+      ag: allag,
     )));
   }
 }

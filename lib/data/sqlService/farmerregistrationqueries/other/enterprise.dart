@@ -138,5 +138,16 @@ class FarmerEnterprisesDB {
         .toList();
   }
 
+  Future<List<FarmerEnterprise>> fetchAllByFarmIdAll(int id) async {
+    final database = await FarmerDatabaseService().database;
+    final enterprises = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+    ''', [id]);
+
+    return enterprises
+        .map((e) => FarmerEnterprise.fromSqfliteDatabase(e))
+        .toList();
+  }
+
   // Add more database methods as needed
 }

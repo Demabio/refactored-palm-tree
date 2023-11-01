@@ -141,6 +141,13 @@ class AddFinancialandservicesSixBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<List<FarmerAgriInfoSource>?> getallInfo() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerAgriInfoSourceDB farmerLivestockAgeGroupsDB =
+        FarmerAgriInfoSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerIdAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -162,6 +169,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
 
     //  if (pfProgress.pageTwo == 1) {
     List<FarmerAgriInfoSource>? info = await getInfo() ?? [];
+    List<FarmerAgriInfoSource>? allinfo = await getallInfo() ?? [];
     infomodels =
         info.isNotEmpty ? infomodels = _infos(infomodels, info) : infomodels;
 
@@ -171,7 +179,7 @@ class AddFinancialandservicesSixBloc extends Bloc<
             state.addFinancialandservicesSixModelObj?.copyWith(
       models: infomodels,
       fsProgress: pfProgress,
-      info: info,
+      info: allinfo,
     )));
   }
 }

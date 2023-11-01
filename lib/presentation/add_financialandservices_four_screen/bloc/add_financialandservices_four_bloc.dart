@@ -175,6 +175,13 @@ class AddFinancialandservicesFourBloc extends Bloc<
     return await farmerLivestockAgeGroupsDB.fetchByFarmerId(id);
   }
 
+  Future<List<FarmerCooperativeGroup>?> getallCoops() async {
+    int id = PrefUtils().getFarmerId();
+    FarmerCooperativeGroupDB farmerLivestockAgeGroupsDB =
+        FarmerCooperativeGroupDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmerIdAll(id);
+  }
+
   Future<FSProgress?> getProgress() async {
     int id = PrefUtils().getFarmId();
     FSProgressDB pfProgressDB = FSProgressDB();
@@ -196,6 +203,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
 
     //if (pfProgress.pageOne == 1) {
     List<FarmerCooperativeGroup>? groups = await getCoops() ?? [];
+    List<FarmerCooperativeGroup>? allgroups = await getallCoops() ?? [];
     if (groups.isNotEmpty) {
       coopmodels = _coops(coopmodels, groups);
     } // }
@@ -204,7 +212,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
             state.addFinancialandservicesFourModelObj?.copyWith(
       ageGroupmModels: coopmodels,
       fsProgress: pfProgress,
-      groups: groups,
+      groups: allgroups,
     )));
   }
 }

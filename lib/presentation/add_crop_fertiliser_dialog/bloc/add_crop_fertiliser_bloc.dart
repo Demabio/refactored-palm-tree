@@ -144,6 +144,12 @@ class AddCropFertiliserBloc
     return await farmerFishInputDB.fetchByCropId(id);
   }
 
+  Future<List<FarmerFertiliser>?> getallTypes() async {
+    int id = PrefUtils().getCropId();
+    FarmerFertiliserDB farmerFishInputDB = FarmerFertiliserDB();
+    return await farmerFishInputDB.fetchByCropIdAll(id);
+  }
+
   Future<CAProgress?> getProgress() async {
     int cropid = PrefUtils().getCropId();
     CAProgressDB caProgressDB = CAProgressDB();
@@ -163,6 +169,7 @@ class AddCropFertiliserBloc
     List<CheckBoxList>? typemodels = await fecthType();
 
     List<FarmerFertiliser>? type = await getTypes() ?? [];
+    List<FarmerFertiliser>? alltype = await getallTypes() ?? [];
     if (type.isNotEmpty) {
       typemodels = _types(typemodels, type);
     }
@@ -171,7 +178,7 @@ class AddCropFertiliserBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: typemodels,
       caProgressDB: caProgress,
-      type: type,
+      type: alltype,
     )));
   }
 }

@@ -199,6 +199,12 @@ class AddFarmtechandassetsTwoBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerPowerSource>?> getallSources() async {
+    int id = PrefUtils().getFarmId();
+    FarmerPowerSourceDB farmerLivestockAgeGroupsDB = FarmerPowerSourceDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<List<CheckBoxList>> fetchPowerSources() async {
     List<CheckBoxList> list = [];
     FarmPowerSourceDB powerSourceDB = FarmPowerSourceDB();
@@ -234,13 +240,14 @@ class AddFarmtechandassetsTwoBloc
     List<CheckBoxList>? atypes = await fetchPowerSources();
 
     List<FarmerPowerSource>? categs = await getSources() ?? [];
+    List<FarmerPowerSource>? allcategs = await getallSources() ?? [];
     atypes = categs.isNotEmpty ? _sources(atypes, categs) : atypes;
 
     emit(state.copyWith(
         addFarmtechandassetsTwoModelObj:
             state.addFarmtechandassetsTwoModelObj?.copyWith(
       models: atypes,
-      categs: categs,
+      categs: allcategs,
       atProgress: pfProgress,
     )));
   }

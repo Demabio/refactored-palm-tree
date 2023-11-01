@@ -231,19 +231,21 @@ class LandandwatermgmtBloc
       SelectionPopupModel? drop;
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationCategoryId);
-      if (ent.membershipTypeId != 0) {
-        int index2 = feedmodels[index]
-            .model
-            .indexWhere((obj) => obj.id == ent.membershipTypeId);
+      if (index >= 0) {
+        if (ent.membershipTypeId != 0 && ent.membershipTypeId != null) {
+          int index2 = feedmodels[index]
+              .model
+              .indexWhere((obj) => obj.id == ent.membershipTypeId);
 
-        drop = index2 >= 0 ? feedmodels[index].model[index2] : drop;
+          drop = index2 >= 0 ? feedmodels[index].model[index2] : drop;
+        }
+
+        feedmodels[index].isSelected = true;
+        feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
+        feedmodels[index].male =
+            TextEditingController(text: ent.irrigationProjectName);
+        feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
       }
-
-      feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
-      feedmodels[index].male =
-          TextEditingController(text: ent.irrigationProjectName);
-      feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;
     }
 
     return feedmodels;

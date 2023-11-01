@@ -20,47 +20,69 @@ class BalancehistoryItemWidget extends StatelessWidget {
   VoidCallback? delete;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(
-            top: 24.v,
-            bottom: 25.v,
-          ),
-          child: Text(
-            balancehistoryItemModelObj.name ?? "N/A",
-            style: CustomTextStyles.bodyMediumPoppinsBlack900,
-          ),
-        ),
-        Spacer(),
-        Padding(
-          padding: EdgeInsets.only(
-            top: 24.v,
-            bottom: 25.v,
-          ),
-          child: Text(
-            balancehistoryItemModelObj.idNo ?? "N/A",
-            style: CustomTextStyles.bodyMediumPoppinsBlack900,
-          ),
-        ),
-        Spacer(),
-        Column(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppbarImage1(
-                svgPath: ImageConstant.imgFrame33,
-                margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
-                onTap: () {
-                  edit?.call();
-                }),
-            AppbarImage1(
-                svgPath: ImageConstant.imgFrame34,
-                margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
-                onTap: () {
-                  delete?.call();
-                }),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 24.v,
+                bottom: 25.v,
+              ),
+              child: Text(
+                balancehistoryItemModelObj.name ?? "N/A",
+                style: CustomTextStyles.bodyMediumPoppinsBlack900,
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 24.v,
+                bottom: 25.v,
+              ),
+              child: Text(
+                balancehistoryItemModelObj.idNo ?? "N/A",
+                style: CustomTextStyles.bodyMediumPoppinsBlack900,
+              ),
+            ),
+            Spacer(),
+            Column(
+              children: [
+                AppbarImage1(
+                    svgPath: ImageConstant.imgFrame33,
+                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                    onTap: () {
+                      edit?.call();
+                    }),
+                AppbarImage1(
+                    svgPath: ImageConstant.imgFrame34,
+                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                    onTap: () {
+                      delete?.call();
+                    }),
+              ],
+            ),
           ],
         ),
+        Visibility(
+          visible: PrefUtils().getAction() == "Rejected",
+          child: Row(
+            children: [
+              Text(
+                "Comments:",
+                style: CustomTextStyles.titleSmall15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  balancehistoryItemModelObj.comments ?? "N/A",
+                  style: CustomTextStyles.bodyMediumPoppinsBlack900,
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

@@ -132,6 +132,19 @@ class FarmerFishCategoryDB {
         .toList();
   }
 
+  Future<List<FarmerFishCategory>> fetchByFarmAll(int id) async {
+    final database = await FarmerDatabaseService().database;
+    final fishCategories = await database.rawQuery(''' 
+      SELECT * FROM $tableName WHERE farmer_farm_id = ?
+    ''', [
+      id,
+    ]);
+
+    return fishCategories
+        .map((e) => FarmerFishCategory.fromSqfliteDatabase(e))
+        .toList();
+  }
+
   Future<FarmerFishCategory> fetchByFarmerFishCategoryId(
       int farmerFishCategoryId) async {
     final database = await FarmerDatabaseService().database;

@@ -144,6 +144,13 @@ class AddLandandwatermgmtFiveBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerIrrigationType>?> getallType() async {
+    int id = PrefUtils().getFarmId();
+    FarmerIrrigationTypeDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationTypeDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
@@ -163,6 +170,7 @@ class AddLandandwatermgmtFiveBloc
     List<CheckBoxList>? typemodels = await fetchType();
 
     List<FarmerIrrigationType>? type = await getType() ?? [];
+    List<FarmerIrrigationType>? alltype = await getallType() ?? [];
     if (type.isNotEmpty) {
       typemodels = _type(typemodels, type);
     }
@@ -171,7 +179,7 @@ class AddLandandwatermgmtFiveBloc
             state.addLandandwatermgmtFiveModelObj?.copyWith(
       models: typemodels,
       lwProgress: pfProgress,
-      type: type,
+      type: alltype,
     )));
   }
 }

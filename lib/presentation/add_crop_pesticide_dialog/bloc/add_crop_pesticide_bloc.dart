@@ -143,6 +143,12 @@ class AddCropPesticideBloc
     return await farmerFishInputDB.fetchByCropId(id);
   }
 
+  Future<List<FarmerPesticide>?> getallPest() async {
+    int id = PrefUtils().getCropId();
+    FarmerPesticidesDB farmerFishInputDB = FarmerPesticidesDB();
+    return await farmerFishInputDB.fetchByCropIdAll(id);
+  }
+
   Future<CAProgress?> getProgress() async {
     int cropid = PrefUtils().getCropId();
     CAProgressDB caProgressDB = CAProgressDB();
@@ -162,6 +168,7 @@ class AddCropPesticideBloc
     List<CheckBoxList>? pestsmodels = await fetchPest();
 
     List<FarmerPesticide>? pest = await getPest() ?? [];
+    List<FarmerPesticide>? allpest = await getallPest() ?? [];
     if (pest.isNotEmpty) {
       pestsmodels = _pest(pestsmodels, pest);
     }
@@ -170,7 +177,7 @@ class AddCropPesticideBloc
             state.addLandandwatermgmtThreeModelObj?.copyWith(
       models: pestsmodels,
       caProgressDB: caProgress,
-      pest: pest,
+      pest: allpest,
     )));
   }
 }

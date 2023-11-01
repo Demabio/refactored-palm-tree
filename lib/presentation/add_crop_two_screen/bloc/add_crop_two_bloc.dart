@@ -31,6 +31,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
     on<ChangeDropDown2Event>(_changeDropDown2);
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
+    on<ClearEvent>(_clear);
 
     on<CheckThreeEvent>(_checkModes);
     on<CheckTwoEvent>(_checkAssets);
@@ -322,6 +323,25 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
     }
   }
 
+  _clear(
+    ClearEvent event,
+    Emitter<AddCropTwoState> emit,
+  ) async {
+    if (state.addCropTwoModelObj?.caProgressDB!.pageTwo == 0) {
+      int id = PrefUtils().getFarmId();
+      FarmerFertiliserDB farmerFishDB = FarmerFertiliserDB();
+      FarmerFertiliserSourcesDB farmerFishCategoryDB =
+          FarmerFertiliserSourcesDB();
+      FarmerPesticidesDB farmerFishProductionSystemDB = FarmerPesticidesDB();
+
+      farmerFishDB.delete(id).then((value) => print("Deleted: $value"));
+      farmerFishCategoryDB.delete(id).then((value) => print("Deleted: $value"));
+      farmerFishProductionSystemDB
+          .delete(id)
+          .then((value) => print("Deleted: $value"));
+    }
+  }
+
   _changeDropDown(
     ChangeDropDownEvent event,
     Emitter<AddCropTwoState> emit,
@@ -432,7 +452,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
 
     fishes != null
         ? emit(state.copyWith(p: feedmodels, checkedP: false))
-        : emit(state.copyWith(checkedP: true));
+        : emit(state.copyWith(checkedP: true, p: feedmodels));
   }
 
   _checkAssets(
@@ -449,7 +469,10 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
 
     fishes != null
         ? emit(state.copyWith(a: feedmodels, checkedA: false))
-        : emit(state.copyWith(checkedA: true));
+        : emit(state.copyWith(
+            checkedA: true,
+            a: feedmodels,
+          ));
   }
 
   _checkModes(
@@ -466,7 +489,10 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
 
     fishes != null
         ? emit(state.copyWith(s: feedmodels, checkedS: false))
-        : emit(state.copyWith(checkedS: true));
+        : emit(state.copyWith(
+            checkedS: true,
+            s: feedmodels,
+          ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {

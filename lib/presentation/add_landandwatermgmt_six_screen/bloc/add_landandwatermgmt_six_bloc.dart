@@ -206,6 +206,13 @@ class AddLandandwatermgmtSixBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerIrrigationCategory>?> getallCategs() async {
+    int id = PrefUtils().getFarmId();
+    FarmerIrrigationCategoryDB farmerLivestockAgeGroupsDB =
+        FarmerIrrigationCategoryDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarmAll(id);
+  }
+
   Future<LWProgress?> getProgress() async {
     int farmerid = PrefUtils().getFarmId();
     LWProgressDB pfProgressDB = LWProgressDB();
@@ -225,6 +232,7 @@ class AddLandandwatermgmtSixBloc
     List<CheckBoxList>? schememodels = await fetchSchemes();
 
     List<FarmerIrrigationCategory>? scheme = await getCategs() ?? [];
+    List<FarmerIrrigationCategory>? allscheme = await getallCategs() ?? [];
     if (scheme.isNotEmpty) {
       schememodels = _land(schememodels, scheme);
     }
@@ -233,7 +241,7 @@ class AddLandandwatermgmtSixBloc
             state.addLandandwatermgmtSixModelObj?.copyWith(
       ageGroupmModels: schememodels,
       lwProgress: pfProgress,
-      scheme: scheme,
+      scheme: allscheme,
     )));
   }
 }

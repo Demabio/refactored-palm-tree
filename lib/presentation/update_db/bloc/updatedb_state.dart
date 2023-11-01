@@ -12,6 +12,11 @@ class UpdateDBState extends Equatable {
     this.percentagedone = 0,
     this.failed = false,
     this.success = false,
+    this.visibility2 = false,
+    this.linebarvalue2 = 0,
+    this.percentagedone2 = 0,
+    this.failed2 = false,
+    this.success2 = false,
   });
 
   UpdateDBModel? homeFarmerNotFoundModelObj;
@@ -28,6 +33,16 @@ class UpdateDBState extends Equatable {
 
   bool success;
 
+  bool visibility2;
+
+  double linebarvalue2;
+
+  int percentagedone2;
+
+  bool failed2;
+
+  bool success2;
+
   @override
   List<Object?> get props => [
         homeFarmerNotFoundModelObj,
@@ -36,16 +51,26 @@ class UpdateDBState extends Equatable {
         percentagedone,
         linebarvalue,
         success,
-        visibility,
+        visibility2,
+        failed2,
+        percentagedone2,
+        linebarvalue2,
+        success2,
+        visibility2,
       ];
   UpdateDBState copyWith({
     UpdateDBModel? homeFarmerNotFoundModelObj,
     int? count,
     bool? visibility,
+    bool? visibility2,
     double? linebarvalue,
     int? percentagedone,
+    double? linebarvalue2,
+    int? percentagedone2,
     bool? failed,
     bool? success,
+    bool? failed2,
+    bool? success2,
   }) {
     return UpdateDBState(
       homeFarmerNotFoundModelObj:
@@ -56,6 +81,11 @@ class UpdateDBState extends Equatable {
       percentagedone: percentagedone ?? this.percentagedone,
       failed: failed ?? this.failed,
       success: success ?? this.success,
+      visibility2: visibility2 ?? this.visibility2,
+      linebarvalue2: linebarvalue2 ?? this.linebarvalue2,
+      percentagedone2: percentagedone2 ?? this.percentagedone2,
+      failed2: failed2 ?? this.failed2,
+      success2: success2 ?? this.success2,
     );
   }
 }

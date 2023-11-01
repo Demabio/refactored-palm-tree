@@ -29,10 +29,26 @@ class InnitDBwithDataEvent extends UpdateDBEvent {
   });
   Function? onSuccess;
   Function? onFailed;
+
   @override
   List<Object?> get props => [
         onSuccess,
         onFailed,
+      ];
+}
+
+class InnitDBwithDataEvent2 extends UpdateDBEvent {
+  InnitDBwithDataEvent2({
+    this.onSuccess2,
+    this.onFailed2,
+  });
+
+  Function? onSuccess2;
+  Function? onFailed2;
+  @override
+  List<Object?> get props => [
+        onSuccess2,
+        onFailed2,
       ];
 }
 
@@ -45,6 +61,20 @@ class InnitDBwithDataFailedEvent extends UpdateDBEvent {
 
 class InnitDBwithDataSuccessEvent extends UpdateDBEvent {
   InnitDBwithDataSuccessEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class InnitDBwithDataFailedEvent2 extends UpdateDBEvent {
+  InnitDBwithDataFailedEvent2();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class InnitDBwithDataSuccessEvent2 extends UpdateDBEvent {
+  InnitDBwithDataSuccessEvent2();
 
   @override
   List<Object?> get props => [];
