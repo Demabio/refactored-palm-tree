@@ -75,11 +75,11 @@ class OtpOneScreen extends StatelessWidget {
                                     });
                               }),
                           SizedBox(height: 20.v),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text("msg_resend_otp_in_55".tr,
-                                  style: theme.textTheme.titleMedium)),
-                          SizedBox(height: 21.v),
+                          // Align(
+                          //     alignment: Alignment.center,
+                          //     child: Text("msg_resend_otp_in_55".tr,
+                          //         style: theme.textTheme.titleMedium)),
+                          // SizedBox(height: 21.v),
                           CustomElevatedButton(
                               text: "lbl_continue".tr,
                               onTap: () {
@@ -123,9 +123,13 @@ class OtpOneScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the homeScreen.
   onTapContinue(BuildContext context) {
-    NavigatorService.popAndPushNamed(
-      AppRoutes.homeScreen,
-    );
+    PrefUtils().getFP()
+        ? NavigatorService.popAndPushNamed(
+            AppRoutes.forgotPasswordScreen,
+          )
+        : NavigatorService.popAndPushNamed(
+            AppRoutes.homeScreen,
+          );
   }
 
   void _onLoginUserServicePostEventError(BuildContext context) {

@@ -110,18 +110,6 @@ class SideMenuDraweritem extends StatelessWidget {
                   onTap: () {
                     updateDialog(context);
                   }),
-              Padding(
-                  padding: EdgeInsets.only(left: 7.h, top: 25.v),
-                  child: Row(children: [
-                    CustomImageView(
-                        svgPath: ImageConstant.imgIconanalytics,
-                        height: 25.adaptSize,
-                        width: 25.adaptSize),
-                    Padding(
-                        padding: EdgeInsets.only(left: 19.h),
-                        child: Text("lbl_view_stats".tr,
-                            style: CustomTextStyles.titleMedium18))
-                  ])),
               CustomElevatedButton(
                   height: 27.v,
                   width: 119.h,

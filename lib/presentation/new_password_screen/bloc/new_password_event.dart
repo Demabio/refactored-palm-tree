@@ -15,6 +15,29 @@ class NewPasswordInitialEvent extends NewPasswordEvent {
   List<Object?> get props => [];
 }
 
+class CreateLoginEvent extends NewPasswordEvent {
+  CreateLoginEvent({
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+    this.onFalse,
+    this.persmissions,
+  });
+
+  Function? onCreateLoginEventSuccess;
+  Function? onFalse;
+  Function? persmissions;
+
+  Function? onCreateLoginEventError;
+
+  @override
+  List<Object?> get props => [
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+        onFalse,
+        persmissions,
+      ];
+}
+
 ///Event for changing password visibility
 class ChangePasswordVisibilityEvent extends NewPasswordEvent {
   ChangePasswordVisibilityEvent({required this.value});

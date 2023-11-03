@@ -327,6 +327,5 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
 
   closeDialog(BuildContext context) {
     Navigator.pop(context);
-    NavigatorService.popAndPushNamed(AppRoutes.homeScreen);
   }
 }

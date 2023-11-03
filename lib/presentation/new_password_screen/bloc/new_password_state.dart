@@ -7,6 +7,7 @@ class NewPasswordState extends Equatable {
   NewPasswordState({
     this.newpasswordController,
     this.confirmpasswordController,
+    this.temporaryPassword,
     this.isShowPassword = true,
     this.isShowPassword1 = true,
     this.newPasswordModelObj,
@@ -15,6 +16,8 @@ class NewPasswordState extends Equatable {
   TextEditingController? newpasswordController;
 
   TextEditingController? confirmpasswordController;
+
+  TextEditingController? temporaryPassword;
 
   NewPasswordModel? newPasswordModelObj;
 
@@ -29,15 +32,18 @@ class NewPasswordState extends Equatable {
         isShowPassword,
         isShowPassword1,
         newPasswordModelObj,
+        temporaryPassword,
       ];
   NewPasswordState copyWith({
     TextEditingController? newpasswordController,
     TextEditingController? confirmpasswordController,
+    TextEditingController? temporaryPassword,
     bool? isShowPassword,
     bool? isShowPassword1,
     NewPasswordModel? newPasswordModelObj,
   }) {
     return NewPasswordState(
+      temporaryPassword: temporaryPassword ?? this.temporaryPassword,
       newpasswordController:
           newpasswordController ?? this.newpasswordController,
       confirmpasswordController:

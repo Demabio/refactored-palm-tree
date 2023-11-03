@@ -63,6 +63,17 @@ bool isNotEmpty(
   return isInputStringValid;
 }
 
+bool matchPasswords(
+  String? inputString,
+  String? input2, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+  isInputStringValid = inputString == input2;
+
+  return isInputStringValid;
+}
+
 /// Checks if string consist only numeric.
 bool isNumeric(
   String? inputString, {

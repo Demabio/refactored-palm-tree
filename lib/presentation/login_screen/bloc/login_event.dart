@@ -55,6 +55,29 @@ class CreateLoginEvent extends LoginEvent {
       ];
 }
 
+class SendOTPEvent extends LoginEvent {
+  SendOTPEvent({
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+    this.onFalse,
+    this.persmissions,
+  });
+
+  Function? onCreateLoginEventSuccess;
+  Function? onFalse;
+  Function? persmissions;
+
+  Function? onCreateLoginEventError;
+
+  @override
+  List<Object?> get props => [
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+        onFalse,
+        persmissions,
+      ];
+}
+
 class VersionCheckEvent extends LoginEvent {
   VersionCheckEvent({
     this.onTrue,

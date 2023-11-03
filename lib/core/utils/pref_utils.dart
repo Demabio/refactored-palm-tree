@@ -331,4 +331,16 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setFP(bool value) {
+    return _sharedPreferences!.setBool('fp', value);
+  }
+
+  bool getFP() {
+    try {
+      return _sharedPreferences!.getBool('fp') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

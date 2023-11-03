@@ -144,9 +144,15 @@ class LoginScreen extends StatelessWidget {
                                     });
                               }),
                           Padding(
-                              padding: EdgeInsets.only(top: 2.v),
-                              child: Text("msg_forgot_password".tr,
-                                  style: theme.textTheme.titleMedium))
+                            padding: EdgeInsets.only(top: 2.v),
+                            child: InkWell(
+                              onTap: () => changePassword(context),
+                              child: Text(
+                                "msg_forgot_password".tr,
+                                style: theme.textTheme.titleMedium?.copyWith(),
+                              ),
+                            ),
+                          )
                         ])),
                 Padding(
                   padding: const EdgeInsets.all(28.0),
@@ -216,11 +222,71 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  changePassword(BuildContext context) async {
+    String label = "Contact Adminisrator";
+    String body =
+        "Contact the administrator to process your request and a Temporary Password will be sent to allow you to change your password";
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+
+    NavigatorService.popAndPushNamed(
+      AppRoutes.newPasswordScreen,
+    );
+  }
+
+  onForgotPass(BuildContext context) {
+    context.read<LoginBloc>().add(
+          SendOTPEvent(
+            onCreateLoginEventSuccess: () {
+              onFP(context);
+            },
+            onCreateLoginEventError: () {
+              _otp(context);
+            },
+          ),
+        );
+  }
+
+  onFP(BuildContext context) {
+    PrefUtils().setFP(true);
+
+    NavigatorService.popAndPushNamed(
+      AppRoutes.otpOneScreen,
+    );
+  }
+
+  void _otp(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: const Text('Request Failed'),
+              content:
+                  const Text('Something went wrong, contact administrator'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Ok'))
+              ],
+            ));
+  }
+
   /// Calls the https://prudmatvisionaries.com/gateway/UserService/login API and triggers a [CreateLoginEvent] event on the [LoginBloc] bloc.
   ///
   /// Validates the form and triggers a [CreateLoginEvent] event on the [LoginBloc] bloc if the form is valid.
   /// The [BuildContext] parameter represents current [BuildContext]
   loginAPI(BuildContext context) {
+    PrefUtils().setFP(false);
+
     if (_formKey.currentState!.validate()) {
       context.read<LoginBloc>().add(
             CreateLoginEvent(
@@ -243,7 +309,7 @@ class LoginScreen extends StatelessWidget {
   /// to push the named route for the otpOneScreen.
   void _onLoginUserServicePostEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.homeScreen,
+      AppRoutes.otpOneScreen,
     );
 
     showDialog(
