@@ -57,7 +57,7 @@ class PieChart2State extends State<PieChartSample2> {
                 children: [
                   Center(
                     child: Text(
-                      "$percentage%",
+                      "${percentage.toInt()}%",
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class PieChart2State extends State<PieChartSample2> {
         case 0:
           return PieChartSectionData(
             color: Color.fromARGB(255, 214, 214, 214),
-            value: percentage,
+            value: percentage.toInt().toDouble(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -122,7 +122,7 @@ class PieChart2State extends State<PieChartSample2> {
         case 1:
           return PieChartSectionData(
             color: pcolor,
-            value: 100 - percentage,
+            value: 100 - percentage.toInt().toDouble(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

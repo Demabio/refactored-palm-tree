@@ -66,7 +66,7 @@ class CustomPinCodeTextField extends StatelessWidget {
             inactiveColor: theme.colorScheme.primary,
             activeColor: theme.colorScheme.primary,
             inactiveFillColor: Colors.white,
-            activeFillColor: appTheme.indigo600.withOpacity(0.08),
+            activeFillColor: Colors.white,
             selectedColor: Colors.transparent,
           ),
           onChanged: (value) => onChanged(value),

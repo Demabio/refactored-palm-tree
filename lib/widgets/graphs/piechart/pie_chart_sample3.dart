@@ -28,6 +28,7 @@ class PieChartSample3State extends State<PieChartSample3> {
     } else {
       percentage = 0;
     }
+    print("$percentage,$unverified,$verified");
   }
 
   late double percentage;
@@ -79,7 +80,7 @@ class PieChartSample3State extends State<PieChartSample3> {
         case 0:
           return PieChartSectionData(
             color: Colors.green[200],
-            value: percentage,
+            value: percentage.toInt().toDouble(),
             title: "${percentage.toInt()}% - Verified",
 
             radius: radius,
@@ -99,7 +100,7 @@ class PieChartSample3State extends State<PieChartSample3> {
         case 1:
           return PieChartSectionData(
             color: Colors.green[900],
-            value: 100 - percentage,
+            value: 100 - percentage.toInt().toDouble(),
             title: "${100 - percentage.toInt()}% - Unverified",
             radius: radius,
             titleStyle: TextStyle(
