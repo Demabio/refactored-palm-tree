@@ -90,13 +90,14 @@ class FarmerCooperativeGroupDB {
     final batch = database.batch();
     try {
       for (var cooperativeGroup in cooperativeGroups) {
+        print(cooperativeGroup);
         batch.rawUpdate('''
         UPDATE $tableName SET active = 1,  cooperative_group_name = ?, other = ?, date_created = ? WHERE farmer_id = ? AND cooperative_group_id = ?
         ''', [
           cooperativeGroup.cooperateiveGroupName,
           cooperativeGroup.other,
           cooperativeGroup.dateCreated?.toLocal().toIso8601String(),
-          cooperativeGroup.farmerFarmId,
+          cooperativeGroup.farmerId,
           cooperativeGroup.cooperateiveGroupId,
         ]);
       }

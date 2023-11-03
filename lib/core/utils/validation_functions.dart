@@ -10,7 +10,7 @@ bool isText(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^[a-zA-Z\s]+$';
+    const pattern = r'^[a-zA-Z0-9\s\-]+$';
 
     final regExp = RegExp(pattern);
 

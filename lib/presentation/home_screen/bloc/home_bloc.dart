@@ -7,6 +7,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/fish/fish.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/downloadedfarmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../data/sqlService/dbutils.dart';
@@ -71,24 +72,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return await farmerFishProductionLevelsDB.fetchByIDNo(id);
   }
 
+  Future<Farmer?> getFarmerWard(String id) async {
+    DFarmerDB farmerFishProductionLevelsDB = DFarmerDB();
+    return await farmerFishProductionLevelsDB.fetchByIDNo(id);
+  }
+
   _searchFarmer(
     FarmerSearchEvent event,
     Emitter<HomeState> emit,
   ) async {
     Farmer? farmer = await getFarmer(event.idNo!);
     if (farmer == null) {
-      PrefUtils().setFarmerId(0);
-      PrefUtils().setFarmerName("N/A");
-      PrefUtils().setFarmerIdNo(event.idNo!);
-      PrefUtils().setFound(false);
-      PrefUtils().setCropId(0);
-      PrefUtils().setFarmId(0);
-      PrefUtils().setLivestockId(0);
-      PrefUtils().setBee("0");
-      PrefUtils().setAgeGroups("0");
-      PrefUtils().setFeeds("0");
-
-      event.onError!.call();
+      Farmer? dfarmers = await getFarmerWard(event.idNo!);
+      if (dfarmers == null) {
+        PrefUtils().setFarmerId(0);
+        PrefUtils().setFarmerName("N/A");
+        PrefUtils().setFarmerIdNo(event.idNo!);
+        PrefUtils().setFound(false);
+        PrefUtils().setCropId(0);
+        PrefUtils().setFarmId(0);
+        PrefUtils().setLivestockId(0);
+        PrefUtils().setBee("0");
+        PrefUtils().setAgeGroups("0");
+        PrefUtils().setFeeds("0");
+        event.onError!.call();
+      } else {
+        PrefUtils().setFarmerId(dfarmers.farmerId);
+        PrefUtils().setFarmerName(dfarmers.farmerName);
+        PrefUtils().setFarmerIdNo(dfarmers.idNo!);
+        PrefUtils().setFound(true);
+        PrefUtils().setCropId(0);
+        PrefUtils().setFarmId(0);
+        PrefUtils().setLivestockId(0);
+        PrefUtils().setBee("0");
+        PrefUtils().setAgeGroups("0");
+        PrefUtils().setFeeds("0");
+        event.onSuccess!.call();
+      }
     } else {
       PrefUtils().setFarmerId(farmer.farmerId);
       PrefUtils().setFarmerName(farmer.farmerName);

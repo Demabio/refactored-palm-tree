@@ -112,6 +112,7 @@ class AddFinancialandservicesFourBloc extends Bloc<
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
+          print(model);
           categs.add(
             FarmerCooperativeGroup(
                 farmerCooperativeGroupId: 0,

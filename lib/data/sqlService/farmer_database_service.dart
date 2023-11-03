@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/aqua_progress.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/assets_tech_progress.dart';
@@ -55,6 +56,7 @@ import 'package:path/path.dart';
 
 class FarmerDatabaseService {
   Database? _database;
+  final claims = JWT.decode(PrefUtils().getToken());
 
   Future<Database> get database async {
     if (_database != null) {
@@ -65,7 +67,9 @@ class FarmerDatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = 'flocaldevice2.db';
+    String userId = claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    String name = 'enumerator-$userId.db';
     final path = await getDatabasesPath();
     PrefUtils().setDBPath(path);
     return join(path, name);

@@ -96,7 +96,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
                         selector: (state) => state.farmerRegistrationModelObj,
                         builder: (context, model) {
                           return Visibility(
-                            visible: (model!.fi2 &&
+                            visible: ((model!.fi2 || PrefUtils().getFound()) &&
                                 model.fh2 &&
                                 (model.ca2 ||
                                     model.crop == StepState.disabled) &&

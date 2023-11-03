@@ -92,6 +92,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
       int selectedCount3 =
           state.p.where((enterprise) => enterprise.isSelected).length;
       FarmerDB farmerDB = FarmerDB();
+      print(state.addFinancialandservicesOneModelObj?.selectedDropDownValue!);
       try {
         FSProgressDB atProgressDB = FSProgressDB();
         if ((!state.credit && !state.income && !state.group) &&
@@ -190,6 +191,9 @@ class AddFinancialandservicesOneBloc extends Bloc<
     int selectedCount3 =
         state.p.where((enterprise) => enterprise.isSelected).length;
     FarmerDB farmerDB = FarmerDB();
+    print(state.addFinancialandservicesOneModelObj?.selectedDropDownValue!.id);
+    print(selectedCount2);
+    print(selectedCount3);
     try {
       FSProgressDB atProgressDB = FSProgressDB();
       if ((!state.credit && !state.income && !state.group) &&

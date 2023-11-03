@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
@@ -45,8 +46,11 @@ class ApiClient {
   }
 
   Future<Response> uploadSQLiteDB() async {
-    // Create a Dio client
-    const name = 'flocaldevice2.db';
+    final claims = JWT.decode(PrefUtils().getToken());
+
+    String userId = claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    String name = 'enumerator-$userId.db';
     final path = await getDatabasesPath();
     PrefUtils().setDBPath(path);
     String dbpath = join(path, name);

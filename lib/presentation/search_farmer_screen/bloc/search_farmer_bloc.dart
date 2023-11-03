@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/downloadedfarmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/presentation/search_farmer_screen/models/farm_item_model.dart';
@@ -29,28 +30,70 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
     return await farmerFishProductionLevelsDB.fetchByFarmer(id);
   }
 
+  Future<Farmer?> getFarmerWard(String id) async {
+    DFarmerDB farmerFishProductionLevelsDB = DFarmerDB();
+    return await farmerFishProductionLevelsDB.fetchByIDNo(id);
+  }
+
   _searchFarmer(
     FarmerSearchEvent event,
     Emitter<SearchFarmerState> emit,
   ) async {
     Farmer? farmer = await getFarmer(event.idNo!);
     if (farmer == null) {
-      PrefUtils().setFarmerId(0);
-      PrefUtils().setFarmerName("N/A");
-      PrefUtils().setBee("0");
-      PrefUtils().setAgeGroups("0");
-      PrefUtils().setFeeds("0");
+      Farmer? dfarmers = await getFarmerWard(event.idNo!);
+      if (dfarmers == null) {
+        PrefUtils().setFarmerId(0);
+        PrefUtils().setFarmerName("N/A");
+        PrefUtils().setBee("0");
+        PrefUtils().setAgeGroups("0");
+        PrefUtils().setFeeds("0");
 
-      PrefUtils().setFarmerIdNo(event.idNo!);
-      PrefUtils().setFound(false);
-      PrefUtils().setCropId(0);
-      PrefUtils().setFarmId(0);
-      PrefUtils().setLivestockId(0);
-      List<FdetailsItemModel>? models = [];
-      emit(state.copyWith(
-        fmodel: models,
-      ));
-      event.onError?.call();
+        PrefUtils().setFarmerIdNo(event.idNo!);
+        PrefUtils().setFound(false);
+        PrefUtils().setCropId(0);
+        PrefUtils().setFarmId(0);
+        PrefUtils().setLivestockId(0);
+        List<FdetailsItemModel>? models = [];
+        emit(state.copyWith(
+          fmodel: models,
+        ));
+        event.onError?.call();
+      } else {
+        PrefUtils().setFarmerId(dfarmers.farmerId);
+        PrefUtils().setFarmerName(dfarmers.farmerName);
+        PrefUtils().setFarmerIdNo(dfarmers.idNo!);
+        PrefUtils().setFound(true);
+        PrefUtils().setCropId(0);
+        PrefUtils().setFarmId(0);
+        PrefUtils().setLivestockId(0);
+        PrefUtils().setBee("0");
+        PrefUtils().setAgeGroups("0");
+        PrefUtils().setFeeds("0");
+        List<FarmerFarm>? farms = await getFarms(dfarmers.farmerId);
+        List<FdetailsItemModel>? models = [];
+
+        if (farms != null) {
+          for (var farm in farms) {
+            String production =
+                "${farm.cropProd! ? "Crop" : ""}, ${farm.livestockProd! ? "Livestock" : ""}, ${farm.fishFarming! ? "Fish" : ""}";
+
+            models.add(FdetailsItemModel(
+              id: farm.farmerFarmId,
+              prod: production,
+              name: farm.farmName,
+              landsize: farm.farmSize.toString(),
+              x: farm.x.toString(),
+              y: farm.y.toString(),
+              completed: farm.completed!,
+            ));
+          }
+        }
+        emit(state.copyWith(
+          fmodel: models,
+          name: dfarmers.idNo,
+        ));
+      }
     } else {
       PrefUtils().setFarmerId(farmer.farmerId);
       PrefUtils().setFarmerName(farmer.farmerName);
