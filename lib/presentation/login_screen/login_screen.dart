@@ -9,6 +9,7 @@ import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -35,66 +36,180 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    double screenHeightPercentage =
+        (DeviceExt(8.3).h / mediaQueryData.size.height) * 100;
+    print(
+        "percent: $screenHeightPercentage , height: ${mediaQueryData.size.height}, Width: ${mediaQueryData.size.width}");
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Form(
           key: _formKey,
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.only(left: 13.h, top: 116.v, right: 13.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 69.h),
-                    child: Row(children: [
-                      CustomImageView(
-                          imagePath: ImageConstant.imgImage2,
-                          height: 70.adaptSize,
-                          width: 70.adaptSize),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 2.h, top: 10.v, bottom: 11.v),
-                          child: Text("lbl_kiamis".tr,
-                              style: theme.textTheme.headlineLarge))
-                    ])),
-                SizedBox(height: 8.v),
-                Align(
-                    alignment: Alignment.center,
-                    child: Text("lbl_welcome_back".tr,
-                        style: theme.textTheme.headlineSmall)),
-                Padding(
-                    padding: EdgeInsets.only(left: 3.h, top: 15.v),
+          child: SingleChildScrollView(
+            child: Container(
+              width: double.maxFinite,
+              padding: Device.orientation == Orientation.portrait
+                  ? EdgeInsets.only(
+                      left: DeviceExt(3).h, top: 28.w, right: DeviceExt(3).h)
+                  : EdgeInsets.only(
+                      left: DeviceExt(3).w,
+                      top: DeviceExt(28).h,
+                      right: DeviceExt(3).w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (Device.orientation == Orientation.portrait)
+                    Padding(
+                        padding: Device.screenType == ScreenType.mobile
+                            ? EdgeInsets.only(left: 20.w)
+                            : EdgeInsets.only(left: 30.w),
+                        child: Row(children: [
+                          CustomImageView(
+                              imagePath: ImageConstant.imgImage2,
+                              height: DeviceExt(8.4).h,
+                              width: DeviceExt(8.4).h),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: DeviceExt(0.2).h,
+                                  top: 2.4.w,
+                                  bottom: 2.7.w),
+                              child: Text("lbl_kiamis".tr,
+                                  style: theme.textTheme.headlineLarge
+                                      ?.copyWith(fontSize: DeviceExt(4).h)))
+                        ])),
+                  if (Device.orientation == Orientation.landscape)
+                    Padding(
+                        padding: Device.screenType == ScreenType.mobile
+                            ? EdgeInsets.only(left: DeviceExt(35).w)
+                            : EdgeInsets.only(left: DeviceExt(35).w),
+                        child: Row(children: [
+                          CustomImageView(
+                              imagePath: ImageConstant.imgImage2,
+                              height: DeviceExt(8.4).w,
+                              width: DeviceExt(8.4).w),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: DeviceExt(0.2).w,
+                                  top: DeviceExt(2.4).h,
+                                  bottom: DeviceExt(2.7).h),
+                              child: Text("lbl_kiamis".tr,
+                                  style: theme.textTheme.headlineLarge
+                                      ?.copyWith(fontSize: 4.w)))
+                        ])),
+                  SizedBox(height: 2.w),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "lbl_welcome_back".tr,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2.5).h
+                              : DeviceExt(3).w,
+                        ),
+                      )),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: DeviceExt(0.36).h, top: 3.6.w),
                     child: Text("msg_login_to_your_account".tr,
-                        style: CustomTextStyles.titleSmallMedium)),
-                BlocSelector<LoginBloc, LoginState, TextEditingController?>(
-                    selector: (state) => state.userNameController,
-                    builder: (context, userNameController) {
-                      return CustomTextFormField(
-                          autofocus: false,
-                          focusNode: _firstTextFieldFocus,
-                          controller: userNameController,
-                          margin:
-                              EdgeInsets.only(left: 3.h, top: 26.v, right: 2.h),
-                          hintText: "lbl_username".tr,
-                          validator: (value) {
-                            if (isNotEmpty(value)) {
-                              return "Please enter valid text";
-                            }
-                            return null;
-                          },
-                          borderDecoration:
-                              TextFormFieldStyleHelper.outlinePrimaryTL101,
-                          fillColor: appTheme.indigo600.withOpacity(0.08));
-                    }),
-                BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-                  return CustomTextFormField(
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(1.8).h
+                              : DeviceExt(2).w,
+                          fontWeight: FontWeight.normal,
+                        )),
+                  ),
+                  BlocSelector<LoginBloc, LoginState, TextEditingController?>(
+                      selector: (state) => state.userNameController,
+                      builder: (context, userNameController) {
+                        return CustomTextFormField(
+                            autofocus: false,
+                            focusNode: _firstTextFieldFocus,
+                            controller: userNameController,
+                            margin: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    left: DeviceExt(0.36).h,
+                                    top: 6.3.w,
+                                    right: DeviceExt(0.2).h)
+                                : EdgeInsets.only(
+                                    left: DeviceExt(0.36).w,
+                                    top: DeviceExt(6.3).h,
+                                    right: DeviceExt(0.2).w),
+                            hintText: "lbl_username".tr,
+                            textStyle: theme.textTheme.titleSmall?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(1.8).h
+                                      : DeviceExt(2).w,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            hintStyle: theme.textTheme.titleSmall?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(1.8).h
+                                      : DeviceExt(2).w,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            validator: (value) {
+                              if (isNotEmpty(value)) {
+                                return "Please enter valid text";
+                              }
+                              return null;
+                            },
+                            suffix: InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  height:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(3.5).h
+                                          : 3.5.w,
+                                  width:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(3.5).h
+                                          : 3.5.w,
+                                  margin:
+                                      Device.orientation == Orientation.portrait
+                                          ? EdgeInsets.fromLTRB(
+                                              DeviceExt(3.6).h,
+                                              3.w,
+                                              DeviceExt(2).h,
+                                              3.w)
+                                          : EdgeInsets.fromLTRB(
+                                              DeviceExt(3.6).w,
+                                              DeviceExt(3).h,
+                                              DeviceExt(2).w,
+                                              DeviceExt(3).h),
+                                )),
+                            borderDecoration:
+                                TextFormFieldStyleHelper.outlinePrimaryTL101,
+                            fillColor: appTheme.indigo600.withOpacity(0.08));
+                      }),
+                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+                    return CustomTextFormField(
                       autofocus: false,
                       controller: state.passwordController,
                       focusNode: _secondTextFieldFocus,
-                      margin: EdgeInsets.only(left: 3.h, top: 16.v, right: 2.h),
+                      margin: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.only(
+                              left: DeviceExt(0.36).h,
+                              top: 6.3.w,
+                              right: DeviceExt(0.2).h)
+                          : EdgeInsets.only(
+                              left: DeviceExt(0.36).w,
+                              top: DeviceExt(6.3).h,
+                              right: DeviceExt(0.2).w),
                       hintText: "lbl_password".tr,
+                      textStyle: theme.textTheme.titleSmall?.copyWith(
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(1.8).h
+                            : DeviceExt(2).w,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      hintStyle: theme.textTheme.titleSmall?.copyWith(
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(1.8).h
+                            : DeviceExt(2).w,
+                        fontWeight: FontWeight.normal,
+                      ),
                       textInputAction: TextInputAction.done,
                       textInputType: TextInputType.visiblePassword,
                       suffix: InkWell(
@@ -104,15 +219,26 @@ class LoginScreen extends StatelessWidget {
                                     value: !state.isShowPassword));
                           },
                           child: Container(
-                              margin:
-                                  EdgeInsets.fromLTRB(30.h, 13.v, 20.h, 13.v),
+                              height: Device.orientation == Orientation.portrait
+                                  ? DeviceExt(3.5).h
+                                  : 3.5.w,
+                              width: Device.orientation == Orientation.portrait
+                                  ? DeviceExt(3.5).h
+                                  : 3.5.w,
+                              margin: Device.orientation == Orientation.portrait
+                                  ? EdgeInsets.fromLTRB(DeviceExt(3.6).h, 3.w,
+                                      DeviceExt(2).h, 3.w)
+                                  : EdgeInsets.fromLTRB(
+                                      DeviceExt(3.6).w,
+                                      DeviceExt(3).h,
+                                      DeviceExt(2).w,
+                                      DeviceExt(3).h),
                               child: CustomImageView(
                                   svgPath: state.isShowPassword
                                       ? ImageConstant
                                           .imgAntdesigneyeinvisiblefilled
                                       : ImageConstant
                                           .imgAntdesigneyeinvisiblefilled))),
-                      suffixConstraints: BoxConstraints(maxHeight: 50.v),
                       validator: (value) {
                         if (value == null || (isNotEmpty(value))) {
                           return "Please enter valid password";
@@ -120,101 +246,155 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                       obscureText: state.isShowPassword,
-                      contentPadding:
-                          EdgeInsets.only(left: 14.h, top: 13.v, bottom: 13.v),
+                      // contentPadding: EdgeInsets.only(
+                      //     left: DeviceExt(1.7).h, top: 3.w, bottom: 3.w),
                       borderDecoration:
                           TextFormFieldStyleHelper.outlinePrimaryTL101,
-                      fillColor: appTheme.indigo600.withOpacity(0.08));
-                }),
-                Padding(
-                    padding: EdgeInsets.only(left: 1.h, top: 28.v),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          BlocSelector<LoginBloc, LoginState, bool?>(
-                              selector: (state) => state.englishName,
-                              builder: (context, englishName) {
-                                return CustomCheckboxButton(
-                                    text: "lbl_remember_me".tr,
-                                    value: englishName,
-                                    margin: EdgeInsets.only(bottom: 2.v),
-                                    onChange: (value) {
-                                      context.read<LoginBloc>().add(
-                                          ChangeCheckBoxEvent(value: value));
-                                    });
-                              }),
-                          Padding(
-                            padding: EdgeInsets.only(top: 2.v),
-                            child: InkWell(
-                              onTap: () => changePassword(context),
-                              child: Text(
-                                "msg_forgot_password".tr,
-                                style: theme.textTheme.titleMedium?.copyWith(),
-                              ),
-                            ),
-                          )
-                        ])),
-                Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: BlocSelector<LoginBloc, LoginState, LoginState>(
-                      selector: (state) => state,
-                      builder: (context, state) {
-                        return Visibility(
-                          visible: state.success,
-                          child: Column(
-                            children: [
-                              Center(
+                      fillColor: appTheme.indigo600.withOpacity(0.08),
+                    );
+                  }),
+                  Padding(
+                      padding: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.only(left: DeviceExt(0.12).h, top: 7.w)
+                          : EdgeInsets.only(
+                              left: DeviceExt(0.12).w, top: DeviceExt(7).h),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BlocSelector<LoginBloc, LoginState, bool?>(
+                                selector: (state) => state.englishName,
+                                builder: (context, englishName) {
+                                  return CustomCheckboxButton(
+                                      text: "lbl_remember_me".tr,
+                                      textStyle:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        fontSize: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(1.8).h
+                                            : DeviceExt(2).w,
+                                      ),
+                                      value: englishName,
+                                      margin: EdgeInsets.only(bottom: 0.5.w),
+                                      onChange: (value) {
+                                        context.read<LoginBloc>().add(
+                                            ChangeCheckBoxEvent(value: value));
+                                      });
+                                }),
+                            Padding(
+                              padding: EdgeInsets.only(top: 0.5.w),
+                              child: InkWell(
+                                onTap: () => changePassword(context),
                                 child: Text(
-                                  "Downloading: ${state.percentagedone}% Done",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: CustomTextStyles
-                                      .bodyMediumPoppinsBlack900
-                                      .copyWith(
-                                    height: 1.57,
+                                  "msg_forgot_password".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
                                   ),
                                 ),
                               ),
-                              Center(
-                                child: SizedBox(
-                                  width: 300.h,
-                                  height: 50.v,
-                                  child: LinearProgressIndicator(
-                                    // borderRadius: BorderRadius.circular(10),
+                            )
+                          ])),
+                  Padding(
+                    padding: Device.orientation == Orientation.portrait
+                        ? EdgeInsets.all(7.w)
+                        : EdgeInsets.all(DeviceExt(7).h),
+                    child: BlocSelector<LoginBloc, LoginState, LoginState>(
+                        selector: (state) => state,
+                        builder: (context, state) {
+                          return Visibility(
+                            visible: state.success,
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Downloading: ${state.percentagedone}% Done",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      color: Colors.black,
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2).w,
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: SizedBox(
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(36).h
+                                        : 36.w,
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? 12.w
+                                        : DeviceExt(12).h,
+                                    child: LinearProgressIndicator(
+                                      // borderRadius: BorderRadius.circular(10),
 
-                                    semanticsLabel: "Progress",
-                                    semanticsValue:
-                                        state.percentagedone.toString(),
-                                    value: state
-                                        .linebarvalue, // The value should be between 0.0 and 1.0, where 0.0 is 0% and 1.0 is 100%.
-                                    backgroundColor: Colors
-                                        .grey, // Background color of the progress bar.
-                                    valueColor: AlwaysStoppedAnimation<Color>(theme
-                                        .colorScheme
-                                        .primary), // Color of the progress bar.
+                                      semanticsLabel: "Progress",
+                                      semanticsValue:
+                                          state.percentagedone.toString(),
+                                      value: state
+                                          .linebarvalue, // The value should be between 0.0 and 1.0, where 0.0 is 0% and 1.0 is 100%.
+                                      backgroundColor: Colors
+                                          .grey, // Background color of the progress bar.
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          theme.colorScheme
+                                              .primary), // Color of the progress bar.
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                ),
-                BlocSelector<LoginBloc, LoginState, bool>(
-                  selector: (state) => state.success,
-                  builder: (context, success) {
-                    return Visibility(
-                        visible: !success,
-                        child: CustomElevatedButton(
-                            text: "lbl_log_in".tr,
-                            margin: EdgeInsets.fromLTRB(3.h, 25.v, 2.h, 5.v),
-                            onTap: () {
-                              loginAPI(context);
-                            }));
-                  },
-                ),
-              ],
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  BlocSelector<LoginBloc, LoginState, bool>(
+                    selector: (state) => state.success,
+                    builder: (context, success) {
+                      return Visibility(
+                          visible: !success,
+                          child: Center(
+                            child: CustomElevatedButton(
+                                height: Device.orientation ==
+                                        Orientation.portrait
+                                    ? DeviceExt(6).h
+                                    : 8.w,
+                                // width:
+                                //     Device.orientation == Orientation.portrait
+                                //         ? DeviceExt(50).h
+                                //         : 50.w,
+                                text: "lbl_log_in".tr,
+                                buttonTextStyle:
+                                    theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                ),
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
+                                            6.w, DeviceExt(0.2).h, 1.2.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(0.36).w,
+                                            DeviceExt(6).h,
+                                            DeviceExt(0.2).w,
+                                            DeviceExt(1.2).h),
+                                onTap: () {
+                                  loginAPI(context);
+                                }),
+                          ));
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

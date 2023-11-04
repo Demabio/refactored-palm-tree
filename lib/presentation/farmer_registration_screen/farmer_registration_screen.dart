@@ -12,7 +12,7 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'package:kiamis_app/presentation/save_draft_modal_dialog/save_draft_modal_dialog.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class FarmerRegistrationScreen extends StatelessWidget {
@@ -280,13 +280,13 @@ class FarmerRegistrationScreen extends StatelessWidget {
       isActive: isActive,
       content: LimitedBox(
         maxWidth: 300,
-        maxHeight: SizerExt(15).h,
+        maxHeight: DeviceExt(15).h,
         child: Column(
           children: [
             if (!addoredit)
               CustomElevatedButton(
                 text: "Add Details",
-                margin: EdgeInsets.only(left: SizerExt(10).h),
+                margin: EdgeInsets.only(left: DeviceExt(10).h),
                 buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                 buttonTextStyle: CustomTextStyles.bodyLarge16,
                 onTap: () {
@@ -297,7 +297,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
             if (addoredit)
               CustomElevatedButton(
                 text: "Edit Details",
-                margin: EdgeInsets.only(left: SizerExt(10).h),
+                margin: EdgeInsets.only(left: DeviceExt(10).h),
                 buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                 buttonTextStyle: CustomTextStyles.bodyLarge16,
                 onTap: () {

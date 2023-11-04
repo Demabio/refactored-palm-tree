@@ -2,7 +2,7 @@ import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/m
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/widgets/feeds_widget.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'bloc/add_reared_livestock_dialog_bee_bloc.dart';
 import 'models/add_reared_livestock_dialog_bee_model.dart';
@@ -33,7 +33,7 @@ class AddRearedLivestockDialogBeeDialog extends StatelessWidget {
 
     return Container(
       width: ResponsiveExtension(344).h,
-      height: SizerExt(75).h,
+      height: DeviceExt(75).h,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveExtension(13).h,
         vertical: 16.v,

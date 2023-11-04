@@ -21,7 +21,6 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   grouped_list: ^5.1.2
   dio: ^5.0.3
-  sizer: ^2.0.15
   cupertino_stepper: ^0.2.1
   intl: ^0.18.0
   sqflite: ^2.3.0
@@ -38,6 +37,7 @@ dependencies:
   package_info: ^2.0.2
   path_provider: ^2.1.1
   open_file_plus: ^3.4.1
+  flutter_sizer: ^1.0.5
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

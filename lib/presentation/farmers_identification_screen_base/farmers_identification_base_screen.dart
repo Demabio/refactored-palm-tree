@@ -11,7 +11,7 @@ import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class FarmersIdentificationScreenBase extends StatefulWidget {
@@ -138,7 +138,7 @@ class _FarmersIdentificationScreenBaseState
       state: state,
       isActive: isActive,
       content: LimitedBox(
-          maxWidth: double.infinity, maxHeight: SizerExt(70).h, child: screen),
+          maxWidth: double.infinity, maxHeight: DeviceExt(70).h, child: screen),
     );
   }
 

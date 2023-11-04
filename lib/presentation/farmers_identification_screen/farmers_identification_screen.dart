@@ -316,7 +316,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       ])),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
-                                        ?.farmer?.farmerTheRespodent! ??
+                                        ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
                                   padding:
@@ -342,7 +342,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                               ),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
-                                        ?.farmer?.farmerTheRespodent! ??
+                                        ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
                                   padding:
@@ -367,7 +367,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                               ),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
-                                        ?.farmer?.farmerTheRespodent! ??
+                                        ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
                                   padding:
@@ -394,7 +394,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                               SizedBox(height: 20.v),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
-                                        ?.farmer?.farmerTheRespodent! ??
+                                        ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
                                   padding:

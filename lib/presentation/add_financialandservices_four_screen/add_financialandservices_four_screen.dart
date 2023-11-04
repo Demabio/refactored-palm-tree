@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'widgets/irrigation_widget.dart';
 
@@ -33,7 +33,7 @@ class AddFinancialandservicesFourScreen extends StatelessWidget {
 
     return Container(
       width: ResponsiveExtension(344).h,
-      height: SizerExt(75).h,
+      height: DeviceExt(75).h,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveExtension(13).h,
         vertical: 16.v,

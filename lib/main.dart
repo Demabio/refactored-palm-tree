@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'core/app_export.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -12,6 +12,9 @@ Future<void> main() async {
   Future.wait([
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown,
     ]),
     PrefUtils().init()
   ]).then((value) {
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
       ),
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          return Sizer(builder: (context, orientation, deviceType) {
+          return FlutterSizer(builder: (context, orientation, deviceType) {
             return MaterialApp(
               theme: theme,
               title: 'kiamis_app',

@@ -2,7 +2,7 @@ import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/presentation/add_landandwatermgmt_six_screen/widgets/irrigation_widget.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'bloc/add_landandwatermgmt_six_bloc.dart';
 import 'models/add_landandwatermgmt_six_model.dart';
@@ -32,7 +32,7 @@ class AddLandandwatermgmtSixScreen extends StatelessWidget {
 
     return Container(
       width: ResponsiveExtension(344).h,
-      height: SizerExt(75).h,
+      height: DeviceExt(75).h,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveExtension(13).h,
         vertical: 16.v,
