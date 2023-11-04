@@ -68,6 +68,7 @@ class DynamicDialogTwo extends StatelessWidget {
                   : EdgeInsets.fromLTRB(DeviceExt(1).w, DeviceExt(6).h,
                       DeviceExt(1).w, DeviceExt(1.2).h),
               child: CustomElevatedButton(
+                  text: "Close".tr,
                   height: Device.orientation == Orientation.portrait
                       ? DeviceExt(6).h
                       : 8.w,
@@ -78,7 +79,6 @@ class DynamicDialogTwo extends StatelessWidget {
                   width: Device.orientation == Orientation.portrait
                       ? DeviceExt(17).h
                       : 17.w,
-                  text: "Close".tr,
                   margin: EdgeInsets.only(
                       left: Device.orientation == Orientation.portrait
                           ? DeviceExt(1).h

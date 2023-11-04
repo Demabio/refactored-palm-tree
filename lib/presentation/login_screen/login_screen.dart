@@ -391,7 +391,7 @@ class LoginScreen extends StatelessWidget {
                                             DeviceExt(0.2).w,
                                             DeviceExt(1.2).h),
                                 onTap: () {
-                                  loginAPI(context);
+                                  _onLoginUserServicePostEventSuccess(context);
                                 }),
                           ));
                     },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class DynamicDialog extends StatelessWidget {
   final String label;
@@ -33,29 +34,93 @@ class DynamicDialog extends StatelessWidget {
         return Future.value(false);
       },
       child: Container(
-          width: 330.h,
-          padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 26.v),
+          width: Device.orientation == Orientation.portrait
+              ? DeviceExt(40).h
+              : 50.w,
+          padding: Device.orientation == Orientation.portrait
+              ? EdgeInsets.symmetric(
+                  horizontal: DeviceExt(0.8).h, vertical: 5.w)
+              : EdgeInsets.symmetric(
+                  horizontal: DeviceExt(1.8).w, vertical: DeviceExt(5).h),
           decoration: AppDecoration.fillWhiteA
               .copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(label, style: CustomTextStyles.bodyLargePrimary_2),
-            SizedBox(height: 8.v),
-            Text(body, style: CustomTextStyles.bodyMediumPoppinsBlack900),
-            SizedBox(height: 23.v),
+            Text(
+              label,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+              ),
+            ),
+            SizedBox(
+                height: Device.orientation == Orientation.portrait
+                    ? 2.4.w
+                    : DeviceExt(2.4).h),
+            Text(
+              body,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+              ),
+            ),
+            SizedBox(
+                height: Device.orientation == Orientation.portrait
+                    ? 2.4.w
+                    : DeviceExt(2.4).h),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Expanded(
                   child: CustomOutlinedButton(
                       text: "lbl_no".tr,
-                      margin: EdgeInsets.only(right: 4.h),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(6).h
+                          : 8.w,
+                      // width:
+                      //     Device.orientation == Orientation.portrait
+                      //         ? DeviceExt(50).h
+                      //         : 50.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(17).h
+                          : 17.w,
+                      margin: EdgeInsets.only(
+                          left: Device.orientation == Orientation.portrait
+                              ? DeviceExt(1).h
+                              : 1.w),
+                      buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(2).h
+                            : DeviceExt(2.5).w,
+                      ),
                       onTap: () {
                         onTapNo(context);
                       })),
               Expanded(
                   child: CustomElevatedButton(
                       text: "lbl_yes".tr,
-                      margin: EdgeInsets.only(left: 4.h),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(6).h
+                          : 8.w,
+                      // width:
+                      //     Device.orientation == Orientation.portrait
+                      //         ? DeviceExt(50).h
+                      //         : 50.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(17).h
+                          : 17.w,
+                      margin: EdgeInsets.only(
+                          left: Device.orientation == Orientation.portrait
+                              ? DeviceExt(1).h
+                              : 1.w),
                       buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                      buttonTextStyle: CustomTextStyles.bodyLarge16,
+                      buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(2).h
+                            : DeviceExt(2.5).w,
+                      ),
                       onTap: () {
                         onTapYes(context);
                       }))
