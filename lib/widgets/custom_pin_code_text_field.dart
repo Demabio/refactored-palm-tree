@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class CustomPinCodeTextField extends StatelessWidget {
@@ -51,6 +52,7 @@ class CustomPinCodeTextField extends StatelessWidget {
           appContext: context,
           controller: controller,
           length: 4,
+          backgroundColor: Colors.white,
           keyboardType: TextInputType.number,
           textStyle: textStyle ?? theme.textTheme.headlineMedium,
           hintStyle: hintStyle ?? theme.textTheme.headlineMedium,
@@ -59,15 +61,21 @@ class CustomPinCodeTextField extends StatelessWidget {
           ],
           enableActiveFill: true,
           pinTheme: PinTheme(
-            fieldHeight: 60.h,
-            fieldWidth: 60.h,
+            fieldHeight: Device.orientation == Orientation.portrait
+                ? DeviceExt(8).h
+                : 8.w,
+            fieldWidth: Device.orientation == Orientation.portrait
+                ? DeviceExt(8).h
+                : 8.w,
             shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(15.h),
+            borderRadius: BorderRadius.circular(
+              Device.orientation == Orientation.portrait ? DeviceExt(2).h : 2.w,
+            ),
             inactiveColor: theme.colorScheme.primary,
-            activeColor: theme.colorScheme.primary,
+            activeColor: Colors.white,
             inactiveFillColor: Colors.white,
             activeFillColor: Colors.white,
-            selectedColor: Colors.transparent,
+            selectedColor: Colors.white,
           ),
           onChanged: (value) => onChanged(value),
           validator: validator,

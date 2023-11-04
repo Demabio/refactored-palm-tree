@@ -391,7 +391,7 @@ class LoginScreen extends StatelessWidget {
                                             DeviceExt(0.2).w,
                                             DeviceExt(1.2).h),
                                 onTap: () {
-                                  _onLoginUserServicePostEventSuccess(context);
+                                  loginAPI(context);
                                 }),
                           ));
                     },
@@ -550,14 +550,56 @@ class LoginScreen extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              title: const Text('Failed Login'),
-              content: Text("Invalid Credentials"),
+              title: Text(
+                'Failed Login',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(2.5).h
+                      : DeviceExt(3).w,
+                ),
+              ),
+              content: Text(
+                "Invalid Credentials",
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(2.5).h
+                      : DeviceExt(3).w,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
               actions: [
                 TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Ok'))
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: CustomElevatedButton(
+                      text: "OK".tr,
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(6).h
+                          : 8.w,
+                      // width:
+                      //     Device.orientation == Orientation.portrait
+                      //         ? DeviceExt(50).h
+                      //         : 50.w,
+                      buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(2).h
+                            : DeviceExt(2.5).w,
+                      ),
+                      margin: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.fromLTRB(
+                              DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                          : EdgeInsets.fromLTRB(
+                              DeviceExt(0.36).w,
+                              DeviceExt(6).h,
+                              DeviceExt(0.2).w,
+                              DeviceExt(1.2).h),
+                      onTap: () {
+                        Navigator.pop(context);
+                      }),
+                )
               ],
             ));
   }
