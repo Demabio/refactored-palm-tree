@@ -3,6 +3,7 @@ import 'models/draft_entries_clear_drafts_modal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class DynamicDialogTwo extends StatelessWidget {
   final String label;
@@ -30,22 +31,65 @@ class DynamicDialogTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Container(
-        width: 330.h,
-        padding: EdgeInsets.symmetric(horizontal: 7.h, vertical: 22.v),
+        width:
+            Device.orientation == Orientation.portrait ? DeviceExt(40).h : 50.w,
+        padding: Device.orientation == Orientation.portrait
+            ? EdgeInsets.symmetric(horizontal: DeviceExt(0.8).h, vertical: 5.w)
+            : EdgeInsets.symmetric(
+                horizontal: DeviceExt(1.8).w, vertical: DeviceExt(5).h),
         decoration: AppDecoration.fillWhiteA
             .copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(label, style: CustomTextStyles.bodyLargePrimary_2),
-          SizedBox(height: 10.v),
-          Text(body, style: CustomTextStyles.bodyMediumPoppinsBlack900),
+          Text(
+            label,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+            ),
+          ),
+          SizedBox(
+              height: Device.orientation == Orientation.portrait
+                  ? 2.4.w
+                  : DeviceExt(2.4).h),
+          Text(
+            body,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: Colors.black,
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+            ),
+          ),
           Padding(
-              padding: EdgeInsets.fromLTRB(8.h, 24.v, 8.h, 5.v),
+              padding: Device.orientation == Orientation.portrait
+                  ? EdgeInsets.fromLTRB(
+                      DeviceExt(1).h, 6.w, DeviceExt(1).h, 1.2.w)
+                  : EdgeInsets.fromLTRB(DeviceExt(1).w, DeviceExt(6).h,
+                      DeviceExt(1).w, DeviceExt(1.2).h),
               child: CustomElevatedButton(
-                  width: 145.h,
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(6).h
+                      : 8.w,
+                  // width:
+                  //     Device.orientation == Orientation.portrait
+                  //         ? DeviceExt(50).h
+                  //         : 50.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(17).h
+                      : 17.w,
                   text: "Close".tr,
-                  margin: EdgeInsets.only(left: 8.h),
+                  margin: EdgeInsets.only(
+                      left: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1).h
+                          : 1.w),
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
+                  buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(2).h
+                        : DeviceExt(2.5).w,
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                   }))

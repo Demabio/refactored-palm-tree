@@ -96,7 +96,10 @@ class LoginScreen extends StatelessWidget {
                                   style: theme.textTheme.headlineLarge
                                       ?.copyWith(fontSize: 4.w)))
                         ])),
-                  SizedBox(height: 2.w),
+                  SizedBox(
+                      height: Device.orientation == Orientation.portrait
+                          ? 2.w
+                          : DeviceExt(2).h),
                   Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -361,6 +364,7 @@ class LoginScreen extends StatelessWidget {
                           visible: !success,
                           child: Center(
                             child: CustomElevatedButton(
+                                text: "lbl_log_in".tr,
                                 height: Device.orientation ==
                                         Orientation.portrait
                                     ? DeviceExt(6).h
@@ -369,7 +373,6 @@ class LoginScreen extends StatelessWidget {
                                 //     Device.orientation == Orientation.portrait
                                 //         ? DeviceExt(50).h
                                 //         : 50.w,
-                                text: "lbl_log_in".tr,
                                 buttonTextStyle:
                                     theme.textTheme.titleMedium?.copyWith(
                                   color: Colors.white,

@@ -50,6 +50,17 @@ class ChangePasswordVisibilityEvent extends NewPasswordEvent {
       ];
 }
 
+class ChangePasswordVisibilityEvent2 extends NewPasswordEvent {
+  ChangePasswordVisibilityEvent2({required this.value});
+
+  bool value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
 ///Event for changing password visibility
 class ChangePasswordVisibilityEvent1 extends NewPasswordEvent {
   ChangePasswordVisibilityEvent1({required this.value});

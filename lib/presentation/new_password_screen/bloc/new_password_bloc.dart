@@ -14,9 +14,16 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
     on<NewPasswordInitialEvent>(_onInitialize);
     on<ChangePasswordVisibilityEvent>(_changePasswordVisibility);
     on<ChangePasswordVisibilityEvent1>(_changePasswordVisibility1);
+    on<ChangePasswordVisibilityEvent2>(_changePasswordVisibility2);
     on<CreateLoginEvent>(_resetPassword);
   }
   final _repository = Repository();
+  _changePasswordVisibility2(
+    ChangePasswordVisibilityEvent2 event,
+    Emitter<NewPasswordState> emit,
+  ) {
+    emit(state.copyWith(isShowPassword2: event.value));
+  }
 
   _changePasswordVisibility(
     ChangePasswordVisibilityEvent event,

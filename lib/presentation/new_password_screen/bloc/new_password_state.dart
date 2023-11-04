@@ -10,6 +10,7 @@ class NewPasswordState extends Equatable {
     this.temporaryPassword,
     this.isShowPassword = true,
     this.isShowPassword1 = true,
+    this.isShowPassword2 = true,
     this.newPasswordModelObj,
   });
 
@@ -24,6 +25,7 @@ class NewPasswordState extends Equatable {
   bool isShowPassword;
 
   bool isShowPassword1;
+  bool isShowPassword2;
 
   @override
   List<Object?> get props => [
@@ -31,6 +33,7 @@ class NewPasswordState extends Equatable {
         confirmpasswordController,
         isShowPassword,
         isShowPassword1,
+        isShowPassword2,
         newPasswordModelObj,
         temporaryPassword,
       ];
@@ -40,6 +43,7 @@ class NewPasswordState extends Equatable {
     TextEditingController? temporaryPassword,
     bool? isShowPassword,
     bool? isShowPassword1,
+    bool? isShowPassword2,
     NewPasswordModel? newPasswordModelObj,
   }) {
     return NewPasswordState(
@@ -49,6 +53,7 @@ class NewPasswordState extends Equatable {
       confirmpasswordController:
           confirmpasswordController ?? this.confirmpasswordController,
       isShowPassword: isShowPassword ?? this.isShowPassword,
+      isShowPassword2: isShowPassword2 ?? this.isShowPassword2,
       isShowPassword1: isShowPassword1 ?? this.isShowPassword1,
       newPasswordModelObj: newPasswordModelObj ?? this.newPasswordModelObj,
     );
