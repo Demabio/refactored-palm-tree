@@ -34,7 +34,7 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
 
   Future<List<Farmer>?> getUnverified() async {
     FarmerDB farmerDB = FarmerDB();
-    return await farmerDB.fetchUnverified();
+    return await farmerDB.fetchSubmitted();
   }
 
   Future<List<Farmer>?> getAll() async {
@@ -50,13 +50,13 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
     List<Farmer>? farmers = [];
     if (action == "All") {
       farmers = await getAll();
-    } else if (action == "Saved") {
+    } else if (action == "To Submit") {
       farmers = await getSaved();
     } else if (action == "Approved") {
       farmers = await getApproved();
     } else if (action == "Rejected") {
       farmers = await getUnapproved();
-    } else if (action == "Unverified") {
+    } else if (action == "Submitted") {
       farmers = await getUnverified();
     } else {
       farmers = await getAll();
@@ -125,13 +125,13 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
         List<Farmer>? farmers = [];
         if (action == "All") {
           farmers = await getAll();
-        } else if (action == "Saved") {
+        } else if (action == "To Submit") {
           farmers = await getSaved();
         } else if (action == "Approved") {
           farmers = await getApproved();
         } else if (action == "Rejected") {
           farmers = await getUnapproved();
-        } else if (action == "Unverified") {
+        } else if (action == "Submitted") {
           farmers = await getUnverified();
         } else {
           farmers = await getAll();

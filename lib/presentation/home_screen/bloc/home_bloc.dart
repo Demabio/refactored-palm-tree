@@ -48,7 +48,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     int? savedfarmers = await farmerDB.getSaved();
     int? verfarmers = await farmerDB.getApproved();
     int? rejfarmers = await farmerDB.getUnapproved();
-    int? unverfarmers = await farmerDB.getUnverified();
+    int? submitted = await farmerDB.getSubmitted();
+
+    // int? unverfarmers = await farmerDB.getUnverified();
     int? iprs = 0;
     // await farmerDB.getFarmersCount();
 
@@ -59,7 +61,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         searchController1: TextEditingController(),
         a: savedfarmers,
         b: verfarmers,
-        c: unverfarmers,
+        c: submitted,
         d: rejfarmers,
         e: iprs,
         f: allfarmers,

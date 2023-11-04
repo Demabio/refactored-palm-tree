@@ -19,6 +19,7 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 import 'package:kiamis_app/presentation/home_farmer_found_dialog/home_farmer_found_dialog.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -63,153 +64,381 @@ class _HomeScreenState extends State<HomeScreen> {
           resizeToAvoidBottomInset: true,
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
-              height: 47.v,
-              leadingWidth: 73.h,
+              height: Device.orientation == Orientation.portrait
+                  ? 11.w
+                  : DeviceExt(11).h,
+              leadingWidth: Device.orientation == Orientation.portrait
+                  ? DeviceExt(9).h
+                  : 2.2.w,
               leading: AppbarImage(
                   svgPath: ImageConstant.imgMenu,
-                  margin: EdgeInsets.only(left: 49.h, top: 8.v, bottom: 15.v),
+                  margin: Device.orientation == Orientation.portrait
+                      ? EdgeInsets.only(
+                          left: DeviceExt(6).h,
+                          top: 2.w,
+                          bottom: 4.w,
+                        )
+                      : EdgeInsets.only(
+                          left: DeviceExt(6).w,
+                          top: DeviceExt(2).h,
+                          bottom: DeviceExt(4).h,
+                        ),
                   onTap: () {
                     onTapMenuone(context);
                   }),
               centerTitle: true,
-              title: AppbarSubtitle1(text: "lbl_dashboard".tr)),
+              title: Device.orientation == Orientation.portrait
+                  ? AppbarSubtitle1(
+                      text: "lbl_dashboard".tr,
+                    )
+                  : null),
           body: SizedBox(
             width: mediaQueryData.size.width,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: 14.v),
+              padding: Device.orientation == Orientation.portrait
+                  ? EdgeInsets.only(top: 10.w)
+                  : EdgeInsets.only(top: DeviceExt(10).h),
               child: Padding(
-                padding: EdgeInsets.only(right: 1.h, bottom: 5.v),
+                padding: Device.orientation == Orientation.portrait
+                    ? EdgeInsets.only(
+                        bottom: 1.2.w,
+                      )
+                    : EdgeInsets.only(
+                        bottom: DeviceExt(1.2).h,
+                      ),
                 child: Column(
                   children: [
                     BlocSelector<HomeBloc, HomeState, TextEditingController?>(
                         selector: (state) => state.searchController,
                         builder: (context, searchController) {
                           return CustomSearchView(
-                              enabled: true,
-                              autofocus: false,
-                              focusNode: _firstTextFieldFocus,
-                              margin: EdgeInsets.only(left: 24.h, right: 23.h),
-                              controller: searchController,
-                              hintText: "lbl_search_for_menu".tr,
-                              prefix: Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      16.h, 12.v, 10.h, 12.v),
-                                  child: CustomImageView(
-                                      svgPath: ImageConstant.imgSearch)),
-                              prefixConstraints:
-                                  BoxConstraints(maxHeight: 40.v),
-                              suffix: Padding(
-                                  padding: EdgeInsets.only(right: 15.h),
-                                  child: IconButton(
-                                      onPressed: () {
-                                        searchController!.clear();
-                                      },
-                                      icon: Icon(Icons.clear,
-                                          color: Colors.grey.shade600))));
+                            enabled: true,
+                            autofocus: false,
+                            focusNode: _firstTextFieldFocus,
+                            margin: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    left: DeviceExt(3).h,
+                                    right: DeviceExt(3).h,
+                                  )
+                                : EdgeInsets.only(
+                                    left: DeviceExt(3).w,
+                                    right: DeviceExt(3).w,
+                                  ),
+                            controller: searchController,
+                            hintText: "lbl_search_for_menu".tr,
+                            textStyle: theme.textTheme.titleSmall?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(1.8).h
+                                      : DeviceExt(2).w,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            hintStyle: theme.textTheme.titleSmall?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(1.8).h
+                                      : DeviceExt(2).w,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            prefix: Container(
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(
+                                            DeviceExt(2).h,
+                                            3.w,
+                                            DeviceExt(1).h,
+                                            3.w,
+                                          )
+                                        : EdgeInsets.fromLTRB(
+                                            2.w,
+                                            DeviceExt(3).h,
+                                            1.w,
+                                            DeviceExt(3).h,
+                                          ),
+                                child: CustomImageView(
+                                    svgPath: ImageConstant.imgSearch)),
+                            prefixConstraints: Device.orientation ==
+                                    Orientation.portrait
+                                ? BoxConstraints(maxHeight: 10.w)
+                                : BoxConstraints(maxHeight: DeviceExt(10).h),
+                            suffix: Padding(
+                              padding:
+                                  Device.orientation == Orientation.portrait
+                                      ? EdgeInsets.only(
+                                          right: DeviceExt(2).h,
+                                        )
+                                      : EdgeInsets.only(
+                                          right: 2.w,
+                                        ),
+                              child: IconButton(
+                                onPressed: () {
+                                  searchController!.clear();
+                                },
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ),
+                          );
                         }),
+                    SizedBox(
+                      height: Device.orientation == Orientation.portrait
+                          ? 11.w
+                          : DeviceExt(11).h,
+                    ),
                     Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                            padding: EdgeInsets.only(left: 24.h, top: 7.v),
-                            child: Text("msg_farmers_overview".tr,
-                                style: CustomTextStyles.titleMediumSemiBold))),
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.only(left: DeviceExt(3).h, top: 7.v)
+                            : EdgeInsets.only(left: DeviceExt(3).w, top: 7.v),
+                        child: Text(
+                          "msg_farmers_overview".tr,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2.5).h
+                                : DeviceExt(3).w,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Device.orientation == Orientation.portrait
+                          ? 7.w
+                          : DeviceExt(7).h,
+                    ),
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 1.h),
+                      padding: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.symmetric(horizontal: DeviceExt(0.1).h)
+                          : EdgeInsets.symmetric(horizontal: DeviceExt(0.1).w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: Device.orientation == Orientation.portrait
+                                  ? EdgeInsets.only(right: DeviceExt(1).h)
+                                  : EdgeInsets.only(right: DeviceExt(1).w),
+                              padding:
+                                  Device.orientation == Orientation.portrait
+                                      ? EdgeInsets.symmetric(
+                                          horizontal: DeviceExt(2).h,
+                                          vertical: 5.w,
+                                        )
+                                      : EdgeInsets.symmetric(
+                                          horizontal: DeviceExt(2).w,
+                                          vertical: DeviceExt(5).h,
+                                        ),
+                              decoration: AppDecoration.fillGray.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder15),
+                              child: Row(
+                                children: [
+                                  CustomIconButton(
+                                      onTap: () {
+                                        PrefUtils().setAction("To Submit");
+                                        NavigatorService.popAndPushNamed(
+                                            AppRoutes.draftEntriesScreen);
+                                      },
+                                      height: Device.orientation ==
+                                              Orientation.portrait
+                                          ? 11.w
+                                          : DeviceExt(11).h,
+                                      width: Device.orientation ==
+                                              Orientation.portrait
+                                          ? 11.w
+                                          : DeviceExt(11).h,
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.all(DeviceExt(0.5).h)
+                                          : EdgeInsets.all(0.5.w),
+                                      decoration: IconButtonStyleHelper
+                                          .fillPrimaryContainer,
+                                      child: CustomImageView(
+                                        height: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(3).h
+                                            : 3.w,
+                                        width: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(3).h
+                                            : 3.w,
+                                        fit: BoxFit.fill,
+                                        svgPath: ImageConstant.imgSave,
+                                      )),
+                                  Padding(
+                                    padding: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(1).h, bottom: 0.5.w)
+                                        : EdgeInsets.only(
+                                            left: DeviceExt(1).w,
+                                            bottom: DeviceExt(0.5).h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "To Submit".tr,
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.5).h
+                                                : DeviceExt(2).w,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? 1.w
+                                              : DeviceExt(1).h,
+                                        ),
+                                        Text(
+                                          state.a.toString(),
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(2.5).h
+                                                : DeviceExt(3).w,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: Device.orientation == Orientation.portrait
+                                  ? EdgeInsets.only(right: DeviceExt(1).h)
+                                  : EdgeInsets.only(right: DeviceExt(1).w),
+                              padding:
+                                  Device.orientation == Orientation.portrait
+                                      ? EdgeInsets.symmetric(
+                                          horizontal: DeviceExt(2).h,
+                                          vertical: 5.w,
+                                        )
+                                      : EdgeInsets.symmetric(
+                                          horizontal: DeviceExt(2).w,
+                                          vertical: DeviceExt(5).h,
+                                        ),
+                              decoration: AppDecoration.fillGray.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder15),
+                              child: Row(
+                                children: [
+                                  CustomIconButton(
+                                      onTap: () {
+                                        PrefUtils().setAction("Approved");
+                                        NavigatorService.popAndPushNamed(
+                                            AppRoutes.draftEntriesScreen);
+                                      },
+                                      height: Device.orientation ==
+                                              Orientation.portrait
+                                          ? 11.w
+                                          : DeviceExt(11).h,
+                                      width: Device.orientation ==
+                                              Orientation.portrait
+                                          ? 11.w
+                                          : DeviceExt(11).h,
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.all(DeviceExt(0.5).h)
+                                          : EdgeInsets.all(0.5.w),
+                                      decoration: IconButtonStyleHelper
+                                          .fillPrimaryContainer,
+                                      child: CustomImageView(
+                                          height: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(3).h
+                                              : 3.w,
+                                          width: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(3).h
+                                              : 3.w,
+                                          fit: BoxFit.fill,
+                                          svgPath: ImageConstant.imgCall)),
+                                  Padding(
+                                    padding: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(1).h, bottom: 0.5.w)
+                                        : EdgeInsets.only(
+                                            left: DeviceExt(1).w,
+                                            bottom: DeviceExt(0.5).h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "lbl_verified".tr,
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.5).h
+                                                : DeviceExt(2).w,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? 1.w
+                                              : DeviceExt(1).h,
+                                        ),
+                                        Text(
+                                          state.b.toString(),
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(2.5).h
+                                                : DeviceExt(3).w,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                        padding: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.only(top: 5.w, right: DeviceExt(0.1).h)
+                            : EdgeInsets.only(
+                                top: DeviceExt(5).h, right: DeviceExt(0.1).w),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
                                   child: Container(
-                                      margin: EdgeInsets.only(right: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 19.v),
-                                      decoration: AppDecoration.fillGray
-                                          .copyWith(
-                                              borderRadius: BorderRadiusStyle
-                                                  .roundedBorder15),
-                                      child: Row(children: [
-                                        CustomIconButton(
-                                            onTap: () {
-                                              PrefUtils().setAction("Saved");
-                                              NavigatorService.popAndPushNamed(
-                                                  AppRoutes.draftEntriesScreen);
-                                            },
-                                            height: 45.adaptSize,
-                                            width: 45.adaptSize,
-                                            padding: EdgeInsets.all(12.h),
-                                            decoration: IconButtonStyleHelper
-                                                .fillPrimaryContainer,
-                                            child: CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgSave)),
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.h, bottom: 2.v),
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("To Submit".tr,
-                                                      style: theme.textTheme
-                                                          .labelLarge),
-                                                  SizedBox(height: 1.v),
-                                                  Text(state.a.toString(),
-                                                      style: CustomTextStyles
-                                                          .titleMediumPrimary)
-                                                ]))
-                                      ]))),
-                              Expanded(
-                                  child: Container(
-                                      margin: EdgeInsets.only(left: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 19.v),
-                                      decoration: AppDecoration.fillGray
-                                          .copyWith(
-                                              borderRadius: BorderRadiusStyle
-                                                  .roundedBorder15),
-                                      child: Row(children: [
-                                        CustomIconButton(
-                                            onTap: () {
-                                              PrefUtils().setAction("Approved");
-                                              NavigatorService.popAndPushNamed(
-                                                  AppRoutes.draftEntriesScreen);
-                                            },
-                                            height: 45.adaptSize,
-                                            width: 45.adaptSize,
-                                            padding: EdgeInsets.all(12.h),
-                                            decoration: IconButtonStyleHelper
-                                                .fillPrimaryContainer,
-                                            child: CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgCall)),
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.h, bottom: 2.v),
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("lbl_verified".tr,
-                                                      style: theme.textTheme
-                                                          .labelLarge),
-                                                  SizedBox(height: 1.v),
-                                                  Text(state.b.toString(),
-                                                      style: CustomTextStyles
-                                                          .titleMediumPrimary)
-                                                ]))
-                                      ])))
-                            ])),
-                    Padding(
-                        padding: EdgeInsets.only(top: 19.v, right: 1.h),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                      margin:
-                                          EdgeInsets.only(top: 1.v, right: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 19.v),
+                                      margin: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              right: DeviceExt(1).h)
+                                          : EdgeInsets.only(
+                                              right: DeviceExt(1).w),
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).h,
+                                              vertical: 5.w,
+                                            )
+                                          : EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).w,
+                                              vertical: DeviceExt(5).h,
+                                            ),
                                       decoration: AppDecoration.fillGray
                                           .copyWith(
                                               borderRadius: BorderRadiusStyle
@@ -218,39 +447,103 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CustomIconButton(
                                             onTap: () {
                                               PrefUtils()
-                                                  .setAction("Unverified");
+                                                  .setAction("Submitted");
                                               NavigatorService.popAndPushNamed(
                                                   AppRoutes.draftEntriesScreen);
                                             },
-                                            height: 45.adaptSize,
-                                            width: 45.adaptSize,
-                                            padding: EdgeInsets.all(12.h),
+                                            height: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            width: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.all(
+                                                    DeviceExt(0.5).h)
+                                                : EdgeInsets.all(0.5.w),
                                             decoration: IconButtonStyleHelper
                                                 .fillPrimaryContainer,
                                             child: CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgWarning)),
+                                                height: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                width: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                fit: BoxFit.fill,
+                                                svgPath: ImageConstant.imgWarning)),
                                         Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.h, bottom: 2.v),
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.only(
+                                                    left: DeviceExt(1).h,
+                                                    bottom: 0.5.w)
+                                                : EdgeInsets.only(
+                                                    left: DeviceExt(1).w,
+                                                    bottom: DeviceExt(0.5).h),
                                             child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Submitted".tr,
-                                                      style: theme.textTheme
-                                                          .labelMedium),
-                                                  SizedBox(height: 2.v),
-                                                  Text(state.c.toString(),
-                                                      style: CustomTextStyles
-                                                          .titleMediumPrimary)
+                                                  Text(
+                                                    "Submitted".tr,
+                                                    style: theme
+                                                        .textTheme.headlineSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.5).h
+                                                              : DeviceExt(2).w,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Device
+                                                                .orientation ==
+                                                            Orientation.portrait
+                                                        ? 1.w
+                                                        : DeviceExt(1).h,
+                                                  ),
+                                                  Text(
+                                                    state.c.toString(),
+                                                    style: theme
+                                                        .textTheme.headlineSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(2.5).h
+                                                              : DeviceExt(3).w,
+                                                    ),
+                                                  ),
                                                 ]))
                                       ]))),
                               Expanded(
                                   child: Container(
-                                      margin: EdgeInsets.only(left: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 20.v),
+                                      margin: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              right: DeviceExt(1).h)
+                                          : EdgeInsets.only(
+                                              right: DeviceExt(1).w),
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).h,
+                                              vertical: 5.w,
+                                            )
+                                          : EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).w,
+                                              vertical: DeviceExt(5).h,
+                                            ),
                                       decoration: AppDecoration.fillGray
                                           .copyWith(
                                               borderRadius: BorderRadiusStyle
@@ -267,80 +560,199 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .popAndPushNamed(AppRoutes
                                                           .draftEntriesScreen);
                                                 },
-                                                height: 45.adaptSize,
-                                                width: 45.adaptSize,
-                                                padding: EdgeInsets.all(12.h),
-                                                decoration:
-                                                    IconButtonStyleHelper
-                                                        .fillPrimaryContainer,
+                                                height: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? 11.w
+                                                    : DeviceExt(11).h,
+                                                width: Device.orientation == Orientation.portrait
+                                                    ? 11.w
+                                                    : DeviceExt(11).h,
+                                                padding: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? EdgeInsets.all(
+                                                        DeviceExt(0.5).h)
+                                                    : EdgeInsets.all(0.5.w),
+                                                decoration: IconButtonStyleHelper
+                                                    .fillPrimaryContainer,
                                                 child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgRefresh)),
+                                                    height: Device.orientation ==
+                                                            Orientation.portrait
+                                                        ? DeviceExt(3).h
+                                                        : 3.w,
+                                                    width: Device.orientation ==
+                                                            Orientation.portrait
+                                                        ? DeviceExt(3).h
+                                                        : 3.w,
+                                                    fit: BoxFit.fill,
+                                                    svgPath: ImageConstant.imgRefresh)),
                                             Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 10.h, bottom: 6.v),
+                                                padding: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? EdgeInsets.only(
+                                                        left: DeviceExt(1).h,
+                                                        bottom: 0.5.w)
+                                                    : EdgeInsets.only(
+                                                        left: DeviceExt(1).w,
+                                                        bottom:
+                                                            DeviceExt(0.5).h),
                                                 child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text("lbl_rejected".tr,
-                                                          style: theme.textTheme
-                                                              .labelLarge),
-                                                      Text(state.d.toString(),
-                                                          style: CustomTextStyles
-                                                              .titleMediumInterPrimary)
+                                                      Text(
+                                                        "lbl_rejected".tr,
+                                                        style: theme.textTheme
+                                                            .headlineSmall
+                                                            ?.copyWith(
+                                                          fontSize: Device
+                                                                      .orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.5).h
+                                                              : DeviceExt(2).w,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        state.d.toString(),
+                                                        style: theme.textTheme
+                                                            .headlineSmall
+                                                            ?.copyWith(
+                                                          fontSize: Device
+                                                                      .orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(2.5).h
+                                                              : DeviceExt(3).w,
+                                                        ),
+                                                      )
                                                     ]))
                                           ])))
                             ])),
                     Padding(
-                        padding:
-                            EdgeInsets.only(left: 1.h, top: 18.v, right: 1.h),
+                        padding: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.only(
+                                left: DeviceExt(0.1).h,
+                                top: 4.3.w,
+                                right: DeviceExt(0.1).h)
+                            : EdgeInsets.only(
+                                left: 0.1.w,
+                                top: DeviceExt(4.3).h,
+                                right: 0.1.w),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
                                   child: Container(
-                                      margin:
-                                          EdgeInsets.only(top: 1.v, right: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 19.v),
+                                      margin: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              right: DeviceExt(1).h)
+                                          : EdgeInsets.only(
+                                              right: DeviceExt(1).w),
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).h,
+                                              vertical: 5.w,
+                                            )
+                                          : EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).w,
+                                              vertical: DeviceExt(5).h,
+                                            ),
                                       decoration: AppDecoration.fillGray
                                           .copyWith(
                                               borderRadius: BorderRadiusStyle
                                                   .roundedBorder15),
                                       child: Row(children: [
                                         CustomIconButton(
-                                            height: 45.adaptSize,
-                                            width: 45.adaptSize,
-                                            padding: EdgeInsets.all(12.h),
+                                            height: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            width: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.all(
+                                                    DeviceExt(0.5).h)
+                                                : EdgeInsets.all(0.5.w),
                                             decoration: IconButtonStyleHelper
                                                 .fillPrimaryContainer,
                                             child: CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgWarning)),
+                                                height: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                width: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                fit: BoxFit.fill,
+                                                svgPath: ImageConstant.imgWarning)),
                                         Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.h, bottom: 2.v),
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.only(
+                                                    left: DeviceExt(1).h,
+                                                    bottom: 0.5.w)
+                                                : EdgeInsets.only(
+                                                    left: DeviceExt(1).w,
+                                                    bottom: DeviceExt(0.5).h),
                                             child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("lbl_iprs_failed".tr,
-                                                      style: theme.textTheme
-                                                          .labelMedium),
-                                                  SizedBox(height: 2.v),
                                                   Text(
-                                                      "0", //state.c.toString(),
-                                                      style: CustomTextStyles
-                                                          .titleMediumPrimary)
+                                                    "lbl_iprs_failed".tr,
+                                                    style: theme
+                                                        .textTheme.headlineSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.5).h
+                                                              : DeviceExt(2).w,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "0", //state.c.toString(),
+                                                    style: theme
+                                                        .textTheme.headlineSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(2.5).h
+                                                              : DeviceExt(3).w,
+                                                    ),
+                                                  )
                                                 ]))
                                       ]))),
                               Expanded(
                                   child: Container(
-                                      margin: EdgeInsets.only(left: 8.h),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.h, vertical: 19.v),
+                                      margin: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              right: DeviceExt(1).h)
+                                          : EdgeInsets.only(
+                                              right: DeviceExt(1).w),
+                                      padding: Device.orientation ==
+                                              Orientation.portrait
+                                          ? EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).h,
+                                              vertical: 5.w,
+                                            )
+                                          : EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(2).w,
+                                              vertical: DeviceExt(5).h,
+                                            ),
                                       decoration: AppDecoration.fillGray
                                           .copyWith(
                                               borderRadius: BorderRadiusStyle
@@ -352,44 +764,98 @@ class _HomeScreenState extends State<HomeScreen> {
                                               NavigatorService.popAndPushNamed(
                                                   AppRoutes.draftEntriesScreen);
                                             },
-                                            height: 45.adaptSize,
-                                            width: 45.adaptSize,
-                                            padding: EdgeInsets.all(12.h),
+                                            height: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            width: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? 11.w
+                                                : DeviceExt(11).h,
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.all(
+                                                    DeviceExt(0.5).h)
+                                                : EdgeInsets.all(0.5.w),
                                             decoration: IconButtonStyleHelper
                                                 .fillPrimaryContainer,
                                             child: CustomImageView(
+                                                height: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                width: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(3).h
+                                                    : 3.w,
+                                                fit: BoxFit.fill,
                                                 svgPath: ImageConstant.imgBag)),
                                         Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.h, bottom: 2.v),
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.only(
+                                                    left: DeviceExt(1).h,
+                                                    bottom: 0.5.w)
+                                                : EdgeInsets.only(
+                                                    left: DeviceExt(1).w,
+                                                    bottom: DeviceExt(0.5).h),
                                             child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("All Farmers".tr,
-                                                      style: theme.textTheme
-                                                          .labelLarge),
+                                                  Text(
+                                                    "All Farmers".tr,
+                                                    style: theme
+                                                        .textTheme.headlineSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.5).h
+                                                              : DeviceExt(2).w,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
                                                   SizedBox(height: 1.v),
                                                   Align(
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text(
-                                                          state.f.toString(),
-                                                          style: CustomTextStyles
-                                                              .titleMediumPrimary))
+                                                        state.f.toString(),
+                                                        style: theme.textTheme
+                                                            .headlineSmall
+                                                            ?.copyWith(
+                                                          fontSize: Device
+                                                                      .orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(2.5).h
+                                                              : DeviceExt(3).w,
+                                                        ),
+                                                      ))
                                                 ]))
                                       ])))
                             ])),
-                    SizedBox(height: 10.v),
                     SizedBox(
-                        height: 200.v,
+                      height: Device.orientation == Orientation.portrait
+                          ? 11.w
+                          : DeviceExt(11).h,
+                    ),
+                    SizedBox(
+                        height: Device.orientation == Orientation.portrait
+                            ? 50.w
+                            : DeviceExt(50).h,
                         width: double.infinity,
                         child: Column(children: [
                           Align(
                               alignment: Alignment.center,
                               child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 23.h),
+                                  padding: Device.orientation ==
+                                          Orientation.portrait
+                                      ? EdgeInsets.symmetric(
+                                          horizontal: DeviceExt(3).h)
+                                      : EdgeInsets.symmetric(horizontal: 3.w),
                                   child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
@@ -426,59 +892,141 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     hintText:
                                                         "msg_search_id_number"
                                                             .tr,
+                                                    textStyle: theme
+                                                        .textTheme.titleSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.8).h
+                                                              : DeviceExt(2).w,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                    hintStyle: theme
+                                                        .textTheme.titleSmall
+                                                        ?.copyWith(
+                                                      fontSize:
+                                                          Device.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? DeviceExt(1.8).h
+                                                              : DeviceExt(2).w,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
                                                     prefix: Container(
-                                                        margin:
-                                                            EdgeInsets.fromLTRB(
-                                                                16.h,
-                                                                12.v,
-                                                                10.h,
-                                                                12.v),
+                                                        margin: Device.orientation ==
+                                                                Orientation
+                                                                    .portrait
+                                                            ? EdgeInsets
+                                                                .fromLTRB(
+                                                                DeviceExt(2).h,
+                                                                3.w,
+                                                                DeviceExt(1.2)
+                                                                    .h,
+                                                                3.w,
+                                                              )
+                                                            : EdgeInsets
+                                                                .fromLTRB(
+                                                                2.w,
+                                                                DeviceExt(3).h,
+                                                                1.2.w,
+                                                                DeviceExt(3).h,
+                                                              ),
                                                         child: CustomImageView(
                                                             svgPath:
                                                                 ImageConstant
                                                                     .imgSearch)),
-                                                    prefixConstraints:
-                                                        BoxConstraints(
-                                                            maxHeight: 40.v),
+                                                    prefixConstraints: Device
+                                                                .orientation ==
+                                                            Orientation.portrait
+                                                        ? BoxConstraints(
+                                                            maxHeight: 10.w)
+                                                        : BoxConstraints(
+                                                            maxHeight:
+                                                                DeviceExt(10).h),
                                                     suffix: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 15.h),
+                                                        padding: Device.orientation == Orientation.portrait
+                                                            ? EdgeInsets.only(right: DeviceExt(2).h)
+                                                            : EdgeInsets.only(
+                                                                right: 2.w,
+                                                              ),
                                                         child: IconButton(
                                                             onPressed: () {
                                                               searchController1!
                                                                   .clear();
                                                             },
-                                                            icon: Icon(
-                                                                Icons.clear,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade600)))),
+                                                            icon: Icon(Icons.clear, color: Colors.grey.shade600)))),
                                               );
                                             }),
                                       ]))),
                           Align(
                               alignment: Alignment.topCenter,
                               child: Container(
-                                  margin: EdgeInsets.only(top: 5.v),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 24.h, vertical: 5.v),
+                                  margin: Device.orientation ==
+                                          Orientation.portrait
+                                      ? EdgeInsets.only(top: 1.2.w)
+                                      : EdgeInsets.only(top: DeviceExt(1.2).h),
+                                  padding:
+                                      Device.orientation == Orientation.portrait
+                                          ? EdgeInsets.symmetric(
+                                              horizontal: DeviceExt(3).h,
+                                              vertical: 1.2.w)
+                                          : EdgeInsets.symmetric(
+                                              horizontal: 3.w,
+                                              vertical: DeviceExt(1.2).h),
                                   decoration: AppDecoration.fillWhiteA,
                                   child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        SizedBox(height: 8.v),
+                                        SizedBox(
+                                          height: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? 2.w
+                                              : DeviceExt(2).h,
+                                        ),
                                         CustomElevatedButton(
                                             text: "lbl_search_farmer".tr,
                                             leftIcon: Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 9.h),
+                                                margin: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? EdgeInsets.only(
+                                                        right: DeviceExt(1).h)
+                                                    : EdgeInsets.only(
+                                                        right: DeviceExt(1).w),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgVolume)),
-                                            buttonTextStyle: CustomTextStyles
-                                                .titleMediumWhiteA700,
+                                            height: Device.orientation == Orientation.portrait
+                                                ? DeviceExt(6).h
+                                                : 8.w,
+                                            // width:
+                                            //     Device.orientation == Orientation.portrait
+                                            //         ? DeviceExt(50).h
+                                            //         : 50.w,
+                                            buttonTextStyle: theme
+                                                .textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.white,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(2).h
+                                                  : DeviceExt(2.5).w,
+                                            ),
+                                            margin: Device.orientation == Orientation.portrait
+                                                ? EdgeInsets.fromLTRB(
+                                                    DeviceExt(0.36).h,
+                                                    6.w,
+                                                    DeviceExt(0.2).h,
+                                                    1.2.w)
+                                                : EdgeInsets.fromLTRB(
+                                                    DeviceExt(0.36).w,
+                                                    DeviceExt(6).h,
+                                                    DeviceExt(0.2).w,
+                                                    DeviceExt(1.2).h),
                                             onTap: () {
                                               if (_formKey.currentState!
                                                   .validate()) {
@@ -501,12 +1049,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 24.h, top: 5.v),
-                        child: Text("msg_registration_accuracy".tr,
-                            style: CustomTextStyles.titleMediumSemiBold),
+                        padding: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.only(left: DeviceExt(3).h, top: 1.2.w)
+                            : EdgeInsets.only(
+                                left: 3.w,
+                                top: DeviceExt(1.2).h,
+                              ),
+                        child: Text(
+                          "msg_registration_accuracy".tr,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2.5).h
+                                : DeviceExt(3).w,
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 46.v),
+                    SizedBox(
+                      height: Device.orientation == Orientation.portrait
+                          ? 11.w
+                          : DeviceExt(11).h,
+                    ),
                     Align(
                       alignment: Alignment.center,
                       child: FutureBuilder<Tuple2<int?, int?>?>(
@@ -521,11 +1084,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Text('Error: ${snapshot.error}');
                           } else if (!snapshot.hasData) {
                             // Handle cases where there's no data to display.
-                            return Center(child: Text('No data available.'));
+                            return Center(
+                                child: Text(
+                              'No data available.',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: Colors.black,
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                              ),
+                            ));
                           } else {
                             // Data is available, build the widget with the data.
                             return Padding(
-                                padding: EdgeInsets.only(top: 15.v, right: 1.h),
+                                padding:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            top: 4.w, right: DeviceExt(0.1).h)
+                                        : EdgeInsets.only(
+                                            top: DeviceExt(4).h, right: 0.1.w),
                                 child: SizedBox(
                                     height: 350,
                                     width: 300,
@@ -539,9 +1117,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 24.h, top: 60.v),
-                            child: Text("msg_verification_statistics".tr,
-                                style: CustomTextStyles.titleMediumSemiBold))),
+                            padding: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    left: DeviceExt(3).h, top: 15.w)
+                                : EdgeInsets.only(
+                                    left: 3.w, top: DeviceExt(15).h),
+                            child: Text(
+                              "msg_verification_statistics".tr,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2.5).h
+                                        : DeviceExt(3).w,
+                              ),
+                            ))),
                     Align(
                       alignment: Alignment.center,
                       child: FutureBuilder<Tuple2<int?, int?>?>(
@@ -556,11 +1145,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Text('Error: ${snapshot.error}');
                           } else if (!snapshot.hasData) {
                             // Handle cases where there's no data to display.
-                            return Center(child: Text('No data available.'));
+                            return Center(
+                              child: Text(
+                                'No data available.',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2).w,
+                                ),
+                              ),
+                            );
                           } else {
                             // Data is available, build the widget with the data.
                             return Padding(
-                              padding: EdgeInsets.only(top: 15.v, right: 1.h),
+                              padding:
+                                  Device.orientation == Orientation.portrait
+                                      ? EdgeInsets.only(
+                                          top: 4.w, right: DeviceExt(0.1).h)
+                                      : EdgeInsets.only(
+                                          top: DeviceExt(4).h, right: 0.1.w),
                               child: Container(
                                   height: 350,
                                   width: 300,
@@ -575,26 +1180,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 24.h, top: 46.v),
-                            child: Text("lbl_weekly_activity".tr,
-                                style: CustomTextStyles.titleMediumSemiBold))),
+                            padding: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    left: DeviceExt(3).h, top: 15.w)
+                                : EdgeInsets.only(
+                                    left: 3.w, top: DeviceExt(15).h),
+                            child: Text(
+                              "lbl_weekly_activity".tr,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2.5).h
+                                        : DeviceExt(3).w,
+                              ),
+                            ))),
                     Container(
-                      margin: EdgeInsets.only(left: 1.h, top: 9.v),
+                      margin: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.only(left: DeviceExt(0.1).h, top: 2.w)
+                          : EdgeInsets.only(left: 0.1.w, top: DeviceExt(2).h),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: 29.v),
+                          SizedBox(
+                            height: Device.orientation == Orientation.portrait
+                                ? 7.w
+                                : DeviceExt(7).h,
+                          ),
                           Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 22.h, vertical: 16.v),
+                            padding: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.symmetric(
+                                    horizontal: DeviceExt(3).h, vertical: 4.w)
+                                : EdgeInsets.symmetric(
+                                    horizontal: 3.w, vertical: DeviceExt(4).h),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 5.h, top: 12.v),
+                                    padding: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(0.5).h, top: 3.w)
+                                        : EdgeInsets.only(
+                                            left: DeviceExt(0.5).h,
+                                            top: DeviceExt(3).h),
                                     child:
                                         FutureBuilder<List<Tuple2<int, int>>?>(
                                       future:
@@ -613,12 +1243,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                         } else if (!snapshot.hasData ||
                                             snapshot.data!.isEmpty) {
                                           // Handle cases where there's no data to display.
-                                          return Text('No data available.');
+                                          return Text(
+                                            'No data available.',
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          );
                                         } else {
                                           // Data is available, build the widget with the data.
                                           return Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 15.v, right: 1.h),
+                                            padding: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? EdgeInsets.only(
+                                                    top: 4.w,
+                                                    right: DeviceExt(0.1).h)
+                                                : EdgeInsets.only(
+                                                    top: DeviceExt(4).h,
+                                                    right: 0.1.w),
                                             child: Container(
                                                 height: 500,
                                                 width: 500,
@@ -640,14 +1286,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 24.h, top: 26.v),
-                            child: Text("msg_registration_overview".tr,
-                                style: CustomTextStyles.titleMediumSemiBold))),
+                            padding: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    left: DeviceExt(3).h, top: 6.w)
+                                : EdgeInsets.only(
+                                    left: 3.w, top: DeviceExt(6).h),
+                            child: Text(
+                              "msg_registration_overview".tr,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2.5).h
+                                        : DeviceExt(3).w,
+                              ),
+                            ))),
                     Container(
-                      margin:
-                          EdgeInsets.only(left: 23.h, top: 9.v, right: 23.h),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 21.h, vertical: 16.v),
+                      margin: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.only(
+                              left: DeviceExt(3).h,
+                              top: 2.w,
+                              right: DeviceExt(3).h)
+                          : EdgeInsets.only(
+                              left: DeviceExt(3).w,
+                              top: DeviceExt(2).h,
+                              right: 3.w),
+                      padding: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.symmetric(
+                              horizontal: DeviceExt(3).h, vertical: 4.w)
+                          : EdgeInsets.symmetric(
+                              horizontal: 3.w, vertical: DeviceExt(4).h),
                       decoration: AppDecoration.fillWhiteA.copyWith(
                           borderRadius: BorderRadiusStyle.roundedBorder15),
                       child: Column(
@@ -656,7 +1323,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 2.v, right: 1.h),
+                            padding: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.only(
+                                    top: 0.5.w, right: DeviceExt(0.1).h)
+                                : EdgeInsets.only(
+                                    top: DeviceExt(0.5).h, right: 0.1.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -666,23 +1337,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: EdgeInsets.only(bottom: 2.v),
                                     decoration: BoxDecoration(
                                         color: theme.colorScheme.primary,
-                                        borderRadius:
-                                            BorderRadius.circular(4.h))),
+                                        borderRadius: BorderRadius.circular(
+                                            DeviceExt(4).h))),
                                 Padding(
-                                    padding: EdgeInsets.only(left: 10.h),
+                                    padding: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(1.2).h)
+                                        : EdgeInsets.only(left: 1.2.w),
                                     child: Text("lbl_approved".tr,
                                         style: theme.textTheme.bodySmall)),
                                 Container(
                                     height: 12.adaptSize,
                                     width: 12.adaptSize,
-                                    margin: EdgeInsets.only(
-                                        left: 11.h, bottom: 2.v),
+                                    margin: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(1.2).h,
+                                            bottom: 0.5.w)
+                                        : EdgeInsets.only(
+                                            left: 1.2.w,
+                                            bottom: DeviceExt(0.5).h),
                                     decoration: BoxDecoration(
                                         color: appTheme.green200,
-                                        borderRadius:
-                                            BorderRadius.circular(4.h))),
+                                        borderRadius: BorderRadius.circular(
+                                            DeviceExt(4).h))),
                                 Padding(
-                                    padding: EdgeInsets.only(left: 10.h),
+                                    padding: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(
+                                            left: DeviceExt(1.2).h)
+                                        : EdgeInsets.only(left: 1.2.w),
                                     child: Text("lbl_rejected".tr,
                                         style: theme.textTheme.bodySmall))
                               ],
@@ -703,12 +1388,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               } else if (!snapshot.hasData ||
                                   snapshot.data!.isEmpty) {
                                 // Handle cases where there's no data to display.
-                                return Text('No data available.');
+                                return Text(
+                                  'No data available.',
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    color: Colors.black,
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                );
                               } else {
                                 // Data is available, build the widget with the data.
                                 return Padding(
                                   padding:
-                                      EdgeInsets.only(top: 15.v, right: 1.h),
+                                      Device.orientation == Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              top: 4.w, right: DeviceExt(0.1).h)
+                                          : EdgeInsets.only(
+                                              top: DeviceExt(4).h,
+                                              right: 0.1.w),
                                   child: Container(
                                     height: 500,
                                     width: 500,

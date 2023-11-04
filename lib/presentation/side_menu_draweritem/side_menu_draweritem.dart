@@ -205,7 +205,7 @@ class SideMenuDraweritem extends StatelessWidget {
 
   onTapSaved(BuildContext context) {
     Navigator.pop(context);
-    PrefUtils().setAction("Saved");
+    PrefUtils().setAction("To Submit");
     NavigatorService.popAndPushNamed(
       AppRoutes.draftEntriesScreen,
     );

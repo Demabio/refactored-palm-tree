@@ -414,6 +414,24 @@ class FarmerDB {
         : null;
   }
 
+  Future<int?> getSubmitted() async {
+    final database = await FarmerDatabaseService().database;
+
+    final result = await database.rawQuery(
+        'SELECT COUNT(*) FROM $tableName WHERE registrationStatusId NOT IN (0,1) AND completed = 1');
+    final count = Sqflite.firstIntValue(result);
+    return count;
+  }
+
+  Future<List<Farmer>?> fetchSubmitted() async {
+    final database = await FarmerDatabaseService().database;
+    final farmerList = await database.rawQuery(
+        'SELECT * FROM $tableName WHERE registrationStatusId NOT IN (0,1) AND completed = 1');
+    return farmerList.isNotEmpty
+        ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
+        : null;
+  }
+
   Future<Tuple2<int?, int?>?> regAccuracy() async {
     int? approved = await getApproved();
     int? rejected = await getUnapproved();
