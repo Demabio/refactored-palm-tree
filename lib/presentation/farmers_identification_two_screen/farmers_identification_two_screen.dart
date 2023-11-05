@@ -213,12 +213,13 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                           focusNode: node6,
                                           controller: nameController1,
                                           autofocus: false,
+                                          textInputType: TextInputType.name,
                                           hintText: "lbl_name".tr,
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003,
                                           validator: (value) {
-                                            if (!isText(value)) {
-                                              return "Please enter valid text";
+                                            if (!isName(value?.trimRight())) {
+                                              return "Please enter valid Name(Two names at least)";
                                             } else if (isNotEmpty(value)) {
                                               return "Field is required.";
                                             }
@@ -307,8 +308,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                             if (value == null) {
                                                               return "Field is required";
                                                             } else {
-                                                return null;
-                                              }
+                                                              return null;
+                                                            }
                                                           },
                                                           contentPadding:
                                                               EdgeInsets.only(
@@ -366,8 +367,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                             if (value == null) {
                                                               return "Field is required";
                                                             } else {
-                                                return null;
-                                              }
+                                                              return null;
+                                                            }
                                                           },
                                                           items: farmersIdentificationTwoModelObj
                                                                   ?.dropdownItemList1 ??

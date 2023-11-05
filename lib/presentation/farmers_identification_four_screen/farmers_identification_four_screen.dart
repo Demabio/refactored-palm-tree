@@ -352,9 +352,9 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               hintStyle: CustomTextStyles
                                                   .titleMediumBluegray40003,
                                               validator: (value) {
-                                                if (!isText(value,
+                                                if (!isName(value?.trimRight(),
                                                     isRequired: true)) {
-                                                  return "Please enter valid text";
+                                                  return "Please enter valid Name(Two names at least)";
                                                 } else if (isNotEmpty(value)) {
                                                   return "Field is required.";
                                                 }

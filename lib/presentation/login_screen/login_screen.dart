@@ -139,12 +139,12 @@ class LoginScreen extends StatelessWidget {
                                     right: DeviceExt(0.2).w),
                             hintText: "lbl_username".tr,
                             textStyle: theme.textTheme.titleSmall?.copyWith(
-                              fontSize:
-                                  Device.orientation == Orientation.portrait
-                                      ? DeviceExt(1.8).h
-                                      : DeviceExt(2).w,
-                              fontWeight: FontWeight.normal,
-                            ),
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
                             hintStyle: theme.textTheme.titleSmall?.copyWith(
                               fontSize:
                                   Device.orientation == Orientation.portrait
@@ -202,11 +202,11 @@ class LoginScreen extends StatelessWidget {
                               right: DeviceExt(0.2).w),
                       hintText: "lbl_password".tr,
                       textStyle: theme.textTheme.titleSmall?.copyWith(
-                        fontSize: Device.orientation == Orientation.portrait
-                            ? DeviceExt(1.8).h
-                            : DeviceExt(2).w,
-                        fontWeight: FontWeight.normal,
-                      ),
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(1.8).h
+                              : DeviceExt(2).w,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black),
                       hintStyle: theme.textTheme.titleSmall?.copyWith(
                         fontSize: Device.orientation == Orientation.portrait
                             ? DeviceExt(1.8).h

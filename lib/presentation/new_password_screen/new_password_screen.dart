@@ -161,7 +161,7 @@ class NewPasswordScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.normal,color: Colors.black
                                   ),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
@@ -233,7 +233,7 @@ class NewPasswordScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.normal,color: Colors.black
                                   ),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
@@ -323,7 +323,7 @@ class NewPasswordScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.normal,color: Colors.black
                                   ),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
@@ -417,7 +417,7 @@ class NewPasswordScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.normal,color: Colors.black
                                   ),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(

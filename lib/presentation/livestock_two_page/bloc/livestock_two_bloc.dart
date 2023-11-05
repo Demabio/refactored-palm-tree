@@ -103,7 +103,7 @@ class LivestockTwoBloc extends Bloc<LivestockTwoEvent, LivestockTwoState> {
           curativeMeasures: false,
         );
     cropAreaUnit = (farmerLivestockService.areaUnitId != null &&
-            farmerLivestockService != 0)
+            farmerLivestockService.areaUnitId != 0)
         ? await getArea(farmerLivestockService.areaUnitId)
         : cropAreaUnit;
 

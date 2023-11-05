@@ -20,6 +20,27 @@ bool isText(
   return isInputStringValid;
 }
 
+bool isName(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^[A-Za-z]+( +[A-Za-z]+)+$';
+
+    final regExp = RegExp(pattern);
+
+    isInputStringValid = regExp.hasMatch(inputString);
+  }
+
+  return isInputStringValid;
+}
+
 /// Password should have,
 /// at least a upper case letter
 ///  at least a lower case letter

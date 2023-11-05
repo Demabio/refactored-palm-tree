@@ -400,7 +400,7 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM $tableName WHERE registrationStatusId IN (4,6,9) AND completed = 1');
+        'SELECT COUNT(*) FROM $tableName WHERE registrationStatusId IN (4,6,9,11) AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -408,7 +408,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchUnapproved() async {
     final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
-        'SELECT * FROM $tableName WHERE registrationStatusId IN (4,6,9) AND completed = 1');
+        'SELECT * FROM $tableName WHERE registrationStatusId IN (4,6,9,11) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -450,7 +450,7 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
 
     final result = await database.rawQuery(
-        'SELECT COUNT(*) FROM $tableName WHERE registrationStatusId IN (2,4,6,9) AND completed = 1');
+        'SELECT COUNT(*) FROM $tableName WHERE registrationStatusId IN (2,4,6,9,11) AND completed = 1');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -458,7 +458,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchUnverified() async {
     final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
-        'SELECT * FROM $tableName WHERE registrationStatusId IN (2,4,6,9) AND completed = 1');
+        'SELECT * FROM $tableName WHERE registrationStatusId IN (2,4,6,9,11) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;
@@ -478,7 +478,7 @@ class FarmerDB {
           endDate.toUtc().toIso8601String()
         ]);
     final rejectedResult = await database.rawQuery(
-        'SELECT COUNT(*) FROM $tableName WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4,6,9) AND completed = 1',
+        'SELECT COUNT(*) FROM $tableName WHERE dateCreated >= ? AND dateCreated < ? AND registrationStatusId IN (4,6,9,11) AND completed = 1',
         [
           startDate.toUtc().toIso8601String(),
           endDate.toUtc().toIso8601String()

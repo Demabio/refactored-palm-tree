@@ -73,7 +73,7 @@ class SideMenuDraweritem extends StatelessWidget {
               CustomElevatedButton(
                   height: 30.v,
                   width: 222.h,
-                  text: "msg_view_saved_farmers".tr,
+                  text: "Submitable Farmers".tr,
                   margin: EdgeInsets.only(left: 7.h, top: 27.v),
                   leftIcon: Container(
                       margin: EdgeInsets.only(right: 20.h),

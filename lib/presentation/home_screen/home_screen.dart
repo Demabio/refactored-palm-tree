@@ -127,12 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             controller: searchController,
                             hintText: "lbl_search_for_menu".tr,
                             textStyle: theme.textTheme.titleSmall?.copyWith(
-                              fontSize:
-                                  Device.orientation == Orientation.portrait
-                                      ? DeviceExt(1.8).h
-                                      : DeviceExt(2).w,
-                              fontWeight: FontWeight.normal,
-                            ),
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
                             hintStyle: theme.textTheme.titleSmall?.copyWith(
                               fontSize:
                                   Device.orientation == Orientation.portrait
@@ -227,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           vertical: 5.w,
                                         )
                                       : EdgeInsets.symmetric(
-                                          horizontal: DeviceExt(2).w,
+                                          horizontal: DeviceExt(1).w,
                                           vertical: DeviceExt(5).h,
                                         ),
                               decoration: AppDecoration.fillGray.copyWith(
@@ -614,6 +614,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      SizedBox(
+                                                        height:
+                                                            Device.orientation ==
+                                                                    Orientation
+                                                                        .portrait
+                                                                ? 1.w
+                                                                : DeviceExt(1)
+                                                                    .h,
+                                                      ),
                                                       Text(
                                                         state.d.toString(),
                                                         style: theme.textTheme
@@ -817,7 +826,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       color: Colors.black,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 1.v),
+                                                  SizedBox(
+                                                    height: Device
+                                                                .orientation ==
+                                                            Orientation.portrait
+                                                        ? 1.w
+                                                        : DeviceExt(1).h,
+                                                  ),
                                                   Align(
                                                       alignment:
                                                           Alignment.center,
@@ -879,8 +894,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         _secondTextFieldFocus,
                                                     controller:
                                                         searchController1,
-                                                    textInputType:
-                                                        TextInputType.number,
+                                                    textInputType: TextInputType
+                                                        .number,
                                                     validator: (value) {
                                                       if (!isID(value,
                                                           isRequired: true)) {
@@ -889,21 +904,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         return null;
                                                       }
                                                     },
-                                                    hintText:
-                                                        "msg_search_id_number"
-                                                            .tr,
-                                                    textStyle: theme
-                                                        .textTheme.titleSmall
-                                                        ?.copyWith(
-                                                      fontSize:
-                                                          Device.orientation ==
-                                                                  Orientation
-                                                                      .portrait
-                                                              ? DeviceExt(1.8).h
-                                                              : DeviceExt(2).w,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
+                                                    hintText: "msg_search_id_number"
+                                                        .tr,
+                                                    textStyle: theme.textTheme.titleSmall?.copyWith(
+                                                        fontSize: Device.orientation == Orientation.portrait
+                                                            ? DeviceExt(1.8).h
+                                                            : DeviceExt(2).w,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        color: Colors.black),
                                                     hintStyle: theme
                                                         .textTheme.titleSmall
                                                         ?.copyWith(
@@ -936,17 +945,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 DeviceExt(3).h,
                                                               ),
                                                         child: CustomImageView(
-                                                            svgPath:
-                                                                ImageConstant
-                                                                    .imgSearch)),
-                                                    prefixConstraints: Device
-                                                                .orientation ==
-                                                            Orientation.portrait
-                                                        ? BoxConstraints(
-                                                            maxHeight: 10.w)
-                                                        : BoxConstraints(
-                                                            maxHeight:
-                                                                DeviceExt(10).h),
+                                                            svgPath: ImageConstant
+                                                                .imgSearch)),
+                                                    prefixConstraints: Device.orientation == Orientation.portrait
+                                                        ? BoxConstraints(maxHeight: 10.w)
+                                                        : BoxConstraints(maxHeight: DeviceExt(10).h),
                                                     suffix: Padding(
                                                         padding: Device.orientation == Orientation.portrait
                                                             ? EdgeInsets.only(right: DeviceExt(2).h)
@@ -1105,8 +1108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         : EdgeInsets.only(
                                             top: DeviceExt(4).h, right: 0.1.w),
                                 child: SizedBox(
-                                    height: 350,
-                                    width: 300,
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(42).h
+                                        : 42.w,
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(36).h
+                                        : 36.w,
                                     child: PieChartSample2(
                                       tdata: snapshot.data,
                                     )));
@@ -1167,8 +1176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : EdgeInsets.only(
                                           top: DeviceExt(4).h, right: 0.1.w),
                               child: Container(
-                                  height: 350,
-                                  width: 300,
+                                  height:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(42).h
+                                          : 42.w,
+                                  width:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(36).h
+                                          : 36.w,
                                   child: PieChartSample3(
                                     data: snapshot.data,
                                   )),
@@ -1266,8 +1281,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     top: DeviceExt(4).h,
                                                     right: 0.1.w),
                                             child: Container(
-                                                height: 500,
-                                                width: 500,
+                                                height: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(42).h
+                                                    : 42.w,
+                                                width: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(42).h
+                                                    : 42.w,
                                                 child: LineChartWidget(
                                                   listdata: snapshot.data,
                                                 )),
@@ -1409,8 +1430,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               top: DeviceExt(4).h,
                                               right: 0.1.w),
                                   child: Container(
-                                    height: 500,
-                                    width: 500,
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(60).h
+                                        : 60.w,
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(42).h
+                                        : 42.w,
                                     child: BarChartSample2(
                                       bardata: snapshot.data,
                                     ),
