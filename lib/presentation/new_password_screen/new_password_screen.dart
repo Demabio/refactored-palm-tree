@@ -24,6 +24,7 @@ class NewPasswordScreen extends StatelessWidget {
   FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
   FocusNode _thirdTextFieldFocus = FocusNode();
+  FocusNode _fourthTextFieldFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +131,83 @@ class NewPasswordScreen extends StatelessWidget {
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            SizedBox(height: 18.v),
+                            SizedBox(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? 2.w
+                                        : DeviceExt(2).h),
+                            BlocBuilder<NewPasswordBloc, NewPasswordState>(
+                                builder: (context, state) {
+                              return CustomTextFormField(
+                                  controller: state.username,
+                                  hintText: "Username".tr,
+                                  autofocus: false,
+                                  focusNode: _fourthTextFieldFocus,
+                                  textInputAction: TextInputAction.next,
+                                  textInputType: TextInputType.text,
+                                  margin:
+                                      Device.orientation == Orientation.portrait
+                                          ? EdgeInsets.only(
+                                              left: DeviceExt(0.36).h,
+                                              top: 6.3.w,
+                                              right: DeviceExt(0.2).h)
+                                          : EdgeInsets.only(
+                                              left: DeviceExt(0.36).w,
+                                              top: DeviceExt(6.3).h,
+                                              right: DeviceExt(0.2).w),
+                                  textStyle:
+                                      theme.textTheme.titleSmall?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  hintStyle:
+                                      theme.textTheme.titleSmall?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  suffix: Container(
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(3.5).h
+                                        : 3.5.w,
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(3.5).h
+                                        : 3.5.w,
+                                    margin: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(3.6).h,
+                                            3.w, DeviceExt(2).h, 3.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(3.6).w,
+                                            DeviceExt(3).h,
+                                            DeviceExt(2).w,
+                                            DeviceExt(3).h),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || (isNotEmpty(value))) {
+                                      return "Please enter valid password";
+                                    }
+                                    return null;
+                                  },
+                                  // contentPadding: EdgeInsets.only(
+                                  //     left: 13.h, top: 13.v, bottom: 13.v),
+                                  borderDecoration: TextFormFieldStyleHelper
+                                      .outlinePrimaryTL101,
+                                  fillColor:
+                                      appTheme.indigo600.withOpacity(0.08));
+                            }),
+                            SizedBox(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? 2.w
+                                        : DeviceExt(2).h),
                             BlocBuilder<NewPasswordBloc, NewPasswordState>(
                                 builder: (context, state) {
                               return CustomTextFormField(

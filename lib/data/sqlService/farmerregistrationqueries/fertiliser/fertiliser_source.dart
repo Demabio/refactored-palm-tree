@@ -102,7 +102,7 @@ class FarmerFertiliserSourcesDB {
           fertiliserSource.otherSource,
           fertiliserSource.distanceSource,
           fertiliserSource.dateCreated?.toLocal().toIso8601String(),
-          fertiliserSource.farmerFarmId,
+          fertiliserSource.farmerCropId,
           fertiliserSource.fertSourceId,
         ]);
       }

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
 import '/core/app_export.dart';
@@ -27,6 +28,21 @@ class AddLiverstockinputBloc
     on<SaveTapEvent>(_saveTap);
   }
 
+  Future<List<SelectionPopupModel>> fetchAreaUnits() async {
+    List<SelectionPopupModel> list = [];
+    CropAreaUnitDB areaUnitDB = CropAreaUnitDB();
+
+    await areaUnitDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(SelectionPopupModel(
+          title: value[i].areaUnit,
+          id: value[i].areaUnitId,
+        ));
+      }
+    });
+    return list;
+  }
+
   _onInitialize(
     AddLiverstockinputInitialEvent event,
     Emitter<AddLiverstockinputState> emit,
@@ -45,6 +61,7 @@ class AddLiverstockinputBloc
         );
     List<SelectionPopupModel>? dropdownItemList = fillDropdownItemList1();
     SelectionPopupModel? selectedDropDownValue1;
+    List<SelectionPopupModel> area = await fetchAreaUnits();
 
     SelectionPopupModel? selectedDropDownValue2;
     SelectionPopupModel? selectedDropDownValue3;
@@ -52,8 +69,12 @@ class AddLiverstockinputBloc
     SelectionPopupModel? selectedDropDownValue5;
     SelectionPopupModel? selectedDropDownValue6;
     SelectionPopupModel? selectedDropDownValue7;
+    SelectionPopupModel? selectedarea;
 
     if (pfProgress.pageTwo == 1 && livestock.farmerLivestockServicesId != 0) {
+      selectedarea = area.firstWhere(
+        (model) => model.id == livestock.areaUnitId,
+      );
       selectedDropDownValue1 = dropdownItemList.firstWhere(
         (model) => model.id == (livestock.fertilizerForFodder! ? 1 : 0),
       );
@@ -79,7 +100,7 @@ class AddLiverstockinputBloc
 
     emit(state.copyWith(
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
-      dropdownItemList: dropdownItemList,
+      dropdownItemList: area,
       dropdownItemList1: dropdownItemList,
       dropdownItemList2: dropdownItemList,
       dropdownItemList3: dropdownItemList,
@@ -87,6 +108,7 @@ class AddLiverstockinputBloc
       dropdownItemList5: dropdownItemList,
       dropdownItemList6: dropdownItemList,
       dropdownItemList7: dropdownItemList,
+      selectedDropDownValue: selectedarea,
       selectedDropDownValue1: selectedDropDownValue1,
       selectedDropDownValue2: selectedDropDownValue2,
       selectedDropDownValue3: selectedDropDownValue3,
@@ -130,7 +152,8 @@ class AddLiverstockinputBloc
               state.addLiverstockinputModelObj!.selectedDropDownValue6!.id == 1,
           curativeMeasures:
               state.addLiverstockinputModelObj!.selectedDropDownValue7!.id == 1,
-          areaUnitId: 1,
+          areaUnitId:
+              state.addLiverstockinputModelObj!.selectedDropDownValue!.id,
           livestockArea: 0,
         ))
             .then((value) {
@@ -152,45 +175,42 @@ class AddLiverstockinputBloc
         });
       }
 
-      int farmerLivestockServicesId = PrefUtils().getLivestockId();
-
       if (state.addLiverstockinputModelObj!.lsProgress!.pageTwo == 1) {
-        if (farmerLivestockServicesId != 0) {
-          farmDB
-              .update(FarmerLivestockService(
-                farmerFarmId: PrefUtils().getFarmId(),
-                farmerId: PrefUtils().getFarmerId(),
-                dateCreated: DateTime.now(),
-                createdBy: userId,
-                farmerLivestockServicesId: PrefUtils().getLivestockId(),
-                fertilizerSeeds: false,
-                fertilizerForFodder: state.addLiverstockinputModelObj!
-                        .selectedDropDownValue1!.id ==
-                    1,
-                fodderSeeds: state.addLiverstockinputModelObj!
-                        .selectedDropDownValue2!.id ==
-                    1,
-                aiUse: state
-                    .addLiverstockinputModelObj!.selectedDropDownValue3!.id,
-                hormoneUse: state
-                    .addLiverstockinputModelObj!.selectedDropDownValue4!.id,
-                embryoTransfer: state.addLiverstockinputModelObj!
-                        .selectedDropDownValue5!.id ==
-                    1,
-                routineVaccination: state.addLiverstockinputModelObj!
-                        .selectedDropDownValue6!.id ==
-                    1,
-                curativeMeasures: state.addLiverstockinputModelObj!
-                        .selectedDropDownValue7!.id ==
-                    1,
-                areaUnitId: 1,
-                livestockArea: 0,
-              ))
-              .then((value) => print(
-                    "Updated scop: " + value.toString(),
-                  ));
-          event.createSuccessful!.call();
-        }
+        farmDB
+            .update(FarmerLivestockService(
+              farmerFarmId: PrefUtils().getFarmId(),
+              farmerId: PrefUtils().getFarmerId(),
+              dateCreated: DateTime.now(),
+              createdBy: userId,
+              farmerLivestockServicesId: PrefUtils().getLivestockId(),
+              fertilizerSeeds: false,
+              fertilizerForFodder: state
+                      .addLiverstockinputModelObj!.selectedDropDownValue1!.id ==
+                  1,
+              fodderSeeds: state
+                      .addLiverstockinputModelObj!.selectedDropDownValue2!.id ==
+                  1,
+              aiUse:
+                  state.addLiverstockinputModelObj!.selectedDropDownValue3!.id,
+              hormoneUse:
+                  state.addLiverstockinputModelObj!.selectedDropDownValue4!.id,
+              embryoTransfer: state
+                      .addLiverstockinputModelObj!.selectedDropDownValue5!.id ==
+                  1,
+              routineVaccination: state
+                      .addLiverstockinputModelObj!.selectedDropDownValue6!.id ==
+                  1,
+              curativeMeasures: state
+                      .addLiverstockinputModelObj!.selectedDropDownValue7!.id ==
+                  1,
+              areaUnitId:
+                  state.addLiverstockinputModelObj!.selectedDropDownValue!.id,
+              livestockArea: 0,
+            ))
+            .then((value) => print(
+                  "Updated scop: " + value.toString(),
+                ));
+        event.createSuccessful!.call();
       }
     } catch (e) {
       event.createFailed!.call();

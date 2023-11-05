@@ -47,6 +47,7 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
         newpasswordController: TextEditingController(),
         confirmpasswordController: TextEditingController(),
         temporaryPassword: TextEditingController(),
+        username: TextEditingController(),
         isShowPassword: true,
         isShowPassword1: true));
   }
@@ -60,7 +61,7 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
         'Content-type': 'application/json',
       },
       requestData: {
-        'Username': PrefUtils().getUsername(),
+        'Username': state.username!.text,
         'OldPassword': state.temporaryPassword!.text,
         'NewPassword': state.newpasswordController!.text,
       },

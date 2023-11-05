@@ -5,6 +5,7 @@ part of 'new_password_bloc.dart';
 /// Represents the state of NewPassword in the application.
 class NewPasswordState extends Equatable {
   NewPasswordState({
+    this.username,
     this.newpasswordController,
     this.confirmpasswordController,
     this.temporaryPassword,
@@ -13,6 +14,7 @@ class NewPasswordState extends Equatable {
     this.isShowPassword2 = true,
     this.newPasswordModelObj,
   });
+  TextEditingController? username;
 
   TextEditingController? newpasswordController;
 
@@ -29,6 +31,7 @@ class NewPasswordState extends Equatable {
 
   @override
   List<Object?> get props => [
+        username,
         newpasswordController,
         confirmpasswordController,
         isShowPassword,
@@ -38,6 +41,7 @@ class NewPasswordState extends Equatable {
         temporaryPassword,
       ];
   NewPasswordState copyWith({
+    TextEditingController? username,
     TextEditingController? newpasswordController,
     TextEditingController? confirmpasswordController,
     TextEditingController? temporaryPassword,
@@ -56,6 +60,7 @@ class NewPasswordState extends Equatable {
       isShowPassword2: isShowPassword2 ?? this.isShowPassword2,
       isShowPassword1: isShowPassword1 ?? this.isShowPassword1,
       newPasswordModelObj: newPasswordModelObj ?? this.newPasswordModelObj,
+      username: username ?? this.username,
     );
   }
 }

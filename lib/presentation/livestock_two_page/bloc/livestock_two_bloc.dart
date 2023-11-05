@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/data/models/dbModels/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/primary_farm_holding_progress.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestock.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockservice.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_input.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/livestock_progress.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
@@ -50,6 +52,11 @@ class LivestockTwoBloc extends Bloc<LivestockTwoEvent, LivestockTwoState> {
     return await pfProgressDB.fetchByFarmId(id);
   }
 
+  Future<CropAreaUnit?> getArea(int? id) async {
+    CropAreaUnitDB cropAreaUnitDB = CropAreaUnitDB();
+    return id != null ? await cropAreaUnitDB.fetchByAreaUnitId(id) : null;
+  }
+
   _onInitialize(
     LivestockTwoInitialEvent event,
     Emitter<LivestockTwoState> emit,
@@ -62,7 +69,7 @@ class LivestockTwoBloc extends Bloc<LivestockTwoEvent, LivestockTwoState> {
           livestockProd: false,
           fishFarming: false,
         );
-
+    CropAreaUnit? cropAreaUnit;
     List<FarmerLivestock>? livestock = await getLuvestocks();
 
     int? livestockid =
@@ -95,12 +102,18 @@ class LivestockTwoBloc extends Bloc<LivestockTwoEvent, LivestockTwoState> {
           routineVaccination: false,
           curativeMeasures: false,
         );
+    cropAreaUnit = (farmerLivestockService.areaUnitId != null &&
+            farmerLivestockService != 0)
+        ? await getArea(farmerLivestockService.areaUnitId)
+        : cropAreaUnit;
+
     emit(state.copyWith(
         next: farm.fishFarming,
         prev: farm.cropProd,
         done: lsProgress.pageOne == 1 && lsiProgress.pageOne == 1,
         livestockTwoModelObj: state.livestockTwoModelObj?.copyWith(
           livestockins: farmerLivestockService,
+          area: cropAreaUnit?.areaUnit,
         )));
   }
 }

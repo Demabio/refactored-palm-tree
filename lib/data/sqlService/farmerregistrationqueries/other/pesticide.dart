@@ -91,7 +91,7 @@ class FarmerPesticidesDB {
         ''', [
           pesticide.others,
           pesticide.dateCreated?.toLocal().toIso8601String(),
-          pesticide.farmerFarmId,
+          pesticide.farmerCropId,
           pesticide.pesticideTypeId,
         ]);
       }

@@ -99,6 +99,24 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
+                                        "Area Unit".tr,
+                                        style:
+                                            CustomTextStyles.labelMediumPrimary,
+                                      ),
+                                      Text(
+                                        state.livestockTwoModelObj!.area,
+                                        style: theme.textTheme.labelMedium,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 2.h),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "msg_do_you_utilize_fodder".tr,
                                         style:
                                             CustomTextStyles.labelMediumPrimary,
