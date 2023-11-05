@@ -1,10 +1,10 @@
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import '../models/cropdetails_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class CropdetailsItemWidget extends StatelessWidget {
@@ -24,7 +24,7 @@ class CropdetailsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 9.h,
+        horizontal: DeviceExt((9 / 841) * 100).h,
         vertical: 13.v,
       ),
       decoration: AppDecoration.outlinePrimary.copyWith(
@@ -36,7 +36,7 @@ class CropdetailsItemWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 17.v,
             ),
             child: Row(
@@ -44,19 +44,30 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "lbl_crop".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.name ?? "N/A",
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 13.v,
             ),
             child: Row(
@@ -66,20 +77,31 @@ class CropdetailsItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 1.v),
                   child: Text(
                     "lbl_total_acreage2".tr,
-                    style: CustomTextStyles.labelMediumPrimary,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.totalAcreage ?? "N/A",
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 13.v,
             ),
             child: Row(
@@ -87,18 +109,29 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "lbl_unit_of_area".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.unitOfArea ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 14.v,
             ),
             child: Row(
@@ -106,18 +139,29 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "msg_use_certified_seeds".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.seeds ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 14.v,
             ),
             child: Row(
@@ -127,20 +171,31 @@ class CropdetailsItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 1.v),
                   child: Text(
                     "lbl_purpose".tr,
-                    style: CustomTextStyles.labelMediumPrimary,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.purpose ?? "N/A",
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 13.v,
             ),
             child: Row(
@@ -150,19 +205,30 @@ class CropdetailsItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 1.v),
                   child: Text(
                     "lbl_water_source".tr,
-                    style: CustomTextStyles.labelMediumPrimary,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.water ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 15.v,
             ),
             child: Row(
@@ -170,18 +236,29 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "lbl_crop_system".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.system ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 13.v,
             ),
             child: Row(
@@ -189,11 +266,22 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "lbl_use_fertilizer".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.fertiliser ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
@@ -201,16 +289,24 @@ class CropdetailsItemWidget extends StatelessWidget {
           Visibility(
             visible: cropdetailsItemModelObj.fertiliser == "Yes",
             child: Padding(
-                padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                child: Text("Fertilisers Used".tr,
-                    style: CustomTextStyles.labelMediumPrimary)),
+                padding: EdgeInsets.only(
+                    left: DeviceExt((4 / 841) * 100).h, top: 4.v),
+                child: Text(
+                  "Fertilisers Used".tr,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
           ),
           Visibility(
             visible: cropdetailsItemModelObj.fertiliser == "Yes",
             child: Padding(
               padding: EdgeInsets.only(
                 top: 15.v,
-                right: 16.h,
+                right: DeviceExt((16 / 841) * 100).h,
               ),
               child: Column(
                 children: List<Widget>.generate(
@@ -229,16 +325,24 @@ class CropdetailsItemWidget extends StatelessWidget {
           Visibility(
             visible: cropdetailsItemModelObj.fertiliser == "Yes",
             child: Padding(
-                padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                child: Text("Fertiliser Sources".tr,
-                    style: CustomTextStyles.labelMediumPrimary)),
+                padding: EdgeInsets.only(
+                    left: DeviceExt((4 / 841) * 100).h, top: 4.v),
+                child: Text(
+                  "Fertiliser Sources".tr,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
           ),
           Visibility(
             visible: cropdetailsItemModelObj.fertiliser == "Yes",
             child: Padding(
               padding: EdgeInsets.only(
                 top: 15.v,
-                right: 16.h,
+                right: DeviceExt((16 / 841) * 100).h,
               ),
               child: Column(
                 children: List<Widget>.generate(
@@ -256,7 +360,7 @@ class CropdetailsItemWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 1.h,
+              left: DeviceExt((1 / 841) * 100).h,
               top: 14.v,
             ),
             child: Row(
@@ -264,11 +368,22 @@ class CropdetailsItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "lbl_use_pesticide".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   cropdetailsItemModelObj.pesticide ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
@@ -276,16 +391,24 @@ class CropdetailsItemWidget extends StatelessWidget {
           Visibility(
             visible: cropdetailsItemModelObj.pesticide == "Yes",
             child: Padding(
-                padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                child: Text("Pesticides Used".tr,
-                    style: CustomTextStyles.labelMediumPrimary)),
+                padding: EdgeInsets.only(
+                    left: DeviceExt((4 / 841) * 100).h, top: 4.v),
+                child: Text(
+                  "Pesticides Used".tr,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
           ),
           Visibility(
             visible: cropdetailsItemModelObj.pesticide == "Yes",
             child: Padding(
               padding: EdgeInsets.only(
                 top: 15.v,
-                right: 16.h,
+                right: DeviceExt((16 / 841) * 100).h,
               ),
               child: Column(
                 children: List<Widget>.generate(
@@ -301,19 +424,31 @@ class CropdetailsItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15.v),
+          SizedBox(
+            height: ((15 / 411) * 100).w,
+          ),
           Row(
             children: [
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame33,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     edit?.call();
                   }),
               Spacer(),
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame34,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     delete?.call();
                   }),

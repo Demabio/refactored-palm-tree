@@ -8,10 +8,10 @@ import 'models/crop_agriculture_model.dart';
 import 'models/cropdetails_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
+
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class CropAgricultureScreen extends StatelessWidget {
   const CropAgricultureScreen({Key? key}) : super(key: key);
@@ -34,39 +34,71 @@ class CropAgricultureScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-              leadingWidth: 60.h,
-              leading: AppbarImage(
+              height: Device.orientation == Orientation.portrait
+                  ? 15.w
+                  : DeviceExt(15).h,
+              leadingWidth: DeviceExt((60 / 841) * 100).h,
+              leading: CustomImageView(
                   svgPath: ImageConstant.imgSort,
-                  margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     onTapSortone(context);
                   }),
               centerTitle: true,
               title: AppbarSubtitle1(text: "msg_crop_agriculture".tr),
               actions: [
-                AppbarImage1(
+                CustomImageView(
                     svgPath: ImageConstant.imgFrame34WhiteA700,
-                    margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                    height: Device.orientation == Orientation.portrait
+                        ? DeviceExt(5).h
+                        : 5.w,
+                    width: Device.orientation == Orientation.portrait
+                        ? DeviceExt(5).h
+                        : 5.w,
                     onTap: () {
                       addorEdit(context, 0, 0);
-                    })
+                    }),
               ],
               styleType: Style.bgFill),
           body: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(horizontal: 11.h, vertical: 2.v),
+            padding: EdgeInsets.symmetric(
+                horizontal: DeviceExt((11 / 841) * 100).h,
+                vertical: ((2 / 411) * 100).w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                    padding: EdgeInsets.only(left: 9.h),
+                    padding:
+                        EdgeInsets.only(left: DeviceExt((9 / 841) * 100).h),
                     child: Row(children: [
-                      Text("lbl_farmer_info".tr,
-                          style: CustomTextStyles.labelMediumPrimary),
+                      Text(
+                        "lbl_farmer_info".tr,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Padding(
-                          padding: EdgeInsets.only(left: 21.h),
-                          child: Text(PrefUtils().getFarmerName(),
-                              style: theme.textTheme.labelMedium))
+                          padding: EdgeInsets.only(
+                              left: DeviceExt((21 / 841) * 100).h),
+                          child: Text(
+                            PrefUtils().getFarmerName(),
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ))
                     ])),
                 Center(
                   child: BlocSelector<CropAgricultureBloc, CropAgricultureState,
@@ -77,16 +109,28 @@ class CropAgricultureScreen extends StatelessWidget {
                       return Visibility(
                         visible: models!.isEmpty,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 24.h, top: 60.v),
-                            child: Text("No Crops Found".tr,
-                                style: CustomTextStyles.titleMediumSemiBold)),
+                            padding: EdgeInsets.only(
+                                left: DeviceExt((24 / 841) * 100).h,
+                                top: ((60 / 411) * 100).w),
+                            child: Text(
+                              "No Crops Found".tr,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
                       );
                     },
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                    padding: EdgeInsets.only(
+                        left: DeviceExt((9 / 841) * 100).h,
+                        top: ((5 / 411) * 100).w),
                     child: BlocSelector<CropAgricultureBloc,
                         CropAgricultureState, CropAgricultureModel?>(
                       selector: (state) => state.cropAgricultureModelObj,
@@ -95,7 +139,7 @@ class CropAgricultureScreen extends StatelessWidget {
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             separatorBuilder: (context, index) {
-                              return SizedBox(height: 18.v);
+                              return SizedBox(height: ((18 / 411) * 100).w);
                             },
                             itemCount: cropAgricultureModelObj
                                     ?.cropdetailsItemList.length ??
@@ -119,7 +163,7 @@ class CropAgricultureScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.v),
+                SizedBox(height: ((20 / 411) * 100).w),
                 BlocSelector<CropAgricultureBloc, CropAgricultureState,
                     CropAgricultureState>(
                   selector: (state) => state,
@@ -129,7 +173,30 @@ class CropAgricultureScreen extends StatelessWidget {
                         Visibility(
                           visible: state.done,
                           child: CustomElevatedButton(
-                            width: ResponsiveExtension(343).h,
+                            width: DeviceExt((344 / 841) * 100).h,
+                            height: Device.orientation == Orientation.portrait
+                                ? DeviceExt(6).h
+                                : 8.w,
+                            // width:
+                            //     Device.orientation == Orientation.portrait
+                            //         ? DeviceExt(50).h
+                            //         : 50.w,
+                            buttonTextStyle:
+                                theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                            ),
+                            margin: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                    DeviceExt(0.2).h, 1.2.w)
+                                : EdgeInsets.fromLTRB(
+                                    DeviceExt(0.36).w,
+                                    DeviceExt(6).h,
+                                    DeviceExt(0.2).w,
+                                    DeviceExt(1.2).h),
                             text: "Next Section".tr,
                             onTap: () {
                               if (state.next) {
@@ -149,16 +216,37 @@ class CropAgricultureScreen extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
-                        SizedBox(height: 20.v),
+                        SizedBox(height: ((20 / 411) * 100).w),
                         CustomElevatedButton(
-                          width: ResponsiveExtension(343).h,
+                          width: DeviceExt((344 / 841) * 100).h,
                           text: "Previous Section".tr,
+                          height: Device.orientation == Orientation.portrait
+                              ? DeviceExt(6).h
+                              : 8.w,
+                          // width:
+                          //     Device.orientation == Orientation.portrait
+                          //         ? DeviceExt(50).h
+                          //         : 50.w,
+                          buttonTextStyle:
+                              theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                          ),
+                          margin: Device.orientation == Orientation.portrait
+                              ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                  DeviceExt(0.2).h, 1.2.w)
+                              : EdgeInsets.fromLTRB(
+                                  DeviceExt(0.36).w,
+                                  DeviceExt(6).h,
+                                  DeviceExt(0.2).w,
+                                  DeviceExt(1.2).h),
                           onTap: () {
                             NavigatorService.popAndPushNamed(
                               AppRoutes.primaryFarmHoldingScreen,
                             );
                           },
-                          margin: EdgeInsets.only(bottom: 10.v),
                           alignment: Alignment.bottomCenter,
                         ),
                       ],

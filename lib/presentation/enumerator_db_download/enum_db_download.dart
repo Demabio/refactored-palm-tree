@@ -3,6 +3,7 @@ import 'models/enum_db_download_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class EnumDbDownloadDialog extends StatelessWidget {
@@ -33,8 +34,14 @@ class EnumDbDownloadDialog extends StatelessWidget {
       child: BlocBuilder<EnumDbDownloadBloc, EnumDbDownloadState>(
           builder: (context, state) {
         return Container(
-          width: 330.h,
-          padding: EdgeInsets.all(16.h),
+          width: Device.orientation == Orientation.portrait
+              ? DeviceExt(40).h
+              : 50.w,
+          padding: Device.orientation == Orientation.portrait
+              ? EdgeInsets.symmetric(
+                  horizontal: DeviceExt(0.8).h, vertical: 5.w)
+              : EdgeInsets.symmetric(
+                  horizontal: DeviceExt(1.8).w, vertical: DeviceExt(5).h),
           decoration: AppDecoration.fillWhiteA.copyWith(
             borderRadius: BorderRadiusStyle.roundedBorder10,
           ),
@@ -42,28 +49,41 @@ class EnumDbDownloadDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(height: 20.v),
+              SizedBox(
+                  height: Device.orientation == Orientation.portrait
+                      ? 2.4.w
+                      : DeviceExt(2.4).h),
               Visibility(
                 visible: !state.failed && !state.success,
                 child: Text(
                   !state.visibility
                       ? "Retrieve Previous Entries"
                       : "Downloading...",
-                  style: CustomTextStyles.bodyLargePrimary_2,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
               Visibility(
                 visible: !state.failed && state.success,
                 child: Text(
                   "Downloaded",
-                  style: CustomTextStyles.bodyLargePrimary_2,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
               SizedBox(height: 9.v),
               Visibility(
                 visible: !state.visibility,
                 child: SizedBox(
-                  width: 200.h,
+                  width: Device.orientation == Orientation.portrait
+                      ? 19.w
+                      : DeviceExt(19).h,
                   child: Text(
                     "This action will cause any entries entered to be lost. Only to be used when setting up on a new device, are you sure?",
                     maxLines: 5,
@@ -78,9 +98,11 @@ class EnumDbDownloadDialog extends StatelessWidget {
               Visibility(
                 visible: state.failed,
                 child: SizedBox(
-                  width: 161.h,
+                  width: Device.orientation == Orientation.portrait
+                      ? 19.w
+                      : DeviceExt(19).h,
                   child: Text(
-                    "Download Failed, Retry?",
+                    "No Previous Entries Found, Retry?",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -94,8 +116,12 @@ class EnumDbDownloadDialog extends StatelessWidget {
               Visibility(
                 visible: state.visibility,
                 child: SizedBox(
-                  width: 250.h,
-                  height: 30.v,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(30).h
+                      : DeviceExt(30).w,
+                  height: Device.orientation == Orientation.portrait
+                      ? 5.w
+                      : DeviceExt(5).h,
                   child: LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(10),
 
@@ -110,12 +136,19 @@ class EnumDbDownloadDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 9.v),
+              SizedBox(
+                  height: Device.orientation == Orientation.portrait
+                      ? 2.4.w
+                      : DeviceExt(2.4).h),
               Visibility(
                 visible: state.visibility && !state.failed && !state.success,
                 child: SizedBox(
-                  width: 30.v,
-                  height: 30.v,
+                  width: Device.orientation == Orientation.portrait
+                      ? 10.w
+                      : DeviceExt(10).h,
+                  height: Device.orientation == Orientation.portrait
+                      ? 10.w
+                      : DeviceExt(10).h,
                   child: CircularProgressIndicator.adaptive(
                     strokeWidth: 4,
                     valueColor: AlwaysStoppedAnimation<Color>(
@@ -129,13 +162,19 @@ class EnumDbDownloadDialog extends StatelessWidget {
               Visibility(
                 visible: state.visibility,
                 child: SizedBox(
-                  width: 161.h,
+                  width: Device.orientation == Orientation.portrait
+                      ? 19.w
+                      : DeviceExt(19).h,
                   child: Text(
                     "${state.percentagedone}%",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: CustomTextStyles.bodyLargePrimary_2,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                    ),
                   ),
                 ),
               ),
@@ -154,17 +193,33 @@ class EnumDbDownloadDialog extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              SizedBox(height: 21.v),
               SizedBox(
-                height: 50.v,
-                child: CustomElevatedButton(
-                  text: "Download",
-                  margin: EdgeInsets.only(left: 4.h),
-                  buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
-                  onTap: () => onTapDonwload(context, state),
-                  isDisabled: state.visibility && !state.failed,
+                  height: Device.orientation == Orientation.portrait
+                      ? 5.w
+                      : DeviceExt(5).h),
+              CustomElevatedButton(
+                text: "Download",
+                height: Device.orientation == Orientation.portrait
+                    ? DeviceExt(6).h
+                    : 8.w,
+                // width:
+                //     Device.orientation == Orientation.portrait
+                //         ? DeviceExt(50).h
+                //         : 50.w,
+
+                margin: EdgeInsets.only(
+                    left: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1).h
+                        : 1.w),
+                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
+                buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.white,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(2).h
+                      : DeviceExt(2.5).w,
                 ),
+                onTap: () => onTapDonwload(context, state),
+                isDisabled: state.visibility && !state.failed,
               ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
@@ -189,15 +244,34 @@ class EnumDbDownloadDialog extends StatelessWidget {
               //     ),
               //   ],
               // ),
-              SizedBox(height: 21.v),
-
+              SizedBox(
+                height: Device.orientation == Orientation.portrait
+                    ? 5.w
+                    : DeviceExt(5).h,
+              ),
               SizedBox(
                 height: 50.v,
                 child: CustomElevatedButton(
                   text: "Close",
-                  margin: EdgeInsets.only(left: 4.h),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(6).h
+                      : 8.w,
+                  // width:
+                  //     Device.orientation == Orientation.portrait
+                  //         ? DeviceExt(50).h
+                  //         : 50.w,
+
+                  margin: EdgeInsets.only(
+                      left: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1).h
+                          : 1.w),
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                  buttonTextStyle: CustomTextStyles.bodyLarge16,
+                  buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(2).h
+                        : DeviceExt(2.5).w,
+                  ),
                   onTap: () => closeDialog(context),
                   isDisabled: state.downing,
                 ),

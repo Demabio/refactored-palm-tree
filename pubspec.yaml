@@ -38,6 +38,7 @@ dependencies:
   path_provider: ^2.1.1
   open_file_plus: ^3.4.1
   flutter_sizer: ^1.0.5
+  responsive_framework: ^1.1.1
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

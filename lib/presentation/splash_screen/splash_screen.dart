@@ -29,8 +29,8 @@ class SplashScreen extends StatelessWidget {
                 child: Device.orientation == Orientation.portrait
                     ? Padding(
                         padding: Device.screenType == ScreenType.mobile
-                            ? EdgeInsets.only(left: 20.w)
-                            : EdgeInsets.only(left: 30.w),
+                            ? EdgeInsets.only(left: DeviceExt(4).h)
+                            : EdgeInsets.only(left: DeviceExt(4).h),
                         child: Row(children: [
                           CustomImageView(
                               imagePath: ImageConstant.imgImage2,

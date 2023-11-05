@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class InputsWidget extends StatelessWidget {
@@ -29,7 +30,13 @@ class InputsWidget extends StatelessWidget {
         width: width,
         child: Text(
           enterpriseModel.title,
-          style: theme.textTheme.labelMedium,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: Colors.black,
+            fontSize: Device.orientation == Orientation.portrait
+                ? DeviceExt(1.5).h
+                : DeviceExt(1.8).w,
+            fontWeight: FontWeight.bold,
+          ),
           textAlign: TextAlign.left,
         ),
       ),

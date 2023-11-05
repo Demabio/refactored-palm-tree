@@ -65,21 +65,19 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
               height: Device.orientation == Orientation.portrait
-                  ? 11.w
-                  : DeviceExt(11).h,
+                  ? 15.w
+                  : DeviceExt(15).h,
               leadingWidth: Device.orientation == Orientation.portrait
-                  ? DeviceExt(9).h
-                  : 2.2.w,
+                  ? DeviceExt(8).h
+                  : 8.w,
               leading: AppbarImage(
                   svgPath: ImageConstant.imgMenu,
                   margin: Device.orientation == Orientation.portrait
                       ? EdgeInsets.only(
-                          left: DeviceExt(6).h,
                           top: 2.w,
                           bottom: 4.w,
                         )
                       : EdgeInsets.only(
-                          left: DeviceExt(6).w,
                           top: DeviceExt(2).h,
                           bottom: DeviceExt(4).h,
                         ),
@@ -87,11 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTapMenuone(context);
                   }),
               centerTitle: true,
-              title: Device.orientation == Orientation.portrait
-                  ? AppbarSubtitle1(
-                      text: "lbl_dashboard".tr,
-                    )
-                  : null),
+              title: AppbarSubtitle1(
+                text: "lbl_dashboard".tr,
+              )),
           body: SizedBox(
             width: mediaQueryData.size.width,
             child: SingleChildScrollView(
@@ -1212,7 +1208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       margin: Device.orientation == Orientation.portrait
                           ? EdgeInsets.only(left: DeviceExt(0.1).h, top: 2.w)
-                          : EdgeInsets.only(left: 0.1.w, top: DeviceExt(2).h),
+                          : EdgeInsets.only(
+                              left: 28.w, right: 28.w, top: DeviceExt(2).h),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -1238,8 +1235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? EdgeInsets.only(
                                             left: DeviceExt(0.5).h, top: 3.w)
                                         : EdgeInsets.only(
-                                            left: DeviceExt(0.5).h,
-                                            top: DeviceExt(3).h),
+                                            left: DeviceExt(1.5).w,
+                                            right: DeviceExt(1.5).w,
+                                            top: DeviceExt(3).w),
                                     child:
                                         FutureBuilder<List<Tuple2<int, int>>?>(
                                       future:
@@ -1281,14 +1279,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     top: DeviceExt(4).h,
                                                     right: 0.1.w),
                                             child: Container(
-                                                height: Device.orientation ==
-                                                        Orientation.portrait
-                                                    ? DeviceExt(42).h
-                                                    : 42.w,
-                                                width: Device.orientation ==
-                                                        Orientation.portrait
-                                                    ? DeviceExt(42).h
-                                                    : 42.w,
+                                                height: 350,
+                                                width: 300,
                                                 child: LineChartWidget(
                                                   listdata: snapshot.data,
                                                 )),
@@ -1353,9 +1345,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Container(
-                                    height: 12.adaptSize,
-                                    width: 12.adaptSize,
-                                    margin: EdgeInsets.only(bottom: 2.v),
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.5).h
+                                        : 1.5.w,
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.5).h
+                                        : 1.5.w,
+                                    margin: Device.orientation ==
+                                            Orientation.portrait
+                                        ? EdgeInsets.only(bottom: 0.5.w)
+                                        : EdgeInsets.only(
+                                            bottom: DeviceExt(0.5).h),
                                     decoration: BoxDecoration(
                                         color: theme.colorScheme.primary,
                                         borderRadius: BorderRadius.circular(
@@ -1366,11 +1368,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? EdgeInsets.only(
                                             left: DeviceExt(1.2).h)
                                         : EdgeInsets.only(left: 1.2.w),
-                                    child: Text("lbl_approved".tr,
-                                        style: theme.textTheme.bodySmall)),
+                                    child: Text(
+                                      "lbl_approved".tr,
+                                      style: theme.textTheme.titleSmall
+                                          ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black),
+                                    )),
                                 Container(
-                                    height: 12.adaptSize,
-                                    width: 12.adaptSize,
+                                    height: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.5).h
+                                        : 1.5.w,
+                                    width: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.5).h
+                                        : 1.5.w,
                                     margin: Device.orientation ==
                                             Orientation.portrait
                                         ? EdgeInsets.only(
@@ -1389,8 +1406,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? EdgeInsets.only(
                                             left: DeviceExt(1.2).h)
                                         : EdgeInsets.only(left: 1.2.w),
-                                    child: Text("lbl_rejected".tr,
-                                        style: theme.textTheme.bodySmall))
+                                    child: Text(
+                                      "lbl_rejected".tr,
+                                      style: theme.textTheme.titleSmall
+                                          ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black),
+                                    ))
                               ],
                             ),
                           ),
@@ -1437,7 +1463,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: Device.orientation ==
                                             Orientation.portrait
                                         ? DeviceExt(42).h
-                                        : 42.w,
+                                        : 95.w,
                                     child: BarChartSample2(
                                       bardata: snapshot.data,
                                     ),

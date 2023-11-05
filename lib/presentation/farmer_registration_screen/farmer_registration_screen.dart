@@ -43,17 +43,17 @@ class FarmerRegistrationScreen extends StatelessWidget {
           key: _scaffoldKey,
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
-            height: 47.v,
-            leadingWidth: ResponsiveExtension(48).h,
+            height: ((47 / 411) * 100).w,
+            leadingWidth: DeviceExt((48 / 841) * 100).h,
             leading: AppbarImage(
               onTap: () {
                 onTapMenuone(context);
               },
               svgPath: ImageConstant.imgMenu,
               margin: EdgeInsets.only(
-                left: ResponsiveExtension(24).h,
-                top: 8.v,
-                bottom: 15.v,
+                left: DeviceExt((24 / 841) * 100).h,
+                top: ((8 / 411) * 100).w,
+                bottom: ((15 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -64,9 +64,9 @@ class FarmerRegistrationScreen extends StatelessWidget {
             height: mediaQueryData.size.height,
             child: Padding(
               padding: EdgeInsets.only(
-                left: ResponsiveExtension(22).h,
-                right: ResponsiveExtension(10).h,
-                bottom: 5.v,
+                left: DeviceExt((22 / 841) * 100).h,
+                right: DeviceExt((10 / 841) * 100).h,
+                bottom: ((5 / 411) * 100).w,
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -77,7 +77,13 @@ class FarmerRegistrationScreen extends StatelessWidget {
                         builder: (context, checked) {
                           return Text(
                             "Complete: ${checked! ? "Yes" : "No"}",
-                            style: CustomTextStyles.labelMediumPrimary_1,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                              fontWeight: FontWeight.bold,
+                            ),
                           );
                         }),
                     BlocSelector<FarmerRegistrationBloc,
@@ -108,7 +114,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
                                 model.lw2 &&
                                 model.fs2),
                             child: CustomElevatedButton(
-                              width: ResponsiveExtension(343).h,
+                              width: DeviceExt((343 / 841) * 100).h,
                               text: "lbl_save".tr,
                               onTap: () {
                                 context
@@ -118,12 +124,38 @@ class FarmerRegistrationScreen extends StatelessWidget {
                                       onFailed: () => goBack(context),
                                     ));
                               },
-                              margin: EdgeInsets.only(bottom: 10.v),
+                              height: Device.orientation == Orientation.portrait
+                                  ? DeviceExt(6).h
+                                  : 8.w,
+                              buttonTextStyle:
+                                  theme.textTheme.titleMedium?.copyWith(
+                                color: Colors.white,
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                              ),
+                              margin: Device.orientation == Orientation.portrait
+                                  ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                      DeviceExt(0.2).h, 1.2.w)
+                                  : EdgeInsets.fromLTRB(
+                                      DeviceExt(0.36).w,
+                                      DeviceExt(6).h,
+                                      DeviceExt(0.2).w,
+                                      DeviceExt(1.2).h),
                               leftIcon: Container(
                                 margin: EdgeInsets.only(
-                                    right: ResponsiveExtension(10).h),
+                                    right: DeviceExt((10 / 841) * 100).h),
                                 child: CustomImageView(
                                   svgPath: ImageConstant.imgSaveWhiteA700,
+                                  height:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(3).h
+                                          : 5.w,
+                                  width:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(3).h
+                                          : 5.w,
                                 ),
                               ),
                               alignment: Alignment.bottomCenter,
@@ -145,8 +177,16 @@ class FarmerRegistrationScreen extends StatelessWidget {
   }
 
   goBack(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Something went wrong")));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      "Something went wrong",
+      style: theme.textTheme.titleMedium?.copyWith(
+        fontSize: Device.orientation == Orientation.portrait
+            ? DeviceExt(1.8).h
+            : DeviceExt(2).w,
+        fontWeight: FontWeight.bold,
+      ),
+    )));
   }
 
   CupertinoStepper _buildStepper(
@@ -168,7 +208,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
       onStepContinue: () => _continueButton(model, context),
       steps: [
         _buildStep(
-          title: Text('Farmers Identification'),
+          title: Text(
+            'Farmers Identification',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.fid,
           addcallback: () {
             farmersIdentification(context);
@@ -177,7 +225,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.fi,
         ),
         _buildStep(
-          title: Text('Farm Holding'),
+          title: Text(
+            'Farm Holding',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.fh2 ? StepState.complete : StepState.indexed,
           addcallback: () {
             primaryFarmHolding(context);
@@ -186,7 +242,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.fh,
         ),
         _buildStep(
-          title: Text('Crop Agriculture'),
+          title: Text(
+            'Crop Agriculture',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.crop,
           addcallback: () {
             cropAgriculture(context);
@@ -195,7 +259,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.ca,
         ),
         _buildStep(
-          title: Text('Livestock'),
+          title: Text(
+            'Livestock',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.live,
           addcallback: () {
             onTapAdddetails(context);
@@ -204,7 +276,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.ls,
         ),
         _buildStep(
-          title: Text('Aquaculture'),
+          title: Text(
+            'Aquaculture',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.fish,
           addcallback: () {
             onTapAqua(context);
@@ -213,7 +293,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.ff,
         ),
         _buildStep(
-          title: Text('Farm Technology and Assets'),
+          title: Text(
+            'Farm Technology and Assets',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.tech,
           addcallback: () {
             onFarmasset(context);
@@ -222,7 +310,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.at,
         ),
         _buildStep(
-          title: Text('Land and Water Management'),
+          title: Text(
+            'Land and Water Management',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.land,
           addcallback: () {
             onLandWater(context);
@@ -231,7 +327,15 @@ class FarmerRegistrationScreen extends StatelessWidget {
           addoredit: model.lw,
         ),
         _buildStep(
-          title: Text('Financial and Services'),
+          title: Text(
+            'Financial and Services',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           state: model.finance,
           addcallback: () {
             onFinance(context);
@@ -279,16 +383,30 @@ class FarmerRegistrationScreen extends StatelessWidget {
       state: state,
       isActive: isActive,
       content: LimitedBox(
-        maxWidth: 300,
+        maxWidth: DeviceExt((200 / 841) * 100).h,
         maxHeight: DeviceExt(15).h,
         child: Column(
           children: [
             if (!addoredit)
               CustomElevatedButton(
                 text: "Add Details",
-                margin: EdgeInsets.only(left: DeviceExt(10).h),
-                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                buttonTextStyle: CustomTextStyles.bodyLarge16,
+                height: Device.orientation == Orientation.portrait
+                    ? DeviceExt(6).h
+                    : 8.w,
+                width: Device.orientation == Orientation.portrait
+                    ? DeviceExt(30).h
+                    : 10.w,
+                buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.white,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(2).h
+                      : DeviceExt(2.5).w,
+                ),
+                margin: Device.orientation == Orientation.portrait
+                    ? EdgeInsets.fromLTRB(
+                        DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                    : EdgeInsets.fromLTRB(DeviceExt(0.36).w, DeviceExt(6).h,
+                        DeviceExt(0.2).w, DeviceExt(1.2).h),
                 onTap: () {
                   addcallback?.call();
                 },
@@ -297,9 +415,23 @@ class FarmerRegistrationScreen extends StatelessWidget {
             if (addoredit)
               CustomElevatedButton(
                 text: "Edit Details",
-                margin: EdgeInsets.only(left: DeviceExt(10).h),
-                buttonStyle: CustomButtonStyles.fillPrimaryTL6,
-                buttonTextStyle: CustomTextStyles.bodyLarge16,
+                height: Device.orientation == Orientation.portrait
+                    ? DeviceExt(6).h
+                    : 8.w,
+                width: Device.orientation == Orientation.portrait
+                    ? DeviceExt(30).h
+                    : 10.w,
+                buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.white,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(2).h
+                      : DeviceExt(2.5).w,
+                ),
+                margin: Device.orientation == Orientation.portrait
+                    ? EdgeInsets.fromLTRB(
+                        DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                    : EdgeInsets.fromLTRB(DeviceExt(0.36).w, DeviceExt(6).h,
+                        DeviceExt(0.2).w, DeviceExt(1.2).h),
                 onTap: () {
                   editcallback?.call();
                 },

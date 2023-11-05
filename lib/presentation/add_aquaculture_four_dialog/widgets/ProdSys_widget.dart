@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class ProdSysItemWidget extends StatelessWidget {
@@ -40,13 +41,24 @@ class ProdSysItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "Production System:",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
                   enterpriseModel.title,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -55,13 +67,24 @@ class ProdSysItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "No of active units",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
                   enterpriseModel.var1 ?? "0",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -70,13 +93,24 @@ class ProdSysItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "Active Volume(M3)",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
                   enterpriseModel.var2 ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -85,13 +119,24 @@ class ProdSysItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "No of inactive units",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
                   enterpriseModel.var3 ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -100,13 +145,24 @@ class ProdSysItemWidget extends StatelessWidget {
               children: [
                 Text(
                   "InActive Volume(M3)",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
                 Spacer(),
                 Text(
                   enterpriseModel.var4 ?? "N/A",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.5).h
+                        : DeviceExt(1.8).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
               ],
@@ -118,14 +174,22 @@ class ProdSysItemWidget extends StatelessWidget {
                 children: [
                   AppbarImage1(
                       svgPath: ImageConstant.imgFrame33,
-                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      margin: EdgeInsets.fromLTRB(
+                          DeviceExt((14 / 841) * 100).h,
+                          ((15 / 411) * 100).w,
+                          DeviceExt((14 / 411) * 100).h,
+                          ((11 / 411) * 100).w),
                       onTap: () {
                         edit?.call();
                       }),
                   Spacer(),
                   AppbarImage1(
                       svgPath: ImageConstant.imgFrame34,
-                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      margin: EdgeInsets.fromLTRB(
+                          DeviceExt((14 / 411) * 100).h,
+                          ((3 / 411) * 100).w,
+                          DeviceExt((14 / 411) * 100).h,
+                          ((11 / 411) * 100).w),
                       onTap: () {
                         delete?.call();
                       }),

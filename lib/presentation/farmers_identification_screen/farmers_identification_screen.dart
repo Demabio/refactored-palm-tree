@@ -4,10 +4,9 @@ import 'bloc/farmers_identification_bloc.dart';
 import 'models/farmers_identification_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class FarmersIdentificationScreen extends StatelessWidget {
   const FarmersIdentificationScreen({Key? key}) : super(key: key);
@@ -33,55 +32,99 @@ class FarmersIdentificationScreen extends StatelessWidget {
           child: SafeArea(
             child: Scaffold(
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
-                  leading: AppbarImage(
+                  height: Device.orientation == Orientation.portrait
+                      ? 15.w
+                      : DeviceExt(15).h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
+                  leading: CustomImageView(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
                       onTap: () {
                         onTapSortone(context);
                       }),
                   centerTitle: true,
                   title: AppbarSubtitle1(text: "msg_farmers_identification".tr),
                   actions: [
-                    AppbarImage1(
+                    CustomImageView(
+                        svgPath: ImageConstant.imgFrame33,
+                        height: Device.orientation == Orientation.portrait
+                            ? DeviceExt(5).h
+                            : 5.w,
+                        width: Device.orientation == Orientation.portrait
+                            ? DeviceExt(5).h
+                            : 5.w,
                         onTap: () {
                           NavigatorService.popAndPushNamed(
                               AppRoutes.farmersIdentificationTwoScreen);
-                        },
-                        svgPath: ImageConstant.imgFrame33,
-                        margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v))
+                        }),
                   ],
                   styleType: Style.bgFill),
               body: SizedBox(
                 width: mediaQueryData.size.width,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 9.v),
+                  padding: EdgeInsets.only(top: ((9 / 411) * 100).w),
                   child: Padding(
-                    padding:
-                        EdgeInsets.only(left: 15.h, right: 15.h, bottom: 5.v),
+                    padding: EdgeInsets.only(
+                        left: DeviceExt((15 / 841) * 100).h,
+                        right: DeviceExt((15 / 841) * 100).h,
+                        bottom: ((5 / 411) * 100).w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                            padding: EdgeInsets.only(left: 3.h),
+                            padding: EdgeInsets.only(
+                                left: DeviceExt((3 / 841) * 100).h),
                             child: Row(children: [
-                              Text("lbl_farmer_info".tr,
-                                  style: CustomTextStyles.labelMediumPrimary),
+                              Text(
+                                "lbl_farmer_info".tr,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               Padding(
-                                  padding: EdgeInsets.only(left: 21.h),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((21 / 841) * 100).h),
                                   child: Text(
-                                      state.farmersIdentificationModelObj
-                                              ?.farmer?.farmerName ??
-                                          "NA",
-                                      style: theme.textTheme.labelMedium))
+                                    state.farmersIdentificationModelObj?.farmer
+                                            ?.farmerName ??
+                                        "NA",
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      color: Colors.black,
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
                             ])),
-                        Text("msg_individual_farmer".tr,
-                            style: CustomTextStyles.titleMediumSemiBold),
+                        SizedBox(height: ((17 / 411) * 100).w),
+                        Text(
+                          "msg_individual_farmer".tr,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Container(
-                            margin: EdgeInsets.only(top: 10.v, right: 3.h),
+                            margin: EdgeInsets.only(
+                                top: ((10 / 411) * 100).w,
+                                right: DeviceExt((3 / 841) * 100).h),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 6.h, vertical: 7.v),
+                                horizontal: DeviceExt((6 / 841) * 100).h,
+                                vertical: ((7 / 411) * 100).w),
                             decoration: AppDecoration.outlinePrimary.copyWith(
                                 borderRadius:
                                     BorderRadiusStyle.roundedBorder10),
@@ -93,249 +136,490 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text("lbl_farmer_name".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
                                         Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.farmerName ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
+                                          "lbl_farmer_name".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.farmerName ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       ]),
-                                  SizedBox(height: 17.v),
+                                  SizedBox(height: ((17 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text("msg_national_id_number".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
                                         Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.idNo ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
+                                          "msg_national_id_number".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.idNo ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       ]),
-                                  SizedBox(height: 17.v),
+                                  SizedBox(height: ((17 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 1.v),
-                                            child: Text("lbl_email".tr,
-                                                style: CustomTextStyles
-                                                    .labelMediumPrimary)),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.email ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 16.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("Date of birth",
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.dob
-                                                    .toString() ??
-                                                "0",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 18.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_postal_address".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.postalAddress ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 18.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_postal_code".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.postalAddress ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 17.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_mobile_number".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.mobile ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 17.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_marital_status".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.marital ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 18.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_sex".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                        ?.farmer?.gender ==
-                                                    1
-                                                ? "Male"
-                                                : "Female",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 17.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("lbl_hh_size".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                    ?.farmer?.hhSize
-                                                    .toString() ??
-                                                "N/A",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 18.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("msg_agriculture_formal".tr,
-                                            style: CustomTextStyles
-                                                .labelMediumPrimary),
-                                        Text(
-                                            state.farmersIdentificationModelObj
-                                                        ?.farmer?.agriSkillsId ==
-                                                    1
-                                                ? "Yes"
-                                                : "No",
-                                            style: theme.textTheme.labelMedium)
-                                      ]),
-                                  SizedBox(height: 16.v),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 16.v),
+                                            padding: EdgeInsets.only(
+                                                bottom: ((1 / 411) * 100).w),
                                             child: Text(
-                                                "msg_formal_education".tr,
-                                                style: CustomTextStyles
-                                                    .labelMediumPrimary)),
+                                              "lbl_email".tr,
+                                              style: theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.email ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((16 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Date of birth",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.dob
+                                                  .toString() ??
+                                              "0",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((18 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_postal_address".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.postalAddress ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((18 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_postal_code".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.postalAddress ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((17 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_mobile_number".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.mobile ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((17 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_marital_status".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.marital ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((18 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_sex".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                      ?.farmer?.gender ==
+                                                  1
+                                              ? "Male"
+                                              : "Female",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((17 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "lbl_hh_size".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                  ?.farmer?.hhSize
+                                                  .toString() ??
+                                              "N/A",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((18 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "msg_agriculture_formal".tr,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          state.farmersIdentificationModelObj
+                                                      ?.farmer?.agriSkillsId ==
+                                                  1
+                                              ? "Yes"
+                                              : "No",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ]),
+                                  SizedBox(height: ((16 / 411) * 100).w),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: ((16 / 411) * 100).w),
+                                            child: Text(
+                                              "msg_formal_education".tr,
+                                              style: theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
                                         Container(
-                                            width: 200.h,
-                                            margin: EdgeInsets.only(left: 24.h),
+                                            width:
+                                                DeviceExt((200 / 841) * 100).h,
+                                            margin: EdgeInsets.only(
+                                                left:
+                                                    DeviceExt((24 / 841) * 100)
+                                                        .h),
                                             child: Text(
-                                                state.farmersIdentificationModelObj
-                                                        ?.ed ??
-                                                    "N/A",
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: theme
-                                                    .textTheme.labelMedium))
+                                              state.farmersIdentificationModelObj
+                                                      ?.ed ??
+                                                  "N/A",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.right,
+                                              style: theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ))
                                       ]),
-                                  SizedBox(height: 3.v)
+                                  SizedBox(height: ((3 / 411) * 100).w)
                                 ])),
-                        SizedBox(height: 11.v),
-                        Text("msg_respondent_details".tr,
-                            style: CustomTextStyles.titleMediumSemiBold),
-                        SizedBox(height: 8.v),
+                        SizedBox(height: ((11 / 411) * 100).w),
+                        Text(
+                          "msg_respondent_details".tr,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: ((8 / 411) * 100).w),
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 9.h, vertical: 23.v),
+                              horizontal: DeviceExt((9 / 841) * 100).h,
+                              vertical: ((23 / 411) * 100).w),
                           decoration: AppDecoration.outlinePrimary.copyWith(
                               borderRadius: BorderRadiusStyle.roundedBorder10),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                  padding: EdgeInsets.only(left: 1.h),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((1 / 841) * 100).h),
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
-                                            padding: EdgeInsets.only(top: 1.v),
+                                            padding: EdgeInsets.only(
+                                                top: ((1 / 411) * 100).w),
                                             child: Text(
-                                                "msg_is_farmer_respondent".tr,
-                                                style: CustomTextStyles
-                                                    .labelMediumPrimary)),
+                                              "msg_is_farmer_respondent".tr,
+                                              style: theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
                                         Text(
-                                            state
-                                                        .farmersIdentificationModelObj
-                                                        ?.farmer
-                                                        ?.farmerTheRespodent ??
-                                                    false
-                                                ? "Yes"
-                                                : "No",
-                                            style: theme.textTheme.labelMedium)
+                                          state
+                                                      .farmersIdentificationModelObj
+                                                      ?.farmer
+                                                      ?.farmerTheRespodent ??
+                                                  false
+                                              ? "Yes"
+                                              : "No",
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       ])),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
                                         ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 1.h, top: 13.v),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((1 / 841) * 100).h,
+                                      top: ((13 / 411) * 100).w),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                          padding: EdgeInsets.only(top: 1.v),
+                                          padding: EdgeInsets.only(
+                                              top: ((1 / 411) * 100).w),
                                           child: Text(
                                               "msg_respondent_relationship".tr,
                                               style: CustomTextStyles
                                                   .labelMediumPrimary)),
                                       Text(
-                                          state.farmersIdentificationModelObj
-                                                  ?.rship ??
-                                              "N/A",
-                                          style: theme.textTheme.labelMedium),
+                                        state.farmersIdentificationModelObj
+                                                ?.rship ??
+                                            "N/A",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -345,74 +629,130 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 1.h, top: 13.v),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((1 / 841) * 100).h,
+                                      top: ((13 / 411) * 100).w),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                          padding: EdgeInsets.only(top: 1.v),
-                                          child: Text("Respondent Name:".tr,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
-                                      Text(
-                                          state.farmersIdentificationModelObj
-                                                  ?.farmer?.respondentName ??
-                                              "N/A",
-                                          style: theme.textTheme.labelMedium),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: !(state.farmersIdentificationModelObj
-                                        ?.farmer?.farmerTheRespodent ??
-                                    false),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 1.h, top: 13.v),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(top: 1.v),
+                                          padding: EdgeInsets.only(
+                                              top: ((1 / 411) * 100).w),
                                           child: Text(
-                                              "Respondent ID Number:".tr,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                            "Respondent Name:".tr,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
                                       Text(
-                                          state.farmersIdentificationModelObj
-                                                  ?.farmer?.respNationalId ??
-                                              "N/A",
-                                          style: theme.textTheme.labelMedium),
+                                        state.farmersIdentificationModelObj
+                                                ?.farmer?.respondentName ??
+                                            "N/A",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20.v),
                               Visibility(
                                 visible: !(state.farmersIdentificationModelObj
                                         ?.farmer?.farmerTheRespodent ??
                                     false),
                                 child: Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 1.h, top: 13.v),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((1 / 841) * 100).h,
+                                      top: ((13 / 411) * 100).w),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                          padding: EdgeInsets.only(top: 1.v),
-                                          child: Text("Respondent Mobile:".tr,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                          padding: EdgeInsets.only(
+                                              top: ((1 / 411) * 100).w),
+                                          child: Text(
+                                            "Respondent ID Number:".tr,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
                                       Text(
-                                          state.farmersIdentificationModelObj
-                                                  ?.farmer?.respondentMobile ??
-                                              "N/A",
-                                          style: theme.textTheme.labelMedium),
+                                        state.farmersIdentificationModelObj
+                                                ?.farmer?.respNationalId ??
+                                            "N/A",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: ((20 / 411) * 100).w),
+                              Visibility(
+                                visible: !(state.farmersIdentificationModelObj
+                                        ?.farmer?.farmerTheRespodent ??
+                                    false),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((1 / 841) * 100).h,
+                                      top: ((13 / 411) * 100).w),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: ((1 / 411) * 100).w),
+                                          child: Text(
+                                            "Respondent Mobile:".tr,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                      Text(
+                                        state.farmersIdentificationModelObj
+                                                ?.farmer?.respondentMobile ??
+                                            "N/A",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -420,15 +760,33 @@ class FarmersIdentificationScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20.v),
+                        SizedBox(height: ((20 / 411) * 100).w),
                         Visibility(
                           visible: state.done,
                           child: CustomElevatedButton(
-                            width: ResponsiveExtension(343).h,
+                            height: Device.orientation == Orientation.portrait
+                                ? DeviceExt(6).h
+                                : 8.w,
+                            width: DeviceExt((343 / 841) * 100).h,
+                            buttonTextStyle:
+                                theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                            ),
+                            margin: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                    DeviceExt(0.2).h, 1.2.w)
+                                : EdgeInsets.fromLTRB(
+                                    DeviceExt(0.36).w,
+                                    DeviceExt(6).h,
+                                    DeviceExt(0.2).w,
+                                    DeviceExt(1.2).h),
                             text: "Next Section".tr,
                             onTap: () => NavigatorService.popAndPushNamed(
                                 AppRoutes.primaryFarmHoldingOneScreen),
-                            margin: EdgeInsets.only(bottom: 10.v),
                             alignment: Alignment.bottomCenter,
                           ),
                         ),

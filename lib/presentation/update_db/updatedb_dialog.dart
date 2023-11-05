@@ -184,8 +184,8 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         ? DeviceExt(30).h
                         : DeviceExt(30).w,
                     height: Device.orientation == Orientation.portrait
-                        ? 10.w
-                        : DeviceExt(10).h,
+                        ? 5.w
+                        : DeviceExt(5).h,
                     child: LinearProgressIndicator(
                       borderRadius: BorderRadius.circular(10),
 
@@ -252,8 +252,8 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         ? DeviceExt(30).h
                         : DeviceExt(30).w,
                     height: Device.orientation == Orientation.portrait
-                        ? 10.w
-                        : DeviceExt(10).h,
+                        ? 5.w
+                        : DeviceExt(5).h,
                     child: LinearProgressIndicator(
                       borderRadius: BorderRadius.circular(10),
 
