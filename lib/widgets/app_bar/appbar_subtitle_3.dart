@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/core/app_export.dart';
 
 // ignore: must_be_immutable
@@ -28,8 +29,11 @@ class AppbarSubtitle3 extends StatelessWidget {
         padding: margin ?? EdgeInsets.zero,
         child: Text(
           text,
-          style: CustomTextStyles.titleMediumPlayfairDisplayIndigoA200.copyWith(
-            color: appTheme.indigoA200,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontSize: Device.orientation == Orientation.portrait
+                ? DeviceExt(2.4).h
+                : DeviceExt(2.5).w,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

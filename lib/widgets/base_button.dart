@@ -12,6 +12,7 @@ class BaseButton extends StatelessWidget {
     this.width,
     this.margin,
     this.alignment,
+    this.mainAxisAlignment = MainAxisAlignment.center,
   }) : super(
           key: key,
         );
@@ -34,6 +35,7 @@ class BaseButton extends StatelessWidget {
 
   final Alignment? alignment;
 
+  final MainAxisAlignment mainAxisAlignment;
   @override
   Widget build(BuildContext context) {
     return const SizedBox.shrink();

@@ -16,6 +16,7 @@ class CustomElevatedButton extends BaseButton {
     bool? isDisabled,
     double? height,
     double? width,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
     required String text,
   }) : super(
           text: text,
@@ -27,6 +28,7 @@ class CustomElevatedButton extends BaseButton {
           width: width,
           alignment: alignment,
           margin: margin,
+          mainAxisAlignment: mainAxisAlignment,
         );
 
   final BoxDecoration? decoration;
@@ -54,7 +56,7 @@ class CustomElevatedButton extends BaseButton {
           style: buttonStyle,
           onPressed: isDisabled ?? false ? null : onTap ?? () {},
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: mainAxisAlignment,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               leftIcon ?? const SizedBox.shrink(),

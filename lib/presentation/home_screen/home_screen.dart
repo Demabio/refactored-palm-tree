@@ -64,26 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
           resizeToAvoidBottomInset: true,
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
-              height: Device.orientation == Orientation.portrait
-                  ? 15.w
-                  : DeviceExt(15).h,
-              leadingWidth: Device.orientation == Orientation.portrait
-                  ? DeviceExt(8).h
-                  : 8.w,
+              height: ((47 / 411) * 100).w,
+              leadingWidth: DeviceExt((48 / 841) * 100).h,
               leading: AppbarImage(
-                  svgPath: ImageConstant.imgMenu,
-                  margin: Device.orientation == Orientation.portrait
-                      ? EdgeInsets.only(
-                          top: 2.w,
-                          bottom: 4.w,
-                        )
-                      : EdgeInsets.only(
-                          top: DeviceExt(2).h,
-                          bottom: DeviceExt(4).h,
-                        ),
-                  onTap: () {
-                    onTapMenuone(context);
-                  }),
+                onTap: () {
+                  onTapMenuone(context);
+                },
+                svgPath: ImageConstant.imgMenu,
+                margin: EdgeInsets.only(
+                  left: DeviceExt((24 / 841) * 100).h,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((15 / 411) * 100).w,
+                ),
+              ),
               centerTitle: true,
               title: AppbarSubtitle1(
                 text: "lbl_dashboard".tr,

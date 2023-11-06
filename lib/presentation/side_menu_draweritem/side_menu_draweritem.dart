@@ -3,6 +3,7 @@ import 'package:kiamis_app/presentation/update_db/updatedb_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class SideMenuDraweritem extends StatelessWidget {
   const SideMenuDraweritem({Key? key}) : super(key: key);
@@ -11,137 +12,295 @@ class SideMenuDraweritem extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Drawer(
-        child: Container(
-            width: 274.h,
-            padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 33.v),
-            decoration: AppDecoration.fillWhiteA,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                  padding: EdgeInsets.only(left: 5.h),
-                  child: Row(children: [
-                    CustomImageView(
-                        imagePath: ImageConstant.imgImage2,
-                        height: 70.adaptSize,
-                        width: 70.adaptSize),
-                    Padding(
-                        padding:
-                            EdgeInsets.only(left: 2.h, top: 10.v, bottom: 11.v),
-                        child: Text("lbl_kiamis".tr,
-                            style: theme.textTheme.headlineLarge))
+        width: DeviceExt((300 / 841) * 100).h,
+        child: SingleChildScrollView(
+          child: Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(vertical: ((33 / 411) * 100).w),
+              decoration: AppDecoration.fillWhiteA,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                      CustomImageView(
+                          imagePath: ImageConstant.imgImage2,
+                          height: DeviceExt(8.4).h,
+                          width: DeviceExt(8.4).h),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: DeviceExt(0.2).h,
+                              top: 2.4.w,
+                              bottom: 2.7.w),
+                          child: Text("lbl_kiamis".tr,
+                              style: theme.textTheme.headlineLarge
+                                  ?.copyWith(fontSize: DeviceExt(4).h)))
+                    ]),
+                    CustomElevatedButton(
+                        height: ((28 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "lbl_dashboard".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((48 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgHome2)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapDashboard(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((28 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "lbl_draft_entries".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((26 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgTransfer1)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapDraftentries(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((30 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "lbl_register_farmer".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((27 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgUser31)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapRegisterfarmer(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((30 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "Submitable Farmers".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((27 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgSavePrimary)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapSaved(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((30 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "msg_post_farmers_to".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((27 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgUpload)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          postDialog(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((30 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "msg_download_farmers".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((27 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgRefresh)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          updateDialog(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((27 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "lbl_settings".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((30 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgSettingsSolid1)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapSettings(context);
+                        }),
+                    CustomElevatedButton(
+                        height: ((27 / 411) * 100).w,
+                        width: DeviceExt((250 / 841) * 100).h,
+                        text: "lbl_exit".tr,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        margin: EdgeInsets.only(
+                            left: DeviceExt((7 / 841) * 100).h,
+                            top: ((30 / 411) * 100).w),
+                        leftIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: DeviceExt((10 / 841) * 100).h,
+                            ),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((20 / 841) * 100).h),
+                            child: CustomImageView(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                width:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(3).h
+                                        : 5.w,
+                                svgPath: ImageConstant.imgArrowright)),
+                        buttonStyle: CustomButtonStyles.none,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        onTap: () {
+                          onTapRowarrowright(context);
+                        }),
                   ])),
-              CustomElevatedButton(
-                  height: 28.v,
-                  width: 147.h,
-                  text: "lbl_dashboard".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 48.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(svgPath: ImageConstant.imgHome2)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    onTapDashboard(context);
-                  }),
-              CustomElevatedButton(
-                  height: 28.v,
-                  width: 155.h,
-                  text: "lbl_draft_entries".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 26.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child:
-                          CustomImageView(svgPath: ImageConstant.imgTransfer1)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    onTapDraftentries(context);
-                  }),
-              CustomElevatedButton(
-                  height: 30.v,
-                  width: 222.h,
-                  text: "lbl_register_farmer".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 27.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(svgPath: ImageConstant.imgUser31)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    onTapRegisterfarmer(context);
-                  }),
-              CustomElevatedButton(
-                  height: 30.v,
-                  width: 222.h,
-                  text: "Submitable Farmers".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 27.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(
-                          svgPath: ImageConstant.imgSavePrimary)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    onTapSaved(context);
-                  }),
-              CustomElevatedButton(
-                  height: 30.v,
-                  width: 222.h,
-                  text: "msg_post_farmers_to".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 27.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(svgPath: ImageConstant.imgUpload)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    postDialog(context);
-                  }),
-              CustomElevatedButton(
-                  height: 30.v,
-                  width: 222.h,
-                  text: "msg_download_farmers".tr,
-                  margin: EdgeInsets.only(top: 27.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(svgPath: ImageConstant.imgUpload)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    updateDialog(context);
-                  }),
-              CustomElevatedButton(
-                  height: 27.v,
-                  width: 119.h,
-                  text: "lbl_settings".tr,
-                  margin: EdgeInsets.only(left: 7.h, top: 30.v),
-                  leftIcon: Container(
-                      margin: EdgeInsets.only(right: 20.h),
-                      child: CustomImageView(
-                          svgPath: ImageConstant.imgSettingsSolid1)),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleMedium18,
-                  onTap: () {
-                    onTapSettings(context);
-                  }),
-              GestureDetector(
-                  onTap: () {
-                    onTapRowarrowright(context);
-                  },
-                  child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 7.h, top: 25.v, bottom: 25.v),
-                      child: Row(children: [
-                        CustomImageView(
-                            svgPath: ImageConstant.imgArrowright,
-                            height: 25.adaptSize,
-                            width: 25.adaptSize),
-                        Padding(
-                            padding: EdgeInsets.only(left: 20.h),
-                            child: Text("lbl_exit".tr,
-                                style: CustomTextStyles.titleMedium18))
-                      ])))
-            ])));
+        ));
   }
 
   postDialog(BuildContext context) async {

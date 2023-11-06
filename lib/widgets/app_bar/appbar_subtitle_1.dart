@@ -33,7 +33,7 @@ class AppbarSubtitle1 extends StatelessWidget {
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.bold,
             fontSize: Device.orientation == Orientation.portrait
-                ? DeviceExt(2).h
+                ? DeviceExt(2.4).h
                 : DeviceExt(2.5).w,
           ),
         ),
