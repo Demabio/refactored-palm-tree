@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/base_button.dart';
 
@@ -48,7 +49,7 @@ class CustomElevatedButton extends BaseButton {
   }
 
   Widget get buildElevatedButtonWidget => Container(
-        height: this.height ?? 50.v,
+        height: this.height ?? ((40 / 411) * 100).w,
         width: this.width ?? double.maxFinite,
         margin: margin,
         decoration: decoration,
@@ -62,7 +63,11 @@ class CustomElevatedButton extends BaseButton {
               leftIcon ?? const SizedBox.shrink(),
               Text(
                 text,
-                style: buttonTextStyle ?? theme.textTheme.bodyLarge,
+                style: buttonTextStyle ??
+                    theme.textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                        fontSize: DeviceExt(2.0).h,
+                        fontWeight: FontWeight.bold),
               ),
               rightIcon ?? const SizedBox.shrink(),
             ],

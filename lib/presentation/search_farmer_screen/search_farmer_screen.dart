@@ -16,6 +16,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class SearchFarmerScreen extends StatelessWidget {
@@ -43,24 +44,29 @@ class SearchFarmerScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-              height: 47.v,
-              leadingWidth: 60.h,
+              height: ((47 / 411) * 100).w,
+              leadingWidth: DeviceExt((48 / 841) * 100).h,
               leading: AppbarImage(
-                  svgPath: ImageConstant.imgMenu,
-                  margin: EdgeInsets.only(
-                    left: ResponsiveExtension(24).h,
-                    top: 8.v,
-                    bottom: 15.v,
-                  ),
-                  onTap: () {
-                    onTapMenuone(context);
-                  }),
+                onTap: () {
+                  onTapMenuone(context);
+                },
+                svgPath: ImageConstant.imgMenu,
+                margin: EdgeInsets.only(
+                  left: DeviceExt((24 / 841) * 100).h,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((15 / 411) * 100).w,
+                ),
+              ),
               centerTitle: true,
               title: AppbarSubtitle1(text: "lbl_search_farmer".tr),
               actions: [
                 AppbarImage1(
                     svgPath: ImageConstant.imgFrame34WhiteA700,
-                    margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                    margin: EdgeInsets.fromLTRB(
+                        DeviceExt((11 / 841) * 100).h,
+                        ((5 / 411) * 100).w,
+                        DeviceExt((11 / 841) * 100).h,
+                        ((9 / 411) * 100).w),
                     onTap: () {
                       addorEdit(context, 0, 0);
                     })
@@ -77,7 +83,8 @@ class SearchFarmerScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                        padding: EdgeInsets.symmetric(vertical: 7.v),
+                        padding:
+                            EdgeInsets.symmetric(vertical: ((7 / 411) * 100).w),
                         decoration: AppDecoration.fillWhiteA,
                         child: Column(children: [
                           BlocSelector<SearchFarmerBloc, SearchFarmerState,
@@ -97,21 +104,44 @@ class SearchFarmerScreen extends StatelessWidget {
                                         return null;
                                       }
                                     },
+                                    textStyle:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      color: Colors.black,
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2.5).w,
+                                    ),
+                                    hintStyle:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2.5).w,
+                                    ),
                                     focusNode: _firstTextFieldFocus,
                                     textInputType: TextInputType.number,
                                     margin: EdgeInsets.fromLTRB(
-                                        24.h, 24.v, 24.h, 12.v),
+                                        DeviceExt((24 / 841) * 100).h,
+                                        ((24 / 411) * 100).w,
+                                        DeviceExt((24 / 841) * 100).h,
+                                        ((12 / 411) * 100).w),
                                     controller: searchController,
                                     hintText: "msg_search_id_number".tr,
                                     prefix: Container(
                                         margin: EdgeInsets.fromLTRB(
-                                            16.h, 12.v, 10.h, 12.v),
+                                            DeviceExt((16 / 841) * 100).h,
+                                            ((12 / 411) * 100).w,
+                                            DeviceExt((10 / 841) * 100).h,
+                                            ((12 / 411) * 100).w),
                                         child: CustomImageView(
                                             svgPath: ImageConstant.imgSearch)),
-                                    prefixConstraints:
-                                        BoxConstraints(maxHeight: 40.v),
+                                    prefixConstraints: BoxConstraints(
+                                        maxHeight: ((40 / 411) * 100).w),
                                     suffix: Padding(
-                                        padding: EdgeInsets.only(right: 15.h),
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                DeviceExt((15 / 841) * 100).h),
                                         child: IconButton(
                                             onPressed: () {
                                               searchController!.clear();
@@ -129,17 +159,31 @@ class SearchFarmerScreen extends StatelessWidget {
                           return Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 21.h),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((21 / 841) * 100).h),
                                 child: Text(
                                   "Farmer: ".tr,
-                                  style: CustomTextStyles.labelMediumPrimary,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 21.h),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((21 / 841) * 100).h),
                                 child: Text(
                                   PrefUtils().getFarmerName(),
-                                  style: theme.textTheme.labelMedium,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    color: Colors.black,
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                  ),
                                 ),
                               ),
                             ],
@@ -155,16 +199,28 @@ class SearchFarmerScreen extends StatelessWidget {
                           return Visibility(
                             visible: models!.isEmpty,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 24.h, top: 60.v),
-                                child: Text("No Farms Found".tr,
-                                    style:
-                                        CustomTextStyles.titleMediumSemiBold)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((24 / 841) * 100).h,
+                                    top: ((60 / 411) * 100).w),
+                                child: Text(
+                                  "No Farms Found".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
                           );
                         },
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 9.h, top: 5.v, right: 9.h),
+                      padding: EdgeInsets.only(
+                          left: DeviceExt((9 / 841) * 100).h,
+                          top: ((5 / 411) * 100).w,
+                          right: DeviceExt((9 / 841) * 100).h),
                       child: BlocSelector<SearchFarmerBloc, SearchFarmerState,
                           List<FdetailsItemModel>?>(
                         selector: (state) => state.fmodel,
@@ -175,7 +231,8 @@ class SearchFarmerScreen extends StatelessWidget {
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   separatorBuilder: (context, index) {
-                                    return SizedBox(height: 18.v);
+                                    return SizedBox(
+                                        height: ((18 / 411) * 100).w);
                                   },
                                   itemCount: models?.length ?? 0,
                                   itemBuilder: (context, index) {
@@ -202,14 +259,25 @@ class SearchFarmerScreen extends StatelessWidget {
                       builder: (context, searchController) {
                         return CustomElevatedButton(
                           text: "lbl_search_farmer".tr,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 25.h, vertical: 69.v),
-                          leftIcon: Container(
-                              margin: EdgeInsets.only(right: 9.h),
-                              child: CustomImageView(
-                                  svgPath: ImageConstant.imgVolume)),
+                          height: Device.orientation == Orientation.portrait
+                              ? DeviceExt(6).h
+                              : 8.w,
+                          width: DeviceExt((450 / 841) * 100).h,
                           buttonTextStyle:
-                              CustomTextStyles.titleMediumWhiteA700,
+                              theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                          ),
+                          margin: Device.orientation == Orientation.portrait
+                              ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                  DeviceExt(0.2).h, 1.2.w)
+                              : EdgeInsets.fromLTRB(
+                                  DeviceExt(0.36).w,
+                                  DeviceExt(6).h,
+                                  DeviceExt(0.2).w,
+                                  DeviceExt(1.2).h),
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               _firstTextFieldFocus.unfocus();

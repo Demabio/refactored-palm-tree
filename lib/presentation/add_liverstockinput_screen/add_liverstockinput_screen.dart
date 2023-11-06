@@ -192,7 +192,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           "msg_which_assisted_reproductive".tr,
                           maxLines: 10,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleSmall,
+                          style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
                       SizedBox(height: 7.v),
@@ -324,7 +324,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                       SizedBox(height: 10.v),
                       Text(
                         "msg_which_animal_health".tr,
-                        style: theme.textTheme.titleSmall,
+                        style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       SizedBox(height: 29.v),
                       Text(

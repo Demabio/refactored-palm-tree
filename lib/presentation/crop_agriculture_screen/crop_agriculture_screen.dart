@@ -96,7 +96,7 @@ class CropAgricultureScreen extends StatelessWidget {
                                   Device.orientation == Orientation.portrait
                                       ? DeviceExt(2).h
                                       : DeviceExt(2.5).w,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
                           ))
                     ])),

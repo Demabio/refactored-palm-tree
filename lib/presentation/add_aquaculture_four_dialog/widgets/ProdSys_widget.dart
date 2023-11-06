@@ -43,9 +43,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   "Production System:",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -55,9 +54,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -69,9 +67,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   "No of active units",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -81,9 +78,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -95,9 +91,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   "Active Volume(M3)",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -107,9 +102,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -121,9 +115,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   "No of inactive units",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -133,9 +126,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -147,9 +139,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   "InActive Volume(M3)",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -159,9 +150,8 @@ class ProdSysItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),

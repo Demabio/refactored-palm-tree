@@ -166,7 +166,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             })),
                         Text(
                           "msg_aquaculture_type2".tr,
-                          style: theme.textTheme.titleSmall,
+                          style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, bool?>(
@@ -218,7 +218,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                         SizedBox(height: 17.v),
                         // Text(
                         //   "msg_production_system3".tr,
-                        //   style: theme.textTheme.titleSmall,
+                        //   style: CustomTextStyles.labelMediumPrimary_1,
                         // ),
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, bool?>(
@@ -290,7 +290,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                 ),
                                 child: Text(
                                   "msg_does_the_household2".tr,
-                                  maxLines: 4,
+                                  maxLines: 10,
                                   overflow: TextOverflow.ellipsis,
                                   style: checked!
                                       ? CustomTextStyles.labelMediumPrimary_1red

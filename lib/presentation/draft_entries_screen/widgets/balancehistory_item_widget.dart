@@ -1,3 +1,4 @@
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import '../models/balancehistory_item_model.dart';
@@ -27,23 +28,37 @@ class BalancehistoryItemWidget extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 24.v,
-                bottom: 25.v,
+                top: ((24 / 411) * 100).w,
+                bottom: ((25 / 411) * 100).w,
               ),
-              child: Text(
-                balancehistoryItemModelObj.name ?? "N/A",
-                style: CustomTextStyles.bodyMediumPoppinsBlack900,
+              child: Container(
+                width: ((100 / 411) * 100).w,
+                child: Text(
+                  balancehistoryItemModelObj.name ?? "N/A",
+                  maxLines: 10,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(1.8).w,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
             Spacer(),
             Padding(
               padding: EdgeInsets.only(
-                top: 24.v,
-                bottom: 25.v,
+                top: ((24 / 411) * 100).w,
+                bottom: ((25 / 411) * 100).w,
               ),
               child: Text(
                 balancehistoryItemModelObj.idNo ?? "N/A",
-                style: CustomTextStyles.bodyMediumPoppinsBlack900,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(1.8).h
+                      : DeviceExt(1.8).w,
+                  color: Colors.black,
+                ),
               ),
             ),
             Spacer(),
@@ -51,13 +66,12 @@ class BalancehistoryItemWidget extends StatelessWidget {
               children: [
                 AppbarImage1(
                     svgPath: ImageConstant.imgFrame33,
-                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
                     onTap: () {
                       edit?.call();
                     }),
+                SizedBox(height: ((15 / 411) * 100).w),
                 AppbarImage1(
                     svgPath: ImageConstant.imgFrame34,
-                    margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
                     onTap: () {
                       delete?.call();
                     }),
@@ -71,13 +85,23 @@ class BalancehistoryItemWidget extends StatelessWidget {
             children: [
               Text(
                 "Comments:",
-                style: CustomTextStyles.titleSmall15,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(1.8).h
+                      : DeviceExt(2).w,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
                   balancehistoryItemModelObj.comments ?? "N/A",
-                  style: CustomTextStyles.bodyMediumPoppinsBlack900,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ],

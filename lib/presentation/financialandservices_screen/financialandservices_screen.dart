@@ -7,10 +7,9 @@ import 'bloc/financialandservices_bloc.dart';
 import 'models/financialandservices_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class FinancialandservicesScreen extends StatelessWidget {
   const FinancialandservicesScreen({Key? key}) : super(key: key);
@@ -35,48 +34,82 @@ class FinancialandservicesScreen extends StatelessWidget {
         child: SafeArea(
           child: Scaffold(
             appBar: CustomAppBar(
-                leadingWidth: 60.h,
-                leading: AppbarImage(
+                height: Device.orientation == Orientation.portrait
+                    ? 15.w
+                    : DeviceExt(15).h,
+                leadingWidth: DeviceExt((60 / 841) * 100).h,
+                leading: CustomImageView(
                     svgPath: ImageConstant.imgSort,
-                    margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                    height: Device.orientation == Orientation.portrait
+                        ? DeviceExt(5).h
+                        : 5.w,
+                    width: Device.orientation == Orientation.portrait
+                        ? DeviceExt(5).h
+                        : 5.w,
                     onTap: () {
                       onTapSortone(context);
                     }),
                 centerTitle: true,
                 title: AppbarSubtitle4(text: "msg_financial_and_services2".tr),
                 actions: [
-                  AppbarImage1(
+                  CustomImageView(
                       svgPath: ImageConstant.imgFrame33,
-                      margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
                       onTap: () {
                         onTapImage(context);
-                      })
+                      }),
                 ],
                 styleType: Style.bgFill),
             body: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 2.v),
+                padding: EdgeInsets.only(top: ((2 / 411) * 100).w),
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 15.h, right: 15.h, bottom: 5.v),
+                  padding: EdgeInsets.only(
+                      left: DeviceExt((15 / 841) * 100).h,
+                      right: DeviceExt((15 / 841) * 100).h,
+                      bottom: ((5 / 411) * 100).w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: EdgeInsets.only(left: 4.h),
+                          padding: EdgeInsets.only(
+                              left: DeviceExt((4 / 841) * 100).h),
                           child: Row(children: [
-                            Text("lbl_farmer_info".tr,
-                                style: CustomTextStyles.labelMediumPrimary),
+                            Text(
+                              "lbl_farmer_info".tr,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             Padding(
-                                padding: EdgeInsets.only(left: 21.h),
-                                child: Text(PrefUtils().getFarmerName(),
-                                    style: theme.textTheme.labelMedium))
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((21 / 841) * 100).h),
+                                child: Text(
+                                  PrefUtils().getFarmerName(),
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    color: Colors.black,
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                  ),
+                                ))
                           ])),
-                      SizedBox(height: 15.v),
+                      SizedBox(height: ((15 / 411) * 100).w),
                       Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 5.h, vertical: 19.v),
+                            horizontal: DeviceExt((5 / 841) * 100).h,
+                            vertical: ((19 / 411) * 100).w),
                         decoration: AppDecoration.outlinePrimary.copyWith(
                             borderRadius: BorderRadiusStyle.roundedBorder10),
                         child: Column(
@@ -84,10 +117,17 @@ class FinancialandservicesScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h),
-                                child: Text("msg_financial_livelihood".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h),
+                                child: Text(
+                                  "msg_financial_livelihood".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             BlocSelector<
                                     FinancialandservicesBloc,
                                     FinancialandservicesState,
@@ -96,8 +136,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 builder: (context, list) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: ((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -115,58 +155,102 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 }),
                             Padding(
                                 padding: EdgeInsets.only(
-                                    left: 4.h, top: 2.v, right: 6.h),
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w,
+                                    right: DeviceExt((6 / 841) * 100).h),
                                 child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                          width: 186.h,
+                                          width: DeviceExt((186 / 841) * 100).h,
                                           child: Text(
-                                              "msg_percentage_of_household".tr,
-                                              maxLines: 10,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                            "msg_percentage_of_household".tr,
+                                            maxLines: 10,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
                                       Padding(
-                                          padding:
-                                              EdgeInsets.only(bottom: 19.v),
+                                          padding: EdgeInsets.only(
+                                              bottom: ((19 / 411) * 100).w),
                                           child: Text(
-                                              state.farm?.farmingIncomePercent
-                                                      .toString() ??
-                                                  "N/A",
-                                              style:
-                                                  theme.textTheme.labelMedium))
+                                            state.farm?.farmingIncomePercent
+                                                    .toString() ??
+                                                "N/A",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          ))
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h),
                                 child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                          width: 173.h,
-                                          child: Text("msg_do_you_belong_to".tr,
-                                              maxLines: 10,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
-                                      Padding(
-                                          padding:
-                                              EdgeInsets.only(bottom: 18.v),
+                                          width: DeviceExt((173 / 841) * 100).h,
                                           child: Text(
-                                              (state.farm?.cooperativeGroup ??
-                                                      false)
-                                                  ? "Yes"
-                                                  : "No",
-                                              style:
-                                                  theme.textTheme.labelMedium))
+                                            "msg_do_you_belong_to".tr,
+                                            maxLines: 10,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: ((18 / 411) * 100).w),
+                                          child: Text(
+                                            (state.farm?.cooperativeGroup ??
+                                                    false)
+                                                ? "Yes"
+                                                : "No",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          ))
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
-                                child: Text("msg_cooperative_groups".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
+                                child: Text(
+                                  "msg_cooperative_groups".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             BlocSelector<
                                     FinancialandservicesBloc,
                                     FinancialandservicesState,
@@ -175,8 +259,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 builder: (context, list) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: ((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -192,11 +276,20 @@ class FinancialandservicesScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
+                            SizedBox(height: ((20 / 411) * 100).w),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
-                                child: Text("msg_financial_services".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
+                                child: Text(
+                                  "msg_financial_services".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             BlocSelector<
                                     FinancialandservicesBloc,
                                     FinancialandservicesState,
@@ -205,8 +298,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 builder: (context, list) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: ((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -222,113 +315,214 @@ class FinancialandservicesScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
+                            SizedBox(height: ((20 / 411) * 100).w),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 3.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((3 / 411) * 100).w),
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("msg_do_you_insure_your2".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary),
                                       Text(
-                                          (state.f?.cropsInsurance ?? false)
-                                              ? "Yes"
-                                              : "No",
-                                          style: theme.textTheme.labelMedium)
+                                        "msg_do_you_insure_your2".tr,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
+                                      ),
+                                      Text(
+                                        (state.f?.cropsInsurance ?? false)
+                                            ? "Yes"
+                                            : "No",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      )
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("msg_do_you_insure_your3".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary),
                                       Text(
-                                          state.f?.livestockInsurance ?? false
-                                              ? "Yes"
-                                              : "No",
-                                          style: theme.textTheme.labelMedium)
+                                        "msg_do_you_insure_your3".tr,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
+                                      ),
+                                      Text(
+                                        state.f?.livestockInsurance ?? false
+                                            ? "Yes"
+                                            : "No",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      )
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("msg_do_you_insure_your".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary),
                                       Text(
-                                          state.f?.fishInsurance ?? false
-                                              ? "Yes"
-                                              : "No",
-                                          style: theme.textTheme.labelMedium)
+                                        "msg_do_you_insure_your".tr,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
+                                      ),
+                                      Text(
+                                        state.f?.fishInsurance ?? false
+                                            ? "Yes"
+                                            : "No",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      )
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
                                 child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                          width: 191.h,
+                                          width: DeviceExt((191 / 841) * 100).h,
                                           child: Text(
-                                              "msg_do_you_insure_your4".tr,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                            "msg_do_you_insure_your4".tr,
+                                            maxLines: 10,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
                                       Padding(
-                                          padding:
-                                              EdgeInsets.only(bottom: 15.v),
+                                          padding: EdgeInsets.only(
+                                              bottom: ((15 / 411) * 100).w),
                                           child: Text(
-                                              state.f?.assetsInsurance ?? false
-                                                  ? "Yes"
-                                                  : "No",
-                                              style:
-                                                  theme.textTheme.labelMedium))
+                                            state.f?.assetsInsurance ?? false
+                                                ? "Yes"
+                                                : "No",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          ))
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 6.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((6 / 411) * 100).w),
                                 child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                          width: 141.h,
+                                          width: DeviceExt((141 / 841) * 100).h,
                                           child: Text(
-                                              "msg_do_you_keep_written".tr,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                            "msg_do_you_keep_written".tr,
+                                            maxLines: 10,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
                                       Padding(
-                                          padding:
-                                              EdgeInsets.only(bottom: 15.v),
+                                          padding: EdgeInsets.only(
+                                              bottom: ((15 / 411) * 100).w),
                                           child: Text(
-                                              state.f?.farmRecords ?? false
-                                                  ? "Yes"
-                                                  : "No",
-                                              style:
-                                                  theme.textTheme.labelMedium))
+                                            state.f?.farmRecords ?? false
+                                                ? "Yes"
+                                                : "No",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          ))
                                     ])),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                                child: Text("msg_agricultural_info".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((4 / 411) * 100).w),
+                                child: Text(
+                                  "msg_agricultural_info".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             Container(
-                                width: 275.h,
+                                width: DeviceExt((275 / 841) * 100).h,
                                 margin: EdgeInsets.only(
-                                    left: 4.h, top: 2.v, right: 54.h),
-                                child: Text("msg_what_is_your_main".tr,
-                                    maxLines: 10,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w,
+                                    right: DeviceExt((54 / 841) * 100).h),
+                                child: Text(
+                                  "msg_what_is_your_main".tr,
+                                  maxLines: 10,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             BlocSelector<
                                     FinancialandservicesBloc,
                                     FinancialandservicesState,
@@ -337,8 +531,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 builder: (context, list) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: ((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -354,33 +548,68 @@ class FinancialandservicesScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
+                            SizedBox(height: ((20 / 411) * 100).w),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 3.v),
-                                child: Text("msg_soil_seeds_and".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((3 / 411) * 100).w),
+                                child: Text(
+                                  "msg_soil_seeds_and".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 2.v),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((2 / 411) * 100).w),
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("msg_extension_service".tr,
-                                          style: CustomTextStyles
-                                              .labelMediumPrimary),
                                       Text(
-                                          state.f?.extensionsericeAccess == 1
-                                              ? "Yes"
-                                              : "No",
-                                          style: theme.textTheme.labelMedium)
+                                        "msg_extension_service".tr,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
+                                      ),
+                                      Text(
+                                        state.f?.extensionsericeAccess == 1
+                                            ? "Yes"
+                                            : "No",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      )
                                     ])),
                             Visibility(
                               visible: state.farm?.extensionsericeAccess == 1,
                               child: Padding(
-                                  padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                                  child: Text("msg_if_yes_from_where".tr,
-                                      style:
-                                          CustomTextStyles.labelMediumPrimary)),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((4 / 841) * 100).h,
+                                      top: ((4 / 411) * 100).w),
+                                  child: Text(
+                                    "msg_if_yes_from_where".tr,
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2).w,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
                             ),
                             Visibility(
                               visible: state.farm?.extensionsericeAccess == 1,
@@ -392,8 +621,8 @@ class FinancialandservicesScreen extends StatelessWidget {
                                   builder: (context, list) {
                                     return Padding(
                                       padding: EdgeInsets.only(
-                                        top: 15.v,
-                                        right: 16.h,
+                                        top: ((15 / 411) * 100).w,
+                                        right: DeviceExt((16 / 841) * 100).h,
                                       ),
                                       child: Column(
                                         children: List<Widget>.generate(
@@ -411,18 +640,27 @@ class FinancialandservicesScreen extends StatelessWidget {
                                   }),
                             ),
                             Padding(
-                                padding: EdgeInsets.only(left: 4.h, top: 4.v),
-                                child: Text("msg_what_is_the_mode".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary)),
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((4 / 841) * 100).h,
+                                    top: ((4 / 411) * 100).w),
+                                child: Text(
+                                  "msg_what_is_the_mode".tr,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(1.8).h
+                                        : DeviceExt(2).w,
+                                  ),
+                                )),
+                            SizedBox(height: ((20 / 411) * 100).w),
                             BlocSelector<FinancialandservicesBloc,
                                 FinancialandservicesState, List<CheckBoxList>?>(
                               selector: (state) => state.m,
                               builder: (context, list) {
                                 return Padding(
                                   padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 16.h,
+                                    top: ((15 / 411) * 100).w,
+                                    right: DeviceExt((16 / 841) * 100).h,
                                   ),
                                   child: Column(
                                     children: List<Widget>.generate(
@@ -442,28 +680,61 @@ class FinancialandservicesScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20.v),
+                      SizedBox(height: ((20 / 411) * 100).w),
                       Visibility(
                         visible: state.done,
                         child: CustomElevatedButton(
-                          width: ResponsiveExtension(343).h,
+                          height: Device.orientation == Orientation.portrait
+                              ? DeviceExt(6).h
+                              : 8.w,
+                          width: DeviceExt((344 / 841) * 100).h,
+                          buttonTextStyle:
+                              theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                          ),
+                          margin: Device.orientation == Orientation.portrait
+                              ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                  DeviceExt(0.2).h, 1.2.w)
+                              : EdgeInsets.fromLTRB(
+                                  DeviceExt(0.36).w,
+                                  DeviceExt(6).h,
+                                  DeviceExt(0.2).w,
+                                  DeviceExt(1.2).h),
                           text: "Main Page".tr,
                           onTap: () => NavigatorService.popAndPushNamed(
                               AppRoutes.farmerRegistrationScreen),
-                          margin: EdgeInsets.only(bottom: 10.v),
                           alignment: Alignment.bottomCenter,
                         ),
                       ),
-                      SizedBox(height: 20.v),
+                      SizedBox(height: ((20 / 411) * 100).w),
                       CustomElevatedButton(
-                        width: ResponsiveExtension(343).h,
+                        height: Device.orientation == Orientation.portrait
+                            ? DeviceExt(6).h
+                            : 8.w,
+                        width: DeviceExt((344 / 841) * 100).h,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        margin: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                            : EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).w,
+                                DeviceExt(6).h,
+                                DeviceExt(0.2).w,
+                                DeviceExt(1.2).h),
                         text: "Previous Section".tr,
                         onTap: () {
                           NavigatorService.popAndPushNamed(
                             AppRoutes.landandwatermgmtScreen,
                           );
                         },
-                        margin: EdgeInsets.only(bottom: 10.v),
                         alignment: Alignment.bottomCenter,
                       ),
                     ],

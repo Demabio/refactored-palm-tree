@@ -89,7 +89,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                     Device.orientation == Orientation.portrait
                                         ? DeviceExt(2).h
                                         : DeviceExt(2.5).w,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
@@ -130,7 +129,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<
@@ -178,7 +176,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Text(
@@ -186,7 +183,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.bold,
                                           fontSize: Device.orientation ==
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
@@ -204,7 +200,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<
@@ -255,7 +250,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -268,7 +262,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
-                                              fontWeight: FontWeight.bold,
                                               fontSize: Device.orientation ==
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
@@ -287,7 +280,6 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<FarmtechandassetsBloc,

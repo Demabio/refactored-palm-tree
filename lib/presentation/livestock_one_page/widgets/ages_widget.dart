@@ -44,7 +44,6 @@ class AgeItemWidget extends StatelessWidget {
                 fontSize: Device.orientation == Orientation.portrait
                     ? DeviceExt(1.8).h
                     : DeviceExt(2).w,
-                fontWeight: FontWeight.bold,
               ),
             ),
             Spacer(),
@@ -55,7 +54,6 @@ class AgeItemWidget extends StatelessWidget {
                 fontSize: Device.orientation == Orientation.portrait
                     ? DeviceExt(1.8).h
                     : DeviceExt(2).w,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ],

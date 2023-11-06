@@ -292,7 +292,7 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                         child: Text(
                           "Have you benefited from Economic Stimulus Programme(ESP)? (*)"
                               .tr,
-                          maxLines: 3,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),

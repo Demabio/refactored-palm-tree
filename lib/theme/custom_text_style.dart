@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import '../core/app_export.dart';
 
 /// A collection of pre-defined text styles for customizing text appearance,
@@ -55,13 +56,23 @@ class CustomTextStyles {
       );
   static get bodyLargePrimary => theme.textTheme.bodyLarge!.copyWith(
         color: theme.colorScheme.primary,
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
+        fontWeight: FontWeight.bold,
+      );
+  static get bodyLargePrimarywhite => theme.textTheme.bodyLarge!.copyWith(
+        color: Colors.white,
+        fontSize: DeviceExt(2).h,
+        fontWeight: FontWeight.bold,
       );
   static get bodyLargePrimary_1 => theme.textTheme.bodyLarge!.copyWith(
         color: theme.colorScheme.primary.withOpacity(0.62),
+        fontSize: DeviceExt(2).h,
+        fontWeight: FontWeight.bold,
       );
   static get bodyLargePrimary_2 => theme.textTheme.bodyLarge!.copyWith(
         color: theme.colorScheme.primary,
+        fontSize: DeviceExt(2).h,
+        fontWeight: FontWeight.bold,
       );
   static get bodyMedium14 => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 14.fSize,
@@ -193,6 +204,7 @@ class CustomTextStyles {
       );
   static get bodySmallLatoGray90001 => theme.textTheme.bodySmall!.lato.copyWith(
         color: appTheme.gray90001,
+        fontSize: DeviceExt(1.8).h,
       );
   static get bodySmallPoppinsGray500 =>
       theme.textTheme.bodySmall!.poppins.copyWith(
@@ -257,29 +269,33 @@ class CustomTextStyles {
   // Label text style
   static get labelLargeInterGreen600 =>
       theme.textTheme.labelLarge!.inter.copyWith(
+        fontSize: DeviceExt(2).h,
         color: appTheme.green600,
       );
   static get labelLargeInterRed700 =>
       theme.textTheme.labelLarge!.inter.copyWith(
+        fontSize: DeviceExt(2).h,
         color: appTheme.red700,
       );
   static get labelLargeLatoGray90001 =>
       theme.textTheme.labelLarge!.lato.copyWith(
         color: appTheme.gray90001,
-        fontSize: 13.fSize,
+        fontSize: DeviceExt(2).h,
         fontWeight: FontWeight.w600,
       );
   static get labelLargeOnPrimary => theme.textTheme.labelLarge!.copyWith(
         color: theme.colorScheme.onPrimary,
+        fontSize: DeviceExt(2).h,
         fontWeight: FontWeight.w700,
       );
   static get labelLargePrimary => theme.textTheme.labelLarge!.copyWith(
         color: theme.colorScheme.primary,
-        fontSize: 13.fSize,
+        fontSize: DeviceExt(2).h,
         fontWeight: FontWeight.w600,
       );
   static get labelLargePrimaryBold => theme.textTheme.labelLarge!.copyWith(
         color: theme.colorScheme.primary,
+        fontSize: DeviceExt(2).h,
         fontWeight: FontWeight.w700,
       );
   static get labelLargeWhiteA700 => theme.textTheme.labelLarge!.copyWith(
@@ -288,26 +304,29 @@ class CustomTextStyles {
       );
   static get labelMediumGray500 => theme.textTheme.labelMedium!.copyWith(
         color: appTheme.gray500,
-        fontSize: 10.fSize,
+        fontSize: DeviceExt(1.8).h,
         fontWeight: FontWeight.w500,
       );
   static get labelMediumMedium => theme.textTheme.labelMedium!.copyWith(
         fontWeight: FontWeight.w500,
+        fontSize: DeviceExt(1.8).h,
       );
   static get labelMediumMedium10 => theme.textTheme.labelMedium!.copyWith(
-        fontSize: 10.fSize,
+        fontSize: DeviceExt(1.8).h,
         fontWeight: FontWeight.w500,
       );
   static get labelMediumMedium10_1 => theme.textTheme.labelMedium!.copyWith(
-        fontSize: 10.fSize,
+        fontSize: DeviceExt(1.8).h,
         fontWeight: FontWeight.w500,
       );
   static get labelMediumPrimary => theme.textTheme.labelMedium!.copyWith(
         color: theme.colorScheme.primary,
+        fontSize: DeviceExt(1.8).h,
         fontWeight: FontWeight.w700,
       );
   static get labelMediumPrimary_1 => theme.textTheme.labelMedium!.copyWith(
         color: theme.colorScheme.primary,
+        fontSize: DeviceExt(1.8).h,
       );
   static get labelMediumPrimary_1red => theme.textTheme.labelMedium!.copyWith(
         color: const Color.fromARGB(255, 252, 17, 0),
@@ -328,14 +347,14 @@ class CustomTextStyles {
         fontWeight: FontWeight.w400,
       );
   static get titleMedium18 => theme.textTheme.titleMedium!.copyWith(
-        fontSize: 18.fSize,
+        fontSize: DeviceExt(1.8).h,
       );
   static get titleMediumBlack900 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.black900,
       );
   static get titleMediumBlack90018 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.black900,
-        fontSize: 18.fSize,
+        fontSize: DeviceExt(1.8).h,
       );
   static get titleMediumBlack900SemiBold =>
       theme.textTheme.titleMedium!.copyWith(
@@ -345,11 +364,12 @@ class CustomTextStyles {
   static get titleMediumBlack900SemiBold18 =>
       theme.textTheme.titleMedium!.copyWith(
         color: appTheme.black900,
-        fontSize: 18.fSize,
+        fontSize: DeviceExt(1.8).h,
         fontWeight: FontWeight.w600,
       );
   static get titleMediumBluegray40003 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.blueGray40003,
+        fontSize: DeviceExt(1.8).h,
       );
   static get titleMediumBluegray90001 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.blueGray90001,
@@ -383,34 +403,41 @@ class CustomTextStyles {
   static get titleMediumLatoWhiteA700 =>
       theme.textTheme.titleMedium!.lato.copyWith(
         color: appTheme.whiteA700,
-        fontSize: 18.fSize,
+        fontSize: DeviceExt(1.8).h,
       );
   static get titleMediumLatoWhiteA700_1 =>
       theme.textTheme.titleMedium!.lato.copyWith(
         color: appTheme.whiteA700,
+        fontSize: DeviceExt(2).h,
       );
   static get titleMediumOnPrimary => theme.textTheme.titleMedium!.copyWith(
+        fontSize: DeviceExt(2).h,
         color: theme.colorScheme.onPrimary,
         fontWeight: FontWeight.w600,
       );
   static get titleMediumPlayfairDisplayIndigoA200 =>
       theme.textTheme.titleMedium!.playfairDisplay.copyWith(
+        fontSize: DeviceExt(2).h,
         color: appTheme.indigoA200,
         fontWeight: FontWeight.w700,
       );
   static get titleMediumPrimary => theme.textTheme.titleMedium!.copyWith(
+        fontSize: DeviceExt(2).h,
         color: theme.colorScheme.primary,
         fontWeight: FontWeight.w700,
       );
   static get titleMediumPrimarySemiBold =>
       theme.textTheme.titleMedium!.copyWith(
+        fontSize: DeviceExt(2).h,
         color: theme.colorScheme.primary,
         fontWeight: FontWeight.w600,
       );
   static get titleMediumPrimary_1 => theme.textTheme.titleMedium!.copyWith(
+        fontSize: DeviceExt(2).h,
         color: theme.colorScheme.primary,
       );
   static get titleMediumSemiBold => theme.textTheme.titleMedium!.copyWith(
+        fontSize: DeviceExt(2).h,
         fontWeight: FontWeight.w600,
       );
   static get titleMediumWhiteA700 => theme.textTheme.titleMedium!.copyWith(

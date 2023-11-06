@@ -79,7 +79,6 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                               Orientation.portrait
                                           ? DeviceExt(2).h
                                           : DeviceExt(2.5).w,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -114,24 +113,20 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "Area Unit".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         state.livestockTwoModelObj!.area,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -147,12 +142,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "msg_do_you_utilize_fodder".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state
@@ -164,13 +157,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -188,12 +179,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "msg_do_you_utilize_fertilizer".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state
@@ -205,13 +194,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -230,7 +217,7 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         theme.textTheme.titleMedium?.copyWith(
                                       fontSize: Device.orientation ==
                                               Orientation.portrait
-                                          ? DeviceExt(2).h
+                                          ? DeviceExt(1.8).h
                                           : DeviceExt(2.5).w,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -249,12 +236,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "msg_artificial_insemination".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state.livestockTwoModelObj!
@@ -264,13 +249,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -288,12 +271,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "lbl_animal_hormones".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         state.livestockTwoModelObj!.livestockins
@@ -303,13 +284,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -327,12 +306,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "lbl_embryo_transfer".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state
@@ -344,13 +321,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -369,7 +344,7 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         theme.textTheme.titleMedium?.copyWith(
                                       fontSize: Device.orientation ==
                                               Orientation.portrait
-                                          ? DeviceExt(2).h
+                                          ? DeviceExt(1.8).h
                                           : DeviceExt(2.5).w,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -388,12 +363,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "msg_routine_vaccination".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state
@@ -405,13 +378,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),
@@ -429,12 +400,10 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                         "Curative Measures".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Text(
                                         (state
@@ -446,13 +415,11 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                     ],
                                   ),

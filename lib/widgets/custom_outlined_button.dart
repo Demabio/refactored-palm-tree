@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/base_button.dart';
 
@@ -49,7 +50,7 @@ class CustomOutlinedButton extends BaseButton {
   }
 
   Widget get buildOutlinedButtonWidget => Container(
-        height: this.height ?? 50.v,
+        height: this.height ?? ((40 / 411) * 100).w,
         width: this.width ?? double.maxFinite,
         margin: margin,
         decoration: decoration,
@@ -63,7 +64,11 @@ class CustomOutlinedButton extends BaseButton {
               leftIcon ?? const SizedBox.shrink(),
               Text(
                 text,
-                style: buttonTextStyle ?? CustomTextStyles.bodyLargePrimary,
+                style: buttonTextStyle ??
+                    theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontSize: DeviceExt(2.2).h,
+                        fontWeight: FontWeight.bold),
               ),
               rightIcon ?? const SizedBox.shrink(),
             ],

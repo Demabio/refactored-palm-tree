@@ -6,6 +6,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class SearchFarmerFoundScreen extends StatelessWidget {
   const SearchFarmerFoundScreen({Key? key})
@@ -31,14 +32,14 @@ class SearchFarmerFoundScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
-          height: 45.v,
-          leadingWidth: 48.h,
+          height: ((45 / 411) * 100).w,
+          leadingWidth: DeviceExt((48 / 841) * 100).h,
           leading: AppbarImage(
             svgPath: ImageConstant.imgMenu,
             margin: EdgeInsets.only(
-              left: 24.h,
-              top: 8.v,
-              bottom: 13.v,
+              left: DeviceExt((24 / 841) * 100).h,
+              top: ((8 / 411) * 100).w,
+              bottom: ((13 / 411) * 100).w,
             ),
           ),
           centerTitle: true,
@@ -49,8 +50,8 @@ class SearchFarmerFoundScreen extends StatelessWidget {
         body: Container(
           width: double.maxFinite,
           padding: EdgeInsets.symmetric(
-            horizontal: 17.h,
-            vertical: 16.v,
+            horizontal: DeviceExt((17 / 841) * 100).h,
+            vertical: ((16 / 411) * 100).w,
           ),
           child: Column(
             children: [
@@ -59,21 +60,26 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                 selector: (state) => state.searchController,
                 builder: (context, searchController) {
                   return CustomSearchView(
-                    margin: EdgeInsets.symmetric(horizontal: 7.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((7 / 841) * 100).h),
                     controller: searchController,
                     hintText: "msg_search_id_number".tr,
                     prefix: Container(
-                      margin: EdgeInsets.fromLTRB(16.h, 12.v, 10.h, 12.v),
+                      margin: EdgeInsets.fromLTRB(
+                          DeviceExt((16 / 841) * 100).h,
+                          ((12 / 411) * 100).w,
+                          DeviceExt((10 / 841) * 100).h,
+                          ((12 / 411) * 100).w),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgSearch,
                       ),
                     ),
                     prefixConstraints: BoxConstraints(
-                      maxHeight: 40.v,
+                      maxHeight: ((40 / 411) * 100).w,
                     ),
                     suffix: Padding(
                       padding: EdgeInsets.only(
-                        right: 15.h,
+                        right: DeviceExt((15 / 841) * 100).h,
                       ),
                       child: IconButton(
                         onPressed: () {
@@ -91,8 +97,8 @@ class SearchFarmerFoundScreen extends StatelessWidget {
               Spacer(),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 6.h,
-                  vertical: 18.v,
+                  horizontal: DeviceExt((6 / 841) * 100).h,
+                  vertical: ((18 / 411) * 100).w,
                 ),
                 decoration: AppDecoration.outlinePrimary.copyWith(
                   borderRadius: BorderRadiusStyle.roundedBorder10,
@@ -114,7 +120,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.v),
+                    SizedBox(height: ((10 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -128,7 +134,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 12.v),
+                    SizedBox(height: ((12 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -142,12 +148,12 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 9.v),
+                    SizedBox(height: ((9 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(bottom: 1.v),
+                          padding: EdgeInsets.only(bottom: ((1 / 411) * 100).w),
                           child: Text(
                             "lbl_email".tr,
                             style: CustomTextStyles.labelMediumPrimary,
@@ -159,7 +165,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 9.v),
+                    SizedBox(height: ((9 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -173,7 +179,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -187,7 +193,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -201,7 +207,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -215,7 +221,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -229,7 +235,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -243,7 +249,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -257,7 +263,7 @@ class SearchFarmerFoundScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 11.v),
+                    SizedBox(height: ((11 / 411) * 100).w),
                     CustomImageView(
                       svgPath: ImageConstant.imgEdit,
                       height: 22.adaptSize,

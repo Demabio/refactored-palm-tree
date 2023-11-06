@@ -104,7 +104,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                               Orientation.portrait
                                           ? DeviceExt(2).h
                                           : DeviceExt(2.5).w,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ))
                             ])),
@@ -115,7 +114,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                             fontSize: Device.orientation == Orientation.portrait
                                 ? DeviceExt(2).h
                                 : DeviceExt(2.5).w,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Container(
@@ -144,7 +142,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -158,7 +155,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -175,7 +171,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -189,7 +184,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -209,7 +203,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             )),
                                         Text(
@@ -223,7 +216,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -240,7 +232,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -255,7 +246,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -272,7 +262,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -286,7 +275,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -303,7 +291,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -317,7 +304,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -334,7 +320,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -348,7 +333,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -365,7 +349,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -379,7 +362,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -396,7 +378,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -412,7 +393,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -429,7 +409,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -444,7 +423,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -461,7 +439,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
@@ -477,7 +454,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ]),
@@ -497,7 +473,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             )),
                                         Container(
@@ -511,7 +486,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                               state.farmersIdentificationModelObj
                                                       ?.ed ??
                                                   "N/A",
-                                              maxLines: 1,
+                                              maxLines: 10,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.right,
                                               style: theme.textTheme.titleMedium
@@ -521,7 +496,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             ))
                                       ]),
@@ -534,7 +508,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                             fontSize: Device.orientation == Orientation.portrait
                                 ? DeviceExt(2).h
                                 : DeviceExt(2.5).w,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(height: ((8 / 411) * 100).w),
@@ -565,7 +538,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             )),
                                         Text(
@@ -583,7 +555,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                     Orientation.portrait
                                                 ? DeviceExt(1.8).h
                                                 : DeviceExt(2).w,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ])),
@@ -617,7 +588,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],
@@ -647,7 +617,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Text(
@@ -661,7 +630,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],
@@ -691,7 +659,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Text(
@@ -705,7 +672,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],
@@ -736,7 +702,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Text(
@@ -750,7 +715,6 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ],

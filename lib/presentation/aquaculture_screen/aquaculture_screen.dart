@@ -104,7 +104,6 @@ class AquacultureScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(2).h
                                         : DeviceExt(2.5).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ))
                           ])),
@@ -129,7 +128,6 @@ class AquacultureScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<AquacultureBloc, AquacultureState,
@@ -165,7 +163,6 @@ class AquacultureScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<AquacultureBloc, AquacultureState,
@@ -206,7 +203,6 @@ class AquacultureScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<AquacultureBloc, AquacultureState,
@@ -244,7 +240,6 @@ class AquacultureScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<AquacultureBloc, AquacultureState,
@@ -282,12 +277,10 @@ class AquacultureScreen extends StatelessWidget {
                                         "msg_do_you_utilize_fertilizers".tr,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       ),
                                       Spacer(),
                                       Text(
@@ -298,13 +291,11 @@ class AquacultureScreen extends StatelessWidget {
                                             : "No",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                color: Colors.black,
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       )
                                     ])),
                             Align(
@@ -332,7 +323,6 @@ class AquacultureScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Spacer(),
@@ -341,7 +331,6 @@ class AquacultureScreen extends StatelessWidget {
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
-                                              fontWeight: FontWeight.bold,
                                               fontSize: Device.orientation ==
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
@@ -364,12 +353,10 @@ class AquacultureScreen extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w),
                                       )),
                                   Spacer(),
                                   Padding(
@@ -384,7 +371,6 @@ class AquacultureScreen extends StatelessWidget {
                                       style:
                                           theme.textTheme.titleMedium?.copyWith(
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
                                         fontSize: Device.orientation ==
                                                 Orientation.portrait
                                             ? DeviceExt(1.8).h

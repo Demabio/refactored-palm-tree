@@ -35,7 +35,6 @@ class FeedItemWidget extends StatelessWidget {
             fontSize: Device.orientation == Orientation.portrait
                 ? DeviceExt(1.8).h
                 : DeviceExt(2).w,
-            fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.left,
         ),

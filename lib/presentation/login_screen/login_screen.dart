@@ -313,7 +313,7 @@ class LoginScreen extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     "Downloading: ${state.percentagedone}% Done",
-                                    maxLines: 1,
+                                    maxLines: 10,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                     style:

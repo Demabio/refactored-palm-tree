@@ -1,4 +1,4 @@
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
@@ -23,8 +23,8 @@ class FdetailsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 9.h,
-        vertical: 13.v,
+        horizontal: DeviceExt((9 / 841) * 100).h,
+        vertical: ((13 / 411) * 100).w,
       ),
       decoration: AppDecoration.outlinePrimary1
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
@@ -34,136 +34,191 @@ class FdetailsItemWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 17.v,
-              right: 5.h,
+              top: ((17 / 411) * 100).w,
+              right: DeviceExt((5 / 841) * 100).h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Farm Name:".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2.5).w,
+                  ),
                 ),
                 Text(
                   farmdetailsItemModel.name!,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               SizedBox(
-                width: 112.h,
+                width: DeviceExt((112 / 841) * 100).h,
                 child: Text(
                   "Production on farm:".tr,
                   maxLines: 10,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2.5).w,
+                  ),
                 ),
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.v,
-                  bottom: 9.v,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((9 / 411) * 100).w,
                 ),
                 child: Text(
                   farmdetailsItemModel.prod!,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               SizedBox(
-                width: 112.h,
+                width: DeviceExt((112 / 841) * 100).h,
                 child: Text(
                   "Size:".tr,
                   maxLines: 10,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2.5).w,
+                  ),
                 ),
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.v,
-                  bottom: 9.v,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((9 / 411) * 100).w,
                 ),
                 child: Text(
                   farmdetailsItemModel.landsize!,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               SizedBox(
-                width: 112.h,
+                width: DeviceExt((112 / 841) * 100).h,
                 child: Text(
                   "Coordinates:".tr,
                   maxLines: 10,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2.5).w,
+                  ),
                 ),
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.v,
-                  bottom: 9.v,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((9 / 411) * 100).w,
                 ),
                 child: Text(
                   "${farmdetailsItemModel.x!},${farmdetailsItemModel.y!}",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               SizedBox(
-                width: 112.h,
+                width: DeviceExt((112 / 841) * 100).h,
                 child: Text(
                   "Is Completely Filled:".tr,
                   maxLines: 10,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2.5).w,
+                  ),
                 ),
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.v,
-                  bottom: 9.v,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((9 / 411) * 100).w,
                 ),
                 child: Text(
                   "${farmdetailsItemModel.completed}",
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame33,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     edit?.call();
                   }),
               Spacer(),
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame34,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     delete?.call();
                   }),

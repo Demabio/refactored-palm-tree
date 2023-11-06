@@ -337,7 +337,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                         "msg_for_irrigation_schemes".tr,
                                         maxLines: 10,
                                         overflow: TextOverflow.ellipsis,
-                                        style: theme.textTheme.titleSmall,
+                                        style: CustomTextStyles
+                                            .labelMediumPrimary_1,
                                       ),
                                     ),
                                     BlocSelector<
@@ -458,7 +459,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                           }),
                       // Text(
                       //   "msg_type_and_name_of2".tr,
-                      //   style: theme.textTheme.titleSmall,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
 
                       SizedBox(height: 18.v),

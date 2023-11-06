@@ -401,7 +401,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                         SizedBox(height: 35.v),
                                         Text(
                                           "Number of Bee Hives".tr,
-                                          style: theme.textTheme.titleSmall,
+                                          style: CustomTextStyles
+                                              .labelMediumPrimary_1,
                                         ),
                                         SizedBox(height: 10.v),
                                         CustomTextFormField(
@@ -424,7 +425,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                         SizedBox(height: 17.v),
                                         Text(
                                           "Beehive types".tr,
-                                          style: theme.textTheme.titleSmall,
+                                          style: CustomTextStyles
+                                              .labelMediumPrimary_1,
                                         ),
                                         SizedBox(height: 17.v),
                                         Padding(
@@ -484,7 +486,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                             SizedBox(height: 35.v),
                             Text(
                               "msg_livestock_age_group".tr,
-                              style: theme.textTheme.titleSmall,
+                              style: CustomTextStyles.labelMediumPrimary_1,
                             ),
                             SizedBox(height: 18.v),
                             BlocSelector<

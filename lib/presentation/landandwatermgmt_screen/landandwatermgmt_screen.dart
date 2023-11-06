@@ -106,7 +106,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(2).h
                                         : DeviceExt(2.5).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ))
                           ])),
@@ -138,7 +137,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2.5).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<LandandwatermgmtBloc,
@@ -180,7 +178,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(
@@ -194,7 +191,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       )
                                     ])),
@@ -220,7 +216,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2.5).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -237,7 +232,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2.5).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ))
                                     ])),
@@ -252,7 +246,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                             Orientation.portrait
                                         ? DeviceExt(1.8).h
                                         : DeviceExt(2.5).w,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 )),
                             BlocSelector<LandandwatermgmtBloc,
@@ -294,7 +287,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(
@@ -308,7 +300,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       )
                                     ])),
@@ -328,7 +319,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       )),
                                   BlocSelector<
@@ -370,7 +360,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       )),
                                   BlocSelector<
@@ -412,7 +401,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                   Orientation.portrait
                                               ? DeviceExt(1.8).h
                                               : DeviceExt(2.5).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       )),
                                   BlocSelector<
@@ -500,7 +488,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2.5).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Text(
@@ -512,7 +499,6 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2.5).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             )
                                           ]))

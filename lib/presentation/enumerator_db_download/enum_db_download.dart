@@ -86,7 +86,7 @@ class EnumDbDownloadDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "This action will cause any entries entered to be lost. Only to be used when setting up on a new device, are you sure?",
-                    maxLines: 5,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
@@ -103,7 +103,7 @@ class EnumDbDownloadDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "No Previous Entries Found, Retry?",
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(
@@ -167,7 +167,7 @@ class EnumDbDownloadDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "${state.percentagedone}%",
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -184,7 +184,7 @@ class EnumDbDownloadDialog extends StatelessWidget {
               //     width: 161.h,
               //     child: Text(
               //       "Count ${state.count}",
-              //       maxLines: 1,
+              //       maxLines: 10,
               //       overflow: TextOverflow.ellipsis,
               //       textAlign: TextAlign.center,
               //       style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(

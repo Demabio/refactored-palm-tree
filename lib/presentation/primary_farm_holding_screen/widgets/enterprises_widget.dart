@@ -33,9 +33,8 @@ class EnterprisesItemWidget extends StatelessWidget {
           style: theme.textTheme.titleMedium?.copyWith(
             color: Colors.black,
             fontSize: Device.orientation == Orientation.portrait
-                ? DeviceExt(1.5).h
+                ? DeviceExt(1.8).h
                 : DeviceExt(2).w,
-            fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.left,
         ),

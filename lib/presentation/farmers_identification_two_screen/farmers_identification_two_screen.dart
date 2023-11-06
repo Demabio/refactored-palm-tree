@@ -1,4 +1,5 @@
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/farmer_identification_progress.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
@@ -7,7 +8,6 @@ import 'models/farmers_identification_two_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/core/utils/validation_functions.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
@@ -49,11 +49,18 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
-                  leading: AppbarImage(
+                  height: Device.orientation == Orientation.portrait
+                      ? 15.w
+                      : DeviceExt(15).h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
+                  leading: CustomImageView(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
                       onTap: () {
                         goToDetails(context);
                       }),
@@ -63,10 +70,12 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
               body: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
-                      padding: EdgeInsets.only(top: 9.v),
+                      padding: EdgeInsets.only(top: ((9 / 411) * 100).w),
                       child: Padding(
                           padding: EdgeInsets.only(
-                              left: 16.h, right: 16.h, bottom: 5.v),
+                              left: DeviceExt((16 / 841) * 100).h,
+                              right: DeviceExt((16 / 841) * 100).h,
+                              bottom: ((5 / 411) * 100).w),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -96,19 +105,24 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                         activeStepTextColor: Colors.black87,
                                         finishedStepTextColor: Colors.black87,
                                         internalPadding: 0,
+                                        fitWidth: true,
                                         showLoadingAnimation: true,
-                                        stepRadius: 20,
+                                        stepRadius:
+                                            DeviceExt((25 / 841) * 100).h,
                                         disableScroll: true,
                                         showStepBorder: true,
                                         alignment: Alignment.center,
                                         steps: [
                                           EasyStep(
                                             customStep: CircleAvatar(
-                                              radius: 35,
+                                              radius:
+                                                  DeviceExt((35 / 841) * 100).h,
                                               backgroundColor:
                                                   theme.colorScheme.primary,
                                               child: CircleAvatar(
-                                                radius: 25,
+                                                radius:
+                                                    DeviceExt((25 / 841) * 100)
+                                                        .h,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
                                                 child:
@@ -123,21 +137,30 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  DeviceExt(1.8)
+                                                                      .h,
                                                             ),
                                                           )
-                                                        : Icon(Icons.check),
+                                                        : Icon(
+                                                            Icons.check,
+                                                            size: DeviceExt(1.8)
+                                                                .h,
+                                                          ),
                                               ),
                                             ),
                                             title: 'Step 1',
                                           ),
                                           EasyStep(
                                             customStep: CircleAvatar(
-                                              radius: 35,
+                                              radius:
+                                                  DeviceExt((35 / 841) * 100).h,
                                               backgroundColor:
                                                   theme.colorScheme.primary,
                                               child: CircleAvatar(
-                                                radius: 25,
+                                                radius:
+                                                    DeviceExt((25 / 841) * 100)
+                                                        .h,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
                                                 child:
@@ -152,7 +175,9 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  DeviceExt(1.8)
+                                                                      .h,
                                                             ),
                                                           )
                                                         : Icon(Icons.check),
@@ -164,11 +189,14 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                           ),
                                           EasyStep(
                                             customStep: CircleAvatar(
-                                              radius: 35,
+                                              radius:
+                                                  DeviceExt((35 / 841) * 100).h,
                                               backgroundColor:
                                                   theme.colorScheme.primary,
                                               child: CircleAvatar(
-                                                radius: 25,
+                                                radius:
+                                                    DeviceExt((25 / 841) * 100)
+                                                        .h,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
                                                 child:
@@ -183,7 +211,9 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  DeviceExt(1.8)
+                                                                      .h,
                                                             ),
                                                           )
                                                         : Icon(Icons.check),
@@ -194,12 +224,12 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                         ],
                                       );
                                     })),
-                                SizedBox(height: 11.v),
+                                SizedBox(height: ((11 / 411) * 100).w),
 
                                 Text("msg_individual_farmer".tr,
                                     style:
                                         CustomTextStyles.titleMediumSemiBold),
-                                SizedBox(height: 20.v),
+                                SizedBox(height: ((20 / 411) * 100).w),
                                 Text("lbl_farmer_name2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -210,25 +240,24 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                     selector: (state) => state.name,
                                     builder: (context, nameController1) {
                                       return CustomTextFormField(
-                                          focusNode: node6,
-                                          controller: nameController1,
-                                          autofocus: false,
-                                          textInputType: TextInputType.name,
-                                          hintText: "lbl_name".tr,
-                                          hintStyle: CustomTextStyles
-                                              .titleMediumBluegray40003,
-                                          validator: (value) {
-                                            if (!isName(value?.trimRight())) {
-                                              return "Please enter valid Name(Two names at least)";
-                                            } else if (isNotEmpty(value)) {
-                                              return "Field is required.";
-                                            }
-                                            return null;
-                                          },
-                                          contentPadding: EdgeInsets.fromLTRB(
-                                              16.h, 13.v, 16.h, 12.v));
+                                        focusNode: node6,
+                                        controller: nameController1,
+                                        autofocus: false,
+                                        textInputType: TextInputType.name,
+                                        hintText: "lbl_name".tr,
+                                        hintStyle: CustomTextStyles
+                                            .titleMediumBluegray40003,
+                                        validator: (value) {
+                                          if (!isName(value?.trimRight())) {
+                                            return "Please enter valid Name(Two names at least)";
+                                          } else if (isNotEmpty(value)) {
+                                            return "Field is required.";
+                                          }
+                                          return null;
+                                        },
+                                      );
                                     }),
-                                SizedBox(height: 21.v),
+                                SizedBox(height: ((21 / 411) * 100).w),
 
                                 Text("msg_national_id_number2".tr,
                                     style:
@@ -256,10 +285,11 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                             return null;
                                           });
                                     }),
-                                SizedBox(height: 31.v),
+                                SizedBox(height: ((31 / 411) * 100).w),
                                 Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 17.v, right: 18.h),
+                                    padding: EdgeInsets.only(
+                                        top: ((17 / 411) * 100).w,
+                                        right: DeviceExt((18 / 841) * 100).h),
                                     child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -280,30 +310,31 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                     builder: (context,
                                                         farmersIdentificationTwoModelObj) {
                                                       return CustomDropDown(
-                                                          width: 160.h,
+                                                          width:
+                                                              DeviceExt((160 / 841) * 100)
+                                                                  .h,
                                                           autofocus: false,
                                                           val: farmersIdentificationTwoModelObj
                                                               ?.selectedDropDownValue,
                                                           icon: Container(
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      30.h,
-                                                                      10.v,
-                                                                      7.h,
-                                                                      15.v),
+                                                              margin: EdgeInsets.fromLTRB(
+                                                                  DeviceExt((30 / 841) * 100)
+                                                                      .h,
+                                                                  ((10 / 411) * 100)
+                                                                      .w,
+                                                                  DeviceExt((7 / 841) * 100)
+                                                                      .h,
+                                                                  ((15 / 411) * 100)
+                                                                      .w),
                                                               decoration: BoxDecoration(
                                                                   borderRadius:
-                                                                      BorderRadius.circular(10
-                                                                          .h)),
+                                                                      BorderRadius.circular(
+                                                                          DeviceExt((10 / 411) * 100)
+                                                                              .h)),
                                                               child: CustomImageView(
-                                                                  svgPath:
-                                                                      ImageConstant
-                                                                          .imgArrowdownPrimary)),
-                                                          hintText:
-                                                              "lbl_year".tr,
-                                                          items: farmersIdentificationTwoModelObj
-                                                                  ?.dropdownItemList ??
-                                                              [],
+                                                                  svgPath: ImageConstant.imgArrowdownPrimary)),
+                                                          hintText: "lbl_year".tr,
+                                                          items: farmersIdentificationTwoModelObj?.dropdownItemList ?? [],
                                                           validator: (value) {
                                                             if (value == null) {
                                                               return "Field is required";
@@ -311,11 +342,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                               return null;
                                                             }
                                                           },
-                                                          contentPadding:
-                                                              EdgeInsets.only(
-                                                                  left: 7.h,
-                                                                  top: 13.v,
-                                                                  bottom: 13.v),
+                                                          contentPadding: EdgeInsets.only(left: DeviceExt((7 / 841) * 100).h, top: ((13 / 411) * 100).w, bottom: ((13 / 411) * 100).w),
                                                           onChanged: (value) {
                                                             context
                                                                 .read<
@@ -342,27 +369,30 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                     builder: (context,
                                                         farmersIdentificationTwoModelObj) {
                                                       return CustomDropDown(
-                                                          width: 160.h,
+                                                          width:
+                                                              DeviceExt((160 / 841) * 100)
+                                                                  .h,
                                                           autofocus: false,
                                                           val: farmersIdentificationTwoModelObj
                                                               ?.selectedDropDownValue1,
                                                           icon: Container(
-                                                              margin: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      30.h,
-                                                                      10.v,
-                                                                      8.h,
-                                                                      15.v),
+                                                              margin: EdgeInsets.fromLTRB(
+                                                                  DeviceExt((30 / 841) * 100)
+                                                                      .h,
+                                                                  ((10 / 411) * 100)
+                                                                      .w,
+                                                                  DeviceExt((8 / 841) * 100)
+                                                                      .h,
+                                                                  ((15 / 411) * 100)
+                                                                      .w),
                                                               decoration: BoxDecoration(
                                                                   borderRadius:
-                                                                      BorderRadius.circular(10
-                                                                          .h)),
+                                                                      BorderRadius.circular(
+                                                                          DeviceExt((10 / 411) * 100)
+                                                                              .h)),
                                                               child: CustomImageView(
-                                                                  svgPath:
-                                                                      ImageConstant
-                                                                          .imgArrowdownPrimary)),
-                                                          hintText:
-                                                              "lbl_sex3".tr,
+                                                                  svgPath: ImageConstant.imgArrowdownPrimary)),
+                                                          hintText: "lbl_sex3".tr,
                                                           validator: (value) {
                                                             if (value == null) {
                                                               return "Field is required";
@@ -370,14 +400,8 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                               return null;
                                                             }
                                                           },
-                                                          items: farmersIdentificationTwoModelObj
-                                                                  ?.dropdownItemList1 ??
-                                                              [],
-                                                          contentPadding:
-                                                              EdgeInsets.only(
-                                                                  left: 8.h,
-                                                                  top: 13.v,
-                                                                  bottom: 13.v),
+                                                          items: farmersIdentificationTwoModelObj?.dropdownItemList1 ?? [],
+                                                          contentPadding: EdgeInsets.only(left: DeviceExt((8 / 841) * 100).h, top: ((13 / 411) * 100).w, bottom: ((13 / 411) * 100).w),
                                                           onChanged: (value) {
                                                             context
                                                                 .read<
@@ -389,7 +413,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                     })
                                               ])
                                         ])),
-                                SizedBox(height: 17.v),
+                                SizedBox(height: ((17 / 411) * 100).w),
                                 // Text("msg_national_id_number2".tr,
                                 //     style: CustomTextStyles.labelMediumPrimary_1),
                                 // BlocSelector<
@@ -412,7 +436,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                 //             return null;
                                 //           });
                                 //     }),
-                                SizedBox(height: 17.v),
+                                SizedBox(height: ((17 / 411) * 100).w),
                                 Text("msg_mobile_number".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -439,7 +463,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                             return null;
                                           });
                                     }),
-                                SizedBox(height: 17.v),
+                                SizedBox(height: ((17 / 411) * 100).w),
                                 Text("lbl_email2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -465,7 +489,7 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                             return null;
                                           });
                                     }),
-                                SizedBox(height: 17.v),
+                                SizedBox(height: ((17 / 411) * 100).w),
                                 Text("lbl_postal_address2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -484,15 +508,17 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                           textInputAction:
                                               TextInputAction.done);
                                     }),
-                                SizedBox(height: 28.v),
+                                SizedBox(height: ((28 / 411) * 100).w),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Expanded(
                                           child: CustomOutlinedButton(
                                               text: "lbl_back".tr,
-                                              margin:
-                                                  EdgeInsets.only(right: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  right:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               buttonStyle: CustomButtonStyles
                                                   .outlinePrimaryTL10,
                                               isDisabled: true,
@@ -504,17 +530,21 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                       Expanded(
                                           child: CustomElevatedButton(
                                               text: "lbl_next".tr,
-                                              margin:
-                                                  EdgeInsets.only(left: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               onTap: () {
                                                 nextPage(context);
                                               }))
                                     ]),
-                                SizedBox(height: 12.v),
+                                SizedBox(height: ((12 / 411) * 100).w),
                                 CustomElevatedButton(
                                     text: "lbl_save".tr,
                                     leftIcon: Container(
-                                        margin: EdgeInsets.only(right: 10.h),
+                                        margin: EdgeInsets.only(
+                                            right:
+                                                DeviceExt((10 / 841) * 100).h),
                                         child: CustomImageView(
                                             svgPath: ImageConstant
                                                 .imgSaveWhiteA700)),

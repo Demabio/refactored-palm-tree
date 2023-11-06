@@ -1,6 +1,5 @@
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
@@ -51,7 +50,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
@@ -61,7 +59,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -72,7 +69,7 @@ class LSdetailsItemWidget extends StatelessWidget {
             "msg_livestock_age_groups".tr,
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: Device.orientation == Orientation.portrait
-                  ? DeviceExt(1.8).h
+                  ? DeviceExt(2).h
                   : DeviceExt(2).w,
               fontWeight: FontWeight.bold,
             ),
@@ -100,7 +97,7 @@ class LSdetailsItemWidget extends StatelessWidget {
             "msg_main_livestock_feed".tr,
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: Device.orientation == Orientation.portrait
-                  ? DeviceExt(1.8).h
+                  ? DeviceExt(2).h
                   : DeviceExt(2).w,
               fontWeight: FontWeight.bold,
             ),
@@ -131,7 +128,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -148,7 +144,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -169,7 +164,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                       fontSize: Device.orientation == Orientation.portrait
                           ? DeviceExt(1.8).h
                           : DeviceExt(2).w,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -186,7 +180,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                       fontSize: Device.orientation == Orientation.portrait
                           ? DeviceExt(1.8).h
                           : DeviceExt(2).w,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -202,7 +195,6 @@ class LSdetailsItemWidget extends StatelessWidget {
                 fontSize: Device.orientation == Orientation.portrait
                     ? DeviceExt(1.8).h
                     : DeviceExt(2).w,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -225,24 +217,26 @@ class LSdetailsItemWidget extends StatelessWidget {
           SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame33,
-                  margin: EdgeInsets.fromLTRB(
-                      DeviceExt((14 / 841) * 100).h,
-                      ((15 / 411) * 100).w,
-                      DeviceExt((14 / 411) * 100).h,
-                      ((11 / 411) * 100).w),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     edit?.call();
                   }),
               Spacer(),
-              AppbarImage1(
+              CustomImageView(
                   svgPath: ImageConstant.imgFrame34,
-                  margin: EdgeInsets.fromLTRB(
-                      DeviceExt((14 / 411) * 100).h,
-                      ((3 / 411) * 100).w,
-                      DeviceExt((14 / 411) * 100).h,
-                      ((11 / 411) * 100).w),
+                  height: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
+                  width: Device.orientation == Orientation.portrait
+                      ? DeviceExt(5).h
+                      : 5.w,
                   onTap: () {
                     delete?.call();
                   }),

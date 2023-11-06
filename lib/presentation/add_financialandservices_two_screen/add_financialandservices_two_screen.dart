@@ -390,7 +390,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                       SizedBox(height: 17.v),
                       Text(
                         "msg_soil_seeds_and".tr,
-                        style: theme.textTheme.titleSmall,
+                        style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       SizedBox(height: 17.v),
                       Text(
@@ -440,7 +440,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                       SizedBox(height: 18.v),
                       // Text(
                       //   "msg_if_yes_from_where".tr,
-                      //   style: theme.textTheme.titleSmall,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
                       // CustomElevatedButton(
                       //   text: "msg_add_extension_access".tr,
@@ -477,7 +477,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                                     //     "msg_if_yes_from_where".tr,
                                     //     maxLines: 10,
                                     //     overflow: TextOverflow.ellipsis,
-                                    //     style: theme.textTheme.titleSmall,
+                                    //     style: CustomTextStyles.labelMediumPrimary_1,
                                     //   ),
                                     // ),
                                     BlocSelector<
@@ -545,7 +545,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                           "msg_what_is_the_mode2".tr,
                           maxLines: 10,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleSmall,
+                          style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
                       BlocSelector<

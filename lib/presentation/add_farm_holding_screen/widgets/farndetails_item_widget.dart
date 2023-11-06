@@ -73,7 +73,7 @@ class FarmdetailsItemWidget extends StatelessWidget {
             SizedBox(
                 width: 156.h,
                 child: Text("msg_total_land_area".tr,
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     style: CustomTextStyles.labelMediumPrimary)),
             Padding(
@@ -99,7 +99,7 @@ class FarmdetailsItemWidget extends StatelessWidget {
             SizedBox(
                 width: 164.h,
                 child: Text("msg_size_of_land_lying".tr,
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     style: CustomTextStyles.labelMediumPrimary)),
             Padding(

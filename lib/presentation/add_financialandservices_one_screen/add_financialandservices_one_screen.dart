@@ -172,7 +172,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       SizedBox(height: 20.v),
                       Text(
                         "msg_financial_livelihood".tr,
-                        style: theme.textTheme.titleSmall,
+                        style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       Container(
                         width: 297.h,
@@ -184,7 +184,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           "msg_what_are_your_main4".tr,
                           maxLines: 10,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleSmall,
+                          style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
                       BlocSelector<
@@ -261,7 +261,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       SizedBox(height: 18.v),
                       Text(
                         "msg_agricultural_info".tr,
-                        style: theme.textTheme.titleSmall,
+                        style: CustomTextStyles.labelMediumPrimary_1,
                       ),
 
                       BlocSelector<AddFinancialandservicesOneBloc,
@@ -313,7 +313,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
 
                       Text(
                         "msg_cooperative_groups".tr,
-                        style: theme.textTheme.titleSmall,
+                        style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       Container(
                         width: 270.h,
@@ -395,7 +395,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                                     //     "msg_if_yes_which_groups_farmer".tr,
                                     //     maxLines: 10,
                                     //     overflow: TextOverflow.ellipsis,
-                                    //     style: theme.textTheme.titleSmall,
+                                    //     style: CustomTextStyles.labelMediumPrimary_1,
                                     //   ),
                                     // ),
                                     BlocSelector<
@@ -474,7 +474,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       //     "msg_where_do_you_access".tr,
                       //     maxLines: 10,
                       //     overflow: TextOverflow.ellipsis,
-                      //     style: theme.textTheme.titleSmall,
+                      //     style: CustomTextStyles.labelMediumPrimary_1,
                       //   ),
                       // ),
 

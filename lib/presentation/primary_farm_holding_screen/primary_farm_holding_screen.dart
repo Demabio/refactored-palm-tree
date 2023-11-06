@@ -61,8 +61,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                           ? DeviceExt(5).h
                           : 5.w,
                       onTap: () {
-                        NavigatorService.popAndPushNamed(
-                            AppRoutes.farmersIdentificationTwoScreen);
+                        onTapImage(context);
                       }),
                 ],
                 styleType: Style.bgFill),
@@ -82,11 +81,11 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                         Text(
                           "lbl_farmer_info".tr,
                           style: theme.textTheme.titleMedium?.copyWith(
-                            fontSize: Device.orientation == Orientation.portrait
-                                ? DeviceExt(2).h
-                                : DeviceExt(2.5).w,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                              fontWeight: FontWeight.bold),
                         ),
                         Padding(
                             padding: EdgeInsets.only(
@@ -99,7 +98,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                     Device.orientation == Orientation.portrait
                                         ? DeviceExt(2).h
                                         : DeviceExt(2.5).w,
-                                fontWeight: FontWeight.bold,
                               ),
                             ))
                       ]),
@@ -173,7 +171,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
@@ -189,7 +186,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )
                                             ])),
@@ -206,7 +202,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
@@ -220,7 +215,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -237,7 +231,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
@@ -251,7 +244,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -273,7 +265,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Text(
@@ -288,7 +279,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -305,7 +295,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
@@ -319,7 +308,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -346,7 +334,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -366,7 +353,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -393,7 +379,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -413,7 +398,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -440,7 +424,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -460,7 +443,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -487,7 +469,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -507,7 +488,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -529,7 +509,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
@@ -547,7 +526,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )
                                             ])),
@@ -570,7 +548,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
@@ -588,7 +565,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )
                                             ])),
@@ -609,7 +585,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
@@ -625,7 +600,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ],
@@ -644,7 +618,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
@@ -659,7 +632,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -681,7 +653,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Text(
@@ -696,7 +667,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -718,7 +688,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Text(
@@ -733,7 +702,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ]),
@@ -761,7 +729,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -780,7 +747,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -807,7 +773,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               )),
                                           Padding(
@@ -828,7 +793,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                           Orientation.portrait
                                                       ? DeviceExt(1.8).h
                                                       : DeviceExt(2).w,
-                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ))
                                         ]),
@@ -845,7 +809,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Spacer(),
@@ -862,7 +825,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                         Orientation.portrait
                                                     ? DeviceExt(1.8).h
                                                     : DeviceExt(2).w,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           )

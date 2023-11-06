@@ -42,9 +42,8 @@ class FishtemWidget extends StatelessWidget {
                   "Fish:",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -54,9 +53,8 @@ class FishtemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -68,9 +66,8 @@ class FishtemWidget extends StatelessWidget {
                   "Fish Category:",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -80,9 +77,8 @@ class FishtemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -94,9 +90,8 @@ class FishtemWidget extends StatelessWidget {
                   "Production System:",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -106,9 +101,8 @@ class FishtemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -120,9 +114,8 @@ class FishtemWidget extends StatelessWidget {
                   "Number of Fingerlings:",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -132,9 +125,8 @@ class FishtemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(1.8).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),

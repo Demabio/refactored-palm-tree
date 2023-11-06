@@ -92,7 +92,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           }),
                       // Text(
                       //   "msg_source_of_power2".tr,
-                      //   style: theme.textTheme.titleSmall,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
                       BlocSelector<
                               AddFarmtechandassetsOneBloc,
@@ -188,7 +188,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           }),
                       // Text(
                       //   "msg_farmer_machinery2".tr,
-                      //   style: theme.textTheme.titleSmall,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
                       BlocSelector<
                               AddFarmtechandassetsOneBloc,
@@ -294,7 +294,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           }),
                       // Text(
                       //   "msg_which_farm_structures2".tr,
-                      //   style: theme.textTheme.titleSmall,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
                       BlocSelector<
                               AddFarmtechandassetsOneBloc,

@@ -48,7 +48,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
@@ -56,7 +55,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -81,7 +79,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                       fontSize: Device.orientation == Orientation.portrait
                           ? DeviceExt(1.8).h
                           : DeviceExt(2).w,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -90,7 +87,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -113,14 +109,12 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.unitOfArea ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -143,14 +137,12 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.seeds ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -175,7 +167,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                       fontSize: Device.orientation == Orientation.portrait
                           ? DeviceExt(1.8).h
                           : DeviceExt(2).w,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -184,7 +175,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -209,7 +199,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                       fontSize: Device.orientation == Orientation.portrait
                           ? DeviceExt(1.8).h
                           : DeviceExt(2).w,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -217,7 +206,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                   cropdetailsItemModelObj.water ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -240,14 +228,12 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.system ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -270,14 +256,12 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.fertiliser ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -297,7 +281,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 )),
           ),
@@ -333,7 +316,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 )),
           ),
@@ -372,14 +354,12 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   cropdetailsItemModelObj.pesticide ?? "N/A",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
@@ -399,7 +379,6 @@ class CropdetailsItemWidget extends StatelessWidget {
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
-                    fontWeight: FontWeight.bold,
                   ),
                 )),
           ),

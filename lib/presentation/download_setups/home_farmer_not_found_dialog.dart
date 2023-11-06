@@ -89,7 +89,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "Download Data?",
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -109,7 +109,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "Download Failed, Retry?",
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -179,7 +179,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
                       : DeviceExt(19).h,
                   child: Text(
                     "${state.percentagedone}%",
-                    maxLines: 1,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium?.copyWith(
@@ -196,7 +196,7 @@ class HomeFarmerNotFoundDialog extends StatelessWidget {
               //     width: 161.h,
               //     child: Text(
               //       "Count ${state.count}",
-              //       maxLines: 1,
+              //       maxLines: 10,
               //       overflow: TextOverflow.ellipsis,
               //       textAlign: TextAlign.center,
               //       style: CustomTextStyles.bodyMediumPoppinsBlack900.copyWith(

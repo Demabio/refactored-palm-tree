@@ -419,7 +419,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
                     ? DeviceExt(6).h
                     : 8.w,
                 width: Device.orientation == Orientation.portrait
-                    ? DeviceExt(30).h
+                    ? DeviceExt(20).h
                     : 10.w,
                 buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
                   color: Colors.white,

@@ -56,11 +56,11 @@ class LivestockOnePageState extends State<LivestockOnePage>
                         child: Text(
                           "lbl_farmer_info".tr,
                           style: theme.textTheme.titleMedium?.copyWith(
-                            fontSize: Device.orientation == Orientation.portrait
-                                ? DeviceExt(2).h
-                                : DeviceExt(2.5).w,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
@@ -73,7 +73,6 @@ class LivestockOnePageState extends State<LivestockOnePage>
                             fontSize: Device.orientation == Orientation.portrait
                                 ? DeviceExt(2).h
                                 : DeviceExt(2.5).w,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

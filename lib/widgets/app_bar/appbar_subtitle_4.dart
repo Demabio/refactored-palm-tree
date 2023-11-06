@@ -29,6 +29,8 @@ class AppbarSubtitle4 extends StatelessWidget {
         padding: margin ?? EdgeInsets.zero,
         child: Text(
           text,
+          maxLines: 10,
+          textAlign: TextAlign.center,
           style: theme.textTheme.titleMedium?.copyWith(
             fontSize: Device.orientation == Orientation.portrait
                 ? DeviceExt(2.4).h

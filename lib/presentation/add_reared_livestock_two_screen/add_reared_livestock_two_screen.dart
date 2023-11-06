@@ -273,7 +273,7 @@ class AddRearedLivestockTwoScreen extends StatelessWidget {
                           ),
                           child: Text(
                             "msg_livestock_age_group".tr,
-                            style: theme.textTheme.titleSmall,
+                            style: CustomTextStyles.labelMediumPrimary_1,
                           ),
                         ),
                         Align(
@@ -339,7 +339,7 @@ class AddRearedLivestockTwoScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "msg_what_are_your_main".tr,
-                            style: theme.textTheme.titleSmall,
+                            style: CustomTextStyles.labelMediumPrimary_1,
                           ),
                         ),
                         Padding(

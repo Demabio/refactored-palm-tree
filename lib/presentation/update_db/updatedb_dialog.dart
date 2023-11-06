@@ -121,7 +121,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         : DeviceExt(19).h,
                     child: Text(
                       "Retry Database?",
-                      maxLines: 1,
+                      maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -141,7 +141,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         : DeviceExt(19).h,
                     child: Text(
                       "Retry Setups?",
-                      maxLines: 1,
+                      maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -161,7 +161,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         : DeviceExt(19).h,
                     child: Text(
                       "Update Failed, Retry?",
-                      maxLines: 1,
+                      maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -234,7 +234,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         : DeviceExt(10).h,
                     child: Text(
                       "Database update ${state.percentagedone}% Done",
-                      maxLines: 1,
+                      maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -303,7 +303,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         : DeviceExt(10).h,
                     child: Text(
                       "Setups update ${state.percentagedone2}% done",
-                      maxLines: 1,
+                      maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
