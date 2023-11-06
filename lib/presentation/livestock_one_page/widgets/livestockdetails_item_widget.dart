@@ -1,3 +1,4 @@
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 
@@ -27,8 +28,8 @@ class LSdetailsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 9.h,
-        vertical: 13.v,
+        horizontal: DeviceExt((9 / 841) * 100).h,
+        vertical: ((13 / 411) * 100).w,
       ),
       decoration: AppDecoration.outlinePrimary1
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder10),
@@ -38,32 +39,48 @@ class LSdetailsItemWidget extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 17.v,
-              right: 5.h,
+              top: ((17 / 411) * 100).w,
+              right: DeviceExt((5 / 841) * 100).h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "lbl_livestock2".tr,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   farmdetailsItemModel.name!,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 16.v),
+          SizedBox(height: ((16 / 411) * 100).w),
           Text(
             "msg_livestock_age_groups".tr,
-            style: CustomTextStyles.labelMediumPrimary,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: 15.v,
-              right: 16.h,
+              top: ((15 / 411) * 100).w,
+              right: DeviceExt((16 / 841) * 100).h,
             ),
             child: Column(
               children: List<Widget>.generate(
@@ -78,12 +95,17 @@ class LSdetailsItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 14.v),
+          SizedBox(height: ((14 / 411) * 100).w),
           Text(
             "msg_main_livestock_feed".tr,
-            style: CustomTextStyles.labelMediumPrimary,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: Device.orientation == Orientation.portrait
+                  ? DeviceExt(1.8).h
+                  : DeviceExt(2).w,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          SizedBox(height: 14.v),
+          SizedBox(height: ((14 / 411) * 100).w),
           Column(
             children: List<Widget>.generate(
               farmdetailsItemModel.feeds.length,
@@ -96,68 +118,95 @@ class LSdetailsItemWidget extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               SizedBox(
-                width: 112.h,
+                width: DeviceExt((112 / 841) * 100).h,
                 child: Text(
                   "msg_farming_production".tr,
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.labelMediumPrimary,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 8.v,
-                  bottom: 9.v,
+                  top: ((8 / 411) * 100).w,
+                  bottom: ((9 / 411) * 100).w,
                 ),
                 child: Text(
                   farmdetailsItemModel.prod!,
-                  style: theme.textTheme.labelMedium,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(2).w,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 15.v),
+          SizedBox(height: ((15 / 411) * 100).w),
           Visibility(
             visible: farmdetailsItemModel.beekeepr,
             child: Row(
               children: [
                 SizedBox(
-                  width: 112.h,
+                  width: DeviceExt((112 / 841) * 100).h,
                   child: Text(
                     "Number of BeeHives".tr,
-                    maxLines: 2,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.labelMediumPrimary,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
-                    top: 8.v,
-                    bottom: 9.v,
+                    top: ((8 / 411) * 100).w,
+                    bottom: ((9 / 411) * 100).w,
                   ),
                   child: Text(
                     farmdetailsItemModel.x ?? "0",
-                    style: theme.textTheme.labelMedium,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.black,
+                      fontSize: Device.orientation == Orientation.portrait
+                          ? DeviceExt(1.8).h
+                          : DeviceExt(2).w,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 15.v),
+          SizedBox(height: ((15 / 411) * 100).w),
           Visibility(
             visible: farmdetailsItemModel.beekeepr,
             child: Text(
               "BeeHive Types".tr,
-              style: CustomTextStyles.labelMediumPrimary,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          SizedBox(height: 14.v),
+          SizedBox(height: ((14 / 411) * 100).w),
           Visibility(
             visible: farmdetailsItemModel.beekeepr,
             child: Column(
@@ -173,19 +222,27 @@ class LSdetailsItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 13.v),
+          SizedBox(height: ((13 / 411) * 100).w),
           Row(
             children: [
               AppbarImage1(
                   svgPath: ImageConstant.imgFrame33,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  margin: EdgeInsets.fromLTRB(
+                      DeviceExt((14 / 841) * 100).h,
+                      ((15 / 411) * 100).w,
+                      DeviceExt((14 / 411) * 100).h,
+                      ((11 / 411) * 100).w),
                   onTap: () {
                     edit?.call();
                   }),
               Spacer(),
               AppbarImage1(
                   svgPath: ImageConstant.imgFrame34,
-                  margin: EdgeInsets.fromLTRB(14.h, 3.v, 14.h, 11.v),
+                  margin: EdgeInsets.fromLTRB(
+                      DeviceExt((14 / 411) * 100).h,
+                      ((3 / 411) * 100).w,
+                      DeviceExt((14 / 411) * 100).h,
+                      ((11 / 411) * 100).w),
                   onTap: () {
                     delete?.call();
                   }),

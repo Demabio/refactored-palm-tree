@@ -1,5 +1,6 @@
 // ignore_for_file: must_call_super
 
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
@@ -50,17 +51,30 @@ class LivestockOnePageState extends State<LivestockOnePage>
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 21.h),
+                        padding: EdgeInsets.only(
+                            left: DeviceExt((21 / 841) * 100).h),
                         child: Text(
                           "lbl_farmer_info".tr,
-                          style: CustomTextStyles.labelMediumPrimary,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 21.h),
+                        padding: EdgeInsets.only(
+                            left: DeviceExt((21 / 841) * 100).h),
                         child: Text(
                           PrefUtils().getFarmerName(),
-                          style: theme.textTheme.labelMedium,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.black,
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -74,16 +88,28 @@ class LivestockOnePageState extends State<LivestockOnePage>
                         return Visibility(
                           visible: models!.isEmpty,
                           child: Padding(
-                              padding: EdgeInsets.only(left: 24.h, top: 60.v),
-                              child: Text("No Livestock Found".tr,
-                                  style: CustomTextStyles.titleMediumSemiBold)),
+                              padding: EdgeInsets.only(
+                                  left: DeviceExt((24 / 841) * 100).h,
+                                  top: 60.v),
+                              child: Text(
+                                "No Livestock Found".tr,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(1.8).h
+                                          : DeviceExt(2).w,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
                         );
                       },
                     ),
                   ),
                   SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                      padding: EdgeInsets.only(
+                          left: DeviceExt((9 / 841) * 100).h,
+                          top: ((5 / 411) * 100).w),
                       child: BlocSelector<LivestockOneBloc, LivestockOneState,
                           LivestockOneModel?>(
                         selector: (state) => state.livestockOneModelObj,
@@ -114,9 +140,30 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                       delete: () => delete(context, model.id!),
                                     );
                                   }),
-                              SizedBox(height: 20.v),
+                              SizedBox(height: ((20 / 411) * 100).w),
                               CustomElevatedButton(
-                                width: ResponsiveExtension(343).h,
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(6).h
+                                        : 8.w,
+                                width: DeviceExt((343 / 841) * 100).h,
+                                buttonTextStyle:
+                                    theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                ),
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
+                                            6.w, DeviceExt(0.2).h, 1.2.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(0.36).w,
+                                            DeviceExt(6).h,
+                                            DeviceExt(0.2).w,
+                                            DeviceExt(1.2).h),
                                 text: "Livestock Input".tr,
                                 onTap: () {
                                   NavigatorService.popAndPushNamed(
@@ -125,11 +172,35 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                 },
                                 alignment: Alignment.bottomCenter,
                               ),
-                              SizedBox(height: 20.v),
+                              SizedBox(height: ((20 / 411) * 100).w),
                               Visibility(
                                 visible: state.done,
                                 child: CustomElevatedButton(
-                                  width: ResponsiveExtension(343).h,
+                                  height:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(6).h
+                                          : 8.w,
+                                  width: DeviceExt((343 / 841) * 100).h,
+                                  buttonTextStyle:
+                                      theme.textTheme.titleMedium?.copyWith(
+                                    color: Colors.white,
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                  ),
+                                  margin:
+                                      Device.orientation == Orientation.portrait
+                                          ? EdgeInsets.fromLTRB(
+                                              DeviceExt(0.36).h,
+                                              6.w,
+                                              DeviceExt(0.2).h,
+                                              1.2.w)
+                                          : EdgeInsets.fromLTRB(
+                                              DeviceExt(0.36).w,
+                                              DeviceExt(6).h,
+                                              DeviceExt(0.2).w,
+                                              DeviceExt(1.2).h),
                                   text: "Next Section".tr,
                                   onTap: () {
                                     if (state.next) {
@@ -143,9 +214,30 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                   alignment: Alignment.bottomCenter,
                                 ),
                               ),
-                              SizedBox(height: 20.v),
+                              SizedBox(height: ((20 / 411) * 100).w),
                               CustomElevatedButton(
-                                width: ResponsiveExtension(343).h,
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(6).h
+                                        : 8.w,
+                                width: DeviceExt((343 / 841) * 100).h,
+                                buttonTextStyle:
+                                    theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                ),
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
+                                            6.w, DeviceExt(0.2).h, 1.2.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(0.36).w,
+                                            DeviceExt(6).h,
+                                            DeviceExt(0.2).w,
+                                            DeviceExt(1.2).h),
                                 text: "Previous Section".tr,
                                 onTap: () {
                                   if (state.prev) {
@@ -156,7 +248,6 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                         AppRoutes.farmerRegistrationScreen);
                                   }
                                 },
-                                margin: EdgeInsets.only(bottom: 10.v),
                                 alignment: Alignment.bottomCenter,
                               ),
                             ],

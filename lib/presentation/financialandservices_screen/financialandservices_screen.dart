@@ -124,7 +124,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                           width: 186.h,
                                           child: Text(
                                               "msg_percentage_of_household".tr,
-                                              maxLines: 2,
+                                              maxLines: 10,
                                               overflow: TextOverflow.ellipsis,
                                               style: CustomTextStyles
                                                   .labelMediumPrimary)),
@@ -147,7 +147,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                       SizedBox(
                                           width: 173.h,
                                           child: Text("msg_do_you_belong_to".tr,
-                                              maxLines: 2,
+                                              maxLines: 10,
                                               overflow: TextOverflow.ellipsis,
                                               style: CustomTextStyles
                                                   .labelMediumPrimary)),
@@ -325,7 +325,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                 margin: EdgeInsets.only(
                                     left: 4.h, top: 2.v, right: 54.h),
                                 child: Text("msg_what_is_your_main".tr,
-                                    maxLines: 2,
+                                    maxLines: 10,
                                     overflow: TextOverflow.ellipsis,
                                     style:
                                         CustomTextStyles.labelMediumPrimary)),

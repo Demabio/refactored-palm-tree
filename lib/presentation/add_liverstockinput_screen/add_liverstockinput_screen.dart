@@ -190,7 +190,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         ),
                         child: Text(
                           "msg_which_assisted_reproductive".tr,
-                          maxLines: 2,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleSmall,
                         ),

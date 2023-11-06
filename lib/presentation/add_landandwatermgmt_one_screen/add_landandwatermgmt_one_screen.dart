@@ -171,7 +171,7 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                       //   ),
                       //   child: Text(
                       //     "msg_what_sustainable2".tr,
-                      //     maxLines: 2,
+                      //     maxLines: 10,
                       //     overflow: TextOverflow.ellipsis,
                       //     style: theme.textTheme.titleSmall,
                       //   ),

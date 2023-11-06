@@ -1,5 +1,6 @@
 // ignore_for_file: must_call_super
 
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'bloc/livestock_two_bloc.dart';
@@ -45,31 +46,41 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 16.h),
+                      padding:
+                          EdgeInsets.only(left: DeviceExt((16 / 841) * 100).h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.imgRectangle9,
-                            onTap: () => Navigator.pop(context),
-                            height: 50.v,
-                            width: 343.h,
-                            margin: EdgeInsets.only(left: 16.h),
-                          ),
                           Padding(
-                            padding: EdgeInsets.only(left: 5.h),
+                            padding: EdgeInsets.only(
+                                left: DeviceExt((5 / 841) * 100).h),
                             child: Row(
                               children: [
                                 Text(
                                   "lbl_farmer_info".tr,
-                                  style: CustomTextStyles.labelMediumPrimary,
+                                  style: theme.textTheme.titleMedium?.copyWith(
+                                    fontSize: Device.orientation ==
+                                            Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 21.h),
+                                  padding: EdgeInsets.only(
+                                      left: DeviceExt((21 / 841) * 100).h),
                                   child: Text(
                                     PrefUtils()
                                         .getFarmerName(), // "msg_farmer_felix_faro".tr,
-                                    style: theme.textTheme.labelMedium,
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      color: Colors.black,
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -77,12 +88,12 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                              top: 17.v,
-                              right: 15.h,
+                              top: ((17 / 411) * 100).w,
+                              right: DeviceExt((15 / 841) * 100).h,
                             ),
                             padding: EdgeInsets.symmetric(
-                              horizontal: 8.h,
-                              vertical: 29.v,
+                              horizontal: DeviceExt((8 / 841) * 100).h,
+                              vertical: ((29 / 411) * 100).w,
                             ),
                             decoration: AppDecoration.outlinePrimary1.copyWith(
                               borderRadius: BorderRadiusStyle.roundedBorder10,
@@ -93,33 +104,55 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(right: 2.h),
+                                  padding: EdgeInsets.only(
+                                      right: DeviceExt((2 / 841) * 100).h),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "Area Unit".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         state.livestockTwoModelObj!.area,
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 2.h),
+                                  padding: EdgeInsets.only(
+                                      right: DeviceExt((2 / 841) * 100).h),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "msg_do_you_utilize_fodder".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state
@@ -129,15 +162,23 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 false)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 2.h,
+                                    top: ((20 / 411) * 100).w,
+                                    right: DeviceExt((2 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -145,8 +186,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "msg_do_you_utilize_fertilizer".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state
@@ -156,29 +203,43 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 false)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  width: 293.h,
+                                  width: DeviceExt((293 / 841) * 100).h,
                                   margin: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 35.h,
+                                    top: ((15 / 411) * 100).w,
+                                    right: DeviceExt((35 / 841) * 100).h,
                                   ),
                                   child: Text(
                                     "msg_which_assisted_reproductive".tr,
-                                    maxLines: 2,
+                                    maxLines: 10,
                                     overflow: TextOverflow.ellipsis,
                                     style:
-                                        CustomTextStyles.labelLargePrimaryBold,
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 9.v,
-                                    right: 3.h,
+                                    top: ((9 / 411) * 100).w,
+                                    right: DeviceExt((3 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -186,8 +247,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "msg_artificial_insemination".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state.livestockTwoModelObj!
@@ -195,15 +262,23 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 1)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 14.v,
-                                    right: 3.h,
+                                    top: ((14 / 411) * 100).w,
+                                    right: DeviceExt((3 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -211,8 +286,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "lbl_animal_hormones".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         state.livestockTwoModelObj!.livestockins
@@ -220,15 +301,23 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 1
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 3.h,
+                                    top: ((15 / 411) * 100).w,
+                                    right: DeviceExt((3 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -236,8 +325,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "lbl_embryo_transfer".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state
@@ -247,29 +342,43 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 false)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  width: 293.h,
+                                  width: DeviceExt((293 / 841) * 100).h,
                                   margin: EdgeInsets.only(
-                                    top: 15.v,
-                                    right: 35.h,
+                                    top: ((15 / 411) * 100).w,
+                                    right: DeviceExt((35 / 841) * 100).h,
                                   ),
                                   child: Text(
                                     "msg_which_assisted_reproductive".tr,
-                                    maxLines: 2,
+                                    maxLines: 10,
                                     overflow: TextOverflow.ellipsis,
                                     style:
-                                        CustomTextStyles.labelLargePrimaryBold,
+                                        theme.textTheme.titleMedium?.copyWith(
+                                      fontSize: Device.orientation ==
+                                              Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 9.v,
-                                    right: 3.h,
+                                    top: ((9 / 411) * 100).w,
+                                    right: DeviceExt((3 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -277,8 +386,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "msg_routine_vaccination".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state
@@ -288,15 +403,23 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 false)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                    top: 9.v,
-                                    right: 3.h,
+                                    top: ((9 / 411) * 100).w,
+                                    right: DeviceExt((3 / 841) * 100).h,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -304,8 +427,14 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                     children: [
                                       Text(
                                         "Curative Measures".tr,
-                                        style:
-                                            CustomTextStyles.labelMediumPrimary,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         (state
@@ -315,7 +444,15 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                                                 false)
                                             ? "Yes"
                                             : "No",
-                                        style: theme.textTheme.labelMedium,
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -326,11 +463,28 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.v),
+                    SizedBox(height: ((20 / 411) * 100).w),
                     Visibility(
                       visible: state.done,
                       child: CustomElevatedButton(
-                        width: ResponsiveExtension(343).h,
+                        height: Device.orientation == Orientation.portrait
+                            ? DeviceExt(6).h
+                            : 8.w,
+                        width: DeviceExt((344 / 841) * 100).h,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        margin: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                            : EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).w,
+                                DeviceExt(6).h,
+                                DeviceExt(0.2).w,
+                                DeviceExt(1.2).h),
                         text: "Next Section".tr,
                         onTap: () {
                           if (state.next) {
@@ -344,9 +498,26 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                         alignment: Alignment.bottomCenter,
                       ),
                     ),
-                    SizedBox(height: 20.v),
+                    SizedBox(height: ((20 / 411) * 100).w),
                     CustomElevatedButton(
-                      width: ResponsiveExtension(343).h,
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(6).h
+                          : 8.w,
+                      width: DeviceExt((344 / 841) * 100).h,
+                      buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: Device.orientation == Orientation.portrait
+                            ? DeviceExt(2).h
+                            : DeviceExt(2.5).w,
+                      ),
+                      margin: Device.orientation == Orientation.portrait
+                          ? EdgeInsets.fromLTRB(
+                              DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                          : EdgeInsets.fromLTRB(
+                              DeviceExt(0.36).w,
+                              DeviceExt(6).h,
+                              DeviceExt(0.2).w,
+                              DeviceExt(1.2).h),
                       text: "Previous Section".tr,
                       onTap: () {
                         if (state.prev) {
@@ -357,7 +528,6 @@ class LivestockTwoPageState extends State<LivestockTwoPage>
                               AppRoutes.farmerRegistrationScreen);
                         }
                       },
-                      margin: EdgeInsets.only(bottom: 10.v),
                       alignment: Alignment.bottomCenter,
                     ),
                   ],

@@ -87,7 +87,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                               margin: EdgeInsets.only(
                                   left: 4.h, top: 4.v, right: 90.h),
                               child: Text("msg_what_sustainable".tr,
-                                  maxLines: 2,
+                                  maxLines: 10,
                                   overflow: TextOverflow.ellipsis,
                                   style: CustomTextStyles.labelMediumPrimary)),
                           BlocSelector<LandandwatermgmtBloc,
@@ -136,7 +136,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                     SizedBox(
                                         width: 182.h,
                                         child: Text("msg_have_you_done_soil".tr,
-                                            maxLines: 2,
+                                            maxLines: 10,
                                             overflow: TextOverflow.ellipsis,
                                             style: CustomTextStyles
                                                 .labelMediumPrimary)),

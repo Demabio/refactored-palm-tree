@@ -182,7 +182,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         ),
                         child: Text(
                           "msg_what_are_your_main4".tr,
-                          maxLines: 2,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleSmall,
                         ),
@@ -229,7 +229,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         ),
                         child: Text(
                           "msg_percentage_of_household2".tr,
-                          maxLines: 2,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
@@ -323,7 +323,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         ),
                         child: Text(
                           "msg_do_you_belong_to2".tr,
-                          maxLines: 2,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
@@ -393,7 +393,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                                     //   ),
                                     //   child: Text(
                                     //     "msg_if_yes_which_groups_farmer".tr,
-                                    //     maxLines: 2,
+                                    //     maxLines: 10,
                                     //     overflow: TextOverflow.ellipsis,
                                     //     style: theme.textTheme.titleSmall,
                                     //   ),
@@ -472,7 +472,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       //   ),
                       //   child: Text(
                       //     "msg_where_do_you_access".tr,
-                      //     maxLines: 2,
+                      //     maxLines: 10,
                       //     overflow: TextOverflow.ellipsis,
                       //     style: theme.textTheme.titleSmall,
                       //   ),

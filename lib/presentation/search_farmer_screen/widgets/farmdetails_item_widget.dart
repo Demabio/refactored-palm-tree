@@ -58,7 +58,7 @@ class FdetailsItemWidget extends StatelessWidget {
                 width: 112.h,
                 child: Text(
                   "Production on farm:".tr,
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
@@ -83,7 +83,7 @@ class FdetailsItemWidget extends StatelessWidget {
                 width: 112.h,
                 child: Text(
                   "Size:".tr,
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
@@ -108,7 +108,7 @@ class FdetailsItemWidget extends StatelessWidget {
                 width: 112.h,
                 child: Text(
                   "Coordinates:".tr,
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   style: CustomTextStyles.labelMediumPrimary,
                 ),
@@ -133,7 +133,7 @@ class FdetailsItemWidget extends StatelessWidget {
                 width: 112.h,
                 child: Text(
                   "Is Completely Filled:".tr,
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   style: CustomTextStyles.labelMediumPrimary,
                 ),

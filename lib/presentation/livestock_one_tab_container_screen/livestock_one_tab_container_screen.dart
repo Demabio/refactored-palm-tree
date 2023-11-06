@@ -1,11 +1,11 @@
+import 'package:flutter_sizer/flutter_sizer.dart';
+
 import 'bloc/livestock_one_tab_container_bloc.dart';
 import 'models/livestock_one_tab_container_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/livestock_one_page/livestock_one_page.dart';
 import 'package:kiamis_app/presentation/livestock_two_page/livestock_two_page.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image_1.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 
@@ -50,11 +50,18 @@ class LivestockOneTabContainerScreenState
         child: SafeArea(
             child: Scaffold(
                 appBar: CustomAppBar(
-                    leadingWidth: 60.h,
-                    leading: AppbarImage(
+                    height: Device.orientation == Orientation.portrait
+                        ? 15.w
+                        : DeviceExt(15).h,
+                    leadingWidth: DeviceExt((60 / 841) * 100).h,
+                    leading: CustomImageView(
                         svgPath: ImageConstant.imgSort,
-                        margin:
-                            EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                        height: Device.orientation == Orientation.portrait
+                            ? DeviceExt(5).h
+                            : 5.w,
+                        width: Device.orientation == Orientation.portrait
+                            ? DeviceExt(5).h
+                            : 5.w,
                         onTap: () {
                           onTapSortone(context);
                         }),
@@ -62,51 +69,84 @@ class LivestockOneTabContainerScreenState
                     title: AppbarSubtitle1(text: "lbl_livestock".tr),
                     actions: [
                       if (state.liveorins)
-                        AppbarImage1(
+                        CustomImageView(
                             svgPath: ImageConstant.imgFrame34WhiteA70044x44,
-                            margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                            height: Device.orientation == Orientation.portrait
+                                ? DeviceExt(5).h
+                                : 5.w,
+                            width: Device.orientation == Orientation.portrait
+                                ? DeviceExt(5).h
+                                : 5.w,
                             onTap: () {
                               onTapImage(context);
                             }),
                       if (!state.liveorins)
-                        AppbarImage1(
+                        CustomImageView(
                             svgPath: ImageConstant.imgFrame33,
-                            margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                            height: Device.orientation == Orientation.portrait
+                                ? DeviceExt(5).h
+                                : 5.w,
+                            width: Device.orientation == Orientation.portrait
+                                ? DeviceExt(5).h
+                                : 5.w,
                             onTap: () {
                               gotoInputs(context);
-                            })
+                            }),
                     ],
                     styleType: Style.bgFill),
                 body: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 4.v),
+                        padding: EdgeInsets.only(top: ((4 / 411) * 100).w),
                         child: Column(children: [
                           Container(
-                              height: 50.v,
-                              width: 350.h,
+                              height: ((50 / 411) * 100).w,
+                              width: DeviceExt((350 / 841) * 100).h,
                               decoration: BoxDecoration(
                                   color: appTheme.gray5001,
                                   border: Border.all(
-                                      color: appTheme.whiteA700, width: 1.h)),
+                                      color: appTheme.whiteA700,
+                                      width: DeviceExt((1 / 841) * 100).h)),
                               child: TabBar(
                                   onTap: (value) => changeTab(context, value),
                                   controller: tabviewController,
                                   labelPadding: EdgeInsets.zero,
                                   labelColor: theme.colorScheme.primary,
-                                  labelStyle: TextStyle(
-                                      fontSize: 16.fSize,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400),
-                                  unselectedLabelColor: appTheme.blueGray40003,
-                                  unselectedLabelStyle: TextStyle(
-                                      fontSize: 16.fSize,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400),
+                                  // labelStyle: TextStyle(
+                                  //     fontSize: 16.fSize,
+                                  //     fontFamily: 'Poppins',
+                                  //     fontWeight: FontWeight.w400),
+                                  // unselectedLabelColor: appTheme.blueGray40003,
+                                  // unselectedLabelStyle: TextStyle(
+                                  //     fontSize: 16.fSize,
+                                  //     fontFamily: 'Poppins',
+                                  //     fontWeight: FontWeight.w400),
                                   indicatorColor: theme.colorScheme.primary,
                                   tabs: [
-                                    Tab(child: Text("msg_livestock_reared".tr)),
-                                    Tab(child: Text("lbl_livestock_input".tr))
+                                    Tab(
+                                        child: Text(
+                                      "msg_livestock_reared".tr,
+                                      style:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        fontSize: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(2).h
+                                            : DeviceExt(2.5).w,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )),
+                                    Tab(
+                                        child: Text(
+                                      "lbl_livestock_input".tr,
+                                      style:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        fontSize: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(2).h
+                                            : DeviceExt(2.5).w,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ))
                                   ])),
                           SizedBox(
                               height: double.maxFinite,

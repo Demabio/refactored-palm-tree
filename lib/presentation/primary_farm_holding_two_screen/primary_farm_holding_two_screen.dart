@@ -559,7 +559,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               right: 60.h),
                                           child: Text(
                                             "msg_what_enterprises".tr,
-                                            maxLines: 2,
+                                            maxLines: 10,
                                             overflow: TextOverflow.ellipsis,
                                             style: checked!
                                                 ? CustomTextStyles

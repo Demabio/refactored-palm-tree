@@ -59,7 +59,7 @@ class LoginOneScreen extends StatelessWidget {
                             ),
                             child: Text(
                               "msg_welcome_back_glad".tr,
-                              maxLines: 2,
+                              maxLines: 10,
                               overflow: TextOverflow.ellipsis,
                               style: CustomTextStyles.headlineSmallLatoGray900
                                   .copyWith(

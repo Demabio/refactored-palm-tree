@@ -475,7 +475,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                                     //   ),
                                     //   child: Text(
                                     //     "msg_if_yes_from_where".tr,
-                                    //     maxLines: 2,
+                                    //     maxLines: 10,
                                     //     overflow: TextOverflow.ellipsis,
                                     //     style: theme.textTheme.titleSmall,
                                     //   ),
@@ -543,7 +543,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                         ),
                         child: Text(
                           "msg_what_is_the_mode2".tr,
-                          maxLines: 2,
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleSmall,
                         ),

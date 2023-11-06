@@ -335,7 +335,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "msg_for_irrigation_schemes".tr,
-                                        maxLines: 2,
+                                        maxLines: 10,
                                         overflow: TextOverflow.ellipsis,
                                         style: theme.textTheme.titleSmall,
                                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 
@@ -29,7 +30,13 @@ class FeedItemWidget extends StatelessWidget {
         width: width,
         child: Text(
           enterpriseModel.title,
-          style: theme.textTheme.labelMedium,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: Colors.black,
+            fontSize: Device.orientation == Orientation.portrait
+                ? DeviceExt(1.8).h
+                : DeviceExt(2).w,
+            fontWeight: FontWeight.bold,
+          ),
           textAlign: TextAlign.left,
         ),
       ),
