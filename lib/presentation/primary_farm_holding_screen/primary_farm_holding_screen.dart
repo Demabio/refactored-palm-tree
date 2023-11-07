@@ -110,7 +110,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontSize:
                                   Device.orientation == Orientation.portrait
-                                      ? DeviceExt(2).h
+                                      ? DeviceExt(1.8).h
                                       : DeviceExt(2.5).w,
                               fontWeight: FontWeight.bold,
                             ),

@@ -39,6 +39,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
           appBar: CustomAppBar(
             leadingWidth: 60.h,
             leading: AppbarImage(
+              onTap: () => goBack(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
                 left: 16.h,
@@ -67,38 +68,41 @@ class AddLiverstockinputScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   "lbl_area_unit2".tr,
-                      //   style: CustomTextStyles.labelMediumPrimary_1,
-                      // ),
-                      // BlocSelector<AddLiverstockinputBloc, AddLiverstockinputState,
-                      //     AddLiverstockinputModel?>(
-                      //   selector: (state) => state.addLiverstockinputModelObj,
-                      //   builder: (context, addLiverstockinputModelObj) {
-                      //     return CustomDropDown(
-                      //       icon: Container(
-                      //         margin: EdgeInsets.only(left: 30.h),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(
-                      //             10.h,
-                      //           ),
-                      //         ),
-                      //         child: CustomImageView(
-                      //           svgPath: ImageConstant.imgArrowdownPrimary,
-                      //         ),
-                      //       ),
-                      //       hintText: "lbl_select".tr,
-                      //       items:
-                      //           addLiverstockinputModelObj?.dropdownItemList ?? [],
-                      //       onChanged: (value) {
-                      //         context
-                      //             .read<AddLiverstockinputBloc>()
-                      //             .add(ChangeDropDownEvent(value: value));
-                      //       },
-                      //     );
-                      //   },
-                      // ),
-                      // SizedBox(height: 9.v),
+                      Text(
+                        "lbl_area_unit2".tr,
+                        style: CustomTextStyles.labelMediumPrimary_1,
+                      ),
+                      BlocSelector<AddLiverstockinputBloc,
+                          AddLiverstockinputState, AddLiverstockinputModel?>(
+                        selector: (state) => state.addLiverstockinputModelObj,
+                        builder: (context, addLiverstockinputModelObj) {
+                          return CustomDropDown(
+                            icon: Container(
+                              margin: EdgeInsets.only(left: 30.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10.h,
+                                ),
+                              ),
+                              child: CustomImageView(
+                                svgPath: ImageConstant.imgArrowdownPrimary,
+                              ),
+                            ),
+                            hintText: "lbl_select".tr,
+                            val: addLiverstockinputModelObj
+                                ?.selectedDropDownValue,
+                            items:
+                                addLiverstockinputModelObj?.dropdownItemList ??
+                                    [],
+                            onChanged: (value) {
+                              context
+                                  .read<AddLiverstockinputBloc>()
+                                  .add(ChangeDropDownEvent(value: value));
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(height: 9.v),
                       Text(
                         "msg_do_you_utilize_fertilizer2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,

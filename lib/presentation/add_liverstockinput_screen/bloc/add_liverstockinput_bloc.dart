@@ -235,20 +235,23 @@ class AddLiverstockinputBloc
   ) {
     emit(state.copyWith(
       selectedDropDownValue: event.value,
-      selectedDropDownValue1:
-          state.addLiverstockinputModelObj?.selectedDropDownValue1,
-      selectedDropDownValue2:
-          state.addLiverstockinputModelObj?.selectedDropDownValue2,
-      selectedDropDownValue3:
-          state.addLiverstockinputModelObj?.selectedDropDownValue3,
-      selectedDropDownValue4:
-          state.addLiverstockinputModelObj?.selectedDropDownValue4,
-      selectedDropDownValue5:
-          state.addLiverstockinputModelObj?.selectedDropDownValue5,
-      selectedDropDownValue6:
-          state.addLiverstockinputModelObj?.selectedDropDownValue6,
-      selectedDropDownValue7:
-          state.addLiverstockinputModelObj?.selectedDropDownValue7,
+      addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
+        selectedDropDownValue: event.value,
+        selectedDropDownValue1:
+            state.addLiverstockinputModelObj?.selectedDropDownValue1,
+        selectedDropDownValue2:
+            state.addLiverstockinputModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.addLiverstockinputModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.addLiverstockinputModelObj?.selectedDropDownValue4,
+        selectedDropDownValue5:
+            state.addLiverstockinputModelObj?.selectedDropDownValue5,
+        selectedDropDownValue6:
+            state.addLiverstockinputModelObj?.selectedDropDownValue6,
+        selectedDropDownValue7:
+            state.addLiverstockinputModelObj?.selectedDropDownValue7,
+      ),
     ));
   }
 
@@ -260,6 +263,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue1: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue1: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue2:
               state.addLiverstockinputModelObj?.selectedDropDownValue2,
           selectedDropDownValue3:
@@ -283,6 +288,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue2: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue2: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue3:
@@ -306,6 +313,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue3: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue3: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue2:
@@ -329,6 +338,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue4: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue4: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue2:
@@ -352,6 +363,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue5: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue5: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue2:
@@ -375,6 +388,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue6: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue6: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue2:
@@ -398,6 +413,8 @@ class AddLiverstockinputBloc
         selectedDropDownValue7: event.value,
         addLiverstockinputModelObj: state.addLiverstockinputModelObj?.copyWith(
           selectedDropDownValue7: event.value,
+          selectedDropDownValue:
+              state.addLiverstockinputModelObj?.selectedDropDownValue,
           selectedDropDownValue1:
               state.addLiverstockinputModelObj?.selectedDropDownValue1,
           selectedDropDownValue2:
