@@ -216,7 +216,6 @@ class CropAgricultureScreen extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
-                        SizedBox(height: ((20 / 411) * 100).w),
                         CustomElevatedButton(
                           width: DeviceExt((344 / 841) * 100).h,
                           text: "Previous Section".tr,

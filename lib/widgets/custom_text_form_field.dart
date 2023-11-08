@@ -106,7 +106,7 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: hintStyle ?? CustomTextStyles.titleMediumBluegray40003,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
-        errorStyle: TextStyle(color: const Color.fromARGB(255, 240, 16, 0)),
+        errorStyle: CustomTextStyles.errorstyle,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
           borderSide: BorderSide(

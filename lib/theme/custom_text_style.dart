@@ -9,21 +9,22 @@ import '../core/app_export.dart';
 class CustomTextStyles {
   // Body text style
   static get bodyLarge16 => theme.textTheme.bodyLarge!.copyWith(
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
+        fontWeight: FontWeight.bold,
       );
   static get bodyLargeBluegray40003 => theme.textTheme.bodyLarge!.copyWith(
         color: appTheme.blueGray40003,
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeBluegray90001 => theme.textTheme.bodyLarge!.copyWith(
         color: appTheme.blueGray90001,
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeInter => theme.textTheme.bodyLarge!.inter.copyWith(
-        fontSize: 17.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeInter16 => theme.textTheme.bodyLarge!.inter.copyWith(
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeInterBlack900 =>
       theme.textTheme.bodyLarge!.inter.copyWith(
@@ -32,12 +33,12 @@ class CustomTextStyles {
   static get bodyLargeInterBlueA700 =>
       theme.textTheme.bodyLarge!.inter.copyWith(
         color: appTheme.blueA700,
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeInterBluegray400 =>
       theme.textTheme.bodyLarge!.inter.copyWith(
         color: appTheme.blueGray400,
-        fontSize: 16.fSize,
+        fontSize: DeviceExt(2).h,
       );
   static get bodyLargeInterGreen600 =>
       theme.textTheme.bodyLarge!.inter.copyWith(
@@ -169,7 +170,7 @@ class CustomTextStyles {
   static get bodyMediumPoppinsGray500 =>
       theme.textTheme.bodyMedium!.poppins.copyWith(
         color: appTheme.gray500,
-        fontSize: 14.fSize,
+        fontSize: DeviceExt(1.8).h,
       );
   static get bodyMediumPoppinsWhiteA700 =>
       theme.textTheme.bodyMedium!.poppins.copyWith(
@@ -204,6 +205,11 @@ class CustomTextStyles {
       );
   static get bodySmallLatoGray90001 => theme.textTheme.bodySmall!.lato.copyWith(
         color: appTheme.gray90001,
+        fontSize: DeviceExt(1.8).h,
+      );
+
+  static get errorstyle => theme.textTheme.bodySmall!.lato.copyWith(
+        color: const Color.fromARGB(255, 240, 16, 0),
         fontSize: DeviceExt(1.8).h,
       );
   static get bodySmallPoppinsGray500 =>

@@ -176,6 +176,7 @@ class FarmersIdentificationTwoBloc
               postalAddress: state.addressController?.text ?? "NA",
             ))
             .then((value) => print("UPdated !!! $value"));
+        PrefUtils().setFarmerName(state.name!.text);
 
         FIProgressDB fiProgressDB = FIProgressDB();
         fiProgressDB
@@ -269,6 +270,7 @@ class FarmersIdentificationTwoBloc
                 postalAddress: state.addressController?.text ?? "NA",
               ))
               .then((value) => print("UPdated !!! $value"));
+          PrefUtils().setFarmerName(state.name!.text);
 
           FIProgressDB fiProgressDB = FIProgressDB();
           fiProgressDB

@@ -41,7 +41,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Container(
-        width: DeviceExt((344 / 841) * 100).h,
+        width: DeviceExt((450 / 841) * 100).h,
+        height: DeviceExt((450 / 841) * 100).h,
         padding: EdgeInsets.symmetric(
           horizontal: DeviceExt((11 / 841) * 100).h,
           vertical: DeviceExt((25 / 411) * 100).w,

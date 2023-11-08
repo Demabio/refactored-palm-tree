@@ -265,6 +265,7 @@ class AquacultureScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
+                            SizedBox(height: DeviceExt((12 / 411) * 100).w),
                             Padding(
                                 padding: EdgeInsets.only(
                                     left: DeviceExt((4 / 841) * 100).h,

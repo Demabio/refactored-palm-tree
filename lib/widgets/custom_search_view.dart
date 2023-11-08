@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class CustomSearchView extends StatelessWidget {
   CustomSearchView({
@@ -106,11 +107,12 @@ class CustomSearchView extends StatelessWidget {
         hintText: hintText ?? "",
         hintStyle: hintStyle ?? CustomTextStyles.bodyMediumPoppinsGray500,
         prefixIcon: prefix,
+        errorStyle: CustomTextStyles.errorstyle,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix ??
             Padding(
               padding: EdgeInsets.only(
-                right: 15.h,
+                right: DeviceExt((15 / 841) * 100).h,
               ),
               child: IconButton(
                 onPressed: () => controller!.clear(),
@@ -124,15 +126,16 @@ class CustomSearchView extends StatelessWidget {
         isDense: true,
         contentPadding: contentPadding ??
             EdgeInsets.only(
-              top: 10.v,
-              right: 10.h,
-              bottom: 10.v,
+              left: DeviceExt((13 / 841) * 100).h,
+              top: DeviceExt((13 / 411) * 100).w,
+              bottom: DeviceExt((13 / 411) * 100).w,
             ),
         fillColor: fillColor ?? theme.colorScheme.primaryContainer,
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(13.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((13 / 841) * 100).h),
               borderSide: BorderSide(
                 color: appTheme.gray200,
                 width: 1,
@@ -140,7 +143,8 @@ class CustomSearchView extends StatelessWidget {
             ),
         enabledBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(13.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((13 / 841) * 100).h),
               borderSide: BorderSide(
                 color: appTheme.gray200,
                 width: 1,
@@ -148,7 +152,8 @@ class CustomSearchView extends StatelessWidget {
             ),
         focusedBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(13.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((13 / 841) * 100).h),
               borderSide: BorderSide(
                 color: appTheme.gray200,
                 width: 1,
@@ -160,7 +165,7 @@ class CustomSearchView extends StatelessWidget {
 /// Extension on [CustomSearchView] to facilitate inclusion of all types of border style etc
 extension SearchViewStyleHelper on CustomSearchView {
   static OutlineInputBorder get fillPrimaryContainerTL20 => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20.h),
+        borderRadius: BorderRadius.circular(DeviceExt((20 / 841) * 100).h),
         borderSide: BorderSide.none,
       );
 }

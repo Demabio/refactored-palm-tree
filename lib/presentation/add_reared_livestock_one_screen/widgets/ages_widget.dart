@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_two_dialog/models/agegroupmodel.dart';
 
@@ -32,15 +33,30 @@ class AgeItemWidget extends StatelessWidget {
           children: [
             Text(
               enterpriseModel.title,
-              style: theme.textTheme.labelMedium,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+              ),
             ),
             Text(
               "Males: ${enterpriseModel.males ?? "0"}",
-              style: theme.textTheme.labelMedium,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+              ),
             ),
             Text(
               "Females: ${enterpriseModel.females ?? "0"}",
-              style: theme.textTheme.labelMedium,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(2).w,
+              ),
             ),
           ],
         ),

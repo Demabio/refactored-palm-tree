@@ -436,6 +436,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                           ),
                                         );
                                       }),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   Text("msg_use_fertilizer".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),

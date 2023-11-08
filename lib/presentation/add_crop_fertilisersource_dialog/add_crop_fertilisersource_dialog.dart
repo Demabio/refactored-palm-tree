@@ -31,7 +31,8 @@ class AddCropFertiliserSourceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Container(
-      width: DeviceExt((344 / 841) * 100).h,
+      width: DeviceExt((450 / 841) * 100).h,
+      height: DeviceExt((450 / 841) * 100).h,
       padding: EdgeInsets.symmetric(
           horizontal: DeviceExt((13 / 841) * 100).h,
           vertical: DeviceExt((15 / 411) * 100).w),
@@ -82,15 +83,15 @@ class AddCropFertiliserSourceDialog extends StatelessWidget {
           builder: (context, addRearedLivestockDialogOneModelObj) {
             return Padding(
               padding: EdgeInsets.fromLTRB(
-                  ResponsiveExtension(5).h,
+                  DeviceExt((5 / 841) * 100).h,
                   DeviceExt((44 / 411) * 100).w,
-                  ResponsiveExtension(4).h,
+                  DeviceExt((4 / 841) * 100).h,
                   DeviceExt((16 / 411) * 100).w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomElevatedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_reset".tr,
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -101,7 +102,7 @@ class AddCropFertiliserSourceDialog extends StatelessWidget {
                     },
                   ),
                   CustomElevatedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_add".tr,
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -112,7 +113,7 @@ class AddCropFertiliserSourceDialog extends StatelessWidget {
                     },
                   ),
                   CustomOutlinedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_close".tr,
                     onTap: () {
                       Navigator.pop(context);

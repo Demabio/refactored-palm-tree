@@ -32,10 +32,10 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
 
     return Container(
-      width: ResponsiveExtension(344).h,
-      height: DeviceExt(75).h,
+      width: DeviceExt((450 / 841) * 100).h,
+      height: DeviceExt((450 / 841) * 100).h,
       padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveExtension(13).h,
+        horizontal: DeviceExt((13 / 841) * 100).h,
         vertical: DeviceExt((16 / 411) * 100).w,
       ),
       decoration: AppDecoration.fillWhiteA.copyWith(
@@ -87,15 +87,15 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
           builder: (context, addRearedLivestockDialogTwoModelObj) {
             return Padding(
               padding: EdgeInsets.fromLTRB(
-                  ResponsiveExtension(5).h,
+                  DeviceExt((5 / 841) * 100).h,
                   DeviceExt((44 / 411) * 100).w,
-                  ResponsiveExtension(4).h,
+                  DeviceExt((4 / 841) * 100).h,
                   DeviceExt((16 / 411) * 100).w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomElevatedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_reset".tr,
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -106,7 +106,7 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
                     },
                   ),
                   CustomElevatedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_add".tr,
                     buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                     buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -119,7 +119,7 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
                     },
                   ),
                   CustomOutlinedButton(
-                    width: ResponsiveExtension(95).h,
+                    width: DeviceExt((95 / 841) * 100).h,
                     text: "lbl_close".tr,
                     onTap: () {
                       Navigator.pop(context);

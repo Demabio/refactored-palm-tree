@@ -154,8 +154,8 @@ bool isID(
 
     final regExp = RegExp(pattern);
 
-    isInputStringValid =
-        regExp.hasMatch(inputString) && inputString.length == 8;
+    isInputStringValid = regExp.hasMatch(inputString) &&
+        (inputString.length >= 5 && inputString.length <= 8);
   }
 
   return isInputStringValid;

@@ -1,6 +1,7 @@
 import '../models/chipviewalbert_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class ChipviewalbertItemWidget extends StatelessWidget {
@@ -19,14 +20,14 @@ class ChipviewalbertItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawChip(
-      padding: EdgeInsets.all(11.h),
+      padding: EdgeInsets.all(DeviceExt((11 / 841) * 100).h),
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
       label: Text(
         chipviewalbertItemModelObj.albertcrop,
         style: TextStyle(
           color: appTheme.whiteA700,
-          fontSize: 13.fSize,
+          fontSize: DeviceExt(1.8).h,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w400,
         ),
@@ -38,16 +39,16 @@ class ChipviewalbertItemWidget extends StatelessWidget {
           ? RoundedRectangleBorder(
               side: BorderSide(
                 color: appTheme.whiteA700.withOpacity(0.6),
-                width: 1.h,
+                width: DeviceExt((1 / 841) * 100).h,
               ),
               borderRadius: BorderRadius.circular(
-                10.h,
+                DeviceExt((10 / 841) * 100).h,
               ),
             )
           : RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.circular(
-                10.h,
+                DeviceExt((10 / 841) * 100).h,
               ),
             ),
       onSelected: (value) {

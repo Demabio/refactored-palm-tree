@@ -44,11 +44,13 @@ class _FarmersIdentificationScreenBaseState
       return SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-              leadingWidth: ResponsiveExtension(60).h,
+              leadingWidth: DeviceExt((60 / 841) * 100).h,
               leading: AppbarImage(
                   svgPath: ImageConstant.imgSort,
                   margin: EdgeInsets.only(
-                      left: ResponsiveExtension(16).h, top: 3.v, bottom: 11.v),
+                      left: DeviceExt((16 / 841) * 100).h,
+                      top: 3.v,
+                      bottom: 11.v),
                   onTap: () {
                     onTapSortone(context);
                   }),
@@ -58,7 +60,7 @@ class _FarmersIdentificationScreenBaseState
                 AppbarImage(
                     svgPath: ImageConstant.imgSort,
                     margin: EdgeInsets.only(
-                        left: ResponsiveExtension(16).h,
+                        left: DeviceExt((16 / 841) * 100).h,
                         top: 3.v,
                         bottom: 11.v),
                     onTap: () {

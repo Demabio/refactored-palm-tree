@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FarmerDB farmerDB = FarmerDB();
-  FocusNode _firstTextFieldFocus = FocusNode();
+  // FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
   int count = 0;
 
@@ -97,80 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                 child: Column(
                   children: [
-                    BlocSelector<HomeBloc, HomeState, TextEditingController?>(
-                        selector: (state) => state.searchController,
-                        builder: (context, searchController) {
-                          return CustomSearchView(
-                            enabled: true,
-                            autofocus: false,
-                            focusNode: _firstTextFieldFocus,
-                            margin: Device.orientation == Orientation.portrait
-                                ? EdgeInsets.only(
-                                    left: DeviceExt(3).h,
-                                    right: DeviceExt(3).h,
-                                  )
-                                : EdgeInsets.only(
-                                    left: DeviceExt(3).w,
-                                    right: DeviceExt(3).w,
-                                  ),
-                            controller: searchController,
-                            hintText: "lbl_search_for_menu".tr,
-                            textStyle: theme.textTheme.titleSmall?.copyWith(
-                                fontSize:
-                                    Device.orientation == Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black),
-                            hintStyle: theme.textTheme.titleSmall?.copyWith(
-                              fontSize:
-                                  Device.orientation == Orientation.portrait
-                                      ? DeviceExt(1.8).h
-                                      : DeviceExt(2).w,
-                              fontWeight: FontWeight.normal,
-                            ),
-                            prefix: Container(
-                                margin:
-                                    Device.orientation == Orientation.portrait
-                                        ? EdgeInsets.fromLTRB(
-                                            DeviceExt(2).h,
-                                            3.w,
-                                            DeviceExt(1).h,
-                                            3.w,
-                                          )
-                                        : EdgeInsets.fromLTRB(
-                                            2.w,
-                                            DeviceExt(3).h,
-                                            1.w,
-                                            DeviceExt(3).h,
-                                          ),
-                                child: CustomImageView(
-                                    svgPath: ImageConstant.imgSearch)),
-                            prefixConstraints: Device.orientation ==
-                                    Orientation.portrait
-                                ? BoxConstraints(maxHeight: 10.w)
-                                : BoxConstraints(maxHeight: DeviceExt(10).h),
-                            suffix: Padding(
-                              padding:
-                                  Device.orientation == Orientation.portrait
-                                      ? EdgeInsets.only(
-                                          right: DeviceExt(2).h,
-                                        )
-                                      : EdgeInsets.only(
-                                          right: 2.w,
-                                        ),
-                              child: IconButton(
-                                onPressed: () {
-                                  searchController!.clear();
-                                },
-                                icon: Icon(
-                                  Icons.clear,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+                     
                     SizedBox(
                       height: Device.orientation == Orientation.portrait
                           ? 11.w
