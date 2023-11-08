@@ -110,18 +110,22 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                         finishedStepTextColor: Colors.black87,
                                         internalPadding: 0,
                                         showLoadingAnimation: true,
-                                        stepRadius: 20,
+                                        stepRadius:
+                                            DeviceExt((25 / 841) * 100).h,
                                         disableScroll: true,
                                         showStepBorder: true,
                                         alignment: Alignment.center,
                                         steps: [
                                           EasyStep(
                                             customStep: CircleAvatar(
-                                              radius: 35,
+                                              radius:
+                                                  DeviceExt((35 / 841) * 100).h,
                                               backgroundColor:
                                                   theme.colorScheme.primary,
                                               child: CircleAvatar(
-                                                radius: 25,
+                                                radius:
+                                                    DeviceExt((25 / 841) * 100)
+                                                        .h,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
                                                 child:
@@ -136,21 +140,33 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  DeviceExt(1.8)
+                                                                      .h,
                                                             ),
                                                           )
-                                                        : Icon(Icons.check),
+                                                        : Icon(
+                                                            Icons.check,
+                                                            size:
+                                                                DeviceExt(5).h,
+                                                          ),
                                               ),
                                             ),
-                                            title: 'Step 1',
+                                            customTitle: Text("Step 1".tr,
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyles
+                                                    .titleMediumBlack90018),
                                           ),
                                           EasyStep(
                                             customStep: CircleAvatar(
-                                              radius: 35,
+                                              radius:
+                                                  DeviceExt((35 / 841) * 100).h,
                                               backgroundColor:
                                                   theme.colorScheme.primary,
                                               child: CircleAvatar(
-                                                radius: 25,
+                                                radius:
+                                                    DeviceExt((25 / 841) * 100)
+                                                        .h,
                                                 backgroundColor:
                                                     theme.colorScheme.primary,
                                                 child:
@@ -165,14 +181,23 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 20,
+                                                              fontSize:
+                                                                  DeviceExt(1.8)
+                                                                      .h,
                                                             ),
                                                           )
-                                                        : Icon(Icons.check),
+                                                        : Icon(
+                                                            Icons.check,
+                                                            size:
+                                                                DeviceExt(5).h,
+                                                          ),
                                               ),
                                             ),
 
-                                            title: 'Step 2',
+                                            customTitle: Text("Step 2".tr,
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyles
+                                                    .titleMediumBlack90018),
                                             //topTitle: true,
                                           ),
                                         ],

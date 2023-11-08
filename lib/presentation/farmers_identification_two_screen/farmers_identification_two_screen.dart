@@ -144,12 +144,15 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                           )
                                                         : Icon(
                                                             Icons.check,
-                                                            size: DeviceExt(1.8)
-                                                                .h,
+                                                            size:
+                                                                DeviceExt(5).h,
                                                           ),
                                               ),
                                             ),
-                                            title: 'Step 1',
+                                            customTitle: Text("Step 1".tr,
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyles
+                                                    .titleMediumBlack90018),
                                           ),
                                           EasyStep(
                                             customStep: CircleAvatar(
@@ -180,11 +183,18 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                                       .h,
                                                             ),
                                                           )
-                                                        : Icon(Icons.check),
+                                                        : Icon(
+                                                            Icons.check,
+                                                            size:
+                                                                DeviceExt(5).h,
+                                                          ),
                                               ),
                                             ),
 
-                                            title: 'Step 2',
+                                            customTitle: Text("Step 2".tr,
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyles
+                                                    .titleMediumBlack90018),
                                             //topTitle: true,
                                           ),
                                           EasyStep(
@@ -216,10 +226,17 @@ class FarmersIdentificationTwoScreen extends StatelessWidget {
                                                                       .h,
                                                             ),
                                                           )
-                                                        : Icon(Icons.check),
+                                                        : Icon(
+                                                            Icons.check,
+                                                            size:
+                                                                DeviceExt(5).h,
+                                                          ),
                                               ),
                                             ),
-                                            title: 'Step 3',
+                                            customTitle: Text("Step 3".tr,
+                                                textAlign: TextAlign.center,
+                                                style: CustomTextStyles
+                                                    .titleMediumBlack90018),
                                           ),
                                         ],
                                       );

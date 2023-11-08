@@ -115,7 +115,10 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                         : Icon(Icons.check),
                                   ),
                                 ),
-                                title: 'Step 1',
+                                customTitle: Text("Step 1".tr,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        CustomTextStyles.titleMediumBlack90018),
                               ),
                               EasyStep(
                                 customStep: CircleAvatar(
@@ -139,7 +142,10 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                   ),
                                 ),
 
-                                title: 'Step 2',
+                                customTitle: Text("Step 2".tr,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        CustomTextStyles.titleMediumBlack90018),
                                 //topTitle: true,
                               ),
                               EasyStep(
@@ -163,7 +169,10 @@ class FarmersIdentificationOneScreen extends StatelessWidget {
                                         : Icon(Icons.check),
                                   ),
                                 ),
-                                title: 'Step 3',
+                                customTitle: Text("Step 3".tr,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        CustomTextStyles.titleMediumBlack90018),
                               ),
                             ],
                           );
