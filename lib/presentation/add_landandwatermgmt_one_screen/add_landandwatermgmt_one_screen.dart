@@ -16,6 +16,7 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddLandandwatermgmtOneScreen extends StatelessWidget {
@@ -47,14 +48,14 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
               onTap: () => goB(context),
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -68,12 +69,12 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
             child: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 5.v),
+                padding: EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 16.h,
-                    right: 16.h,
-                    bottom: 5.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    right: DeviceExt((16 / 841) * 100).h,
+                    bottom: DeviceExt((5 / 411) * 100).w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,12 +163,12 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                               ],
                             );
                           })),
-                      SizedBox(height: 22.v),
+                      SizedBox(height: DeviceExt((22 / 411) * 100).w),
                       // Container(
-                      //   width: 319.h,
+                      //   width: DeviceExt((319/841)*100).h,
                       //   margin: EdgeInsets.only(
-                      //     top: 18.v,
-                      //     right: 24.h,
+                      //     top: DeviceExt(( 18/411)*100).w,
+                      //     right: DeviceExt((24/841)*100).h,
                       //   ),
                       //   child: Text(
                       //     "msg_what_sustainable2".tr,
@@ -193,8 +194,8 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -214,12 +215,12 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         text: "lbl_add_practice".tr,
                         onTap: () => addPractice(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 41.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((41 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 17.v),
+                      SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
                         "msg_have_you_benefited2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -233,10 +234,11 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         builder: (context, addLandandwatermgmtOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -264,7 +266,7 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 17.v),
+                      SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
                         "msg_do_you_use_lime2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -278,10 +280,11 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         builder: (context, addLandandwatermgmtOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -309,7 +312,7 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 17.v),
+                      SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
                         "msg_have_you_done_soil2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -323,10 +326,11 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         builder: (context, addLandandwatermgmtOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -355,10 +359,10 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         },
                       ),
                       Container(
-                        width: 315.h,
+                        width: DeviceExt((315 / 841) * 100).h,
                         margin: EdgeInsets.only(
-                          top: 17.v,
-                          right: 27.h,
+                          top: DeviceExt((17 / 411) * 100).w,
+                          right: DeviceExt((27 / 841) * 100).h,
                         ),
                         child: Text(
                           "msg_what_is_the_main2".tr,
@@ -373,8 +377,8 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -394,19 +398,20 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         text: "lbl_add_source".tr,
                         onTap: () => addSource(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 67.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((67 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
-                              margin: EdgeInsets.only(right: 1.h),
+                              margin: EdgeInsets.only(
+                                  right: DeviceExt((1 / 841) * 100).h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
                               isDisabled: true,
@@ -418,17 +423,19 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                             child: CustomElevatedButton(
                               text: "lbl_next".tr,
                               onTap: () => nextPage(context),
-                              margin: EdgeInsets.only(left: 1.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((1 / 841) * 100).h),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 12.v),
+                      SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "lbl_save".tr,
                         onTap: () => saveDraft(context),
                         leftIcon: Container(
-                          margin: EdgeInsets.only(right: 10.h),
+                          margin: EdgeInsets.only(
+                              right: DeviceExt((10 / 841) * 100).h),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgSaveWhiteA700,
                           ),

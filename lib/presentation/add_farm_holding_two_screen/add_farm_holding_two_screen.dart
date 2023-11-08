@@ -14,6 +14,7 @@ import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddFarmHoldingTwoScreen extends StatelessWidget {
@@ -45,11 +46,13 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      margin: EdgeInsets.only(
+                          left: DeviceExt((16 / 841) * 100).h,
+                          top: DeviceExt((3 / 411) * 100).w,
+                          bottom: DeviceExt((11 / 411) * 100).w),
                       onTap: () {
                         onTapSortone(context);
                       }),
@@ -61,10 +64,13 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 5.v),
+                        padding:
+                            EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: 16.h, right: 16.h, bottom: 5.v),
+                                left: DeviceExt((16 / 841) * 100).h,
+                                right: DeviceExt((16 / 841) * 100).h,
+                                bottom: DeviceExt((5 / 411) * 100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -165,11 +171,13 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                       })),
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 14.h, top: 15.v),
+                                          left: DeviceExt((14 / 841) * 100).h,
+                                          top: DeviceExt((15 / 411) * 100).w),
                                       child: Text("msg_farm_enterprises".tr,
                                           style: CustomTextStyles
                                               .titleMediumSemiBold)),
-                                  SizedBox(height: 54.v),
+                                  SizedBox(
+                                      height: DeviceExt((54 / 411) * 100).w),
                                   Text("msg_legal_status_of2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -183,12 +191,15 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                           (context, addFarmHoldingTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (30 / 841) * 100)
+                                                        .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -212,7 +223,8 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 25.v),
+                                  SizedBox(
+                                      height: DeviceExt((25 / 411) * 100).w),
                                   Text("msg_lr_no_certificate_lease2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -231,17 +243,21 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                             textInputAction:
                                                 TextInputAction.done);
                                       }),
-                                  SizedBox(height: 25.v),
+                                  SizedBox(
+                                      height: DeviceExt((25 / 411) * 100).w),
                                   BlocSelector<AddFarmHoldingTwoBloc,
                                           AddFarmHoldingTwoState, bool?>(
                                       selector: (state) => state.checked,
                                       builder: (context, checked) {
                                         return Container(
-                                          width: 266.h,
+                                          width: DeviceExt((266 / 841) * 100).h,
                                           margin: EdgeInsets.only(
-                                              left: 14.h,
-                                              top: 13.v,
-                                              right: 60.h),
+                                              left:
+                                                  DeviceExt((14 / 841) * 100).h,
+                                              top:
+                                                  DeviceExt((13 / 411) * 100).w,
+                                              right: DeviceExt((60 / 841) * 100)
+                                                  .h),
                                           child: Text(
                                             "msg_what_enterprises".tr,
                                             maxLines: 10,
@@ -290,7 +306,8 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                  SizedBox(height: 16.v),
+                                  SizedBox(
+                                      height: DeviceExt((16 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -298,8 +315,10 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomOutlinedButton(
                                                 text: "lbl_back".tr,
-                                                margin:
-                                                    EdgeInsets.only(right: 1.h),
+                                                margin: EdgeInsets.only(
+                                                    right: DeviceExt(
+                                                            (1 / 841) * 100)
+                                                        .h),
                                                 buttonStyle: CustomButtonStyles
                                                     .outlinePrimary,
                                                 buttonTextStyle:
@@ -311,16 +330,21 @@ class AddFarmHoldingTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomElevatedButton(
                                                 text: "lbl_next".tr,
-                                                margin:
-                                                    EdgeInsets.only(left: 1.h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (1 / 841) * 100)
+                                                        .h),
                                                 buttonStyle: CustomButtonStyles
                                                     .fillPrimaryTL10))
                                       ]),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: 10.h),
+                                          margin: EdgeInsets.only(
+                                              right: DeviceExt((10 / 841) * 100)
+                                                  .h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),

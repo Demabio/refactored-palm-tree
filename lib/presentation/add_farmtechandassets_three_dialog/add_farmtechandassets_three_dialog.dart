@@ -12,6 +12,7 @@ import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 
 import 'widgets/chipvieway_item_widget.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class AddFarmtechandassetsThreeDialog extends StatelessWidget {
@@ -42,10 +43,10 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Container(
-        width: 344.h,
+        width: DeviceExt((344 / 841) * 100).h,
         padding: EdgeInsets.symmetric(
-          horizontal: 11.h,
-          vertical: 13.v,
+          horizontal: DeviceExt((11 / 841) * 100).h,
+          vertical: DeviceExt((13 / 411) * 100).w,
         ),
         decoration: AppDecoration.fillWhiteA.copyWith(
           borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -57,8 +58,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: 3.h,
-                  top: 12.v,
+                  left: DeviceExt((3 / 841) * 100).h,
+                  top: DeviceExt((12 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_add_farm_machinery".tr,
@@ -79,24 +80,28 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                     enabled: true,
                     autofocus: false,
                     margin: EdgeInsets.only(
-                      left: 5.h,
-                      top: 26.v,
-                      right: 5.h,
+                      left: DeviceExt((5 / 841) * 100).h,
+                      top: DeviceExt((26 / 411) * 100).w,
+                      right: DeviceExt((5 / 841) * 100).h,
                     ),
                     controller: searchController,
                     hintText: "lbl_search_asset".tr,
                     prefix: Container(
-                      margin: EdgeInsets.fromLTRB(15.h, 12.v, 9.h, 12.v),
+                      margin: EdgeInsets.fromLTRB(
+                          DeviceExt((15 / 841) * 100).h,
+                          DeviceExt((12 / 411) * 100).w,
+                          DeviceExt((9 / 841) * 100).h,
+                          DeviceExt((12 / 411) * 100).w),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgSearch,
                       ),
                     ),
                     prefixConstraints: BoxConstraints(
-                      maxHeight: 40.v,
+                      maxHeight: DeviceExt((40 / 411) * 100).w,
                     ),
                     suffix: Padding(
                       padding: EdgeInsets.only(
-                        right: 15.h,
+                        right: DeviceExt((15 / 841) * 100).h,
                       ),
                       child: IconButton(
                         onPressed: () {
@@ -114,7 +119,7 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 20.v),
+              SizedBox(height: DeviceExt((20 / 411) * 100).w),
               Align(
                 alignment: Alignment.center,
                 child: BlocSelector<
@@ -126,8 +131,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                     return Visibility(
                       visible: addRearedLivestockOneModelObj!.search,
                       child: Wrap(
-                        runSpacing: 10.v,
-                        spacing: 10.h,
+                        runSpacing: DeviceExt((10 / 411) * 100).w,
+                        spacing: DeviceExt((10 / 841) * 100).h,
                         children: List<Widget>.generate(
                           addRearedLivestockOneModelObj.searchResults.length,
                           (index) {
@@ -155,8 +160,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 41.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((41 / 411) * 100).w,
                 ),
                 child: Text(
                   "lbl_asset_type2".tr,
@@ -171,17 +176,19 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                 builder: (context, addFarmtechandassetsThreeModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -204,8 +211,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 21.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((21 / 411) * 100).w,
                 ),
                 child: Text(
                   "lbl_asset2".tr,
@@ -220,17 +227,19 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                 builder: (context, addFarmtechandassetsThreeModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -253,8 +262,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 21.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((21 / 411) * 100).w,
                 ),
                 child: Text(
                   "Quantity (*)".tr,
@@ -267,9 +276,9 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                 builder: (context, usableConditionController) {
                   return CustomTextFormField(
                     margin: EdgeInsets.only(
-                      left: 5.h,
-                      top: 22.v,
-                      right: 5.h,
+                      left: DeviceExt((5 / 841) * 100).h,
+                      top: DeviceExt((22 / 411) * 100).w,
+                      right: DeviceExt((5 / 841) * 100).h,
                     ),
                     controller: usableConditionController,
                     autofocus: false,
@@ -293,8 +302,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 21.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((21 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_is_the_equipment".tr,
@@ -309,17 +318,19 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                 builder: (context, addFarmtechandassetsThreeModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -343,8 +354,8 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 21.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((21 / 411) * 100).w,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -364,13 +375,13 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                               ));
                         }
                       },
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_add".tr,
                       buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                       buttonTextStyle: CustomTextStyles.bodyLarge16,
                     ),
                     CustomOutlinedButton(
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_close".tr,
                       onTap: () {
                         Navigator.pop(context);

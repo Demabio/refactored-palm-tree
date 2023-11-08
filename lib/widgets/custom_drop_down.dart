@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class CustomDropDown extends StatelessWidget {
   CustomDropDown({
@@ -99,7 +100,7 @@ class CustomDropDown extends StatelessWidget {
               child: Text(
                 item.title,
                 overflow: TextOverflow.ellipsis,
-                style: hintStyle ?? CustomTextStyles.titleMediumBluegray40003,
+                style: hintStyle ?? CustomTextStyles.bodySmallLatoGray90001,
               ),
             );
           }).toList(),
@@ -119,7 +120,7 @@ class CustomDropDown extends StatelessWidget {
         suffixIconConstraints: suffixConstraints,
         errorStyle: TextStyle(color: const Color.fromARGB(255, 240, 16, 0)),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.h),
+          borderRadius: BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
           borderSide: BorderSide(
             color: Color.fromARGB(255, 255, 17, 0),
             width: 2,
@@ -129,15 +130,16 @@ class CustomDropDown extends StatelessWidget {
         enabled: enabled,
         contentPadding: contentPadding ??
             EdgeInsets.only(
-              left: 13.h,
-              top: 13.v,
-              bottom: 13.v,
+              left: DeviceExt((13 / 841) * 100).h,
+              top: DeviceExt((13 / 411) * 100).w,
+              bottom: DeviceExt((13 / 411) * 100).w,
             ),
         fillColor: fillColor ?? appTheme.blueGray50,
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,
@@ -145,7 +147,8 @@ class CustomDropDown extends StatelessWidget {
             ),
         enabledBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,
@@ -153,7 +156,8 @@ class CustomDropDown extends StatelessWidget {
             ),
         focusedBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,

@@ -15,6 +15,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddFarmtechandassetsOneScreen extends StatelessWidget {
@@ -48,14 +49,14 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               onTap: () => goB(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -69,12 +70,12 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
             child: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 8.v),
+                padding: EdgeInsets.only(top: DeviceExt((8 / 411) * 100).w),
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 16.h,
-                    right: 16.h,
-                    bottom: 5.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    right: DeviceExt((16 / 841) * 100).h,
+                    bottom: DeviceExt((5 / 411) * 100).w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,8 +103,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -119,17 +120,17 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                               ),
                             );
                           }),
-                      SizedBox(height: 20.v),
+                      SizedBox(height: DeviceExt((20 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "msg_add_powersource".tr,
                         onTap: () => addPowerSource(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 65.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((65 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 33.v),
+                      SizedBox(height: DeviceExt((33 / 411) * 100).w),
                       Text(
                         "lbl_labour_source2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -143,10 +144,11 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         builder: (context, addFarmtechandassetsOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -174,7 +176,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 33.v),
+                      SizedBox(height: DeviceExt((33 / 411) * 100).w),
                       BlocSelector<AddFarmtechandassetsOneBloc,
                               AddFarmtechandassetsOneState, bool?>(
                           selector: (state) => state.checkedA,
@@ -198,8 +200,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -230,12 +232,12 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           0,
                         ),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 106.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((106 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 33.v),
+                      SizedBox(height: DeviceExt((33 / 411) * 100).w),
                       Text(
                         "msg_who_owns_most_of2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -249,10 +251,11 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         builder: (context, addFarmtechandassetsOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -280,7 +283,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 33.v),
+                      SizedBox(height: DeviceExt((33 / 411) * 100).w),
                       BlocSelector<AddFarmtechandassetsOneBloc,
                               AddFarmtechandassetsOneState, bool?>(
                           selector: (state) => state.checkedS,
@@ -304,8 +307,8 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -325,17 +328,18 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         text: "Add Farm Structure".tr,
                         onTap: () => addFarmStructure(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 106.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((106 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 34.v),
+                      SizedBox(height: DeviceExt((34 / 411) * 100).w),
                       CustomElevatedButton(
                         onTap: () => saveDraft(context),
                         text: "lbl_save".tr,
                         leftIcon: Container(
-                          margin: EdgeInsets.only(right: 10.h),
+                          margin: EdgeInsets.only(
+                              right: DeviceExt((10 / 841) * 100).h),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgSaveWhiteA700,
                           ),

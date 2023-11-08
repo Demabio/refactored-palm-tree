@@ -19,6 +19,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class AddAquacultureOneScreen extends StatelessWidget {
   const AddAquacultureOneScreen({Key? key})
@@ -49,14 +50,14 @@ class AddAquacultureOneScreen extends StatelessWidget {
           child: SafeArea(
             child: Scaffold(
               appBar: CustomAppBar(
-                leadingWidth: 60.h,
+                leadingWidth: DeviceExt((60 / 841) * 100).h,
                 leading: AppbarImage(
                   svgPath: ImageConstant.imgSort,
                   onTap: () => goB(context),
                   margin: EdgeInsets.only(
-                    left: 16.h,
-                    top: 3.v,
-                    bottom: 11.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    top: DeviceExt((3 / 411) * 100).w,
+                    bottom: DeviceExt((11 / 411) * 100).w,
                   ),
                 ),
                 centerTitle: true,
@@ -68,12 +69,12 @@ class AddAquacultureOneScreen extends StatelessWidget {
               body: SizedBox(
                 width: mediaQueryData.size.width,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.only(top: 5.v),
+                  padding: EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: 16.h,
-                      right: 16.h,
-                      bottom: 5.v,
+                      left: DeviceExt((16 / 841) * 100).h,
+                      right: DeviceExt((16 / 841) * 100).h,
+                      bottom: DeviceExt((5 / 411) * 100).w,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +180,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                     : CustomTextStyles.labelMediumPrimary_1,
                               );
                             }),
-                        SizedBox(height: 18.v),
+                        SizedBox(height: DeviceExt((18 / 411) * 100).w),
 
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, List<CheckBoxList>?>(
@@ -187,8 +188,8 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             builder: (context, list) {
                               return Padding(
                                 padding: EdgeInsets.only(
-                                  top: 15.v,
-                                  right: 16.h,
+                                  top: DeviceExt((15 / 411) * 100).w,
+                                  right: DeviceExt((16 / 841) * 100).h,
                                 ),
                                 child: Column(
                                   children: List<Widget>.generate(
@@ -210,12 +211,12 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             addAquaculturetype(context);
                           },
                           margin: EdgeInsets.only(
-                            left: 82.h,
-                            top: 65.v,
+                            left: DeviceExt((82 / 841) * 100).h,
+                            top: DeviceExt((65 / 411) * 100).w,
                           ),
                           alignment: Alignment.centerRight,
                         ),
-                        SizedBox(height: 17.v),
+                        SizedBox(height: DeviceExt((17 / 411) * 100).w),
                         // Text(
                         //   "msg_production_system3".tr,
                         //   style: CustomTextStyles.labelMediumPrimary_1,
@@ -231,15 +232,15 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                     : CustomTextStyles.labelMediumPrimary_1,
                               );
                             }),
-                        SizedBox(height: 18.v),
+                        SizedBox(height: DeviceExt((18 / 411) * 100).w),
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, List<CheckBoxList>?>(
                             selector: (state) => state.prodsyss,
                             builder: (context, list) {
                               return Padding(
                                 padding: EdgeInsets.only(
-                                  top: 15.v,
-                                  right: 16.h,
+                                  top: DeviceExt((15 / 411) * 100).w,
+                                  right: DeviceExt((16 / 841) * 100).h,
                                 ),
                                 child: Column(
                                   children: List<Widget>.generate(
@@ -272,8 +273,8 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             );
                           },
                           margin: EdgeInsets.only(
-                            left: 82.h,
-                            top: 30.v,
+                            left: DeviceExt((82 / 841) * 100).h,
+                            top: DeviceExt((30 / 411) * 100).w,
                           ),
                           alignment: Alignment.centerRight,
                         ),
@@ -283,10 +284,10 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             selector: (state) => state.checkedF,
                             builder: (context, checked) {
                               return Container(
-                                width: 316.h,
+                                width: DeviceExt((316 / 841) * 100).h,
                                 margin: EdgeInsets.only(
-                                  top: 17.v,
-                                  right: 26.h,
+                                  top: DeviceExt((17 / 411) * 100).w,
+                                  right: DeviceExt((26 / 841) * 100).h,
                                 ),
                                 child: Text(
                                   "msg_does_the_household2".tr,
@@ -298,15 +299,15 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                 ),
                               );
                             }),
-                        SizedBox(height: 18.v),
+                        SizedBox(height: DeviceExt((18 / 411) * 100).w),
                         BlocSelector<AddAquacultureOneBloc,
                                 AddAquacultureOneState, List<CheckBoxList>?>(
                             selector: (state) => state.fish,
                             builder: (context, list) {
                               return Padding(
                                 padding: EdgeInsets.only(
-                                  top: 15.v,
-                                  right: 16.h,
+                                  top: DeviceExt((15 / 411) * 100).w,
+                                  right: DeviceExt((16 / 841) * 100).h,
                                 ),
                                 child: Column(
                                   children: List<Widget>.generate(
@@ -339,19 +340,20 @@ class AddAquacultureOneScreen extends StatelessWidget {
                             );
                           },
                           margin: EdgeInsets.only(
-                            left: 82.h,
-                            top: 41.v,
+                            left: DeviceExt((82 / 841) * 100).h,
+                            top: DeviceExt((41 / 411) * 100).w,
                           ),
                           alignment: Alignment.centerRight,
                         ),
-                        SizedBox(height: 18.v),
+                        SizedBox(height: DeviceExt((18 / 411) * 100).w),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
                               child: CustomOutlinedButton(
                                 text: "lbl_back".tr,
-                                margin: EdgeInsets.only(right: 1.h),
+                                margin: EdgeInsets.only(
+                                    right: DeviceExt((1 / 841) * 100).h),
                                 buttonStyle:
                                     CustomButtonStyles.outlinePrimaryTL10,
                                 isDisabled: true,
@@ -363,17 +365,19 @@ class AddAquacultureOneScreen extends StatelessWidget {
                               child: CustomElevatedButton(
                                 text: "lbl_next".tr,
                                 onTap: () => nextPage(context),
-                                margin: EdgeInsets.only(left: 1.h),
+                                margin: EdgeInsets.only(
+                                    left: DeviceExt((1 / 841) * 100).h),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 12.v),
+                        SizedBox(height: DeviceExt((12 / 411) * 100).w),
                         CustomElevatedButton(
                           text: "lbl_save".tr,
                           onTap: () => saveDraft(context),
                           leftIcon: Container(
-                            margin: EdgeInsets.only(right: 10.h),
+                            margin: EdgeInsets.only(
+                                right: DeviceExt((10 / 841) * 100).h),
                             child: CustomImageView(
                               svgPath: ImageConstant.imgSaveWhiteA700,
                             ),

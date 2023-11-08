@@ -13,6 +13,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class AddFarmHoldingOneScreen extends StatelessWidget {
@@ -45,11 +46,13 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      margin: EdgeInsets.only(
+                          left: DeviceExt((16 / 841) * 100).h,
+                          top: DeviceExt((3 / 411) * 100).w,
+                          bottom: DeviceExt((11 / 411) * 100).w),
                       onTap: () {
                         onTapSortone(context);
                       }),
@@ -59,10 +62,13 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
               body: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
-                      padding: EdgeInsets.only(top: 5.v),
+                      padding:
+                          EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                       child: Padding(
                           padding: EdgeInsets.only(
-                              left: 16.h, right: 16.h, bottom: 5.v),
+                              left: DeviceExt((16 / 841) * 100).h,
+                              right: DeviceExt((16 / 841) * 100).h,
+                              bottom: DeviceExt((5 / 411) * 100).w),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -162,12 +168,13 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                       );
                                     })),
                                 Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 13.h, top: 13.v),
+                                    padding: EdgeInsets.only(
+                                        left: DeviceExt((13 / 841) * 100).h,
+                                        top: DeviceExt((13 / 411) * 100).w),
                                     child: Text("msg_farm_enterprises".tr,
                                         style: CustomTextStyles
                                             .titleMediumSemiBold)),
-                                SizedBox(height: 27.v),
+                                SizedBox(height: DeviceExt((27 / 411) * 100).w),
                                 Text("msg_descriptive_name2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -192,7 +199,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                             return null;
                                           });
                                     }),
-                                SizedBox(height: 32.v),
+                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("msg_total_land_size".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -217,7 +224,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: 32.v),
+                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("lbl_area_unit2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -231,12 +238,15 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                         (context, addFarmHoldingOneModelObj) {
                                       return CustomDropDown(
                                           icon: Container(
-                                              margin:
-                                                  EdgeInsets.only(left: 30.h),
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      DeviceExt((30 / 841) * 100)
+                                                          .h),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          10.h)),
+                                                          DeviceExt((10 / 841) * 100)
+                                                              .h)),
                                               child: CustomImageView(
                                                   svgPath: ImageConstant
                                                       .imgArrowdownPrimary)),
@@ -260,7 +270,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                                     value: value));
                                           });
                                     }),
-                                SizedBox(height: 32.v),
+                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("msg_size_of_land_under2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -279,7 +289,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: 32.v),
+                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("msg_total_land_area2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -304,7 +314,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: 33.v),
+                                SizedBox(height: DeviceExt((33 / 411) * 100).w),
                                 Text("msg_size_of_land_leased2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -324,7 +334,7 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: 33.v),
+                                SizedBox(height: DeviceExt((33 / 411) * 100).w),
                                 Text("msg_size_of_land_lying2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -346,15 +356,17 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                           textInputAction:
                                               TextInputAction.done);
                                     }),
-                                SizedBox(height: 32.v),
+                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Expanded(
                                           child: CustomOutlinedButton(
                                               text: "lbl_back".tr,
-                                              margin:
-                                                  EdgeInsets.only(right: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  right:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               buttonStyle: CustomButtonStyles
                                                   .outlinePrimaryTL10,
                                               buttonTextStyle: CustomTextStyles
@@ -362,17 +374,21 @@ class AddFarmHoldingOneScreen extends StatelessWidget {
                                       Expanded(
                                           child: CustomElevatedButton(
                                               text: "lbl_next".tr,
-                                              margin:
-                                                  EdgeInsets.only(left: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               onTap: () {
                                                 nextPage(context);
                                               }))
                                     ]),
-                                SizedBox(height: 12.v),
+                                SizedBox(height: DeviceExt((12 / 411) * 100).w),
                                 CustomElevatedButton(
                                     text: "lbl_save".tr,
                                     leftIcon: Container(
-                                        margin: EdgeInsets.only(right: 10.h),
+                                        margin: EdgeInsets.only(
+                                            right:
+                                                DeviceExt((10 / 841) * 100).h),
                                         child: CustomImageView(
                                             svgPath: ImageConstant
                                                 .imgSaveWhiteA700)),

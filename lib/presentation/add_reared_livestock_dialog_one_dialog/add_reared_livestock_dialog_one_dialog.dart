@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class AddRearedLivestockDialogOneDialog extends StatelessWidget {
   const AddRearedLivestockDialogOneDialog({Key? key}) : super(key: key);
@@ -25,8 +26,10 @@ class AddRearedLivestockDialogOneDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return Container(
-      width: 344.h,
-      padding: EdgeInsets.symmetric(horizontal: 13.h, vertical: 15.v),
+      width: DeviceExt((344 / 841) * 100).h,
+      padding: EdgeInsets.symmetric(
+          horizontal: DeviceExt((13 / 841) * 100).h,
+          vertical: DeviceExt((15 / 411) * 100).w),
       decoration: AppDecoration.fillWhiteA
           .copyWith(borderRadius: BorderRadiusStyle.roundedBorder6),
       child: Column(children: [
@@ -70,8 +73,11 @@ class AddRearedLivestockDialogOneDialog extends StatelessWidget {
           selector: (state) => state.addRearedLivestockDialogOneModelObj,
           builder: (context, addRearedLivestockDialogOneModelObj) {
             return Padding(
-              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
-                  ResponsiveExtension(4).h, 16.v),
+              padding: EdgeInsets.fromLTRB(
+                  ResponsiveExtension(5).h,
+                  DeviceExt((44 / 411) * 100).w,
+                  ResponsiveExtension(4).h,
+                  DeviceExt((16 / 411) * 100).w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

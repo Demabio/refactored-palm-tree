@@ -22,6 +22,7 @@ import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddFinancialandservicesOneScreen extends StatelessWidget {
@@ -54,14 +55,14 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
               onTap: () => goB(context),
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -75,12 +76,12 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
             child: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 5.v),
+                padding: EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 16.h,
-                    right: 16.h,
-                    bottom: 5.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    right: DeviceExt((16 / 841) * 100).h,
+                    bottom: DeviceExt((5 / 411) * 100).w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,16 +170,16 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                               ],
                             );
                           })),
-                      SizedBox(height: 20.v),
+                      SizedBox(height: DeviceExt((20 / 411) * 100).w),
                       Text(
                         "msg_financial_livelihood".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       Container(
-                        width: 297.h,
+                        width: DeviceExt((297 / 841) * 100).h,
                         margin: EdgeInsets.only(
-                          top: 20.v,
-                          right: 45.h,
+                          top: DeviceExt((20 / 411) * 100).w,
+                          right: DeviceExt((45 / 841) * 100).h,
                         ),
                         child: Text(
                           "msg_what_are_your_main4".tr,
@@ -195,8 +196,8 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -215,17 +216,17 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       CustomElevatedButton(
                         text: "msg_add_financial_source".tr,
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 42.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((42 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                         onTap: () => addSource(context),
                       ),
                       Container(
-                        width: 306.h,
+                        width: DeviceExt((306 / 841) * 100).h,
                         margin: EdgeInsets.only(
-                          top: 17.v,
-                          right: 36.h,
+                          top: DeviceExt((17 / 411) * 100).w,
+                          right: DeviceExt((36 / 841) * 100).h,
                         ),
                         child: Text(
                           "msg_percentage_of_household2".tr,
@@ -234,7 +235,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       BlocSelector<
                           AddFinancialandservicesOneBloc,
                           AddFinancialandservicesOneState,
@@ -258,7 +259,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       Text(
                         "msg_agricultural_info".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -283,8 +284,8 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -304,22 +305,22 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         text: "Add Information Source".tr,
                         onTap: () => addInfoSource(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 9.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((9 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
 
                       Text(
                         "msg_cooperative_groups".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       Container(
-                        width: 270.h,
+                        width: DeviceExt((270 / 841) * 100).h,
                         margin: EdgeInsets.only(
-                          top: 17.v,
-                          right: 72.h,
+                          top: DeviceExt((17 / 411) * 100).w,
+                          right: DeviceExt((72 / 841) * 100).h,
                         ),
                         child: Text(
                           "msg_do_you_belong_to2".tr,
@@ -328,7 +329,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
-                      SizedBox(height: 3.v),
+                      SizedBox(height: DeviceExt((3 / 411) * 100).w),
                       BlocSelector<
                           AddFinancialandservicesOneBloc,
                           AddFinancialandservicesOneState,
@@ -338,10 +339,11 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         builder: (context, addFinancialandservicesOneModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -378,18 +380,18 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Visibility(
                                 visible: list?.selectedDropDownValue?.id == 1,
                                 child: Column(
                                   children: [
                                     // Container(
-                                    //   width: 302.h,
+                                    //   width: DeviceExt((302/841)*100).h,
                                     //   margin: EdgeInsets.only(
-                                    //     top: 15.v,
-                                    //     right: 40.h,
+                                    //     top: DeviceExt(( 15/411)*100).w,
+                                    //     right: DeviceExt((40/841)*100).h,
                                     //   ),
                                     //   child: Text(
                                     //     "msg_if_yes_which_groups_farmer".tr,
@@ -421,8 +423,10 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                                         builder: (context, list) {
                                           return Padding(
                                             padding: EdgeInsets.only(
-                                              top: 15.v,
-                                              right: 16.h,
+                                              top:
+                                                  DeviceExt((15 / 411) * 100).w,
+                                              right:
+                                                  DeviceExt((16 / 841) * 100).h,
                                             ),
                                             child: Column(
                                               children: List<Widget>.generate(
@@ -443,8 +447,8 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                                       text: "msg_add_cooperative".tr,
                                       onTap: () => addCoopGroup(context),
                                       margin: EdgeInsets.only(
-                                        left: 82.h,
-                                        top: 34.v,
+                                        left: DeviceExt((82 / 841) * 100).h,
+                                        top: DeviceExt((34 / 411) * 100).w,
                                       ),
                                       alignment: Alignment.centerRight,
                                     ),
@@ -465,10 +469,10 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                             );
                           }),
                       // Container(
-                      //   width: 332.h,
+                      //   width: DeviceExt((332/841)*100).h,
                       //   margin: EdgeInsets.only(
-                      //     top: 16.v,
-                      //     right: 11.h,
+                      //     top: DeviceExt(( 16/411)*100).w,
+                      //     right: DeviceExt((11/841)*100).h,
                       //   ),
                       //   child: Text(
                       //     "msg_where_do_you_access".tr,
@@ -486,8 +490,8 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Column(
                                 children: List<Widget>.generate(
@@ -507,19 +511,20 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         text: "msg_add_financial_services".tr,
                         onTap: () => addFinancial(context),
                         margin: EdgeInsets.only(
-                          left: 82.h,
-                          top: 37.v,
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((37 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
-                              margin: EdgeInsets.only(right: 1.h),
+                              margin: EdgeInsets.only(
+                                  right: DeviceExt((1 / 841) * 100).h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
                               isDisabled: true,
@@ -531,17 +536,19 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                             child: CustomElevatedButton(
                               text: "lbl_next".tr,
                               onTap: () => nextPage(context),
-                              margin: EdgeInsets.only(left: 1.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((1 / 841) * 100).h),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 12.v),
+                      SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "lbl_save".tr,
                         onTap: () => saveDraft(context),
                         leftIcon: Container(
-                          margin: EdgeInsets.only(right: 10.h),
+                          margin: EdgeInsets.only(
+                              right: DeviceExt((10 / 841) * 100).h),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgSaveWhiteA700,
                           ),

@@ -36,7 +36,7 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
       height: DeviceExt(75).h,
       padding: EdgeInsets.symmetric(
         horizontal: ResponsiveExtension(13).h,
-        vertical: 16.v,
+        vertical: DeviceExt((16 / 411) * 100).w,
       ),
       decoration: AppDecoration.fillWhiteA.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -86,8 +86,11 @@ class AddRearedLivestockDialogTwoDialog extends StatelessWidget {
           selector: (state) => state.addRearedLivestockDialogTwoModelObj,
           builder: (context, addRearedLivestockDialogTwoModelObj) {
             return Padding(
-              padding: EdgeInsets.fromLTRB(ResponsiveExtension(5).h, 44.v,
-                  ResponsiveExtension(4).h, 16.v),
+              padding: EdgeInsets.fromLTRB(
+                  ResponsiveExtension(5).h,
+                  DeviceExt((44 / 411) * 100).w,
+                  ResponsiveExtension(4).h,
+                  DeviceExt((16 / 411) * 100).w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

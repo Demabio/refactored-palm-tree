@@ -16,6 +16,7 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddCropTwoScreen extends StatelessWidget {
@@ -46,11 +47,13 @@ class AddCropTwoScreen extends StatelessWidget {
       child: SafeArea(
           child: Scaffold(
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      margin: EdgeInsets.only(
+                          left: DeviceExt((16 / 841) * 100).h,
+                          top: DeviceExt((3 / 411) * 100).w,
+                          bottom: DeviceExt((11 / 411) * 100).w),
                       onTap: () {
                         goBack(context);
                       }),
@@ -62,10 +65,13 @@ class AddCropTwoScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 10.v),
+                        padding:
+                            EdgeInsets.only(top: DeviceExt((10 / 411) * 100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: 16.h, right: 16.h, bottom: 5.v),
+                                left: DeviceExt((16 / 841) * 100).h,
+                                right: DeviceExt((16 / 841) * 100).h,
+                                bottom: DeviceExt((5 / 411) * 100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -162,7 +168,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                           ],
                                         );
                                       })),
-                                  SizedBox(height: 11.v),
+                                  SizedBox(
+                                      height: DeviceExt((11 / 411) * 100).w),
                                   Text("lbl_purpose2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -173,12 +180,15 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, addCropTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -202,7 +212,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 35.v),
+                                  SizedBox(
+                                      height: DeviceExt((35 / 411) * 100).w),
                                   Text("msg_production_system".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -213,12 +224,15 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, addCropTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -242,7 +256,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 35.v),
+                                  SizedBox(
+                                      height: DeviceExt((35 / 411) * 100).w),
                                   Text("msg_water_source".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -253,12 +268,15 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, addCropTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -282,7 +300,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 35.v),
+                                  SizedBox(
+                                      height: DeviceExt((35 / 411) * 100).w),
                                   Text("msg_use_pesticide".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -293,12 +312,15 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, addCropTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -322,7 +344,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 35.v),
+                                  SizedBox(
+                                      height: DeviceExt((35 / 411) * 100).w),
                                   BlocSelector<AddCropTwoBloc, AddCropTwoState,
                                           AddCropTwoModel?>(
                                       selector: (state) =>
@@ -330,8 +353,9 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, list) {
                                         return Padding(
                                           padding: EdgeInsets.only(
-                                            top: 15.v,
-                                            right: 16.h,
+                                            top: DeviceExt((15 / 411) * 100).w,
+                                            right:
+                                                DeviceExt((16 / 841) * 100).h,
                                           ),
                                           child: Visibility(
                                             visible: list
@@ -366,8 +390,14 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       return Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                          top: 15.v,
-                                                          right: 16.h,
+                                                          top: DeviceExt(
+                                                                  (15 / 411) *
+                                                                      100)
+                                                              .w,
+                                                          right: DeviceExt(
+                                                                  (16 / 841) *
+                                                                      100)
+                                                              .h,
                                                         ),
                                                         child: Column(
                                                           children: List<
@@ -391,8 +421,12 @@ class AddCropTwoScreen extends StatelessWidget {
                                                   onTap: () =>
                                                       addPesticide(context),
                                                   margin: EdgeInsets.only(
-                                                    left: 82.h,
-                                                    top: 9.v,
+                                                    left: DeviceExt(
+                                                            (82 / 841) * 100)
+                                                        .h,
+                                                    top: DeviceExt(
+                                                            (9 / 411) * 100)
+                                                        .w,
                                                   ),
                                                   alignment:
                                                       Alignment.centerRight,
@@ -413,11 +447,18 @@ class AddCropTwoScreen extends StatelessWidget {
                                         return CustomDropDown(
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
-                                                    30.h, 11.v, 1.h, 14.v),
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((11 / 411) * 100)
+                                                        .w,
+                                                    DeviceExt((1 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((14 / 411) * 100)
+                                                        .w),
                                                 decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.h)),
+                                                    borderRadius: BorderRadius.circular(
+                                                        DeviceExt((10 / 841) * 100)
+                                                            .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -448,8 +489,9 @@ class AddCropTwoScreen extends StatelessWidget {
                                       builder: (context, list) {
                                         return Padding(
                                           padding: EdgeInsets.only(
-                                            top: 15.v,
-                                            right: 16.h,
+                                            top: DeviceExt((15 / 411) * 100).w,
+                                            right:
+                                                DeviceExt((16 / 841) * 100).h,
                                           ),
                                           child: Visibility(
                                             visible: list
@@ -473,7 +515,10 @@ class AddCropTwoScreen extends StatelessWidget {
                                                                 .labelMediumPrimary_1,
                                                       );
                                                     }),
-                                                SizedBox(height: 17.v),
+                                                SizedBox(
+                                                    height: DeviceExt(
+                                                            (17 / 411) * 100)
+                                                        .w),
                                                 BlocSelector<
                                                         AddCropTwoBloc,
                                                         AddCropTwoState,
@@ -484,8 +529,14 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       return Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                          top: 15.v,
-                                                          right: 16.h,
+                                                          top: DeviceExt(
+                                                                  (15 / 411) *
+                                                                      100)
+                                                              .w,
+                                                          right: DeviceExt(
+                                                                  (16 / 841) *
+                                                                      100)
+                                                              .h,
                                                         ),
                                                         child: Column(
                                                           children: List<
@@ -504,20 +555,30 @@ class AddCropTwoScreen extends StatelessWidget {
                                                         ),
                                                       );
                                                     }),
-                                                SizedBox(height: 17.v),
+                                                SizedBox(
+                                                    height: DeviceExt(
+                                                            (17 / 411) * 100)
+                                                        .w),
                                                 CustomElevatedButton(
                                                   text:
                                                       "Add Fertiliser Used".tr,
                                                   onTap: () =>
                                                       addFertiliser(context),
                                                   margin: EdgeInsets.only(
-                                                    left: 82.h,
-                                                    top: 9.v,
+                                                    left: DeviceExt(
+                                                            (82 / 841) * 100)
+                                                        .h,
+                                                    top: DeviceExt(
+                                                            (9 / 411) * 100)
+                                                        .w,
                                                   ),
                                                   alignment:
                                                       Alignment.centerRight,
                                                 ),
-                                                SizedBox(height: 17.v),
+                                                SizedBox(
+                                                    height: DeviceExt(
+                                                            (17 / 411) * 100)
+                                                        .w),
                                                 BlocSelector<AddCropTwoBloc,
                                                         AddCropTwoState, bool?>(
                                                     selector: (state) =>
@@ -534,7 +595,10 @@ class AddCropTwoScreen extends StatelessWidget {
                                                                 .labelMediumPrimary_1,
                                                       );
                                                     }),
-                                                SizedBox(height: 17.v),
+                                                SizedBox(
+                                                    height: DeviceExt(
+                                                            (17 / 411) * 100)
+                                                        .w),
                                                 BlocSelector<
                                                         AddCropTwoBloc,
                                                         AddCropTwoState,
@@ -545,8 +609,14 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       return Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                          top: 15.v,
-                                                          right: 16.h,
+                                                          top: DeviceExt(
+                                                                  (15 / 411) *
+                                                                      100)
+                                                              .w,
+                                                          right: DeviceExt(
+                                                                  (16 / 841) *
+                                                                      100)
+                                                              .h,
                                                         ),
                                                         child: Column(
                                                           children: List<
@@ -565,7 +635,10 @@ class AddCropTwoScreen extends StatelessWidget {
                                                         ),
                                                       );
                                                     }),
-                                                SizedBox(height: 17.v),
+                                                SizedBox(
+                                                    height: DeviceExt(
+                                                            (17 / 411) * 100)
+                                                        .w),
                                                 CustomElevatedButton(
                                                   text: "Add Fertiliser Source"
                                                       .tr,
@@ -573,8 +646,12 @@ class AddCropTwoScreen extends StatelessWidget {
                                                       addFertiliserSource(
                                                           context),
                                                   margin: EdgeInsets.only(
-                                                    left: 82.h,
-                                                    top: 7.v,
+                                                    left: DeviceExt(
+                                                            (82 / 841) * 100)
+                                                        .h,
+                                                    top: DeviceExt(
+                                                            (7 / 411) * 100)
+                                                        .w,
                                                   ),
                                                   alignment:
                                                       Alignment.centerRight,
@@ -584,7 +661,8 @@ class AddCropTwoScreen extends StatelessWidget {
                                           ),
                                         );
                                       }),
-                                  SizedBox(height: 17.v),
+                                  SizedBox(
+                                      height: DeviceExt((17 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -592,8 +670,10 @@ class AddCropTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomOutlinedButton(
                                                 text: "lbl_back".tr,
-                                                margin:
-                                                    EdgeInsets.only(right: 1.h),
+                                                margin: EdgeInsets.only(
+                                                    right: DeviceExt(
+                                                            (1 / 841) * 100)
+                                                        .h),
                                                 buttonStyle: CustomButtonStyles
                                                     .outlinePrimary,
                                                 buttonTextStyle:
@@ -605,17 +685,22 @@ class AddCropTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomElevatedButton(
                                           text: "lbl_next".tr,
-                                          margin: EdgeInsets.only(left: 1.h),
+                                          margin: EdgeInsets.only(
+                                              left:
+                                                  DeviceExt((1 / 841) * 100).h),
                                           isDisabled: true,
                                           buttonStyle: CustomButtonStyles
                                               .fillPrimaryTL10,
                                         ))
                                       ]),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: 10.h),
+                                          margin: EdgeInsets.only(
+                                              right: DeviceExt((10 / 841) * 100)
+                                                  .h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),

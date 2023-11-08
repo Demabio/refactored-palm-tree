@@ -21,6 +21,7 @@ import 'package:kiamis_app/widgets/custom_search_view.dart';
 
 import 'widgets/ages_widget.dart';
 import 'widgets/feeds_widget.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddRearedLivestockOneScreen extends StatelessWidget {
@@ -58,14 +59,14 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               onTap: () => goBack(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -80,14 +81,14 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
               width: double.maxFinite,
               child: Column(
                 children: [
-                  SizedBox(height: 4.v),
+                  SizedBox(height: DeviceExt((4 / 411) * 100).w),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: 16.h,
-                          right: 16.h,
-                          bottom: 5.v,
+                          left: DeviceExt((16 / 841) * 100).h,
+                          right: DeviceExt((16 / 841) * 100).h,
+                          bottom: DeviceExt((5 / 411) * 100).w,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,8 +110,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     },
                                     enabled: true,
                                     margin: EdgeInsets.only(
-                                      left: 15.h,
-                                      right: 16.h,
+                                      left: DeviceExt((15 / 841) * 100).h,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     controller: searchController,
                                     autofocus: false,
@@ -119,17 +120,20 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     alignment: Alignment.center,
                                     prefix: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          15.h, 12.v, 9.h, 12.v),
+                                          DeviceExt((15 / 841) * 100).h,
+                                          DeviceExt((12 / 411) * 100).w,
+                                          DeviceExt((9 / 841) * 100).h,
+                                          DeviceExt((12 / 411) * 100).w),
                                       child: CustomImageView(
                                         svgPath: ImageConstant.imgSearch,
                                       ),
                                     ),
                                     prefixConstraints: BoxConstraints(
-                                      maxHeight: 40.v,
+                                      maxHeight: DeviceExt((40 / 411) * 100).w,
                                     ),
                                     suffix: Padding(
                                       padding: EdgeInsets.only(
-                                        right: 15.h,
+                                        right: DeviceExt((15 / 841) * 100).h,
                                       ),
                                       child: IconButton(
                                         onPressed: () {
@@ -151,15 +155,15 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 15.h,
-                                top: 5.v,
+                                left: DeviceExt((15 / 841) * 100).h,
+                                top: DeviceExt((5 / 411) * 100).w,
                               ),
                               child: Text(
                                 "msg_common_livestock".tr,
                                 style: CustomTextStyles.labelMediumPrimary_1,
                               ),
                             ),
-                            SizedBox(height: 20.v),
+                            SizedBox(height: DeviceExt((20 / 411) * 100).w),
                             Align(
                               alignment: Alignment.center,
                               child: BlocSelector<
@@ -172,8 +176,10 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     (context, addRearedLivestockOneModelObj) {
                                   return !addRearedLivestockOneModelObj!.search
                                       ? Wrap(
-                                          runSpacing: 10.v,
-                                          spacing: 10.h,
+                                          runSpacing:
+                                              DeviceExt((10 / 411) * 100).w,
+                                          spacing:
+                                              DeviceExt((10 / 841) * 100).h,
                                           children: List<Widget>.generate(
                                             addRearedLivestockOneModelObj
                                                 .chipviewayrshiItemList.length,
@@ -199,8 +205,10 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                           ),
                                         )
                                       : Wrap(
-                                          runSpacing: 10.v,
-                                          spacing: 10.h,
+                                          runSpacing:
+                                              DeviceExt((10 / 411) * 100).w,
+                                          spacing:
+                                              DeviceExt((10 / 841) * 100).h,
                                           children: List<Widget>.generate(
                                             addRearedLivestockOneModelObj
                                                     .searchResults?.length ??
@@ -232,7 +240,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 },
                               ),
                             ),
-                            SizedBox(height: 20.v),
+                            SizedBox(height: DeviceExt((20 / 411) * 100).w),
                             Text(
                               "Category (*)".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -247,10 +255,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   (context, addRearedLivestockOneModelObj) {
                                 return CustomDropDown(
                                   icon: Container(
-                                    margin: EdgeInsets.only(left: 30.h),
+                                    margin: EdgeInsets.only(
+                                        left: DeviceExt((30 / 841) * 100).h),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                        10.h,
+                                        DeviceExt((10 / 841) * 100).h,
                                       ),
                                     ),
                                     child: CustomImageView(
@@ -282,7 +291,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 16.v),
+                            SizedBox(height: DeviceExt((16 / 411) * 100).w),
                             Text(
                               "SubCategory (*)".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -297,10 +306,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   (context, addRearedLivestockOneModelObj) {
                                 return CustomDropDown(
                                   icon: Container(
-                                    margin: EdgeInsets.only(left: 30.h),
+                                    margin: EdgeInsets.only(
+                                        left: DeviceExt((30 / 841) * 100).h),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                        10.h,
+                                        DeviceExt((10 / 841) * 100).h,
                                       ),
                                     ),
                                     child: CustomImageView(
@@ -332,7 +342,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 15.v),
+                            SizedBox(height: DeviceExt((15 / 411) * 100).w),
                             Text(
                               "lbl_livestock3".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -347,10 +357,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   (context, addRearedLivestockOneModelObj) {
                                 return CustomDropDown(
                                   icon: Container(
-                                    margin: EdgeInsets.only(left: 30.h),
+                                    margin: EdgeInsets.only(
+                                        left: DeviceExt((30 / 841) * 100).h),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                        10.h,
+                                        DeviceExt((10 / 841) * 100).h,
                                       ),
                                     ),
                                     child: CustomImageView(
@@ -398,13 +409,17 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     alignment: Alignment.centerLeft,
                                     child: Column(
                                       children: [
-                                        SizedBox(height: 35.v),
+                                        SizedBox(
+                                            height:
+                                                DeviceExt((35 / 411) * 100).w),
                                         Text(
                                           "Number of Bee Hives".tr,
                                           style: CustomTextStyles
                                               .labelMediumPrimary_1,
                                         ),
-                                        SizedBox(height: 10.v),
+                                        SizedBox(
+                                            height:
+                                                DeviceExt((10 / 411) * 100).w),
                                         CustomTextFormField(
                                             autofocus: false,
                                             focusNode: _secondTextFieldFocus,
@@ -422,17 +437,22 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                             hintText: "Number".tr,
                                             textInputAction:
                                                 TextInputAction.done),
-                                        SizedBox(height: 17.v),
+                                        SizedBox(
+                                            height:
+                                                DeviceExt((17 / 411) * 100).w),
                                         Text(
                                           "Beehive types".tr,
                                           style: CustomTextStyles
                                               .labelMediumPrimary_1,
                                         ),
-                                        SizedBox(height: 17.v),
+                                        SizedBox(
+                                            height:
+                                                DeviceExt((17 / 411) * 100).w),
                                         Padding(
                                           padding: EdgeInsets.only(
-                                            top: 15.v,
-                                            right: 16.h,
+                                            top: DeviceExt((15 / 411) * 100).w,
+                                            right:
+                                                DeviceExt((16 / 841) * 100).h,
                                           ),
                                           child: Column(
                                             children: List<Widget>.generate(
@@ -448,16 +468,19 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 17.v),
+                                        SizedBox(
+                                            height:
+                                                DeviceExt((17 / 411) * 100).w),
                                         CustomElevatedButton(
-                                          width: 152.h,
+                                          width: DeviceExt((152 / 841) * 100).h,
                                           alignment: Alignment.centerRight,
-                                          height: 47.v,
+                                          height: DeviceExt((47 / 411) * 100).w,
                                           text: "Add Type".tr,
                                           margin: EdgeInsets.only(
-                                            left: 15.h,
-                                            top: 15.v,
-                                            right: 15.h,
+                                            left: DeviceExt((15 / 841) * 100).h,
+                                            top: DeviceExt((15 / 411) * 100).w,
+                                            right:
+                                                DeviceExt((15 / 841) * 100).h,
                                           ),
                                           onTap: () {
                                             addBee(context);
@@ -469,26 +492,26 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 35.v),
+                            SizedBox(height: DeviceExt((35 / 411) * 100).w),
                             CustomElevatedButton(
-                              height: 47.v,
+                              height: DeviceExt((47 / 411) * 100).w,
                               text: "msg_add_livestock_age".tr,
                               margin: EdgeInsets.only(
-                                left: 15.h,
-                                top: 15.v,
-                                right: 15.h,
+                                left: DeviceExt((15 / 841) * 100).h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((15 / 841) * 100).h,
                               ),
                               alignment: Alignment.center,
                               onTap: () {
                                 addAgeGroup(context);
                               },
                             ),
-                            SizedBox(height: 35.v),
+                            SizedBox(height: DeviceExt((35 / 411) * 100).w),
                             Text(
                               "msg_livestock_age_group".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
                             ),
-                            SizedBox(height: 18.v),
+                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
                             BlocSelector<
                                     AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState,
@@ -497,8 +520,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 builder: (context, ages) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: DeviceExt((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -514,7 +537,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
-                            SizedBox(height: 18.v),
+                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
                             BlocSelector<AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState, bool?>(
                                 selector: (state) => state.checkedF,
@@ -527,7 +550,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                         : CustomTextStyles.labelMediumPrimary_1,
                                   );
                                 }),
-                            SizedBox(height: 18.v),
+                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
                             BlocSelector<
                                     AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState,
@@ -536,8 +559,8 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 builder: (context, feeds) {
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      top: 15.v,
-                                      right: 16.h,
+                                      top: DeviceExt((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
                                     ),
                                     child: Column(
                                       children: List<Widget>.generate(
@@ -553,14 +576,14 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
-                            SizedBox(height: 65.v),
+                            SizedBox(height: DeviceExt((65 / 411) * 100).w),
                             CustomElevatedButton(
-                              width: 152.h,
+                              width: DeviceExt((152 / 841) * 100).h,
                               onTap: () => addFeed(context),
                               text: "lbl_add_feed".tr,
                               alignment: Alignment.centerRight,
                             ),
-                            SizedBox(height: 34.v),
+                            SizedBox(height: DeviceExt((34 / 411) * 100).w),
                             Text(
                               "msg_farming_production2".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -575,10 +598,11 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                   (context, addRearedLivestockOneModelObj) {
                                 return CustomDropDown(
                                   icon: Container(
-                                    margin: EdgeInsets.only(left: 30.h),
+                                    margin: EdgeInsets.only(
+                                        left: DeviceExt((30 / 841) * 100).h),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                        10.h,
+                                        DeviceExt((10 / 841) * 100).h,
                                       ),
                                     ),
                                     child: CustomImageView(
@@ -621,12 +645,12 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
             text: "lbl_save".tr,
             onTap: () => saveDraft(context),
             margin: EdgeInsets.only(
-              left: 16.h,
-              right: 16.h,
-              bottom: 20.v,
+              left: DeviceExt((16 / 841) * 100).h,
+              right: DeviceExt((16 / 841) * 100).h,
+              bottom: DeviceExt((20 / 411) * 100).w,
             ),
             leftIcon: Container(
-              margin: EdgeInsets.only(right: 10.h),
+              margin: EdgeInsets.only(right: DeviceExt((10 / 841) * 100).h),
               child: CustomImageView(
                 svgPath: ImageConstant.imgSaveWhiteA700,
               ),

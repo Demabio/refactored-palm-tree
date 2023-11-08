@@ -10,6 +10,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 
 import 'models/farm_item_model.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class AddFarmHoldingScreen extends StatelessWidget {
   const AddFarmHoldingScreen({Key? key}) : super(key: key);
@@ -30,10 +31,13 @@ class AddFarmHoldingScreen extends StatelessWidget {
       return SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-              leadingWidth: 60.h,
+              leadingWidth: DeviceExt((60 / 841) * 100).h,
               leading: AppbarImage(
                   svgPath: ImageConstant.imgSort,
-                  margin: EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                  margin: EdgeInsets.only(
+                      left: DeviceExt((16 / 841) * 100).h,
+                      top: DeviceExt((3 / 411) * 100).w,
+                      bottom: DeviceExt((11 / 411) * 100).w),
                   onTap: () {
                     onTapSortone(context);
                   }),
@@ -42,7 +46,11 @@ class AddFarmHoldingScreen extends StatelessWidget {
               actions: [
                 AppbarImage1(
                     svgPath: ImageConstant.imgFrame34WhiteA70044x44,
-                    margin: EdgeInsets.fromLTRB(11.h, 5.v, 11.h, 9.v),
+                    margin: EdgeInsets.fromLTRB(
+                        DeviceExt((11 / 841) * 100).h,
+                        DeviceExt((5 / 411) * 100).w,
+                        DeviceExt((11 / 841) * 100).h,
+                        DeviceExt((9 / 411) * 100).w),
                     onTap: () {
                       onTapImage(context);
                     })
@@ -51,7 +59,10 @@ class AddFarmHoldingScreen extends StatelessWidget {
           body: SizedBox(
             width: mediaQueryData.size.width,
             child: Padding(
-              padding: EdgeInsets.only(left: 20.h, right: 14.h, bottom: 5.v),
+              padding: EdgeInsets.only(
+                  left: DeviceExt((20 / 841) * 100).h,
+                  right: DeviceExt((14 / 841) * 100).h,
+                  bottom: DeviceExt((5 / 411) * 100).w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,17 +70,22 @@ class AddFarmHoldingScreen extends StatelessWidget {
                     Text("lbl_farmer_info".tr,
                         style: CustomTextStyles.labelMediumPrimary),
                     Padding(
-                        padding: EdgeInsets.only(left: 21.h),
+                        padding: EdgeInsets.only(
+                            left: DeviceExt((21 / 841) * 100).h),
                         child: Text("msg_farmer_felix_faro".tr,
                             style: theme.textTheme.labelMedium))
                   ]),
                   Padding(
-                      padding: EdgeInsets.only(left: 1.h, top: 7.v),
+                      padding: EdgeInsets.only(
+                          left: DeviceExt((1 / 841) * 100).h,
+                          top: DeviceExt((7 / 411) * 100).w),
                       child: Text("Other Farms".tr,
                           style: CustomTextStyles.titleMediumSemiBold)),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 9.h, top: 5.v),
+                      padding: EdgeInsets.only(
+                          left: DeviceExt((9 / 841) * 100).h,
+                          top: DeviceExt((5 / 411) * 100).w),
                       child: BlocSelector<AddFarmHoldingBloc,
                           AddFarmHoldingState, AddFarmHoldingModel?>(
                         selector: (state) => state.addFarmHoldingModelObj,
@@ -78,7 +94,8 @@ class AddFarmHoldingScreen extends StatelessWidget {
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
                               separatorBuilder: (context, index) {
-                                return SizedBox(height: 18.v);
+                                return SizedBox(
+                                    height: DeviceExt((18 / 411) * 100).w);
                               },
                               itemCount:
                                   addFarmHoldingModelObj?.farms.length ?? 0,

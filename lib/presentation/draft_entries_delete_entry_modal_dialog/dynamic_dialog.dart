@@ -89,7 +89,6 @@ class DynamicDialog extends StatelessWidget {
                               ? DeviceExt(1).h
                               : 1.w),
                       buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white,
                         fontSize: Device.orientation == Orientation.portrait
                             ? DeviceExt(2).h
                             : DeviceExt(2.5).w,

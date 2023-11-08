@@ -82,7 +82,7 @@ class EnumDbDownloadDialog extends StatelessWidget {
                 visible: !state.visibility,
                 child: SizedBox(
                   width: Device.orientation == Orientation.portrait
-                      ? 19.w
+                      ? 50.w
                       : DeviceExt(19).h,
                   child: Text(
                     "This action will cause any entries entered to be lost. Only to be used when setting up on a new device, are you sure?",

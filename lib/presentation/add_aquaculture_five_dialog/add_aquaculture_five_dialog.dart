@@ -11,6 +11,7 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class AddAquacultureFiveDialog extends StatelessWidget {
@@ -45,10 +46,10 @@ class AddAquacultureFiveDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Container(
-        width: 344.h,
+        width: DeviceExt((344 / 841) * 100).h,
         padding: EdgeInsets.symmetric(
-          horizontal: 11.h,
-          vertical: 13.v,
+          horizontal: DeviceExt((11 / 841) * 100).h,
+          vertical: DeviceExt((13 / 411) * 100).w,
         ),
         decoration: AppDecoration.fillWhiteA.copyWith(
           borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -60,8 +61,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: 3.h,
-                  top: 10.v,
+                  left: DeviceExt((3 / 841) * 100).h,
+                  top: DeviceExt((10 / 411) * 100).w,
                 ),
                 child: Text(
                   "lbl_add_fish_reared".tr,
@@ -80,26 +81,30 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                           .add(SearchEventFish(value: value));
                     },
                     margin: EdgeInsets.only(
-                      left: 5.h,
-                      top: 9.v,
-                      right: 5.h,
+                      left: DeviceExt((5 / 841) * 100).h,
+                      top: DeviceExt((9 / 411) * 100).w,
+                      right: DeviceExt((5 / 841) * 100).h,
                     ),
                     controller: searchController,
                     focusNode: _firstTextFieldFocus,
                     autofocus: false,
                     hintText: "lbl_search_fish".tr,
                     prefix: Container(
-                      margin: EdgeInsets.fromLTRB(15.h, 12.v, 9.h, 12.v),
+                      margin: EdgeInsets.fromLTRB(
+                          DeviceExt((15 / 841) * 100).h,
+                          DeviceExt((12 / 411) * 100).w,
+                          DeviceExt((9 / 841) * 100).h,
+                          DeviceExt((12 / 411) * 100).w),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgSearch,
                       ),
                     ),
                     prefixConstraints: BoxConstraints(
-                      maxHeight: 40.v,
+                      maxHeight: DeviceExt((40 / 411) * 100).w,
                     ),
                     suffix: Padding(
                       padding: EdgeInsets.only(
-                        right: 15.h,
+                        right: DeviceExt((15 / 841) * 100).h,
                       ),
                       child: IconButton(
                         onPressed: () {
@@ -117,7 +122,7 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 20.v),
+              SizedBox(height: DeviceExt((20 / 411) * 100).w),
               Align(
                 alignment: Alignment.center,
                 child: BlocSelector<AddAquacultureFiveBloc,
@@ -126,8 +131,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                   builder: (context, addRearedLivestockOneModelObj) {
                     return !addRearedLivestockOneModelObj!.search
                         ? Wrap(
-                            runSpacing: 10.v,
-                            spacing: 10.h,
+                            runSpacing: DeviceExt((10 / 411) * 100).w,
+                            spacing: DeviceExt((10 / 841) * 100).h,
                             children: List<Widget>.generate(
                               addRearedLivestockOneModelObj.commons.length,
                               (index) {
@@ -149,8 +154,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                             ),
                           )
                         : Wrap(
-                            runSpacing: 10.v,
-                            spacing: 10.h,
+                            runSpacing: DeviceExt((10 / 411) * 100).w,
+                            spacing: DeviceExt((10 / 841) * 100).h,
                             children: List<Widget>.generate(
                               addRearedLivestockOneModelObj
                                   .searchResults.length,
@@ -178,8 +183,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 13.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((13 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_fish_category".tr,
@@ -192,17 +197,19 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                 builder: (context, addAquacultureFiveModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -225,8 +232,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 13.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((13 / 411) * 100).w,
                 ),
                 child: Text(
                   "lbl_fish_type2".tr,
@@ -239,17 +246,19 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                 builder: (context, addAquacultureFiveModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -272,8 +281,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 13.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((13 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_type_of_production".tr,
@@ -286,17 +295,19 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                 builder: (context, addAquacultureFiveModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     validator: (value) {
                       if (value == null) {
                         return "Field is required";
@@ -317,8 +328,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 13.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((13 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_estimated_number".tr,
@@ -331,7 +342,8 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                 builder: (context, numbervalueoneController) {
                   return CustomTextFormField(
                     controller: numbervalueoneController,
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_number".tr,
                     autofocus: false,
                     focusNode: node1,
@@ -348,14 +360,14 @@ class AddAquacultureFiveDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 14.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((14 / 411) * 100).w,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomElevatedButton(
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_add".tr,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
@@ -373,7 +385,7 @@ class AddAquacultureFiveDialog extends StatelessWidget {
                       buttonTextStyle: CustomTextStyles.bodyLarge16,
                     ),
                     CustomOutlinedButton(
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_close".tr,
                       onTap: () => Navigator.pop(context),
                     ),

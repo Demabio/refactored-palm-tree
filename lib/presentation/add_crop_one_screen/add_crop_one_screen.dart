@@ -17,6 +17,7 @@ import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_search_view.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddCropOneScreen extends StatelessWidget {
@@ -48,11 +49,11 @@ class AddCropOneScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60/841)*100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
                       margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                          EdgeInsets.only(left: DeviceExt((16/841)*100).h, top: DeviceExt(( 3/411)*100).w, bottom: DeviceExt(( 11/411)*100).w),
                       onTap: () {
                         onTapSortone(context);
                       }),
@@ -64,10 +65,10 @@ class AddCropOneScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 5.v),
+                        padding: EdgeInsets.only(top: DeviceExt(( 5/411)*100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: 16.h, right: 16.h, bottom: 5.v),
+                                left: DeviceExt((16/841)*100).h, right: DeviceExt((16/841)*100).h, bottom: DeviceExt(( 5/411)*100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -175,9 +176,9 @@ class AddCropOneScreen extends StatelessWidget {
                                           builder: (context, searchController) {
                                             return CustomSearchView(
                                                 margin: EdgeInsets.only(
-                                                    left: 13.h,
-                                                    top: 7.v,
-                                                    right: 18.h),
+                                                    left: DeviceExt((13/841)*100).h,
+                                                    top: DeviceExt(( 7/411)*100).w,
+                                                    right: DeviceExt((18/841)*100).h),
                                                 controller: searchController,
                                                 enabled: true,
                                                 autofocus: false,
@@ -192,16 +193,16 @@ class AddCropOneScreen extends StatelessWidget {
                                                 alignment: Alignment.center,
                                                 prefix: Container(
                                                     margin: EdgeInsets.fromLTRB(
-                                                        15.h, 12.v, 9.h, 12.v),
+                                                        DeviceExt((15/841)*100).h, DeviceExt(( 12/411)*100).w, DeviceExt((9/841)*100).h, DeviceExt(( 12/411)*100).w),
                                                     child: CustomImageView(
                                                         svgPath: ImageConstant
                                                             .imgSearch)),
                                                 prefixConstraints:
                                                     BoxConstraints(
-                                                        maxHeight: 40.v),
+                                                        maxHeight: DeviceExt(( 40/411)*100).w),
                                                 suffix: Padding(
                                                     padding: EdgeInsets.only(
-                                                        right: 15.h),
+                                                        right: DeviceExt((15/841)*100).h),
                                                     child: IconButton(
                                                         onPressed: () {
                                                           searchController!
@@ -218,11 +219,11 @@ class AddCropOneScreen extends StatelessWidget {
                                           })),
                                   Padding(
                                       padding:
-                                          EdgeInsets.only(left: 13.h, top: 7.v),
+                                          EdgeInsets.only(left: DeviceExt((13/841)*100).h, top: DeviceExt(( 7/411)*100).w),
                                       child: Text("lbl_common_crops".tr,
                                           style: CustomTextStyles
                                               .labelMediumPrimary_1)),
-                                  SizedBox(height: 18.v),
+                                  SizedBox(height: DeviceExt(( 18/411)*100).w),
                                   Align(
                                       alignment: Alignment.center,
                                       child: BlocSelector<
@@ -235,8 +236,8 @@ class AddCropOneScreen extends StatelessWidget {
                                               (context, addCropOneModelObj) {
                                             return !addCropOneModelObj!.search
                                                 ? Wrap(
-                                                    runSpacing: 10.v,
-                                                    spacing: 10.h,
+                                                    runSpacing: DeviceExt(( 10/411)*100).w,
+                                                    spacing: DeviceExt((10/841)*100).h,
                                                     children:
                                                         List<Widget>.generate(
                                                       addCropOneModelObj
@@ -267,8 +268,8 @@ class AddCropOneScreen extends StatelessWidget {
                                                     ),
                                                   )
                                                 : Wrap(
-                                                    runSpacing: 10.v,
-                                                    spacing: 10.h,
+                                                    runSpacing: DeviceExt(( 10/411)*100).w,
+                                                    spacing: DeviceExt((10/841)*100).h,
                                                     children:
                                                         List<Widget>.generate(
                                                       addCropOneModelObj
@@ -301,7 +302,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                     ),
                                                   );
                                           })),
-                                  SizedBox(height: 24.v),
+                                  SizedBox(height: DeviceExt(( 24/411)*100).w),
                                   Text("lbl_crop2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -313,11 +314,11 @@ class AddCropOneScreen extends StatelessWidget {
                                         return CustomDropDown(
                                             icon: Container(
                                                 margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10/841)*100).h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -341,7 +342,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 9.v),
+                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
                                   Text("msg_total_acreage".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -368,7 +369,7 @@ class AddCropOneScreen extends StatelessWidget {
                                             textInputAction:
                                                 TextInputAction.done);
                                       }),
-                                  SizedBox(height: 9.v),
+                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
                                   Text("msg_unit_of_area".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -380,11 +381,11 @@ class AddCropOneScreen extends StatelessWidget {
                                         return CustomDropDown(
                                             icon: Container(
                                                 margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10/841)*100).h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -409,7 +410,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 9.v),
+                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
                                   Text("msg_use_of_certified".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -421,11 +422,11 @@ class AddCropOneScreen extends StatelessWidget {
                                         return CustomDropDown(
                                             icon: Container(
                                                 margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10/841)*100).h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -449,7 +450,7 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 10.v),
+                                  SizedBox(height: DeviceExt(( 10/411)*100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -457,7 +458,7 @@ class AddCropOneScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomOutlinedButton(
                                           text: "lbl_back".tr,
-                                          margin: EdgeInsets.only(right: 1.h),
+                                          margin: EdgeInsets.only(right: DeviceExt((1/841)*100).h),
                                           buttonStyle: CustomButtonStyles
                                               .outlinePrimaryTL10,
                                           isDisabled: true,
@@ -468,16 +469,16 @@ class AddCropOneScreen extends StatelessWidget {
                                             child: CustomElevatedButton(
                                                 text: "lbl_next".tr,
                                                 margin:
-                                                    EdgeInsets.only(left: 1.h),
+                                                    EdgeInsets.only(left: DeviceExt((1/841)*100).h),
                                                 onTap: () {
                                                   nextPage(context);
                                                 }))
                                       ]),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(height: DeviceExt(( 12/411)*100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: 10.h),
+                                          margin: EdgeInsets.only(right: DeviceExt((10/841)*100).h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),

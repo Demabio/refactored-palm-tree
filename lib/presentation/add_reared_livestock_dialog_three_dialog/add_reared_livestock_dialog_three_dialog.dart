@@ -6,6 +6,7 @@ import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
@@ -31,10 +32,10 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
     mediaQueryData = MediaQuery.of(context);
 
     return Container(
-      width: 344.h,
+      width: DeviceExt((344 / 841) * 100).h,
       padding: EdgeInsets.symmetric(
-        horizontal: 9.h,
-        vertical: 2.v,
+        horizontal: DeviceExt((9 / 841) * 100).h,
+        vertical: DeviceExt((2 / 411) * 100).w,
       ),
       decoration: AppDecoration.fillWhiteA.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -44,7 +45,7 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 5.h),
+            padding: EdgeInsets.only(left: DeviceExt((5 / 841) * 100).h),
             child: Text(
               "msg_add_livestock_age2".tr,
               style: CustomTextStyles.titleMediumSemiBold,
@@ -58,8 +59,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "msg_less_than_3_weeks".tr,
                 value: lessThanThreeWe,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 46.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((46 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -71,15 +72,16 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: 14.v,
-              right: 5.h,
+              top: DeviceExt((14 / 411) * 100).w,
+              right: DeviceExt((5 / 841) * 100).h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 10.h),
+                    padding:
+                        EdgeInsets.only(right: DeviceExt((10 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -94,12 +96,12 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.twotosixmonthsmController,
                           builder: (context, twotosixmonthsmController) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: twotosixmonthsmController,
                               hintText: "lbl_males".tr,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 7.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((7 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -110,7 +112,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 10.h),
+                    padding:
+                        EdgeInsets.only(left: DeviceExt((10 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -125,12 +128,12 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.femalesController,
                           builder: (context, femalesController) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: femalesController,
                               hintText: "lbl_females".tr,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((8 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -150,8 +153,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "lbl_3_8_weeks".tr,
                 value: threeToEightWee,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -169,8 +172,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "msg_less_than_2_months".tr,
                 value: lessThanTwoMont,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -182,16 +185,17 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 2.h,
-              top: 14.v,
-              right: 5.h,
+              left: DeviceExt((2 / 841) * 100).h,
+              top: DeviceExt((14 / 411) * 100).w,
+              right: DeviceExt((5 / 841) * 100).h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 9.h),
+                    padding:
+                        EdgeInsets.only(right: DeviceExt((9 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -206,12 +210,12 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.twotosixmonthsmController1,
                           builder: (context, twotosixmonthsmController1) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: twotosixmonthsmController1,
                               hintText: "lbl_males".tr,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 7.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((7 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -222,7 +226,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 9.h),
+                    padding:
+                        EdgeInsets.only(left: DeviceExt((9 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -237,12 +242,12 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.femalesoneController,
                           builder: (context, femalesoneController) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: femalesoneController,
                               hintText: "lbl_females".tr,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((8 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -262,8 +267,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "lbl_2_6_months".tr,
                 value: twoToSixMonths,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -281,8 +286,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "lbl_6_12_months".tr,
                 value: sixToTwelveMont,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -300,8 +305,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "lbl_1_2_years2".tr,
                 value: oneToTwoYears,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -313,16 +318,17 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 2.h,
-              top: 12.v,
-              right: 5.h,
+              left: DeviceExt((2 / 841) * 100).h,
+              top: DeviceExt((12 / 411) * 100).w,
+              right: DeviceExt((5 / 841) * 100).h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 9.h),
+                    padding:
+                        EdgeInsets.only(right: DeviceExt((9 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -337,12 +343,12 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.twotosixmonthsmController2,
                           builder: (context, twotosixmonthsmController2) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: twotosixmonthsmController2,
                               hintText: "lbl_males".tr,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 7.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((7 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -353,7 +359,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 9.h),
+                    padding:
+                        EdgeInsets.only(left: DeviceExt((9 / 841) * 100).h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -368,13 +375,13 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                           selector: (state) => state.femalestwoController,
                           builder: (context, femalestwoController) {
                             return CustomTextFormField(
-                              width: 150.h,
+                              width: DeviceExt((150 / 841) * 100).h,
                               controller: femalestwoController,
                               hintText: "lbl_females".tr,
                               textInputAction: TextInputAction.done,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((8 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             );
                           },
@@ -394,8 +401,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "lbl_2_4_years".tr,
                 value: twoToFourYears,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 15.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((15 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -413,8 +420,8 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                 text: "msg_4_years_or_older".tr,
                 value: fourYearsOrOlde,
                 margin: EdgeInsets.only(
-                  left: 5.h,
-                  top: 13.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((13 / 411) * 100).w,
                 ),
                 onChange: (value) {
                   context
@@ -425,14 +432,18 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
             },
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(5.h, 44.v, 4.h, 16.v),
+            padding: EdgeInsets.fromLTRB(
+                DeviceExt((5 / 841) * 100).h,
+                DeviceExt((44 / 411) * 100).w,
+                DeviceExt((4 / 841) * 100).h,
+                DeviceExt((16 / 411) * 100).w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 25.h,
-                    vertical: 12.v,
+                    horizontal: DeviceExt((25 / 841) * 100).h,
+                    vertical: DeviceExt((12 / 411) * 100).w,
                   ),
                   decoration: AppDecoration.fillPrimary.copyWith(
                     borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -443,13 +454,13 @@ class AddRearedLivestockDialogThreeDialog extends StatelessWidget {
                   ),
                 ),
                 CustomElevatedButton(
-                  width: 95.h,
+                  width: DeviceExt((95 / 841) * 100).h,
                   text: "lbl_add".tr,
                   buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                   buttonTextStyle: CustomTextStyles.bodyLarge16,
                 ),
                 CustomOutlinedButton(
-                  width: 95.h,
+                  width: DeviceExt((95 / 841) * 100).h,
                   text: "lbl_close".tr,
                 ),
               ],

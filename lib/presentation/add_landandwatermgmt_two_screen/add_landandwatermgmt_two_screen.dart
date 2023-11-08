@@ -19,6 +19,7 @@ import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddLandandwatermgmtTwoScreen extends StatelessWidget {
@@ -52,14 +53,14 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               svgPath: ImageConstant.imgSort,
               onTap: () => goB(context),
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -73,12 +74,12 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
             child: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 5.v),
+                padding: EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 16.h,
-                    right: 16.h,
-                    bottom: 5.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    right: DeviceExt((16 / 841) * 100).h,
+                    bottom: DeviceExt((5 / 411) * 100).w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +168,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                               ],
                             );
                           })),
-                      SizedBox(height: 45.v),
+                      SizedBox(height: DeviceExt((45 / 411) * 100).w),
                       Text(
                         "msg_do_you_undertake2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -181,10 +182,11 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                         builder: (context, addLandandwatermgmtTwoModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -221,8 +223,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                           builder: (context, list) {
                             return Padding(
                               padding: EdgeInsets.only(
-                                top: 15.v,
-                                right: 16.h,
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
                               ),
                               child: Visibility(
                                 visible: list?.selectedDropDownValue?.id == 1,
@@ -249,8 +251,10 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                         builder: (context, list) {
                                           return Padding(
                                             padding: EdgeInsets.only(
-                                              top: 15.v,
-                                              right: 16.h,
+                                              top:
+                                                  DeviceExt((15 / 411) * 100).w,
+                                              right:
+                                                  DeviceExt((16 / 841) * 100).h,
                                             ),
                                             child: Column(
                                               children: List<Widget>.generate(
@@ -271,12 +275,13 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       text: "msg_add_undertaken_irrigation".tr,
                                       onTap: () => addIrrigation(context),
                                       margin: EdgeInsets.only(
-                                        left: 82.h,
-                                        top: 9.v,
+                                        left: DeviceExt((82 / 841) * 100).h,
+                                        top: DeviceExt((9 / 411) * 100).w,
                                       ),
                                       alignment: Alignment.centerRight,
                                     ),
-                                    SizedBox(height: 17.v),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
                                     BlocSelector<AddLandandwatermgmtTwoBloc,
                                             AddLandandwatermgmtTwoState, bool?>(
                                         selector: (state) => state.checkb,
@@ -298,8 +303,10 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                         builder: (context, list) {
                                           return Padding(
                                             padding: EdgeInsets.only(
-                                              top: 15.v,
-                                              right: 16.h,
+                                              top:
+                                                  DeviceExt((15 / 411) * 100).w,
+                                              right:
+                                                  DeviceExt((16 / 841) * 100).h,
                                             ),
                                             child: Column(
                                               children: List<Widget>.generate(
@@ -321,17 +328,18 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       onTap: () =>
                                           addIrrigationProject(context),
                                       margin: EdgeInsets.only(
-                                        left: 82.h,
-                                        top: 31.v,
+                                        left: DeviceExt((82 / 841) * 100).h,
+                                        top: DeviceExt((31 / 411) * 100).w,
                                       ),
                                       alignment: Alignment.centerRight,
                                     ),
-                                    SizedBox(height: 17.v),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
                                     Container(
-                                      width: 244.h,
+                                      width: DeviceExt((244 / 841) * 100).h,
                                       margin: EdgeInsets.only(
-                                        top: 17.v,
-                                        right: 98.h,
+                                        top: DeviceExt((17 / 411) * 100).w,
+                                        right: DeviceExt((98 / 841) * 100).h,
                                       ),
                                       child: Text(
                                         "msg_for_irrigation_schemes".tr,
@@ -349,8 +357,10 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                         builder: (context, list) {
                                           return Padding(
                                             padding: EdgeInsets.only(
-                                              top: 15.v,
-                                              right: 16.h,
+                                              top:
+                                                  DeviceExt((15 / 411) * 100).w,
+                                              right:
+                                                  DeviceExt((16 / 841) * 100).h,
                                             ),
                                             child: Column(
                                               children: List<Widget>.generate(
@@ -371,12 +381,13 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       text: "msg_add_implementing".tr,
                                       onTap: () => addImplementing(context),
                                       margin: EdgeInsets.only(
-                                        left: 82.h,
-                                        top: 7.v,
+                                        left: DeviceExt((82 / 841) * 100).h,
+                                        top: DeviceExt((7 / 411) * 100).w,
                                       ),
                                       alignment: Alignment.centerRight,
                                     ),
-                                    SizedBox(height: 17.v),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
                                     Text(
                                       "msg_total_area_under".tr,
                                       style:
@@ -408,7 +419,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                         );
                                       },
                                     ),
-                                    SizedBox(height: 17.v),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
                                     Text(
                                       "lbl_unit_of_area2".tr,
                                       style:
@@ -424,11 +436,14 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                           addLandandwatermgmtTwoModelObj) {
                                         return CustomDropDown(
                                           icon: Container(
-                                            margin: EdgeInsets.only(left: 30.h),
+                                            margin: EdgeInsets.only(
+                                                left:
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                10.h,
+                                                DeviceExt((10 / 841) * 100).h,
                                               ),
                                             ),
                                             child: CustomImageView(
@@ -462,7 +477,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                       //   style: CustomTextStyles.labelMediumPrimary_1,
                       // ),
 
-                      SizedBox(height: 18.v),
+                      SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -470,7 +485,8 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                             child: CustomOutlinedButton(
                               text: "lbl_back".tr,
                               onTap: () => goB(context),
-                              margin: EdgeInsets.only(right: 1.h),
+                              margin: EdgeInsets.only(
+                                  right: DeviceExt((1 / 841) * 100).h),
                               buttonStyle:
                                   CustomButtonStyles.outlinePrimaryTL10,
                               buttonTextStyle:
@@ -482,17 +498,19 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                               isDisabled: true,
                               buttonStyle: CustomButtonStyles.fillPrimaryTL10,
                               text: "lbl_next".tr,
-                              margin: EdgeInsets.only(left: 1.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((1 / 841) * 100).h),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 12.v),
+                      SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "lbl_save".tr,
                         onTap: () => saveDraft(context),
                         leftIcon: Container(
-                          margin: EdgeInsets.only(right: 10.h),
+                          margin: EdgeInsets.only(
+                              right: DeviceExt((10 / 841) * 100).h),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgSaveWhiteA700,
                           ),

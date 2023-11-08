@@ -8,6 +8,7 @@ import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore_for_file: must_be_immutable
 class AddAquacultureFourDialog extends StatelessWidget {
@@ -40,10 +41,10 @@ class AddAquacultureFourDialog extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Container(
-        width: 344.h,
+        width: DeviceExt((344 / 841) * 100).h,
         padding: EdgeInsets.symmetric(
-          horizontal: 11.h,
-          vertical: 25.v,
+          horizontal: DeviceExt((11 / 841) * 100).h,
+          vertical: DeviceExt((25 / 411) * 100).w,
         ),
         decoration: AppDecoration.fillWhiteA.copyWith(
           borderRadius: BorderRadiusStyle.roundedBorder6,
@@ -54,7 +55,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 3.h),
+                padding: EdgeInsets.only(left: DeviceExt((3 / 841) * 100).h),
                 child: Text(
                   "msg_add_production_system".tr,
                   style: CustomTextStyles.titleMediumSemiBold,
@@ -62,8 +63,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 36.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((36 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_production_system4".tr,
@@ -76,17 +77,19 @@ class AddAquacultureFourDialog extends StatelessWidget {
                 builder: (context, addAquacultureFourModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_select".tr,
                     validator: (value) {
                       if (value == null) {
@@ -107,8 +110,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 7.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((7 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_unit_of_measure".tr,
@@ -121,17 +124,19 @@ class AddAquacultureFourDialog extends StatelessWidget {
                 builder: (context, addAquacultureFourModelObj) {
                   return CustomDropDown(
                     icon: Container(
-                      margin: EdgeInsets.only(left: 30.h),
+                      margin:
+                          EdgeInsets.only(left: DeviceExt((30 / 841) * 100).h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          10.h,
+                          DeviceExt((10 / 841) * 100).h,
                         ),
                       ),
                       child: CustomImageView(
                         svgPath: ImageConstant.imgArrowdownPrimary,
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_select".tr,
                     val: addAquacultureFourModelObj?.selectedDropDownValue1,
                     validator: (value) {
@@ -152,8 +157,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 7.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((7 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_number_of_active".tr,
@@ -168,7 +173,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     autofocus: false,
                     focusNode: node1,
                     controller: numbervalueoneController1,
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_number".tr,
                     textInputType: TextInputType.number,
                     validator: (value) {
@@ -182,8 +188,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 7.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((7 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_active_volume_m32".tr,
@@ -198,7 +204,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     focusNode: node2,
                     autofocus: false,
                     controller: numbervalueoneController2,
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_number".tr,
                     textInputType: TextInputType.number,
                     validator: (value) {
@@ -212,8 +219,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 7.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((7 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_number_of_inactive".tr,
@@ -228,7 +235,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     focusNode: node3,
                     autofocus: false,
                     controller: numbervalueoneController3,
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_number".tr,
                     textInputType: TextInputType.number,
                     validator: (value) {
@@ -242,8 +250,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 7.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((7 / 411) * 100).w,
                 ),
                 child: Text(
                   "msg_inactive_volume".tr,
@@ -258,7 +266,8 @@ class AddAquacultureFourDialog extends StatelessWidget {
                     autofocus: false,
                     focusNode: node4,
                     controller: numbervalueoneController4,
-                    margin: EdgeInsets.symmetric(horizontal: 5.h),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: DeviceExt((5 / 841) * 100).h),
                     hintText: "lbl_number".tr,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.number,
@@ -273,15 +282,15 @@ class AddAquacultureFourDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: 5.h,
-                  top: 8.v,
-                  bottom: 29.v,
+                  left: DeviceExt((5 / 841) * 100).h,
+                  top: DeviceExt((8 / 411) * 100).w,
+                  bottom: DeviceExt((29 / 411) * 100).w,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomElevatedButton(
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_add".tr,
                       buttonStyle: CustomButtonStyles.fillPrimaryTL6,
                       buttonTextStyle: CustomTextStyles.bodyLarge16,
@@ -299,7 +308,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                       },
                     ),
                     CustomOutlinedButton(
-                      width: 95.h,
+                      width: DeviceExt((95 / 841) * 100).h,
                       text: "lbl_close".tr,
                       onTap: () => Navigator.pop(context),
                     ),

@@ -13,6 +13,7 @@ import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class FarmersIdentificationFourScreen extends StatelessWidget {
@@ -46,11 +47,13 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
       child: SafeArea(
           child: Scaffold(
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      margin: EdgeInsets.only(
+                          left: DeviceExt((16 / 841) * 100).h,
+                          top: DeviceExt((3 / 411) * 100).w,
+                          bottom: DeviceExt((11 / 411) * 100).w),
                       onTap: () {
                         goToDetails(context);
                       }),
@@ -62,10 +65,13 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 9.v),
+                        padding:
+                            EdgeInsets.only(top: DeviceExt((9 / 411) * 100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: 16.h, right: 16.h, bottom: 5.v),
+                                left: DeviceExt((16 / 841) * 100).h,
+                                right: DeviceExt((16 / 841) * 100).h,
+                                bottom: DeviceExt((5 / 411) * 100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -193,11 +199,13 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                           ],
                                         );
                                       })),
-                                  SizedBox(height: 11.v),
+                                  SizedBox(
+                                      height: DeviceExt((11 / 411) * 100).w),
                                   Text("msg_respondent_details".tr,
                                       style:
                                           CustomTextStyles.titleMediumSemiBold),
-                                  SizedBox(height: 18.v),
+                                  SizedBox(
+                                      height: DeviceExt((18 / 411) * 100).w),
                                   Text("msg_is_the_farmer_the".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -218,24 +226,29 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                 return null;
                                               }
                                             },
-                                            val:
-                                                farmersIdentificationFourModelObj
-                                                    ?.selectedDropDownValue,
+                                            val: farmersIdentificationFourModelObj
+                                                ?.selectedDropDownValue,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((10 / 411) * 100)
+                                                        .w,
+                                                    DeviceExt((9 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((15 / 411) * 100)
+                                                        .w),
                                                 decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.h)),
+                                                    borderRadius: BorderRadius.circular(
+                                                        DeviceExt((10 / 841) * 100)
+                                                            .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
                                             hintText: "lbl_select".tr,
-                                            items:
-                                                farmersIdentificationFourModelObj
-                                                        ?.dropdownItemList ??
-                                                    [],
+                                            items: farmersIdentificationFourModelObj
+                                                    ?.dropdownItemList ??
+                                                [],
                                             onChanged: (value) {
                                               context
                                                   .read<
@@ -244,7 +257,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 19.v),
+                                  SizedBox(
+                                      height: DeviceExt((19 / 411) * 100).w),
                                   BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -288,16 +302,23 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                   return null;
                                                 }
                                               },
-                                              val:
-                                                  farmersIdentificationFourModelObj
-                                                      .selectedDropDownValue1,
+                                              val: farmersIdentificationFourModelObj
+                                                  .selectedDropDownValue1,
                                               icon: Container(
                                                   margin: EdgeInsets.fromLTRB(
-                                                      30.h, 10.v, 9.h, 15.v),
+                                                      DeviceExt((30 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt((10 / 411) * 100)
+                                                          .w,
+                                                      DeviceExt((9 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt((15 / 411) * 100)
+                                                          .w),
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10.h)),
+                                                              DeviceExt((10 / 841) * 100)
+                                                                  .h)),
                                                   child: CustomImageView(
                                                       svgPath: ImageConstant
                                                           .imgArrowdownPrimary)),
@@ -314,7 +335,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               }),
                                         );
                                       }),
-                                  SizedBox(height: 20.v),
+                                  SizedBox(
+                                      height: DeviceExt((20 / 411) * 100).w),
                                   BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -362,10 +384,22 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               },
                                               contentPadding:
                                                   EdgeInsets.fromLTRB(
-                                                      16.h, 13.v, 16.h, 12.v)),
+                                                      DeviceExt(
+                                                              (16 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt(
+                                                              (13 / 411) * 100)
+                                                          .w,
+                                                      DeviceExt(
+                                                              (16 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt(
+                                                              (12 / 411) * 100)
+                                                          .w)),
                                         );
                                       }),
-                                  SizedBox(height: 21.v),
+                                  SizedBox(
+                                      height: DeviceExt((21 / 411) * 100).w),
                                   BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -415,7 +449,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               }),
                                         );
                                       }),
-                                  SizedBox(height: 31.v),
+                                  SizedBox(
+                                      height: DeviceExt((31 / 411) * 100).w),
                                   BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -465,10 +500,22 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               },
                                               contentPadding:
                                                   EdgeInsets.fromLTRB(
-                                                      16.h, 13.v, 16.h, 12.v)),
+                                                      DeviceExt(
+                                                              (16 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt(
+                                                              (13 / 411) * 100)
+                                                          .w,
+                                                      DeviceExt(
+                                                              (16 / 841) * 100)
+                                                          .h,
+                                                      DeviceExt(
+                                                              (12 / 411) * 100)
+                                                          .w)),
                                         );
                                       }),
-                                  SizedBox(height: 21.v),
+                                  SizedBox(
+                                      height: DeviceExt((21 / 411) * 100).w),
                                   GestureDetector(
                                       onTap: () {
                                         onTapRowback(context);
@@ -480,8 +527,10 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                             Expanded(
                                                 child: CustomOutlinedButton(
                                               text: "lbl_back".tr,
-                                              margin:
-                                                  EdgeInsets.only(right: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  right:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               onTap: () => goBack(context),
                                               isDisabled: true,
                                               buttonStyle: CustomButtonStyles
@@ -490,18 +539,23 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                             Expanded(
                                                 child: CustomElevatedButton(
                                               text: "lbl_next".tr,
-                                              margin:
-                                                  EdgeInsets.only(left: 1.h),
+                                              margin: EdgeInsets.only(
+                                                  left:
+                                                      DeviceExt((1 / 841) * 100)
+                                                          .h),
                                               isDisabled: true,
                                               buttonStyle: CustomButtonStyles
                                                   .fillPrimaryTL10,
                                             ))
                                           ])),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: 10.h),
+                                          margin: EdgeInsets.only(
+                                              right: DeviceExt((10 / 841) * 100)
+                                                  .h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),

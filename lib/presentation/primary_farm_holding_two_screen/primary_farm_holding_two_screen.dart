@@ -16,6 +16,7 @@ import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
@@ -48,11 +49,13 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
-                  leadingWidth: 60.h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
                   leading: AppbarImage(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: 16.h, top: 3.v, bottom: 11.v),
+                      margin: EdgeInsets.only(
+                          left: DeviceExt((16 / 841) * 100).h,
+                          top: DeviceExt((3 / 411) * 100).w,
+                          bottom: DeviceExt((11 / 411) * 100).w),
                       onTap: () {
                         onTapSortone(context);
                       }),
@@ -64,10 +67,13 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 5.v),
+                        padding:
+                            EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: 16.h, right: 16.h, bottom: 5.v),
+                                left: DeviceExt((16 / 841) * 100).h,
+                                right: DeviceExt((16 / 841) * 100).h,
+                                bottom: DeviceExt((5 / 411) * 100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -169,7 +175,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                   Text("lbl_production_type".tr,
                                       style:
                                           CustomTextStyles.titleMediumSemiBold),
-                                  SizedBox(height: 18.v),
+                                  SizedBox(
+                                      height: DeviceExt((18 / 411) * 100).w),
                                   Text("msg_crop_production2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -194,11 +201,19 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                 ?.selectedDropDownValue2,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((10 / 411) * 100)
+                                                        .w,
+                                                    DeviceExt((9 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((15 / 411) * 100)
+                                                        .w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -214,7 +229,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 19.v),
+                                  SizedBox(
+                                      height: DeviceExt((19 / 411) * 100).w),
                                   Text("msg_livestock_production2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -239,11 +255,19 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                 ?.selectedDropDownValue3,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((10 / 411) * 100)
+                                                        .w,
+                                                    DeviceExt((9 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((15 / 411) * 100)
+                                                        .w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -259,7 +283,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 19.v),
+                                  SizedBox(
+                                      height: DeviceExt((19 / 411) * 100).w),
                                   Text("msg_aquaculture_production2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -284,11 +309,19 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                 ?.selectedDropDownValue4,
                                             icon: Container(
                                                 margin: EdgeInsets.fromLTRB(
-                                                    30.h, 10.v, 9.h, 15.v),
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((10 / 411) * 100)
+                                                        .w,
+                                                    DeviceExt((9 / 841) * 100)
+                                                        .h,
+                                                    DeviceExt((15 / 411) * 100)
+                                                        .w),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -304,20 +337,25 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 20.v),
+                                  SizedBox(
+                                      height: DeviceExt((20 / 411) * 100).w),
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 14.h, top: 15.v),
+                                          left: DeviceExt((14 / 841) * 100).h,
+                                          top: DeviceExt((15 / 411) * 100).w),
                                       child: Text(
                                           "msg_main_farm_enterprises".tr,
                                           style: CustomTextStyles
                                               .titleMediumSemiBold)),
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 14.h, top: 16.v),
+                                          left: DeviceExt((14 / 841) * 100).h,
+                                          top: DeviceExt((16 / 411) * 100).w),
                                       child: Row(children: [
                                         Padding(
-                                            padding: EdgeInsets.only(top: 1.v),
+                                            padding: EdgeInsets.only(
+                                                top: DeviceExt((1 / 411) * 100)
+                                                    .w),
                                             child: Text("lbl_accuracy".tr,
                                                 style: CustomTextStyles
                                                     .labelLargePrimary)),
@@ -330,14 +368,17 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             builder: (context, state) {
                                               return Padding(
                                                   padding: EdgeInsets.only(
-                                                      left: 87.h),
+                                                      left: DeviceExt(
+                                                              (87 / 841) * 100)
+                                                          .h),
                                                   child: Text(
                                                       "${state?.accuracy} metres",
                                                       style: CustomTextStyles
                                                           .labelLargePrimary));
                                             }),
                                       ])),
-                                  SizedBox(height: 15.v),
+                                  SizedBox(
+                                      height: DeviceExt((15 / 411) * 100).w),
                                   Row(children: [
                                     Column(
                                         crossAxisAlignment:
@@ -355,7 +396,9 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               builder: (context,
                                                   titleoneController) {
                                                 return CustomTextFormField(
-                                                    width: 95.h,
+                                                    width: DeviceExt(
+                                                            (95 / 841) * 100)
+                                                        .h,
                                                     autofocus: false,
                                                     focusNode: node1,
                                                     controller:
@@ -373,12 +416,20 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                         TextInputType.number,
                                                     contentPadding:
                                                         EdgeInsets.symmetric(
-                                                            horizontal: 4.h,
-                                                            vertical: 11.v));
+                                                            horizontal: DeviceExt(
+                                                                    (4 / 841) *
+                                                                        100)
+                                                                .h,
+                                                            vertical: DeviceExt(
+                                                                    (11 / 411) *
+                                                                        100)
+                                                                .w));
                                               })
                                         ]),
                                     Padding(
-                                        padding: EdgeInsets.only(left: 13.h),
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                DeviceExt((13 / 841) * 100).h),
                                         child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -395,7 +446,10 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                   builder: (context,
                                                       titlethreeController) {
                                                     return CustomTextFormField(
-                                                        width: 95.h,
+                                                        width: DeviceExt((95 /
+                                                                    841) *
+                                                                100)
+                                                            .h,
                                                         autofocus: false,
                                                         focusNode: node2,
                                                         controller:
@@ -414,19 +468,25 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                         hintText:
                                                             "lbl_latitude3".tr,
                                                         contentPadding:
-                                                            EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        4.h,
-                                                                    vertical:
-                                                                        11.v));
+                                                            EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    DeviceExt((4 /
+                                                                                841) *
+                                                                            100)
+                                                                        .h,
+                                                                vertical: DeviceExt(
+                                                                        (11 / 411) *
+                                                                            100)
+                                                                    .w));
                                                   })
                                             ])),
                                     CustomElevatedButton(
-                                        height: 64.v,
-                                        width: 95.h,
+                                        height: DeviceExt((64 / 411) * 100).w,
+                                        width: DeviceExt((95 / 841) * 100).h,
                                         text: "lbl_set_location".tr,
-                                        margin: EdgeInsets.only(left: 45.h),
+                                        margin: EdgeInsets.only(
+                                            left:
+                                                DeviceExt((45 / 841) * 100).h),
                                         buttonTextStyle: CustomTextStyles
                                             .bodySmallPoppinsWhiteA700,
                                         onTap: () {
@@ -440,7 +500,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                               ));
                                         })
                                   ]),
-                                  SizedBox(height: 37.v),
+                                  SizedBox(
+                                      height: DeviceExt((37 / 411) * 100).w),
                                   Text("msg_legal_status_of2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -454,12 +515,15 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                           primaryFarmHoldingTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (30 / 841) * 100)
+                                                        .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -484,7 +548,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: 37.v),
+                                  SizedBox(
+                                      height: DeviceExt((37 / 411) * 100).w),
                                   Text("msg_lr_no_certificate_lease2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -503,7 +568,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                             textInputAction:
                                                 TextInputAction.done);
                                       }),
-                                  SizedBox(height: 37.v),
+                                  SizedBox(
+                                      height: DeviceExt((37 / 411) * 100).w),
                                   Text("msg_do_you_have_another2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -517,12 +583,15 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                           primaryFarmHoldingTwoModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 30.h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (30 / 841) * 100)
+                                                        .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -552,11 +621,14 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       selector: (state) => state.checked,
                                       builder: (context, checked) {
                                         return Container(
-                                          width: 266.h,
+                                          width: DeviceExt((266 / 841) * 100).h,
                                           margin: EdgeInsets.only(
-                                              left: 14.h,
-                                              top: 13.v,
-                                              right: 60.h),
+                                              left:
+                                                  DeviceExt((14 / 841) * 100).h,
+                                              top:
+                                                  DeviceExt((13 / 411) * 100).w,
+                                              right: DeviceExt((60 / 841) * 100)
+                                                  .h),
                                           child: Text(
                                             "msg_what_enterprises".tr,
                                             maxLines: 10,
@@ -569,7 +641,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                           ),
                                         );
                                       }),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   BlocSelector<
                                       PrimaryFarmHoldingTwoBloc,
                                       PrimaryFarmHoldingTwoState,
@@ -606,7 +679,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -614,8 +688,10 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomOutlinedButton(
                                                 text: "lbl_back".tr,
-                                                margin:
-                                                    EdgeInsets.only(right: 1.h),
+                                                margin: EdgeInsets.only(
+                                                    right: DeviceExt(
+                                                            (1 / 841) * 100)
+                                                        .h),
                                                 buttonStyle: CustomButtonStyles
                                                     .outlinePrimary,
                                                 buttonTextStyle:
@@ -627,17 +703,22 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomElevatedButton(
                                           text: "lbl_next".tr,
-                                          margin: EdgeInsets.only(left: 1.h),
+                                          margin: EdgeInsets.only(
+                                              left:
+                                                  DeviceExt((1 / 841) * 100).h),
                                           isDisabled: true,
                                           buttonStyle: CustomButtonStyles
                                               .fillPrimaryTL10,
                                         ))
                                       ]),
-                                  SizedBox(height: 12.v),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: 10.h),
+                                          margin: EdgeInsets.only(
+                                              right: DeviceExt((10 / 841) * 100)
+                                                  .h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),
@@ -771,10 +852,10 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
         barrierDismissible: false,
         builder: (_) => AlertDialog(
               content: Container(
-                width: 330.h,
+                width: DeviceExt((330 / 841) * 100).h,
                 padding: EdgeInsets.symmetric(
-                  horizontal: 16.h,
-                  vertical: 6.v,
+                  horizontal: DeviceExt((16 / 841) * 100).h,
+                  vertical: DeviceExt((6 / 411) * 100).w,
                 ),
                 decoration: AppDecoration.fillWhiteA.copyWith(
                   borderRadius: BorderRadiusStyle.roundedBorder10,
@@ -783,22 +864,23 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(height: 30.v),
+                    SizedBox(height: DeviceExt((30 / 411) * 100).w),
                     Text(
                       "Farmer Id Number: ${PrefUtils().getFarmerIdNo()}".tr,
                       style: CustomTextStyles.bodyLargePrimary_2,
                     ),
-                    SizedBox(height: 10.v),
+                    SizedBox(height: DeviceExt((10 / 411) * 100).w),
                     Text(
                       "Kindly Enable Location Services",
                       style: CustomTextStyles.bodyMediumPoppinsBlack900,
                     ),
-                    SizedBox(height: 51.v),
+                    SizedBox(height: DeviceExt((51 / 411) * 100).w),
                     Expanded(
                       child: CustomOutlinedButton(
                         text: "Close".tr,
                         onTap: () => Navigator.pop(context),
-                        margin: EdgeInsets.only(right: 4.h),
+                        margin: EdgeInsets.only(
+                            right: DeviceExt((4 / 841) * 100).h),
                       ),
                     ),
                   ],

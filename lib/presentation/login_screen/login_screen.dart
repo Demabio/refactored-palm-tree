@@ -391,7 +391,7 @@ class LoginScreen extends StatelessWidget {
                                             DeviceExt(0.2).w,
                                             DeviceExt(1.2).h),
                                 onTap: () {
-                                  _onLoginUserServicePostEventSuccess(context);
+                                  loginAPI(context);
                                 }),
                           ));
                     },
@@ -442,7 +442,7 @@ class LoginScreen extends StatelessWidget {
     PrefUtils().setFP(true);
 
     NavigatorService.popAndPushNamed(
-      AppRoutes.otpOneScreen,
+      AppRoutes.homeScreen,
     );
   }
 
@@ -492,7 +492,7 @@ class LoginScreen extends StatelessWidget {
   /// to push the named route for the otpOneScreen.
   void _onLoginUserServicePostEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.otpOneScreen,
+      AppRoutes.homeScreen,
     );
 
     showDialog(

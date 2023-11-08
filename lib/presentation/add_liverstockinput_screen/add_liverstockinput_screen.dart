@@ -7,6 +7,7 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class AddLiverstockinputScreen extends StatelessWidget {
@@ -37,14 +38,14 @@ class AddLiverstockinputScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
-            leadingWidth: 60.h,
+            leadingWidth: DeviceExt((60 / 841) * 100).h,
             leading: AppbarImage(
               onTap: () => goBack(context),
               svgPath: ImageConstant.imgSort,
               margin: EdgeInsets.only(
-                left: 16.h,
-                top: 3.v,
-                bottom: 11.v,
+                left: DeviceExt((16 / 841) * 100).h,
+                top: DeviceExt((3 / 411) * 100).w,
+                bottom: DeviceExt((11 / 411) * 100).w,
               ),
             ),
             centerTitle: true,
@@ -58,12 +59,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
             child: SizedBox(
               width: mediaQueryData.size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(top: 27.v),
+                padding: EdgeInsets.only(top: DeviceExt((27 / 411) * 100).w),
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: 16.h,
-                    right: 16.h,
-                    bottom: 5.v,
+                    left: DeviceExt((16 / 841) * 100).h,
+                    right: DeviceExt((16 / 841) * 100).h,
+                    bottom: DeviceExt((5 / 411) * 100).w,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,10 +79,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -102,7 +104,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
                       Text(
                         "msg_do_you_utilize_fertilizer2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -113,10 +115,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -144,7 +147,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
                       Text(
                         "msg_do_you_utilize_fodder2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -155,10 +158,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -187,10 +191,10 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         },
                       ),
                       Container(
-                        width: 337.h,
+                        width: DeviceExt((337 / 841) * 100).h,
                         margin: EdgeInsets.only(
-                          top: 9.v,
-                          right: 5.h,
+                          top: DeviceExt((9 / 411) * 100).w,
+                          right: DeviceExt((5 / 841) * 100).h,
                         ),
                         child: Text(
                           "msg_which_assisted_reproductive".tr,
@@ -199,7 +203,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           style: CustomTextStyles.labelMediumPrimary_1,
                         ),
                       ),
-                      SizedBox(height: 7.v),
+                      SizedBox(height: DeviceExt((7 / 411) * 100).w),
                       Text(
                         "msg_artificial_insemination2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -210,10 +214,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -241,7 +246,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
                       Text(
                         "msg_animal_hormones".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -252,10 +257,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -283,7 +289,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
                       Text(
                         "msg_embryo_transfer".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -294,10 +300,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -325,12 +332,12 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 10.v),
+                      SizedBox(height: DeviceExt((10 / 411) * 100).w),
                       Text(
                         "msg_which_animal_health".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),
-                      SizedBox(height: 29.v),
+                      SizedBox(height: DeviceExt((29 / 411) * 100).w),
                       Text(
                         "msg_routine_vaccination2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -341,10 +348,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -372,7 +380,7 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
                       Text(
                         "msg_disease_control".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
@@ -383,10 +391,11 @@ class AddLiverstockinputScreen extends StatelessWidget {
                         builder: (context, addLiverstockinputModelObj) {
                           return CustomDropDown(
                             icon: Container(
-                              margin: EdgeInsets.only(left: 30.h),
+                              margin: EdgeInsets.only(
+                                  left: DeviceExt((30 / 841) * 100).h),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
-                                  10.h,
+                                  DeviceExt((10 / 841) * 100).h,
                                 ),
                               ),
                               child: CustomImageView(
@@ -414,12 +423,13 @@ class AddLiverstockinputScreen extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 51.v),
+                      SizedBox(height: DeviceExt((51 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "lbl_save".tr,
                         onTap: () => saveDraft(context),
                         leftIcon: Container(
-                          margin: EdgeInsets.only(right: 10.h),
+                          margin: EdgeInsets.only(
+                              right: DeviceExt((10 / 841) * 100).h),
                           child: CustomImageView(
                             svgPath: ImageConstant.imgSaveWhiteA700,
                           ),

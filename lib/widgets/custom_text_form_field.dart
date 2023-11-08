@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField({
@@ -107,7 +108,7 @@ class CustomTextFormField extends StatelessWidget {
         prefixIconConstraints: prefixConstraints,
         errorStyle: TextStyle(color: const Color.fromARGB(255, 240, 16, 0)),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.h),
+          borderRadius: BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
           borderSide: BorderSide(
             color: Color.fromARGB(255, 255, 17, 0),
             width: 2,
@@ -116,12 +117,18 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
-        contentPadding: contentPadding ?? EdgeInsets.all(13.h),
+        contentPadding: contentPadding ??
+            EdgeInsets.only(
+              left: DeviceExt((13 / 841) * 100).h,
+              top: DeviceExt((13 / 411) * 100).w,
+              bottom: DeviceExt((13 / 411) * 100).w,
+            ),
         fillColor: fillColor ?? appTheme.blueGray50,
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,
@@ -129,7 +136,8 @@ class CustomTextFormField extends StatelessWidget {
             ),
         enabledBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,
@@ -137,7 +145,8 @@ class CustomTextFormField extends StatelessWidget {
             ),
         focusedBorder: borderDecoration ??
             OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.h),
+              borderRadius:
+                  BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
               borderSide: BorderSide(
                 color: theme.colorScheme.primary,
                 width: 2,
@@ -149,18 +158,18 @@ class CustomTextFormField extends StatelessWidget {
 /// Extension on [CustomTextFormField] to facilitate inclusion of all types of border style etc
 extension TextFormFieldStyleHelper on CustomTextFormField {
   static OutlineInputBorder get outlinePrimaryTL101 => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.h),
+        borderRadius: BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
         borderSide: BorderSide(
           color: theme.colorScheme.primary,
           width: 1,
         ),
       );
   static OutlineInputBorder get fillGray => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.h),
+        borderRadius: BorderRadius.circular(DeviceExt((8 / 841) * 100).h),
         borderSide: BorderSide.none,
       );
   static OutlineInputBorder get fillWhiteA => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6.h),
+        borderRadius: BorderRadius.circular(DeviceExt((6 / 841) * 100).h),
         borderSide: BorderSide.none,
       );
   static OutlineInputBorder get fillWhiteA1 => OutlineInputBorder(
