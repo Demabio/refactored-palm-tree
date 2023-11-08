@@ -9,7 +9,6 @@ import 'models/add_crop_one_model.dart';
 import 'models/chipviewalbert_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
@@ -49,11 +48,18 @@ class AddCropOneScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
-                  leadingWidth: DeviceExt((60/841)*100).h,
-                  leading: AppbarImage(
+                  height: Device.orientation == Orientation.portrait
+                      ? 15.w
+                      : DeviceExt(15).h,
+                  leadingWidth: DeviceExt((60 / 841) * 100).h,
+                  leading: CustomImageView(
                       svgPath: ImageConstant.imgSort,
-                      margin:
-                          EdgeInsets.only(left: DeviceExt((16/841)*100).h, top: DeviceExt(( 3/411)*100).w, bottom: DeviceExt(( 11/411)*100).w),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
                       onTap: () {
                         onTapSortone(context);
                       }),
@@ -65,10 +71,13 @@ class AddCropOneScreen extends StatelessWidget {
                 child: SizedBox(
                     width: mediaQueryData.size.width,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: DeviceExt(( 5/411)*100).w),
+                        padding:
+                            EdgeInsets.only(top: DeviceExt((5 / 411) * 100).w),
                         child: Padding(
                             padding: EdgeInsets.only(
-                                left: DeviceExt((16/841)*100).h, right: DeviceExt((16/841)*100).h, bottom: DeviceExt(( 5/411)*100).w),
+                                left: DeviceExt((16 / 841) * 100).h,
+                                right: DeviceExt((16 / 841) * 100).h,
+                                bottom: DeviceExt((5 / 411) * 100).w),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -176,9 +185,13 @@ class AddCropOneScreen extends StatelessWidget {
                                           builder: (context, searchController) {
                                             return CustomSearchView(
                                                 margin: EdgeInsets.only(
-                                                    left: DeviceExt((13/841)*100).h,
-                                                    top: DeviceExt(( 7/411)*100).w,
-                                                    right: DeviceExt((18/841)*100).h),
+                                                    left: DeviceExt((13 / 841) * 100)
+                                                        .h,
+                                                    top: DeviceExt((7 / 411) * 100)
+                                                        .w,
+                                                    right:
+                                                        DeviceExt((18 / 841) * 100)
+                                                            .h),
                                                 controller: searchController,
                                                 enabled: true,
                                                 autofocus: false,
@@ -193,16 +206,19 @@ class AddCropOneScreen extends StatelessWidget {
                                                 alignment: Alignment.center,
                                                 prefix: Container(
                                                     margin: EdgeInsets.fromLTRB(
-                                                        DeviceExt((15/841)*100).h, DeviceExt(( 12/411)*100).w, DeviceExt((9/841)*100).h, DeviceExt(( 12/411)*100).w),
+                                                        DeviceExt((15 / 841) * 100)
+                                                            .h,
+                                                        DeviceExt((12 / 411) * 100)
+                                                            .w,
+                                                        DeviceExt((9 / 841) * 100)
+                                                            .h,
+                                                        DeviceExt((12 / 411) * 100)
+                                                            .w),
                                                     child: CustomImageView(
-                                                        svgPath: ImageConstant
-                                                            .imgSearch)),
-                                                prefixConstraints:
-                                                    BoxConstraints(
-                                                        maxHeight: DeviceExt(( 40/411)*100).w),
+                                                        svgPath: ImageConstant.imgSearch)),
+                                                prefixConstraints: BoxConstraints(maxHeight: DeviceExt((40 / 411) * 100).w),
                                                 suffix: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: DeviceExt((15/841)*100).h),
+                                                    padding: EdgeInsets.only(right: DeviceExt((15 / 841) * 100).h),
                                                     child: IconButton(
                                                         onPressed: () {
                                                           searchController!
@@ -213,17 +229,17 @@ class AddCropOneScreen extends StatelessWidget {
                                                               .add(
                                                                   ReturnCommonEventCrop());
                                                         },
-                                                        icon: Icon(Icons.clear,
-                                                            color: Colors.grey
-                                                                .shade600))));
+                                                        icon: Icon(Icons.clear, color: Colors.grey.shade600))));
                                           })),
                                   Padding(
-                                      padding:
-                                          EdgeInsets.only(left: DeviceExt((13/841)*100).h, top: DeviceExt(( 7/411)*100).w),
+                                      padding: EdgeInsets.only(
+                                          left: DeviceExt((13 / 841) * 100).h,
+                                          top: DeviceExt((7 / 411) * 100).w),
                                       child: Text("lbl_common_crops".tr,
                                           style: CustomTextStyles
                                               .labelMediumPrimary_1)),
-                                  SizedBox(height: DeviceExt(( 18/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((18 / 411) * 100).w),
                                   Align(
                                       alignment: Alignment.center,
                                       child: BlocSelector<
@@ -236,8 +252,12 @@ class AddCropOneScreen extends StatelessWidget {
                                               (context, addCropOneModelObj) {
                                             return !addCropOneModelObj!.search
                                                 ? Wrap(
-                                                    runSpacing: DeviceExt(( 10/411)*100).w,
-                                                    spacing: DeviceExt((10/841)*100).h,
+                                                    runSpacing: DeviceExt(
+                                                            (10 / 411) * 100)
+                                                        .w,
+                                                    spacing: DeviceExt(
+                                                            (10 / 841) * 100)
+                                                        .h,
                                                     children:
                                                         List<Widget>.generate(
                                                       addCropOneModelObj
@@ -268,8 +288,12 @@ class AddCropOneScreen extends StatelessWidget {
                                                     ),
                                                   )
                                                 : Wrap(
-                                                    runSpacing: DeviceExt(( 10/411)*100).w,
-                                                    spacing: DeviceExt((10/841)*100).h,
+                                                    runSpacing: DeviceExt(
+                                                            (10 / 411) * 100)
+                                                        .w,
+                                                    spacing: DeviceExt(
+                                                            (10 / 841) * 100)
+                                                        .h,
                                                     children:
                                                         List<Widget>.generate(
                                                       addCropOneModelObj
@@ -302,7 +326,8 @@ class AddCropOneScreen extends StatelessWidget {
                                                     ),
                                                   );
                                           })),
-                                  SizedBox(height: DeviceExt(( 24/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((24 / 411) * 100).w),
                                   Text("lbl_crop2".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -313,12 +338,15 @@ class AddCropOneScreen extends StatelessWidget {
                                       builder: (context, addCropOneModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (30 / 841) * 100)
+                                                        .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            DeviceExt((10/841)*100).h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -342,7 +370,8 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_total_acreage".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -369,7 +398,8 @@ class AddCropOneScreen extends StatelessWidget {
                                             textInputAction:
                                                 TextInputAction.done);
                                       }),
-                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_unit_of_area".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -380,12 +410,15 @@ class AddCropOneScreen extends StatelessWidget {
                                       builder: (context, addCropOneModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            DeviceExt((10/841)*100).h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -410,7 +443,8 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: DeviceExt(( 9/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_use_of_certified".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -421,12 +455,15 @@ class AddCropOneScreen extends StatelessWidget {
                                       builder: (context, addCropOneModelObj) {
                                         return CustomDropDown(
                                             icon: Container(
-                                                margin:
-                                                    EdgeInsets.only(left: DeviceExt((30/841)*100).h),
+                                                margin: EdgeInsets.only(
+                                                    left:
+                                                        DeviceExt((30 / 841) * 100)
+                                                            .h),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            DeviceExt((10/841)*100).h)),
+                                                            DeviceExt((10 / 841) * 100)
+                                                                .h)),
                                                 child: CustomImageView(
                                                     svgPath: ImageConstant
                                                         .imgArrowdownPrimary)),
@@ -450,7 +487,8 @@ class AddCropOneScreen extends StatelessWidget {
                                                       value: value));
                                             });
                                       }),
-                                  SizedBox(height: DeviceExt(( 10/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((10 / 411) * 100).w),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -458,7 +496,9 @@ class AddCropOneScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomOutlinedButton(
                                           text: "lbl_back".tr,
-                                          margin: EdgeInsets.only(right: DeviceExt((1/841)*100).h),
+                                          margin: EdgeInsets.only(
+                                              right:
+                                                  DeviceExt((1 / 841) * 100).h),
                                           buttonStyle: CustomButtonStyles
                                               .outlinePrimaryTL10,
                                           isDisabled: true,
@@ -468,17 +508,22 @@ class AddCropOneScreen extends StatelessWidget {
                                         Expanded(
                                             child: CustomElevatedButton(
                                                 text: "lbl_next".tr,
-                                                margin:
-                                                    EdgeInsets.only(left: DeviceExt((1/841)*100).h),
+                                                margin: EdgeInsets.only(
+                                                    left: DeviceExt(
+                                                            (1 / 841) * 100)
+                                                        .h),
                                                 onTap: () {
                                                   nextPage(context);
                                                 }))
                                       ]),
-                                  SizedBox(height: DeviceExt(( 12/411)*100).w),
+                                  SizedBox(
+                                      height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_save".tr,
                                       leftIcon: Container(
-                                          margin: EdgeInsets.only(right: DeviceExt((10/841)*100).h),
+                                          margin: EdgeInsets.only(
+                                              right: DeviceExt((10 / 841) * 100)
+                                                  .h),
                                           child: CustomImageView(
                                               svgPath: ImageConstant
                                                   .imgSaveWhiteA700)),

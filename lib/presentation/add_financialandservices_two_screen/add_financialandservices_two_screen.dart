@@ -9,7 +9,6 @@ import 'bloc/add_financialandservices_two_bloc.dart';
 import 'models/add_financialandservices_two_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
@@ -47,16 +46,21 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(
+            height: Device.orientation == Orientation.portrait
+                ? 15.w
+                : DeviceExt(15).h,
             leadingWidth: DeviceExt((60 / 841) * 100).h,
-            leading: AppbarImage(
-              svgPath: ImageConstant.imgSort,
-              onTap: () => goB(context),
-              margin: EdgeInsets.only(
-                left: DeviceExt((16 / 841) * 100).h,
-                top: DeviceExt((3 / 411) * 100).w,
-                bottom: DeviceExt((11 / 411) * 100).w,
-              ),
-            ),
+            leading: CustomImageView(
+                svgPath: ImageConstant.imgSort,
+                height: Device.orientation == Orientation.portrait
+                    ? DeviceExt(5).h
+                    : 5.w,
+                width: Device.orientation == Orientation.portrait
+                    ? DeviceExt(5).h
+                    : 5.w,
+                onTap: () {
+                  goB(context);
+                }),
             centerTitle: true,
             title: AppbarSubtitle4(
               text: "msg_financial_and_services2".tr,

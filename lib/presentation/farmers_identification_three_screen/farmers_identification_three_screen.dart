@@ -7,7 +7,6 @@ import 'bloc/farmers_identification_three_bloc.dart';
 import 'models/farmers_identification_three_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
-import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
@@ -47,13 +46,18 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
           child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: CustomAppBar(
+                  height: Device.orientation == Orientation.portrait
+                      ? 15.w
+                      : DeviceExt(15).h,
                   leadingWidth: DeviceExt((60 / 841) * 100).h,
-                  leading: AppbarImage(
+                  leading: CustomImageView(
                       svgPath: ImageConstant.imgSort,
-                      margin: EdgeInsets.only(
-                          left: DeviceExt((16 / 841) * 100).h,
-                          top: DeviceExt((3 / 411) * 100).w,
-                          bottom: DeviceExt((11 / 411) * 100).w),
+                      height: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
+                      width: Device.orientation == Orientation.portrait
+                          ? DeviceExt(5).h
+                          : 5.w,
                       onTap: () {
                         goToDetails(context);
                       }),
