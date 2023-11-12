@@ -266,7 +266,13 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                           (context, codevalueoneController) {
                                         return CustomTextFormField(
                                             autofocus: false,
-                                            focusNode: node2,
+                                            focusNode: node2, validator: (value) {
+                                              if (!isText(value)) {
+                                                return "Text only";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             controller: codevalueoneController,
                                             hintText: "lbl_code".tr);
                                       }),

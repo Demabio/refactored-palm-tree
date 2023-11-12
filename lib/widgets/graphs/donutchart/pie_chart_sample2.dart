@@ -1,7 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/theme/theme_helper.dart';
 import 'package:tuple/tuple.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class PieChartSample2 extends StatefulWidget {
@@ -58,10 +60,10 @@ class PieChart2State extends State<PieChartSample2> {
                   Center(
                     child: Text(
                       "${percentage.toInt()}%",
-                      style: TextStyle(
-                        fontSize: 34,
+                      style: theme.textTheme.labelLarge!.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontSize: DeviceExt(2).h,
                         fontWeight: FontWeight.bold,
-                        color: pcolor,
                       ),
                     ),
                   ),
@@ -85,7 +87,7 @@ class PieChart2State extends State<PieChartSample2> {
                         show: false,
                       ),
                       sectionsSpace: 0,
-                      centerSpaceRadius: 120,
+                      centerSpaceRadius: DeviceExt(5).h,
                       sections: showingSections(),
                     ),
                   ),
@@ -104,8 +106,7 @@ class PieChart2State extends State<PieChartSample2> {
   List<PieChartSectionData> showingSections() {
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final radius = isTouched ? DeviceExt(5).h : DeviceExt(4).h;
       // const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
       switch (i) {
         case 0:
@@ -113,10 +114,10 @@ class PieChart2State extends State<PieChartSample2> {
             color: Color.fromARGB(255, 214, 214, 214),
             value: percentage.toInt().toDouble(),
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
+            titleStyle: theme.textTheme.labelLarge!.copyWith(
               color: Color.fromARGB(255, 214, 214, 214),
+              fontSize: DeviceExt(0.002).h,
+              fontWeight: FontWeight.bold,
             ),
           );
         case 1:
@@ -124,10 +125,10 @@ class PieChart2State extends State<PieChartSample2> {
             color: pcolor,
             value: 100 - percentage.toInt().toDouble(),
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
+            titleStyle: theme.textTheme.labelLarge!.copyWith(
+              color: theme.colorScheme.primary,
+              fontSize: DeviceExt(0.002).h,
               fontWeight: FontWeight.bold,
-              color: pcolor,
             ),
           );
 

@@ -494,6 +494,7 @@ class LoginScreen extends StatelessWidget {
     NavigatorService.pushNamed(
       AppRoutes.homeScreen,
     );
+    PrefUtils().setRefresh(false);
 
     showDialog(
         context: context,

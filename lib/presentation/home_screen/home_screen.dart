@@ -1,11 +1,12 @@
 import 'package:kiamis_app/core/utils/validation_functions.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
+import 'package:kiamis_app/widgets/graphs/bargraph/bar_chart.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/graphs/bargraph/bar_chart_sample2.dart';
 import '../../widgets/graphs/donutchart/pie_chart_sample2.dart';
-import '../../widgets/graphs/linegraph/line_chart_widget.dart';
+// import '../../widgets/graphs/linegraph/line_chart_widget.dart';
 import '../../widgets/graphs/piechart/pie_chart_sample3.dart';
 import '../download_setups/home_farmer_not_found_dialog.dart';
 import '../side_menu_draweritem/side_menu_draweritem.dart';
@@ -97,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                 child: Column(
                   children: [
-                     
                     SizedBox(
                       height: Device.orientation == Orientation.portrait
                           ? 11.w
@@ -685,7 +685,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Row(children: [
                                         CustomIconButton(
                                             onTap: () {
-                                              PrefUtils().setAction("All");
+                                              PrefUtils()
+                                                  .setAction("Incomplete");
                                               NavigatorService.popAndPushNamed(
                                                   AppRoutes.draftEntriesScreen);
                                             },
@@ -729,7 +730,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "All Farmers".tr,
+                                                    "Incomplete".tr,
                                                     style: theme
                                                         .textTheme.headlineSmall
                                                         ?.copyWith(
@@ -975,11 +976,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 top: DeviceExt(1.2).h,
                               ),
                         child: Text(
-                          "msg_registration_accuracy".tr,
+                          "Registration Accuracy and Verification Statistics"
+                              .tr,
                           style: theme.textTheme.headlineSmall?.copyWith(
                             fontSize: Device.orientation == Orientation.portrait
-                                ? DeviceExt(2.5).h
-                                : DeviceExt(3).w,
+                                ? DeviceExt(1.5).h
+                                : DeviceExt(1).w,
                           ),
                         ),
                       ),
@@ -989,124 +991,124 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? 11.w
                           : DeviceExt(11).h,
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: FutureBuilder<Tuple2<int?, int?>?>(
-                        future: farmerDB.regAccuracy(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            // Return a loading indicator while waiting for data.
-                            return Center(child: CircularProgressIndicator());
-                          } else if (snapshot.hasError) {
-                            // Handle errors, e.g., display an error message.
-                            return Text('Error: ${snapshot.error}');
-                          } else if (!snapshot.hasData) {
-                            // Handle cases where there's no data to display.
-                            return Center(
-                                child: Text(
-                              'No data available.',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: Colors.black,
-                                fontSize:
-                                    Device.orientation == Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: Device.orientation == Orientation.portrait
+                              ? 15.w
+                              : DeviceExt(11).h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 4.w,
+                              right: DeviceExt(1.5).h,
+                              left: DeviceExt(1.5).h),
+                          child: Column(
+                            children: [
+                              FutureBuilder<Tuple2<int?, int?>?>(
+                                future: farmerDB.regAccuracy(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    // Return a loading indicator while waiting for data.
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.hasError) {
+                                    // Handle errors, e.g., display an error message.
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (!snapshot.hasData) {
+                                    // Handle cases where there's no data to display.
+                                    return Center(
+                                        child: Text(
+                                      'No data available.',
+                                      style:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        color: Colors.black,
+                                        fontSize: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(1.8).h
+                                            : DeviceExt(2).w,
+                                      ),
+                                    ));
+                                  } else {
+                                    // Data is available, build the widget with the data.
+                                    return Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 4.w,
+                                            right: DeviceExt(0.5).h,
+                                            left: DeviceExt(0.5).h),
+                                        child: Container(
+                                            height: DeviceExt(14).h,
+                                            width: DeviceExt(9).h,
+                                            child: PieChartSample2(
+                                              tdata: snapshot.data,
+                                            )));
+                                  }
+                                },
                               ),
-                            ));
-                          } else {
-                            // Data is available, build the widget with the data.
-                            return Padding(
-                                padding:
-                                    Device.orientation == Orientation.portrait
-                                        ? EdgeInsets.only(
-                                            top: 4.w, right: DeviceExt(0.1).h)
-                                        : EdgeInsets.only(
-                                            top: DeviceExt(4).h, right: 0.1.w),
-                                child: SizedBox(
-                                    height: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(42).h
-                                        : 42.w,
-                                    width: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(36).h
-                                        : 36.w,
-                                    child: PieChartSample2(
-                                      tdata: snapshot.data,
-                                    )));
-                          }
-                        },
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                            padding: Device.orientation == Orientation.portrait
-                                ? EdgeInsets.only(
-                                    left: DeviceExt(3).h, top: 15.w)
-                                : EdgeInsets.only(
-                                    left: 3.w, top: DeviceExt(15).h),
-                            child: Text(
-                              "msg_verification_statistics".tr,
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontSize:
-                                    Device.orientation == Orientation.portrait
-                                        ? DeviceExt(2.5).h
-                                        : DeviceExt(3).w,
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 4.w,
+                              right: DeviceExt(0.5).h,
+                              left: DeviceExt(0.5).h),
+                          child: Column(
+                            children: [
+                              FutureBuilder<Tuple2<int?, int?>?>(
+                                future: farmerDB.regPie(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    // Return a loading indicator while waiting for data.
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.hasError) {
+                                    // Handle errors, e.g., display an error message.
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (!snapshot.hasData) {
+                                    // Handle cases where there's no data to display.
+                                    return Center(
+                                      child: Text(
+                                        'No data available.',
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    // Data is available, build the widget with the data.
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 4.w,
+                                          right: DeviceExt(0.5).h,
+                                          left: DeviceExt(0.5).h),
+                                      child: Container(
+                                          height: DeviceExt(14).h,
+                                          width: DeviceExt(9).h,
+                                          child: PieChartSample3(
+                                            data: snapshot.data,
+                                          )),
+                                    );
+                                  }
+                                },
                               ),
-                            ))),
-                    Align(
-                      alignment: Alignment.center,
-                      child: FutureBuilder<Tuple2<int?, int?>?>(
-                        future: farmerDB.regPie(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            // Return a loading indicator while waiting for data.
-                            return Center(child: CircularProgressIndicator());
-                          } else if (snapshot.hasError) {
-                            // Handle errors, e.g., display an error message.
-                            return Text('Error: ${snapshot.error}');
-                          } else if (!snapshot.hasData) {
-                            // Handle cases where there's no data to display.
-                            return Center(
-                              child: Text(
-                                'No data available.',
-                                style: theme.textTheme.titleMedium?.copyWith(
-                                  color: Colors.black,
-                                  fontSize:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(1.8).h
-                                          : DeviceExt(2).w,
-                                ),
-                              ),
-                            );
-                          } else {
-                            // Data is available, build the widget with the data.
-                            return Padding(
-                              padding:
-                                  Device.orientation == Orientation.portrait
-                                      ? EdgeInsets.only(
-                                          top: 4.w, right: DeviceExt(0.1).h)
-                                      : EdgeInsets.only(
-                                          top: DeviceExt(4).h, right: 0.1.w),
-                              child: Container(
-                                  height:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(42).h
-                                          : 42.w,
-                                  width:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(36).h
-                                          : 36.w,
-                                  child: PieChartSample3(
-                                    data: snapshot.data,
-                                  )),
-                            );
-                          }
-                        },
-                      ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: Device.orientation == Orientation.portrait
+                              ? 15.w
+                              : DeviceExt(11).h,
+                        ),
+                      ],
                     ),
                     Align(
                         alignment: Alignment.centerLeft,
@@ -1175,6 +1177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               'Error: ${snapshot.error}');
                                         } else if (!snapshot.hasData ||
                                             snapshot.data!.isEmpty) {
+                                          print(snapshot.data);
                                           // Handle cases where there's no data to display.
                                           return Text(
                                             'No data available.',
@@ -1190,18 +1193,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         } else {
                                           // Data is available, build the widget with the data.
                                           return Padding(
-                                            padding: Device.orientation ==
-                                                    Orientation.portrait
-                                                ? EdgeInsets.only(
-                                                    top: 4.w,
-                                                    right: DeviceExt(0.1).h)
-                                                : EdgeInsets.only(
-                                                    top: DeviceExt(4).h,
-                                                    right: 0.1.w),
+                                            padding: EdgeInsets.only(
+                                                top: 4.w,
+                                                right: DeviceExt(0.5).h,
+                                                left: DeviceExt(0.5).h),
                                             child: Container(
-                                                height: 350,
-                                                width: 300,
-                                                child: LineChartWidget(
+                                                height: DeviceExt(20).h,
+                                                width: DeviceExt(9).h,
+                                                child: BarChartSample3(
                                                   listdata: snapshot.data,
                                                 )),
                                           );
@@ -1368,22 +1367,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               } else {
                                 // Data is available, build the widget with the data.
                                 return Padding(
-                                  padding:
-                                      Device.orientation == Orientation.portrait
-                                          ? EdgeInsets.only(
-                                              top: 4.w, right: DeviceExt(0.1).h)
-                                          : EdgeInsets.only(
-                                              top: DeviceExt(4).h,
-                                              right: 0.1.w),
+                                  padding: EdgeInsets.only(
+                                      top: 4.w,
+                                      right: DeviceExt(0.5).h,
+                                      left: DeviceExt(0.5).h),
                                   child: Container(
-                                    height: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(60).h
-                                        : 60.w,
-                                    width: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(42).h
-                                        : 95.w,
+                                    height: DeviceExt(40).h,
+                                    width: DeviceExt(40).h,
                                     child: BarChartSample2(
                                       bardata: snapshot.data,
                                     ),

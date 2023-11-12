@@ -343,4 +343,28 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setRefresh(bool value) {
+    return _sharedPreferences!.setBool('refresh', value);
+  }
+
+  bool getRefresh() {
+    try {
+      return _sharedPreferences!.getBool('refresh') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> setEdit(bool value) {
+    return _sharedPreferences!.setBool('edit', value);
+  }
+
+  bool getEdit() {
+    try {
+      return _sharedPreferences!.getBool('edit') ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

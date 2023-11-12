@@ -323,7 +323,8 @@ class FarmerDB {
 
   Future<List<Farmer>> fetchAll() async {
     final database = await FarmerDatabaseService().database;
-    final farmerList = await database.rawQuery('SELECT * FROM $tableName');
+    final farmerList =
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
     return farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList();
   }
 
@@ -355,7 +356,8 @@ class FarmerDB {
   Future<int?> getFarmersCount() async {
     final database = await FarmerDatabaseService().database;
 
-    final result = await database.rawQuery('SELECT COUNT(*) FROM $tableName');
+    final result = await database
+        .rawQuery('SELECT COUNT(*) FROM $tableName WHERE completed = 0');
     final count = Sqflite.firstIntValue(result);
     return count;
   }
@@ -516,20 +518,43 @@ class FarmerDB {
     return results;
   }
 
-  Future<List<Tuple2<int, int>>?> getFarmersCountLast7Days() async {
+  Future<List<Tuple2<int, int>>> getFarmersCountLast7Days() async {
     final database = await FarmerDatabaseService().database;
 
     // Calculate the start date (7 days ago)
     final now = DateTime.now();
-    final startDate =
-        now.subtract(Duration(days: 6)); // 6 days ago, as today is also counted
+    final startDate = now.subtract(Duration(days: 6));
 
     final results = await database.rawQuery('''
-    SELECT strftime('%w', dateCreated) as day, COUNT(*) as count
-    FROM $tableName
-    WHERE dateCreated >= ?
-    GROUP BY day
-  ''', [startDate.toIso8601String()]);
+    SELECT Days.day, COALESCE(COUNT($tableName.dateCreated), 0) as count
+    FROM (
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+      UNION ALL
+      SELECT strftime('%w', date(?)) as day
+    ) Days
+    LEFT JOIN $tableName ON Days.day = strftime('%w', $tableName.dateCreated)
+      AND $tableName.dateCreated >= ?
+    GROUP BY Days.day
+  ''', [
+      startDate.toIso8601String(),
+      startDate.add(Duration(days: 1)).toIso8601String(),
+      startDate.add(Duration(days: 2)).toIso8601String(),
+      startDate.add(Duration(days: 3)).toIso8601String(),
+      startDate.add(Duration(days: 4)).toIso8601String(),
+      startDate.add(Duration(days: 5)).toIso8601String(),
+      startDate.add(Duration(days: 6)).toIso8601String(),
+      startDate.toIso8601String(),
+    ]);
 
     final counts = results.map((row) {
       final day = int.parse(row['day'].toString());

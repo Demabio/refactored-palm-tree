@@ -88,15 +88,21 @@ class DraftEntriesScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Spacer(),
-                          Text(
-                            "lbl_actions".tr,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontSize:
-                                  Device.orientation == Orientation.portrait
-                                      ? DeviceExt(2).h
-                                      : DeviceExt(2.5).w,
-                              fontWeight: FontWeight.bold,
+                          Visibility(
+                            visible: PrefUtils().getEdit(),
+                            child: Spacer(),
+                          ),
+                          Visibility(
+                            visible: PrefUtils().getEdit(),
+                            child: Text(
+                              "lbl_actions".tr,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontSize:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(2).h
+                                        : DeviceExt(2.5).w,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           )
                         ]),

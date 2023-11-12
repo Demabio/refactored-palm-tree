@@ -322,6 +322,7 @@ class SideMenuDraweritem extends StatelessWidget {
 
   updateDialog(BuildContext context) async {
     Navigator.pop(context);
+    PrefUtils().setRefresh(true);
 
     await showDialog(
         context: context,
@@ -356,7 +357,7 @@ class SideMenuDraweritem extends StatelessWidget {
   /// to push the named route for the draftEntriesScreen.
   onTapDraftentries(BuildContext context) {
     Navigator.pop(context);
-    PrefUtils().setAction("All");
+    PrefUtils().setAction("Incomplete");
     NavigatorService.popAndPushNamed(
       AppRoutes.draftEntriesScreen,
     );

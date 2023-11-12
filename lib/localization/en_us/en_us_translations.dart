@@ -122,7 +122,7 @@ final Map<String, String> enUs = {
   // Farmers Identification Three Screen
   "lbl_code": "Code",
   "lbl_hh_size2": "Household Size (*)",
-  "lbl_hh_size3": "Hh Size",
+  "lbl_hh_size3": "Household Size",
   "msg_formal_education2": "Formal Education (*)",
   "msg_formal_training": "Formal Training in agriculture? (*)",
   "msg_individual_farmer2": "Individual Farmer Personal Details ",

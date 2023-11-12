@@ -454,5 +454,8 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
 
   closeDialog(BuildContext context) {
     Navigator.pop(context);
+    if (PrefUtils().getRefresh()) {
+      Navigator.pushNamed(context, AppRoutes.homeScreen);
+    }
   }
 }

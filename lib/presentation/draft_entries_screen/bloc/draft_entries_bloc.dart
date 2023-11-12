@@ -48,17 +48,28 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
   ) async {
     String action = PrefUtils().getAction();
     List<Farmer>? farmers = [];
-    if (action == "All") {
+    if (action == "Incomplete") {
+      PrefUtils().setEdit(true);
       farmers = await getAll();
     } else if (action == "To Submit") {
+      PrefUtils().setEdit(true);
+
       farmers = await getSaved();
     } else if (action == "Approved") {
+      PrefUtils().setEdit(false);
+
       farmers = await getApproved();
     } else if (action == "Rejected") {
+      PrefUtils().setEdit(true);
+
       farmers = await getUnapproved();
     } else if (action == "Submitted") {
+      PrefUtils().setEdit(false);
+
       farmers = await getUnverified();
     } else {
+      PrefUtils().setEdit(true);
+
       farmers = await getAll();
     }
     List<BalancehistoryItemModel> models = [];
@@ -123,17 +134,28 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
       if (del > 0) {
         String action = PrefUtils().getAction();
         List<Farmer>? farmers = [];
-        if (action == "All") {
+        if (action == "Incomplete") {
+          PrefUtils().setEdit(true);
           farmers = await getAll();
         } else if (action == "To Submit") {
+          PrefUtils().setEdit(true);
+
           farmers = await getSaved();
         } else if (action == "Approved") {
+          PrefUtils().setEdit(false);
+
           farmers = await getApproved();
         } else if (action == "Rejected") {
+          PrefUtils().setEdit(true);
+
           farmers = await getUnapproved();
         } else if (action == "Submitted") {
+          PrefUtils().setEdit(false);
+
           farmers = await getUnverified();
         } else {
+          PrefUtils().setEdit(true);
+
           farmers = await getAll();
         }
         List<BalancehistoryItemModel> models = [];

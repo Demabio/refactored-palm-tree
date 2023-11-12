@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/theme/theme_helper.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class BarChartSample2 extends StatefulWidget {
@@ -150,11 +151,6 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget leftTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.green,
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
-    );
     String text = value.toString();
     // if (value % 10 == 0) {
     //   text = value.toString();
@@ -164,7 +160,12 @@ class BarChartSample2State extends State<BarChartSample2> {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 0,
-      child: Text(text, style: style),
+      child: Text(text,
+          style: TextStyle(
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
+            fontSize: DeviceExt(1.2).h,
+          )),
     );
   }
 
@@ -186,10 +187,10 @@ class BarChartSample2State extends State<BarChartSample2> {
 
     final Widget text = Text(
       titles[value.toInt()],
-      style: const TextStyle(
+      style: TextStyle(
         color: Colors.green,
         fontWeight: FontWeight.bold,
-        fontSize: 11,
+        fontSize: DeviceExt(1.2).h,
       ),
     );
 

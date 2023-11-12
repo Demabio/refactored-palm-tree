@@ -61,21 +61,24 @@ class BalancehistoryItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
-            Column(
-              children: [
-                AppbarImage1(
-                    svgPath: ImageConstant.imgFrame33,
-                    onTap: () {
-                      edit?.call();
-                    }),
-                SizedBox(height: ((15 / 411) * 100).w),
-                AppbarImage1(
-                    svgPath: ImageConstant.imgFrame34,
-                    onTap: () {
-                      delete?.call();
-                    }),
-              ],
+            Visibility(visible: PrefUtils().getEdit(), child: Spacer()),
+            Visibility(
+              visible: PrefUtils().getEdit(),
+              child: Column(
+                children: [
+                  AppbarImage1(
+                      svgPath: ImageConstant.imgFrame33,
+                      onTap: () {
+                        edit?.call();
+                      }),
+                  SizedBox(height: ((15 / 411) * 100).w),
+                  AppbarImage1(
+                      svgPath: ImageConstant.imgFrame34,
+                      onTap: () {
+                        delete?.call();
+                      }),
+                ],
+              ),
             ),
           ],
         ),

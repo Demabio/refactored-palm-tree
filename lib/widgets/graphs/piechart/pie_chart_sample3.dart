@@ -1,7 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kiamis_app/theme/theme_helper.dart';
 import 'package:tuple/tuple.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class PieChartSample3 extends StatefulWidget {
@@ -71,8 +73,7 @@ class PieChartSample3State extends State<PieChartSample3> {
   List<PieChartSectionData> showingSections() {
     return List.generate(2, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 * 1.5 : 100.0 * 1.5;
+      final radius = isTouched ? DeviceExt(10).h : DeviceExt(9).h;
       // final widgetSize = isTouched ? 55.0 * 1.5 : 40.0 * 1.5;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
 
@@ -84,10 +85,10 @@ class PieChartSample3State extends State<PieChartSample3> {
             title: "${percentage.toInt()}% - Verified",
 
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
+            titleStyle: theme.textTheme.labelLarge!.copyWith(
               color: const Color(0xffffffff),
+              fontSize: DeviceExt(1.2).h,
+              fontWeight: FontWeight.bold,
               shadows: shadows,
             ),
             // badgeWidget: _Badge(
@@ -103,10 +104,10 @@ class PieChartSample3State extends State<PieChartSample3> {
             value: 100 - percentage.toInt().toDouble(),
             title: "${100 - percentage.toInt()}% - Unverified",
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
+            titleStyle: theme.textTheme.labelLarge!.copyWith(
               color: const Color(0xffffffff),
+              fontSize: DeviceExt(1.2).h,
+              fontWeight: FontWeight.bold,
               shadows: shadows,
             ),
             // badgeWidget: _Badge(
