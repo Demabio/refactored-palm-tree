@@ -20,10 +20,20 @@ class PrimaryFarmHoldingOneModel extends Equatable {
     this.pfProgress,
     this.stepped2 = 0,
     this.selectedDropDownValue,
+    this.dropdownItemList2 = const [],
+    this.dropdownItemList3 = const [],
+    this.dropdownItemList4 = const [],
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
   });
 
   List<SelectionPopupModel> dropdownItemList;
+  List<SelectionPopupModel> dropdownItemList2;
 
+  List<SelectionPopupModel> dropdownItemList3;
+
+  List<SelectionPopupModel> dropdownItemList4;
   int stepped;
 
   StepState? page1;
@@ -39,7 +49,11 @@ class PrimaryFarmHoldingOneModel extends Equatable {
   PFProgress? pfProgress;
   int stepped2;
   SelectionPopupModel? selectedDropDownValue;
+  SelectionPopupModel? selectedDropDownValue2;
 
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
   PrimaryFarmHoldingOneModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     int? stepped,
@@ -51,6 +65,12 @@ class PrimaryFarmHoldingOneModel extends Equatable {
     PFProgress? pfProgress,
     int? stepped2,
     SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
+    List<SelectionPopupModel>? dropdownItemList2,
+    List<SelectionPopupModel>? dropdownItemList3,
+    List<SelectionPopupModel>? dropdownItemList4,
   }) {
     return PrimaryFarmHoldingOneModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -64,11 +84,20 @@ class PrimaryFarmHoldingOneModel extends Equatable {
       stepped2: stepped2 ?? this.stepped2,
       selectedDropDownValue:
           selectedDropDownValue ?? this.selectedDropDownValue,
+      dropdownItemList2: dropdownItemList2 ?? this.dropdownItemList2,
+      dropdownItemList3: dropdownItemList3 ?? this.dropdownItemList3,
+      dropdownItemList4: dropdownItemList4 ?? this.dropdownItemList4,
+      selectedDropDownValue2: selectedDropDownValue2,
+      selectedDropDownValue3: selectedDropDownValue3,
+      selectedDropDownValue4: selectedDropDownValue4,
     );
   }
 
   @override
   List<Object?> get props => [
+        dropdownItemList2,
+        dropdownItemList3,
+        dropdownItemList4,
         dropdownItemList,
         stepped,
         page1,
@@ -79,5 +108,8 @@ class PrimaryFarmHoldingOneModel extends Equatable {
         farm,
         stepped2,
         selectedDropDownValue,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
       ];
 }

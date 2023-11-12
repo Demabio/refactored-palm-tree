@@ -28,6 +28,9 @@ class AddFinancialandservicesTwoModel extends Equatable {
     this.selectedDropDownValue4,
     this.selectedDropDownValue5,
     this.fsProgress,
+    this.livestock = false,
+    this.fish = false,
+    this.crop = false,
   });
 
   List<SelectionPopupModel> dropdownItemList;
@@ -63,6 +66,9 @@ class AddFinancialandservicesTwoModel extends Equatable {
   SelectionPopupModel? selectedDropDownValue4;
 
   SelectionPopupModel? selectedDropDownValue5;
+  bool livestock;
+  bool fish;
+  bool crop;
 
   FSProgress? fsProgress;
   AddFinancialandservicesTwoModel copyWith({
@@ -85,6 +91,9 @@ class AddFinancialandservicesTwoModel extends Equatable {
     SelectionPopupModel? selectedDropDownValue4,
     SelectionPopupModel? selectedDropDownValue5,
     FSProgress? fsProgress,
+    bool? livestock,
+    bool? fish,
+    bool? crop,
   }) {
     return AddFinancialandservicesTwoModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -112,6 +121,9 @@ class AddFinancialandservicesTwoModel extends Equatable {
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
       selectedDropDownValue5:
           selectedDropDownValue5 ?? this.selectedDropDownValue5,
+      livestock: livestock ?? this.livestock,
+      fish: fish ?? this.fish,
+      crop: crop ?? this.crop,
     );
   }
 
@@ -136,5 +148,8 @@ class AddFinancialandservicesTwoModel extends Equatable {
         selectedDropDownValue4,
         selectedDropDownValue5,
         fsProgress,
+        livestock,
+        fish,
+        crop,
       ];
 }

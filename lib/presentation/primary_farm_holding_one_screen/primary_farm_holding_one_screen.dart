@@ -369,59 +369,261 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                           });
                                     }),
                                 SizedBox(height: DeviceExt((32 / 411) * 100).w),
-                                Text("msg_size_of_land_under2".tr,
+                                Text("msg_aquaculture_production2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
                                 BlocSelector<
                                         PrimaryFarmHoldingOneBloc,
                                         PrimaryFarmHoldingOneState,
-                                        TextEditingController?>(
+                                        PrimaryFarmHoldingOneModel?>(
                                     selector: (state) =>
-                                        state.sizeoneController,
-                                    builder: (context, sizeoneController) {
-                                      return CustomTextFormField(
-                                          controller: sizeoneController,
+                                        state.primaryFarmHoldingOneModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingTwoModelObj) {
+                                      return CustomDropDown(
                                           autofocus: false,
-                                          focusNode: node3,
-                                          hintText: "lbl_size".tr,
                                           validator: (value) {
-                                            if (!isNumeric(value,
-                                                isRequired: true)) {
-                                              return "Please enter valid input";
+                                            if (value == null) {
+                                              return "Field is required";
+                                            } else {
+                                              return null;
                                             }
-                                            return null;
                                           },
-                                          textInputType: TextInputType.number,
-                                          hintStyle: CustomTextStyles
-                                              .titleMediumBluegray40003);
+                                          val: primaryFarmHoldingTwoModelObj
+                                              ?.selectedDropDownValue4,
+                                          icon: Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  DeviceExt((30 / 841) * 100).h,
+                                                  DeviceExt((10 / 411) * 100).w,
+                                                  DeviceExt((9 / 841) * 100).h,
+                                                  DeviceExt((15 / 411) * 100)
+                                                      .w),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          DeviceExt((10 / 841) * 100)
+                                                              .h)),
+                                              child: CustomImageView(
+                                                  svgPath: ImageConstant
+                                                      .imgArrowdownPrimary)),
+                                          hintText: "lbl_select".tr,
+                                          items: primaryFarmHoldingTwoModelObj
+                                                  ?.dropdownItemList4 ??
+                                              [],
+                                          onChanged: (value) {
+                                            context
+                                                .read<
+                                                    PrimaryFarmHoldingOneBloc>()
+                                                .add(ChangeDropDown4Event(
+                                                    value: value));
+                                          });
                                     }),
-                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
-                                Text("msg_total_land_area2".tr,
+                                SizedBox(height: DeviceExt((20 / 411) * 100).w),
+                                Text("msg_crop_production2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
                                 BlocSelector<
                                         PrimaryFarmHoldingOneBloc,
                                         PrimaryFarmHoldingOneState,
-                                        TextEditingController?>(
-                                    selector: (state) => state.areaController,
-                                    builder: (context, areaController) {
-                                      return CustomTextFormField(
-                                          controller: areaController,
-                                          focusNode: node4,
+                                        PrimaryFarmHoldingOneModel?>(
+                                    selector: (state) =>
+                                        state.primaryFarmHoldingOneModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingTwoModelObj) {
+                                      return CustomDropDown(
                                           autofocus: false,
-                                          hintText: "lbl_area".tr,
                                           validator: (value) {
-                                            if (!isNumeric(value,
-                                                isRequired: true)) {
-                                              return "Please enter valid input";
+                                            if (value == null) {
+                                              return "Field is required";
+                                            } else {
+                                              return null;
                                             }
-                                            return null;
                                           },
-                                          textInputType: TextInputType.number,
-                                          hintStyle: CustomTextStyles
-                                              .titleMediumBluegray40003);
+                                          val: primaryFarmHoldingTwoModelObj
+                                              ?.selectedDropDownValue2,
+                                          icon: Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  DeviceExt((30 / 841) * 100).h,
+                                                  DeviceExt((10 / 411) * 100).w,
+                                                  DeviceExt((9 / 841) * 100).h,
+                                                  DeviceExt((15 / 411) * 100)
+                                                      .w),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          DeviceExt((10 / 841) * 100)
+                                                              .h)),
+                                              child: CustomImageView(
+                                                  svgPath: ImageConstant
+                                                      .imgArrowdownPrimary)),
+                                          hintText: "lbl_select".tr,
+                                          items: primaryFarmHoldingTwoModelObj
+                                                  ?.dropdownItemList2 ??
+                                              [],
+                                          onChanged: (value) {
+                                            context
+                                                .read<
+                                                    PrimaryFarmHoldingOneBloc>()
+                                                .add(ChangeDropDown2Event(
+                                                    value: value));
+                                          });
                                     }),
-                                SizedBox(height: DeviceExt((33 / 411) * 100).w),
+                                SizedBox(height: DeviceExt((19 / 411) * 100).w),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        PrimaryFarmHoldingOneModel?>(
+                                    selector: (state) =>
+                                        state.primaryFarmHoldingOneModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingOneModelObj) {
+                                      return Visibility(
+                                        visible: primaryFarmHoldingOneModelObj
+                                                    ?.selectedDropDownValue2
+                                                    ?.id ==
+                                                1
+                                            ? true
+                                            : false,
+                                        child: Text(
+                                            "msg_size_of_land_under2".tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1),
+                                      );
+                                    }),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        PrimaryFarmHoldingOneState>(
+                                    selector: (state) => state,
+                                    builder: (context, state) {
+                                      return Visibility(
+                                        visible: state
+                                                    .primaryFarmHoldingOneModelObj
+                                                    ?.selectedDropDownValue2
+                                                    ?.id ==
+                                                1
+                                            ? true
+                                            : false,
+                                        child: CustomTextFormField(
+                                            controller: state.sizeoneController,
+                                            autofocus: false,
+                                            focusNode: node3,
+                                            hintText: "lbl_size".tr,
+                                            validator: (value) {
+                                              if (!isNumeric(value,
+                                                  isRequired: true)) {
+                                                return "Please enter valid input";
+                                              }
+                                              return null;
+                                            },
+                                            textInputType: TextInputType.number,
+                                            hintStyle: CustomTextStyles
+                                                .titleMediumBluegray40003),
+                                      );
+                                    }),
+                                SizedBox(height: DeviceExt((19 / 411) * 100).w),
+                                Text("msg_livestock_production2".tr,
+                                    style:
+                                        CustomTextStyles.labelMediumPrimary_1),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        PrimaryFarmHoldingOneModel?>(
+                                    selector: (state) =>
+                                        state.primaryFarmHoldingOneModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingOneModelObj) {
+                                      return CustomDropDown(
+                                          autofocus: false,
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return "Field is required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          val: primaryFarmHoldingOneModelObj
+                                              ?.selectedDropDownValue3,
+                                          icon: Container(
+                                              margin: EdgeInsets.fromLTRB(
+                                                  DeviceExt((30 / 841) * 100).h,
+                                                  DeviceExt((10 / 411) * 100).w,
+                                                  DeviceExt((9 / 841) * 100).h,
+                                                  DeviceExt((15 / 411) * 100)
+                                                      .w),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          DeviceExt((10 / 841) * 100)
+                                                              .h)),
+                                              child: CustomImageView(
+                                                  svgPath: ImageConstant
+                                                      .imgArrowdownPrimary)),
+                                          hintText: "lbl_select".tr,
+                                          items: primaryFarmHoldingOneModelObj
+                                                  ?.dropdownItemList3 ??
+                                              [],
+                                          onChanged: (value) {
+                                            context
+                                                .read<
+                                                    PrimaryFarmHoldingOneBloc>()
+                                                .add(ChangeDropDown3Event(
+                                                    value: value));
+                                          });
+                                    }),
+                                SizedBox(height: DeviceExt((19 / 411) * 100).w),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        PrimaryFarmHoldingOneModel?>(
+                                    selector: (state) =>
+                                        state.primaryFarmHoldingOneModelObj,
+                                    builder: (context,
+                                        primaryFarmHoldingOneModelObj) {
+                                      return Visibility(
+                                        visible: primaryFarmHoldingOneModelObj
+                                                    ?.selectedDropDownValue3
+                                                    ?.id ==
+                                                1
+                                            ? true
+                                            : false,
+                                        child: Text("msg_total_land_area2".tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1),
+                                      );
+                                    }),
+                                BlocSelector<
+                                        PrimaryFarmHoldingOneBloc,
+                                        PrimaryFarmHoldingOneState,
+                                        PrimaryFarmHoldingOneState>(
+                                    selector: (state) => state,
+                                    builder: (context, state) {
+                                      return Visibility(
+                                        visible: state
+                                                    .primaryFarmHoldingOneModelObj
+                                                    ?.selectedDropDownValue3
+                                                    ?.id ==
+                                                1
+                                            ? true
+                                            : false,
+                                        child: CustomTextFormField(
+                                            controller: state.areaController,
+                                            focusNode: node4,
+                                            autofocus: false,
+                                            hintText: "lbl_area".tr,
+                                            validator: (value) {
+                                              if (!isNumeric(value,
+                                                  isRequired: true)) {
+                                                return "Please enter valid input";
+                                              }
+                                              return null;
+                                            },
+                                            textInputType: TextInputType.number,
+                                            hintStyle: CustomTextStyles
+                                                .titleMediumBluegray40003),
+                                      );
+                                    }),
+                                SizedBox(height: DeviceExt((18 / 411) * 100).w),
                                 Text("msg_size_of_land_leased2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),
@@ -443,7 +645,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: DeviceExt((33 / 411) * 100).w),
+                                SizedBox(height: DeviceExt((18 / 411) * 100).w),
                                 Text("msg_size_of_land_lying2".tr,
                                     style:
                                         CustomTextStyles.labelMediumPrimary_1),

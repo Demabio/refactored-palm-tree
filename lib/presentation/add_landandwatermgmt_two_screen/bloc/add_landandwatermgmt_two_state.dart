@@ -14,6 +14,9 @@ class AddLandandwatermgmtTwoState extends Equatable {
     this.u = const [],
     this.p = const [],
     this.b = const [],
+    this.livestock = false,
+    this.fish = false,
+    this.crop = false,
   });
 
   TextEditingController? areavalueoneController;
@@ -28,6 +31,9 @@ class AddLandandwatermgmtTwoState extends Equatable {
   List<CheckBoxList> u;
   List<CheckBoxList> p;
   List<CheckBoxList> b;
+  bool livestock;
+  bool fish;
+  bool crop;
   @override
   List<Object?> get props => [
         areavalueoneController,
@@ -39,6 +45,9 @@ class AddLandandwatermgmtTwoState extends Equatable {
         u,
         p,
         b,
+        livestock,
+        fish,
+        crop,
       ];
   AddLandandwatermgmtTwoState copyWith({
     TextEditingController? areavalueoneController,
@@ -50,6 +59,9 @@ class AddLandandwatermgmtTwoState extends Equatable {
     List<CheckBoxList>? u,
     List<CheckBoxList>? p,
     List<CheckBoxList>? b,
+    bool? livestock,
+    bool? fish,
+    bool? crop,
   }) {
     return AddLandandwatermgmtTwoState(
       areavalueoneController:
@@ -65,6 +77,9 @@ class AddLandandwatermgmtTwoState extends Equatable {
       u: u ?? this.u,
       p: p ?? this.p,
       b: b ?? this.b,
+      livestock: livestock ?? this.livestock,
+      fish: fish ?? this.fish,
+      crop: crop ?? this.crop,
     );
   }
 }

@@ -405,11 +405,9 @@ class AddCropOneScreen extends StatelessWidget {
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
                                   BlocSelector<AddCropOneBloc, AddCropOneState,
-                                          TextEditingController?>(
-                                      selector: (state) =>
-                                          state.areavalueoneController,
-                                      builder:
-                                          (context, areavalueoneController) {
+                                          AddCropOneState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
                                         return CustomTextFormField(
                                             autofocus: false,
                                             focusNode: node2,
@@ -417,12 +415,25 @@ class AddCropOneScreen extends StatelessWidget {
                                               if (!isNumeric(value,
                                                   isRequired: true)) {
                                                 return "Invalid Input";
+                                              } else if (double.parse(
+                                                      value ?? "0") >
+                                                  state.addCropOneModelObj!
+                                                      .area!) {
+                                                return "Size can not be larger than stated crop farming size.";
+                                              } else if (double.parse(
+                                                          value ?? "0") +
+                                                      state.addCropOneModelObj!
+                                                          .area1! >
+                                                  state.addCropOneModelObj!
+                                                      .area!) {
+                                                return "Combined crop sizes is larger than crop farming size.";
                                               } else {
                                                 return null;
                                               }
                                             },
                                             textInputType: TextInputType.number,
-                                            controller: areavalueoneController,
+                                            controller:
+                                                state.areavalueoneController,
                                             hintText: "lbl_area".tr,
                                             textInputAction:
                                                 TextInputAction.done);

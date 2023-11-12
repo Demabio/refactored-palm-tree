@@ -59,6 +59,41 @@ class SaveTapEvent extends PrimaryFarmHoldingOneEvent {
       ];
 }
 
+class ChangeDropDown2Event extends PrimaryFarmHoldingOneEvent {
+  ChangeDropDown2Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+///event for dropdown selection
+class ChangeDropDown3Event extends PrimaryFarmHoldingOneEvent {
+  ChangeDropDown3Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+///event for dropdown selection
+class ChangeDropDown4Event extends PrimaryFarmHoldingOneEvent {
+  ChangeDropDown4Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
 ///event for dropdown selection
 class ChangeDropDownEvent extends PrimaryFarmHoldingOneEvent {
   ChangeDropDownEvent({required this.value});

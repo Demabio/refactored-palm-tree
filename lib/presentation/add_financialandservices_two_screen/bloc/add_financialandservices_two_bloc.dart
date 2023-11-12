@@ -71,6 +71,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           assetsInsurance: false,
           livestockInsurance: false,
           farmRecords: false,
+          cropProd: false,
+          livestockProd: false,
+          fishFarming: false,
         );
     List<CheckBoxList>? accessmodels = await fetchEAccess();
     List<CheckBoxList>? modemodels = await fetchEService();
@@ -115,6 +118,22 @@ class AddFinancialandservicesTwoBloc extends Bloc<
         );
       }
     }
+    if (!farmer.fishFarming!) {
+      ee = a.firstWhere(
+        (model) => model.id == 0,
+      );
+    }
+    if (!farmer.livestockProd!) {
+      dd = a.firstWhere(
+        (model) => model.id == 0,
+      );
+    }
+    if (!farmer.cropProd!) {
+      aa = a.firstWhere(
+        (model) => model.id == 0,
+      );
+    }
+
     int stepped = 0;
     if (pfProgress.pageTwo == 1) {
       stepped = 2;
@@ -140,6 +159,9 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           selectedDropDownValue5: ff,
           fsProgress: pfProgress,
           stepped2: stepped,
+          livestock: farmer.livestockProd!,
+          fish: farmer.fishFarming!,
+          crop: farmer.cropProd!,
         )));
   }
 

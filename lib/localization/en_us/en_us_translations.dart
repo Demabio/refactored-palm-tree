@@ -1037,14 +1037,17 @@ final Map<String, String> enUs = {
   "msg_size_of_land_leased2":
       "Size of land leased out to others for farming activities",
   "msg_size_of_land_lying": "Size of Land lying completely idle:",
-  "msg_size_of_land_lying2": "Size of land lying completely idle",
+  "msg_size_of_land_lying2":
+      "Size of land lying completely(including fallow land) idle",
   "msg_size_of_land_under": "Size of Land under own crop farming:",
-  "msg_size_of_land_under2": "Size of Land under crop farming (*)",
+  "msg_size_of_land_under2":
+      "Size of Land under crop farming(including planted trees) (*)",
   "msg_soil_seeds_and": "Soil, Seeds and Extension Services",
   "msg_total_area_under": "Total Area Under Irrigation (*)",
   "msg_total_land_area": "Total land area reserved for livestock:",
-  "msg_total_land_area2": "Total  land area reserved for livestock(acres) (*)",
-  "msg_total_land_size": "Total Land Size of the farm (*)",
+  "msg_total_land_area2":
+      "Total  land area reserved for livestock(acres)(including pasture & fodder) (*)",
+  "msg_total_land_size": "Total Land Size of the farm(agricultural land) (*)",
   "msg_transfer_request": "Transfer Request",
   "msg_type_and_name_of2": "Type and Name of Irrigation Scheme (*)",
   "msg_what_are_your_main": "What are your main livestock feed items? (*)",

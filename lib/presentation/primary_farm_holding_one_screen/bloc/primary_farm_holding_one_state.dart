@@ -13,6 +13,9 @@ class PrimaryFarmHoldingOneState extends Equatable {
     this.sizeLandIdleController,
     this.selectedDropDownValue,
     this.primaryFarmHoldingOneModelObj,
+    this.selectedDropDownValue2,
+    this.selectedDropDownValue3,
+    this.selectedDropDownValue4,
     this.vil,
     this.shop,
   });
@@ -36,6 +39,11 @@ class PrimaryFarmHoldingOneState extends Equatable {
   TextEditingController? shop;
 
   TextEditingController? vil;
+  SelectionPopupModel? selectedDropDownValue2;
+
+  SelectionPopupModel? selectedDropDownValue3;
+
+  SelectionPopupModel? selectedDropDownValue4;
   @override
   List<Object?> get props => [
         nameController,
@@ -45,6 +53,9 @@ class PrimaryFarmHoldingOneState extends Equatable {
         sizeLandLeasedController,
         sizeLandIdleController,
         selectedDropDownValue,
+        selectedDropDownValue2,
+        selectedDropDownValue3,
+        selectedDropDownValue4,
         vil,
         shop,
         primaryFarmHoldingOneModelObj,
@@ -57,6 +68,9 @@ class PrimaryFarmHoldingOneState extends Equatable {
     TextEditingController? sizeLandLeasedController,
     TextEditingController? sizeLandIdleController,
     SelectionPopupModel? selectedDropDownValue,
+    SelectionPopupModel? selectedDropDownValue2,
+    SelectionPopupModel? selectedDropDownValue3,
+    SelectionPopupModel? selectedDropDownValue4,
     PrimaryFarmHoldingOneModel? primaryFarmHoldingOneModelObj,
     TextEditingController? shop,
     TextEditingController? vil,
@@ -74,6 +88,12 @@ class PrimaryFarmHoldingOneState extends Equatable {
           selectedDropDownValue ?? this.selectedDropDownValue,
       primaryFarmHoldingOneModelObj:
           primaryFarmHoldingOneModelObj ?? this.primaryFarmHoldingOneModelObj,
+      selectedDropDownValue2:
+          selectedDropDownValue2 ?? this.selectedDropDownValue2,
+      selectedDropDownValue3:
+          selectedDropDownValue3 ?? this.selectedDropDownValue3,
+      selectedDropDownValue4:
+          selectedDropDownValue4 ?? this.selectedDropDownValue4,
       shop: shop ?? this.shop,
       vil: vil ?? this.vil,
     );

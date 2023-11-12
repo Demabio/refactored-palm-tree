@@ -87,12 +87,9 @@ class FarmerFarmDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      cropProd = ?, livestockProd = ?, fishFarming = ?,  x = ?, y = ?, accuracy_level = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
+       x = ?, y = ?, accuracy_level = ?, ownership_id = ?, farm_lr_cert = ?, other_farm_elsewhere = ?
       WHERE farmer_farm_id = ?
     ''', [
-      farm.cropProd,
-      farm.livestockProd,
-      farm.fishFarming,
       farm.x,
       farm.y,
       farm.accuracyLevel?.toInt(),
@@ -107,7 +104,11 @@ class FarmerFarmDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-      villageName = ?, shoppingCenter = ?, enumerationAreaNumber = ?, enumeratorId = ?, enumeratorName = ?, enumeratorMobile = ?, farm_name = ?, farm_size = ?, area_unit_id = ?, crop_farm_size = ?, livestock_farm_size = ?, leased_farm_size = ?, idle_farm_size = ? 
+      villageName = ?, shoppingCenter = ?, enumerationAreaNumber = ?, enumeratorId = ?,
+       enumeratorName = ?, enumeratorMobile = ?, farm_name = ?, 
+      farm_size = ?, area_unit_id = ?, crop_farm_size = ?, livestock_farm_size = ?, 
+      leased_farm_size = ?, idle_farm_size = ?, cropProd = ?, livestockProd = ?, 
+      fishFarming = ?
       WHERE farmer_farm_id = ?
     ''', [
       farm.villageName,
@@ -123,6 +124,9 @@ class FarmerFarmDB {
       farm.livestockFarmSize,
       farm.leasedFarmSize,
       farm.idleFarmSize,
+      farm.cropProd,
+      farm.livestockProd,
+      farm.fishFarming,
       farm.farmerFarmId,
     ]);
   }

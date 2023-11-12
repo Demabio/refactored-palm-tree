@@ -20,6 +20,9 @@ class PrimaryFarmHoldingOneBloc
     on<ChangeDropDownEvent>(_changeDropDown);
     on<NextTapEvent>(_nextTap);
     on<SaveTapEvent>(_saveTap);
+    on<ChangeDropDown2Event>(_changeDropDown2);
+    on<ChangeDropDown3Event>(_changeDropDown3);
+    on<ChangeDropDown4Event>(_changeDropDown4);
   }
 
   _changeDropDown(
@@ -31,7 +34,80 @@ class PrimaryFarmHoldingOneBloc
         primaryFarmHoldingOneModelObj:
             state.primaryFarmHoldingOneModelObj?.copyWith(
           selectedDropDownValue: event.value,
+          selectedDropDownValue2:
+              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
+          selectedDropDownValue3:
+              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
+          selectedDropDownValue4:
+              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue4,
         )));
+  }
+
+  _changeDropDown2(
+    ChangeDropDown2Event event,
+    Emitter<PrimaryFarmHoldingOneState> emit,
+  ) {
+    TextEditingController sizeoneController = TextEditingController(text: "0");
+    if (event.value.id == 0) {
+      sizeoneController = TextEditingController(text: "0");
+    }
+    emit(state.copyWith(
+      sizeoneController: sizeoneController,
+      selectedDropDownValue2: event.value,
+      primaryFarmHoldingOneModelObj:
+          state.primaryFarmHoldingOneModelObj?.copyWith(
+        selectedDropDownValue2: event.value,
+        selectedDropDownValue:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue4,
+      ),
+    ));
+  }
+
+  _changeDropDown3(
+    ChangeDropDown3Event event,
+    Emitter<PrimaryFarmHoldingOneState> emit,
+  ) {
+    TextEditingController areaController = TextEditingController();
+    if (event.value.id == 0) {
+      areaController = TextEditingController(text: "0");
+    }
+    emit(state.copyWith(
+      areaController: areaController,
+      selectedDropDownValue3: event.value,
+      primaryFarmHoldingOneModelObj:
+          state.primaryFarmHoldingOneModelObj?.copyWith(
+        selectedDropDownValue3: event.value,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
+        selectedDropDownValue:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
+        selectedDropDownValue4:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue4,
+      ),
+    ));
+  }
+
+  _changeDropDown4(
+    ChangeDropDown4Event event,
+    Emitter<PrimaryFarmHoldingOneState> emit,
+  ) {
+    emit(state.copyWith(
+      selectedDropDownValue4: event.value,
+      primaryFarmHoldingOneModelObj:
+          state.primaryFarmHoldingOneModelObj?.copyWith(
+        selectedDropDownValue4: event.value,
+        selectedDropDownValue2:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
+        selectedDropDownValue3:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
+        selectedDropDownValue:
+            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
+      ),
+    ));
   }
 
   List<SelectionPopupModel> fillDropdownItemList() {
@@ -148,6 +224,15 @@ class PrimaryFarmHoldingOneBloc
                   state.sizeLandIdleController?.text == ""
                       ? "0"
                       : state.sizeLandIdleController!.text),
+              cropProd: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue2!.id ==
+                  1,
+              livestockProd: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue3!.id ==
+                  1,
+              fishFarming: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue4!.id ==
+                  1,
             ));
 
             PFProgressDB pfProgressDB = PFProgressDB();
@@ -187,10 +272,23 @@ class PrimaryFarmHoldingOneBloc
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
                 cropFarmSize: double.parse(state.sizeoneController!.text),
                 livestockFarmSize: double.parse(state.areaController!.text),
-                leasedFarmSize:
-                    double.parse(state.sizeLandLeasedController?.text ?? "0"),
-                idleFarmSize:
-                    double.parse(state.sizeLandIdleController?.text ?? "0"),
+                leasedFarmSize: double.parse(
+                    state.sizeLandLeasedController?.text == ""
+                        ? "0"
+                        : state.sizeLandLeasedController!.text),
+                idleFarmSize: double.parse(
+                    state.sizeLandIdleController?.text == ""
+                        ? "0"
+                        : state.sizeLandIdleController!.text),
+                cropProd: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue2!.id ==
+                    1,
+                livestockProd: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue3!.id ==
+                    1,
+                fishFarming: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue4!.id ==
+                    1,
               ))
               .then((value) => print(
                     "Updated scop: " + value.toString(),
@@ -269,6 +367,15 @@ class PrimaryFarmHoldingOneBloc
                   state.sizeLandIdleController?.text == ""
                       ? "0"
                       : state.sizeLandIdleController!.text),
+              cropProd: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue2!.id ==
+                  1,
+              livestockProd: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue3!.id ==
+                  1,
+              fishFarming: state.primaryFarmHoldingOneModelObj!
+                      .selectedDropDownValue4!.id ==
+                  1,
             ));
 
             PFProgressDB pfProgressDB = PFProgressDB();
@@ -308,10 +415,23 @@ class PrimaryFarmHoldingOneBloc
                     .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
                 cropFarmSize: double.parse(state.sizeoneController!.text),
                 livestockFarmSize: double.parse(state.areaController!.text),
-                leasedFarmSize:
-                    double.parse(state.sizeLandLeasedController?.text ?? "0"),
-                idleFarmSize:
-                    double.parse(state.sizeLandIdleController?.text ?? "0"),
+                leasedFarmSize: double.parse(
+                    state.sizeLandLeasedController?.text == ""
+                        ? "0"
+                        : state.sizeLandLeasedController!.text),
+                idleFarmSize: double.parse(
+                    state.sizeLandIdleController?.text == ""
+                        ? "0"
+                        : state.sizeLandIdleController!.text),
+                cropProd: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue2!.id ==
+                    1,
+                livestockProd: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue3!.id ==
+                    1,
+                fishFarming: state.primaryFarmHoldingOneModelObj!
+                        .selectedDropDownValue4!.id ==
+                    1,
               ))
               .then((value) => print(
                     "Updated scop: " + value.toString(),
@@ -352,6 +472,13 @@ class PrimaryFarmHoldingOneBloc
           pageTwo: 0,
         );
 
+    List<SelectionPopupModel> fillDropdownItemList1() {
+      return [
+        SelectionPopupModel(id: 1, title: "Yes"),
+        SelectionPopupModel(id: 0, title: "No")
+      ];
+    }
+
     //print(farmer);
     TextEditingController vil = TextEditingController();
     TextEditingController shop = TextEditingController();
@@ -362,7 +489,14 @@ class PrimaryFarmHoldingOneBloc
     TextEditingController sizeLandLeasedController = TextEditingController();
     TextEditingController sizeLandIdleController = TextEditingController();
 
+    List<SelectionPopupModel> crop = fillDropdownItemList1();
+    List<SelectionPopupModel> livestock = fillDropdownItemList1();
+    List<SelectionPopupModel> fish = fillDropdownItemList1();
     List<SelectionPopupModel> area = await fetchAreaUnits();
+
+    SelectionPopupModel? selectedDropDownValue2;
+    SelectionPopupModel? selectedDropDownValue3;
+    SelectionPopupModel? selectedDropDownValue4;
     SelectionPopupModel? selectedarea;
 
     if (pfProgress.pageOne == 1 && farm.farmerFarmId != 0) {
@@ -382,6 +516,16 @@ class PrimaryFarmHoldingOneBloc
 
       selectedarea = area.firstWhere(
         (model) => model.id == farm.areaUnitId,
+      );
+
+      selectedDropDownValue2 = crop.firstWhere(
+        (model) => model.id == (farm.cropProd! ? 1 : 0),
+      );
+      selectedDropDownValue3 = livestock.firstWhere(
+        (model) => model.id == (farm.livestockProd! ? 1 : 0),
+      );
+      selectedDropDownValue4 = fish.firstWhere(
+        (model) => model.id == (farm.fishFarming! ? 1 : 0),
       );
     }
     int stepper = 0;
@@ -409,6 +553,12 @@ class PrimaryFarmHoldingOneBloc
           stepped2: stepper,
           pfProgress: pfProgress,
           farm: farm,
+          dropdownItemList2: crop,
+          dropdownItemList3: livestock,
+          dropdownItemList4: fish,
+          selectedDropDownValue2: selectedDropDownValue2,
+          selectedDropDownValue3: selectedDropDownValue3,
+          selectedDropDownValue4: selectedDropDownValue4,
         ),
       ),
     );

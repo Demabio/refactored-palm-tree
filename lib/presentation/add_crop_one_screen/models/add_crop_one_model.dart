@@ -29,6 +29,8 @@ class AddCropOneModel extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.stepped2 = 0,
+    this.area,
+    this.area1,
   });
 
   List<ChipviewalbertItemModel> chipviewalbertItemList;
@@ -64,7 +66,8 @@ class AddCropOneModel extends Equatable {
   CAProgress? caProgressDB;
   FarmerCrop? crop;
   int stepped2;
-
+  double? area;
+  double? area1;
   AddCropOneModel copyWith({
     List<ChipviewalbertItemModel>? chipviewalbertItemList,
     List<SelectionPopupModel>? dropdownItemList,
@@ -84,6 +87,8 @@ class AddCropOneModel extends Equatable {
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     int? stepped2,
+    double? area,
+    double? area1,
   }) {
     return AddCropOneModel(
       chipviewalbertItemList:
@@ -105,6 +110,8 @@ class AddCropOneModel extends Equatable {
       selectedDropDownValue1: selectedDropDownValue1,
       selectedDropDownValue2: selectedDropDownValue2,
       stepped2: stepped2 ?? this.stepped2,
+      area: area ?? this.area,
+      area1: area1 ?? this.area1,
     );
   }
 
@@ -128,5 +135,7 @@ class AddCropOneModel extends Equatable {
         selectedDropDownValue1,
         selectedDropDownValue2,
         stepped2,
+        area,
+        area1,
       ];
 }

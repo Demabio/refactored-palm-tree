@@ -391,15 +391,6 @@ class PrimaryFarmHoldingTwoBloc
           otherFarmElsewhere:
               state.primaryFarmHoldingTwoModelObj?.selectedDropDownValue1!.id ==
                   1,
-          cropProd:
-              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue2!.id ==
-                  1,
-          livestockProd:
-              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue3!.id ==
-                  1,
-          fishFarming:
-              state.primaryFarmHoldingTwoModelObj!.selectedDropDownValue4!.id ==
-                  1,
         ))
             .then((value) async {
           if (value > 0) {
@@ -511,14 +502,14 @@ class PrimaryFarmHoldingTwoBloc
     SelectionPopupModel? selectedowners;
     List<SelectionPopupModel> farms = fillDropdownItemList1();
 
-    List<SelectionPopupModel> crop = fillDropdownItemList1();
-    List<SelectionPopupModel> livestock = fillDropdownItemList1();
-    List<SelectionPopupModel> fish = fillDropdownItemList1();
+    // List<SelectionPopupModel> crop = fillDropdownItemList1();
+    // List<SelectionPopupModel> livestock = fillDropdownItemList1();
+    // List<SelectionPopupModel> fish = fillDropdownItemList1();
 
     SelectionPopupModel? selectedfarms;
-    SelectionPopupModel? selectedDropDownValue2;
-    SelectionPopupModel? selectedDropDownValue3;
-    SelectionPopupModel? selectedDropDownValue4;
+    // SelectionPopupModel? selectedDropDownValue2;
+    // SelectionPopupModel? selectedDropDownValue3;
+    // SelectionPopupModel? selectedDropDownValue4;
 
     if (pfProgress.pageTwo == 1 && farm.farmerFarmId != 0) {
       titleoneController = TextEditingController(text: farm.x.toString());
@@ -532,15 +523,15 @@ class PrimaryFarmHoldingTwoBloc
       selectedfarms = farms.firstWhere(
         (model) => model.id == (farm.otherFarmElsewhere! ? 1 : 0),
       );
-      selectedDropDownValue2 = crop.firstWhere(
-        (model) => model.id == (farm.cropProd! ? 1 : 0),
-      );
-      selectedDropDownValue3 = livestock.firstWhere(
-        (model) => model.id == (farm.livestockProd! ? 1 : 0),
-      );
-      selectedDropDownValue4 = fish.firstWhere(
-        (model) => model.id == (farm.fishFarming! ? 1 : 0),
-      );
+      // selectedDropDownValue2 = crop.firstWhere(
+      //   (model) => model.id == (farm.cropProd! ? 1 : 0),
+      // );
+      // selectedDropDownValue3 = livestock.firstWhere(
+      //   (model) => model.id == (farm.livestockProd! ? 1 : 0),
+      // );
+      // selectedDropDownValue4 = fish.firstWhere(
+      //   (model) => model.id == (farm.fishFarming! ? 1 : 0),
+      // );
 
       for (var ent in farments) {
         int index =
@@ -573,17 +564,17 @@ class PrimaryFarmHoldingTwoBloc
           enterprises: ents,
           dropdownItemList: owners,
           dropdownItemList1: farms,
-          dropdownItemList2: crop,
-          dropdownItemList3: livestock,
-          dropdownItemList4: fish,
+          // dropdownItemList2: crop,
+          // dropdownItemList3: livestock,
+          // dropdownItemList4: fish,
           selectedDropDownValue: selectedowners,
           selectedDropDownValue1: selectedfarms,
           stepped2: stepper,
           farm: farm,
           pfProgress: pfProgress,
-          selectedDropDownValue2: selectedDropDownValue2,
-          selectedDropDownValue3: selectedDropDownValue3,
-          selectedDropDownValue4: selectedDropDownValue4,
+          // selectedDropDownValue2: selectedDropDownValue2,
+          // selectedDropDownValue3: selectedDropDownValue3,
+          // selectedDropDownValue4: selectedDropDownValue4,
         ),
       ),
     );

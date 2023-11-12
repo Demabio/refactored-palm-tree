@@ -3,10 +3,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/data/models/dbModels/processes/crop_agri.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/crops/crop.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farm.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/crop.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/crops/cropareaunit.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/processes/crop_agri.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/crop/crops.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm.dart';
 import '/core/app_export.dart';
 import '../models/chipviewalbert_item_model.dart';
 import 'package:kiamis_app/presentation/add_crop_one_screen/models/add_crop_one_model.dart';
@@ -433,6 +435,18 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
     return await caProgressDB.fetchByCropId(cropid);
   }
 
+  Future<FarmerFarm?> getFarm() async {
+    int farmid = PrefUtils().getFarmId();
+    FarmerFarmDB farmDB = FarmerFarmDB();
+    return await farmDB.fetchByFarmerFarmId(farmid);
+  }
+
+  Future<double> getsizes() async {
+    int farmid = PrefUtils().getFarmId();
+    FarmerCropsDB farmerCropsDB = FarmerCropsDB();
+    return await farmerCropsDB.cropFarmsizes(farmid);
+  }
+
   _onInitialize(
     AddCropOneInitialEvent event,
     Emitter<AddCropOneState> emit,
@@ -449,7 +463,18 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           pageOne: 0,
           pageTwo: 0,
         );
-
+    FarmerFarm farmer = await getFarm() ??
+        FarmerFarm(
+          farmerId: 0,
+          farmerFarmId: 0,
+          labourSourceId: 0,
+          cropsInsurance: false,
+          fishInsurance: false,
+          assetsInsurance: false,
+          livestockInsurance: false,
+          farmRecords: false,
+          cropFarmSize: 0,
+        );
     //print(farmer);
     TextEditingController areavalueoneController = TextEditingController();
 
@@ -502,6 +527,8 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           selectedDropDownValue2: selecteduse,
           crop: crop,
           caProgressDB: caProgress,
+          area: farmer.cropFarmSize,
+          area1: await getsizes(),
         ),
       ),
     );

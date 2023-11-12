@@ -20,6 +20,7 @@ class AddLandandwatermgmtTwoModel extends Equatable {
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.lwProgress,
+    this.area,
   });
 
   List<SelectionPopupModel> dropdownItemList;
@@ -40,7 +41,7 @@ class AddLandandwatermgmtTwoModel extends Equatable {
   SelectionPopupModel? selectedDropDownValue;
 
   SelectionPopupModel? selectedDropDownValue1;
-
+  double? area;
   AddLandandwatermgmtTwoModel copyWith({
     List<SelectionPopupModel>? dropdownItemList,
     List<SelectionPopupModel>? dropdownItemList1,
@@ -53,6 +54,7 @@ class AddLandandwatermgmtTwoModel extends Equatable {
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     LWProgress? lwProgress,
+    double? area,
   }) {
     return AddLandandwatermgmtTwoModel(
       dropdownItemList: dropdownItemList ?? this.dropdownItemList,
@@ -66,6 +68,7 @@ class AddLandandwatermgmtTwoModel extends Equatable {
       lwProgress: lwProgress ?? this.lwProgress,
       selectedDropDownValue: selectedDropDownValue,
       selectedDropDownValue1: selectedDropDownValue1,
+      area: area ?? this.area,
     );
   }
 
@@ -82,5 +85,6 @@ class AddLandandwatermgmtTwoModel extends Equatable {
         selectedDropDownValue,
         selectedDropDownValue1,
         lwProgress,
+        area,
       ];
 }

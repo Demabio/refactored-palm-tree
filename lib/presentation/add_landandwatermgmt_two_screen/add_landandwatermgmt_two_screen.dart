@@ -412,20 +412,24 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                     BlocSelector<
                                         AddLandandwatermgmtTwoBloc,
                                         AddLandandwatermgmtTwoState,
-                                        TextEditingController?>(
-                                      selector: (state) =>
-                                          state.areavalueoneController,
-                                      builder:
-                                          (context, areavalueoneController) {
+                                        AddLandandwatermgmtTwoState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
                                         return CustomTextFormField(
                                           focusNode: node,
                                           autofocus: false,
                                           textInputType: TextInputType.number,
-                                          controller: areavalueoneController,
+                                          controller:
+                                              state.areavalueoneController,
                                           validator: (value) {
                                             if (!isNumeric(value,
                                                 isRequired: true)) {
                                               return "Field is required";
+                                            } else if (double.parse(value!) >
+                                                state
+                                                    .addLandandwatermgmtTwoModelObj!
+                                                    .area!) {
+                                              return "Size is larger than stated crop and livestock size.";
                                             } else {
                                               return null;
                                             }

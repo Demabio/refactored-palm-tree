@@ -170,6 +170,36 @@ class CropAgricultureScreen extends StatelessWidget {
                   builder: (context, state) {
                     return Column(
                       children: [
+                        CustomElevatedButton(
+                          width: DeviceExt((344 / 841) * 100).h,
+                          text: "Add Crop".tr,
+                          height: Device.orientation == Orientation.portrait
+                              ? DeviceExt(6).h
+                              : 8.w,
+                          // width:
+                          //     Device.orientation == Orientation.portrait
+                          //         ? DeviceExt(50).h
+                          //         : 50.w,
+                          buttonTextStyle:
+                              theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontSize: Device.orientation == Orientation.portrait
+                                ? DeviceExt(2).h
+                                : DeviceExt(2.5).w,
+                          ),
+                          margin: Device.orientation == Orientation.portrait
+                              ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                  DeviceExt(0.2).h, 1.2.w)
+                              : EdgeInsets.fromLTRB(
+                                  DeviceExt(0.36).w,
+                                  DeviceExt(6).h,
+                                  DeviceExt(0.2).w,
+                                  DeviceExt(1.2).h),
+                          onTap: () {
+                            addorEdit(context, 0, 0);
+                          },
+                          alignment: Alignment.bottomCenter,
+                        ),
                         Visibility(
                           visible: state.done,
                           child: CustomElevatedButton(

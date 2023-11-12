@@ -201,6 +201,19 @@ class FarmerCropsDB {
         : null;
   }
 
+  Future<double> cropFarmsizes(int farm) async {
+    final database = await FarmerDatabaseService().database;
+    final result = await database.rawQuery('''
+    SELECT SUM(crop_area) FROM $tableName WHERE farmer_farm_id = ? AND active = 1
+  ''', [farm]);
+
+    // Access the value directly from the result map
+    final area = result.isNotEmpty ? result.first.values.first : null;
+    print(area);
+    // Convert the value to a double if it's not null
+    return area != null ? double.parse(area.toString()) : 0;
+  }
+
   Future<int> delete(int id) async {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''

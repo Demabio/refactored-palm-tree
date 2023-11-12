@@ -499,6 +499,8 @@ class AddLandandwatermgmtTwoBloc
           labourSourceId: 0,
           irrigationArea: 0,
           irrigationUse: false,
+          cropFarmSize: 0,
+          livestockFarmSize: 0,
         );
     List<CheckBoxList>? typemodels = await fetchType();
     List<CheckBoxList>? schememodels = await fetchSchemes();
@@ -548,6 +550,7 @@ class AddLandandwatermgmtTwoBloc
           selectedDropDownValue: aa,
           lwProgress: pfProgress,
           stepped2: stepped,
+          area: (farmer.livestockFarmSize ?? 0) + (farmer.cropFarmSize ?? 0),
         )));
   }
 }
