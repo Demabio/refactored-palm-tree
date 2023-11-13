@@ -65,23 +65,34 @@ class _HomeScreenState extends State<HomeScreen> {
           resizeToAvoidBottomInset: true,
           drawer: SideMenuDraweritem(),
           appBar: CustomAppBar(
-              height: ((47 / 411) * 100).w,
-              leadingWidth: DeviceExt((48 / 841) * 100).h,
-              leading: AppbarImage(
-                onTap: () {
-                  onTapMenuone(context);
-                },
-                svgPath: ImageConstant.imgMenu,
-                margin: EdgeInsets.only(
-                  left: DeviceExt((24 / 841) * 100).h,
-                  top: ((8 / 411) * 100).w,
-                  bottom: ((15 / 411) * 100).w,
+            height: ((47 / 411) * 100).w,
+            leadingWidth: DeviceExt((48 / 841) * 100).h,
+            leading: AppbarImage(
+              onTap: () {
+                onTapMenuone(context);
+              },
+              svgPath: ImageConstant.imgMenu,
+              margin: EdgeInsets.only(
+                left: DeviceExt((24 / 841) * 100).h,
+                top: ((8 / 411) * 100).w,
+                bottom: ((15 / 411) * 100).w,
+              ),
+            ),
+            centerTitle: true,
+            title: AppbarSubtitle1(
+              text: "lbl_dashboard".tr,
+            ),
+            actions: [
+              IconButton(
+                onPressed: () => profileNav(context),
+                icon: Icon(
+                  Icons.person,
+                  color: theme.colorScheme.primary,
+                  size: DeviceExt((24 / 841) * 100).h,
                 ),
               ),
-              centerTitle: true,
-              title: AppbarSubtitle1(
-                text: "lbl_dashboard".tr,
-              )),
+            ],
+          ),
           body: SizedBox(
             width: mediaQueryData.size.width,
             child: SingleChildScrollView(
@@ -1399,6 +1410,12 @@ class _HomeScreenState extends State<HomeScreen> {
   /// variable.
   onTapMenuone(BuildContext context) {
     _scaffoldKey.currentState?.openDrawer();
+  }
+
+  profileNav(BuildContext context) {
+    NavigatorService.popAndPushNamed(
+      AppRoutes.profilescreen,
+    );
   }
 
   /// Displays an [AlertDialog] with a custom content widget using the

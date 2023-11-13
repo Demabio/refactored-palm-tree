@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:package_info/package_info.dart';
 import 'package:equatable/equatable.dart';
@@ -248,6 +249,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     PrefUtils().setToken(resp.token ?? '');
+    DateTime now = DateTime.now();
+
+// Set the time to tomorrow at 6 am
+    DateTime tomorrow6AM = DateTime(now.year, now.month, now.day + 1, 6, 0, 0);
+
+// Format the DateTime to a string
+    String formattedTomorrow6AM =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(tomorrow6AM);
+
+// Set the formatted string to your PrefUtils
+    PrefUtils().setTomorrow(formattedTomorrow6AM);
     emit(
       state.copyWith(
         loginModelObj: state.loginModelObj?.copyWith(),

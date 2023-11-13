@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/splash_screen/models/splash_model.dart';
 part 'splash_event.dart';
@@ -16,9 +17,26 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     Emitter<SplashState> emit,
   ) async {
     Future.delayed(const Duration(milliseconds: 3000), () {
-      NavigatorService.popAndPushNamed(
-        AppRoutes.loginScreen,
-      );
+      String storedTomorrowTime = PrefUtils()
+          .getTomorrow(); // Assuming you have a method to retrieve the stored time
+
+// Parse the stored string back to DateTime
+      DateTime storedTomorrowDateTime =
+          DateFormat('yyyy-MM-dd HH:mm:ss').parse(storedTomorrowTime);
+
+// Get the current date and time
+      DateTime now = DateTime.now();
+
+// Check if the current time is past the stored tomorrow time
+      if (now.isAfter(storedTomorrowDateTime)) {
+        NavigatorService.popAndPushNamed(
+          AppRoutes.loginScreen,
+        );
+      } else {
+        NavigatorService.popAndPushNamed(
+          AppRoutes.homeScreen,
+        );
+      }
     });
   }
 }

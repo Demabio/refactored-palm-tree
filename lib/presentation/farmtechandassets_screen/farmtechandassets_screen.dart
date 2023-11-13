@@ -267,7 +267,8 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                                   DeviceExt((77 / 841) * 100).h,
                                               bottom: ((18 / 411) * 100).w),
                                           child: Text(
-                                            "lbl_self_family".tr,
+                                            state.farmStructure?.assetSource ??
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,

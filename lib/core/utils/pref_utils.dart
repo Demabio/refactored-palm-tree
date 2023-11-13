@@ -367,4 +367,17 @@ class PrefUtils {
       return false;
     }
   }
+
+  Future<void> setTomorrow(String value) {
+    return _sharedPreferences!.setString('tomorrow', value);
+  }
+
+  String getTomorrow() {
+    try {
+      return _sharedPreferences!.getString('tomorrow') ??
+          DateTime.now().toString();
+    } catch (e) {
+      return DateTime.now().toString();
+    }
+  }
 }
