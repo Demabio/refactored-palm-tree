@@ -15,6 +15,7 @@ import 'package:kiamis_app/data/sqlService/dbqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestock.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmcategory.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmingsystem.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfeedtypes.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestocksubcategory.dart';
@@ -69,6 +70,13 @@ class AddRearedLivestockOneBloc
     List<SelectionPopupModel> livestock =
         await fillLivestock(event.model!.subcategoryid!);
 
+    LivestockFarmSystemCategoryDB livestockFarmSystemCategoryDB =
+        LivestockFarmSystemCategoryDB();
+
+    List<int> farmsystemsid = await livestockFarmSystemCategoryDB
+        .getLivestockSystemIds(event.model!.categoryid!);
+
+    List<SelectionPopupModel> production = await fillProduction(farmsystemsid);
     final updatedState = state.copyWith(
         selectedCategory: SelectionPopupModel(
           title: event.model?.livestockCat ?? "",
@@ -84,14 +92,14 @@ class AddRearedLivestockOneBloc
         ),
         addRearedLivestockOneModelObj:
             state.addRearedLivestockOneModelObj?.copyWith(
+          dropdownItemList1: production,
           selectedLivestock: null,
           selectedCategory: null,
           selectedSubCategory: null,
           subcategories: subcategories,
           livestock: livestock,
           search: false,
-          selectedDropDownValue1:
-              state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
+          selectedDropDownValue1: null,
         )
         // addRearedLivestockOneModelObj: state.addRearedLivestockOneModelObj
         //     ?.copyWith(chipviewayrshiItemList: newList),
@@ -120,8 +128,7 @@ class AddRearedLivestockOneBloc
       selectedCategory: categorymodel,
       selectedSubCategory: subcategorymodel,
       selectedLivestock: livestockmodel,
-      selectedDropDownValue1:
-          state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
+      selectedDropDownValue1: null,
     )));
   }
 
@@ -147,6 +154,13 @@ class AddRearedLivestockOneBloc
     ChangeDropDownEventCategory event,
     Emitter<AddRearedLivestockOneState> emit,
   ) async {
+    LivestockFarmSystemCategoryDB livestockFarmSystemCategoryDB =
+        LivestockFarmSystemCategoryDB();
+
+    List<int> farmsystemsid = await livestockFarmSystemCategoryDB
+        .getLivestockSystemIds(event.value.id!);
+
+    List<SelectionPopupModel> production = await fillProduction(farmsystemsid);
     emit(
       state.copyWith(
         selectedCategory: event.value,
@@ -155,8 +169,8 @@ class AddRearedLivestockOneBloc
           selectedCategory: event.value,
           selectedSubCategory: null,
           selectedLivestock: null,
-          selectedDropDownValue1:
-              state.addRearedLivestockOneModelObj?.selectedDropDownValue1,
+          selectedDropDownValue1: null,
+          dropdownItemList1: production,
           subcategories: await fillSubCategory(
             event.value.id!,
           ),
@@ -424,11 +438,11 @@ class AddRearedLivestockOneBloc
     }
   }
 
-  Future<List<SelectionPopupModel>> fillProduction() async {
+  Future<List<SelectionPopupModel>> fillProduction(List<int> iDs) async {
     List<SelectionPopupModel> list = [];
     LivestockFarmingSystemDB livestockFarmingSystemDB =
         LivestockFarmingSystemDB();
-    await livestockFarmingSystemDB.fetchAll().then((value) {
+    await livestockFarmingSystemDB.fetchAllByLivestockCat(iDs).then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(SelectionPopupModel(
           title: value[i].livestockFarmsystem,
@@ -916,8 +930,10 @@ class AddRearedLivestockOneBloc
     SelectionPopupModel? selectedcateg;
     List<SelectionPopupModel> subcateg = [];
     SelectionPopupModel? selectedsubcateg;
-    List<SelectionPopupModel> prod = await fillProduction();
+    List<SelectionPopupModel> prod = [];
     SelectionPopupModel? selectedprod;
+    LivestockFarmSystemCategoryDB livestockFarmSystemCategoryDB =
+        LivestockFarmSystemCategoryDB();
 
     if (pfProgress.pageOne == 1 && livestock.farmerLivestockId != 0) {
       Livestock? lives =
@@ -953,6 +969,14 @@ class AddRearedLivestockOneBloc
       beeslist = await fetchBees();
       feedslist = _feeds(feedslist, feeds!);
       ageGroupList = _ages(ageGroupList, ages!);
+
+      if (lives.livestockCatId != null) {
+        List<int> farmsystemsid = await livestockFarmSystemCategoryDB
+            .getLivestockSystemIds(lives.livestockCatId!);
+
+        prod = await fillProduction(farmsystemsid);
+      }
+
       if (bees != null) {
         beeslist = _bees(beeslist, bees);
       }
@@ -964,7 +988,6 @@ class AddRearedLivestockOneBloc
           chipviewayrshiItemList:
               await fillCommonLivestock(), //fillChipviewayrshiItemList(),
           categories: categ,
-          dropdownItemList1: prod,
           selectedCategory: selectedcateg,
           selectedLivestock: selectedlivestock,
           selectedSubCategory: selectedsubcateg,

@@ -1,5 +1,5 @@
 import 'package:kiamis_app/data/models/farmerregistrationmodels/livestock/livestockfarmcategory.dart';
-import 'package:kiamis_app/data/sqlService/farmer_database_service.dart';
+import 'package:kiamis_app/data/sqlService/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LivestockFarmSystemCategoryDB {
@@ -14,15 +14,13 @@ class LivestockFarmSystemCategoryDB {
         "livestock_farmsys_cat_code" VARCHAR(25),
         "date_created" DATETIME ,
         "created_by" VARCHAR(255),
-        "active" INT,
-        "enumerator_id" INT,
         PRIMARY KEY("livestock_farmsystem_cat_id")
       );
     """);
   }
 
   Future<int> create(LivestockFarmSystemCategory farmSystemCategory) async {
-    final database = await FarmerDatabaseService().database;
+    final database = await DatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
         livestock_cat_id, livestock_farmsystem_id, livestock_farmsys_cat_code,
@@ -37,9 +35,23 @@ class LivestockFarmSystemCategoryDB {
     ]);
   }
 
+  Future<List<int>> getLivestockSystemIds(int livestockCatId) async {
+    final database = await DatabaseService().database;
+
+    List<Map<String, dynamic>> result = await database.rawQuery('''
+    SELECT livestock_farmsystem_id
+    FROM tblfrlivestockfarmsystemcategories
+    WHERE livestock_cat_id = ?
+  ''', [livestockCatId]);
+
+    List<int> livestockFarmsystemIds =
+        result.map((map) => map['livestock_farmsystem_id'] as int).toList();
+    return livestockFarmsystemIds;
+  }
+
   Future<int> insertCategories(
       List<LivestockFarmSystemCategory> categories) async {
-    final database = await FarmerDatabaseService().database;
+    final database = await DatabaseService().database;
     final batch = database.batch();
     try {
       for (var category in categories) {
@@ -67,7 +79,7 @@ class LivestockFarmSystemCategoryDB {
   }
 
   Future<List<LivestockFarmSystemCategory>> fetchAll() async {
-    final database = await FarmerDatabaseService().database;
+    final database = await DatabaseService().database;
     final categories = await database.rawQuery(''' 
       SELECT * FROM $tableName 
     ''');

@@ -74,6 +74,20 @@ class LivestockFarmingSystemDB {
         .toList();
   }
 
+  Future<List<LivestockFarmingSystem>> fetchAllByLivestockCat(
+      List<int> livestockFarmsystemIds) async {
+    final database = await DatabaseService().database;
+    final farmingSystems = await database.rawQuery('''
+    SELECT *
+    FROM $tableName
+    WHERE livestock_farmsystem_id IN (${livestockFarmsystemIds.join(', ')})
+  ''');
+
+    return farmingSystems
+        .map((e) => LivestockFarmingSystem.fromSqfliteDatabase(e))
+        .toList();
+  }
+
   Future<LivestockFarmingSystem> fetchByLivestockFarmingSystemId(
       int livestockFarmingSystemId) async {
     final database = await DatabaseService().database;

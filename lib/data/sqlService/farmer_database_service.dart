@@ -30,7 +30,7 @@ import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/irrigation/
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/agegroup.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/beehivetype.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestock.dart';
-import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmcategory.dart';
+import 'package:kiamis_app/data/sqlService/dbqueries/livestock/livestockfarmcategory.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfarmsystem.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockfeed.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/livestock/livestockservices.dart';
