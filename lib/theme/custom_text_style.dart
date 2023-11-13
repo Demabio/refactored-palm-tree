@@ -211,6 +211,9 @@ class CustomTextStyles {
   static get errorstyle => theme.textTheme.bodySmall!.lato.copyWith(
         color: const Color.fromARGB(255, 240, 16, 0),
         fontSize: DeviceExt(1.8).h,
+        fontWeight: FontWeight.bold,
+        decorationStyle: TextDecorationStyle.solid,
+        decorationThickness: 2,
       );
   static get bodySmallPoppinsGray500 =>
       theme.textTheme.bodySmall!.poppins.copyWith(
@@ -219,6 +222,7 @@ class CustomTextStyles {
       );
   static get bodySmallPoppinsWhiteA700 =>
       theme.textTheme.bodySmall!.poppins.copyWith(
+        fontSize: DeviceExt(1.8).h,
         color: appTheme.whiteA700,
       );
   static get bodySmallWhiteA700 => theme.textTheme.bodySmall!.copyWith(
@@ -337,7 +341,14 @@ class CustomTextStyles {
   static get labelMediumPrimary_1red => theme.textTheme.labelMedium!.copyWith(
         color: const Color.fromARGB(255, 252, 17, 0),
         fontSize: DeviceExt(1.8).h,
-        backgroundColor: theme.colorScheme.primary,
+        fontWeight: FontWeight.bold,
+        decorationStyle: TextDecorationStyle.solid,
+        decorationThickness: 2,
+        decoration: TextDecoration.combine(
+          <TextDecoration>[
+            TextDecoration.underline,
+          ],
+        ),
       );
   // Title text style
   static get titleLargeInterBluegray900 =>

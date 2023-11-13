@@ -247,81 +247,36 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       ])),
                                   SizedBox(
                                       height: DeviceExt((15 / 411) * 100).w),
-                                  Row(children: [
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text("lbl_longitude2".tr,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary_1),
-                                          BlocSelector<
-                                                  PrimaryFarmHoldingTwoBloc,
-                                                  PrimaryFarmHoldingTwoState,
-                                                  TextEditingController?>(
-                                              selector: (state) =>
-                                                  state.titleoneController,
-                                              builder: (context,
-                                                  titleoneController) {
-                                                return CustomTextFormField(
-                                                    width: DeviceExt(
-                                                            (95 / 841) * 100)
-                                                        .h,
-                                                    autofocus: false,
-                                                    focusNode: node1,
-                                                    controller:
-                                                        titleoneController,
-                                                    hintText:
-                                                        "lbl_longitude3".tr,
-                                                    validator: (value) {
-                                                      if (!isNumeric(value,
-                                                          isRequired: true)) {
-                                                        return "Please enter valid input";
-                                                      }
-                                                      return null;
-                                                    },
-                                                    textInputType:
-                                                        TextInputType.number,
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: DeviceExt(
-                                                                    (4 / 841) *
-                                                                        100)
-                                                                .h,
-                                                            vertical: DeviceExt(
-                                                                    (11 / 411) *
-                                                                        100)
-                                                                .w));
-                                              })
-                                        ]),
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left:
-                                                DeviceExt((13 / 841) * 100).h),
-                                        child: Column(
+                                  Wrap(
+                                      direction: Axis.horizontal,
+                                      alignment: WrapAlignment.spaceEvenly,
+                                      children: [
+                                        Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("lbl_latitude2".tr,
+                                              Text("lbl_longitude2".tr,
                                                   style: CustomTextStyles
                                                       .labelMediumPrimary_1),
                                               BlocSelector<
                                                       PrimaryFarmHoldingTwoBloc,
                                                       PrimaryFarmHoldingTwoState,
                                                       TextEditingController?>(
-                                                  selector: (state) => state
-                                                      .titlethreeController,
+                                                  selector: (state) =>
+                                                      state.titleoneController,
                                                   builder: (context,
-                                                      titlethreeController) {
+                                                      titleoneController) {
                                                     return CustomTextFormField(
-                                                        width: DeviceExt((95 /
-                                                                    841) *
-                                                                100)
+                                                        width: DeviceExt(
+                                                                (150 / 841) *
+                                                                    100)
                                                             .h,
                                                         autofocus: false,
-                                                        focusNode: node2,
+                                                        focusNode: node1,
                                                         controller:
-                                                            titlethreeController,
+                                                            titleoneController,
+                                                        hintText:
+                                                            "lbl_longitude3".tr,
                                                         validator: (value) {
                                                           if (!isNumeric(value,
                                                               isRequired:
@@ -333,8 +288,6 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                         textInputType:
                                                             TextInputType
                                                                 .number,
-                                                        hintText:
-                                                            "lbl_latitude3".tr,
                                                         contentPadding:
                                                             EdgeInsets.symmetric(
                                                                 horizontal:
@@ -347,14 +300,72 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                                             100)
                                                                     .w));
                                                   })
-                                            ])),
-                                    CustomElevatedButton(
-                                        height: DeviceExt((64 / 411) * 100).w,
-                                        width: DeviceExt((95 / 841) * 100).h,
+                                            ]),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left:
+                                                    DeviceExt((13 / 841) * 100)
+                                                        .h),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("lbl_latitude2".tr,
+                                                      style: CustomTextStyles
+                                                          .labelMediumPrimary_1),
+                                                  BlocSelector<
+                                                          PrimaryFarmHoldingTwoBloc,
+                                                          PrimaryFarmHoldingTwoState,
+                                                          TextEditingController?>(
+                                                      selector: (state) => state
+                                                          .titlethreeController,
+                                                      builder: (context,
+                                                          titlethreeController) {
+                                                        return CustomTextFormField(
+                                                            width: DeviceExt(
+                                                                    (150 / 841) *
+                                                                        100)
+                                                                .h,
+                                                            autofocus: false,
+                                                            focusNode: node2,
+                                                            controller:
+                                                                titlethreeController,
+                                                            validator: (value) {
+                                                              if (!isNumeric(
+                                                                  value,
+                                                                  isRequired:
+                                                                      true)) {
+                                                                return "Please enter valid input";
+                                                              }
+                                                              return null;
+                                                            },
+                                                            textInputType:
+                                                                TextInputType
+                                                                    .number,
+                                                            hintText:
+                                                                "lbl_latitude3"
+                                                                    .tr,
+                                                            contentPadding: EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    DeviceExt((4 /
+                                                                                841) *
+                                                                            100)
+                                                                        .h,
+                                                                vertical: DeviceExt(
+                                                                        (11 / 411) *
+                                                                            100)
+                                                                    .w));
+                                                      })
+                                                ])),
+                                      ]),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: DeviceExt((15 / 411) * 100).w),
+                                    child: CustomElevatedButton(
+                                        height: DeviceExt((50 / 411) * 100).w,
+                                        width: DeviceExt((150 / 841) * 100).h,
                                         text: "lbl_set_location".tr,
-                                        margin: EdgeInsets.only(
-                                            left:
-                                                DeviceExt((45 / 841) * 100).h),
                                         buttonTextStyle: CustomTextStyles
                                             .bodySmallPoppinsWhiteA700,
                                         onTap: () {
@@ -366,8 +377,8 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                 createSuccessful: () =>
                                                     closedialog(context),
                                               ));
-                                        })
-                                  ]),
+                                        }),
+                                  ),
                                   SizedBox(
                                       height: DeviceExt((37 / 411) * 100).w),
                                   Text("msg_legal_status_of2".tr,

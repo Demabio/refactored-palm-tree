@@ -99,6 +99,7 @@ class CustomDropDown extends StatelessWidget {
               value: item,
               child: Text(
                 item.title,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: hintStyle ?? CustomTextStyles.bodySmallLatoGray90001,
               ),
@@ -118,7 +119,7 @@ class CustomDropDown extends StatelessWidget {
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
-        errorStyle: TextStyle(color: const Color.fromARGB(255, 240, 16, 0)),
+        errorStyle: CustomTextStyles.errorstyle,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(DeviceExt((10 / 841) * 100).h),
           borderSide: BorderSide(
