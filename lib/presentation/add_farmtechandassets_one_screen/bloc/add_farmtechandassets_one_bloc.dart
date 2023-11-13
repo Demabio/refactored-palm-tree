@@ -9,6 +9,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.d
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/assetsource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/farmstructure.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/laboursource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/powersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassetsource.dart';
@@ -21,6 +22,7 @@ import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assetsource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/laboursource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/powersource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/structure.dart';
 import '/core/app_export.dart';
@@ -40,6 +42,8 @@ class AddFarmtechandassetsOneBloc
     on<CheckOneEvent>(_checkpowers);
     on<CheckTwoEvent>(_checkAssets);
     on<CheckThreeEvent>(_checkStructs);
+    on<CheckFourEvent>(_checklabour);
+
     on<AddEditEvent>(_addEdit);
     on<DeleteEvent>(_delete);
     on<ClearEvent>(_clear);
@@ -75,13 +79,13 @@ class AddFarmtechandassetsOneBloc
           farmerFarmId: 0,
           assetSourceId: 0,
         );
-    FarmerFarm farmer = await getFarm() ??
-        FarmerFarm(
-          farmerId: 0,
-          farmerFarmId: 0,
-          labourSourceId: 0,
-        );
-    List<SelectionPopupModel>? a = await fetchLabourSources();
+    // FarmerFarm farmer = await getFarm() ??
+    //     FarmerFarm(
+    //       farmerId: 0,
+    //       farmerFarmId: 0,
+    //       labourSourceId: 0,
+    //     );
+    List<CheckBoxList>? labours = await fetchLabourSources();
     List<SelectionPopupModel>? b = await fetchOwnerships();
 
     SelectionPopupModel? aa;
@@ -96,14 +100,12 @@ class AddFarmtechandassetsOneBloc
 
       List<FarmerAsset>? assetss = await getFAssets();
       assets = _assets(assets, assetss!);
-      List<FarmerStructure>? structss = await getStructs();
 
+      List<FarmerStructure>? structss = await getStructs();
       strucs = _structs(strucs, structss!);
-      if (farmer.labourSourceId != 0) {
-        aa = a.firstWhere(
-          (model) => model.id == farmer.labourSourceId,
-        );
-      }
+
+      List<FarmerLabourSource>? labourss = await getLabourSources();
+      labours = labourss != null ? _laboursources(labours, labourss) : labours;
 
       bb = farmerFishProductionLevel.assetSourceId != 0
           ? b.firstWhere(
@@ -115,9 +117,9 @@ class AddFarmtechandassetsOneBloc
         a: assets,
         p: atypes,
         s: strucs,
+        l: labours,
         addFarmtechandassetsOneModelObj:
             state.addFarmtechandassetsOneModelObj?.copyWith(
-          dropdownItemList: a,
           dropdownItemList1: b,
           selectedDropDownValue: aa,
           selectedDropDownValue1: bb,
@@ -170,6 +172,20 @@ class AddFarmtechandassetsOneBloc
     return feedmodels;
   }
 
+  List<CheckBoxList> _laboursources(
+      List<CheckBoxList> feedmodelss, List<FarmerLabourSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerLabourSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.labourSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
   List<CheckBoxList> _structs(
       List<CheckBoxList> feedmodelss, List<FarmerStructure> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
@@ -193,6 +209,21 @@ class AddFarmtechandassetsOneBloc
         list.add(CheckBoxList(
           title: value[i].powerSource,
           id: value[i].powerSourceId,
+        ));
+      }
+    });
+    return list;
+  }
+
+  Future<List<CheckBoxList>> fetchLabourSources() async {
+    List<CheckBoxList> list = [];
+    LabourSourceDB labourSourceDB = LabourSourceDB();
+
+    await labourSourceDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].labourSource,
+          id: value[i].labourSourceId,
         ));
       }
     });
@@ -263,6 +294,13 @@ class AddFarmtechandassetsOneBloc
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 
+  Future<List<FarmerLabourSource>?> getLabourSources() async {
+    int id = PrefUtils().getFarmId();
+    FarmerLabourSourceDB farmerLivestockAgeGroupsDB = FarmerLabourSourceDB();
+    farmerLivestockAgeGroupsDB.createTable();
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
+  }
+
   Future<List<FarmerStructure>?> getStructs() async {
     int id = PrefUtils().getFarmId();
     FarmerStructureDB farmerLivestockAgeGroupsDB = FarmerStructureDB();
@@ -290,6 +328,9 @@ class AddFarmtechandassetsOneBloc
       FarmerPowerSourceDB farmerPowerSourceDB = FarmerPowerSourceDB();
       FarmerStructureDB farmerStructureDB = FarmerStructureDB();
       FarmerAssetsDB farmerAssetsDB = FarmerAssetsDB();
+      FarmerLabourSourceDB farmerLabourSourceDB = FarmerLabourSourceDB();
+
+      farmerLabourSourceDB.delete(id).then((value) => print("Deleted: $value"));
 
       farmerPowerSourceDB.delete(id).then((value) => print("Deleted: $value"));
       farmerStructureDB.delete(id).then((value) => print("Deleted: $value"));
@@ -313,15 +354,19 @@ class AddFarmtechandassetsOneBloc
         state.a.where((enterprise) => enterprise.isSelected).length;
     int selectedCount3 =
         state.s.where((enterprise) => enterprise.isSelected).length;
+
+    int selectedCount4 =
+        state.l.where((enterprise) => enterprise.isSelected).length;
     FarmerAssetSourceDB farmerFishProductionLevelsDB = FarmerAssetSourceDB();
-    FarmerFarmDB farmerDB = FarmerFarmDB();
+    // FarmerFarmDB farmerDB = FarmerFarmDB();
     try {
       ATProgressDB atProgressDB = ATProgressDB();
       if (state.addFarmtechandassetsOneModelObj!.atProgress!.pageOne == 0 &&
           selectedCount != 0 &&
           selectedCount2 != 0 &&
-          selectedCount3 != 0) {
-        int id = await farmerFishProductionLevelsDB.create(
+          selectedCount3 != 0 &&
+          selectedCount4 != 0) {
+        await farmerFishProductionLevelsDB.create(
           FarmerAssetSource(
             farmerAssetSource: 0,
             farmerId: farmerid,
@@ -333,28 +378,29 @@ class AddFarmtechandassetsOneBloc
           ),
         );
 
-        int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
-          farmerId: farmerid,
-          farmerFarmId: farmid,
-          labourSourceId:
-              state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
-        ));
-        if (id > 0 && updatedid > 0) {
-          atProgressDB
-              .insert(ATProgress(
-                farmId: farmid,
-                pageTwo: 1,
-                pageOne: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
-        }
+        // int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
+        //   farmerId: farmerid,
+        //   farmerFarmId: farmid,
+        //   labourSourceId:
+        //       state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
+        // ));
+        // if (id > 0 && updatedid > 0) {
+        atProgressDB
+            .insert(ATProgress(
+              farmId: farmid,
+              pageTwo: 1,
+              pageOne: 1,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+        event.createSuccessful!.call();
+        // } else {
+        //   event.createFailed!.call();
+        // }
       } else if (selectedCount != 0 &&
           selectedCount2 != 0 &&
-          selectedCount3 != 0) {
-        int id = await farmerFishProductionLevelsDB.update(
+          selectedCount3 != 0 &&
+          selectedCount4 != 0) {
+        await farmerFishProductionLevelsDB.update(
           FarmerAssetSource(
             farmerAssetSource: 0,
             farmerId: farmerid,
@@ -365,24 +411,24 @@ class AddFarmtechandassetsOneBloc
             dateCreated: DateTime.now(),
           ),
         );
-        int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
-          farmerId: farmerid,
-          farmerFarmId: farmid,
-          labourSourceId:
-              state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
-        ));
-        if (id > 0 && updatedid > 0) {
-          atProgressDB
-              .update(ATProgress(
-                farmId: farmid,
-                pageTwo: 1,
-                pageOne: 1,
-              ))
-              .then((value) => print("Scope FI" + value.toString()));
-          event.createSuccessful!.call();
-        } else {
-          event.createFailed!.call();
-        }
+        // int updatedid = await farmerDB.updateFromFarmAsset(FarmerFarm(
+        //   farmerId: farmerid,
+        //   farmerFarmId: farmid,
+        //   labourSourceId:
+        //       state.addFarmtechandassetsOneModelObj!.selectedDropDownValue?.id,
+        // ));
+        // if (id > 0 && updatedid > 0) {
+        atProgressDB
+            .update(ATProgress(
+              farmId: farmid,
+              pageTwo: 1,
+              pageOne: 1,
+            ))
+            .then((value) => print("Scope FI" + value.toString()));
+        event.createSuccessful!.call();
+        // } else {
+        //   event.createFailed!.call();
+        // }
       } else {
         //   event.createFailed!.call();
         int selectedCount =
@@ -392,10 +438,13 @@ class AddFarmtechandassetsOneBloc
             state.a.where((enterprise) => enterprise.isSelected).length;
         int selectedCount3 =
             state.s.where((enterprise) => enterprise.isSelected).length;
+        int selectedCount4 =
+            state.l.where((enterprise) => enterprise.isSelected).length;
         emit(state.copyWith(
           checkedP: selectedCount == 0,
           checkedA: selectedCount2 == 0,
           checkedS: selectedCount3 == 0,
+          checkedL: selectedCount4 == 0,
         ));
       }
     } catch (e) {
@@ -420,6 +469,28 @@ class AddFarmtechandassetsOneBloc
       emit(state.copyWith(
         checkedP: true,
         p: feedmodels,
+      ));
+    }
+  }
+
+  _checklabour(
+    CheckFourEvent event,
+    Emitter<AddFarmtechandassetsOneState> emit,
+  ) async {
+    List<FarmerLabourSource>? fishes = await getLabourSources();
+
+    List<CheckBoxList>? feedmodels = [];
+    feedmodels = await fetchLabourSources();
+
+    feedmodels =
+        fishes != null ? _laboursources(feedmodels, fishes) : feedmodels;
+
+    if (fishes != null) {
+      emit(state.copyWith(l: feedmodels, checkedL: false));
+    } else {
+      emit(state.copyWith(
+        checkedL: true,
+        l: feedmodels,
       ));
     }
   }
@@ -547,20 +618,20 @@ class AddFarmtechandassetsOneBloc
     return list;
   }
 
-  Future<List<SelectionPopupModel>> fetchLabourSources() async {
-    List<SelectionPopupModel> list = [];
-    LabourSourceDB labourSourceDB = LabourSourceDB();
+  // Future<List<SelectionPopupModel>> fetchLabourSources() async {
+  //   List<SelectionPopupModel> list = [];
+  //   LabourSourceDB labourSourceDB = LabourSourceDB();
 
-    await labourSourceDB.fetchAll().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        list.add(SelectionPopupModel(
-          title: value[i].labourSource,
-          id: value[i].labourSourceId,
-        ));
-      }
-    });
-    return list;
-  }
+  //   await labourSourceDB.fetchAll().then((value) {
+  //     for (int i = 0; i < value.length; i++) {
+  //       list.add(SelectionPopupModel(
+  //         title: value[i].labourSource,
+  //         id: value[i].labourSourceId,
+  //       ));
+  //     }
+  //   });
+  //   return list;
+  // }
 
   _addEdit(
     AddEditEvent event,

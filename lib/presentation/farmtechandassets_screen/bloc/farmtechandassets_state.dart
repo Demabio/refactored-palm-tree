@@ -9,6 +9,7 @@ class FarmtechandassetsState extends Equatable {
     this.a = const [],
     this.p = const [],
     this.s = const [],
+    this.l = const [],
     this.farm,
     this.farmStructure,
     this.next = false,
@@ -21,6 +22,8 @@ class FarmtechandassetsState extends Equatable {
   List<CheckBoxList> p;
   List<CheckBoxList> a;
   List<CheckBoxList> s;
+  List<CheckBoxList> l;
+
   LabourSource? farm;
   FarmAssetSource? farmStructure;
   bool next;
@@ -33,6 +36,7 @@ class FarmtechandassetsState extends Equatable {
         a,
         p,
         s,
+        l,
         farm,
         farmStructure,
         next,
@@ -45,6 +49,7 @@ class FarmtechandassetsState extends Equatable {
     List<CheckBoxList>? p,
     List<CheckBoxList>? a,
     List<CheckBoxList>? s,
+    List<CheckBoxList>? l,
     LabourSource? farm,
     FarmAssetSource? farmStructure,
     bool? next,
@@ -58,6 +63,7 @@ class FarmtechandassetsState extends Equatable {
       p: p ?? this.p,
       a: a ?? this.a,
       s: s ?? this.s,
+      l: l ?? this.l,
       farmStructure: farmStructure ?? this.farmStructure,
       farm: farm ?? this.farm,
       next: next ?? this.next,

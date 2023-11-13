@@ -11,9 +11,11 @@ class AddFarmtechandassetsOneState extends Equatable {
     this.checkedP = false,
     this.checkedA = false,
     this.checkedS = false,
+    this.checkedL = false,
     this.a = const [],
     this.p = const [],
     this.s = const [],
+    this.l = const [],
   });
 
   SelectionPopupModel? selectedDropDownValue;
@@ -25,9 +27,13 @@ class AddFarmtechandassetsOneState extends Equatable {
   bool checkedP;
   bool checkedA;
   bool checkedS;
+  bool checkedL;
+
   List<CheckBoxList> p;
   List<CheckBoxList> a;
   List<CheckBoxList> s;
+  List<CheckBoxList> l;
+
   @override
   List<Object?> get props => [
         selectedDropDownValue,
@@ -36,9 +42,11 @@ class AddFarmtechandassetsOneState extends Equatable {
         checkedP,
         checkedA,
         checkedS,
+        checkedL,
         a,
         p,
         s,
+        l,
       ];
   AddFarmtechandassetsOneState copyWith({
     SelectionPopupModel? selectedDropDownValue,
@@ -47,9 +55,11 @@ class AddFarmtechandassetsOneState extends Equatable {
     bool? checkedP,
     bool? checkedA,
     bool? checkedS,
+    bool? checkedL,
     List<CheckBoxList>? p,
     List<CheckBoxList>? a,
     List<CheckBoxList>? s,
+    List<CheckBoxList>? l,
   }) {
     return AddFarmtechandassetsOneState(
       selectedDropDownValue:
@@ -61,9 +71,11 @@ class AddFarmtechandassetsOneState extends Equatable {
       checkedP: checkedP ?? this.checkedP,
       checkedA: checkedA ?? this.checkedA,
       checkedS: checkedS ?? this.checkedS,
+      checkedL: checkedL ?? this.checkedL,
       p: p ?? this.p,
       a: a ?? this.a,
       s: s ?? this.s,
+      l: l ?? this.l,
     );
   }
 }

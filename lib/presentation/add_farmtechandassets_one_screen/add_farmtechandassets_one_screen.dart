@@ -1,5 +1,6 @@
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
+import 'package:kiamis_app/presentation/add_farmtechandassets_five_dialog/add_farmtechandassets_five_dialog.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_four_dialog/add_farmtechandassets_four_dialog.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/add_farmtechandassets_three_dialog.dart';
 import 'package:kiamis_app/presentation/add_farmtechandassets_three_dialog/widgets/techassets_widget.dart';
@@ -130,55 +131,56 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         onTap: () => addPowerSource(context),
                         margin: EdgeInsets.only(
                           left: DeviceExt((82 / 841) * 100).h,
-                          top: DeviceExt((65 / 411) * 100).w,
+                          top: DeviceExt((33 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((33 / 411) * 100).w),
-                      Text(
-                        "lbl_labour_source2".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
-                      ),
+                      BlocSelector<AddFarmtechandassetsOneBloc,
+                              AddFarmtechandassetsOneState, bool?>(
+                          selector: (state) => state.checkedL,
+                          builder: (context, checked) {
+                            return Text(
+                              "lbl_labour_source2".tr,
+                              style: checked!
+                                  ? CustomTextStyles.labelMediumPrimary_1red
+                                  : CustomTextStyles.labelMediumPrimary_1,
+                            );
+                          }),
                       BlocSelector<
-                          AddFarmtechandassetsOneBloc,
-                          AddFarmtechandassetsOneState,
-                          AddFarmtechandassetsOneModel?>(
-                        selector: (state) =>
-                            state.addFarmtechandassetsOneModelObj,
-                        builder: (context, addFarmtechandassetsOneModelObj) {
-                          return CustomDropDown(
-                            icon: Container(
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((30 / 841) * 100).h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  DeviceExt((10 / 841) * 100).h,
+                              AddFarmtechandassetsOneBloc,
+                              AddFarmtechandassetsOneState,
+                              List<CheckBoxList>?>(
+                          selector: (state) => state.l,
+                          builder: (context, list) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                top: DeviceExt((15 / 411) * 100).w,
+                                right: DeviceExt((16 / 841) * 100).h,
+                              ),
+                              child: Column(
+                                children: List<Widget>.generate(
+                                  list?.length ?? 0,
+                                  (index) {
+                                    CheckBoxList model = list![index];
+
+                                    return InputsWidget(
+                                      model,
+                                    );
+                                  },
                                 ),
                               ),
-                              child: CustomImageView(
-                                svgPath: ImageConstant.imgArrowdownPrimary,
-                              ),
-                            ),
-                            hintText: "lbl_select".tr,
-                            validator: (value) {
-                              if (value == null) {
-                                return "Field is required";
-                              } else {
-                                return null;
-                              }
-                            },
-                            val: addFarmtechandassetsOneModelObj
-                                ?.selectedDropDownValue,
-                            items: addFarmtechandassetsOneModelObj
-                                    ?.dropdownItemList ??
-                                [],
-                            onChanged: (value) {
-                              context
-                                  .read<AddFarmtechandassetsOneBloc>()
-                                  .add(ChangeDropDownEvent(value: value));
-                            },
-                          );
-                        },
+                            );
+                          }),
+                      SizedBox(height: DeviceExt((20 / 411) * 100).w),
+                      CustomElevatedButton(
+                        text: "Add Laboursource".tr,
+                        onTap: () => addLabourSource(context),
+                        margin: EdgeInsets.only(
+                          left: DeviceExt((82 / 841) * 100).h,
+                          top: DeviceExt((33 / 411) * 100).w,
+                        ),
+                        alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((33 / 411) * 100).w),
                       BlocSelector<AddFarmtechandassetsOneBloc,
@@ -237,7 +239,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         ),
                         margin: EdgeInsets.only(
                           left: DeviceExt((82 / 841) * 100).h,
-                          top: DeviceExt((106 / 411) * 100).w,
+                          top: DeviceExt((33 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
@@ -333,7 +335,7 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
                         onTap: () => addFarmStructure(context),
                         margin: EdgeInsets.only(
                           left: DeviceExt((82 / 841) * 100).h,
-                          top: DeviceExt((106 / 411) * 100).w,
+                          top: DeviceExt((33 / 411) * 100).w,
                         ),
                         alignment: Alignment.centerRight,
                       ),
@@ -456,6 +458,22 @@ class AddFarmtechandassetsOneScreen extends StatelessWidget {
             ));
     context.read<AddFarmtechandassetsOneBloc>().add(
           CheckOneEvent(),
+        );
+  }
+
+  addLabourSource(BuildContext context) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: AddFarmtechandassetsFiveDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+    context.read<AddFarmtechandassetsOneBloc>().add(
+          CheckFourEvent(),
         );
   }
 

@@ -138,6 +138,13 @@ class CheckThreeEvent extends AddFarmtechandassetsOneEvent {
   List<Object?> get props => [];
 }
 
+class CheckFourEvent extends AddFarmtechandassetsOneEvent {
+  CheckFourEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 ///event for dropdown selection
 class ChangeDropDown1Event extends AddFarmtechandassetsOneEvent {
   ChangeDropDown1Event({required this.value});

@@ -10,6 +10,7 @@ import 'package:kiamis_app/data/models/farmerregistrationmodels/farmers/farmer.d
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/asset.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/assetsource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/farmstructure.dart';
+import 'package:kiamis_app/data/models/farmerregistrationmodels/other/laboursource.dart';
 import 'package:kiamis_app/data/models/farmerregistrationmodels/other/powersource.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassets.dart';
 import 'package:kiamis_app/data/sqlService/dbqueries/farm/farmassetsource.dart';
@@ -22,6 +23,7 @@ import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farm
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/farmer/farmer.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assets.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/assetsource.dart';
+import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/laboursource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/powersource.dart';
 import 'package:kiamis_app/data/sqlService/farmerregistrationqueries/other/structure.dart';
 import '/core/app_export.dart';
@@ -65,7 +67,7 @@ class FarmtechandassetsBloc
         );
 
     FarmAssetSource? assetSource;
-    LabourSource? labour;
+    List<CheckBoxList>? labours = await fetchLabourSources();
 
     List<CheckBoxList>? atypes = await fetchPowerSources();
     List<CheckBoxList>? assets = await fillAssets();
@@ -78,12 +80,10 @@ class FarmtechandassetsBloc
       List<FarmerAsset>? assetss = await getFAssets();
       assets = _assets(assets, assetss!);
       List<FarmerStructure>? structss = await getStructs();
-
       strucs = _structs(strucs, structss!);
-      if (farmer.labourSourceId != 0) {
-        labour = await fetchLabourSources(farmer.labourSourceId!);
-      }
 
+      List<FarmerLabourSource>? labourss = await getLabourSources();
+      labours = labourss != null ? _laboursources(labours, labourss) : labours;
       assetSource = farmerFishProductionLevel.assetSourceId != 0
           ? await fetchAssetSources(farmerFishProductionLevel.assetSourceId)
           : null;
@@ -93,7 +93,7 @@ class FarmtechandassetsBloc
       a: assets,
       p: atypes,
       s: strucs,
-      farm: labour,
+      l: labours,
       done: pfProgress.pageOne == 1 || pfProgress.pageTwo == 1,
       next: farmer.livestockProd,
       next2: farmer.cropProd,
@@ -108,10 +108,19 @@ class FarmtechandassetsBloc
     return await labourSourceDB.fetchByAssetSourceId(id);
   }
 
-  Future<LabourSource?> fetchLabourSources(int id) async {
+  Future<List<CheckBoxList>> fetchLabourSources() async {
+    List<CheckBoxList> list = [];
     LabourSourceDB labourSourceDB = LabourSourceDB();
 
-    return await labourSourceDB.fetchByLabourSourceId(id);
+    await labourSourceDB.fetchAll().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        list.add(CheckBoxList(
+          title: value[i].labourSource,
+          id: value[i].labourSourceId,
+        ));
+      }
+    });
+    return list;
   }
 
   Future<ATProgress?> getProgress() async {
@@ -145,6 +154,20 @@ class FarmtechandassetsBloc
 
     for (var ent in feeds) {
       int index = feedmodels.indexWhere((obj) => obj.id == ent.powerSourceId);
+
+      feedmodels[index].isSelected = true;
+    }
+
+    return feedmodels;
+  }
+
+  List<CheckBoxList> _laboursources(
+      List<CheckBoxList> feedmodelss, List<FarmerLabourSource> feedss) {
+    List<CheckBoxList> feedmodels = feedmodelss;
+    List<FarmerLabourSource> feeds = feedss;
+
+    for (var ent in feeds) {
+      int index = feedmodels.indexWhere((obj) => obj.id == ent.labourSourceId);
 
       feedmodels[index].isSelected = true;
     }
@@ -242,6 +265,13 @@ class FarmtechandassetsBloc
   Future<List<FarmerAsset>?> getFAssets() async {
     int id = PrefUtils().getFarmId();
     FarmerAssetsDB farmerLivestockAgeGroupsDB = FarmerAssetsDB();
+    return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
+  }
+
+  Future<List<FarmerLabourSource>?> getLabourSources() async {
+    int id = PrefUtils().getFarmId();
+    FarmerLabourSourceDB farmerLivestockAgeGroupsDB = FarmerLabourSourceDB();
+    farmerLivestockAgeGroupsDB.createTable();
     return await farmerLivestockAgeGroupsDB.fetchByFarm(id);
   }
 

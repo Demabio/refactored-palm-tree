@@ -336,6 +336,8 @@ class CustomTextStyles {
       );
   static get labelMediumPrimary_1red => theme.textTheme.labelMedium!.copyWith(
         color: const Color.fromARGB(255, 252, 17, 0),
+        fontSize: DeviceExt(1.8).h,
+        backgroundColor: theme.colorScheme.primary,
       );
   // Title text style
   static get titleLargeInterBluegray900 =>

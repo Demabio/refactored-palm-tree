@@ -161,35 +161,44 @@ class FarmtechandassetsScreen extends StatelessWidget {
                                     left: DeviceExt((2 / 841) * 100).h,
                                     top: ((11 / 411) * 100).w,
                                     right: DeviceExt((7 / 841) * 100).h),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: ((1 / 411) * 100).w),
-                                          child: Text(
-                                            "lbl_labour_source2".tr,
-                                            style: theme.textTheme.titleMedium
-                                                ?.copyWith(
-                                              fontSize: Device.orientation ==
-                                                      Orientation.portrait
-                                                  ? DeviceExt(1.8).h
-                                                  : DeviceExt(2).w,
-                                            ),
-                                          )),
-                                      Text(
-                                        state.farm?.labourSource ?? "N/A",
-                                        style: theme.textTheme.titleMedium
-                                            ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
-                                        ),
-                                      )
-                                    ])),
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: ((1 / 411) * 100).w),
+                                    child: Text(
+                                      "lbl_labour_source2".tr,
+                                      style:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        fontSize: Device.orientation ==
+                                                Orientation.portrait
+                                            ? DeviceExt(1.8).h
+                                            : DeviceExt(2).w,
+                                      ),
+                                    ))),
+                            BlocSelector<
+                                    FarmtechandassetsBloc,
+                                    FarmtechandassetsState,
+                                    List<CheckBoxList>?>(
+                                selector: (state) => state.l,
+                                builder: (context, list) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      top: ((15 / 411) * 100).w,
+                                      right: DeviceExt((16 / 841) * 100).h,
+                                    ),
+                                    child: Column(
+                                      children: List<Widget>.generate(
+                                        list?.length ?? 0,
+                                        (index) {
+                                          CheckBoxList model = list![index];
+
+                                          return InputsWidget(
+                                            model,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }),
                             Padding(
                                 padding:
                                     EdgeInsets.only(top: ((11 / 411) * 100).w),
