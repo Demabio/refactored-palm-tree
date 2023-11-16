@@ -30,6 +30,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
     on<ChangeDropDown5Event>(_changeDropDown5);
+    on<ChangeDropDown6Event>(_changeDropDown6);
 
     on<SaveTapEvent>(_saveTap);
 
@@ -161,6 +162,10 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       );
 
       aa = a.firstWhere(
+        (model) => model.id == 0,
+      );
+
+      bb = a.firstWhere(
         (model) => model.id == 0,
       );
     }
@@ -563,6 +568,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
           selectedDropDownValue5:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
   }
 
@@ -585,6 +592,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
           selectedDropDownValue5:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
   }
 
@@ -607,6 +616,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
           selectedDropDownValue5:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
   }
 
@@ -629,6 +640,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
           selectedDropDownValue5:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
   }
 
@@ -651,6 +664,8 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue,
           selectedDropDownValue5:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
   }
 
@@ -673,6 +688,49 @@ class AddFinancialandservicesTwoBloc extends Bloc<
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
           selectedDropDownValue:
               state.addFinancialandservicesTwoModelObj?.selectedDropDownValue,
+          selectedDropDownValue6:
+              state.addFinancialandservicesTwoModelObj?.selectedDropDownValue6,
         )));
+  }
+
+  _changeDropDown6(
+    ChangeDropDown6Event event,
+    Emitter<AddFinancialandservicesTwoState> emit,
+  ) {
+    if (event.value.id == 0) {
+      emit(state.copyWith(
+          selectedDropDownValue6: event.value,
+          addFinancialandservicesTwoModelObj:
+              state.addFinancialandservicesTwoModelObj?.copyWith(
+            selectedDropDownValue5: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+            selectedDropDownValue1: event.value,
+            selectedDropDownValue2: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue2,
+            selectedDropDownValue3: event.value,
+            selectedDropDownValue4: event.value,
+            selectedDropDownValue: event.value,
+            selectedDropDownValue6: event.value,
+          )));
+    } else {
+      emit(state.copyWith(
+          selectedDropDownValue6: event.value,
+          addFinancialandservicesTwoModelObj:
+              state.addFinancialandservicesTwoModelObj?.copyWith(
+            selectedDropDownValue6: event.value,
+            selectedDropDownValue1: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue1,
+            selectedDropDownValue2: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue2,
+            selectedDropDownValue3: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue3,
+            selectedDropDownValue4: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue4,
+            selectedDropDownValue:
+                state.addFinancialandservicesTwoModelObj?.selectedDropDownValue,
+            selectedDropDownValue5: state
+                .addFinancialandservicesTwoModelObj?.selectedDropDownValue5,
+          )));
+    }
   }
 }

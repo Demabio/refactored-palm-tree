@@ -179,64 +179,6 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                             );
                           })),
                       SizedBox(height: DeviceExt((45 / 411) * 100).w),
-                      BlocSelector<
-                              AddFinancialandservicesTwoBloc,
-                              AddFinancialandservicesTwoState,
-                              AddFinancialandservicesTwoModel>(
-                          selector: (state) =>
-                              state.addFinancialandservicesTwoModelObj!,
-                          builder: (context, primaryFarmHoldingOneModelObj) {
-                            return Visibility(
-                              visible: primaryFarmHoldingOneModelObj.crop,
-                              child: Text("msg_do_you_insure_your5".tr,
-                                  style: CustomTextStyles.labelMediumPrimary_1),
-                            );
-                          }),
-
-                      BlocSelector<
-                          AddFinancialandservicesTwoBloc,
-                          AddFinancialandservicesTwoState,
-                          AddFinancialandservicesTwoModel?>(
-                        selector: (state) =>
-                            state.addFinancialandservicesTwoModelObj,
-                        builder: (context, addFinancialandservicesTwoModelObj) {
-                          return Visibility(
-                            visible: addFinancialandservicesTwoModelObj!.crop,
-                            child: CustomDropDown(
-                              icon: Container(
-                                margin: EdgeInsets.only(
-                                    left: DeviceExt((30 / 841) * 100).h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    DeviceExt((10 / 841) * 100).h,
-                                  ),
-                                ),
-                                child: CustomImageView(
-                                  svgPath: ImageConstant.imgArrowdownPrimary,
-                                ),
-                              ),
-                              hintText: "lbl_select".tr,
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Field is required";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              val: addFinancialandservicesTwoModelObj
-                                  .selectedDropDownValue,
-                              items: addFinancialandservicesTwoModelObj
-                                  .dropdownItemList,
-                              onChanged: (value) {
-                                context
-                                    .read<AddFinancialandservicesTwoBloc>()
-                                    .add(ChangeDropDownEvent(value: value));
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: DeviceExt((17 / 411) * 100).w),
 
                       Text(
                         "msg_do_you_keep_written2".tr,
@@ -285,7 +227,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                       ),
                       SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
-                        "msg_do_you_insure_your6".tr,
+                        "Do you have insurance?(*)".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       BlocSelector<
@@ -317,14 +259,14 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                               }
                             },
                             val: addFinancialandservicesTwoModelObj
-                                ?.selectedDropDownValue1,
+                                ?.selectedDropDownValue6,
                             items: addFinancialandservicesTwoModelObj
-                                    ?.dropdownItemList1 ??
+                                    ?.dropdownItemList ??
                                 [],
                             onChanged: (value) {
                               context
                                   .read<AddFinancialandservicesTwoBloc>()
-                                  .add(ChangeDropDown1Event(value: value));
+                                  .add(ChangeDropDown6Event(value: value));
                             },
                           );
                         },
@@ -354,9 +296,141 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                                           return Visibility(
                                             visible:
                                                 primaryFarmHoldingOneModelObj
+                                                    .crop,
+                                            child: Text(
+                                                "msg_do_you_insure_your5".tr,
+                                                style: CustomTextStyles
+                                                    .labelMediumPrimary_1),
+                                          );
+                                        }),
+                                    BlocSelector<
+                                        AddFinancialandservicesTwoBloc,
+                                        AddFinancialandservicesTwoState,
+                                        AddFinancialandservicesTwoModel?>(
+                                      selector: (state) => state
+                                          .addFinancialandservicesTwoModelObj,
+                                      builder: (context,
+                                          addFinancialandservicesTwoModelObj) {
+                                        return Visibility(
+                                          visible:
+                                              addFinancialandservicesTwoModelObj!
+                                                  .crop,
+                                          child: CustomDropDown(
+                                            icon: Container(
+                                              margin: EdgeInsets.only(
+                                                  left: DeviceExt(
+                                                          (30 / 841) * 100)
+                                                      .h),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  DeviceExt((10 / 841) * 100).h,
+                                                ),
+                                              ),
+                                              child: CustomImageView(
+                                                svgPath: ImageConstant
+                                                    .imgArrowdownPrimary,
+                                              ),
+                                            ),
+                                            hintText: "lbl_select".tr,
+                                            validator: (value) {
+                                              if (value == null) {
+                                                return "Field is required";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            val:
+                                                addFinancialandservicesTwoModelObj
+                                                    .selectedDropDownValue,
+                                            items:
+                                                addFinancialandservicesTwoModelObj
+                                                    .dropdownItemList,
+                                            onChanged: (value) {
+                                              context
+                                                  .read<
+                                                      AddFinancialandservicesTwoBloc>()
+                                                  .add(ChangeDropDownEvent(
+                                                      value: value));
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
+                                    Text(
+                                      "msg_do_you_insure_your6".tr,
+                                      style:
+                                          CustomTextStyles.labelMediumPrimary_1,
+                                    ),
+                                    BlocSelector<
+                                        AddFinancialandservicesTwoBloc,
+                                        AddFinancialandservicesTwoState,
+                                        AddFinancialandservicesTwoModel?>(
+                                      selector: (state) => state
+                                          .addFinancialandservicesTwoModelObj,
+                                      builder: (context,
+                                          addFinancialandservicesTwoModelObj) {
+                                        return CustomDropDown(
+                                          icon: Container(
+                                            margin: EdgeInsets.only(
+                                                left:
+                                                    DeviceExt((30 / 841) * 100)
+                                                        .h),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                DeviceExt((10 / 841) * 100).h,
+                                              ),
+                                            ),
+                                            child: CustomImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowdownPrimary,
+                                            ),
+                                          ),
+                                          hintText: "lbl_select".tr,
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return "Field is required";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          val:
+                                              addFinancialandservicesTwoModelObj
+                                                  ?.selectedDropDownValue1,
+                                          items:
+                                              addFinancialandservicesTwoModelObj
+                                                      ?.dropdownItemList1 ??
+                                                  [],
+                                          onChanged: (value) {
+                                            context
+                                                .read<
+                                                    AddFinancialandservicesTwoBloc>()
+                                                .add(ChangeDropDown1Event(
+                                                    value: value));
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                        height: DeviceExt((17 / 411) * 100).w),
+                                    BlocSelector<
+                                            AddFinancialandservicesTwoBloc,
+                                            AddFinancialandservicesTwoState,
+                                            AddFinancialandservicesTwoModel>(
+                                        selector: (state) => state
+                                            .addFinancialandservicesTwoModelObj!,
+                                        builder: (context,
+                                            primaryFarmHoldingOneModelObj) {
+                                          return Visibility(
+                                            visible:
+                                                primaryFarmHoldingOneModelObj
                                                     .livestock,
                                             child: Text(
                                                 "msg_do_you_insure_your7".tr,
+                                                textAlign: TextAlign.left,
                                                 style: CustomTextStyles
                                                     .labelMediumPrimary_1),
                                           );

@@ -185,6 +185,17 @@ class ChangeDropDown5Event extends AddFinancialandservicesTwoEvent {
       ];
 }
 
+class ChangeDropDown6Event extends AddFinancialandservicesTwoEvent {
+  ChangeDropDown6Event({required this.value});
+
+  SelectionPopupModel value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
 class StepUpEvent extends AddFinancialandservicesTwoEvent {
   StepUpEvent({this.value});
 

@@ -176,7 +176,6 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -217,7 +216,6 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -431,7 +429,6 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -473,7 +470,6 @@ class FinancialandservicesScreen extends StatelessWidget {
                                                       Orientation.portrait
                                                   ? DeviceExt(1.8).h
                                                   : DeviceExt(2).w,
-                                              fontWeight: FontWeight.bold,
                                             ),
                                           )),
                                       Padding(
@@ -607,7 +603,6 @@ class FinancialandservicesScreen extends StatelessWidget {
                                               Orientation.portrait
                                           ? DeviceExt(1.8).h
                                           : DeviceExt(2).w,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   )),
                             ),
