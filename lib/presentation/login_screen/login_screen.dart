@@ -288,7 +288,7 @@ class LoginScreen extends StatelessWidget {
                               child: InkWell(
                                 onTap: () => changePassword(context),
                                 child: Text(
-                                  "msg_forgot_password".tr,
+                                  "Change Password".tr,
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontSize: Device.orientation ==
                                             Orientation.portrait
@@ -463,7 +463,7 @@ class LoginScreen extends StatelessWidget {
             ));
   }
 
-  /// Calls the https://prudmatvisionaries.com/gateway/UserService/login API and triggers a [CreateLoginEvent] event on the [LoginBloc] bloc.
+  /// Calls the https://kiamistrainapi.kalro.org/gateway/UserService/login API and triggers a [CreateLoginEvent] event on the [LoginBloc] bloc.
   ///
   /// Validates the form and triggers a [CreateLoginEvent] event on the [LoginBloc] bloc if the form is valid.
   /// The [BuildContext] parameter represents current [BuildContext]
@@ -476,11 +476,19 @@ class LoginScreen extends StatelessWidget {
               onCreateLoginEventSuccess: () {
                 _onLoginUserServicePostEventSuccess(context);
               },
-              onCreateLoginEventError: () {
+              onCreateLoginFailed: () {
                 _onLoginUserServicePostEventError(context);
               },
+              onCreateLoginEventError: () {
+                closedialog(context, "Server Error",
+                    "Kindly contact the administrator");
+              },
+              timeout: () => closedialog(context, "Internet Connection",
+                  "Kindly check your internet connection"),
+              onServiceUnavailable: () => closedialog(context,
+                  "Service Unavailable", "Kindly contact the administrator"),
               onFalse: () => downloadDialog(context, "Old App Version Detected",
-                  "Your current version of KIAMIS is outdated. Please update to the latest version for a better experience. Please Allow KIAMIS to auto-download. Thanks"),
+                  "Your current version of KIAMIS is outdated. An update to the latest version will start on close. Thanks"),
             ),
           );
     }
@@ -490,24 +498,33 @@ class LoginScreen extends StatelessWidget {
 
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the otpOneScreen.
-  void _onLoginUserServicePostEventSuccess(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.homeScreen,
-    );
-    PrefUtils().setRefresh(false);
+  void _onLoginUserServicePostEventSuccess(BuildContext context) async {
+    if (!PrefUtils().getchangepassword()) {
+      NavigatorService.pushNamed(
+        AppRoutes.otpOneScreen,
+      );
+      PrefUtils().setRefresh(false);
 
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
-        builder: (_) => AlertDialog(
-              content: UpdateDBDialog.builder(
-                context,
-              ),
-              backgroundColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              insetPadding: const EdgeInsets.only(left: 0),
-            ));
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+          builder: (_) => AlertDialog(
+                content: UpdateDBDialog.builder(
+                  context,
+                ),
+                backgroundColor: Colors.transparent,
+                contentPadding: EdgeInsets.zero,
+                insetPadding: const EdgeInsets.only(left: 0),
+              ));
+    } else {
+      await closedialog(context, "Change Password",
+          "Kindly change your password with the provided temporary password sent to your device via SMS");
+
+      NavigatorService.pushNamed(
+        AppRoutes.newPasswordScreen,
+      );
+    }
   }
 
   static downloadDialog(BuildContext context, String label, String body) async {

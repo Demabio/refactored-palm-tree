@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kiamis_app/data/repository/repository.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/otp_one_screen/models/otp_one_model.dart';
@@ -65,13 +66,33 @@ class OtpOneBloc extends Bloc<OtpOneEvent, OtpOneState> with CodeAutoFill {
         'Content-type': 'application/json',
       },
       requestData: {
-        'Username': PrefUtils().getUsername(),
+        'Username': PrefUtils().getUsernameOTP(),
         'OTP': state.otpController!.text,
       },
     ).then((value) async {
-      value.statusCode == 200
-          ? event.onCreateLoginEventSuccess?.call()
-          : event.onCreateLoginEventSuccess?.call();
+      if (value.statusCode == 200) {
+        DateTime now = DateTime.now();
+
+// Set the time to tomorrow at 6 am
+        DateTime tomorrow6AM =
+            DateTime(now.year, now.month, now.day + 1, 6, 0, 0);
+
+// Format the DateTime to a string
+        String formattedTomorrow6AM =
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(tomorrow6AM);
+
+// Set the formatted string to your PrefUtils
+        PrefUtils().setTomorrow(formattedTomorrow6AM);
+        event.onCreateLoginEventSuccess?.call();
+      } else if (value.statusCode == 401) {
+        event.onCreateLoginFailed?.call();
+      } else if (value.statusCode == 408) {
+        event.timeout?.call();
+      } else if (value.statusCode == 503 || value.statusCode == 502) {
+        event.onServiceUnavailable?.call();
+      } else {
+        event.onCreateLoginEventError?.call();
+      }
     }).onError((error, stackTrace) {
       event.onCreateLoginEventError?.call();
     });

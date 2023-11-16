@@ -84,6 +84,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     SelectionPopupModel? dd;
     SelectionPopupModel? ee;
     SelectionPopupModel? ff;
+    SelectionPopupModel? yesno;
 
     if (pfProgress.pageTwo == 1) {
       List<FarmerExtensionAccess>? access = await getEAccess();
@@ -140,6 +141,30 @@ class AddFinancialandservicesTwoBloc extends Bloc<
     } else if (pfProgress.pageOne == 1) {
       stepped = 1;
     }
+
+    if (farmer.fishInsurance! ||
+        farmer.cropsInsurance! ||
+        farmer.livestockInsurance!) {
+      yesno = a.firstWhere(
+        (model) => model.id == 1,
+      );
+    } else {
+      yesno = a.firstWhere(
+        (model) => model.id == 0,
+      );
+      ee = a.firstWhere(
+        (model) => model.id == 0,
+      );
+
+      dd = a.firstWhere(
+        (model) => model.id == 0,
+      );
+
+      aa = a.firstWhere(
+        (model) => model.id == 0,
+      );
+    }
+
     emit(state.copyWith(
         e: accessmodels,
         m: modemodels,
@@ -151,12 +176,14 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           dropdownItemList3: a,
           dropdownItemList4: a,
           dropdownItemList5: a,
+          dropdownItemList6: a,
           selectedDropDownValue: aa,
           selectedDropDownValue1: bb,
           selectedDropDownValue2: cc,
           selectedDropDownValue3: dd,
           selectedDropDownValue4: ee,
           selectedDropDownValue5: ff,
+          selectedDropDownValue6: yesno,
           fsProgress: pfProgress,
           stepped2: stepped,
           livestock: farmer.livestockProd!,

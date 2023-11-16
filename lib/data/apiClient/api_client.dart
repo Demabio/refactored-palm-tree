@@ -18,7 +18,7 @@ class ApiClient {
 
   ApiClient._internal();
 
-  var url = "https://prudmatvisionaries.com";
+  var url = "https://kiamistrainapi.kalro.org";
 
   static final ApiClient _apiClient = ApiClient._internal();
 
@@ -140,9 +140,9 @@ class ApiClient {
     }
   }
 
-  /// Performs API call for https://prudmatvisionaries.com/gateway/UserService/login
+  /// Performs API call for https://kiamistrainapi.kalro.org/gateway/UserService/login
   ///
-  /// Sends a POST request to the server's 'https://prudmatvisionaries.com/gateway/UserService/login' endpoint
+  /// Sends a POST request to the server's 'https://kiamistrainapi.kalro.org/gateway/UserService/login' endpoint
   /// with the provided headers and request data
   /// Returns a [PostLoginUserServicePostResp] object representing the response.
   /// Throws an error if the request fails or an exception occurs.
@@ -160,12 +160,33 @@ class ApiClient {
       );
       ProgressDialogUtils.hideProgressDialog();
       if (_isSuccessCall(response)) {
-        return PostLoginUserServicePostResp.fromJson(response.data);
+        PostLoginUserServicePostResp postLoginUserServicePostResp =
+            PostLoginUserServicePostResp.fromJson(response.data);
+        PostLoginUserServicePostResp postLoginUserServicePostResp2 =
+            PostLoginUserServicePostResp(
+          statusCode: response.statusCode,
+          token: postLoginUserServicePostResp.token,
+          changePassword: postLoginUserServicePostResp.changePassword,
+        );
+
+        return postLoginUserServicePostResp2;
       } else {
         throw response.data != null
             ? PostLoginUserServicePostResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
+    } on DioException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      PostLoginUserServicePostResp postLoginUserServicePostResp =
+          PostLoginUserServicePostResp(
+              statusCode: error.response?.statusCode ?? 500);
+
+      return postLoginUserServicePostResp;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -198,6 +219,14 @@ class ApiClient {
       } else {
         throw response.data != null ? response : 'Something Went Wrong!';
       }
+    } on DioException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return error.response!;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -230,6 +259,14 @@ class ApiClient {
       } else {
         throw response.data != null ? response : 'Something Went Wrong!';
       }
+    } on DioException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return error.response!;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -294,6 +331,14 @@ class ApiClient {
       } else {
         throw response.data != null ? response : 'Something Went Wrong!';
       }
+    } on DioException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return error.response!;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

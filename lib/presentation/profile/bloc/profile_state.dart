@@ -25,6 +25,7 @@ class ProfileState extends Equatable {
     this.idNo,
     this.name,
     this.status,
+    this.id,
   });
 
   ProfileModel? farmtechandassetsModelObj;
@@ -48,6 +49,7 @@ class ProfileState extends Equatable {
   String? sublocation;
   String? idNo;
   String? status;
+  String? id;
   @override
   List<Object?> get props => [
         farmtechandassetsModelObj,
@@ -70,6 +72,7 @@ class ProfileState extends Equatable {
         idNo,
         name,
         status,
+        id,
       ];
   ProfileState copyWith({
     ProfileModel? farmtechandassetsModelObj,
@@ -92,6 +95,7 @@ class ProfileState extends Equatable {
     String? idNo,
     String? name,
     String? status,
+    String? id,
   }) {
     return ProfileState(
       farmtechandassetsModelObj:
@@ -115,6 +119,7 @@ class ProfileState extends Equatable {
       idNo: idNo ?? this.idNo,
       name: name ?? this.name,
       status: status ?? this.status,
+      id: id ?? this.id,
     );
   }
 }

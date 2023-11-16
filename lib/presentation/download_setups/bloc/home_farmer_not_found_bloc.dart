@@ -76,7 +76,7 @@ class HomeFarmerNotFoundBloc
       String token = PrefUtils().getToken();
 
       Response response = await dio.download(
-        'https://prudmatvisionaries.com/Gateway/FarmerRegistration/setupdownload', // Replace with the actual URL
+        'https://kiamistrainapi.kalro.org/Gateway/FarmerRegistration/setupdownload', // Replace with the actual URL
         '$dbpath',
         options: Options(
           headers: {

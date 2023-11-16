@@ -49,6 +49,8 @@ class CustomPinCodeTextField extends StatelessWidget {
   Widget get pinCodeTextFieldWidget => Padding(
         padding: margin ?? EdgeInsets.zero,
         child: PinCodeTextField(
+          enablePinAutofill: true,
+
           appContext: context,
           controller: controller,
           length: 4,
@@ -58,7 +60,7 @@ class CustomPinCodeTextField extends StatelessWidget {
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
           ],
-          enableActiveFill: true,
+          // enableActiveFill: true,
           pinTheme: PinTheme(
             fieldHeight: Device.orientation == Orientation.portrait
                 ? DeviceExt(8).h

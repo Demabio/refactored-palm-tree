@@ -305,7 +305,7 @@ class FarmerDB {
       return await database.rawUpdate(
         '''
     UPDATE $tableName SET registrationStatusId = 2
-    WHERE completed = 1 AND registrationStatusId IN (0,1)
+    WHERE completed = 1 AND registrationStatusId IN (0,1,4,6,9,11)
   ''',
       );
     } catch (e) {
@@ -325,6 +325,13 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     final farmerList =
         await database.rawQuery('SELECT * FROM $tableName WHERE completed = 0');
+    return farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList();
+  }
+
+  Future<List<Farmer>> fetchAllUpdate() async {
+    final database = await FarmerDatabaseService().database;
+    final farmerList =
+        await database.rawQuery('SELECT * FROM $tableName WHERE completed = 1');
     return farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList();
   }
 

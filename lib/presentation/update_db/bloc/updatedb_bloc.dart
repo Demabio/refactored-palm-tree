@@ -93,7 +93,7 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       String token = PrefUtils().getToken();
 
       Response response = await dio.download(
-        'https://prudmatvisionaries.com/Gateway/FarmerRegistration/setupdownload', // Replace with the actual URL
+        'https://kiamistrainapi.kalro.org/Gateway/FarmerRegistration/setupdownload', // Replace with the actual URL
         '$dbpath',
         options: Options(
           headers: {
@@ -142,7 +142,7 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       String token = PrefUtils().getToken();
 
       Response response = await dio.download(
-        'https://prudmatvisionaries.com/Gateway/FarmerRegistration/download', // Replace with the actual URL
+        'https://kiamistrainapi.kalro.org/Gateway/FarmerRegistration/download', // Replace with the actual URL
         '$dbpath',
         options: Options(
           headers: {
@@ -182,14 +182,14 @@ class UpdateDBBloc extends Bloc<UpdateDBEvent, UpdateDBState> {
       FarmerDB farmerDB = FarmerDB();
       DFarmerDB dFarmerDB = DFarmerDB();
 
-      List<Farmer> farmers = await farmerDB.fetchAll();
+      List<Farmer> farmers = await farmerDB.fetchAllUpdate();
       if (farmers.isNotEmpty) {
         int totalFarmers =
             farmers.length; // Assuming 'farmers' is your list of farmers
         int maxChunkSize = 1;
         int numberOfChunks = (totalFarmers / maxChunkSize).ceil();
         numberOfChunks = numberOfChunks > 100 ? 100 : numberOfChunks;
-
+        print(totalFarmers);
         List<List<Farmer>> chunks = chunkList(farmers, numberOfChunks);
         List<Future<void>> updateChunkFutures = [];
 

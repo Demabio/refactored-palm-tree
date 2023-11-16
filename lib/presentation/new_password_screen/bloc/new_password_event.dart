@@ -21,20 +21,29 @@ class CreateLoginEvent extends NewPasswordEvent {
     this.onCreateLoginEventError,
     this.onFalse,
     this.persmissions,
+    this.onServiceUnavailable,
+    this.onCreateLoginFailed,
+    this.timeout,
   });
 
   Function? onCreateLoginEventSuccess;
   Function? onFalse;
   Function? persmissions;
 
-  Function? onCreateLoginEventError;
+  Function? onCreateLoginFailed;
+  Function? timeout;
 
+  Function? onCreateLoginEventError;
+  Function? onServiceUnavailable;
   @override
   List<Object?> get props => [
         onCreateLoginEventSuccess,
         onCreateLoginEventError,
         onFalse,
         persmissions,
+        onCreateLoginFailed,
+        onServiceUnavailable,
+        timeout,
       ];
 }
 

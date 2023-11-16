@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kiamis_app/presentation/post_dialog/post_dialog.dart';
 import 'package:kiamis_app/presentation/update_db/updatedb_dialog.dart';
 import 'package:flutter/material.dart';
@@ -403,6 +404,17 @@ class SideMenuDraweritem extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the loginScreen.
   onTapRowarrowright(BuildContext context) {
+    DateTime now = DateTime.now();
+
+// Set the time to tomorrow at 6 am
+    DateTime tomorrow6AM = DateTime(now.year, now.month, now.day - 1, 6, 0, 0);
+
+// Format the DateTime to a string
+    String formattedTomorrow6AM =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(tomorrow6AM);
+
+// Set the formatted string to your PrefUtils
+    PrefUtils().setTomorrow(formattedTomorrow6AM);
     Navigator.pop(context);
 
     NavigatorService.popAndPushNamed(

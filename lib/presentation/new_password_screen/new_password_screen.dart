@@ -1,3 +1,5 @@
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
+
 import 'bloc/new_password_bloc.dart';
 import 'models/new_password_model.dart';
 import 'package:flutter/material.dart';
@@ -155,14 +157,14 @@ class NewPasswordScreen extends StatelessWidget {
                                               left: DeviceExt(0.36).w,
                                               top: DeviceExt(6.3).h,
                                               right: DeviceExt(0.2).w),
-                                  textStyle:
-                                      theme.textTheme.titleSmall?.copyWith(
-                                    fontSize: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,color: Colors.black
-                                  ),
+                                  textStyle: theme.textTheme.titleSmall
+                                      ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
                                     fontSize: Device.orientation ==
@@ -227,14 +229,14 @@ class NewPasswordScreen extends StatelessWidget {
                                               left: DeviceExt(0.36).w,
                                               top: DeviceExt(6.3).h,
                                               right: DeviceExt(0.2).w),
-                                  textStyle:
-                                      theme.textTheme.titleSmall?.copyWith(
-                                    fontSize: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,color: Colors.black
-                                  ),
+                                  textStyle: theme.textTheme.titleSmall
+                                      ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
                                     fontSize: Device.orientation ==
@@ -317,14 +319,14 @@ class NewPasswordScreen extends StatelessWidget {
                                               left: DeviceExt(0.36).w,
                                               top: DeviceExt(6.3).h,
                                               right: DeviceExt(0.2).w),
-                                  textStyle:
-                                      theme.textTheme.titleSmall?.copyWith(
-                                    fontSize: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,color: Colors.black
-                                  ),
+                                  textStyle: theme.textTheme.titleSmall
+                                      ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
                                     fontSize: Device.orientation ==
@@ -411,14 +413,14 @@ class NewPasswordScreen extends StatelessWidget {
                                               left: DeviceExt(0.36).w,
                                               top: DeviceExt(6.3).h,
                                               right: DeviceExt(0.2).w),
-                                  textStyle:
-                                      theme.textTheme.titleSmall?.copyWith(
-                                    fontSize: Device.orientation ==
-                                            Orientation.portrait
-                                        ? DeviceExt(1.8).h
-                                        : DeviceExt(2).w,
-                                    fontWeight: FontWeight.normal,color: Colors.black
-                                  ),
+                                  textStyle: theme.textTheme.titleSmall
+                                      ?.copyWith(
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                   hintStyle:
                                       theme.textTheme.titleSmall?.copyWith(
                                     fontSize: Device.orientation ==
@@ -532,9 +534,17 @@ class NewPasswordScreen extends StatelessWidget {
               onCreateLoginEventSuccess: () {
                 onTapContinue(context);
               },
-              onCreateLoginEventError: () {
+              onCreateLoginFailed: () {
                 _onLoginUserServicePostEventError(context);
               },
+              onCreateLoginEventError: () {
+                closedialog(context, "Server Error",
+                    "Kindly contact the administrator");
+              },
+              timeout: () => closedialog(context, "Internet Connection",
+                  "Kindly check your internet connection"),
+              onServiceUnavailable: () => closedialog(context,
+                  "Service Unavailable", "Kindly contact the administrator"),
             ),
           );
     }
@@ -563,7 +573,7 @@ class NewPasswordScreen extends StatelessWidget {
         builder: (_) => AlertDialog(
               title: const Text('Request Failed'),
               content: const Text(
-                  'Something went wrong, kindly confirm youve entered the temporary password you received correctly'),
+                  'Incorrect Credentials, Please enter correct credentials(Username Or Temporary Password are incorrect)'),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -571,6 +581,19 @@ class NewPasswordScreen extends StatelessWidget {
                     },
                     child: const Text('Ok'))
               ],
+            ));
+  }
+
+  static closedialog(BuildContext context, String label, String body) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
             ));
   }
 

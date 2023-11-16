@@ -1,3 +1,5 @@
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
+
 import 'bloc/otp_one_bloc.dart';
 import 'models/otp_one_model.dart';
 import 'package:flutter/material.dart';
@@ -206,12 +208,33 @@ class OtpOneScreen extends StatelessWidget {
               onCreateLoginEventSuccess: () {
                 onTapContinue(context);
               },
-              onCreateLoginEventError: () {
+              onCreateLoginFailed: () {
                 _onLoginUserServicePostEventError(context);
               },
+              onCreateLoginEventError: () {
+                closedialog(context, "Server Error",
+                    "Kindly contact the administrator");
+              },
+              timeout: () => closedialog(context, "Internet Connection",
+                  "Kindly check your internet connection"),
+              onServiceUnavailable: () => closedialog(context,
+                  "Service Unavailable", "Kindly contact the administrator"),
             ),
           );
     }
+  }
+
+  static closedialog(BuildContext context, String label, String body) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
   }
 
   /// Navigates to the loginScreen when the action is triggered.

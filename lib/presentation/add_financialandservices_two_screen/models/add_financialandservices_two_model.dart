@@ -27,6 +27,8 @@ class AddFinancialandservicesTwoModel extends Equatable {
     this.selectedDropDownValue3,
     this.selectedDropDownValue4,
     this.selectedDropDownValue5,
+    this.selectedDropDownValue6,
+    this.dropdownItemList6 = const [],
     this.fsProgress,
     this.livestock = false,
     this.fish = false,
@@ -44,6 +46,8 @@ class AddFinancialandservicesTwoModel extends Equatable {
   List<SelectionPopupModel> dropdownItemList4;
 
   List<SelectionPopupModel> dropdownItemList5;
+
+  List<SelectionPopupModel> dropdownItemList6;
 
   int stepped;
   int stepped2;
@@ -66,6 +70,9 @@ class AddFinancialandservicesTwoModel extends Equatable {
   SelectionPopupModel? selectedDropDownValue4;
 
   SelectionPopupModel? selectedDropDownValue5;
+
+  SelectionPopupModel? selectedDropDownValue6;
+
   bool livestock;
   bool fish;
   bool crop;
@@ -78,6 +85,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
     List<SelectionPopupModel>? dropdownItemList3,
     List<SelectionPopupModel>? dropdownItemList4,
     List<SelectionPopupModel>? dropdownItemList5,
+    List<SelectionPopupModel>? dropdownItemList6,
     int? stepped,
     int? stepped2,
     StepState? page1,
@@ -90,6 +98,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
     SelectionPopupModel? selectedDropDownValue3,
     SelectionPopupModel? selectedDropDownValue4,
     SelectionPopupModel? selectedDropDownValue5,
+    SelectionPopupModel? selectedDropDownValue6,
     FSProgress? fsProgress,
     bool? livestock,
     bool? fish,
@@ -102,6 +111,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
       dropdownItemList3: dropdownItemList3 ?? this.dropdownItemList3,
       dropdownItemList4: dropdownItemList4 ?? this.dropdownItemList4,
       dropdownItemList5: dropdownItemList5 ?? this.dropdownItemList5,
+      dropdownItemList6: dropdownItemList6 ?? this.dropdownItemList6,
       stepped: stepped ?? this.stepped,
       stepped2: stepped2 ?? this.stepped2,
       page1: page1 ?? this.page1,
@@ -121,6 +131,8 @@ class AddFinancialandservicesTwoModel extends Equatable {
           selectedDropDownValue4 ?? this.selectedDropDownValue4,
       selectedDropDownValue5:
           selectedDropDownValue5 ?? this.selectedDropDownValue5,
+      selectedDropDownValue6:
+          selectedDropDownValue6 ?? this.selectedDropDownValue6,
       livestock: livestock ?? this.livestock,
       fish: fish ?? this.fish,
       crop: crop ?? this.crop,
@@ -135,6 +147,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
         dropdownItemList3,
         dropdownItemList4,
         dropdownItemList5,
+        dropdownItemList6,
         stepped,
         stepped2,
         page1,
@@ -147,6 +160,7 @@ class AddFinancialandservicesTwoModel extends Equatable {
         selectedDropDownValue3,
         selectedDropDownValue4,
         selectedDropDownValue5,
+        selectedDropDownValue6,
         fsProgress,
         livestock,
         fish,

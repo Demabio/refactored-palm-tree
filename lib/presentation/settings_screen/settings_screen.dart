@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 import 'package:kiamis_app/presentation/enumerator_db_download/enum_db_download.dart';
 import 'package:kiamis_app/presentation/side_menu_draweritem/side_menu_draweritem.dart';
@@ -192,6 +193,17 @@ class SettingsScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the loginScreen.
   onTapLogout(BuildContext context) {
+    DateTime now = DateTime.now();
+
+// Set the time to tomorrow at 6 am
+    DateTime tomorrow6AM = DateTime(now.year, now.month, now.day - 1, 6, 0, 0);
+
+// Format the DateTime to a string
+    String formattedTomorrow6AM =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(tomorrow6AM);
+
+// Set the formatted string to your PrefUtils
+    PrefUtils().setTomorrow(formattedTomorrow6AM);
     NavigatorService.pushNamed(
       AppRoutes.loginScreen,
     );

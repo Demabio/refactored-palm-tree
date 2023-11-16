@@ -98,5 +98,9 @@ class PostDialog extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),
             ));
+
+    NavigatorService.popAndPushNamed(
+      AppRoutes.homeScreen,
+    );
   }
 }

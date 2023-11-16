@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:package_info/package_info.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '/core/app_export.dart';
 import 'package:kiamis_app/presentation/login_screen/models/login_model.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
@@ -135,46 +133,35 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final dio = Dio();
       Directory appDocDir = getApplicationDocumentsDirectory();
 
-      var status = await Permission.storage.request();
-      if (status.isGranted) {
-        final response = await dio.download(
-          apkUrl,
-          '${appDocDir.path}/FarmerRegistrationApp.apk', // Get the local file URI to save the APK
-          onReceiveProgress: (received, total) {
-            // Handle progress updates if needed
-            double currentval = received / total;
-            int percent = (currentval * 100).toInt();
-            emit(state.copyWith(
-                linebarvalue: currentval, percentagedone: percent));
-            // print('Received: $received out of $total');
-          },
-        );
-        if (response.statusCode == 200) {
-          File localFile = File('${appDocDir.path}/FarmerRegistrationApp.apk');
+      final response = await dio.download(
+        apkUrl,
+        '${appDocDir.path}/FarmerRegistrationApp.apk', // Get the local file URI to save the APK
+        onReceiveProgress: (received, total) {
+          // Handle progress updates if needed
+          double currentval = received / total;
+          int percent = (currentval * 100).toInt();
+          emit(state.copyWith(
+              linebarvalue: currentval, percentagedone: percent));
+          // print('Received: $received out of $total');
+        },
+      );
+      if (response.statusCode == 200) {
+        File localFile = File('${appDocDir.path}/FarmerRegistrationApp.apk');
 
-          if (await localFile.exists()) {
-            // Open and install the APK file
-            //await OpenFile.open(localFile.path, type: 'application/vnd.android.package-archive');
-            OpenResult result = await OpenFile.open(localFile.path,
-                type: 'application/vnd.android.package-archive');
+        if (await localFile.exists()) {
+          // Open and install the APK file
+          //await OpenFile.open(localFile.path, type: 'application/vnd.android.package-archive');
+          OpenResult result = await OpenFile.open(localFile.path,
+              type: 'application/vnd.android.package-archive');
 
-            print(result);
-          } else {
-            return false;
-          }
+          print(result);
         } else {
           return false;
         }
-      } else if (status.isPermanentlyDenied) {
-        openAppSettings();
-      } else if (status.isDenied) {
-        event.onFalse?.call();
-        openAppSettings();
-
-        return false;
       } else {
         return false;
       }
+
       // Download the APK and save it to a file
 
       // if (response.statusCode == 200) {
@@ -200,7 +187,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     // return Uri.file(localFilePath);
   }
 
-  /// Calls [https://prudmatvisionaries.com/gateway/UserService/login] with the provided event and emits the state.
+  /// Calls [https://kiamistrainapi.kalro.org/gateway/UserService/login] with the provided event and emits the state.
   ///
   /// The [CreateLoginEvent] parameter is used for handling event data
   /// The [emit] parameter is used for emitting the state
@@ -227,16 +214,28 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
       requestData: postLoginUserServicePostReq.toJson(),
     ).then((value) async {
-      if (PrefUtils().getSaveCreds()) {
-        PrefUtils().setUsername(state.userNameController?.text ?? '');
-        PrefUtils().setPassword(state.passwordController?.text ?? '');
+      if (value.statusCode == 200) {
+        PrefUtils().setUsernameOTP(state.userNameController?.text ?? '');
+
+        if (PrefUtils().getSaveCreds()) {
+          PrefUtils().setUsername(state.userNameController?.text ?? '');
+          PrefUtils().setPassword(state.passwordController?.text ?? '');
+        } else {
+          PrefUtils().setUsername('');
+          PrefUtils().setPassword('');
+        }
+        postLoginUserServicePostResp = value;
+        _onLoginUserServicePostSuccess(value, emit);
+        event.onCreateLoginEventSuccess?.call();
+      } else if (value.statusCode == 401) {
+        event.onCreateLoginFailed?.call();
+      } else if (value.statusCode == 408) {
+        event.timeout?.call();
+      } else if (value.statusCode == 503 || value.statusCode == 502) {
+        event.onServiceUnavailable?.call();
       } else {
-        PrefUtils().setUsername('');
-        PrefUtils().setPassword('');
+        event.onCreateLoginEventError?.call();
       }
-      postLoginUserServicePostResp = value;
-      _onLoginUserServicePostSuccess(value, emit);
-      event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       //implement error call
       _onLoginUserServicePostError();
@@ -249,17 +248,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     PrefUtils().setToken(resp.token ?? '');
-    DateTime now = DateTime.now();
+    PrefUtils().setchangepassword(resp.changePassword ?? true);
 
-// Set the time to tomorrow at 6 am
-    DateTime tomorrow6AM = DateTime(now.year, now.month, now.day + 1, 6, 0, 0);
-
-// Format the DateTime to a string
-    String formattedTomorrow6AM =
-        DateFormat('yyyy-MM-dd HH:mm:ss').format(tomorrow6AM);
-
-// Set the formatted string to your PrefUtils
-    PrefUtils().setTomorrow(formattedTomorrow6AM);
     emit(
       state.copyWith(
         loginModelObj: state.loginModelObj?.copyWith(),

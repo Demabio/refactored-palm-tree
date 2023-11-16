@@ -31,20 +31,27 @@ class LoginInitialEvent extends LoginEvent {
       ];
 }
 
-///Event that is dispatched when the user calls the https://prudmatvisionaries.com/gateway/UserService/login API.
+///Event that is dispatched when the user calls the https://kiamistrainapi.kalro.org/gateway/UserService/login API.
 class CreateLoginEvent extends LoginEvent {
   CreateLoginEvent({
     this.onCreateLoginEventSuccess,
     this.onCreateLoginEventError,
     this.onFalse,
     this.persmissions,
+    this.onCreateLoginFailed,
+    this.timeout,
+    this.onServiceUnavailable,
   });
 
   Function? onCreateLoginEventSuccess;
   Function? onFalse;
   Function? persmissions;
 
+  Function? onCreateLoginFailed;
+  Function? timeout;
+
   Function? onCreateLoginEventError;
+  Function? onServiceUnavailable;
 
   @override
   List<Object?> get props => [
@@ -52,6 +59,9 @@ class CreateLoginEvent extends LoginEvent {
         onCreateLoginEventError,
         onFalse,
         persmissions,
+        onCreateLoginFailed,
+        timeout,
+        onServiceUnavailable,
       ];
 }
 

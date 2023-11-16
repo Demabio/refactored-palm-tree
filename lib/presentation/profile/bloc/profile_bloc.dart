@@ -20,6 +20,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     final claims = JWT.decode(PrefUtils().getToken());
+    int userId = int.parse(claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     String ward = claims.payload['Ward'] ?? "1";
     String sublocation = claims.payload['Sublocation'] ?? "1";
@@ -49,6 +51,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       subCounty: subcounty,
       status: status,
       idNo: idNo,
+      id: userId.toString(),
     ));
   }
 }

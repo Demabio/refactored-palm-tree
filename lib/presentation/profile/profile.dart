@@ -115,6 +115,43 @@ class ProfileScreen extends StatelessWidget {
                                       SizedBox(
                                           width: DeviceExt((186 / 841) * 100).h,
                                           child: Text(
+                                            "Enumerator Code:".tr,
+                                            maxLines: 10,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          )),
+                                      Spacer(),
+                                      Text(
+                                        state.id ?? "",
+                                        style: theme.textTheme.titleMedium
+                                            ?.copyWith(
+                                          color: Colors.black,
+                                          fontSize: Device.orientation ==
+                                                  Orientation.portrait
+                                              ? DeviceExt(1.8).h
+                                              : DeviceExt(2).w,
+                                        ),
+                                      )
+                                    ])),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: DeviceExt((2 / 841) * 100).h,
+                                    top: ((11 / 411) * 100).w),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                          width: DeviceExt((186 / 841) * 100).h,
+                                          child: Text(
                                             "ID Number:".tr,
                                             maxLines: 10,
                                             overflow: TextOverflow.ellipsis,

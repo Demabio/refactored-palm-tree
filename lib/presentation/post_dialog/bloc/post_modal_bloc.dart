@@ -28,7 +28,7 @@ class PostModalBloc extends Bloc<PostModalEvent, PostModalState> {
         int posted = await farmerDB.updateToPosted();
         int farms = await farmfarmerDB.updateToPosted();
 
-        print("$posted,$farms");
+        print("$posted,$farms,$value");
         event.createSuccessful!.call();
       } else {
         event.createFailed!.call();

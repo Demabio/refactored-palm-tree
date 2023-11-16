@@ -66,9 +66,17 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
         'NewPassword': state.newpasswordController!.text,
       },
     ).then((value) async {
-      value.statusCode == 200
-          ? event.onCreateLoginEventSuccess?.call()
-          : event.onCreateLoginEventError?.call();
+      if (value.statusCode == 200) {
+        event.onCreateLoginEventSuccess?.call();
+      } else if (value.statusCode == 401) {
+        event.onCreateLoginFailed?.call();
+      } else if (value.statusCode == 408) {
+        event.timeout?.call();
+      } else if (value.statusCode == 503 || value.statusCode == 502) {
+        event.onServiceUnavailable?.call();
+      } else {
+        event.onCreateLoginEventError?.call();
+      }
     }).onError((error, stackTrace) {
       event.onCreateLoginEventError?.call();
     });

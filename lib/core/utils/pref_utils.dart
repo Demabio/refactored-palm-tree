@@ -296,6 +296,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setUsernameOTP(String value) {
+    return _sharedPreferences!.setString('usernameOTP', value);
+  }
+
+  String getUsernameOTP() {
+    try {
+      return _sharedPreferences!.getString('usernameOTP') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setResponse(String value) {
     return _sharedPreferences!.setString('response', value);
   }
@@ -378,6 +390,18 @@ class PrefUtils {
           DateTime.now().toString();
     } catch (e) {
       return DateTime.now().toString();
+    }
+  }
+
+  Future<void> setchangepassword(bool value) {
+    return _sharedPreferences!.setBool('changepassword', value);
+  }
+
+  bool getchangepassword() {
+    try {
+      return _sharedPreferences!.getBool('changepassword') ?? false;
+    } catch (e) {
+      return false;
     }
   }
 }
