@@ -767,31 +767,11 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((18 / 411) * 100).w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              text: "lbl_back".tr,
-                              onTap: () => goB(context),
-                              margin: EdgeInsets.only(
-                                  right: DeviceExt((1 / 841) * 100).h),
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL10,
-                              buttonTextStyle:
-                                  CustomTextStyles.bodyLargePrimary_1,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              text: "lbl_next".tr,
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((1 / 841) * 100).h),
-                              isDisabled: true,
-                              buttonStyle: CustomButtonStyles.fillPrimaryTL10,
-                            ),
-                          ),
-                        ],
+                      CustomOutlinedButton(
+                        text: "lbl_back".tr,
+                        onTap: () => goB(context),
+                        buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
+                        buttonTextStyle: CustomTextStyles.bodyLargePrimary_1,
                       ),
                       SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(

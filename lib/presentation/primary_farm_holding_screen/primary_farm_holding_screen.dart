@@ -948,9 +948,11 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                 DeviceExt(0.2).w,
                                 DeviceExt(1.2).h),
                         text: "Previous Section".tr,
-                        onTap: () => NavigatorService.popAndPushNamed(
-                          AppRoutes.farmersIdentificationScreen,
-                        ),
+                        onTap: () {
+                          NavigatorService.popAndPushNamed(
+                            AppRoutes.farmersIdentificationScreen,
+                          );
+                        },
                         alignment: Alignment.bottomCenter,
                       ),
                     ],

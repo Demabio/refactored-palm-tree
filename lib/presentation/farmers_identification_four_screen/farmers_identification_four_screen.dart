@@ -564,38 +564,14 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                       }),
                                   SizedBox(
                                       height: DeviceExt((21 / 411) * 100).w),
-                                  GestureDetector(
-                                      onTap: () {
-                                        onTapRowback(context);
-                                      },
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                                child: CustomOutlinedButton(
-                                              text: "lbl_back".tr,
-                                              margin: EdgeInsets.only(
-                                                  right:
-                                                      DeviceExt((1 / 841) * 100)
-                                                          .h),
-                                              onTap: () => goBack(context),
-                                              isDisabled: true,
-                                              buttonStyle: CustomButtonStyles
-                                                  .fillPrimaryTL10,
-                                            )),
-                                            Expanded(
-                                                child: CustomElevatedButton(
-                                              text: "lbl_next".tr,
-                                              margin: EdgeInsets.only(
-                                                  left:
-                                                      DeviceExt((1 / 841) * 100)
-                                                          .h),
-                                              isDisabled: true,
-                                              buttonStyle: CustomButtonStyles
-                                                  .fillPrimaryTL10,
-                                            ))
-                                          ])),
+                                  CustomOutlinedButton(
+                                    text: "lbl_back".tr,
+                                  
+                                    onTap: () => goBack(context),
+                                    isDisabled: true,
+                                    buttonStyle: CustomButtonStyles
+                                    .fillPrimaryTL10,
+                                  ),
                                   SizedBox(
                                       height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(

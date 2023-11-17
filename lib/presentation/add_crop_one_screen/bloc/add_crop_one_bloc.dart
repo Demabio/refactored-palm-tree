@@ -456,6 +456,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           farmerId: PrefUtils().getFarmerId(),
           farmerFarmId: PrefUtils().getFarmId(),
           farmerCropId: 0,
+          cropArea: 0,
         );
     CAProgress caProgress = await getProgress() ??
         CAProgress(
@@ -528,7 +529,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
           crop: crop,
           caProgressDB: caProgress,
           area: farmer.cropFarmSize,
-          area1: await getsizes(),
+          area1: await getsizes() - crop.cropArea!,
         ),
       ),
     );

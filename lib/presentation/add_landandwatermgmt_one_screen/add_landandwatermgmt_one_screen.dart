@@ -14,7 +14,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
@@ -420,30 +419,9 @@ class AddLandandwatermgmtOneScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((18 / 411) * 100).w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              text: "lbl_back".tr,
-                              margin: EdgeInsets.only(
-                                  right: DeviceExt((1 / 841) * 100).h),
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL10,
-                              isDisabled: true,
-                              buttonTextStyle:
-                                  CustomTextStyles.bodyLargePrimary_1,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              text: "lbl_next".tr,
-                              onTap: () => nextPage(context),
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((1 / 841) * 100).h),
-                            ),
-                          ),
-                        ],
+                      CustomElevatedButton(
+                        text: "lbl_next".tr,
+                        onTap: () => nextPage(context),
                       ),
                       SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(

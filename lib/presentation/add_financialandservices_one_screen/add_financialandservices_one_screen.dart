@@ -10,6 +10,7 @@ import 'package:kiamis_app/presentation/add_financialandservices_six_dialog/add_
 
 import 'package:kiamis_app/presentation/add_financialandservices_three_dialog/add_financialandservices_three_dialog.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
+import 'package:kiamis_app/presentation/financialandservices_screen/widgets/inputs_widget.dart';
 
 import 'bloc/add_financialandservices_one_bloc.dart';
 import 'models/add_financialandservices_one_model.dart';
@@ -19,7 +20,6 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_4.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_drop_down.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
-import 'package:kiamis_app/widgets/custom_outlined_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
@@ -221,7 +221,7 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                                   (index) {
                                     CheckBoxList model = list![index];
 
-                                    return InputsWidget(
+                                    return IncomesWidget(
                                       model,
                                     );
                                   },
@@ -533,30 +533,9 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((18 / 411) * 100).w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              text: "lbl_back".tr,
-                              margin: EdgeInsets.only(
-                                  right: DeviceExt((1 / 841) * 100).h),
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL10,
-                              isDisabled: true,
-                              buttonTextStyle:
-                                  CustomTextStyles.bodyLargePrimary_1,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              text: "lbl_next".tr,
-                              onTap: () => nextPage(context),
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((1 / 841) * 100).h),
-                            ),
-                          ),
-                        ],
+                      CustomElevatedButton(
+                        text: "lbl_next".tr,
+                        onTap: () => nextPage(context),
                       ),
                       SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(

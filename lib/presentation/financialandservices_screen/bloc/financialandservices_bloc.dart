@@ -212,6 +212,7 @@ class FinancialandservicesBloc
       int index = feedmodels.indexWhere((obj) => obj.id == ent.incomeSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = "${ent.priorityLevel ?? 0}";
     }
 
     return feedmodels;

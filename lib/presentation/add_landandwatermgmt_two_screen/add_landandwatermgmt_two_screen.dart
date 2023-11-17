@@ -498,31 +498,11 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                       // ),
 
                       SizedBox(height: DeviceExt((18 / 411) * 100).w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              text: "lbl_back".tr,
-                              onTap: () => goB(context),
-                              margin: EdgeInsets.only(
-                                  right: DeviceExt((1 / 841) * 100).h),
-                              buttonStyle:
-                                  CustomButtonStyles.outlinePrimaryTL10,
-                              buttonTextStyle:
-                                  CustomTextStyles.bodyLargePrimary_1,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              isDisabled: true,
-                              buttonStyle: CustomButtonStyles.fillPrimaryTL10,
-                              text: "lbl_next".tr,
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((1 / 841) * 100).h),
-                            ),
-                          ),
-                        ],
+                      CustomOutlinedButton(
+                        text: "lbl_back".tr,
+                        onTap: () => goB(context),
+                        buttonStyle: CustomButtonStyles.outlinePrimary,
+                        buttonTextStyle: CustomTextStyles.bodyLargePrimary_2,
                       ),
                       SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(

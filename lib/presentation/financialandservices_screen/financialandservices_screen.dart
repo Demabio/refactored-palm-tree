@@ -1,6 +1,7 @@
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_financialandservices_four_screen/widgets/coop_widget.dart';
+import 'package:kiamis_app/presentation/financialandservices_screen/widgets/inputs_widget.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'bloc/financialandservices_bloc.dart';
@@ -145,7 +146,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                         (index) {
                                           CheckBoxList model = list![index];
 
-                                          return InputsWidget(
+                                          return IncomesWidget(
                                             model,
                                           );
                                         },

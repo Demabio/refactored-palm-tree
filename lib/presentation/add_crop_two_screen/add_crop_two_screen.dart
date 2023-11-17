@@ -698,36 +698,15 @@ class AddCropTwoScreen extends StatelessWidget {
                                       }),
                                   SizedBox(
                                       height: DeviceExt((17 / 411) * 100).w),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                            child: CustomOutlinedButton(
-                                                text: "lbl_back".tr,
-                                                margin: EdgeInsets.only(
-                                                    right: DeviceExt(
-                                                            (1 / 841) * 100)
-                                                        .h),
-                                                buttonStyle: CustomButtonStyles
-                                                    .outlinePrimary,
-                                                buttonTextStyle:
-                                                    CustomTextStyles
-                                                        .bodyLargePrimary_2,
-                                                onTap: () {
-                                                  goBack(context);
-                                                })),
-                                        Expanded(
-                                            child: CustomElevatedButton(
-                                          text: "lbl_next".tr,
-                                          margin: EdgeInsets.only(
-                                              left:
-                                                  DeviceExt((1 / 841) * 100).h),
-                                          isDisabled: true,
-                                          buttonStyle: CustomButtonStyles
-                                              .fillPrimaryTL10,
-                                        ))
-                                      ]),
+                                  CustomOutlinedButton(
+                                      text: "lbl_back".tr,
+                                      buttonStyle:
+                                          CustomButtonStyles.outlinePrimary,
+                                      buttonTextStyle:
+                                          CustomTextStyles.bodyLargePrimary_2,
+                                      onTap: () {
+                                        goBack(context);
+                                      }),
                                   SizedBox(
                                       height: DeviceExt((12 / 411) * 100).w),
                                   CustomElevatedButton(

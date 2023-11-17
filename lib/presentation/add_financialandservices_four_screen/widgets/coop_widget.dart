@@ -36,9 +36,8 @@ class CoopItemWidget extends StatelessWidget {
                   enterpriseModel.title,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
                   ),
                   textAlign: TextAlign.left,
@@ -48,9 +47,8 @@ class CoopItemWidget extends StatelessWidget {
                   enterpriseModel.var1 ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(2).w,
                   ),
                   textAlign: TextAlign.left,
