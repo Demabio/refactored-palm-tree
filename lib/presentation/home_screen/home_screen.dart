@@ -946,7 +946,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               : DeviceExt(2).h,
                                         ),
                                         CustomElevatedButton(
-                                            text: "lbl_search_farmer".tr,
+                                            text: "Search".tr,
                                             leftIcon: Container(
                                                 margin: Device.orientation ==
                                                         Orientation.portrait
