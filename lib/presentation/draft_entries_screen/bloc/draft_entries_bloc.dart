@@ -79,7 +79,7 @@ class DraftEntriesBloc extends Bloc<DraftEntriesEvent, DraftEntriesState> {
             id: farmer.farmerId,
             idNo: farmer.idNo,
             name: farmer.farmerName,
-            comments: farmer.comments ?? "N/A"));
+            comments: farmer.comments ?? "Not Applied"));
       }
     }
 

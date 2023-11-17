@@ -88,6 +88,14 @@ class PrimaryFarmHoldingBloc
           cropProd: false,
           livestockProd: false,
           fishFarming: false,
+          farmSize: 0,
+          cropFarmSize: 0,
+          livestockFarmSize: 0,
+          leasedFarmSize: 0,
+          idleFarmSize: 0,
+          x: 0,
+          y: 0,
+          accuracyLevel: 0,
         );
     PFProgress fhProgress = await getFHProgress() ??
         PFProgress(
@@ -115,8 +123,8 @@ class PrimaryFarmHoldingBloc
         done: fhProgress.pageOne == 1 || fhProgress.pageTwo == 1,
         primaryFarmHoldingModelObj: state.primaryFarmHoldingModelObj?.copyWith(
           farm: farm,
-          area: level?.areaUnit ?? "N/A",
-          owner: relationship?.ownershipDesc ?? "N/A",
+          area: level?.areaUnit ?? "Not Applied",
+          owner: relationship?.ownershipDesc ?? "Not Applied",
           enterprises: ents,
         ),
       ),

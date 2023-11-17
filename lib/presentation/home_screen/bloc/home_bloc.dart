@@ -88,7 +88,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Farmer? dfarmers = await getFarmerWard(event.idNo!);
       if (dfarmers == null) {
         PrefUtils().setFarmerId(0);
-        PrefUtils().setFarmerName("N/A");
+        PrefUtils().setFarmerName("Not Applied");
         PrefUtils().setFarmerIdNo(event.idNo!);
         PrefUtils().setFound(false);
         PrefUtils().setCropId(0);

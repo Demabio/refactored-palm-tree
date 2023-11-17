@@ -68,7 +68,8 @@ class PrimaryFarmHoldingTwoBloc
       ProgressDialogUtils.showProgressDialog();
 
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        desiredAccuracy: LocationAccuracy.bestForNavigation,
+        timeLimit: Duration(seconds: 5),
       );
 
       double y = position.latitude;

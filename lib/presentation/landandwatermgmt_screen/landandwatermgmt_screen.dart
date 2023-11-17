@@ -467,7 +467,7 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                 Text(
                                                     state.farm?.irrigationArea
                                                             .toString() ??
-                                                        "N/A",
+                                                        "Not Applied",
                                                     style: theme
                                                         .textTheme.labelMedium)
                                               ]))),

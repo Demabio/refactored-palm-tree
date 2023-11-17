@@ -97,7 +97,7 @@ class FarmerRegistrationBloc
 
     return Farmer(
       farmerId: 0,
-      farmerName: "NA",
+      farmerName: "Not Applied",
     );
   }
 

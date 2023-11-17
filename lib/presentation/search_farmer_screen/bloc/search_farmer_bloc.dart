@@ -44,7 +44,7 @@ class SearchFarmerBloc extends Bloc<SearchFarmerEvent, SearchFarmerState> {
       Farmer? dfarmers = await getFarmerWard(event.idNo!);
       if (dfarmers == null) {
         PrefUtils().setFarmerId(0);
-        PrefUtils().setFarmerName("N/A");
+        PrefUtils().setFarmerName("Not Applied");
         PrefUtils().setBee("0");
         PrefUtils().setAgeGroups("0");
         PrefUtils().setFeeds("0");

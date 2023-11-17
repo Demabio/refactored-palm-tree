@@ -182,9 +182,7 @@ class FinancialandservicesScreen extends StatelessWidget {
                                           padding: EdgeInsets.only(
                                               bottom: ((19 / 411) * 100).w),
                                           child: Text(
-                                            state.farm?.farmingIncomePercent
-                                                    .toString() ??
-                                                "N/A",
+                                            "${state.farm?.farmingIncomePercent ?? "Not Applied"}",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,

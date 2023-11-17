@@ -108,8 +108,8 @@ class FarmersIdentificationOneBloc
             .insertNonNullable(Farmer(
           farmerId: 0,
           farmerName: state.nameController1!.text,
-          villageName: state.nameController?.text ?? "NA",
-          shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+          villageName: state.nameController?.text ?? "Not Applied",
+          shoppingCenter: state.shoppingCenterController?.text ?? "Not Applied",
           idNo: state.areaNumberController!.text,
           dateCreated: DateTime.now(),
           createdBy: userId,
@@ -121,8 +121,9 @@ class FarmersIdentificationOneBloc
             farmerDB.updatePageOne(Farmer(
               farmerId: value,
               farmerName: state.nameController1!.text,
-              villageName: state.nameController?.text ?? "NA",
-              shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+              villageName: state.nameController?.text ?? "Not Applied",
+              shoppingCenter:
+                  state.shoppingCenterController?.text ?? "Not Applied",
               idNo: state.areaNumberController!.text,
               dateCreated: DateTime.now(),
               createdBy: userId,
@@ -165,8 +166,9 @@ class FarmersIdentificationOneBloc
               .updatePageOne(Farmer(
                 farmerId: PrefUtils().getFarmerId(),
                 farmerName: state.nameController1!.text,
-                villageName: state.nameController?.text ?? "NA",
-                shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+                villageName: state.nameController?.text ?? "Not Applied",
+                shoppingCenter:
+                    state.shoppingCenterController?.text ?? "Not Applied",
                 idNo: state.areaNumberController!.text,
                 dateCreated: DateTime.now(),
                 createdBy: userId,
@@ -197,8 +199,8 @@ class FarmersIdentificationOneBloc
             .insertNonNullable(Farmer(
           farmerId: 0,
           farmerName: state.nameController1!.text,
-          villageName: state.nameController?.text ?? "NA",
-          shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+          villageName: state.nameController?.text ?? "Not Applied",
+          shoppingCenter: state.shoppingCenterController?.text ?? "Not Applied",
           idNo: state.areaNumberController!.text,
           dateCreated: DateTime.now(),
           createdBy: userId,
@@ -210,8 +212,9 @@ class FarmersIdentificationOneBloc
             farmerDB.updatePageOne(Farmer(
               farmerId: value,
               farmerName: state.nameController1!.text,
-              villageName: state.nameController?.text ?? "NA",
-              shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+              villageName: state.nameController?.text ?? "Not Applied",
+              shoppingCenter:
+                  state.shoppingCenterController?.text ?? "Not Applied",
               idNo: state.areaNumberController!.text,
               dateCreated: DateTime.now(),
               createdBy: userId,
@@ -254,8 +257,9 @@ class FarmersIdentificationOneBloc
               .updatePageOne(Farmer(
                 farmerId: PrefUtils().getFarmerId(),
                 farmerName: state.nameController1!.text,
-                villageName: state.nameController?.text ?? "NA",
-                shoppingCenter: state.shoppingCenterController?.text ?? "NA",
+                villageName: state.nameController?.text ?? "Not Applied",
+                shoppingCenter:
+                    state.shoppingCenterController?.text ?? "Not Applied",
                 idNo: state.areaNumberController!.text,
                 dateCreated: DateTime.now(),
                 createdBy: userId,
@@ -315,7 +319,7 @@ class FarmersIdentificationOneBloc
     Farmer farmer = await getFarmer() ??
         Farmer(
           farmerId: 0,
-          farmerName: "NA",
+          farmerName: "Not Applied",
         );
     FIProgress fiProgress = await getProgress() ??
         FIProgress(

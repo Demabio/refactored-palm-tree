@@ -113,7 +113,7 @@ class CropAgricultureBloc
         id: crop.farmerCropId,
         totalAcreage: crop.cropArea.toString(),
         name: cropp!.crop,
-        unitOfArea: cropAreaUnit?.areaUnit ?? "N/A",
+        unitOfArea: cropAreaUnit?.areaUnit ?? "Not Applied",
         water: waterSource?.waterSource,
         purpose: cropPlantingMotive?.cropMotive,
         system: cropSystem?.croppingSystem,

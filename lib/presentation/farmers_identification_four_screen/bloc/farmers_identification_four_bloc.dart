@@ -43,7 +43,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     Farmer farmer = await getFarmer() ??
         Farmer(
           farmerId: 0,
-          farmerName: "NA",
+          farmerName: "Not Applied",
           farmerTheRespodent: true,
         );
     FIProgress fiProgress = await getProgress() ??
@@ -79,11 +79,17 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
             (!farmer.farmerTheRespodent! ? farmer.respondentRlshpId : 1),
       );
       id = TextEditingController(
-          text: !farmer.farmerTheRespodent! ? farmer.respNationalId : "N/A");
+          text: !farmer.farmerTheRespodent!
+              ? farmer.respNationalId
+              : "Not Applied");
       name = TextEditingController(
-          text: !farmer.farmerTheRespodent! ? farmer.respondentName : "N/A");
+          text: !farmer.farmerTheRespodent!
+              ? farmer.respondentName
+              : "Not Applied");
       mobile = TextEditingController(
-          text: !farmer.farmerTheRespodent! ? farmer.respondentMobile : "N/A");
+          text: !farmer.farmerTheRespodent!
+              ? farmer.respondentMobile
+              : "Not Applied");
     }
     int stepper = 3;
     if (fiProgress.pageThree == 1) {
@@ -251,13 +257,13 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
         respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respid!.text
-            : "NA",
+            : "Not Applied",
         respondentMobile: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respMob!.text
-            : "N/A",
+            : "Not Applied",
         respondentName: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respame!.text
-            : "N/A",
+            : "Not Applied",
         farmerTheRespodent: state
                 .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
             1,
@@ -301,13 +307,13 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
         respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respid!.text
-            : "NA",
+            : "Not Applied",
         respondentMobile: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respMob!.text
-            : "N/A",
+            : "Not Applied",
         respondentName: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respame!.text
-            : "N/A",
+            : "Not Applied",
         farmerTheRespodent: state
                 .farmersIdentificationFourModelObj!.selectedDropDownValue!.id ==
             1,

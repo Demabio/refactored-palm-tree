@@ -143,7 +143,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
         farmerName:
             state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
-        postalCode: state.codevalueoneController?.text ?? "NA",
+        postalCode: state.codevalueoneController?.text ?? "Not Applied",
         maritalStatusId:
             state.farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
         agriSkillsId: state
@@ -160,8 +160,10 @@ class FarmersIdentificationThreeBloc extends Bloc<
                 farmerId: PrefUtils().getFarmerId(),
                 pageOne: 1,
                 pageTwo: 1,
-                pageThree: 0,
-                pageFour: 1,
+                pageThree: state
+                    .farmersIdentificationThreeModelObj!.fiProgress!.pageThree,
+                pageFour: state
+                    .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
               ))
               .then((value) => print("Scope FI" + value.toString()));
           event.createSuccessful!.call();
@@ -188,7 +190,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
           farmerName:
               state.farmersIdentificationThreeModelObj!.farmer!.farmerName,
           idNo: state.farmersIdentificationThreeModelObj!.farmer!.idNo,
-          postalCode: state.codevalueoneController?.text ?? "NA",
+          postalCode: state.codevalueoneController?.text ?? "Not Applied",
           maritalStatusId: state
               .farmersIdentificationThreeModelObj!.selectedDropDownValue!.id,
           agriSkillsId: state
@@ -205,7 +207,8 @@ class FarmersIdentificationThreeBloc extends Bloc<
                   farmerId: PrefUtils().getFarmerId(),
                   pageOne: 1,
                   pageTwo: 1,
-                  pageThree: 0,
+                  pageThree: state.farmersIdentificationThreeModelObj!
+                      .fiProgress!.pageThree,
                   pageFour: state
                       .farmersIdentificationThreeModelObj!.fiProgress!.pageFour,
                 ))
@@ -240,7 +243,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
     Farmer farmer = await getFarmer() ??
         Farmer(
           farmerId: 0,
-          farmerName: "NA",
+          farmerName: "Not Applied",
         );
     FIProgress fiProgress = await getProgress() ??
         FIProgress(
@@ -261,7 +264,7 @@ class FarmersIdentificationThreeBloc extends Bloc<
     TextEditingController postalCode = TextEditingController();
     TextEditingController hhSize = TextEditingController();
 
-    if (fiProgress.pageThree == 1) {
+    if (fiProgress.pageTwo == 1) {
       selectedDropDownValue = marital.firstWhere(
         (model) => model.id == farmer.maritalStatusId,
       );

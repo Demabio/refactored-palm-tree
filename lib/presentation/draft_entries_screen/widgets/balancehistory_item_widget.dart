@@ -34,7 +34,7 @@ class BalancehistoryItemWidget extends StatelessWidget {
               child: Container(
                 width: ((100 / 411) * 100).w,
                 child: Text(
-                  balancehistoryItemModelObj.name ?? "N/A",
+                  balancehistoryItemModelObj.name ?? "Not Applied",
                   maxLines: 10,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
@@ -52,7 +52,7 @@ class BalancehistoryItemWidget extends StatelessWidget {
                 bottom: ((25 / 411) * 100).w,
               ),
               child: Text(
-                balancehistoryItemModelObj.idNo ?? "N/A",
+                balancehistoryItemModelObj.idNo ?? "Not Applied",
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontSize: Device.orientation == Orientation.portrait
                       ? DeviceExt(1.8).h
@@ -98,7 +98,7 @@ class BalancehistoryItemWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  balancehistoryItemModelObj.comments ?? "N/A",
+                  balancehistoryItemModelObj.comments ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: Device.orientation == Orientation.portrait
                         ? DeviceExt(1.8).h

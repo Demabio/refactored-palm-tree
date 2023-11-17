@@ -217,49 +217,50 @@ class AddAquacultureTwoScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                       ),
                       SizedBox(height: DeviceExt((17 / 411) * 100).w),
-                      Text(
-                        "msg_do_you_utilize_fertilizers2".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
-                      ),
-                      BlocSelector<AddAquacultureTwoBloc,
-                          AddAquacultureTwoState, AddAquacultureTwoModel?>(
-                        selector: (state) => state.addAquacultureTwoModelObj,
-                        builder: (context, addAquacultureTwoModelObj) {
-                          return CustomDropDown(
-                            icon: Container(
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((30 / 841) * 100).h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  DeviceExt((10 / 841) * 100).h,
-                                ),
-                              ),
-                              child: CustomImageView(
-                                svgPath: ImageConstant.imgArrowdownPrimary,
-                              ),
-                            ),
-                            hintText: "lbl_select".tr,
-                            validator: (value) {
-                              if (value == null) {
-                                return "Field is required";
-                              } else {
-                                return null;
-                              }
-                            },
-                            val: addAquacultureTwoModelObj
-                                ?.selectedDropDownValue,
-                            items:
-                                addAquacultureTwoModelObj?.dropdownItemList ??
-                                    [],
-                            onChanged: (value) {
-                              context
-                                  .read<AddAquacultureTwoBloc>()
-                                  .add(ChangeDropDownEvent(value: value));
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(height: DeviceExt((17 / 411) * 100).w),
+                      // Text(
+                      //   "msg_do_you_utilize_fertilizers2".tr,
+                      //   style: CustomTextStyles.labelMediumPrimary_1,
+                      // ),
+                      // BlocSelector<AddAquacultureTwoBloc,
+                      //     AddAquacultureTwoState, AddAquacultureTwoModel?>(
+                      //   selector: (state) => state.addAquacultureTwoModelObj,
+                      //   builder: (context, addAquacultureTwoModelObj) {
+                      //     return CustomDropDown(
+                      //       icon: Container(
+                      //         margin: EdgeInsets.only(
+                      //             left: DeviceExt((30 / 841) * 100).h),
+                      //         decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(
+                      //             DeviceExt((10 / 841) * 100).h,
+                      //           ),
+                      //         ),
+                      //         child: CustomImageView(
+                      //           svgPath: ImageConstant.imgArrowdownPrimary,
+                      //         ),
+                      //       ),
+                      //       hintText: "lbl_select".tr,
+                      //       disabled: true,
+                      //       validator: (value) {
+                      //         if (value == null) {
+                      //           return "Field is required";
+                      //         } else {
+                      //           return null;
+                      //         }
+                      //       },
+                      //       val: addAquacultureTwoModelObj
+                      //           ?.selectedDropDownValue,
+                      //       items:
+                      //           addAquacultureTwoModelObj?.dropdownItemList ??
+                      //               [],
+                      //       onChanged: (value) {
+                      //         context
+                      //             .read<AddAquacultureTwoBloc>()
+                      //             .add(ChangeDropDownEvent(value: value));
+                      //       },
+                      //     );
+                      //   },
+                      // ),
+                      // SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
                         "msg_which_is_your_production2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,

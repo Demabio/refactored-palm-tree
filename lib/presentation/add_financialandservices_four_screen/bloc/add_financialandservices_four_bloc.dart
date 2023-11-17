@@ -81,8 +81,8 @@ class AddFinancialandservicesFourBloc extends Bloc<
           feedmodels.indexWhere((obj) => obj.id == ent.cooperateiveGroupId);
 
       feedmodels[index].isSelected = true;
-      feedmodels[index].male =
-          TextEditingController(text: ent.cooperateiveGroupName ?? "N/A");
+      feedmodels[index].male = TextEditingController(
+          text: ent.cooperateiveGroupName ?? "Not Applied");
     }
 
     return feedmodels;

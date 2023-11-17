@@ -117,7 +117,7 @@ class AddFarmHoldingBloc
         idle: farm.idleFarmSize.toString(),
         landsize: farm.farmSize.toString(),
         enterprises: ents,
-        lr: farm.farmLrCert ?? "N/A",
+        lr: farm.farmLrCert ?? "Not Applied",
         owner: relationship!.ownershipDesc,
       ));
     }

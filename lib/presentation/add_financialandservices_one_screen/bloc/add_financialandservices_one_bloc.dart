@@ -104,7 +104,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
                     0)) {
           int id = await farmerDB.updateFromFinancial(Farmer(
             farmerId: farmerid,
-            farmerName: "NA",
+            farmerName: "Not Applied",
             cooperativeGroup: state.addFinancialandservicesOneModelObj!
                     .selectedDropDownValue?.id ==
                 1,
@@ -133,7 +133,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
                     0)) {
           int updatedid = await farmerDB.updateFromFinancial(Farmer(
             farmerId: farmerid,
-            farmerName: "NA",
+            farmerName: "Not Applied",
             cooperativeGroup: state.addFinancialandservicesOneModelObj!
                     .selectedDropDownValue?.id ==
                 1,
@@ -205,7 +205,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
                   0)) {
         int id = await farmerDB.updateFromFinancial(Farmer(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerName: "Not Applied",
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
@@ -234,7 +234,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
                   0)) {
         int updatedid = await farmerDB.updateFromFinancial(Farmer(
           farmerId: farmerid,
-          farmerName: "NA",
+          farmerName: "Not Applied",
           cooperativeGroup: state.addFinancialandservicesOneModelObj!
                   .selectedDropDownValue?.id ==
               1,
@@ -487,7 +487,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
           feedmodels.indexWhere((obj) => obj.id == ent.cooperateiveGroupId);
 
       feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = ent.cooperateiveGroupName ?? "N/A";
+      feedmodels[index].var1 = ent.cooperateiveGroupName ?? "Not Applied";
     }
 
     return feedmodels;

@@ -328,7 +328,7 @@ class AquacultureScreen extends StatelessWidget {
                                               )),
                                           Spacer(),
                                           Text(
-                                            state.level ?? "N/A",
+                                            state.level ?? "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,

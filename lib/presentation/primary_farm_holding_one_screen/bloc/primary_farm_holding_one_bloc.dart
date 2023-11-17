@@ -208,7 +208,7 @@ class PrimaryFarmHoldingOneBloc
               farmName: state.nameController!.text,
               enumeratorId: userId,
               enumerationAreaNumber:
-                  enumeratorarea.isEmpty ? "N/A" : enumeratorarea,
+                  enumeratorarea.isEmpty ? "Not Applied" : enumeratorarea,
               enumeratorName: enumeratorname,
               enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),

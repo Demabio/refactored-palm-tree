@@ -133,13 +133,46 @@ class AddAquacultureTwoBloc
     feedmodels = await fetchFish();
 
     feedmodels = _inputs(feedmodels, fishes!);
-
+    CheckBoxList? categorymodel = feedmodels.firstWhere(
+      (model) =>
+          model.title == "Fertilizer" ||
+          model.title == "Fertiliser" ||
+          model.title == "Fertilizers" ||
+          model.title == "Fertilisers",
+    );
+    SelectionPopupModel? yesno;
+    // ignore: unnecessary_null_comparison
+    if (categorymodel.isSelected) {
+      yesno = state.addAquacultureTwoModelObj?.dropdownItemList.firstWhere(
+        (model) => model.id == 1,
+      );
+    } else {
+      yesno = state.addAquacultureTwoModelObj?.dropdownItemList.firstWhere(
+        (model) => model.id == 0,
+      );
+    }
     if (fishes.isNotEmpty) {
-      emit(state.copyWith(inputs: feedmodels, checked: false));
+      emit(state.copyWith(
+          inputs: feedmodels,
+          checked: false,
+          addAquacultureTwoModelObj: state.addAquacultureTwoModelObj?.copyWith(
+            selectedDropDownValue: yesno,
+            selectedDropDownValue2:
+                state.addAquacultureTwoModelObj?.selectedDropDownValue2,
+            selectedDropDownValue1:
+                state.addAquacultureTwoModelObj?.selectedDropDownValue1,
+          )));
     } else {
       emit(state.copyWith(
         checked: true,
         inputs: feedmodels,
+        addAquacultureTwoModelObj: state.addAquacultureTwoModelObj?.copyWith(
+          selectedDropDownValue: yesno,
+          selectedDropDownValue2:
+              state.addAquacultureTwoModelObj?.selectedDropDownValue2,
+          selectedDropDownValue1:
+              state.addAquacultureTwoModelObj?.selectedDropDownValue1,
+        ),
       ));
     }
   }
@@ -244,8 +277,11 @@ class AddAquacultureTwoBloc
             productionLevelId:
                 state.addAquacultureTwoModelObj!.selectedDropDownValue1!.id!,
             fertilizerInPonds:
-                state.addAquacultureTwoModelObj!.selectedDropDownValue!.id! ==
-                    1,
+                state.addAquacultureTwoModelObj?.selectedDropDownValue != null
+                    ? state.addAquacultureTwoModelObj!.selectedDropDownValue!
+                            .id! ==
+                        1
+                    : false,
             espBenefit:
                 state.addAquacultureTwoModelObj!.selectedDropDownValue2!.id!,
             createdBy: userId,

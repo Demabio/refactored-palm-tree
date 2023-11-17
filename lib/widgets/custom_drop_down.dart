@@ -27,6 +27,7 @@ class CustomDropDown extends StatelessWidget {
     this.onChanged,
     this.val,
     this.enabled = false,
+    this.disabled = false,
   }) : super(
           key: key,
         );
@@ -74,6 +75,7 @@ class CustomDropDown extends StatelessWidget {
   final SelectionPopupModel? val;
 
   final bool enabled;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {

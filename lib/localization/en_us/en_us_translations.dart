@@ -889,7 +889,7 @@ final Map<String, String> enUs = {
   "lbl_mineral_salts": "Mineral salts",
   "lbl_mobile_number": "Mobile Number:",
   "lbl_mon": "Mon",
-  "lbl_n_a": "N/A",
+  "lbl_n_a": "Not Applied",
   "lbl_name": "Name",
   "lbl_natural_pasture": "Natural pasture",
   "lbl_next": "Next",

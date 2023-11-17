@@ -176,7 +176,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                               Text(
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.villageName ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -207,7 +207,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                           Text(
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.shoppingCenter ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -236,7 +236,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                           Text(
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.farmName ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -271,7 +271,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.farmSize
                                                     .toString() ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -300,7 +300,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                           Text(
                                             state.primaryFarmHoldingModelObj
                                                     ?.area ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -343,7 +343,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.cropFarmSize
                                                         .toString() ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -388,7 +388,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.livestockFarmSize
                                                         .toString() ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -433,7 +433,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.leasedFarmSize
                                                         .toString() ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -478,7 +478,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.idleFarmSize
                                                         .toString() ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -624,7 +624,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.x
                                                     .toString() ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -659,7 +659,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.y
                                                     .toString() ??
-                                                "N/A",
+                                                "Not Applied",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -694,7 +694,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             state.primaryFarmHoldingModelObj
                                                     ?.farm?.accuracyLevel
                                                     .toString() ??
-                                                "N/A",
+                                                "Not Applied" + " metres",
                                             style: theme.textTheme.titleMedium
                                                 ?.copyWith(
                                               color: Colors.black,
@@ -737,7 +737,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                               child: Text(
                                                 state.primaryFarmHoldingModelObj
                                                         ?.farm?.farmLrCert ??
-                                                    "N/A",
+                                                    "Not Applied",
                                                 style: theme
                                                     .textTheme.titleMedium
                                                     ?.copyWith(
@@ -816,7 +816,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             child: Text(
                                               state.primaryFarmHoldingModelObj
                                                       ?.owner ??
-                                                  "N/A",
+                                                  "Not Applied",
                                               maxLines: 10,
                                               style: theme.textTheme.titleMedium
                                                   ?.copyWith(

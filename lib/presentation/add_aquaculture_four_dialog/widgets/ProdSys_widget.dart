@@ -98,7 +98,7 @@ class ProdSysItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var2 ?? "N/A",
+                  enterpriseModel.var2 ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -122,7 +122,7 @@ class ProdSysItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var3 ?? "N/A",
+                  enterpriseModel.var3 ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -146,7 +146,7 @@ class ProdSysItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var4 ?? "N/A",
+                  enterpriseModel.var4 ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait

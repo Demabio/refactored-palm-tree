@@ -96,7 +96,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                   child: Text(
                                     state.farmersIdentificationModelObj?.farmer
                                             ?.farmerName ??
-                                        "NA",
+                                        "Not Applied",
                                     style:
                                         theme.textTheme.titleMedium?.copyWith(
                                       color: Colors.black,
@@ -147,7 +147,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.farmerName ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -176,7 +176,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.idNo ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -208,7 +208,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.email ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -235,10 +235,15 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          state.farmersIdentificationModelObj
-                                                  ?.farmer?.dob
-                                                  .toString() ??
-                                              "0",
+                                          state.farmersIdentificationModelObj!
+                                                      .farmer?.dob !=
+                                                  null
+                                              ? state
+                                                  .farmersIdentificationModelObj!
+                                                  .farmer!
+                                                  .dob!
+                                                  .toString()
+                                              : "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -267,7 +272,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.postalAddress ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -296,7 +301,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.postalAddress ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -325,7 +330,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.mobile ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -354,7 +359,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Text(
                                           state.farmersIdentificationModelObj
                                                   ?.marital ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -415,7 +420,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                           state.farmersIdentificationModelObj
                                                   ?.farmer?.hhSize
                                                   .toString() ??
-                                              "N/A",
+                                              "Not Applied",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,
@@ -485,7 +490,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                             child: Text(
                                               state.farmersIdentificationModelObj
                                                       ?.ed ??
-                                                  "N/A",
+                                                  "Not Applied",
                                               maxLines: 10,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.right,
@@ -574,13 +579,20 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                           padding: EdgeInsets.only(
                                               top: ((1 / 411) * 100).w),
                                           child: Text(
-                                              "msg_respondent_relationship".tr,
-                                              style: CustomTextStyles
-                                                  .labelMediumPrimary)),
+                                            "msg_respondent_relationship".tr,
+                                            maxLines: 10,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
+                                          )),
                                       Text(
                                         state.farmersIdentificationModelObj
                                                 ?.rship ??
-                                            "N/A",
+                                            "Not Applied",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           color: Colors.black,
@@ -622,7 +634,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       Text(
                                         state.farmersIdentificationModelObj
                                                 ?.farmer?.respondentName ??
-                                            "N/A",
+                                            "Not Applied",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           color: Colors.black,
@@ -664,7 +676,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       Text(
                                         state.farmersIdentificationModelObj
                                                 ?.farmer?.respNationalId ??
-                                            "N/A",
+                                            "Not Applied",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           color: Colors.black,
@@ -707,7 +719,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       Text(
                                         state.farmersIdentificationModelObj
                                                 ?.farmer?.respondentMobile ??
-                                            "N/A",
+                                            "Not Applied",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                           color: Colors.black,

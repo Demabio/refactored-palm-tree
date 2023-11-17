@@ -51,7 +51,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.name ?? "N/A",
+                  cropdetailsItemModelObj.name ?? "Not Applied",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
@@ -83,7 +83,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.totalAcreage ?? "N/A",
+                  cropdetailsItemModelObj.totalAcreage ?? "Not Applied",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
@@ -112,7 +112,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.unitOfArea ?? "N/A",
+                  cropdetailsItemModelObj.unitOfArea ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -140,7 +140,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.seeds ?? "N/A",
+                  cropdetailsItemModelObj.seeds ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -171,7 +171,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.purpose ?? "N/A",
+                  cropdetailsItemModelObj.purpose ?? "Not Applied",
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
@@ -203,7 +203,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.water ?? "N/A",
+                  cropdetailsItemModelObj.water ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -231,7 +231,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.system ?? "N/A",
+                  cropdetailsItemModelObj.system ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -259,7 +259,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.fertiliser ?? "N/A",
+                  cropdetailsItemModelObj.fertiliser ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -357,7 +357,7 @@ class CropdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  cropdetailsItemModelObj.pesticide ?? "N/A",
+                  cropdetailsItemModelObj.pesticide ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait

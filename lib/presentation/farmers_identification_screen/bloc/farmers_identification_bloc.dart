@@ -68,7 +68,9 @@ class FarmersIdentificationBloc
     Farmer farmer = await getFarmer() ??
         Farmer(
           farmerId: 0,
-          farmerName: "NA",
+          farmerName: "Not Applied",
+          agriSkillsId: 0,
+          hhSize: 0,
         );
     FIProgress fiProgress = await getFIProgress() ??
         FIProgress(
@@ -96,9 +98,9 @@ class FarmersIdentificationBloc
       farmersIdentificationModelObj:
           state.farmersIdentificationModelObj?.copyWith(
         farmer: farmer,
-        marital: maritalStatus?.maritalStatus ?? "N/A",
-        rship: relationship?.rlshpToFarmer ?? "N/A",
-        ed: level?.educationLevel ?? "N/A",
+        marital: maritalStatus?.maritalStatus ?? "Not Applied",
+        rship: relationship?.rlshpToFarmer ?? "Not Applied",
+        ed: level?.educationLevel ?? "Not Applied",
       ),
     ));
   }

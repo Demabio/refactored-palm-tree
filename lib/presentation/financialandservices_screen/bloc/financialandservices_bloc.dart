@@ -59,6 +59,7 @@ class FinancialandservicesBloc
           assetsInsurance: false,
           livestockInsurance: false,
           farmRecords: false,
+          farmingIncomePercent: 0,
         );
 
     FarmerFarm farm = await getFarm() ??
@@ -196,7 +197,7 @@ class FinancialandservicesBloc
           feedmodels.indexWhere((obj) => obj.id == ent.cooperateiveGroupId);
 
       feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = ent.cooperateiveGroupName ?? "N/A";
+      feedmodels[index].var1 = ent.cooperateiveGroupName ?? "Not Applied";
     }
 
     return feedmodels;

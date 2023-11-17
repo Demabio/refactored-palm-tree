@@ -1,3 +1,3 @@
 class User {
-  static String na = "NA";
+  static String na = "Not Applied";
 }

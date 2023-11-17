@@ -45,7 +45,7 @@ class CoopItemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.var1 ?? "N/A",
+                  enterpriseModel.var1 ?? "Not Applied",
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

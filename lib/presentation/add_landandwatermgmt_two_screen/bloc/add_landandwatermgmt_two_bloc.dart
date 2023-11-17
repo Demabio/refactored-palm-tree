@@ -418,7 +418,7 @@ class AddLandandwatermgmtTwoBloc
         }
 
         feedmodels[index].isSelected = true;
-        feedmodels[index].var1 = ent.irrigationProjectName ?? "N/A";
+        feedmodels[index].var1 = ent.irrigationProjectName ?? "Not Applied";
         feedmodels[index].male =
             TextEditingController(text: ent.irrigationProjectName);
         feedmodels[index].drop = ent.membershipTypeId == 0 ? null : drop;

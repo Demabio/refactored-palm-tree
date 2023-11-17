@@ -119,7 +119,7 @@ class FarmersIdentificationTwoBloc
           constituencyId: constituencyId,
           enumeratorId: userId,
           enumerationAreaNumber:
-              enumeratorarea.isEmpty ? "N/A" : enumeratorarea,
+              enumeratorarea.isEmpty ? "Not Applied" : enumeratorarea,
           enumeratorName: enumeratorname,
           enumeratorMobile: enumeratormobile,
         ))
@@ -138,8 +138,8 @@ class FarmersIdentificationTwoBloc
                   gender: state.farmersIdentificationTwoModelObj!
                       .selectedDropDownValue1?.id,
                   mobile: state.mobileNumberController!.text,
-                  email: state.emailController?.text ?? "NA",
-                  postalAddress: state.addressController?.text ?? "NA",
+                  email: state.emailController?.text ?? "Not Applied",
+                  postalAddress: state.addressController?.text ?? "Not Applied",
                 ))
                 .then((value) => print("UPdated !!! $value"));
 
@@ -172,8 +172,8 @@ class FarmersIdentificationTwoBloc
               gender: state
                   .farmersIdentificationTwoModelObj!.selectedDropDownValue1?.id,
               mobile: state.mobileNumberController!.text,
-              email: state.emailController?.text ?? "NA",
-              postalAddress: state.addressController?.text ?? "NA",
+              email: state.emailController?.text ?? "Not Applied",
+              postalAddress: state.addressController?.text ?? "Not Applied",
             ))
             .then((value) => print("UPdated !!! $value"));
         PrefUtils().setFarmerName(state.name!.text);
@@ -232,8 +232,9 @@ class FarmersIdentificationTwoBloc
                     gender: state.farmersIdentificationTwoModelObj!
                         .selectedDropDownValue1?.id,
                     mobile: state.mobileNumberController!.text,
-                    email: state.emailController?.text ?? "NA",
-                    postalAddress: state.addressController?.text ?? "NA",
+                    email: state.emailController?.text ?? "Not Applied",
+                    postalAddress:
+                        state.addressController?.text ?? "Not Applied",
                   ))
                   .then((value) => print("UPdated !!! $value"));
 
@@ -266,8 +267,8 @@ class FarmersIdentificationTwoBloc
                 gender: state.farmersIdentificationTwoModelObj!
                     .selectedDropDownValue1?.id,
                 mobile: state.mobileNumberController!.text,
-                email: state.emailController?.text ?? "NA",
-                postalAddress: state.addressController?.text ?? "NA",
+                email: state.emailController?.text ?? "Not Applied",
+                postalAddress: state.addressController?.text ?? "Not Applied",
               ))
               .then((value) => print("UPdated !!! $value"));
           PrefUtils().setFarmerName(state.name!.text);
@@ -312,7 +313,7 @@ class FarmersIdentificationTwoBloc
     Farmer farmer = await getFarmer() ??
         Farmer(
           farmerId: 0,
-          farmerName: "NA",
+          farmerName: "Not Applied",
         );
     FIProgress fiProgress = await getProgress() ??
         FIProgress(
