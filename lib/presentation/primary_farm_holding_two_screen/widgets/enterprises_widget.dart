@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/primary_farm_holding_two_screen/models/enterprisesmodel.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class EnterprisesItemWidget extends StatelessWidget {
@@ -32,8 +32,8 @@ class EnterprisesItemWidget extends StatelessWidget {
         text: enterpriseModel.title,
         value: enterpriseModel.isSelected,
         margin: EdgeInsets.only(
-          left: 5.h,
-          top: 20.v,
+          left: DeviceExt((5 / 841) * 100).h,
+          top: DeviceExt((20 / 411) * 100).w,
         ),
         onChange: (value) {
           onSelect?.call(value);

@@ -1,6 +1,7 @@
 import '../models/chipviewayrshi2_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class Chipviewayrshi2ItemWidget extends StatelessWidget {
@@ -20,8 +21,8 @@ class Chipviewayrshi2ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawChip(
       padding: EdgeInsets.symmetric(
-        horizontal: 27.h,
-        vertical: 11.v,
+        horizontal: DeviceExt((27 / 841) * 100).h,
+        vertical: DeviceExt((11 / 411) * 100).w,
       ),
       showCheckmark: false,
       labelPadding: EdgeInsets.zero,
@@ -41,16 +42,16 @@ class Chipviewayrshi2ItemWidget extends StatelessWidget {
           ? RoundedRectangleBorder(
               side: BorderSide(
                 color: appTheme.whiteA700.withOpacity(0.6),
-                width: 1.h,
+                width: DeviceExt((1 / 841) * 100).h,
               ),
               borderRadius: BorderRadius.circular(
-                10.h,
+                DeviceExt((10 / 841) * 100).h,
               ),
             )
           : RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.circular(
-                10.h,
+                DeviceExt((10 / 841) * 100).h,
               ),
             ),
       onSelected: (value) {

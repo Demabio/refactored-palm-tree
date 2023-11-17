@@ -45,7 +45,8 @@ class AddLandandwatermgmtTwoBloc
     Emitter<AddLandandwatermgmtTwoState> emit,
   ) async {
     if ((state.checka || state.checkb) &&
-        state.addLandandwatermgmtTwoModelObj?.lwProgress!.pageTwo == 1) {
+        state.addLandandwatermgmtTwoModelObj?.lwProgress!.pageTwo == 1 &&
+        state.addLandandwatermgmtTwoModelObj?.selectedDropDownValue!.id == 1) {
       event.createFailed?.call();
     } else {
       event.createSuccessful?.call();

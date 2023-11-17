@@ -28,15 +28,30 @@ class IncomesWidget extends StatelessWidget {
         alignment: Alignment.centerLeft,
         height: height,
         width: width,
-        child: Text(
-          "${enterpriseModel.title} Priority: ${enterpriseModel.var1}",
-          style: theme.textTheme.titleMedium?.copyWith(
-            color: Colors.black,
-            fontSize: Device.orientation == Orientation.portrait
-                ? DeviceExt(1.8).h
-                : DeviceExt(1.8).w,
-          ),
-          textAlign: TextAlign.left,
+        child: Row(
+          children: [
+            Text(
+              "${enterpriseModel.title}",
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(1.8).w,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            Spacer(),
+            Text(
+              "Priority: ${enterpriseModel.var1}",
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(1.8).w,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ],
         ),
       ),
     );

@@ -2,6 +2,7 @@ import '../models/userbalance_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_icon_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class UserbalanceItemWidget extends StatelessWidget {
@@ -18,8 +19,8 @@ class UserbalanceItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 15.h,
-        vertical: 20.v,
+        horizontal: DeviceExt((15 / 841) * 100).h,
+        vertical: DeviceExt((20 / 411) * 100).w,
       ),
       decoration: AppDecoration.fillWhiteA.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder15,
@@ -30,7 +31,7 @@ class UserbalanceItemWidget extends StatelessWidget {
           CustomIconButton(
             height: 45.adaptSize,
             width: 45.adaptSize,
-            padding: EdgeInsets.all(12.h),
+            padding: EdgeInsets.all(DeviceExt((12 / 841) * 100).h),
             decoration: IconButtonStyleHelper.fillPrimaryContainer,
             child: CustomImageView(
               svgPath: ImageConstant.imgMoneytag1,
@@ -38,9 +39,9 @@ class UserbalanceItemWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 10.h,
-              top: 5.v,
-              bottom: 2.v,
+              left: DeviceExt((10 / 841) * 100).h,
+              top: DeviceExt((5 / 411) * 100).w,
+              bottom: DeviceExt((2 / 411) * 100).w,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +54,7 @@ class UserbalanceItemWidget extends StatelessWidget {
                     style: CustomTextStyles.bodySmallBluegray40003,
                   ),
                 ),
-                SizedBox(height: 2.v),
+                SizedBox(height: DeviceExt((2 / 411) * 100).w),
                 Text(
                   userbalanceItemModelObj.balance!,
                   overflow: TextOverflow.ellipsis,

@@ -3,6 +3,7 @@ import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/data/models/customwidgets/checkboxlist.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
 import 'package:kiamis_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class IrrigationProjectGroupItemWidget extends StatelessWidget {
@@ -37,8 +38,8 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
             text: ageGroupmModel.title,
             value: ageGroupmModel.isSelected,
             margin: EdgeInsets.only(
-              left: 5.h,
-              top: 20.v,
+              left: DeviceExt((5 / 841) * 100).h,
+              top: DeviceExt((20 / 411) * 100).w,
             ),
             onChange: (value) {
               onSelect?.call(value);
@@ -46,18 +47,18 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
           ),
           if (ageGroupmModel.isSelected)
             Container(
-              height: 75.v,
+              height: DeviceExt((75 / 411) * 100).w,
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 5.v,
-                  right: 5.h,
+                  right: DeviceExt((5 / 841) * 100).h,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(right: 10.h),
+                        padding: EdgeInsets.only(
+                            right: DeviceExt((10 / 841) * 100).h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -73,8 +74,8 @@ class IrrigationProjectGroupItemWidget extends StatelessWidget {
                               hintText: "Group".tr,
                               textInputType: TextInputType.text,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 7.h,
-                                vertical: 13.v,
+                                horizontal: DeviceExt((7 / 841) * 100).h,
+                                vertical: DeviceExt((13 / 411) * 100).w,
                               ),
                             ),
                           ],

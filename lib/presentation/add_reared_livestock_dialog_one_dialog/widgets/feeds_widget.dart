@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/presentation/add_reared_livestock_dialog_one_dialog/models/feedsmodel.dart';
 import 'package:kiamis_app/widgets/custom_checkbox_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class FeedsItemWidget extends StatelessWidget {
@@ -32,8 +32,8 @@ class FeedsItemWidget extends StatelessWidget {
         text: model.title,
         value: model.isSelected,
         margin: EdgeInsets.only(
-          left: 5.h,
-          top: 20.v,
+          left: DeviceExt((5 / 841) * 100).h,
+          top: DeviceExt((20 / 411) * 100).w,
         ),
         onChange: (value) {
           onSelect?.call(value);

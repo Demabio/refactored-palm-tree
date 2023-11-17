@@ -2,6 +2,7 @@ import '../models/userprofile_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/custom_icon_button.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 // ignore: must_be_immutable
 class UserprofileItemWidget extends StatelessWidget {
@@ -18,8 +19,8 @@ class UserprofileItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 15.h,
-        vertical: 19.v,
+        horizontal: DeviceExt((15 / 841) * 100).h,
+        vertical: DeviceExt((19 / 411) * 100).w,
       ),
       decoration: AppDecoration.fillGray.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder15,
@@ -29,7 +30,7 @@ class UserprofileItemWidget extends StatelessWidget {
           CustomIconButton(
             height: 45.adaptSize,
             width: 45.adaptSize,
-            padding: EdgeInsets.all(12.h),
+            padding: EdgeInsets.all(DeviceExt((12 / 841) * 100).h),
             decoration: IconButtonStyleHelper.fillPrimaryContainer,
             child: CustomImageView(
               svgPath: ImageConstant.imgSave,
@@ -37,8 +38,8 @@ class UserprofileItemWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-              left: 10.h,
-              bottom: 2.v,
+              left: DeviceExt((10 / 841) * 100).h,
+              bottom: DeviceExt((2 / 411) * 100).w,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +49,7 @@ class UserprofileItemWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelLarge,
                 ),
-                SizedBox(height: 1.v),
+                SizedBox(height: DeviceExt((1 / 411) * 100).w),
                 Text(
                   userprofileItemModelObj.balanceAmount!,
                   overflow: TextOverflow.ellipsis,
