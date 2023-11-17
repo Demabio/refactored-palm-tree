@@ -79,9 +79,12 @@ class PostDialog extends StatelessWidget {
     String successbody = "Posting Successful.";
     String label = "Failed";
     String body = "Posting failed, kindly try again";
+    String nofarmers = "No farmers available to be posted";
+    String nolabel = "No Farmers";
     context.read<PostModalBloc>().add(PostEvent(
           createSuccessful: () => closedialog(context, successlbl, successbody),
           createFailed: () => closedialog(context, label, body),
+          nofarmers: () => closedialog(context, nolabel, nofarmers),
         ));
   }
 

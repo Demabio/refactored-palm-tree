@@ -10,7 +10,7 @@ bool isText(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^[a-zA-Z0-9\s\-]+$';
+    const pattern = r"^[a-zA-Z0-9\s'\-]+$";
 
     final regExp = RegExp(pattern);
 
@@ -31,7 +31,7 @@ bool isName(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^[A-Za-z]+( +[A-Za-z]+)+$';
+    const pattern = r"^[A-Za-z']+(\s+[A-Za-z']+)+$";
 
     final regExp = RegExp(pattern);
 
@@ -132,8 +132,56 @@ bool hhsize(
 
     final regExp = RegExp(pattern);
 
+    isInputStringValid = regExp.hasMatch(inputString) &&
+        int.parse(inputString) >= 1 &&
+        int.parse(inputString) <= 30;
+  }
+
+  return isInputStringValid;
+}
+
+bool greaterthanone(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^\d+(\.\d{1,4})$';
+
+    final regExp = RegExp(pattern);
+
+    isInputStringValid = regExp.hasMatch(inputString) &&
+        double.parse(inputString) >= 1 &&
+        double.parse(inputString) <= 5000;
+  }
+
+  return isInputStringValid;
+}
+
+bool ispercent(
+  String? inputString, {
+  bool isRequired = false,
+}) {
+  bool isInputStringValid = false;
+
+  if (!isRequired && (inputString == null ? true : inputString.isEmpty)) {
+    isInputStringValid = true;
+  }
+
+  if (inputString != null && inputString.isNotEmpty) {
+    const pattern = r'^\d+(\.\d{1,3})$';
+
+    final regExp = RegExp(pattern);
+
     isInputStringValid =
-        regExp.hasMatch(inputString) && int.parse(inputString) <= 30;
+        regExp.hasMatch(double.parse(inputString).toString()) &&
+            double.parse(inputString) >= 0 &&
+            double.parse(inputString) <= 100;
   }
 
   return isInputStringValid;

@@ -69,6 +69,7 @@ class FarmersIdentificationTwoBloc
     return [
       SelectionPopupModel(id: 1, title: "Male", isSelected: true),
       SelectionPopupModel(id: 2, title: "Female"),
+      SelectionPopupModel(title: "Other", id: 3)
     ];
   }
 

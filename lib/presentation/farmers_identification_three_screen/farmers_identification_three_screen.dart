@@ -266,7 +266,8 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                           (context, codevalueoneController) {
                                         return CustomTextFormField(
                                             autofocus: false,
-                                            focusNode: node2, validator: (value) {
+                                            focusNode: node2,
+                                            validator: (value) {
                                               if (!isText(value)) {
                                                 return "Text only";
                                               } else {
@@ -459,7 +460,7 @@ class FarmersIdentificationThreeScreen extends StatelessWidget {
                                             validator: (value) {
                                               if (!hhsize(value,
                                                   isRequired: true)) {
-                                                return "Field is require: Max size is 30";
+                                                return "Field is required: Max size is 30";
                                               } else {
                                                 return null;
                                               }

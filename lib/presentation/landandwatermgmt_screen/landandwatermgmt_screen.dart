@@ -460,16 +460,23 @@ class LandandwatermgmtScreen extends StatelessWidget {
                                                                     .h
                                                                 : DeviceExt(2.5)
                                                                     .w,
-                                                        fontWeight:
-                                                            FontWeight.bold,
                                                       ),
                                                     )),
                                                 Text(
-                                                    state.farm?.irrigationArea
-                                                            .toString() ??
-                                                        "Not Applied",
-                                                    style: theme
-                                                        .textTheme.labelMedium)
+                                                  state.farm?.irrigationArea
+                                                          .toString() ??
+                                                      "Not Applied",
+                                                  style: theme
+                                                      .textTheme.titleMedium
+                                                      ?.copyWith(
+                                                    color: Colors.black,
+                                                    fontSize: Device
+                                                                .orientation ==
+                                                            Orientation.portrait
+                                                        ? DeviceExt(1.8).h
+                                                        : DeviceExt(2.5).w,
+                                                  ),
+                                                )
                                               ]))),
                                   Padding(
                                       padding: EdgeInsets.only(

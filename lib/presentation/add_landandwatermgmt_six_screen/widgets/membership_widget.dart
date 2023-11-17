@@ -37,11 +37,11 @@ class MembershipItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(2.5).w,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
+                  maxLines: 3,
                 ),
                 Spacer(),
                 Text(
@@ -49,10 +49,10 @@ class MembershipItemWidget extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
-                        ? DeviceExt(1.5).h
+                        ? DeviceExt(1.8).h
                         : DeviceExt(2.5).w,
-                    fontWeight: FontWeight.bold,
                   ),
+                  maxLines: 3,
                   textAlign: TextAlign.left,
                 ),
               ],

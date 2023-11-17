@@ -293,6 +293,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
         ? emit(state.copyWith(s: feedmodels, checkb: false))
         : emit(state.copyWith(
             s: feedmodels,
+            checkb: true,
           ));
   }
 
@@ -331,8 +332,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
         fishes != null ? feedmodels = _incomes(feedmodels, fishes) : feedmodels;
 
     fishes != null
-        ? emit(state.copyWith(i: feedmodels))
-        : emit(state.copyWith(i: feedmodels));
+        ? emit(state.copyWith(i: feedmodels, checki: false))
+        : emit(state.copyWith(i: feedmodels, checki: true));
   }
 
   _checkinfopowers(

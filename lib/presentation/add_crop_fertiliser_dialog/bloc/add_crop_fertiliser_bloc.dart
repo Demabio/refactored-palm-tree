@@ -88,6 +88,7 @@ class AddCropFertiliserBloc
               farmerId: PrefUtils().getFarmerId(),
               farmerFarmId: PrefUtils().getFarmId(),
               fertiliserTypeId: model.id!,
+              others: model.male?.text == '' ? model.title : model.male?.text,
               createdBy: userId,
               dateCreated: DateTime.now()),
         );
@@ -99,6 +100,7 @@ class AddCropFertiliserBloc
                 farmerId: PrefUtils().getFarmerId(),
                 farmerFarmId: PrefUtils().getFarmId(),
                 fertiliserTypeId: model.id!,
+                others: model.male?.text == '' ? model.title : model.male?.text,
                 createdBy: userId,
                 dateCreated: DateTime.now()),
           );

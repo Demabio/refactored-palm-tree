@@ -44,7 +44,7 @@ class AddAquacultureThreeDialog extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: DeviceExt((3 / 841) * 100).h),
             child: Text(
-              "msg_add_farm_structure".tr,
+              "Add Aquaculture Type".tr,
               style: CustomTextStyles.titleMediumSemiBold,
             ),
           ),

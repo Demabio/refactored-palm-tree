@@ -88,6 +88,8 @@ class AddLandandwatermgmtFiveBloc
               farmerId: PrefUtils().getFarmerId(),
               farmerFarmId: PrefUtils().getFarmId(),
               irrigationTypeId: model.id!,
+              othersName:
+                  model.male?.text == '' ? model.title : model.male?.text,
               createdBy: userId,
               dateCreated: DateTime.now()),
         );
@@ -99,6 +101,8 @@ class AddLandandwatermgmtFiveBloc
                 farmerFarmId: PrefUtils().getFarmId(),
                 irrigationTypeId: model.id!,
                 createdBy: userId,
+                othersName:
+                    model.male?.text == '' ? model.title : model.male?.text,
                 dateCreated: DateTime.now()),
           );
         }

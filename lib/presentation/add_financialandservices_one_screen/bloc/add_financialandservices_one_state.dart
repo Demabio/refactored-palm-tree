@@ -11,6 +11,7 @@ class AddFinancialandservicesOneState extends Equatable {
     this.checka = false,
     this.checkb = false,
     this.checkp = false,
+    this.checki = false,
     this.group = false,
     this.credit = false,
     this.income = false,
@@ -28,6 +29,7 @@ class AddFinancialandservicesOneState extends Equatable {
   bool checka;
   bool checkb;
   bool checkp;
+  bool checki;
   bool credit;
   bool group;
   bool income;
@@ -48,6 +50,7 @@ class AddFinancialandservicesOneState extends Equatable {
         checka,
         checkb,
         checkp,
+        checki,
         credit,
         group,
         income,
@@ -59,6 +62,7 @@ class AddFinancialandservicesOneState extends Equatable {
     bool? checka,
     bool? checkb,
     bool? checkp,
+    bool? checki,
     List<CheckBoxList>? i,
     List<CheckBoxList>? c,
     List<CheckBoxList>? s,
@@ -77,6 +81,7 @@ class AddFinancialandservicesOneState extends Equatable {
       checka: checka ?? this.checka,
       checkb: checkb ?? this.checkb,
       checkp: checkp ?? this.checkp,
+      checki: checki ?? this.checki,
       credit: credit ?? this.credit,
       group: group ?? this.group,
       income: income ?? this.income,

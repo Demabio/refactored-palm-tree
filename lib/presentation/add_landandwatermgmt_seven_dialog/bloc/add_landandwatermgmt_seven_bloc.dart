@@ -88,7 +88,8 @@ class AddLandandwatermgmtSevenBloc
               farmerId: PrefUtils().getFarmerId(),
               irrigationAgencyId: model.id!,
               createdBy: userId,
-              agencyName: model.title,
+              agencyName:
+                  model.male?.text == '' ? model.title : model.male?.text,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
@@ -99,7 +100,8 @@ class AddLandandwatermgmtSevenBloc
                 farmerId: PrefUtils().getFarmerId(),
                 irrigationAgencyId: model.id!,
                 createdBy: userId,
-                agencyName: model.title,
+                agencyName:
+                    model.male?.text == '' ? model.title : model.male?.text,
                 dateCreated: DateTime.now()),
           );
         }

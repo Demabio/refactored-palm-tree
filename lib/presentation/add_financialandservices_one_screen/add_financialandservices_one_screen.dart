@@ -197,12 +197,17 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                           top: DeviceExt((20 / 411) * 100).w,
                           right: DeviceExt((45 / 841) * 100).h,
                         ),
-                        child: Text(
-                          "msg_what_are_your_main4".tr,
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                          style: CustomTextStyles.labelMediumPrimary_1,
-                        ),
+                        child: BlocSelector<AddFinancialandservicesOneBloc,
+                                AddFinancialandservicesOneState, bool?>(
+                            selector: (state) => state.checki,
+                            builder: (context, checked) {
+                              return Text(
+                                "msg_what_are_your_main4".tr,
+                                style: checked!
+                                    ? CustomTextStyles.labelMediumPrimary_1red
+                                    : CustomTextStyles.labelMediumPrimary_1,
+                              );
+                            }),
                       ),
                       BlocSelector<
                               AddFinancialandservicesOneBloc,
@@ -266,6 +271,8 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                             validator: (value) {
                               if (!isNumeric(value, isRequired: true)) {
                                 return "Field is required";
+                              } else if (!ispercent(value, isRequired: true)) {
+                                return "Value must be between 0% and 100%";
                               } else {
                                 return null;
                               }

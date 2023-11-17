@@ -311,6 +311,9 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                             if (!isNumeric(value,
                                                 isRequired: true)) {
                                               return "Please enter valid input";
+                                            } else if (!greaterthanone(value,
+                                                isRequired: true)) {
+                                              return "Value must be greater than 1";
                                             }
                                             return null;
                                           },
@@ -512,6 +515,9 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                               if (!isNumeric(value,
                                                   isRequired: true)) {
                                                 return "Please enter valid input";
+                                              } else if (!greaterthanone(value,
+                                                  isRequired: true)) {
+                                                return "Value must be greater than 1";
                                               }
                                               return null;
                                             },
@@ -614,6 +620,9 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                               if (!isNumeric(value,
                                                   isRequired: true)) {
                                                 return "Please enter valid input";
+                                              } else if (!greaterthanone(value,
+                                                  isRequired: true)) {
+                                                return "Value must be greater than 1";
                                               }
                                               return null;
                                             },

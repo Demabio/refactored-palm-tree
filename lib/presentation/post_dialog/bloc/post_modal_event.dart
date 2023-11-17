@@ -21,11 +21,13 @@ class PostEvent extends PostModalEvent {
     this.createSuccessful,
     this.value,
     this.crop,
+    this.nofarmers,
   });
 
   int? value;
   int? crop;
   Function? createSuccessful;
+  Function? nofarmers;
 
   Function? createFailed;
   @override
@@ -34,5 +36,6 @@ class PostEvent extends PostModalEvent {
         createFailed,
         createSuccessful,
         crop,
+        nofarmers,
       ];
 }

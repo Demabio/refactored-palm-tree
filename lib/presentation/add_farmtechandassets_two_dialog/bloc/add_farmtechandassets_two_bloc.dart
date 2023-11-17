@@ -132,6 +132,7 @@ class AddFarmtechandassetsTwoBloc
       int index = feedmodels.indexWhere((obj) => obj.id == ent.powerSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.othersName);
     }
 
     return feedmodels;
@@ -157,18 +158,21 @@ class AddFarmtechandassetsTwoBloc
               farmerId: PrefUtils().getFarmerId(),
               farmerFarmId: PrefUtils().getFarmId(),
               powerSourceId: model.id!,
-              othersName: model.title,
+              othersName:
+                  model.male?.text == '' ? model.title : model.male?.text,
               createdBy: userId,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
+          print(model.male?.text);
           categs.add(
             FarmerPowerSource(
                 farmPowerSourceId: 0,
                 farmerId: PrefUtils().getFarmerId(),
                 farmerFarmId: PrefUtils().getFarmId(),
                 powerSourceId: model.id!,
-                othersName: model.title,
+                othersName:
+                    model.male?.text == '' ? model.title : model.male?.text,
                 createdBy: userId,
                 dateCreated: DateTime.now()),
           );
@@ -214,6 +218,7 @@ class AddFarmtechandassetsTwoBloc
         list.add(CheckBoxList(
           title: value[i].powerSource,
           id: value[i].powerSourceId,
+          male: TextEditingController(),
         ));
       }
     });

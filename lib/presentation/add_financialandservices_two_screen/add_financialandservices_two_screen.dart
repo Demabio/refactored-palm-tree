@@ -770,8 +770,8 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                       CustomOutlinedButton(
                         text: "lbl_back".tr,
                         onTap: () => goB(context),
-                        buttonStyle: CustomButtonStyles.outlinePrimaryTL10,
-                        buttonTextStyle: CustomTextStyles.bodyLargePrimary_1,
+                        buttonStyle: CustomButtonStyles.outlinePrimary,
+                        buttonTextStyle: CustomTextStyles.bodyLargePrimary_2,
                       ),
                       SizedBox(height: DeviceExt((12 / 411) * 100).w),
                       CustomElevatedButton(

@@ -426,6 +426,9 @@ class AddCropOneScreen extends StatelessWidget {
                                                   state.addCropOneModelObj!
                                                       .area!) {
                                                 return "Combined crop sizes is larger than crop farming size.";
+                                              } else if (!greaterthanone(value,
+                                                  isRequired: true)) {
+                                                return "Value must be greater than 1";
                                               } else {
                                                 return null;
                                               }

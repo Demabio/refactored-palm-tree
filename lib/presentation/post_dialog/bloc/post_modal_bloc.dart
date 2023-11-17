@@ -20,9 +20,14 @@ class PostModalBloc extends Bloc<PostModalEvent, PostModalState> {
     PostEvent event,
     Emitter<PostModalState> emit,
   ) async {
+    FarmerDB farmerDB = FarmerDB();
+    int postables = await farmerDB.postableFarmers() ?? 0;
+    if (postables == 0) {
+      event.nofarmers!.call();
+      return;
+    }
     await _repository.postPost().then((value) async {
       if (value.statusCode == 200) {
-        FarmerDB farmerDB = FarmerDB();
         FarmerFarmDB farmfarmerDB = FarmerFarmDB();
 
         int posted = await farmerDB.updateToPosted();

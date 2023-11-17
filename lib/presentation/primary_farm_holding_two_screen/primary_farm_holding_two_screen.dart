@@ -272,6 +272,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                                     100)
                                                             .h,
                                                         autofocus: false,
+                                                        enabled: false,
                                                         focusNode: node1,
                                                         controller:
                                                             titleoneController,
@@ -327,6 +328,7 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                                                         100)
                                                                 .h,
                                                             autofocus: false,
+                                                            enabled: false,
                                                             focusNode: node2,
                                                             controller:
                                                                 titlethreeController,
@@ -562,12 +564,10 @@ class PrimaryFarmHoldingTwoScreen extends StatelessWidget {
                                       height: DeviceExt((12 / 411) * 100).w),
                                   CustomOutlinedButton(
                                       text: "lbl_back".tr,
-                                      
-                                      buttonStyle: CustomButtonStyles
-                                          .outlinePrimary,
+                                      buttonStyle:
+                                          CustomButtonStyles.outlinePrimary,
                                       buttonTextStyle:
-                                          CustomTextStyles
-                                              .bodyLargePrimary_2,
+                                          CustomTextStyles.bodyLargePrimary_2,
                                       onTap: () {
                                         goBack(context);
                                       }),

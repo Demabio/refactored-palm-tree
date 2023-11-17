@@ -167,6 +167,7 @@ class AddFarmtechandassetsOneBloc
       int index = feedmodels.indexWhere((obj) => obj.id == ent.powerSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.othersName ?? "";
     }
 
     return feedmodels;

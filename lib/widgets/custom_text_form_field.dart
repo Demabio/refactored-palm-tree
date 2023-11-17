@@ -27,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fillColor,
     this.filled = true,
     this.validator,
+    this.enabled = true,
   }) : super(
           key: key,
         );
@@ -73,6 +74,8 @@ class CustomTextFormField extends StatelessWidget {
 
   final bool? filled;
 
+  final bool? enabled;
+
   final FormFieldValidator<String>? validator;
 
   @override
@@ -89,6 +92,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          enabled: enabled,
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,

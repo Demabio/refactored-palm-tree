@@ -967,7 +967,8 @@ final Map<String, String> enUs = {
   "msg_descriptive_name2": "Descriptive Name of Farm (*)",
   "msg_do_you_belong_to2":
       "Do you belong to a Cooperative Group or Farmer Organization? (*)",
-  "msg_do_you_have_another": "Do you have another farm elsewhere?:",
+  "msg_do_you_have_another":
+      "Do you have another farm elsewhere in another county? (*)",
   "msg_do_you_have_another2": "Do you have another farm elsewhere(*)?",
   "msg_do_you_insure_your": "Do you insure your fish?",
   "msg_do_you_undertake2": "Do you undertake irrigation? (*)",
@@ -1051,7 +1052,8 @@ final Map<String, String> enUs = {
   "msg_transfer_request": "Transfer Request",
   "msg_type_and_name_of2": "Type and Name of Irrigation Scheme (*)",
   "msg_what_are_your_main": "What are your main livestock feed items? (*)",
-  "msg_what_are_your_main4": "What are your main sources of income by priority",
+  "msg_what_are_your_main4":
+      "What are your main sources of income by priority (*)",
   "msg_what_enterprises":
       "What enterprises were on this farm in the last 12 months?(tick where applicable only) (*)",
   "msg_what_types_of_aquaculture2":

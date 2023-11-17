@@ -19,6 +19,7 @@ class InputsWidget extends StatelessWidget {
   double? height;
 
   double? width;
+  RegExp pattern = RegExp(r'\b(?:Other|other)\b');
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +29,30 @@ class InputsWidget extends StatelessWidget {
         alignment: Alignment.centerLeft,
         height: height,
         width: width,
-        child: Text(
-          enterpriseModel.title,
-          style: theme.textTheme.titleMedium?.copyWith(
-            color: Colors.black,
-            fontSize: Device.orientation == Orientation.portrait
-                ? DeviceExt(1.8).h
-                : DeviceExt(1.8).w,
-          ),
-          textAlign: TextAlign.left,
+        child: Row(
+          children: [
+            Text(
+              enterpriseModel.title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: Colors.black,
+                fontSize: Device.orientation == Orientation.portrait
+                    ? DeviceExt(1.8).h
+                    : DeviceExt(1.8).w,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            if (pattern.hasMatch(enterpriseModel.title))
+              Text(
+                "- ${enterpriseModel.var1 ?? ""}",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.black,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(1.8).h
+                      : DeviceExt(1.8).w,
+                ),
+                textAlign: TextAlign.left,
+              ),
+          ],
         ),
       ),
     );
