@@ -34,7 +34,7 @@ class AddAquacultureSixDialog extends StatelessWidget {
       key: _formKey,
       child: Container(
         width: DeviceExt((450 / 841) * 100).h,
-        height: DeviceExt((450 / 841) * 100).h,
+        height: DeviceExt((650 / 841) * 100).h,
         padding: EdgeInsets.symmetric(
             horizontal: DeviceExt((13 / 841) * 100).h,
             vertical: DeviceExt((15 / 411) * 100).w),
