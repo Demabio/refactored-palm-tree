@@ -19,7 +19,7 @@ class InputsWidget extends StatelessWidget {
   double? height;
 
   double? width;
-  RegExp pattern = RegExp(r'\b(?:Other|other)\b');
+  RegExp pattern = RegExp(r'\b(?:Other|other|Others|others)\b');
 
   @override
   Widget build(BuildContext context) {

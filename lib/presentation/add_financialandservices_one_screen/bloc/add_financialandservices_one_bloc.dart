@@ -473,6 +473,7 @@ class AddFinancialandservicesOneBloc extends Bloc<
       int index = feedmodels.indexWhere((obj) => obj.id == ent.creditSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.othersName ?? "Not Applied";
     }
 
     return feedmodels;
@@ -503,7 +504,8 @@ class AddFinancialandservicesOneBloc extends Bloc<
       int index = feedmodels.indexWhere((obj) => obj.id == ent.incomeSourceId);
 
       feedmodels[index].isSelected = true;
-      feedmodels[index].var1 = "${ent.priorityLevel ?? 0}";
+      feedmodels[index].var2 = "${ent.priorityLevel ?? 0}";
+      feedmodels[index].var1 = ent.other ?? "Not Applied";
     }
 
     return feedmodels;

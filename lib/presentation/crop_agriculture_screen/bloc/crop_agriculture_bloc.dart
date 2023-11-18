@@ -289,6 +289,7 @@ class CropAgricultureBloc
           feedmodels.indexWhere((obj) => obj.id == ent.fertiliserTypeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.others ?? "Not Applied";
     }
 
     return feedmodels;

@@ -61,12 +61,14 @@ class AddFinancialandservicesFiveBloc extends Bloc<
   Future<List<CheckBoxList>> fetchFinancialServ() async {
     List<CheckBoxList> list = [];
     CreditSourceDB farmStructureDB = CreditSourceDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].creditSource,
           id: value[i].creditSourceId,
+          male: textEditingController,
         ));
       }
     });
@@ -94,6 +96,7 @@ class AddFinancialandservicesFiveBloc extends Bloc<
       int index = feedmodels.indexWhere((obj) => obj.id == ent.creditSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.othersName);
     }
 
     return feedmodels;
@@ -119,6 +122,8 @@ class AddFinancialandservicesFiveBloc extends Bloc<
               saccoName: model.male?.text,
               creditSourceId: model.id!,
               createdBy: userId,
+              othersName:
+                  model.male?.text == '' ? model.title : model.male?.text,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
@@ -129,6 +134,8 @@ class AddFinancialandservicesFiveBloc extends Bloc<
                 saccoName: model.male?.text,
                 creditSourceId: model.id!,
                 createdBy: userId,
+                othersName:
+                    model.male?.text == '' ? model.title : model.male?.text,
                 dateCreated: DateTime.now()),
           );
         }

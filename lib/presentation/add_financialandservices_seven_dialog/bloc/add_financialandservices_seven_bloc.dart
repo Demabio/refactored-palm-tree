@@ -45,12 +45,14 @@ class AddFinancialandservicesSevenBloc extends Bloc<
   Future<List<CheckBoxList>> fetchEService() async {
     List<CheckBoxList> list = [];
     ExtensionSourceDB farmStructureDB = ExtensionSourceDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].sourceType,
           id: value[i].extensionSourceId,
+          male: textEditingController,
         ));
       }
     });
@@ -79,6 +81,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
           feedmodels.indexWhere((obj) => obj.id == ent.extensionSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.other);
     }
 
     return feedmodels;
@@ -104,6 +107,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
             farmerFarmId: PrefUtils().getFarmId(),
             extensionSourceId: model.id!,
             createdBy: userId,
+            other: model.male?.text == '' ? model.title : model.male?.text,
             dateCreated: DateTime.now(),
           ),
         );
@@ -115,6 +119,7 @@ class AddFinancialandservicesSevenBloc extends Bloc<
               farmerFarmId: PrefUtils().getFarmId(),
               extensionSourceId: model.id!,
               createdBy: userId,
+              other: model.male?.text == '' ? model.title : model.male?.text,
               dateCreated: DateTime.now(),
             ),
           );

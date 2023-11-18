@@ -45,12 +45,13 @@ class AddLandandwatermgmtFiveBloc
     List<CheckBoxList> list = [];
     IrrigationTypeDB farmStructureDB = IrrigationTypeDB();
 //        createdBy: int.parse(map['created_by'] ?? "0"),
-
+    TextEditingController textEditingController = TextEditingController();
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].irrigationType,
           id: value[i].irrigationTypeId,
+          male: textEditingController,
         ));
       }
     });
@@ -136,6 +137,7 @@ class AddLandandwatermgmtFiveBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationTypeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.othersName);
     }
 
     return feedmodels;

@@ -87,9 +87,10 @@ class FarmerExtensionModeDB {
     try {
       for (var extensionMode in extensionModes) {
         batch.rawUpdate('''
-        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND extension_mode_id = ?
+        UPDATE $tableName SET active = 1, date_created = ?, other = ?  WHERE farmer_farm_id = ? AND extension_mode_id = ?
         ''', [
           extensionMode.dateCreated?.toLocal().toIso8601String(),
+          extensionMode.other,
           extensionMode.farmerFarmId,
           extensionMode.extensionModeId,
         ]);

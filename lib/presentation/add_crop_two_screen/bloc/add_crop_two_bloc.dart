@@ -199,6 +199,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
       int index = feedmodels.indexWhere((obj) => obj.id == ent.fertSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.otherSource ?? "Not Applied";
     }
 
     return feedmodels;
@@ -240,6 +241,7 @@ class AddCropTwoBloc extends Bloc<AddCropTwoEvent, AddCropTwoState> {
           feedmodels.indexWhere((obj) => obj.id == ent.fertiliserTypeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.others ?? "Not Applied";
     }
 
     return feedmodels;

@@ -6,6 +6,7 @@ class FarmerExtensionAccess {
   final DateTime? dateCreated;
   final int? createdBy;
   final int? enumeratorId;
+  final String? other;
 
   FarmerExtensionAccess({
     required this.farmerExtensionAccessId,
@@ -15,6 +16,7 @@ class FarmerExtensionAccess {
     this.dateCreated,
     this.createdBy,
     this.enumeratorId,
+    this.other,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -24,6 +26,7 @@ class FarmerExtensionAccess {
       'extensionSourceId': extensionSourceId,
       'dateCreated': dateCreated?.toIso8601String(),
       'createdBy': createdBy,
+      'other': other,
     };
   }
 
@@ -36,5 +39,6 @@ class FarmerExtensionAccess {
         extensionSourceId: map['extension_source_id']?.toInt() ?? 0,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by'] ?? 0,
+        other: map['other'] ?? '',
       );
 }

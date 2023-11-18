@@ -57,8 +57,8 @@ class FarmerExtensionAccessDB {
       for (var extensionAccess in extensionAccesses) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, extension_source_id, date_created, created_by, active, enumerator_id
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, extension_source_id, date_created, created_by, active, enumerator_id, other
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           extensionAccess.farmerId,
           extensionAccess.farmerFarmId,
@@ -67,6 +67,7 @@ class FarmerExtensionAccessDB {
           extensionAccess.createdBy,
           0,
           extensionAccess.createdBy,
+          extensionAccess.other,
         ]);
       }
 
@@ -84,9 +85,10 @@ class FarmerExtensionAccessDB {
     try {
       for (var extensionAccess in extensionAccesses) {
         batch.rawUpdate('''
-        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND extension_source_id = ?
+        UPDATE $tableName SET active = 1, date_created = ?, other = ? WHERE farmer_farm_id = ? AND extension_source_id = ?
         ''', [
           extensionAccess.dateCreated?.toLocal().toIso8601String(),
+          extensionAccess.other,
           extensionAccess.farmerFarmId,
           extensionAccess.extensionSourceId,
         ]);

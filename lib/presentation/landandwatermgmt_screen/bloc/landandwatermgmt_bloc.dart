@@ -218,6 +218,7 @@ class LandandwatermgmtBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationTypeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.othersName ?? "Not Applied";
     }
 
     return feedmodels;
@@ -262,6 +263,7 @@ class LandandwatermgmtBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationAgencyId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.agencyName ?? "Not Applied";
     }
 
     return feedmodels;

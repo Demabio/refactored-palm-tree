@@ -52,6 +52,7 @@ class FarmerIncomeSourceDB {
     final batch = database.batch();
     try {
       for (var incomeSource in incomeSources) {
+        print(incomeSource.priorityLevel);
         batch.rawInsert('''
             INSERT INTO $tableName (income_source_id, priority_level, farmer_id, other, active, enumerator_id) 
           VALUES (?, ?, ?, ?, ?, ?)
@@ -77,10 +78,13 @@ class FarmerIncomeSourceDB {
     final batch = database.batch();
     try {
       for (var incomeSource in incomeSources) {
+        print(incomeSource.priorityLevel);
+
         batch.rawUpdate('''
-        UPDATE $tableName SET active = 1, priority_level = ? WHERE farmer_id = ? AND income_source_id = ?
+        UPDATE $tableName SET active = 1, priority_level = ?, other = ? WHERE farmer_id = ? AND income_source_id = ?
         ''', [
           incomeSource.priorityLevel,
+          incomeSource.other,
           incomeSource.farmerId,
           incomeSource.incomeSourceId,
         ]);

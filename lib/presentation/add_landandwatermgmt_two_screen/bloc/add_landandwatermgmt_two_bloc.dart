@@ -393,7 +393,7 @@ class AddLandandwatermgmtTwoBloc
     for (var ent in feeds) {
       int index =
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationTypeId);
-
+      feedmodels[index].var1 = ent.othersName ?? "Not Applied";
       feedmodels[index].isSelected = true;
     }
 
@@ -439,6 +439,7 @@ class AddLandandwatermgmtTwoBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationAgencyId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.agencyName ?? "Not Applied";
     }
 
     return feedmodels;

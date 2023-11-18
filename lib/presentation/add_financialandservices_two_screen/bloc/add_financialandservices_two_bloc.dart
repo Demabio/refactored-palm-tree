@@ -232,6 +232,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
           feedmodels.indexWhere((obj) => obj.id == ent.extensionSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.other ?? "Not Applied";
     }
 
     return feedmodels;
@@ -246,6 +247,7 @@ class AddFinancialandservicesTwoBloc extends Bloc<
       int index = feedmodels.indexWhere((obj) => obj.id == ent.extensionModeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.other ?? "Not Applied";
     }
     return feedmodels;
   }

@@ -44,12 +44,14 @@ class AddCropFertiliserSourceBloc
   Future<List<CheckBoxList>> fetchSources() async {
     List<CheckBoxList> list = [];
     FertiliserSourceDB farmStructureDB = FertiliserSourceDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value!.length; i++) {
         list.add(CheckBoxList(
           title: value[i].source,
           id: value[i].fertSourceId,
+          male: textEditingController,
         ));
       }
     });
@@ -88,6 +90,8 @@ class AddCropFertiliserSourceBloc
               farmerId: PrefUtils().getFarmerId(),
               farmerFarmId: PrefUtils().getFarmId(),
               fertSourceId: model.id!,
+              otherSource:
+                  model.male?.text == '' ? model.title : model.male?.text,
               createdBy: userId,
               dateCreated: DateTime.now()),
         );
@@ -101,6 +105,8 @@ class AddCropFertiliserSourceBloc
                 farmerFarmId: PrefUtils().getFarmId(),
                 fertSourceId: model.id!,
                 createdBy: userId,
+                otherSource:
+                    model.male?.text == '' ? model.title : model.male?.text,
                 dateCreated: DateTime.now()),
           );
         }
@@ -135,6 +141,7 @@ class AddCropFertiliserSourceBloc
       int index = feedmodels.indexWhere((obj) => obj.id == ent.fertSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.otherSource);
     }
 
     return feedmodels;

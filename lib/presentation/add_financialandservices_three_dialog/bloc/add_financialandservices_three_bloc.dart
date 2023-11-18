@@ -39,7 +39,6 @@ class AddFinancialandservicesThreeBloc extends Bloc<
 
     newModels[event.value].isSelected = event.selected!;
     newModels[event.value].var1 = count.toString();
-
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
@@ -51,12 +50,14 @@ class AddFinancialandservicesThreeBloc extends Bloc<
   Future<List<CheckBoxList>> fetchIncomes() async {
     List<CheckBoxList> list = [];
     IncomeSourceDB farmStructureDB = IncomeSourceDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].incomeSource,
           id: value[i].incomeSourceId,
+          male: textEditingController,
         ));
       }
     });
@@ -79,11 +80,11 @@ class AddFinancialandservicesThreeBloc extends Bloc<
       List<CheckBoxList> feedmodelss, List<FarmerIncomeSource> feedss) {
     List<CheckBoxList> feedmodels = feedmodelss;
     List<FarmerIncomeSource> feeds = feedss;
-
     for (var ent in feeds) {
       int index = feedmodels.indexWhere((obj) => obj.id == ent.incomeSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.other);
     }
 
     return feedmodels;
@@ -109,6 +110,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
             priorityLevel: int.parse(model.var1 ?? "0"),
             incomeSourceId: model.id!,
             enumeratorId: userId,
+            other: model.male?.text == '' ? model.title : model.male?.text,
           ),
         );
         if (model.isSelected) {
@@ -119,6 +121,7 @@ class AddFinancialandservicesThreeBloc extends Bloc<
               priorityLevel: int.parse(model.var1 ?? "0"),
               incomeSourceId: model.id!,
               enumeratorId: userId,
+              other: model.male?.text == '' ? model.title : model.male?.text,
             ),
           );
         }
@@ -179,12 +182,17 @@ class AddFinancialandservicesThreeBloc extends Bloc<
         ? incomemodels = _incomes(incomemodels, incomes)
         : incomemodels;
     //  }
+    int count = 0;
+    if (incomes.isNotEmpty) {
+      count = incomes.length;
+    }
     emit(state.copyWith(
         addFinancialandservicesThreeModelObj:
             state.addFinancialandservicesThreeModelObj?.copyWith(
       models: incomemodels,
       fsProgress: pfProgress,
       incomes: allincomes,
+      count: count,
     )));
   }
 }

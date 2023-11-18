@@ -19,6 +19,7 @@ class IncomesWidget extends StatelessWidget {
   double? height;
 
   double? width;
+  RegExp pattern = RegExp(r'\b(?:Other|other|Others|others)\b');
 
   @override
   Widget build(BuildContext context) {
@@ -30,27 +31,48 @@ class IncomesWidget extends StatelessWidget {
         width: width,
         child: Row(
           children: [
-            Text(
-              "${enterpriseModel.title}",
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: Colors.black,
-                fontSize: Device.orientation == Orientation.portrait
-                    ? DeviceExt(1.8).h
-                    : DeviceExt(1.8).w,
+            Container(
+              width: 30.w,
+              child: Text(
+                "${enterpriseModel.title}",
+                maxLines: 3,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.black,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(1.8).h
+                      : DeviceExt(1.8).w,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.left,
             ),
-            Spacer(),
-            Text(
-              "Priority: ${enterpriseModel.var1}",
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: Colors.black,
-                fontSize: Device.orientation == Orientation.portrait
-                    ? DeviceExt(1.8).h
-                    : DeviceExt(1.8).w,
+            Container(
+              width: 20.w,
+              child: Text(
+                "Priority: ${enterpriseModel.var2 ?? ""}",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.black,
+                  fontSize: Device.orientation == Orientation.portrait
+                      ? DeviceExt(1.8).h
+                      : DeviceExt(1.8).w,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.left,
             ),
+            if (pattern.hasMatch(enterpriseModel.title))
+              Container(
+                width: 30.w,
+                child: Text(
+                  "- ${enterpriseModel.var1 ?? ""}",
+                  maxLines: 3,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: Device.orientation == Orientation.portrait
+                        ? DeviceExt(1.8).h
+                        : DeviceExt(1.8).w,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
           ],
         ),
       ),

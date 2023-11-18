@@ -50,6 +50,7 @@ class AddLandandwatermgmtSevenBloc
         list.add(CheckBoxList(
           title: value[i].agencyName,
           id: value[i].irrigationAgencyId,
+          male: TextEditingController(text: value[i].agencyName),
         ));
       }
     });
@@ -134,6 +135,7 @@ class AddLandandwatermgmtSevenBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationAgencyId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.agencyName);
     }
 
     return feedmodels;

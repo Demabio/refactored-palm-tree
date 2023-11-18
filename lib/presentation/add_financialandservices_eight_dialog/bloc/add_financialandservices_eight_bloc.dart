@@ -45,12 +45,14 @@ class AddFinancialandservicesEightBloc extends Bloc<
   Future<List<CheckBoxList>> fetchEAccess() async {
     List<CheckBoxList> list = [];
     ExtensionModeDB farmStructureDB = ExtensionModeDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].sourceMode,
           id: value[i].extensionModeId,
+          male: textEditingController,
         ));
       }
     });
@@ -78,6 +80,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
       int index = feedmodels.indexWhere((obj) => obj.id == ent.extensionModeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.other);
     }
     return feedmodels;
   }
@@ -102,6 +105,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
               farmerFarmId: PrefUtils().getFarmId(),
               extensionModeId: model.id!,
               createdBy: userId,
+              other: model.male?.text == '' ? model.title : model.male?.text,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
@@ -112,6 +116,7 @@ class AddFinancialandservicesEightBloc extends Bloc<
                 farmerFarmId: PrefUtils().getFarmId(),
                 extensionModeId: model.id!,
                 createdBy: userId,
+                other: model.male?.text == '' ? model.title : model.male?.text,
                 dateCreated: DateTime.now()),
           );
         }

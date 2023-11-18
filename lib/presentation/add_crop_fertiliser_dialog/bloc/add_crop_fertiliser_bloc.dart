@@ -135,6 +135,7 @@ class AddCropFertiliserBloc
           feedmodels.indexWhere((obj) => obj.id == ent.fertiliserTypeId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.others);
     }
 
     return feedmodels;
