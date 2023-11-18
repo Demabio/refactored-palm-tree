@@ -80,6 +80,8 @@ class FarmersIdentificationBloc
           pageThree: 0,
           pageFour: 0,
         );
+    print(farmer.other);
+
     EducationLevel? level = farmer.educationLevelId != null
         ? await getEducation(farmer.educationLevelId ?? 0)
         : null;
@@ -90,7 +92,6 @@ class FarmersIdentificationBloc
     MaritalStatus? maritalStatus = farmer.maritalStatusId != null
         ? await getMarstatus(farmer.maritalStatusId ?? 0)
         : null;
-
     emit(state.copyWith(
       done: fiProgress.pageOne == 1 &&
           fiProgress.pageTwo == 1 &&

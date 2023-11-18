@@ -23,6 +23,7 @@ class LSdetailsItemWidget extends StatelessWidget {
   LSdetailsItemModel farmdetailsItemModel;
   VoidCallback? edit;
   VoidCallback? delete;
+  RegExp pattern = RegExp(r'\b(?:Other|other)\b');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +54,9 @@ class LSdetailsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  farmdetailsItemModel.name!,
+                  pattern.hasMatch(farmdetailsItemModel.name!)
+                      ? "${farmdetailsItemModel.name!} - ${farmdetailsItemModel.livestock ?? ""}"
+                      : farmdetailsItemModel.name!,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait
@@ -69,9 +72,8 @@ class LSdetailsItemWidget extends StatelessWidget {
             "msg_livestock_age_groups".tr,
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: Device.orientation == Orientation.portrait
-                  ? DeviceExt(2).h
+                  ? DeviceExt(1.8).h
                   : DeviceExt(2).w,
-              fontWeight: FontWeight.bold,
             ),
           ),
           Padding(
@@ -97,9 +99,8 @@ class LSdetailsItemWidget extends StatelessWidget {
             "msg_main_livestock_feed".tr,
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: Device.orientation == Orientation.portrait
-                  ? DeviceExt(2).h
+                  ? DeviceExt(1.8).h
                   : DeviceExt(2).w,
-              fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: ((14 / 411) * 100).w),

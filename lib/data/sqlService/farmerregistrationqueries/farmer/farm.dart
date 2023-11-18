@@ -226,11 +226,59 @@ class FarmerFarmDB {
       final columns = await database.rawQuery('PRAGMA table_info($tableName)');
       final columnExists = columns.any((column) => column['name'] == 'posted');
 
+      final columns1 =
+          await database.rawQuery('PRAGMA table_info(tblfrfarmerslivestock)');
+      final columnExists1 = columns1.any((column) => column['name'] == 'other');
+
+      final columns2 = await database
+          .rawQuery('PRAGMA table_info(tblfrfarmerfishproductionsystem)');
+      final columnExists2 = columns2.any((column) => column['name'] == 'other');
+
+      final columns3 =
+          await database.rawQuery('PRAGMA table_info(tblfrfarmerfish)');
+      final columnExists3 = columns3.any((column) => column['name'] == 'other');
+
+      final columns4 =
+          await database.rawQuery('PRAGMA table_info(tblfrfarmerassets)');
+      final columnExists4 = columns4.any((column) => column['name'] == 'other');
+
+      final columns5 = await database
+          .rawQuery('PRAGMA table_info(tblfrfarmerextensionaccess)');
+      final columnExists5 = columns5.any((column) => column['name'] == 'other');
+
+      final column6 = await database.rawQuery('PRAGMA table_info(tblfarmer)');
+      final columnExists6 = column6.any((column) => column['name'] == 'other');
+
       if (!columnExists) {
         // The "posted" column doesn't exist, so add it to the table
         await database.execute(
             'ALTER TABLE $tableName ADD COLUMN posted INTEGER DEFAULT 0');
       }
+      if (!columnExists1) {
+        await database.execute(
+            'ALTER TABLE tblfrfarmerslivestock ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists2) {
+        await database.execute(
+            'ALTER TABLE tblfrfarmerfishproductionsystem ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists3) {
+        await database.execute(
+            'ALTER TABLE tblfrfarmerfish ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists4) {
+        await database.execute(
+            'ALTER TABLE tblfrfarmerassets ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists5) {
+        await database.execute(
+            'ALTER TABLE tblfrfarmerextensionaccess ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists6) {
+        await database
+            .execute('ALTER TABLE tblfarmer ADD COLUMN other VARCHAR(100)');
+      }
+
       return columnExists;
     } catch (e) {
       print(e.toString());

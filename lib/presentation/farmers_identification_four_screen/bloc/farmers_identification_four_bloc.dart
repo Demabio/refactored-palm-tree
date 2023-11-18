@@ -67,7 +67,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     TextEditingController mobile = TextEditingController();
     TextEditingController name = TextEditingController();
     TextEditingController id = TextEditingController();
-
+    TextEditingController other = TextEditingController();
     if (fiProgress.pageThree == 1) {
       selectedDropDownValue = isFarmer.firstWhere(
         (model) => model.id == (farmer.farmerTheRespodent! ? 1 : 0),
@@ -90,7 +90,11 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
           text: !farmer.farmerTheRespodent!
               ? farmer.respondentMobile
               : "Not Applied");
+
+      other = TextEditingController(
+          text: farmer.other != null ? farmer.other : "Not Applied");
     }
+    print(farmer.other);
     int stepper = 3;
     if (fiProgress.pageThree == 1) {
       stepper = 3;
@@ -104,6 +108,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         respMob: mobile,
         respame: name,
         respid: id,
+        other: other,
         farmersIdentificationFourModelObj:
             state.farmersIdentificationFourModelObj?.copyWith(
           dropdownItemList: isFarmer,
@@ -255,6 +260,11 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        other: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.other?.text == ""
+                ? "Not Applied"
+                : state.other!.text
+            : "Not Applied",
         respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respid!.text
             : "Not Applied",
@@ -298,6 +308,7 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
     Emitter<FarmersIdentificationFourState> emit,
   ) {
     FarmerDB farmerDB = FarmerDB();
+    print(state.other!.text);
 
     try {
       farmerDB
@@ -305,6 +316,11 @@ class FarmersIdentificationFourBloc extends Bloc<FarmersIdentificationFourEvent,
         farmerId: state.farmersIdentificationFourModelObj!.farmer!.farmerId,
         farmerName: state.farmersIdentificationFourModelObj!.farmer!.farmerName,
         idNo: state.farmersIdentificationFourModelObj!.farmer!.idNo,
+        other: !state.farmersIdentificationFourModelObj!.isFarmer
+            ? state.other?.text == ""
+                ? "Not Applied"
+                : state.other!.text
+            : "Not Applied",
         respNationalId: !state.farmersIdentificationFourModelObj!.isFarmer
             ? state.respid!.text
             : "Not Applied",

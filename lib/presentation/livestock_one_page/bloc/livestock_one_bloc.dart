@@ -281,6 +281,7 @@ class LivestockOneBloc extends Bloc<LivestockOneEvent, LivestockOneState> {
         beekeepr: beekeerper,
         bees: beeslist,
         x: live.noOfBeehives.toString(),
+        livestock: live.other,
       ));
     }
     emit(state.copyWith(

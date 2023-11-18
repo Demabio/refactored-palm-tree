@@ -18,6 +18,7 @@ class FarmerLivestockDB {
         "created_by" VARCHAR(255) ,
         "active" INT,
         "enumerator_id" INT,
+        "other" VARCHAR(10),
         PRIMARY KEY("farmer_livestock_id")
       );
     """);
@@ -53,8 +54,8 @@ class FarmerLivestockDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, livestock_id, livestock_farmsystem_cat_id, no_of_beehives, date_created, created_by, active, enumerator_id, other
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerLivestock.farmerId,
       farmerLivestock.farmerFarmId,
@@ -65,6 +66,7 @@ class FarmerLivestockDB {
       farmerLivestock.createdBy,
       1,
       farmerLivestock.createdBy,
+      farmerLivestock.other,
     ]);
   }
 
@@ -72,12 +74,13 @@ class FarmerLivestockDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-        livestock_id = ?, livestock_farmsystem_cat_id = ?, no_of_beehives = ?
+        livestock_id = ?, livestock_farmsystem_cat_id = ?, no_of_beehives = ?, other = ?
       WHERE farmer_livestock_id = ?
     ''', [
       farmerLivestock.livestockId,
       farmerLivestock.livestockFarmsystemCatId,
       farmerLivestock.noOfBeehives,
+      farmerLivestock.other,
       farmerLivestock.farmerLivestockId,
     ]);
   }

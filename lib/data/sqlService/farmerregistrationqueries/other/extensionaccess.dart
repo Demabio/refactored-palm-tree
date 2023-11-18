@@ -16,6 +16,7 @@ class FarmerExtensionAccessDB {
         "created_by" INT,
         "active" INT,
         "enumerator_id" INT,
+        "other" VARCHAR(10),
         PRIMARY KEY("farmer_extension_access_id")
       );
     """);

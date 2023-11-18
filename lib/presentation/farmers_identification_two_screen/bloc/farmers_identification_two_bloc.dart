@@ -149,12 +149,9 @@ class FarmersIdentificationTwoBloc
                 .insert(FIProgress(
                   farmerId: value,
                   pageOne: 1,
-                  pageTwo: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageTwo,
-                  pageThree: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageThree,
-                  pageFour: state
-                      .farmersIdentificationTwoModelObj!.fiProgress!.pageFour,
+                  pageTwo: 0,
+                  pageThree: 0,
+                  pageFour: 0,
                 ))
                 .then((value) => print("Scope FI" + value.toString()));
             event.createSuccessful!.call();

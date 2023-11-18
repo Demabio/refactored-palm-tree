@@ -34,6 +34,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
   FocusNode node3 = FocusNode();
   FocusNode node4 = FocusNode();
   FocusNode node5 = FocusNode();
+  FocusNode node6 = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -325,6 +327,8 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                       );
                                     },
                                   ),
+                                  SizedBox(
+                                      height: DeviceExt((19 / 411) * 100).w),
                                   BlocSelector<
                                           FarmersIdentificationFourBloc,
                                           FarmersIdentificationFourState,
@@ -383,8 +387,6 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                               }),
                                         );
                                       }),
-                                  SizedBox(
-                                      height: DeviceExt((20 / 411) * 100).w),
                                   BlocSelector<
                                       FarmersIdentificationFourBloc,
                                       FarmersIdentificationFourState,
@@ -397,12 +399,73 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                         visible:
                                             !farmersIdentificationFourModelObj!
                                                 .isFarmer,
-                                        child: Text("Respondent name (*)",
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                                "Specify the relationship (*)"
+                                                    .tr,
+                                                textAlign: TextAlign.left,
+                                                style: CustomTextStyles
+                                                    .labelMediumPrimary_1),
+                                            BlocSelector<
+                                                    FarmersIdentificationFourBloc,
+                                                    FarmersIdentificationFourState,
+                                                    FarmersIdentificationFourState>(
+                                                selector: (state) => state,
+                                                builder: (context, state) {
+                                                  RegExp pattern = RegExp(
+                                                      r'\b(?:Other|other)\b');
+                                                  bool isOther = pattern.hasMatch(
+                                                      state.selectedDropDownValue1
+                                                              ?.title ??
+                                                          "");
+                                                  return Visibility(
+                                                    visible: isOther,
+                                                    child: CustomTextFormField(
+                                                        focusNode: node6,
+                                                        controller: state.other,
+                                                        autofocus: false,
+                                                        hintText: "Other".tr,
+                                                        textInputType:
+                                                            TextInputType
+                                                                .number,
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .done,
+                                                        validator: (value) {
+                                                          if (isNotEmpty(
+                                                              value)) {
+                                                            return "Field is required.";
+                                                          }
+                                                          return null;
+                                                        }),
+                                                  );
+                                                }),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  BlocSelector<
+                                      FarmersIdentificationFourBloc,
+                                      FarmersIdentificationFourState,
+                                      FarmersIdentificationFourModel?>(
+                                    selector: (state) =>
+                                        state.farmersIdentificationFourModelObj,
+                                    builder: (context,
+                                        farmersIdentificationFourModelObj) {
+                                      return Visibility(
+                                        visible:
+                                            !farmersIdentificationFourModelObj!
+                                                .isFarmer,
+                                        child: Text("Respondent's Name (*)".tr,
                                             style: CustomTextStyles
                                                 .labelMediumPrimary_1),
                                       );
                                     },
                                   ),
+                                  SizedBox(
+                                      height: DeviceExt((20 / 411) * 100).w),
                                   BlocSelector<
                                           FarmersIdentificationFourBloc,
                                           FarmersIdentificationFourState,
@@ -566,11 +629,10 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                       height: DeviceExt((21 / 411) * 100).w),
                                   CustomOutlinedButton(
                                     text: "lbl_back".tr,
-                                  
                                     onTap: () => goBack(context),
                                     isDisabled: true,
-                                    buttonStyle: CustomButtonStyles
-                                    .fillPrimaryTL10,
+                                    buttonStyle:
+                                        CustomButtonStyles.fillPrimaryTL10,
                                   ),
                                   SizedBox(
                                       height: DeviceExt((12 / 411) * 100).w),

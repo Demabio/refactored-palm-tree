@@ -8,8 +8,9 @@ import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';
 
+// ignore: must_be_immutable
 class FarmersIdentificationScreen extends StatelessWidget {
-  const FarmersIdentificationScreen({Key? key}) : super(key: key);
+  FarmersIdentificationScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<FarmersIdentificationBloc>(
@@ -20,6 +21,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
         child: FarmersIdentificationScreen());
   }
 
+  RegExp pattern = RegExp(r'\b(?:Other|other)\b');
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -436,29 +438,36 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "msg_agriculture_formal".tr,
-                                          style: theme.textTheme.titleMedium
-                                              ?.copyWith(
-                                            fontSize: Device.orientation ==
-                                                    Orientation.portrait
-                                                ? DeviceExt(1.8).h
-                                                : DeviceExt(2).w,
+                                        Container(
+                                          width: DeviceExt(50).w,
+                                          child: Text(
+                                            "msg_agriculture_formal".tr,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          state.farmersIdentificationModelObj
-                                                      ?.farmer?.agriSkillsId ==
-                                                  1
-                                              ? "Yes"
-                                              : "No",
-                                          style: theme.textTheme.titleMedium
-                                              ?.copyWith(
-                                            color: Colors.black,
-                                            fontSize: Device.orientation ==
-                                                    Orientation.portrait
-                                                ? DeviceExt(1.8).h
-                                                : DeviceExt(2).w,
+                                        Container(
+                                          width: DeviceExt(30).w,
+                                          child: Text(
+                                            state.farmersIdentificationModelObj
+                                                        ?.farmer?.agriSkillsId ==
+                                                    1
+                                                ? "Yes"
+                                                : "No",
+                                            textAlign: TextAlign.right,
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                              color: Colors.black,
+                                              fontSize: Device.orientation ==
+                                                      Orientation.portrait
+                                                  ? DeviceExt(1.8).h
+                                                  : DeviceExt(2).w,
+                                            ),
                                           ),
                                         )
                                       ]),
@@ -470,39 +479,38 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                         Padding(
                                             padding: EdgeInsets.only(
                                                 bottom: ((16 / 411) * 100).w),
-                                            child: Text(
-                                              "msg_formal_education".tr,
-                                              style: theme.textTheme.titleMedium
-                                                  ?.copyWith(
-                                                fontSize: Device.orientation ==
-                                                        Orientation.portrait
-                                                    ? DeviceExt(1.8).h
-                                                    : DeviceExt(2).w,
+                                            child: Container(
+                                              width: DeviceExt(50).w,
+                                              child: Text(
+                                                "msg_formal_education".tr,
+                                                style: theme
+                                                    .textTheme.titleMedium
+                                                    ?.copyWith(
+                                                  fontSize: Device
+                                                              .orientation ==
+                                                          Orientation.portrait
+                                                      ? DeviceExt(1.8).h
+                                                      : DeviceExt(2).w,
+                                                ),
                                               ),
                                             )),
                                         Container(
-                                            width:
-                                                DeviceExt((200 / 841) * 100).h,
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    DeviceExt((24 / 841) * 100)
-                                                        .h),
                                             child: Text(
-                                              state.farmersIdentificationModelObj
-                                                      ?.ed ??
-                                                  "Not Applied",
-                                              maxLines: 10,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.right,
-                                              style: theme.textTheme.titleMedium
-                                                  ?.copyWith(
-                                                color: Colors.black,
-                                                fontSize: Device.orientation ==
-                                                        Orientation.portrait
-                                                    ? DeviceExt(1.8).h
-                                                    : DeviceExt(2).w,
-                                              ),
-                                            ))
+                                          state.farmersIdentificationModelObj
+                                                  ?.ed ??
+                                              "Not Applied",
+                                          maxLines: 10,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.right,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                          ),
+                                        ))
                                       ]),
                                   SizedBox(height: ((3 / 411) * 100).w)
                                 ])),
@@ -578,28 +586,40 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                       Padding(
                                           padding: EdgeInsets.only(
                                               top: ((1 / 411) * 100).w),
-                                          child: Text(
-                                            "msg_respondent_relationship".tr,
-                                            maxLines: 10,
-                                            style: theme.textTheme.titleMedium
-                                                ?.copyWith(
-                                              fontSize: Device.orientation ==
-                                                      Orientation.portrait
-                                                  ? DeviceExt(1.8).h
-                                                  : DeviceExt(2).w,
+                                          child: Container(
+                                            width: DeviceExt(50).w,
+                                            child: Text(
+                                              "msg_respondent_relationship".tr,
+                                              maxLines: 10,
+                                              style: theme.textTheme.titleMedium
+                                                  ?.copyWith(
+                                                fontSize: Device.orientation ==
+                                                        Orientation.portrait
+                                                    ? DeviceExt(1.8).h
+                                                    : DeviceExt(2).w,
+                                              ),
                                             ),
                                           )),
-                                      Text(
-                                        state.farmersIdentificationModelObj
-                                                ?.rship ??
-                                            "Not Applied",
-                                        style: theme.textTheme.titleMedium
-                                            ?.copyWith(
-                                          color: Colors.black,
-                                          fontSize: Device.orientation ==
-                                                  Orientation.portrait
-                                              ? DeviceExt(1.8).h
-                                              : DeviceExt(2).w,
+                                      Container(
+                                        width: DeviceExt(30).w,
+                                        child: Text(
+                                          pattern.hasMatch(state
+                                                      .farmersIdentificationModelObj
+                                                      ?.rship ??
+                                                  "")
+                                              ? "${state.farmersIdentificationModelObj?.rship} - ${state.farmersIdentificationModelObj?.farmer?.other ?? ""}"
+                                              : state.farmersIdentificationModelObj
+                                                      ?.rship ??
+                                                  "Not Applied",
+                                          textAlign: TextAlign.right,
+                                          style: theme.textTheme.titleMedium
+                                              ?.copyWith(
+                                            color: Colors.black,
+                                            fontSize: Device.orientation ==
+                                                    Orientation.portrait
+                                                ? DeviceExt(1.8).h
+                                                : DeviceExt(2).w,
+                                          ),
                                         ),
                                       ),
                                     ],

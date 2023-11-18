@@ -78,6 +78,7 @@ class FarmerDB {
         "comments" VARCHAR(255),     
         "completed" BOOLEAN, 
         "active" INT,
+        "other" VARCHAR(100),
         PRIMARY KEY("farmerId")
       );
     """);
@@ -173,7 +174,7 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?
+    UPDATE $tableName SET farmerTheRespodent = ?, respondentRlshpId = ?, respondentName = ?, respNationalId = ?, respondentMobile = ?, other = ?
     WHERE farmerId = ? 
   ''', [
         farmer.farmerTheRespodent! ? 1 : 0,
@@ -181,6 +182,7 @@ class FarmerDB {
         farmer.respondentName,
         farmer.respNationalId,
         farmer.respondentMobile,
+        farmer.other,
         farmer.farmerId,
       ]);
     } catch (e) {

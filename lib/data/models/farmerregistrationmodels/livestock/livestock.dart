@@ -8,6 +8,7 @@ class FarmerLivestock {
   DateTime? dateCreated;
   int? createdBy;
   final int? enumeratorId;
+  String? other;
 
   FarmerLivestock({
     required this.farmerLivestockId,
@@ -19,6 +20,7 @@ class FarmerLivestock {
     this.dateCreated,
     this.createdBy,
     this.enumeratorId,
+    this.other,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -30,6 +32,8 @@ class FarmerLivestock {
       'noOfBeehives': noOfBeehives,
       'dateCreated': dateCreated?.toIso8601String(),
       'createdBy': createdBy,
+      'enumeratorId': enumeratorId,
+      'other': other,
     };
   }
 
@@ -43,5 +47,6 @@ class FarmerLivestock {
         noOfBeehives: map['no_of_beehives']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: int.parse(map['created_by'] ?? "0"),
+        other: map['other'] ?? '',
       );
 }

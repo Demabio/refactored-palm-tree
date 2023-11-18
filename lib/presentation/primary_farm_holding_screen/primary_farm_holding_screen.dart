@@ -831,7 +831,6 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                         ]),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: DeviceExt((34 / 841) * 100).h,
                                           top: ((29 / 411) * 100).w,
                                           bottom: ((15 / 411) * 100).w),
                                       child: Text(
@@ -840,9 +839,8 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                                             ?.copyWith(
                                           fontSize: Device.orientation ==
                                                   Orientation.portrait
-                                              ? DeviceExt(2).h
+                                              ? DeviceExt(1.8).h
                                               : DeviceExt(2).w,
-                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),

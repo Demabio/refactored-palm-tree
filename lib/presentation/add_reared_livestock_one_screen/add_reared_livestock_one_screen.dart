@@ -42,7 +42,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
 
   FocusNode _firstTextFieldFocus = FocusNode();
   FocusNode _secondTextFieldFocus = FocusNode();
-  // FocusNode _thirdTextFieldFocus = FocusNode();
+  FocusNode _thirdTextFieldFocus = FocusNode();
   FocusNode fouthTextFieldFocus = FocusNode();
   FocusNode fifthTextFieldFocus = FocusNode();
   FocusNode sixthTextFieldFocus = FocusNode();
@@ -396,6 +396,46 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
+                            BlocSelector<
+                                    AddRearedLivestockOneBloc,
+                                    AddRearedLivestockOneState,
+                                    AddRearedLivestockOneState>(
+                                selector: (state) => state,
+                                builder: (context, state) {
+                                  RegExp pattern =
+                                      RegExp(r'\b(?:Other|other)\b');
+                                  bool isOther = pattern.hasMatch(
+                                      state.selectedLivestock?.title ?? "");
+                                  return Visibility(
+                                    visible: isOther,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Specify Other".tr,
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyles
+                                              .labelMediumPrimary_1,
+                                        ),
+                                        CustomTextFormField(
+                                            margin: EdgeInsets.only(
+                                                top: DeviceExt(3).h),
+                                            focusNode: _thirdTextFieldFocus,
+                                            controller: state.other,
+                                            autofocus: false,
+                                            hintText: "Other".tr,
+                                            textInputType: TextInputType.number,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            validator: (value) {
+                                              if (isNotEmpty(value)) {
+                                                return "Field is required.";
+                                              }
+                                              return null;
+                                            }),
+                                      ],
+                                    ),
+                                  );
+                                }),
                             BlocSelector<
                                 AddRearedLivestockOneBloc,
                                 AddRearedLivestockOneState,

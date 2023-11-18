@@ -151,13 +151,14 @@ bool greaterthanone(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^\d+(\.\d{1,4})$';
+    const pattern = r'^\d{1,4}$';
 
     final regExp = RegExp(pattern);
 
-    isInputStringValid = regExp.hasMatch(inputString) &&
-        double.parse(inputString) >= 1 &&
-        double.parse(inputString) <= 5000;
+    isInputStringValid =
+        regExp.hasMatch(double.parse(inputString).toInt().toString()) &&
+            double.parse(inputString) >= 1 &&
+            double.parse(inputString) <= 5000;
   }
 
   return isInputStringValid;
@@ -174,12 +175,12 @@ bool ispercent(
   }
 
   if (inputString != null && inputString.isNotEmpty) {
-    const pattern = r'^\d+(\.\d{1,3})$';
+    const pattern = r'^\d{1,3}$';
 
     final regExp = RegExp(pattern);
 
     isInputStringValid =
-        regExp.hasMatch(double.parse(inputString).toString()) &&
+        regExp.hasMatch(double.parse(inputString).toInt().toString()) &&
             double.parse(inputString) >= 0 &&
             double.parse(inputString) <= 100;
   }

@@ -13,6 +13,7 @@ class FarmersIdentificationFourState extends Equatable {
     this.respMob,
     this.respame,
     this.respid,
+    this.other,
     this.farmersIdentificationFourModelObj,
   });
 
@@ -31,6 +32,7 @@ class FarmersIdentificationFourState extends Equatable {
   TextEditingController? respMob;
 
   TextEditingController? respid;
+  TextEditingController? other;
 
   FarmersIdentificationFourModel? farmersIdentificationFourModelObj;
 
@@ -44,6 +46,7 @@ class FarmersIdentificationFourState extends Equatable {
         respame,
         respMob,
         respid,
+        other,
         farmersIdentificationFourModelObj,
       ];
   FarmersIdentificationFourState copyWith({
@@ -55,6 +58,7 @@ class FarmersIdentificationFourState extends Equatable {
     TextEditingController? respame,
     TextEditingController? respMob,
     TextEditingController? respid,
+    TextEditingController? other,
     FarmersIdentificationFourModel? farmersIdentificationFourModelObj,
   }) {
     return FarmersIdentificationFourState(
@@ -73,6 +77,7 @@ class FarmersIdentificationFourState extends Equatable {
       respame: respame ?? this.respame,
       respMob: respMob ?? this.respMob,
       respid: respid ?? this.respid,
+      other: other ?? this.other,
     );
   }
 }

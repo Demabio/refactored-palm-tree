@@ -8,6 +8,7 @@ class AddRearedLivestockOneState extends Equatable {
     this.searchController,
     this.categoryvalueController,
     this.subcategoryvaluController,
+    this.other,
     this.selectedDropDownValue,
     this.selectedDropDownValue1,
     this.addRearedLivestockOneModelObj,
@@ -35,6 +36,8 @@ class AddRearedLivestockOneState extends Equatable {
   TextEditingController? categoryvalueController;
 
   TextEditingController? subcategoryvaluController;
+
+  TextEditingController? other;
 
   SelectionPopupModel? selectedDropDownValue;
 
@@ -72,6 +75,7 @@ class AddRearedLivestockOneState extends Equatable {
         searchController,
         categoryvalueController,
         subcategoryvaluController,
+        other,
         selectedDropDownValue,
         selectedDropDownValue1,
         addRearedLivestockOneModelObj,
@@ -96,6 +100,7 @@ class AddRearedLivestockOneState extends Equatable {
     TextEditingController? searchController,
     TextEditingController? categoryvalueController,
     TextEditingController? subcategoryvaluController,
+    TextEditingController? other,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     AddRearedLivestockOneModel? addRearedLivestockOneModelObj,
@@ -146,6 +151,7 @@ class AddRearedLivestockOneState extends Equatable {
       feedsdlist: feedsdlist ?? this.feedsdlist,
       bees: bees ?? this.bees,
       hives: hives ?? this.hives,
+      other: other ?? this.other,
     );
   }
 }

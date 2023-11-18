@@ -9,6 +9,7 @@ class Livestock {
   final int? livestockCatId;
   final String? livestockCat;
   final String? livestockSubCat;
+  final String? other;
 
   Livestock({
     required this.livestockId,
@@ -21,6 +22,7 @@ class Livestock {
     this.livestockCatId,
     this.livestockCat,
     this.livestockSubCat,
+    this.other,
   });
 
   factory Livestock.fromSqfliteDatabase(Map<String, dynamic> map) => Livestock(
@@ -31,6 +33,7 @@ class Livestock {
         commonLivestock: map['common_livestock'] == 1,
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: int.parse(map['created_by'] ?? "0"),
+        other: map['other'] ?? '',
       );
 
   factory Livestock.fromSqfliteDatabaseJoined(Map<String, dynamic> map) =>
@@ -45,6 +48,7 @@ class Livestock {
         livestockCatId: map['livestock_cat_id']?.toInt() ?? 0,
         livestockCat: map['livestock_category'] ?? '',
         livestockSubCat: map['livestock_subcategory'] ?? '',
+        other: map['other'] ?? '',
       );
   static List<Livestock> parseLivestocks(Map<String, dynamic> json) {
     final livestockList = json['data']['getAllLivestocks'] as List<dynamic>;
@@ -57,6 +61,11 @@ class Livestock {
               livestockSubCatId: livestockData['livestockSubCatId'] ?? 0,
               commonLivestock: livestockData['commonLivestock'] ?? false,
               dateCreated: DateTime.parse(livestockData['dateCreated'] ?? ''),
+              createdBy: livestockData['createdBy'] ?? 0,
+              livestockCatId: livestockData['livestockCatId'] ?? 0,
+              livestockCat: livestockData['livestockCat'] ?? '',
+              livestockSubCat: livestockData['livestockSubCat'] ?? '',
+              other: livestockData['other'] ?? '',
             ))
         .toList();
   }

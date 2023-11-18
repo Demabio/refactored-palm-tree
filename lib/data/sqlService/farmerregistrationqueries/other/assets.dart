@@ -18,6 +18,7 @@ class FarmerAssetsDB {
         "created_by" INT,
         "active" INT,
         "enumerator_id" INT,
+        "other" VARCHAR(10),
         PRIMARY KEY("farmer_asset_id")
       );
     """);

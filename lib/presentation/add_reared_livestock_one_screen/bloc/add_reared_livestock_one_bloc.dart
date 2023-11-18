@@ -533,6 +533,8 @@ class AddRearedLivestockOneBloc
                   .addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
               livestockId:
                   state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+              other:
+                  state.other?.text == "" ? "Not Applied" : state.other!.text,
             ));
 
             PrefUtils().setLivestockId(value);
@@ -709,6 +711,7 @@ class AddRearedLivestockOneBloc
                 state.addRearedLivestockOneModelObj!.selectedDropDownValue1!.id,
             livestockId:
                 state.addRearedLivestockOneModelObj!.selectedLivestock!.id,
+            other: state.other?.text == "" ? "Not Applied" : state.other!.text,
           ));
 
           String agegroups = PrefUtils().getAgeGroups();
@@ -924,6 +927,7 @@ class AddRearedLivestockOneBloc
     List<FeedsModel>? feedslist = [];
     List<FeedsModel>? beeslist = [];
     TextEditingController at = TextEditingController();
+    TextEditingController other = TextEditingController();
     List<SelectionPopupModel> livestockmodels = [];
     SelectionPopupModel? selectedlivestock;
     List<SelectionPopupModel> categ = await fillCategories();
@@ -939,7 +943,8 @@ class AddRearedLivestockOneBloc
       Livestock? lives =
           await livestockDB.fetchByLivestockId(livestock.livestockId!);
       at = TextEditingController(text: livestock.noOfBeehives.toString());
-
+      other = TextEditingController(
+          text: livestock.other != null ? livestock.other : "");
       subcateg = await fillSubCategory(lives!.livestockCatId!);
       livestockmodels = await fillLivestock(lives.livestockSubCatId);
 
@@ -955,9 +960,6 @@ class AddRearedLivestockOneBloc
         (model) => model.id == lives.livestockId,
       );
 
-      selectedprod = prod.firstWhere(
-        (model) => model.id == livestock.livestockFarmsystemCatId,
-      );
       List<FarmerLivestockAgeGroup>? ages = await getAges();
 
       List<FarmerLivestockFeed>? feeds = await getFeeds();
@@ -975,6 +977,10 @@ class AddRearedLivestockOneBloc
             .getLivestockSystemIds(lives.livestockCatId!);
 
         prod = await fillProduction(farmsystemsid);
+
+        selectedprod = prod.firstWhere(
+          (model) => model.id == livestock.livestockFarmsystemCatId,
+        );
       }
 
       if (bees != null) {
@@ -992,6 +998,7 @@ class AddRearedLivestockOneBloc
           selectedLivestock: selectedlivestock,
           selectedSubCategory: selectedsubcateg,
           selectedDropDownValue1: selectedprod,
+          dropdownItemList1: prod,
           subcategories: subcateg,
           livestock: livestockmodels,
           livestockF: livestock,
@@ -1000,6 +1007,7 @@ class AddRearedLivestockOneBloc
         searchController: TextEditingController(),
         categoryvalueController: TextEditingController(),
         subcategoryvaluController: TextEditingController(),
+        other: other,
         hives: at,
         feedsdlist: feedslist,
         ageGroupMapList: ageGroupList,
