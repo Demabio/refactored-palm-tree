@@ -41,6 +41,7 @@ class AddAquacultureFourBloc
     TextEditingController b = TextEditingController();
     TextEditingController c = TextEditingController();
     TextEditingController d = TextEditingController();
+    TextEditingController other = TextEditingController();
 
     if (edit != 0) {
       FarmerFishProductionSystem? asset = await getProdSyss(edit);
@@ -51,6 +52,7 @@ class AddAquacultureFourBloc
           b = TextEditingController(text: data.var2);
           c = TextEditingController(text: data.var3);
           d = TextEditingController(text: data.var4);
+          other = TextEditingController(text: data.var6);
           aa = d1.firstWhere(
             (model) => model.id == data!.id,
           );
@@ -69,6 +71,7 @@ class AddAquacultureFourBloc
         inp2: b,
         inp3: c,
         inp4: d,
+        other: other,
         addAquacultureFourModelObj: state.addAquacultureFourModelObj?.copyWith(
           dropdownItemList: d1,
           dropdownItemList1: d2,
@@ -91,6 +94,7 @@ class AddAquacultureFourBloc
       var3: agess.noOfInactiveUnits.toString(),
       var4: agess.inactiveArea.toString(),
       var5: agess.productionStatus.toString(),
+      var6: agess.other,
     );
   }
 
@@ -122,6 +126,7 @@ class AddAquacultureFourBloc
           inactiveArea: double.parse(state.inp4!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       } else {
@@ -139,6 +144,7 @@ class AddAquacultureFourBloc
           inactiveArea: double.parse(state.inp4!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       }

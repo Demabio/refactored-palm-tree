@@ -11,6 +11,7 @@ class FarmerFishProductionSystem {
   final DateTime dateCreated;
   final int? createdBy;
   final int? enumeratorId;
+  final String? other;
 
   FarmerFishProductionSystem({
     required this.farmerFishprodId,
@@ -25,6 +26,7 @@ class FarmerFishProductionSystem {
     required this.dateCreated,
     this.createdBy,
     this.enumeratorId,
+    this.other,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -39,6 +41,7 @@ class FarmerFishProductionSystem {
       'noOfInactiveUnits': noOfInactiveUnits,
       'dateCreated': dateCreated.toIso8601String(),
       'createdBy': createdBy,
+      'other': other,
     };
   }
 
@@ -56,5 +59,6 @@ class FarmerFishProductionSystem {
         noOfInactiveUnits: map['no_of_inactive_units']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by'] ?? 0,
+        other: map['other'] ?? '',
       );
 }

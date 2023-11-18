@@ -28,8 +28,8 @@ class FarmerFishDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by , active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, fish_type_id, production_type_id, no_of_fingerlings, date_created, created_by , active, enumerator_id, other
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFish.farmerId,
       farmerFish.farmerFarmId,
@@ -40,6 +40,7 @@ class FarmerFishDB {
       farmerFish.createdBy,
       1,
       farmerFish.enumeratorId,
+      farmerFish.other,
     ]);
   }
 
@@ -47,12 +48,13 @@ class FarmerFishDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawUpdate('''
       UPDATE  $tableName SET
-        fish_type_id = ?, production_type_id = ?, no_of_fingerlings = ?
+        fish_type_id = ?, production_type_id = ?, no_of_fingerlings = ?, other = ?
       WHERE farmer_fish_id = ?
     ''', [
       farmerFish.fishTypeId,
       farmerFish.productionTypeId,
       farmerFish.noOfFingerlings,
+      farmerFish.other,
       farmerFish.farmerFishId,
     ]);
   }

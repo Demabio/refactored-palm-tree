@@ -8,6 +8,7 @@ class FarmerAsset {
   final DateTime? dateCreated;
   final int? createdBy;
   final int? enumeratorId;
+  final String? other;
 
   FarmerAsset({
     required this.farmerAssetId,
@@ -19,6 +20,7 @@ class FarmerAsset {
     this.dateCreated,
     this.createdBy,
     this.enumeratorId,
+    this.other,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -30,6 +32,7 @@ class FarmerAsset {
       'usableCondition': usableCondition,
       'dateCreated': dateCreated?.toIso8601String(),
       'createdBy': createdBy,
+      'other': other,
     };
   }
 
@@ -43,5 +46,6 @@ class FarmerAsset {
         usableCondition: map['usable_condition']?.toInt(),
         dateCreated: DateTime.parse(map['date_created'] ?? ''),
         createdBy: map['created_by'] ?? 0,
+        other: map['other'] ?? '',
       );
 }

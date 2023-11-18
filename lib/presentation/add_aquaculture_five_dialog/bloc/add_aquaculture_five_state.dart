@@ -11,9 +11,12 @@ class AddAquacultureFiveState extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.addAquacultureFiveModelObj,
+    this.other,
   });
 
   TextEditingController? searchController;
+
+  TextEditingController? other;
 
   TextEditingController? numbervalueoneController;
 
@@ -33,6 +36,7 @@ class AddAquacultureFiveState extends Equatable {
         selectedDropDownValue1,
         selectedDropDownValue2,
         addAquacultureFiveModelObj,
+        other,
       ];
   AddAquacultureFiveState copyWith({
     TextEditingController? searchController,
@@ -41,6 +45,7 @@ class AddAquacultureFiveState extends Equatable {
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
     AddAquacultureFiveModel? addAquacultureFiveModelObj,
+    TextEditingController? other,
   }) {
     return AddAquacultureFiveState(
       searchController: searchController ?? this.searchController,
@@ -54,6 +59,7 @@ class AddAquacultureFiveState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       addAquacultureFiveModelObj:
           addAquacultureFiveModelObj ?? this.addAquacultureFiveModelObj,
+      other: other ?? this.other,
     );
   }
 }

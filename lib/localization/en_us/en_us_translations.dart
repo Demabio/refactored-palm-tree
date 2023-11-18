@@ -339,7 +339,7 @@ final Map<String, String> enUs = {
   "lbl_quantity2": "Quantity (*)",
   "lbl_search_asset": "Search Asset",
   "msg_add_farm_machinery": "Add Farm Machinery",
-  "msg_is_the_equipment": "Is the Equipment in Usable Condition?",
+  "msg_is_the_equipment": "Is the Equipment in Usable Condition? (*)",
 
   // Add FarmTechAndAssets Four Screen
   "lbl_animal_crush": "Animal crush",
@@ -874,7 +874,7 @@ final Map<String, String> enUs = {
   "lbl_info": "Info",
   "lbl_jersey": "Jersey",
   "lbl_kiamis": "KIAMIS",
-  "lbl_labour_source2": "Labour Source",
+  "lbl_labour_source2": "Add Labour Sources (*)",
   "lbl_last_name": "Last Name",
   "lbl_livestock": "Livestock",
   "lbl_livestock3": "Livestock (*)",

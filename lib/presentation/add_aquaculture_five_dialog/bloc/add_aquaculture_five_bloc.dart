@@ -250,6 +250,7 @@ class AddAquacultureFiveBloc
           noOfFingerlings: int.parse(state.numbervalueoneController!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       } else {
@@ -263,6 +264,7 @@ class AddAquacultureFiveBloc
           noOfFingerlings: int.parse(state.numbervalueoneController!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       }
@@ -317,6 +319,7 @@ class AddAquacultureFiveBloc
 
     SelectionPopupModel? aa;
     TextEditingController a = TextEditingController();
+    TextEditingController other = TextEditingController();
     SelectionPopupModel? b;
     SelectionPopupModel? c;
 
@@ -328,7 +331,7 @@ class AddAquacultureFiveBloc
           d2 = await fetchFish(int.parse(data.var1!));
 
           a = TextEditingController(text: data.var3);
-
+          other = TextEditingController(text: data.var5);
           aa = d1.firstWhere(
             (model) => model.id == int.parse(data!.var1!),
           );
@@ -343,6 +346,7 @@ class AddAquacultureFiveBloc
     }
     emit(state.copyWith(
       searchController: TextEditingController(),
+      other: other,
       numbervalueoneController: a,
     ));
     emit(state.copyWith(

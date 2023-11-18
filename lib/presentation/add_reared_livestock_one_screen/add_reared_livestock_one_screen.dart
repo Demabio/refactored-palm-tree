@@ -404,14 +404,17 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 builder: (context, state) {
                                   RegExp pattern =
                                       RegExp(r'\b(?:Other|other)\b');
-                                  bool isOther = pattern.hasMatch(
-                                      state.selectedLivestock?.title ?? "");
+                                  bool isOther = pattern.hasMatch(state
+                                          .addRearedLivestockOneModelObj
+                                          ?.selectedLivestock
+                                          ?.title ??
+                                      "");
                                   return Visibility(
                                     visible: isOther,
                                     child: Column(
                                       children: [
                                         Text(
-                                          "Specify Other".tr,
+                                          "Specify Other  (*)".tr,
                                           textAlign: TextAlign.left,
                                           style: CustomTextStyles
                                               .labelMediumPrimary_1,

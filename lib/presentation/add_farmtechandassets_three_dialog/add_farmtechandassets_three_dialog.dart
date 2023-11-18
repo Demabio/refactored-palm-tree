@@ -35,6 +35,7 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
 
   FocusNode node = FocusNode();
   FocusNode node2 = FocusNode();
+  FocusNode node3 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -261,6 +262,45 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                   );
                 },
               ),
+              BlocSelector<
+                      AddFarmtechandassetsThreeBloc,
+                      AddFarmtechandassetsThreeState,
+                      AddFarmtechandassetsThreeState>(
+                  selector: (state) => state,
+                  builder: (context, state) {
+                    RegExp pattern = RegExp(r'\b(?:Other|other)\b');
+                    bool isOther = pattern.hasMatch(state
+                            .addFarmtechandassetsThreeModelObj
+                            ?.selected
+                            ?.title ??
+                        "");
+                    return Visibility(
+                      visible: isOther,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Specify Other (*)".tr,
+                            textAlign: TextAlign.left,
+                            style: CustomTextStyles.labelMediumPrimary_1,
+                          ),
+                          CustomTextFormField(
+                              margin: EdgeInsets.only(top: DeviceExt(3).h),
+                              focusNode: node3,
+                              controller: state.other,
+                              autofocus: false,
+                              hintText: "Other".tr,
+                              textInputType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                              validator: (value) {
+                                if (isNotEmpty(value)) {
+                                  return "Field is required.";
+                                }
+                                return null;
+                              }),
+                        ],
+                      ),
+                    );
+                  }),
               Padding(
                 padding: EdgeInsets.only(
                   left: DeviceExt((5 / 841) * 100).h,

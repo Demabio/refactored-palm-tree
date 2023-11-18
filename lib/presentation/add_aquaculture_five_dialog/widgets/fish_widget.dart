@@ -26,6 +26,8 @@ class FishtemWidget extends StatelessWidget {
   VoidCallback? edit;
   VoidCallback? delete;
   bool view;
+  RegExp pattern = RegExp(r'\b(?:Other|other)\b');
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -49,7 +51,9 @@ class FishtemWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  enterpriseModel.title,
+                  pattern.hasMatch(enterpriseModel.title)
+                      ? "${enterpriseModel.title} - ${enterpriseModel.var5 ?? ""}"
+                      : enterpriseModel.title,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.black,
                     fontSize: Device.orientation == Orientation.portrait

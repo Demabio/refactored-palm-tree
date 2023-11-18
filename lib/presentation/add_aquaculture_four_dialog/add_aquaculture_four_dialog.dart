@@ -34,6 +34,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
   FocusNode node4 = FocusNode();
   FocusNode node5 = FocusNode();
   FocusNode node6 = FocusNode();
+  FocusNode node7 = FocusNode();
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -109,6 +110,40 @@ class AddAquacultureFourDialog extends StatelessWidget {
                   );
                 },
               ),
+              BlocSelector<AddAquacultureFourBloc, AddAquacultureFourState,
+                      AddAquacultureFourState>(
+                  selector: (state) => state,
+                  builder: (context, state) {
+                    RegExp pattern = RegExp(r'\b(?:Other|other)\b');
+                    bool isOther = pattern
+                        .hasMatch(state.selectedDropDownValue?.title ?? "");
+                    return Visibility(
+                      visible: isOther,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Specify Other".tr,
+                            textAlign: TextAlign.left,
+                            style: CustomTextStyles.labelMediumPrimary_1,
+                          ),
+                          CustomTextFormField(
+                              margin: EdgeInsets.only(top: DeviceExt(3).h),
+                              focusNode: node7,
+                              controller: state.other,
+                              autofocus: false,
+                              hintText: "Other".tr,
+                              textInputType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                              validator: (value) {
+                                if (isNotEmpty(value)) {
+                                  return "Field is required.";
+                                }
+                                return null;
+                              }),
+                        ],
+                      ),
+                    );
+                  }),
               Padding(
                 padding: EdgeInsets.only(
                   left: DeviceExt((5 / 841) * 100).h,

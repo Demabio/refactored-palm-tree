@@ -244,6 +244,7 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
         agemodels[index].var2 = fishProductionType.fishProductionType;
         agemodels[index].var1 = category.fishCategory;
         agemodels[index].var3 = ent.noOfFingerlings.toString();
+        agemodels[index].var5 = ent.other;
       }
     }
 
@@ -265,6 +266,7 @@ class AquacultureBloc extends Bloc<AquacultureEvent, AquacultureState> {
         feedmodels[index].var2 = ent.activeArea.toString();
         feedmodels[index].var3 = ent.noOfInactiveUnits.toString();
         feedmodels[index].var4 = ent.inactiveArea.toString();
+        feedmodels[index].var6 = ent.other;
       }
     }
 

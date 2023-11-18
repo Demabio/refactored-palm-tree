@@ -415,10 +415,11 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                 builder: (context, state) {
                                                   RegExp pattern = RegExp(
                                                       r'\b(?:Other|other)\b');
-                                                  bool isOther = pattern.hasMatch(
-                                                      state.selectedDropDownValue1
-                                                              ?.title ??
-                                                          "");
+                                                  bool isOther = pattern.hasMatch(state
+                                                          .farmersIdentificationFourModelObj
+                                                          ?.selectedDropDownValue1
+                                                          ?.title ??
+                                                      "");
                                                   return Visibility(
                                                     visible: isOther,
                                                     child: CustomTextFormField(

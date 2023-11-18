@@ -16,12 +16,15 @@ class AddAquacultureFourState extends Equatable {
     this.inp2,
     this.inp3,
     this.inp4,
+    this.other,
   });
 
   TextEditingController? inp1;
   TextEditingController? inp2;
   TextEditingController? inp3;
   TextEditingController? inp4;
+
+  TextEditingController? other;
 
   SelectionPopupModel? selectedDropDownValue;
 
@@ -50,6 +53,7 @@ class AddAquacultureFourState extends Equatable {
         inp2,
         inp3,
         inp4,
+        other,
       ];
   AddAquacultureFourState copyWith({
     SelectionPopupModel? selectedDropDownValue,
@@ -63,6 +67,7 @@ class AddAquacultureFourState extends Equatable {
     TextEditingController? inp2,
     TextEditingController? inp3,
     TextEditingController? inp4,
+    TextEditingController? other,
   }) {
     return AddAquacultureFourState(
       selectedDropDownValue:
@@ -83,6 +88,7 @@ class AddAquacultureFourState extends Equatable {
       inp2: inp2 ?? this.inp2,
       inp3: inp3 ?? this.inp3,
       inp4: inp4 ?? this.inp4,
+      other: other ?? this.other,
     );
   }
 }

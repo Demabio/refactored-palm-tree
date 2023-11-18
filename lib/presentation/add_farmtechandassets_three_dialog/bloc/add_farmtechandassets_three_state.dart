@@ -11,11 +11,14 @@ class AddFarmtechandassetsThreeState extends Equatable {
     this.selectedDropDownValue1,
     this.selectedDropDownValue2,
     this.addFarmtechandassetsThreeModelObj,
+    this.other,
   });
 
   TextEditingController? searchController;
 
   TextEditingController? usableConditionController;
+
+  TextEditingController? other;
 
   SelectionPopupModel? selectedDropDownValue;
 
@@ -29,6 +32,7 @@ class AddFarmtechandassetsThreeState extends Equatable {
   List<Object?> get props => [
         searchController,
         usableConditionController,
+        other,
         selectedDropDownValue,
         selectedDropDownValue1,
         selectedDropDownValue2,
@@ -37,6 +41,7 @@ class AddFarmtechandassetsThreeState extends Equatable {
   AddFarmtechandassetsThreeState copyWith({
     TextEditingController? searchController,
     TextEditingController? usableConditionController,
+    TextEditingController? other,
     SelectionPopupModel? selectedDropDownValue,
     SelectionPopupModel? selectedDropDownValue1,
     SelectionPopupModel? selectedDropDownValue2,
@@ -54,6 +59,7 @@ class AddFarmtechandassetsThreeState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       addFarmtechandassetsThreeModelObj: addFarmtechandassetsThreeModelObj ??
           this.addFarmtechandassetsThreeModelObj,
+      other: other ?? this.other,
     );
   }
 }

@@ -141,6 +141,7 @@ class FarmtechandassetsBloc
         agemodels[index].isSelected = true;
         agemodels[index].var2 = ent.qty.toString();
         agemodels[index].var3 = ent.usableCondition == 1 ? "Yes" : "No";
+        agemodels[index].var5 = ent.other;
       }
     }
 

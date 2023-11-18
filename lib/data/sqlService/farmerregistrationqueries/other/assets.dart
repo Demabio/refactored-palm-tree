@@ -28,8 +28,8 @@ class FarmerAssetsDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       INSERT INTO $tableName (
-        farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        farmer_id, farmer_farm_id, farm_asset_id, qty, usable_condition, date_created, created_by, active, enumerator_id, other
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerAsset.farmerId,
       farmerAsset.farmerFarmId,
@@ -40,6 +40,7 @@ class FarmerAssetsDB {
       farmerAsset.createdBy,
       1,
       farmerAsset.createdBy,
+      farmerAsset.other,
     ]);
   }
 
@@ -47,12 +48,13 @@ class FarmerAssetsDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       UPDATE  $tableName SET
-        farm_asset_id = ?, qty = ?, usable_condition = ?
+        farm_asset_id = ?, qty = ?, usable_condition = ?, other = ?
       WHERE farmer_asset_id = ?
     ''', [
       farmerAsset.farmAssetId,
       farmerAsset.qty,
       farmerAsset.usableCondition,
+      farmerAsset.other,
       farmerAsset.farmerAssetId,
     ]);
   }

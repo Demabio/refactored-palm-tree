@@ -280,6 +280,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
           qty: int.parse(state.usableConditionController!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       } else {
@@ -293,6 +294,7 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
           qty: int.parse(state.usableConditionController!.text),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          other: state.other?.text == "" ? "Not Applied" : state.other!.text,
         ));
         event.createSuccessful?.call();
       }
@@ -318,12 +320,14 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     agemodels?.var3 = agess.usableCondition.toString();
     agemodels?.var4 = assettype?.assetTypeId.toString();
     agemodels?.id = ages.farmAssetId;
+    agemodels?.var5 = agess.other;
 
     return CheckBoxList(
       id: agess.farmAssetId,
       var2: agess.qty.toString(),
       var3: agess.usableCondition.toString(),
       var4: assettype?.assetTypeId.toString(),
+      var5: agess.other,
     );
   }
 
@@ -345,6 +349,8 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
     SelectionPopupModel? bb;
     SelectionPopupModel? cc;
     TextEditingController at = TextEditingController();
+
+    TextEditingController other = TextEditingController();
     if (edit != 0) {
       FarmerAsset? asset = await getFAsset(edit);
       if (asset != null) {
@@ -363,12 +369,15 @@ class AddFarmtechandassetsThreeBloc extends Bloc<AddFarmtechandassetsThreeEvent,
           cc = d3.firstWhere(
             (model) => model.id == asset.farmAssetId,
           );
+
+          other = TextEditingController(text: data.var5);
         }
       }
     }
     emit(state.copyWith(
       searchController: TextEditingController(),
       usableConditionController: at,
+      other: other,
     ));
     emit(state.copyWith(
         addFarmtechandassetsThreeModelObj:

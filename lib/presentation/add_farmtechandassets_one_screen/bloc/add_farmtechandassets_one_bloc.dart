@@ -152,6 +152,7 @@ class AddFarmtechandassetsOneBloc
         agemodels[index].var1 = ent.farmerAssetId.toString();
         agemodels[index].var2 = ent.qty.toString();
         agemodels[index].var3 = ent.usableCondition == 1 ? "Yes" : "No";
+        agemodels[index].var5 = ent.other;
       }
     }
 

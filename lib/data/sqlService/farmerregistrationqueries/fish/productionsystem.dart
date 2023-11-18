@@ -21,7 +21,7 @@ class FarmerFishProductionSystemDB {
         "created_by" INT,
         "active" INT,
         "enumerator_id" INT,
-        "other" VARCHAR(10),
+        "other" VARCHAR(100),
         PRIMARY KEY("farmer_fishprod_id")
       );
     """);
@@ -33,8 +33,8 @@ class FarmerFishProductionSystemDB {
     return await database.rawInsert('''
       INSERT INTO $tableName (
         farmer_id, farmer_farm_id, production_type_id, production_status, active_area,
-        no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by, active, enumerator_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        no_of_active_units, inactive_area, no_of_inactive_units, date_created, created_by, active, enumerator_id, other
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', [
       farmerFishProductionSystem.farmerId,
       farmerFishProductionSystem.farmerFarmId,
@@ -48,6 +48,7 @@ class FarmerFishProductionSystemDB {
       farmerFishProductionSystem.createdBy,
       1,
       farmerFishProductionSystem.createdBy,
+      farmerFishProductionSystem.other,
     ]);
   }
 
@@ -56,7 +57,7 @@ class FarmerFishProductionSystemDB {
     final database = await FarmerDatabaseService().database;
     return await database.rawInsert('''
       UPDATE  $tableName SET
-        production_type_id = ?, production_status = ?, active_area = ?, no_of_active_units = ?, inactive_area = ?, no_of_inactive_units = ?
+        production_type_id = ?, production_status = ?, active_area = ?, no_of_active_units = ?, inactive_area = ?, no_of_inactive_units = ?, other = ?
       WHERE farmer_fishprod_id = ?
     ''', [
       farmerFishProductionSystem.productionTypeId,
@@ -65,6 +66,7 @@ class FarmerFishProductionSystemDB {
       farmerFishProductionSystem.noOfActiveUnits,
       farmerFishProductionSystem.inactiveArea,
       farmerFishProductionSystem.noOfInactiveUnits,
+      farmerFishProductionSystem.other,
       farmerFishProductionSystem.farmerFishprodId,
     ]);
   }
