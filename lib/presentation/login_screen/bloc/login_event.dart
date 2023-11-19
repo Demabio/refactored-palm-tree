@@ -31,16 +31,16 @@ class LoginInitialEvent extends LoginEvent {
       ];
 }
 
-///Event that is dispatched when the user calls the https://kiamistrainapi.kalro.org/gateway/UserService/login API.
 class CreateLoginEvent extends LoginEvent {
   CreateLoginEvent({
     this.onCreateLoginEventSuccess,
     this.onCreateLoginEventError,
     this.onFalse,
     this.persmissions,
+    this.onServiceUnavailable,
     this.onCreateLoginFailed,
     this.timeout,
-    this.onServiceUnavailable,
+    this.noInternet,
   });
 
   Function? onCreateLoginEventSuccess;
@@ -52,16 +52,17 @@ class CreateLoginEvent extends LoginEvent {
 
   Function? onCreateLoginEventError;
   Function? onServiceUnavailable;
-
+  Function? noInternet;
   @override
   List<Object?> get props => [
         onCreateLoginEventSuccess,
         onCreateLoginEventError,
         onFalse,
         persmissions,
+        onServiceUnavailable,
         onCreateLoginFailed,
         timeout,
-        onServiceUnavailable,
+        noInternet,
       ];
 }
 

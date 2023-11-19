@@ -489,6 +489,8 @@ class LoginScreen extends StatelessWidget {
                   "Service Unavailable", "Kindly contact the administrator"),
               onFalse: () => downloadDialog(context, "Old App Version Detected",
                   "Your current version of KIAMIS is outdated. An update to the latest version will start on close. Thanks"),
+              noInternet: () => closedialog(context, "No Internet Connection",
+                  "Kindly check your internet connection"),
             ),
           );
     }

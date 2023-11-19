@@ -176,6 +176,8 @@ class ApiClient {
             : 'Something Went Wrong!';
       }
     } on DioException catch (error, stackTrace) {
+      print(error.response?.statusCode);
+
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
         error,
@@ -185,6 +187,18 @@ class ApiClient {
       PostLoginUserServicePostResp postLoginUserServicePostResp =
           PostLoginUserServicePostResp(
               statusCode: error.response?.statusCode ?? 500);
+
+      return postLoginUserServicePostResp;
+    } on NoInternetException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      PostLoginUserServicePostResp postLoginUserServicePostResp =
+          PostLoginUserServicePostResp(
+        statusCode: 000,
+      );
 
       return postLoginUserServicePostResp;
     } catch (error, stackTrace) {
@@ -227,6 +241,17 @@ class ApiClient {
       );
 
       return error.response!;
+    } on NoInternetException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return Response(
+        statusCode: 000,
+        requestOptions: RequestOptions(path: ''),
+      );
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -267,6 +292,17 @@ class ApiClient {
       );
 
       return error.response!;
+    } on NoInternetException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return Response(
+        statusCode: 000,
+        requestOptions: RequestOptions(path: ''),
+      );
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -339,6 +375,17 @@ class ApiClient {
       );
 
       return error.response!;
+    } on NoInternetException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return Response(
+        statusCode: 000,
+        requestOptions: RequestOptions(path: ''),
+      );
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

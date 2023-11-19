@@ -233,6 +233,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         event.timeout?.call();
       } else if (value.statusCode == 503 || value.statusCode == 502) {
         event.onServiceUnavailable?.call();
+      } else if (value.statusCode == 000) {
+        event.noInternet?.call();
       } else {
         event.onCreateLoginEventError?.call();
       }

@@ -18,6 +18,7 @@ class OtpOneBloc extends Bloc<OtpOneEvent, OtpOneState> with CodeAutoFill {
     on<ChangeOTPEvent>(_changeOTP);
     on<OtpDeconstruction>(_processOTP);
     on<CreateLoginEvent>(_confirmOTP);
+    on<ResendOTPEvent>(_sendOTP);
   }
   final _repository = Repository();
 
@@ -90,6 +91,39 @@ class OtpOneBloc extends Bloc<OtpOneEvent, OtpOneState> with CodeAutoFill {
         event.timeout?.call();
       } else if (value.statusCode == 503 || value.statusCode == 502) {
         event.onServiceUnavailable?.call();
+      } else if (value.statusCode == 000) {
+        event.noInternet?.call();
+      } else {
+        event.onCreateLoginEventError?.call();
+      }
+    }).onError((error, stackTrace) {
+      event.onCreateLoginEventError?.call();
+    });
+  }
+
+  FutureOr<void> _sendOTP(
+    ResendOTPEvent event,
+    Emitter<OtpOneState> emit,
+  ) async {
+    await _repository.sendotp(
+      headers: {
+        //'RiderID': PrefUtils().getRiderID().toString(),
+        'Content-type': 'application/json',
+      },
+      requestData: {
+        'Username': PrefUtils().getUsernameOTP(),
+      },
+    ).then((value) async {
+      if (value.statusCode == 200) {
+        return;
+      } else if (value.statusCode == 401) {
+        event.onCreateLoginFailed?.call();
+      } else if (value.statusCode == 408) {
+        event.timeout?.call();
+      } else if (value.statusCode == 503 || value.statusCode == 502) {
+        event.onServiceUnavailable?.call();
+      } else if (value.statusCode == 000) {
+        event.noInternet?.call();
       } else {
         event.onCreateLoginEventError?.call();
       }

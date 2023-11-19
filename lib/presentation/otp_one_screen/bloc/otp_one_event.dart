@@ -42,6 +42,7 @@ class CreateLoginEvent extends OtpOneEvent {
     this.onServiceUnavailable,
     this.onCreateLoginFailed,
     this.timeout,
+    this.noInternet,
   });
 
   Function? onCreateLoginEventSuccess;
@@ -53,6 +54,7 @@ class CreateLoginEvent extends OtpOneEvent {
 
   Function? onCreateLoginEventError;
   Function? onServiceUnavailable;
+  Function? noInternet;
   @override
   List<Object?> get props => [
         onCreateLoginEventSuccess,
@@ -62,5 +64,41 @@ class CreateLoginEvent extends OtpOneEvent {
         onServiceUnavailable,
         onCreateLoginFailed,
         timeout,
+        noInternet,
+      ];
+}
+
+class ResendOTPEvent extends OtpOneEvent {
+  ResendOTPEvent({
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+    this.onFalse,
+    this.persmissions,
+    this.onServiceUnavailable,
+    this.onCreateLoginFailed,
+    this.timeout,
+    this.noInternet,
+  });
+
+  Function? onCreateLoginEventSuccess;
+  Function? onFalse;
+  Function? persmissions;
+
+  Function? onCreateLoginFailed;
+  Function? timeout;
+
+  Function? onCreateLoginEventError;
+  Function? onServiceUnavailable;
+  Function? noInternet;
+  @override
+  List<Object?> get props => [
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+        onFalse,
+        persmissions,
+        onServiceUnavailable,
+        onCreateLoginFailed,
+        timeout,
+        noInternet,
       ];
 }

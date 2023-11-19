@@ -545,6 +545,8 @@ class NewPasswordScreen extends StatelessWidget {
                   "Kindly check your internet connection"),
               onServiceUnavailable: () => closedialog(context,
                   "Service Unavailable", "Kindly contact the administrator"),
+              noInternet: () => closedialog(context, "No Internet Connection",
+                  "Kindly check your internet connection"),
             ),
           );
     }
