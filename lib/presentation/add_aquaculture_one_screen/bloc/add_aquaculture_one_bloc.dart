@@ -356,6 +356,7 @@ class AddAquacultureOneBloc
             feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
 
         feedmodels[index].isSelected = true;
+        feedmodels[index].var1 = ent.other;
       }
     }
 

@@ -190,6 +190,7 @@ class AddLandandwatermgmtOneBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationWaterSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].var1 = ent.sourceName;
     }
 
     return feedmodels;

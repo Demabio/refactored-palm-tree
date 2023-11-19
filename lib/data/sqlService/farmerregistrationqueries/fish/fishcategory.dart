@@ -56,8 +56,8 @@ class FarmerFishCategoryDB {
       for (var fishCategory in fishCategories) {
         batch.rawInsert('''
           INSERT INTO $tableName (
-            farmer_id, farmer_farm_id, fish_category_id, created_by, date_created, active, enumerator_id
-          ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            farmer_id, farmer_farm_id, fish_category_id, created_by, date_created, active, enumerator_id, other
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', [
           fishCategory.farmerId,
           fishCategory.farmerFarmId,
@@ -66,6 +66,7 @@ class FarmerFishCategoryDB {
           DateTime.now().toLocal().toIso8601String(),
           0,
           fishCategory.enumeratorId,
+          fishCategory.other,
         ]);
       }
 
@@ -83,9 +84,10 @@ class FarmerFishCategoryDB {
     try {
       for (var fishCategory in fishCategories) {
         batch.rawUpdate('''
-        UPDATE $tableName SET active = 1, date_created = ? WHERE farmer_farm_id = ? AND fish_category_id = ?
+        UPDATE $tableName SET active = 1, date_created = ?, other = ? WHERE farmer_farm_id = ? AND fish_category_id = ?
         ''', [
           fishCategory.dateCreated?.toLocal().toIso8601String(),
+          fishCategory.other,
           fishCategory.farmerFarmId,
           fishCategory.fishCategoryId,
         ]);

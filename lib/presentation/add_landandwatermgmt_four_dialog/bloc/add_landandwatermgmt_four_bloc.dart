@@ -44,12 +44,14 @@ class AddLandandwatermgmtFourBloc
   Future<List<CheckBoxList>> fetchWater() async {
     List<CheckBoxList> list = [];
     IrrigationWaterSourceDB farmStructureDB = IrrigationWaterSourceDB();
+    TextEditingController textEditingController = TextEditingController();
 
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].irrigationWaterSource,
           id: value[i].irrigationWaterSourceId,
+          male: textEditingController,
         ));
       }
     });
@@ -89,7 +91,9 @@ class AddLandandwatermgmtFourBloc
               farmerFarmId: PrefUtils().getFarmId(),
               irrigationWaterSourceId: model.id!,
               createdBy: userId,
-              sourceName: model.title,
+              sourceName: model.male?.text == ''
+                  ? model.title
+                  : model.male?.text ?? model.title,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
@@ -100,7 +104,9 @@ class AddLandandwatermgmtFourBloc
                 farmerFarmId: PrefUtils().getFarmId(),
                 irrigationWaterSourceId: model.id!,
                 createdBy: userId,
-                sourceName: model.title,
+                sourceName: model.male?.text == ''
+                    ? model.title
+                    : model.male?.text ?? model.title,
                 dateCreated: DateTime.now()),
           );
         }
@@ -133,6 +139,7 @@ class AddLandandwatermgmtFourBloc
           feedmodels.indexWhere((obj) => obj.id == ent.irrigationWaterSourceId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.sourceName);
     }
 
     return feedmodels;

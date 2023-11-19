@@ -17,6 +17,7 @@ class FarmerIrrigationTypeDB {
         "created_by" VARCHAR(255) NOT NULL,
         "active" INT,
         "enumerator_id" INT,
+        "other" VARCHAR(100),
         PRIMARY KEY("irrigation_crop_id")
       );
     """);

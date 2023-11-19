@@ -115,8 +115,11 @@ class AddAquacultureFourDialog extends StatelessWidget {
                   selector: (state) => state,
                   builder: (context, state) {
                     RegExp pattern = RegExp(r'\b(?:Other|other)\b');
-                    bool isOther = pattern
-                        .hasMatch(state.selectedDropDownValue?.title ?? "");
+                    bool isOther = pattern.hasMatch(state
+                            .addAquacultureFourModelObj
+                            ?.selectedDropDownValue
+                            ?.title ??
+                        "");
                     return Visibility(
                       visible: isOther,
                       child: Column(
@@ -132,7 +135,7 @@ class AddAquacultureFourDialog extends StatelessWidget {
                               controller: state.other,
                               autofocus: false,
                               hintText: "Other".tr,
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.text,
                               textInputAction: TextInputAction.done,
                               validator: (value) {
                                 if (isNotEmpty(value)) {

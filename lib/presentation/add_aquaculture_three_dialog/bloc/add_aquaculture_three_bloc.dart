@@ -57,11 +57,14 @@ class AddAquacultureThreeBloc
   Future<List<CheckBoxList>> fetchFeeds() async {
     List<CheckBoxList> list = [];
     FishCategoryDB fishCategoryDB = FishCategoryDB();
+    TextEditingController textEditingController = TextEditingController();
+
     await fishCategoryDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].fishCategory,
           id: value[i].fishCategoryId,
+          male: textEditingController,
         ));
       }
     });
@@ -117,6 +120,7 @@ class AddAquacultureThreeBloc
       int index = feedmodels.indexWhere((obj) => obj.id == ent.fishCategoryId);
 
       feedmodels[index].isSelected = true;
+      feedmodels[index].male = TextEditingController(text: ent.other);
     }
 
     return feedmodels;
@@ -142,6 +146,9 @@ class AddAquacultureThreeBloc
               farmerFarmId: PrefUtils().getFarmId(),
               fishCategoryId: model.id!,
               createdBy: userId,
+              other: model.male?.text == ''
+                  ? model.title
+                  : model.male?.text ?? model.title,
               dateCreated: DateTime.now()),
         );
         if (model.isSelected) {
@@ -152,6 +159,9 @@ class AddAquacultureThreeBloc
                 farmerFarmId: PrefUtils().getFarmId(),
                 fishCategoryId: model.id!,
                 createdBy: userId,
+                other: model.male?.text == ''
+                    ? model.title
+                    : model.male?.text ?? model.title,
                 dateCreated: DateTime.now()),
           );
         }
