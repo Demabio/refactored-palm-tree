@@ -571,7 +571,11 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
 
                       Text(
                         "msg_soil_seeds_and".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
+                        style: theme.textTheme.labelMedium!.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontSize: DeviceExt(2).h,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(

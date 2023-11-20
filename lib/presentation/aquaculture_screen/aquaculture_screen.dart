@@ -385,7 +385,7 @@ class AquacultureScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: ((20 / 411) * 100).w),
+                      SizedBox(height: ((10 / 411) * 100).w),
                       Visibility(
                         visible: state.done,
                         child: CustomElevatedButton(
@@ -414,7 +414,7 @@ class AquacultureScreen extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                         ),
                       ),
-                      SizedBox(height: ((11 / 411) * 100).w),
+                      SizedBox(height: ((10 / 411) * 100).w),
                       CustomElevatedButton(
                         text: "Previous Section".tr,
                         height: Device.orientation == Orientation.portrait

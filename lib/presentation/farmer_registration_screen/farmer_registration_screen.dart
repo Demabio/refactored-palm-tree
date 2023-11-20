@@ -1,4 +1,5 @@
 import 'package:cupertino_stepper/cupertino_stepper.dart';
+import 'package:kiamis_app/presentation/draft_entries_clear_drafts_modal_dialog/dynamic_dialog_2.dart';
 import 'package:kiamis_app/presentation/side_menu_draweritem/side_menu_draweritem.dart';
 import 'package:kiamis_app/routes/navigation_args.dart';
 
@@ -174,6 +175,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
 
   _successSaved(BuildContext context) {
     NavigatorService.popAndPushNamed(AppRoutes.homeScreen);
+    closedialog(context, "Success", "Form is completed and ready for posing");
   }
 
   goBack(BuildContext context) {
@@ -616,6 +618,19 @@ class FarmerRegistrationScreen extends StatelessWidget {
         context: context,
         builder: (_) => AlertDialog(
               content: SaveDraftModalDialog.builder(context),
+              backgroundColor: Colors.transparent,
+              contentPadding: EdgeInsets.zero,
+              insetPadding: const EdgeInsets.only(left: 0),
+            ));
+  }
+
+  closedialog(BuildContext context, String label, String body) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        //barrierColor: const Color.fromARGB(255, 50, 50, 50),
+        builder: (_) => AlertDialog(
+              content: DynamicDialogTwo.builder(context, label, body),
               backgroundColor: Colors.transparent,
               contentPadding: EdgeInsets.zero,
               insetPadding: const EdgeInsets.only(left: 0),

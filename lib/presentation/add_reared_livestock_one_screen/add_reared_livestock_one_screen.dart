@@ -346,7 +346,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: DeviceExt((15 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             Text(
                               "lbl_livestock3".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -426,7 +426,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                             controller: state.other,
                                             autofocus: false,
                                             hintText: "Other".tr,
-                                            textInputType: TextInputType.number,
+                                            textInputType: TextInputType.text,
                                             textInputAction:
                                                 TextInputAction.done,
                                             validator: (value) {
@@ -517,7 +517,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                         ),
                                         SizedBox(
                                             height:
-                                                DeviceExt((17 / 411) * 100).w),
+                                                DeviceExt((10 / 411) * 100).w),
                                         CustomElevatedButton(
                                           width: DeviceExt((152 / 841) * 100).h,
                                           alignment: Alignment.centerRight,
@@ -539,7 +539,12 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: DeviceExt((35 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
+                            Text(
+                              "msg_livestock_age_group".tr,
+                              style: CustomTextStyles.labelMediumPrimary_1,
+                            ),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             CustomElevatedButton(
                               height: DeviceExt((47 / 411) * 100).w,
                               text: "msg_add_livestock_age".tr,
@@ -554,11 +559,6 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                               },
                             ),
                             SizedBox(height: DeviceExt((35 / 411) * 100).w),
-                            Text(
-                              "msg_livestock_age_group".tr,
-                              style: CustomTextStyles.labelMediumPrimary_1,
-                            ),
-                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
                             BlocSelector<
                                     AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState,
@@ -584,7 +584,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
-                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             BlocSelector<AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState, bool?>(
                                 selector: (state) => state.checkedF,
@@ -597,7 +597,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                         : CustomTextStyles.labelMediumPrimary_1,
                                   );
                                 }),
-                            SizedBox(height: DeviceExt((18 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             BlocSelector<
                                     AddRearedLivestockOneBloc,
                                     AddRearedLivestockOneState,
@@ -623,14 +623,14 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                     ),
                                   );
                                 }),
-                            SizedBox(height: DeviceExt((65 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             CustomElevatedButton(
                               width: DeviceExt((152 / 841) * 100).h,
                               onTap: () => addFeed(context),
                               text: "lbl_add_feed".tr,
                               alignment: Alignment.centerRight,
                             ),
-                            SizedBox(height: DeviceExt((34 / 411) * 100).w),
+                            SizedBox(height: DeviceExt((10 / 411) * 100).w),
                             Text(
                               "msg_farming_production2".tr,
                               style: CustomTextStyles.labelMediumPrimary_1,
@@ -679,6 +679,7 @@ class AddRearedLivestockOneScreen extends StatelessWidget {
                                 );
                               },
                             ),
+                            SizedBox(height: DeviceExt((25 / 411) * 100).w),
                           ],
                         ),
                       ),

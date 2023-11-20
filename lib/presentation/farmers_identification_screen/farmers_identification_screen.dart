@@ -756,7 +756,7 @@ class FarmersIdentificationScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: ((20 / 411) * 100).w),
+                        SizedBox(height: ((10 / 411) * 100).w),
                         Visibility(
                           visible: state.done,
                           child: CustomElevatedButton(

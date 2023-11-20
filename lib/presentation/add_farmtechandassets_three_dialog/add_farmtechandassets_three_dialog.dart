@@ -289,7 +289,7 @@ class AddFarmtechandassetsThreeDialog extends StatelessWidget {
                               controller: state.other,
                               autofocus: false,
                               hintText: "Other".tr,
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.text,
                               textInputAction: TextInputAction.done,
                               validator: (value) {
                                 if (isNotEmpty(value)) {

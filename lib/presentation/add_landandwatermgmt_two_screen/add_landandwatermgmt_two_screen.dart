@@ -443,53 +443,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                       },
                                     ),
                                     SizedBox(
-                                        height: DeviceExt((17 / 411) * 100).w),
-                                    Text(
-                                      "lbl_unit_of_area2".tr,
-                                      style:
-                                          CustomTextStyles.labelMediumPrimary_1,
-                                    ),
-                                    BlocSelector<
-                                        AddLandandwatermgmtTwoBloc,
-                                        AddLandandwatermgmtTwoState,
-                                        AddLandandwatermgmtTwoModel?>(
-                                      selector: (state) =>
-                                          state.addLandandwatermgmtTwoModelObj,
-                                      builder: (context,
-                                          addLandandwatermgmtTwoModelObj) {
-                                        return CustomDropDown(
-                                          icon: Container(
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    DeviceExt((30 / 841) * 100)
-                                                        .h),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                DeviceExt((10 / 841) * 100).h,
-                                              ),
-                                            ),
-                                            child: CustomImageView(
-                                              svgPath: ImageConstant
-                                                  .imgArrowdownPrimary,
-                                            ),
-                                          ),
-                                          hintText: "lbl_select".tr,
-                                          val: addLandandwatermgmtTwoModelObj
-                                              ?.selectedDropDownValue1,
-                                          items: addLandandwatermgmtTwoModelObj
-                                                  ?.dropdownItemList1 ??
-                                              [],
-                                          onChanged: (value) {
-                                            context
-                                                .read<
-                                                    AddLandandwatermgmtTwoBloc>()
-                                                .add(ChangeDropDown1Event(
-                                                    value: value));
-                                          },
-                                        );
-                                      },
-                                    ),
+                                        height: DeviceExt((20 / 411) * 100).w),
                                   ],
                                 ),
                               ),

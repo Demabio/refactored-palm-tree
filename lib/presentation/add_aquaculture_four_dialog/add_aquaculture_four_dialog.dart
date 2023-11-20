@@ -136,7 +136,6 @@ class AddAquacultureFourDialog extends StatelessWidget {
                               autofocus: false,
                               hintText: "Other".tr,
                               textInputType: TextInputType.text,
-                              textInputAction: TextInputAction.done,
                               validator: (value) {
                                 if (isNotEmpty(value)) {
                                   return "Field is required.";

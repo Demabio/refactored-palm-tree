@@ -16,6 +16,7 @@ class FarmerFishCategoryDB {
         "date_created" DATETIME,
         "active" INT,
         "enumerator_id" INT,
+        "other" VARCHAR(100),
         PRIMARY KEY("farmer_fishcategory_id")
       );
     """);

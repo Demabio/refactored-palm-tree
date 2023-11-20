@@ -428,11 +428,7 @@ class FarmersIdentificationFourScreen extends StatelessWidget {
                                                         autofocus: false,
                                                         hintText: "Other".tr,
                                                         textInputType:
-                                                            TextInputType
-                                                                .number,
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .done,
+                                                            TextInputType.text,
                                                         validator: (value) {
                                                           if (isNotEmpty(
                                                               value)) {

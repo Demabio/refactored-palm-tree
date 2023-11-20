@@ -6,8 +6,8 @@ import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/add_aquacult
 import 'package:kiamis_app/presentation/add_aquaculture_five_dialog/widgets/fish_widget.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/add_aquaculture_four_dialog.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_four_dialog/widgets/ProdSys_widget.dart';
+import 'package:kiamis_app/presentation/add_aquaculture_six_dialog/widgets/inputs_widget.dart';
 import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/add_aquaculture_three_dialog.dart';
-import 'package:kiamis_app/presentation/add_aquaculture_three_dialog/widgets/aqua_types_widget.dart';
 import 'package:kiamis_app/presentation/draft_entries_delete_entry_modal_dialog/dynamic_dialog.dart';
 
 import 'bloc/add_aquaculture_one_bloc.dart';
@@ -17,7 +17,7 @@ import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_subtitle_1.dart';
 import 'package:kiamis_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:kiamis_app/widgets/custom_elevated_button.dart';
- import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
 
 class AddAquacultureOneScreen extends StatelessWidget {
   const AddAquacultureOneScreen({Key? key})
@@ -212,7 +212,7 @@ class AddAquacultureOneScreen extends StatelessWidget {
                                     (index) {
                                       CheckBoxList model = list![index];
 
-                                      return AquaTypeItemWidget(
+                                      return InputsWidget(
                                         model,
                                       );
                                     },

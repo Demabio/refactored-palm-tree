@@ -152,8 +152,7 @@ class AddLiverstockinputBloc
               state.addLiverstockinputModelObj!.selectedDropDownValue6!.id == 1,
           curativeMeasures:
               state.addLiverstockinputModelObj!.selectedDropDownValue7!.id == 1,
-          areaUnitId:
-              state.addLiverstockinputModelObj!.selectedDropDownValue!.id,
+          areaUnitId: 1,
           livestockArea: 0,
         ))
             .then((value) {
@@ -203,8 +202,7 @@ class AddLiverstockinputBloc
               curativeMeasures: state
                       .addLiverstockinputModelObj!.selectedDropDownValue7!.id ==
                   1,
-              areaUnitId:
-                  state.addLiverstockinputModelObj!.selectedDropDownValue!.id,
+              areaUnitId: 1,
               livestockArea: 0,
             ))
             .then((value) => print(

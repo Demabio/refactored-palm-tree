@@ -879,7 +879,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(height: ((20 / 411) * 100).w),
+                      SizedBox(height: ((10 / 411) * 100).w),
                       Visibility(
                         visible: state.done,
                         child: CustomElevatedButton(
@@ -925,7 +925,7 @@ class PrimaryFarmHoldingScreen extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                         ),
                       ),
-                      SizedBox(height: ((20 / 411) * 100).w),
+                      SizedBox(height: ((10 / 411) * 100).w),
                       CustomElevatedButton(
                         height: Device.orientation == Orientation.portrait
                             ? DeviceExt(6).h

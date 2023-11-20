@@ -189,7 +189,11 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       SizedBox(height: DeviceExt((20 / 411) * 100).w),
                       Text(
                         "msg_financial_livelihood".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
+                        style: theme.textTheme.labelMedium!.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontSize: DeviceExt(2).h,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Container(
                         width: DeviceExt((297 / 841) * 100).h,
@@ -285,7 +289,11 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
                       SizedBox(height: DeviceExt((18 / 411) * 100).w),
                       Text(
                         "msg_agricultural_info".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
+                        style: theme.textTheme.labelMedium!.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontSize: DeviceExt(2).h,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
 
                       BlocSelector<AddFinancialandservicesOneBloc,
@@ -337,7 +345,11 @@ class AddFinancialandservicesOneScreen extends StatelessWidget {
 
                       Text(
                         "msg_cooperative_groups".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
+                        style: theme.textTheme.labelMedium!.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontSize: DeviceExt(2).h,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Container(
                         width: DeviceExt((270 / 841) * 100).h,

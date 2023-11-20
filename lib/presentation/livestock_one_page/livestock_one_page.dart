@@ -139,69 +139,7 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                       delete: () => delete(context, model.id!),
                                     );
                                   }),
-                              SizedBox(height: ((20 / 411) * 100).w),
-                              CustomElevatedButton(
-                                height:
-                                    Device.orientation == Orientation.portrait
-                                        ? DeviceExt(6).h
-                                        : 8.w,
-                                width: DeviceExt((343 / 841) * 100).h,
-                                buttonTextStyle:
-                                    theme.textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontSize:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(2).h
-                                          : DeviceExt(2.5).w,
-                                ),
-                                margin:
-                                    Device.orientation == Orientation.portrait
-                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
-                                            6.w, DeviceExt(0.2).h, 1.2.w)
-                                        : EdgeInsets.fromLTRB(
-                                            DeviceExt(0.36).w,
-                                            DeviceExt(6).h,
-                                            DeviceExt(0.2).w,
-                                            DeviceExt(1.2).h),
-                                text: "Livestock Input".tr,
-                                onTap: () {
-                                  NavigatorService.popAndPushNamed(
-                                    AppRoutes.addLiverstockinputScreen,
-                                  );
-                                },
-                                alignment: Alignment.bottomCenter,
-                              ),
-                              SizedBox(height: ((20 / 411) * 100).w),
-                              CustomElevatedButton(
-                                height:
-                                    Device.orientation == Orientation.portrait
-                                        ? DeviceExt(6).h
-                                        : 8.w,
-                                width: DeviceExt((343 / 841) * 100).h,
-                                buttonTextStyle:
-                                    theme.textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontSize:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(2).h
-                                          : DeviceExt(2.5).w,
-                                ),
-                                margin:
-                                    Device.orientation == Orientation.portrait
-                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
-                                            6.w, DeviceExt(0.2).h, 1.2.w)
-                                        : EdgeInsets.fromLTRB(
-                                            DeviceExt(0.36).w,
-                                            DeviceExt(6).h,
-                                            DeviceExt(0.2).w,
-                                            DeviceExt(1.2).h),
-                                text: "Add Livestock".tr,
-                                onTap: () {
-                                  addorEdit(context, 0, 0);
-                                },
-                                alignment: Alignment.bottomCenter,
-                              ),
-                              SizedBox(height: ((20 / 411) * 100).w),
+                              SizedBox(height: ((10 / 411) * 100).w),
                               Visibility(
                                 visible: state.done,
                                 child: CustomElevatedButton(
@@ -243,7 +181,69 @@ class LivestockOnePageState extends State<LivestockOnePage>
                                   alignment: Alignment.bottomCenter,
                                 ),
                               ),
-                              SizedBox(height: ((20 / 411) * 100).w),
+                              SizedBox(height: ((10 / 411) * 100).w),
+                              CustomElevatedButton(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(6).h
+                                        : 8.w,
+                                width: DeviceExt((343 / 841) * 100).h,
+                                buttonTextStyle:
+                                    theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                ),
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
+                                            6.w, DeviceExt(0.2).h, 1.2.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(0.36).w,
+                                            DeviceExt(6).h,
+                                            DeviceExt(0.2).w,
+                                            DeviceExt(1.2).h),
+                                text: "Livestock Input".tr,
+                                onTap: () {
+                                  NavigatorService.popAndPushNamed(
+                                    AppRoutes.addLiverstockinputScreen,
+                                  );
+                                },
+                                alignment: Alignment.bottomCenter,
+                              ),
+                              SizedBox(height: ((10 / 411) * 100).w),
+                              CustomElevatedButton(
+                                height:
+                                    Device.orientation == Orientation.portrait
+                                        ? DeviceExt(6).h
+                                        : 8.w,
+                                width: DeviceExt((343 / 841) * 100).h,
+                                buttonTextStyle:
+                                    theme.textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                  fontSize:
+                                      Device.orientation == Orientation.portrait
+                                          ? DeviceExt(2).h
+                                          : DeviceExt(2.5).w,
+                                ),
+                                margin:
+                                    Device.orientation == Orientation.portrait
+                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
+                                            6.w, DeviceExt(0.2).h, 1.2.w)
+                                        : EdgeInsets.fromLTRB(
+                                            DeviceExt(0.36).w,
+                                            DeviceExt(6).h,
+                                            DeviceExt(0.2).w,
+                                            DeviceExt(1.2).h),
+                                text: "Add Livestock".tr,
+                                onTap: () {
+                                  addorEdit(context, 0, 0);
+                                },
+                                alignment: Alignment.bottomCenter,
+                              ),
+                              SizedBox(height: ((10 / 411) * 100).w),
                               CustomElevatedButton(
                                 height:
                                     Device.orientation == Orientation.portrait

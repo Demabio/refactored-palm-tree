@@ -253,6 +253,10 @@ class FarmerFarmDB {
           .rawQuery('PRAGMA table_info(tblfrfarmersirrigationtypes)');
       final columnExists7 = column7.any((column) => column['name'] == 'other');
 
+      final column8 =
+          await database.rawQuery('PRAGMA table_info(tblfarmerfishcategory)');
+      final columnExists8 = column8.any((column) => column['name'] == 'other');
+
       if (!columnExists) {
         // The "posted" column doesn't exist, so add it to the table
         await database.execute(
@@ -285,6 +289,10 @@ class FarmerFarmDB {
       if (!columnExists7) {
         await database.execute(
             'ALTER TABLE tblfrfarmersirrigationtypes ADD COLUMN other VARCHAR(100)');
+      }
+      if (!columnExists8) {
+        await database.execute(
+            'ALTER TABLE tblfarmerfishcategory ADD COLUMN other VARCHAR(100)');
       }
 
       return columnExists;

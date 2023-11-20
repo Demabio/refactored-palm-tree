@@ -70,42 +70,6 @@ class AddLiverstockinputScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "lbl_area_unit2".tr,
-                        style: CustomTextStyles.labelMediumPrimary_1,
-                      ),
-                      BlocSelector<AddLiverstockinputBloc,
-                          AddLiverstockinputState, AddLiverstockinputModel?>(
-                        selector: (state) => state.addLiverstockinputModelObj,
-                        builder: (context, addLiverstockinputModelObj) {
-                          return CustomDropDown(
-                            icon: Container(
-                              margin: EdgeInsets.only(
-                                  left: DeviceExt((30 / 841) * 100).h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  DeviceExt((10 / 841) * 100).h,
-                                ),
-                              ),
-                              child: CustomImageView(
-                                svgPath: ImageConstant.imgArrowdownPrimary,
-                              ),
-                            ),
-                            hintText: "lbl_select".tr,
-                            val: addLiverstockinputModelObj
-                                ?.selectedDropDownValue,
-                            items:
-                                addLiverstockinputModelObj?.dropdownItemList ??
-                                    [],
-                            onChanged: (value) {
-                              context
-                                  .read<AddLiverstockinputBloc>()
-                                  .add(ChangeDropDownEvent(value: value));
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(height: DeviceExt((9 / 411) * 100).w),
-                      Text(
                         "msg_do_you_utilize_fertilizer2".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),

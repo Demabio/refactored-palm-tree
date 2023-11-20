@@ -323,53 +323,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                SizedBox(height: DeviceExt((32 / 411) * 100).w),
-                                Text("lbl_area_unit2".tr,
-                                    style:
-                                        CustomTextStyles.labelMediumPrimary_1),
-                                BlocSelector<
-                                        PrimaryFarmHoldingOneBloc,
-                                        PrimaryFarmHoldingOneState,
-                                        PrimaryFarmHoldingOneModel?>(
-                                    selector: (state) =>
-                                        state.primaryFarmHoldingOneModelObj,
-                                    builder: (context,
-                                        primaryFarmHoldingOneModelObj) {
-                                      return CustomDropDown(
-                                          icon: Container(
-                                              margin: EdgeInsets.only(
-                                                  left:
-                                                      DeviceExt((30 / 841) * 100)
-                                                          .h),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          DeviceExt((10 / 841) * 100)
-                                                              .h)),
-                                              child: CustomImageView(
-                                                  svgPath: ImageConstant
-                                                      .imgArrowdownPrimary)),
-                                          hintText: "lbl_select".tr,
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return "Field is required";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          val: primaryFarmHoldingOneModelObj
-                                              ?.selectedDropDownValue,
-                                          items: primaryFarmHoldingOneModelObj
-                                                  ?.dropdownItemList ??
-                                              [],
-                                          onChanged: (value) {
-                                            context
-                                                .read<
-                                                    PrimaryFarmHoldingOneBloc>()
-                                                .add(ChangeDropDownEvent(
-                                                    value: value));
-                                          });
-                                    }),
+                                 
                                 SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("msg_aquaculture_production2".tr,
                                     style:

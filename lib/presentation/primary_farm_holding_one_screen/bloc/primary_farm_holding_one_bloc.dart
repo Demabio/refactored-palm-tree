@@ -212,8 +212,7 @@ class PrimaryFarmHoldingOneBloc
               enumeratorName: enumeratorname,
               enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),
-              areaUnitId: state
-                  .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+              areaUnitId: 1,
               cropFarmSize: double.parse(state.sizeoneController!.text),
               livestockFarmSize: double.parse(state.areaController!.text),
               leasedFarmSize: double.parse(
@@ -268,8 +267,7 @@ class PrimaryFarmHoldingOneBloc
                 farmerId: farmerid,
                 farmName: state.nameController!.text,
                 farmSize: double.parse(state.sizeController!.text),
-                areaUnitId: state
-                    .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+                areaUnitId: 1,
                 cropFarmSize: double.parse(state.sizeoneController!.text),
                 livestockFarmSize: double.parse(state.areaController!.text),
                 leasedFarmSize: double.parse(
@@ -355,8 +353,7 @@ class PrimaryFarmHoldingOneBloc
               enumeratorName: enumeratorname,
               enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),
-              areaUnitId: state
-                  .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+              areaUnitId: 1,
               cropFarmSize: double.parse(state.sizeoneController!.text),
               livestockFarmSize: double.parse(state.areaController!.text),
               leasedFarmSize: double.parse(
@@ -411,8 +408,7 @@ class PrimaryFarmHoldingOneBloc
                 farmerId: farmerid,
                 farmName: state.nameController!.text,
                 farmSize: double.parse(state.sizeController!.text),
-                areaUnitId: state
-                    .primaryFarmHoldingOneModelObj!.selectedDropDownValue!.id,
+                areaUnitId: 1,
                 cropFarmSize: double.parse(state.sizeoneController!.text),
                 livestockFarmSize: double.parse(state.areaController!.text),
                 leasedFarmSize: double.parse(

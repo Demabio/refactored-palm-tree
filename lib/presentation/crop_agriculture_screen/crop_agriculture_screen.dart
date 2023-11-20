@@ -163,7 +163,7 @@ class CropAgricultureScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: ((20 / 411) * 100).w),
+                SizedBox(height: ((10 / 411) * 100).w),
                 BlocSelector<CropAgricultureBloc, CropAgricultureState,
                     CropAgricultureState>(
                   selector: (state) => state,
@@ -200,6 +200,7 @@ class CropAgricultureScreen extends StatelessWidget {
                           },
                           alignment: Alignment.bottomCenter,
                         ),
+                        SizedBox(height: ((10 / 411) * 100).w),
                         Visibility(
                           visible: state.done,
                           child: CustomElevatedButton(
@@ -246,6 +247,7 @@ class CropAgricultureScreen extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                           ),
                         ),
+                        SizedBox(height: ((10 / 411) * 100).w),
                         CustomElevatedButton(
                           width: DeviceExt((344 / 841) * 100).h,
                           text: "Previous Section".tr,

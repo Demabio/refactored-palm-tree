@@ -1,6 +1,7 @@
 import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:kiamis_app/presentation/side_menu_draweritem/side_menu_draweritem.dart';
 import 'package:kiamis_app/widgets/app_bar/appbar_image.dart';
+import 'package:kiamis_app/widgets/custom_elevated_button.dart';
 
 import 'bloc/profile_bloc.dart';
 import 'models/profile_model.dart';
@@ -437,6 +438,30 @@ class ProfileScreen extends StatelessWidget {
                                     ])),
                           ],
                         ),
+                      ),
+                      CustomElevatedButton(
+                        height: Device.orientation == Orientation.portrait
+                            ? DeviceExt(6).h
+                            : 8.w,
+                        width: DeviceExt((343 / 841) * 100).h,
+                        buttonTextStyle: theme.textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontSize: Device.orientation == Orientation.portrait
+                              ? DeviceExt(2).h
+                              : DeviceExt(2.5).w,
+                        ),
+                        margin: Device.orientation == Orientation.portrait
+                            ? EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).h, 6.w, DeviceExt(0.2).h, 1.2.w)
+                            : EdgeInsets.fromLTRB(
+                                DeviceExt(0.36).w,
+                                DeviceExt(6).h,
+                                DeviceExt(0.2).w,
+                                DeviceExt(1.2).h),
+                        text: "Back".tr,
+                        onTap: () => NavigatorService.popAndPushNamed(
+                            AppRoutes.homeScreen),
+                        alignment: Alignment.bottomCenter,
                       ),
                     ],
                   ),

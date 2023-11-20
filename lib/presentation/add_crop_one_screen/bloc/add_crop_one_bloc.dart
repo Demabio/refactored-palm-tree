@@ -248,8 +248,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                   farmerCropId: value,
                   cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                   cropArea: double.parse(state.areavalueoneController!.text),
-                  areaUnitId:
-                      state.addCropOneModelObj!.selectedDropDownValue1?.id,
+                  areaUnitId: 1,
                   usageOfCertifiedSeeds:
                       state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
                   cropId: state.addCropOneModelObj!.selectedCrop?.id,
@@ -292,8 +291,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                 farmerCropId: PrefUtils().getCropId(),
                 cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                 cropArea: double.parse(state.areavalueoneController!.text),
-                areaUnitId:
-                    state.addCropOneModelObj!.selectedDropDownValue1?.id,
+                areaUnitId: 1,
                 usageOfCertifiedSeeds:
                     state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
                 cropId: state.addCropOneModelObj!.selectedCrop?.id,
@@ -350,8 +348,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                     farmerCropId: value,
                     cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                     cropArea: double.parse(state.areavalueoneController!.text),
-                    areaUnitId:
-                        state.addCropOneModelObj!.selectedDropDownValue1?.id,
+                    areaUnitId: 1,
                     usageOfCertifiedSeeds:
                         state.addCropOneModelObj!.selectedDropDownValue2?.id ==
                             1,
@@ -395,8 +392,7 @@ class AddCropOneBloc extends Bloc<AddCropOneEvent, AddCropOneState> {
                   farmerCropId: PrefUtils().getCropId(),
                   cropCode: state.addCropOneModelObj!.selectedCrop?.code,
                   cropArea: double.parse(state.areavalueoneController!.text),
-                  areaUnitId:
-                      state.addCropOneModelObj!.selectedDropDownValue1?.id,
+                  areaUnitId: 1,
                   usageOfCertifiedSeeds:
                       state.addCropOneModelObj!.selectedDropDownValue2?.id == 1,
                   cropId: state.addCropOneModelObj!.selectedCrop?.id,

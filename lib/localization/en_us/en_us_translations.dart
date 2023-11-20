@@ -163,7 +163,7 @@ final Map<String, String> enUs = {
   "lbl_maize": "Maize",
   "lbl_purpose": "Purpose:",
   "lbl_subsistence": "Subsistence",
-  "lbl_total_acreage2": "Total Acreage:",
+  "lbl_total_acreage2": "Total area in acres:",
   "lbl_unit_of_area": "Unit of area:",
   "lbl_use_fertilizer": "Use Fertilizer?",
   "lbl_use_pesticide": "Use Pesticide?",
@@ -375,8 +375,8 @@ final Map<String, String> enUs = {
       "What sustainable land and environmental management practices do you carry out?",
 
   // Add Landandwatermgmt One Screen
-  "lbl_add_practice": "Add  Practice",
-  "lbl_add_source": "Add Source",
+  "lbl_add_practice": "Add Land Practice",
+  "lbl_add_source": "Add Water Source",
   "msg_do_you_use_lime2": "Do you use lime on your soil? (*)",
   "msg_have_you_benefited2":
       "Have you benefited from Govt.Subsidized fertilizer? (*)",
@@ -469,9 +469,9 @@ final Map<String, String> enUs = {
   "msg_do_you_insure_your7": "Do you insure your livestock? (*)",
   "msg_do_you_insure_your8": "Do you insure your fish? (*)",
   "msg_do_you_keep_written2": "Do you keep written farm records? (*)",
-  "msg_extension_access": "Extension Access (*)",
+  "msg_extension_access": "What is your main extension service provider? (*)",
   "msg_what_is_the_mode2":
-      "What is the Mode of Exatension Service that you receive",
+      "What is the Mode of Extension Service that you receive",
 
   // Add Financialandservices Three Screen
   "lbl_cash_transfer": "Cash Transfer",
@@ -609,7 +609,7 @@ final Map<String, String> enUs = {
   "lbl_archie_copeland": "Archie Copeland",
   "lbl_log_out2": "Log out",
   "lbl_my_orders": "My orders",
-  "lbl_profile_info": "Profile info",
+  "lbl_profile_info": "Profile Information",
   "lbl_security": "Security",
   "msg_allentown_new_mexico": "Allentown, New Mexico",
 
@@ -953,7 +953,7 @@ final Map<String, String> enUs = {
   "msg_add_production_system": "Add Production System",
   "msg_add_reared_livestock": "Add Reared Livestock",
   "msg_add_undertaken_irrigation": "Add Undertaken Irrigation",
-  "msg_agricultural_info": "Agricultural Info Source",
+  "msg_agricultural_info": "Agricultural Information Source",
   "msg_aquaculture_for": "Aquaculture for sale?",
   "msg_aquaculture_for2": "Aquaculture for subsitence?",
   "msg_aquaculture_type2": "Aquaculture type",
@@ -1009,7 +1009,7 @@ final Map<String, String> enUs = {
   "msg_legal_status_of2": "Legal status of holding (*)",
   "msg_less_than_2_months": "Less than 2 months",
   "msg_less_than_3_weeks": "Less than 3 weeks",
-  "msg_livestock_age_group": "Livestock Age Group",
+  "msg_livestock_age_group": "Add Livestock Age Group",
   "msg_login_to_your_account": "Login to your account",
   "msg_lr_no_certificate_lease":
       "LR.No./Certificate/Lease Agreement (if any) :",
@@ -1044,7 +1044,7 @@ final Map<String, String> enUs = {
   "msg_size_of_land_under2":
       "Size of Land under crop farming(including planted trees) (*)",
   "msg_soil_seeds_and": "Soil, Seeds and Extension Services",
-  "msg_total_area_under": "Total Area Under Irrigation (*)",
+  "msg_total_area_under": "Total Area Under Irrigation(In acres) (*)",
   "msg_total_land_area": "Total land area reserved for livestock:",
   "msg_total_land_area2":
       "Total  land area reserved for livestock(acres)(including pasture & fodder) (*)",

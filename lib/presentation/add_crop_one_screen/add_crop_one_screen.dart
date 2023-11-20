@@ -442,49 +442,7 @@ class AddCropOneScreen extends StatelessWidget {
                                       }),
                                   SizedBox(
                                       height: DeviceExt((9 / 411) * 100).w),
-                                  Text("msg_unit_of_area".tr,
-                                      style: CustomTextStyles
-                                          .labelMediumPrimary_1),
-                                  BlocSelector<AddCropOneBloc, AddCropOneState,
-                                          AddCropOneModel?>(
-                                      selector: (state) =>
-                                          state.addCropOneModelObj,
-                                      builder: (context, addCropOneModelObj) {
-                                        return CustomDropDown(
-                                            icon: Container(
-                                                margin: EdgeInsets.only(
-                                                    left:
-                                                        DeviceExt((30 / 841) * 100)
-                                                            .h),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            DeviceExt((10 / 841) * 100)
-                                                                .h)),
-                                                child: CustomImageView(
-                                                    svgPath: ImageConstant
-                                                        .imgArrowdownPrimary)),
-                                            hintText: "lbl_select".tr,
-                                            validator: (value) {
-                                              if (value == null) {
-                                                return "Field is required";
-                                              } else {
-                                                return null;
-                                              }
-                                            },
-                                            val: addCropOneModelObj
-                                                ?.selectedDropDownValue1,
-                                            items: addCropOneModelObj
-                                                    ?.dropdownItemList1 ??
-                                                [],
-                                            focusNode: FocusNode(),
-                                            onChanged: (value) {
-                                              context
-                                                  .read<AddCropOneBloc>()
-                                                  .add(ChangeDropDown1Event(
-                                                      value: value));
-                                            });
-                                      }),
+                                   
                                   SizedBox(
                                       height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_use_of_certified".tr,
@@ -530,7 +488,7 @@ class AddCropOneScreen extends StatelessWidget {
                                             });
                                       }),
                                   SizedBox(
-                                      height: DeviceExt((10 / 411) * 100).w),
+                                      height: DeviceExt((20 / 411) * 100).w),
                                   CustomElevatedButton(
                                       text: "lbl_next".tr,
                                       onTap: () {
