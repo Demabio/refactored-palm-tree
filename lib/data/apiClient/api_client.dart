@@ -4,6 +4,7 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:kiamis_app/core/app_export.dart';
 import 'package:kiamis_app/core/utils/progress_dialog_utils.dart';
+import 'package:kiamis_app/data/models/VersionDataPost/apk_resp.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
@@ -386,6 +387,60 @@ class ApiClient {
         statusCode: 000,
         requestOptions: RequestOptions(path: ''),
       );
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<VersiontResp> versionPost({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/gateway/UserService/GetApkVersion',
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        VersiontResp versiontResp = VersiontResp.fromJson(response.data);
+        versiontResp.statusCode = response.statusCode;
+        return versiontResp;
+      } else {
+        throw response.data != null
+            ? PostLoginUserServicePostResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } on DioException catch (error, stackTrace) {
+      print(error.response?.statusCode);
+
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      VersiontResp postLoginUserServicePostResp =
+          VersiontResp(statusCode: error.response?.statusCode ?? 500);
+
+      return postLoginUserServicePostResp;
+    } on NoInternetException catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      VersiontResp postLoginUserServicePostResp = VersiontResp(
+        statusCode: 000,
+      );
+
+      return postLoginUserServicePostResp;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

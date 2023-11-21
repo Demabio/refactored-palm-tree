@@ -175,7 +175,7 @@ class FarmerRegistrationScreen extends StatelessWidget {
 
   _successSaved(BuildContext context) {
     NavigatorService.popAndPushNamed(AppRoutes.homeScreen);
-    closedialog(context, "Success", "Form is completed and ready for posing");
+    closedialog(context, "Success", "Form is completed and ready for posting.");
   }
 
   goBack(BuildContext context) {

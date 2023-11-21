@@ -429,7 +429,7 @@ class FarmerDB {
   Future<List<Farmer>?> fetchUnapproved() async {
     final database = await FarmerDatabaseService().database;
     final farmerList = await database.rawQuery(
-        'SELECT * FROM $tableName WHERE registrationStatusId IN (4,6,9,11) AND completed = 1');
+        'SELECT * FROM $tableName WHERE registrationStatusId IN (4,6,9) AND completed = 1');
     return farmerList.isNotEmpty
         ? farmerList.map((e) => Farmer.fromSqfliteDatabase(e)).toList()
         : null;

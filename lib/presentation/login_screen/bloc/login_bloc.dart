@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:kiamis_app/data/models/VersionDataPost/apk_resp.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:package_info/package_info.dart';
 import 'package:equatable/equatable.dart';
@@ -60,6 +61,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (querySnapshot.exists) {
         String latestVersionCode = querySnapshot['version_code'];
         String apkUrl = querySnapshot['apk_url'];
+        // Compare the latest version code with the current app version code
+        // versionCheck();
+        bool vcheck = false;
+        String v = packageInfo.version;
+        PrefUtils().setURL(apkUrl);
+
+        if (latestVersionCode != v) {
+          vcheck = false;
+          PrefUtils().setVcheck(vcheck);
+        } else {
+          vcheck = true;
+
+          PrefUtils().setVcheck(vcheck);
+        }
+      }
+      VersiontResp versiontResp =
+          await _version() ?? VersiontResp(statusCode: 500);
+      if (versiontResp.statusCode == 200) {
+        String latestVersionCode = versiontResp.version ?? '';
+        String apkUrl = versiontResp.url ?? '';
         // Compare the latest version code with the current app version code
         // versionCheck();
         bool vcheck = false;
@@ -242,6 +263,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //implement error call
       _onLoginUserServicePostError();
       event.onCreateLoginEventError?.call();
+    });
+  }
+
+  // ignore: body_might_complete_normally_nullable
+  Future<VersiontResp?> _version() async {
+    await _repository.versionPost(
+      headers: {
+        'Content-type': 'application/json',
+      },
+    ).then((value) async {
+      return value;
+    }).onError((error, stackTrace) {
+      //implement error call
+      return Future(() => VersiontResp(statusCode: 500));
     });
   }
 

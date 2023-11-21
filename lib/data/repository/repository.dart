@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kiamis_app/data/models/VersionDataPost/apk_resp.dart';
 import 'package:kiamis_app/data/models/loginUserServicePost/post_login_user_service_post_resp.dart';
 
 import '../apiClient/api_client.dart';
@@ -17,6 +18,15 @@ class Repository {
     return await _apiClient.loginUserServicePost(
       headers: headers,
       requestData: requestData,
+    );
+  }
+
+  Future<VersiontResp> versionPost({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    return await _apiClient.versionPost(
+      headers: headers,
     );
   }
 
