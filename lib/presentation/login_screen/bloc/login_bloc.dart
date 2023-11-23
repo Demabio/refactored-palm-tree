@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:kiamis_app/data/models/VersionDataPost/apk_resp.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -51,33 +50,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     try {
-      FirebaseFirestore firestore = FirebaseFirestore.instance;
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      DocumentSnapshot querySnapshot = (await firestore
-          .collection('apk_versions')
-          .doc("Current_version")
-          .get());
-
-      if (querySnapshot.exists) {
-        String latestVersionCode = querySnapshot['version_code'];
-        String apkUrl = querySnapshot['apk_url'];
-        // Compare the latest version code with the current app version code
-        // versionCheck();
-        bool vcheck = false;
-        String v = packageInfo.version;
-        PrefUtils().setURL(apkUrl);
-
-        if (latestVersionCode != v) {
-          vcheck = false;
-          PrefUtils().setVcheck(vcheck);
-        } else {
-          vcheck = true;
-
-          PrefUtils().setVcheck(vcheck);
-        }
-      }
-      VersiontResp versiontResp =
-          await _version() ?? VersiontResp(statusCode: 500);
+      VersiontResp versiontResp = await _version();
       if (versiontResp.statusCode == 200) {
         String latestVersionCode = versiontResp.version ?? '';
         String apkUrl = versiontResp.url ?? '';
@@ -267,8 +241,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   // ignore: body_might_complete_normally_nullable
-  Future<VersiontResp?> _version() async {
-    await _repository.versionPost(
+  Future<VersiontResp> _version() async {
+    return await _repository.versionPost(
       headers: {
         'Content-type': 'application/json',
       },

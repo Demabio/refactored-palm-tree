@@ -404,7 +404,7 @@ class ApiClient {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      var response = await _dio.post(
+      var response = await _dio.get(
         '$url/gateway/UserService/GetApkVersion',
       );
       ProgressDialogUtils.hideProgressDialog();

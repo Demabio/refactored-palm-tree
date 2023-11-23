@@ -18,7 +18,7 @@ class FarmerLivestockDB {
         "created_by" VARCHAR(255) ,
         "active" INT,
         "enumerator_id" INT,
-        "other" VARCHAR(10),
+        "other" VARCHAR(100),
         PRIMARY KEY("farmer_livestock_id")
       );
     """);

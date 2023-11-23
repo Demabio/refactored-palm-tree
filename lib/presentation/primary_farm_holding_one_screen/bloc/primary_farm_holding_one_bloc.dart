@@ -17,30 +17,11 @@ class PrimaryFarmHoldingOneBloc
   PrimaryFarmHoldingOneBloc(PrimaryFarmHoldingOneState initialState)
       : super(initialState) {
     on<PrimaryFarmHoldingOneInitialEvent>(_onInitialize);
-    on<ChangeDropDownEvent>(_changeDropDown);
     on<NextTapEvent>(_nextTap);
     on<SaveTapEvent>(_saveTap);
     on<ChangeDropDown2Event>(_changeDropDown2);
     on<ChangeDropDown3Event>(_changeDropDown3);
     on<ChangeDropDown4Event>(_changeDropDown4);
-  }
-
-  _changeDropDown(
-    ChangeDropDownEvent event,
-    Emitter<PrimaryFarmHoldingOneState> emit,
-  ) {
-    emit(state.copyWith(
-        selectedDropDownValue: event.value,
-        primaryFarmHoldingOneModelObj:
-            state.primaryFarmHoldingOneModelObj?.copyWith(
-          selectedDropDownValue: event.value,
-          selectedDropDownValue2:
-              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
-          selectedDropDownValue3:
-              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
-          selectedDropDownValue4:
-              state.primaryFarmHoldingOneModelObj?.selectedDropDownValue4,
-        )));
   }
 
   _changeDropDown2(
@@ -57,8 +38,6 @@ class PrimaryFarmHoldingOneBloc
       primaryFarmHoldingOneModelObj:
           state.primaryFarmHoldingOneModelObj?.copyWith(
         selectedDropDownValue2: event.value,
-        selectedDropDownValue:
-            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
         selectedDropDownValue3:
             state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
         selectedDropDownValue4:
@@ -83,8 +62,6 @@ class PrimaryFarmHoldingOneBloc
         selectedDropDownValue3: event.value,
         selectedDropDownValue2:
             state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
-        selectedDropDownValue:
-            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
         selectedDropDownValue4:
             state.primaryFarmHoldingOneModelObj?.selectedDropDownValue4,
       ),
@@ -104,8 +81,6 @@ class PrimaryFarmHoldingOneBloc
             state.primaryFarmHoldingOneModelObj?.selectedDropDownValue2,
         selectedDropDownValue3:
             state.primaryFarmHoldingOneModelObj?.selectedDropDownValue3,
-        selectedDropDownValue:
-            state.primaryFarmHoldingOneModelObj?.selectedDropDownValue,
       ),
     ));
   }
