@@ -297,10 +297,30 @@ class PrimaryFarmHoldingOneBloc
     final claims = JWT.decode(PrefUtils().getToken());
     int userId = int.parse(claims.payload[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-    String enumeratorname = claims.payload['fullName'];
-    String enumeratorarea = claims.payload['roleID'];
 
-    String enumeratormobile = claims.payload['mobilephone'];
+    String ward = claims.payload['WardId'] ?? "1";
+    String sublocation = claims.payload['SublocationId'] ?? "1";
+    // String location = claims.payload['LocationId'] ?? "1";
+    String constituency = claims.payload['ConstituencyId'] ?? "1";
+    // String county = claims.payload['CountyId'] ?? "1";
+    // String subcounty = claims.payload['SubcountyId'] ?? "1";
+    String division = claims.payload['DivisionId'] ?? "1";
+
+    int wardId = int.parse(ward.isEmpty ? "1" : ward);
+    int sublocationId = int.parse(sublocation.isEmpty ? "1" : sublocation);
+
+    // int locationId = int.parse(location.isEmpty ? "1" : location);
+
+    int constituencyId = int.parse(constituency.isEmpty ? "1" : constituency);
+    // int countyId = int.parse(county.isEmpty ? "1" : county);
+    // int subcountyId = int.parse(subcounty.isEmpty ? "1" : subcounty);
+    int divisionId = int.parse(division.isEmpty ? "1" : division);
+    String enumeratorname = claims
+        .payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    String enumeratorarea = claims.payload['EnumerationAreaNumber'];
+
+    String enumeratormobile = claims.payload[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone'];
 
     FarmerFarmDB farmDB = FarmerFarmDB();
     int farmerid = PrefUtils().getFarmId();
@@ -312,6 +332,10 @@ class PrimaryFarmHoldingOneBloc
           farmerId: PrefUtils().getFarmerId(),
           dateCreated: DateTime.now(),
           createdBy: userId,
+          wardId: wardId,
+          sublocationId: sublocationId,
+          divisionId: divisionId,
+          constituencyId: constituencyId,
         ))
             .then((value) {
           if (value > 0) {
@@ -324,7 +348,8 @@ class PrimaryFarmHoldingOneBloc
               shoppingCenter: state.shop?.text,
               farmName: state.nameController!.text,
               enumeratorId: userId,
-              enumerationAreaNumber: enumeratorarea,
+              enumerationAreaNumber:
+                  enumeratorarea.isEmpty ? "Not Applied" : enumeratorarea,
               enumeratorName: enumeratorname,
               enumeratorMobile: enumeratormobile,
               farmSize: double.parse(state.sizeController!.text),

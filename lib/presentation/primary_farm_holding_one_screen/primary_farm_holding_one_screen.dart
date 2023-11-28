@@ -313,7 +313,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                               return "Please enter valid input";
                                             } else if (!greaterthanone(value,
                                                 isRequired: true)) {
-                                              return "Value must be greater than 1";
+                                              return "Value must be greater than 0";
                                             }
                                             return null;
                                           },
@@ -323,7 +323,6 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                           hintStyle: CustomTextStyles
                                               .titleMediumBluegray40003);
                                     }),
-                                 
                                 SizedBox(height: DeviceExt((32 / 411) * 100).w),
                                 Text("msg_aquaculture_production2".tr,
                                     style:
@@ -471,7 +470,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                                 return "Please enter valid input";
                                               } else if (!greaterthanone(value,
                                                   isRequired: true)) {
-                                                return "Value must be greater than 1";
+                                                return "Value must be greater than 0";
                                               }
                                               return null;
                                             },
@@ -576,7 +575,7 @@ class PrimaryFarmHoldingOneScreen extends StatelessWidget {
                                                 return "Please enter valid input";
                                               } else if (!greaterthanone(value,
                                                   isRequired: true)) {
-                                                return "Value must be greater than 1";
+                                                return "Value must be greater than 0";
                                               }
                                               return null;
                                             },

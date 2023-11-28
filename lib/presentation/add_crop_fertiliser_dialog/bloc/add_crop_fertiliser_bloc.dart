@@ -44,12 +44,13 @@ class AddCropFertiliserBloc
   Future<List<CheckBoxList>> fecthType() async {
     List<CheckBoxList> list = [];
     FertiliserTypeDB farmStructureDB = FertiliserTypeDB();
-
+    TextEditingController? m = TextEditingController();
     await farmStructureDB.fetchAll().then((value) {
       for (int i = 0; i < value.length; i++) {
         list.add(CheckBoxList(
           title: value[i].fertiliserType,
           id: value[i].fertiliserTypeId,
+          male: m,
         ));
       }
     });

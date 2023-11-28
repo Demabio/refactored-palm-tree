@@ -96,15 +96,14 @@ class FinancialandservicesBloc
       infomodels = _infos(infomodels, info);
     }
 
-    if (pfProgress.pageTwo == 1) {
-      List<FarmerExtensionAccess>? access = await getEAccess();
-      accessmodels =
-          access != null ? _access(accessmodels, access) : accessmodels;
-      List<FarmerExtensionMode>? mode = await getModes();
-      if (mode != null) {
-        modemodels = _modes(modemodels, mode);
-      }
+    List<FarmerExtensionAccess>? access = await getEAccess();
+    accessmodels =
+        access != null ? _access(accessmodels, access) : accessmodels;
+    List<FarmerExtensionMode>? mode = await getModes();
+    if (mode != null) {
+      modemodels = _modes(modemodels, mode);
     }
+
     emit(state.copyWith(
       done: pfProgress.pageOne == 1 || pfProgress.pageTwo == 1,
       p: infomodels,

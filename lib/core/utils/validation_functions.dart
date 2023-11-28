@@ -157,7 +157,7 @@ bool greaterthanone(
 
     isInputStringValid =
         regExp.hasMatch(double.parse(inputString).toInt().toString()) &&
-            double.parse(inputString) >= 1 &&
+            double.parse(inputString) > 0 &&
             double.parse(inputString) <= 5000;
   }
 

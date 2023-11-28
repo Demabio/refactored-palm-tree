@@ -579,7 +579,7 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                       ),
                       SizedBox(height: DeviceExt((17 / 411) * 100).w),
                       Text(
-                        "msg_extension_access".tr,
+                        "Do you have an extension service provider? (*)".tr,
                         style: CustomTextStyles.labelMediumPrimary_1,
                       ),
                       BlocSelector<
@@ -673,7 +673,8 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
                                         selector: (state) => state.checkb,
                                         builder: (context, checked) {
                                           return Text(
-                                            "msg_if_yes_which_groups_farmer".tr,
+                                            "If yes, What is the mode of extension service that you receive? (*)"
+                                                .tr,
                                             style: checked!
                                                 ? CustomTextStyles
                                                     .labelMediumPrimary_1red
@@ -840,9 +841,16 @@ class AddFinancialandservicesTwoScreen extends StatelessWidget {
   }
 
   _navToStep(int val, BuildContext context, FSProgress pfProgress) {
-    if (val == 0) {
-      Navigator.popAndPushNamed(
-          context, AppRoutes.addFinancialandservicesOneScreen);
+    if (PrefUtils().getFound()) {
+      if (val == 0) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.financialandservicesScreen);
+      }
+    } else {
+      if (val == 0) {
+        Navigator.popAndPushNamed(
+            context, AppRoutes.addFinancialandservicesOneScreen);
+      }
     }
   }
 

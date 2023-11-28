@@ -155,11 +155,12 @@ class FarmerDB {
     final database = await FarmerDatabaseService().database;
     try {
       return await database.rawUpdate('''
-    UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
+    UPDATE $tableName SET postalCode = ?, maritalStatusId = ?, agriSkillsId = ?,formalAgriTraining = ?, educationLevelId = ?, hhSize = ? WHERE farmerId = ? 
   ''', [
         farmer.postalCode,
         farmer.maritalStatusId,
         farmer.agriSkillsId,
+        farmer.agriSkillsId == 1,
         farmer.educationLevelId,
         farmer.hhSize,
         farmer.farmerId,

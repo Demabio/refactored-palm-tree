@@ -432,7 +432,7 @@ class AddLandandwatermgmtTwoScreen extends StatelessWidget {
                                               return "Size is larger than stated crop and livestock size.";
                                             } else if (!greaterthanone(value,
                                                 isRequired: true)) {
-                                              return "Value must be greater than 1";
+                                              return "Value must be greater than 0";
                                             } else {
                                               return null;
                                             }

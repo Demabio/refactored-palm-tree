@@ -57,6 +57,7 @@ class AddRearedLivestockDialogOneBloc extends Bloc<
     ResetCBs event,
     Emitter<AddRearedLivestockDialogOneState> emit,
   ) async {
+    PrefUtils().setFeeds("0");
     emit(state.copyWith(
         addRearedLivestockDialogOneModelObj:
             state.addRearedLivestockDialogOneModelObj?.copyWith(

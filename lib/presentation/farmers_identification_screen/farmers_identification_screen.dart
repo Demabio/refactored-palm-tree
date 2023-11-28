@@ -392,7 +392,11 @@ class FarmersIdentificationScreen extends StatelessWidget {
                                                       ?.farmer?.gender ==
                                                   1
                                               ? "Male"
-                                              : "Female",
+                                              : state.farmersIdentificationModelObj
+                                                          ?.farmer?.gender ==
+                                                      2
+                                                  ? "Female"
+                                                  : "Other",
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                             color: Colors.black,

@@ -912,7 +912,7 @@ final Map<String, String> enUs = {
   "lbl_reset": "Reset",
   "lbl_sat": "Sat",
   "lbl_save": "Save",
-  "lbl_search_farmer": "Enter ID Number",
+  "lbl_search_farmer": "Search",
   "lbl_select": "Select",
   "lbl_self_private": "Self (Private)",
   "lbl_settings": "Settings",

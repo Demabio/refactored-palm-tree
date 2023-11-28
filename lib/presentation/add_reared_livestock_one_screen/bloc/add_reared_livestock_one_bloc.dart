@@ -345,10 +345,20 @@ class AddRearedLivestockOneBloc
       // Create a list of AgeGroupModel objects from the list of dynamic objects
       List<FeedsModel> feedmodels =
           decageGroupMapList.map((json) => FeedsModel.fromJson(json)).toList();
-
-      emit(state.copyWith(feedsdlist: feedmodels, checkedF: false));
+      int selectedCount =
+          feedmodels.where((enterprise) => enterprise.isSelected).length;
+      if (selectedCount <= 0) {
+        PrefUtils().setFeeds("0");
+        emit(state.copyWith(
+          checkedF: true,
+          feedsdlist: [],
+        ));
+        return;
+      } else {
+        emit(state.copyWith(feedsdlist: feedmodels, checkedF: false));
+      }
     } else {
-      emit(state.copyWith(checkedF: true));
+      emit(state.copyWith(checkedF: true, feedsdlist: []));
     }
   }
 
@@ -507,8 +517,10 @@ class AddRearedLivestockOneBloc
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
     FarmerLivestockDB farmDB = FarmerLivestockDB();
     try {
+      int selectedCount =
+          state.feedsdlist!.where((enterprise) => enterprise.isSelected).length;
       if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 0 &&
-          state.feedsdlist!.isNotEmpty) {
+          selectedCount > 0) {
         farmDB
             .insertNonNulls(FarmerLivestock(
           farmerFarmId: PrefUtils().getFarmId(),
@@ -697,7 +709,7 @@ class AddRearedLivestockOneBloc
       int farmerLivestockId = PrefUtils().getLivestockId();
 
       if (state.addRearedLivestockOneModelObj!.lsProgress!.pageOne == 1 &&
-          state.feedsdlist!.isNotEmpty) {
+          selectedCount > 0) {
         if (farmerLivestockId != 0) {
           farmDB.update(FarmerLivestock(
             farmerFarmId: PrefUtils().getFarmId(),
@@ -814,6 +826,9 @@ class AddRearedLivestockOneBloc
           }
           event.createSuccessful!.call();
         }
+      }
+      if (selectedCount <= 0) {
+        emit(state.copyWith(checkedF: true));
       }
     } catch (e) {
       event.createFailed!.call();

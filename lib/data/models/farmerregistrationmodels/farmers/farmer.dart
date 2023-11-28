@@ -237,7 +237,7 @@ class Farmer {
         monthlyHhExpenditure: map['monthlyHhExpenditure']?.toInt(),
         dataSourceId: map['dataSourceId']?.toInt(),
         hhSize: map['hhSize']?.toInt(),
-        formalAgriTraining: map['formalAgriTraining'],
+        formalAgriTraining: (map['formalAgriTraining'] == 1),
         accountNo: map['accountNo'],
         approvedList: map['approvedList']?.toInt() ?? 0,
         campChangeRequestStatus: map['campChangeRequestStatus']?.toInt(),

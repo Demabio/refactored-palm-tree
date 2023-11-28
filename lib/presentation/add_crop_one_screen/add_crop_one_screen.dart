@@ -400,6 +400,28 @@ class AddCropOneScreen extends StatelessWidget {
                                       }),
                                   SizedBox(
                                       height: DeviceExt((9 / 411) * 100).w),
+                                  BlocSelector<AddCropOneBloc, AddCropOneState,
+                                          AddCropOneState>(
+                                      selector: (state) => state,
+                                      builder: (context, state) {
+                                        double area = (state
+                                                    .addCropOneModelObj?.area ??
+                                                0) -
+                                            (state.addCropOneModelObj?.area1 ??
+                                                0);
+                                        double roundedResult = double.parse(
+                                            area.toStringAsFixed(2));
+                                        print(roundedResult);
+
+                                        //toStringAsFixed(2)
+                                        return Text(
+                                            "Remaing Crop acreage in Farm: $roundedResult acres"
+                                                .tr,
+                                            style: CustomTextStyles
+                                                .labelMediumPrimary_1);
+                                      }),
+                                  SizedBox(
+                                      height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_total_acreage".tr,
                                       style: CustomTextStyles
                                           .labelMediumPrimary_1),
@@ -425,10 +447,10 @@ class AddCropOneScreen extends StatelessWidget {
                                                           .area1! >
                                                   state.addCropOneModelObj!
                                                       .area!) {
-                                                return "Combined crop sizes is larger than crop farming size.";
+                                                return "Crop sizes are larger than crop farming size.";
                                               } else if (!greaterthanone(value,
                                                   isRequired: true)) {
-                                                return "Value must be greater than 1";
+                                                return "Value must be greater than 0";
                                               } else {
                                                 return null;
                                               }
@@ -442,7 +464,6 @@ class AddCropOneScreen extends StatelessWidget {
                                       }),
                                   SizedBox(
                                       height: DeviceExt((9 / 411) * 100).w),
-                                   
                                   SizedBox(
                                       height: DeviceExt((9 / 411) * 100).w),
                                   Text("msg_use_of_certified".tr,

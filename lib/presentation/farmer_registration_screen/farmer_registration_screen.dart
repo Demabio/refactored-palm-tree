@@ -519,10 +519,12 @@ class FarmerRegistrationScreen extends StatelessWidget {
 
 //EDIT
   editfarmersIdentification(BuildContext context) {
-    NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen,
-        arguments: {
-          NavigationArgs.farmerEdit: true,
-        });
+    if (!PrefUtils().getFound()) {
+      NavigatorService.popAndPushNamed(AppRoutes.farmersIdentificationScreen,
+          arguments: {
+            NavigationArgs.farmerEdit: true,
+          });
+    }
   }
 
   editprimaryFarmHolding(BuildContext context) {
