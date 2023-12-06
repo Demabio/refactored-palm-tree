@@ -375,7 +375,8 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                         ? 5.w
                         : DeviceExt(5).h),
                 Visibility(
-                  visible: !state.failed && state.success,
+                  visible: (!state.failed && state.success) &&
+                      (!state.failed2 && state.success2),
                   child: CustomElevatedButton(
                     text: "Close",
                     height: Device.orientation == Orientation.portrait
@@ -398,7 +399,7 @@ class _UpdateDBDialogState extends State<UpdateDBDialog> {
                           : DeviceExt(2.5).w,
                     ),
                     onTap: () => closeDialog(context),
-                    isDisabled: !state.success,
+                    isDisabled: !state.success && !state.success2,
                   ),
                 ),
               ],

@@ -361,39 +361,39 @@ class LoginScreen extends StatelessWidget {
                     selector: (state) => state.success,
                     builder: (context, success) {
                       return Visibility(
-                          visible: !success,
-                          child: Center(
-                            child: CustomElevatedButton(
-                                text: "lbl_log_in".tr,
-                                height: Device.orientation ==
-                                        Orientation.portrait
-                                    ? DeviceExt(6).h
-                                    : 8.w,
-                                // width:
-                                //     Device.orientation == Orientation.portrait
-                                //         ? DeviceExt(50).h
-                                //         : 50.w,
-                                buttonTextStyle:
-                                    theme.textTheme.titleMedium?.copyWith(
-                                  color: Colors.white,
-                                  fontSize:
-                                      Device.orientation == Orientation.portrait
-                                          ? DeviceExt(2).h
-                                          : DeviceExt(2.5).w,
-                                ),
-                                margin:
-                                    Device.orientation == Orientation.portrait
-                                        ? EdgeInsets.fromLTRB(DeviceExt(0.36).h,
-                                            6.w, DeviceExt(0.2).h, 1.2.w)
-                                        : EdgeInsets.fromLTRB(
-                                            DeviceExt(0.36).w,
-                                            DeviceExt(6).h,
-                                            DeviceExt(0.2).w,
-                                            DeviceExt(1.2).h),
-                                onTap: () {
-                                  loginAPI(context);
-                                }),
-                          ));
+                        visible: !success,
+                        child: Center(
+                          child: CustomElevatedButton(
+                            text: "lbl_log_in".tr,
+                            height: Device.orientation == Orientation.portrait
+                                ? DeviceExt(6).h
+                                : 8.w,
+                            // width:
+                            //     Device.orientation == Orientation.portrait
+                            //         ? DeviceExt(50).h
+                            //         : 50.w,
+                            buttonTextStyle:
+                                theme.textTheme.titleMedium?.copyWith(
+                              color: Colors.white,
+                              fontSize:
+                                  Device.orientation == Orientation.portrait
+                                      ? DeviceExt(2).h
+                                      : DeviceExt(2.5).w,
+                            ),
+                            margin: Device.orientation == Orientation.portrait
+                                ? EdgeInsets.fromLTRB(DeviceExt(0.36).h, 6.w,
+                                    DeviceExt(0.2).h, 1.2.w)
+                                : EdgeInsets.fromLTRB(
+                                    DeviceExt(0.36).w,
+                                    DeviceExt(6).h,
+                                    DeviceExt(0.2).w,
+                                    DeviceExt(1.2).h),
+                            onTap: () {
+                              loginAPI(context);
+                            },
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ],

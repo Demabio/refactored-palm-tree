@@ -414,7 +414,7 @@ class ApiClient {
         return versiontResp;
       } else {
         throw response.data != null
-            ? PostLoginUserServicePostResp.fromJson(response.data)
+            ? VersiontResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } on DioException catch (error, stackTrace) {
